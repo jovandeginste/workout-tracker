@@ -44,6 +44,10 @@
     @apply col-span-2;
   }
 
+  .content a {
+    @apply underline text-amber-100 hover:text-amber-300;
+  }
+
   .menu {
     @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300;
     @apply items-baseline grid grid-cols-5 gap-4;

@@ -40,14 +40,12 @@
       </h2>
 
       <div class="workouts-list">
-        <ol>
-          {{ range .workouts }}
-          <li>
-            <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
-            ({{ .Date | html }})
-          </li>
-          {{ end }}
-        </ol>
+        {{ range .workouts }}
+        <div class="grid grid-flow-col auto-cols-max gap-4">
+          <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
+          <div class="italic">({{ .Date | html }})</div>
+        </div>
+        {{ end }}
       </div>
     </div>
   </body>

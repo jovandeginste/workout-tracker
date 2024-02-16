@@ -581,6 +581,17 @@ form .form-row input {
   grid-column: span 2 / span 2;
 }
 
+.content a {
+  --tw-text-opacity: 1;
+  color: rgb(254 243 199 / var(--tw-text-opacity));
+  text-decoration-line: underline;
+}
+
+.content a:hover {
+  --tw-text-opacity: 1;
+  color: rgb(252 211 77 / var(--tw-text-opacity));
+}
+
 .menu {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -965,6 +976,14 @@ form .form-row input {
 
 .resize {
   resize: both;
+}
+
+.auto-cols-max {
+  grid-auto-columns: max-content;
+}
+
+.grid-flow-col {
+  grid-auto-flow: column;
 }
 
 .grid-cols-2 {
