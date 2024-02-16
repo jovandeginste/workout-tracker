@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/leaflet.css" />
+    <script src="/assets/leaflet.js"></script>
+    <link href="/assets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row text-center">
+        <h1 class="alert alert-primary" role="alert">GPX File Viewer</h1>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span class="workout-name">{{ .Name }}</span>
+          <span class="workout-type">{{ .Type }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col"><div class="workout-date">{{ .Date }}</div></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="map" style="height: 300px; border: 1px solid black"></div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-4 workout-info-label">Total duration</div>
+            <div class="col workout-info-value">{{ .TotalDuration }}</div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Total distance</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .TotalDistance }} km
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Average speed</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .AverageSpeed }} km/h
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Max speed</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .MaxSpeed }} km/h
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Time pauzed</div>
+            <div class="col workout-info-value">{{ .PauzeDuration }}</div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Min elevation</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .MinElevation }} m
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Max elevation</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .MaxElevation }} m
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Total up</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .TotalUp }} m
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 workout-info-label">Total down</div>
+            <div class="col workout-info-value">
+              {{ printf "%.2f" .TotalDown }} m
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let points = [
+        {{- range $idx, $pt := .Points }}
+        {{ if $idx }},{{ end -}}
+        { "lat": {{ $pt.Lat }}, "lng": {{ $pt.Lng -}}, "title": {{ $pt.Title }} }
+        {{- end }}
+      ];
+      let center = [{{ .Center.Lat }}, {{ .Center.Lng }}];
+    </script>
+    <script src="/assets/map.js"></script>
+  </body>
+</html>

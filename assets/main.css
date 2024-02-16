@@ -1,0 +1,78 @@
+@tailwind base;
+
+@layer base {
+  body {
+    @apply bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20;
+  }
+
+  input {
+    @apply rounded-xl px-4 py-1 dark:bg-neutral-800;
+  }
+
+  textarea {
+    @apply rounded-xl px-4 py-1 dark:bg-neutral-800;
+  }
+
+  button[type="submit"] {
+    @apply bg-blue-500 hover:bg-blue-700 dark:bg-zinc-500 dark:hover:bg-zinc-400;
+    @apply font-bold rounded-xl px-4 py-1;
+  }
+
+  h1 {
+    @apply text-3xl dark:text-white;
+  }
+  h2,
+  h3 {
+    @apply text-2xl mt-10 mb-5 dark:text-zinc-200;
+  }
+  a {
+    @apply hover:text-amber-300;
+  }
+
+  form .form-row {
+    @apply mb-2;
+  }
+  form .form-row label {
+    @apply text-right py-1;
+  }
+
+  form .form-row input {
+    @apply col-span-2;
+  }
+
+  form .form-row {
+    @apply grid grid-cols-3 gap-4;
+  }
+
+  .menu {
+    @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300;
+    @apply items-baseline grid grid-cols-5 gap-4;
+  }
+  .menu a {
+    @apply icon-solid icon-baseline icon-before;
+  }
+  .menu a::before {
+    @apply pr-2;
+  }
+  .menu h1,
+  .menu .user {
+    @apply col-span-1;
+  }
+  .menu .main {
+    @apply col-span-3;
+  }
+  .menu .main a,
+  .menu .user a {
+    @apply mt-5 mr-5;
+  }
+  .menu .main,
+  .menu .user {
+    @apply flex-wrap -mt-5 -mr-5;
+  }
+  .content {
+    @apply rounded-xl p-10 dark:bg-neutral-700;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;

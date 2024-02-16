@@ -1,0 +1,96 @@
+package user
+
+import (
+	"errors"
+	"regexp"
+
+	"github.com/tkrajina/gpxgo/gpx"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
+)
+
+var (
+	ErrUsernameInvalidLength = errors.New("username has invalid length")
+	ErrUsernameInvalidChars  = errors.New("username contains invalid characters")
+
+	UsernameValidRegex = regexp.MustCompile(`^[a-zA-Z0-9]{3,20}$`)
+)
+
+type User struct {
+	gorm.Model
+	Password string `form:"password" json:"password"`
+	Username string `form:"username" gorm:"uniqueIndex;not null" json:"username"`
+	Name     string `form:"name"     json:"name"`
+	Active   bool   `form:"active"   json:"active"`
+	Admin    bool   `form:"admin"    json:"admin"`
+
+	Profile  Profile
+	Workouts []Workout
+}
+
+func GetUser(db *gorm.DB, username string) (*User, error) {
+	var u *User
+
+	if err := db.Where(&User{Username: username}).First(&u).Error; err != nil {
+		return nil, db.Error
+	}
+
+	return u, nil
+}
+
+type Profile struct {
+	gorm.Model
+	UserID int
+	Theme  ThemePreference
+}
+
+type ThemePreference string
+
+func (u *User) ValidLogin(password string) bool {
+	if u == nil {
+		return false
+	}
+
+	if !u.Active || u.Password == "" || u.Username == "" {
+		return false
+	}
+
+	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password)) == nil
+}
+
+func (u *User) IsValid() error {
+	if len(u.Username) < 3 || len(u.Username) > 20 {
+		return ErrUsernameInvalidLength
+	}
+
+	if !UsernameValidRegex.MatchString(u.Username) {
+		return ErrUsernameInvalidChars
+	}
+
+	return nil
+}
+
+func (u *User) CryptPassword() error {
+	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	u.Password = string(cryptedPassword)
+
+	return nil
+}
+
+func (u *User) Create(db *gorm.DB) error {
+	return db.Create(u).Error
+}
+
+func (u *User) UpdateUser(db *gorm.DB) error {
+	return db.Save(u).Error
+}
+
+func (u *User) AddWorkout(db *gorm.DB, notes string, gpxContent *gpx.GPX) error {
+	w := NewWorkout(u, notes, gpxContent)
+
+	return w.Create(db)
+}

@@ -1,0 +1,70 @@
+package app
+
+import (
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/jovandeginste/workouts/pkg/user"
+
+	"github.com/labstack/echo/v4"
+)
+
+func (a *App) setUser(c echo.Context) {
+	token, ok := c.Get("user").(*jwt.Token)
+	if !ok {
+		return
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return
+	}
+
+	dbUser, err := user.GetUser(a.db, claims["name"].(string))
+	if err != nil {
+		return
+	}
+
+	c.Set("user_info", dbUser)
+}
+
+func (a *App) getUser(c echo.Context) *user.User {
+	d := c.Get("user_info")
+	if d == nil {
+		return nil
+	}
+
+	u, ok := d.(*user.User)
+	if !ok {
+		return nil
+	}
+
+	return u
+}
+
+func (a *App) defaultData(c echo.Context) map[string]interface{} {
+	data := map[string]interface{}{}
+
+	a.addUserInfo(data, c)
+	a.addError(data, c)
+	a.addNotice(data, c)
+
+	return data
+}
+
+func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
+	u := a.getUser(c)
+	if u == nil {
+		return
+	}
+
+	data["user"] = u
+}
+
+func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
+	u := a.getUser(c)
+
+	if err := a.db.Preload("Workouts").Find(&u).Error; err != nil {
+		return
+	}
+
+	data["workouts"] = u.Workouts
+}
