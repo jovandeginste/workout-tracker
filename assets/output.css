@@ -569,6 +569,12 @@ form .form-row label {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   text-align: right;
+  font-weight: 700;
+}
+
+form .form-row label::after {
+  --tw-content: ':';
+  content: var(--tw-content);
 }
 
 form .form-row input {
@@ -741,6 +747,12 @@ form .form-row input {
 
 .workout-info-label {
   text-align: right;
+  font-weight: 700;
+}
+
+.workout-info-label::after {
+  --tw-content: ':';
+  content: var(--tw-content);
 }
 
 *, ::before, ::after {
@@ -959,16 +971,33 @@ form .form-row input {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .gap-4 {
   gap: 1rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 
 .border {
   border-width: 1px;
 }
 
+.border-2 {
+  border-width: 2px;
+}
+
 .border-none {
   border-style: none;
+}
+
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
 .bg-gray-300 {

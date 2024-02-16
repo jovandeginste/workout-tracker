@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/leaflet.css" />
+    <script src="/assets/leaflet.js"></script>
     <link href="/assets/output.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
@@ -34,68 +36,78 @@
       </div>
       {{ end }}
 
-      <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
-      >
-        {{ .workout.Name | html }}
-        <span class="italic">{{ .workout.Type }}</span>
-      </h2>
-      <div class="workout-date">{{ .workout.Date }}</div>
-      <div class="grid grid-cols-2">
-        <div id="map" style="height: 300px; border: 1px solid black"></div>
-        <div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Total duration</div>
-            <div class="workout-info-value">
-              {{ .workout_map_data.TotalDuration }}
+      <div class="grid grid-cols-3">
+        <h2
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
+        >
+          {{ .workout.Name | html }}
+        </h2>
+        <div class="italic">{{ .workout.Type }}</div>
+        <div class="workout-date">{{ .workout.Date }}</div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div
+          id="map"
+          class="border-2 border-black rounded-xl"
+          style="height: 600px"
+        ></div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="inner-form">
+            <div class="workout-info-row">
+              <div class="workout-info-label">Total duration</div>
+              <div class="workout-info-value">
+                {{ .workout_map_data.TotalDuration }}
+              </div>
+            </div>
+            <div class="workout-info-row">
+              <div class="workout-info-label">Total distance</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.TotalDistance }} km
+              </div>
+            </div>
+            <div class="workout-info-row">
+              <div class="workout-info-label">Average speed</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.AverageSpeed }} km/h
+              </div>
+            </div>
+            <div class="workout-info-row">
+              <div class="workout-info-label">Max speed</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.MaxSpeed }} km/h
+              </div>
+            </div>
+            <div class="workout-info-row">
+              <div class="workout-info-label">Time pauzed</div>
+              <div class="workout-info-value">
+                {{ .workout_map_data.PauzeDuration }}
+              </div>
             </div>
           </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Total distance</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.TotalDistance }} km
+          <div class="inner-form">
+            <div class="workout-info-row">
+              <div class="workout-info-label">Min elevation</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.MinElevation }} m
+              </div>
             </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Average speed</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.AverageSpeed }} km/h
+            <div class="workout-info-row">
+              <div class="workout-info-label">Max elevation</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.MaxElevation }} m
+              </div>
             </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Max speed</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.MaxSpeed }} km/h
+            <div class="workout-info-row">
+              <div class="workout-info-label">Total up</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.TotalUp }} m
+              </div>
             </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Time pauzed</div>
-            <div class="workout-info-value">
-              {{ .workout_map_data.PauzeDuration }}
-            </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Min elevation</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.MinElevation }} m
-            </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Max elevation</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.MaxElevation }} m
-            </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Total up</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.TotalUp }} m
-            </div>
-          </div>
-          <div class="workout-info-row">
-            <div class="workout-info-label">Total down</div>
-            <div class="workout-info-value">
-              {{ printf "%.2f" .workout_map_data.TotalDown }} m
+            <div class="workout-info-row">
+              <div class="workout-info-label">Total down</div>
+              <div class="workout-info-value">
+                {{ printf "%.2f" .workout_map_data.TotalDown }} m
+              </div>
             </div>
           </div>
         </div>

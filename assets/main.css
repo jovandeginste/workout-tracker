@@ -37,6 +37,7 @@
   }
   form .form-row label {
     @apply text-right py-1;
+    @apply font-bold after:content-[':'];
   }
 
   form .form-row input {
@@ -90,7 +91,7 @@
     @apply mb-2 grid grid-cols-2 gap-4;
   }
   .workout-info-label {
-    @apply text-right;
+    @apply text-right font-bold after:content-[':'];
   }
 
   .workout-info-input {
