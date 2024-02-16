@@ -17,7 +17,7 @@
       </div>
       <div class="user">
         <a class="icon-regular icon-user-circle" href="/user/profile"
-          >{{ .user.Username }}</a
+          >{{ .user.Username | html }}</a
         >
         <a class="icon-gear" href="/admin/">Manage</a>
         <a class="icon-arrow-right-from-bracket" href="/user/signout">Logout</a>
@@ -25,27 +25,21 @@
     </div>
     <div class="content">
       {{ if .notice }}
-      <div
-        class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3"
-        role="alert"
-      >
-        <span class="block sm:inline"> {{ .notice }} </span>
+      <div class="notice" role="alert">
+        <span class="block sm:inline"> {{ .notice | html }} </span>
       </div>
       {{ end }} {{ if .error }}
-      <div
-        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-        role="alert"
-      >
-        <span class="block sm:inline"> {{ .error }} </span>
+      <div class="alert" role="alert">
+        <span class="block sm:inline"> {{ .error | html }} </span>
       </div>
       {{ end }}
-      <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-circle-plus"
-      >
-        Add a workout
-      </h2>
 
-      <div class="workouts-add">
+      <div class="inner-form">
+        <h2
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-circle-plus"
+        >
+          Add a workout
+        </h2>
         <form
           method="post"
           action="/workouts/add"

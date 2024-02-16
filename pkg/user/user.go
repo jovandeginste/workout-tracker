@@ -89,8 +89,8 @@ func (u *User) UpdateUser(db *gorm.DB) error {
 	return db.Save(u).Error
 }
 
-func (u *User) AddWorkout(db *gorm.DB, notes string, gpxContent *gpx.GPX) error {
-	w := NewWorkout(u, notes, gpxContent)
+func (u *User) AddWorkout(db *gorm.DB, notes string, content string, gpxContent *gpx.GPX) (*Workout, error) {
+	w := NewWorkout(u, notes, content, gpxContent)
 
-	return w.Create(db)
+	return w, w.Create(db)
 }

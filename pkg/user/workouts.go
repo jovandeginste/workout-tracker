@@ -7,15 +7,15 @@ import (
 
 type Workout struct {
 	gorm.Model
-	Name    string
-	UserID  uint `gorm:"not null;index"`
+	Name    string `gorm:"nut null"`
+	UserID  uint   `gorm:"not null;index"`
 	User    *User
 	Notes   string
 	Type    string
 	GPXData string `gorm:"type:mediumtext"`
 }
 
-func NewWorkout(u *User, notes string, gpxContent *gpx.GPX) *Workout {
+func NewWorkout(u *User, notes string, content string, gpxContent *gpx.GPX) *Workout {
 	if u == nil {
 		return nil
 	}
@@ -23,7 +23,7 @@ func NewWorkout(u *User, notes string, gpxContent *gpx.GPX) *Workout {
 	w := Workout{
 		User:    u,
 		UserID:  u.ID,
-		GPXData: gpxContent.XMLNs,
+		GPXData: content,
 		Name:    gpxContent.Name,
 		Notes:   notes,
 	}

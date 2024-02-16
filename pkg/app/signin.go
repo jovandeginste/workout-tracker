@@ -51,6 +51,8 @@ func (a *App) SignIn(c echo.Context) error {
 
 // SignOut will log a user out
 func (a *App) SignOut(c echo.Context) error {
+	a.clearTokenCookie(c)
+
 	if err := a.sessionManager.Destroy(c.Request().Context()); err != nil {
 		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
 	}

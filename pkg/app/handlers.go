@@ -6,15 +6,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) mapHandler(c echo.Context) error {
-	gpxContent, err := uploadedGPXFile(c)
+func (a *App) workoutsShowHandler(c echo.Context) error {
+	_, gpxContent, err := uploadedGPXFile(c)
 	if err != nil {
 		return err
 	}
 
 	data := gpxAsMapData(gpxContent)
 
-	return c.Render(http.StatusOK, "map.html", data)
+	return c.Render(http.StatusOK, "workouts_show.html", data)
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {

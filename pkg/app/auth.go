@@ -30,6 +30,12 @@ func (a *App) createToken(u *user.User, c echo.Context) error {
 		return err
 	}
 
+	a.setTokenCookie(t, exp, c)
+
+	return nil
+}
+
+func (a *App) setTokenCookie(t string, exp time.Time, c echo.Context) {
 	cookie := new(http.Cookie)
 	cookie.Path = "/"
 	cookie.HttpOnly = true
@@ -38,6 +44,9 @@ func (a *App) createToken(u *user.User, c echo.Context) error {
 	cookie.Expires = exp
 
 	c.SetCookie(cookie)
+}
 
-	return nil
+func (a *App) clearTokenCookie(c echo.Context) {
+	exp := time.Now()
+	a.setTokenCookie("", exp, c)
 }

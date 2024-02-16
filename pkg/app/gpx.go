@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"io"
 	"time"
 
 	"github.com/dustin/go-humanize"
@@ -36,13 +35,7 @@ type MapPoint struct {
 }
 
 // ParseGPX parses a GPX file, returns GPX.
-func ParseGPX(r io.Reader) (*gpx.GPX, error) {
-	// Read all from r into a bytes slice
-	gpxBytes, err := io.ReadAll(r)
-	if err != nil {
-		return nil, err
-	}
-
+func ParseGPX(gpxBytes []byte) (*gpx.GPX, error) {
 	gpxContent, err := gpx.ParseBytes(gpxBytes)
 	if err != nil {
 		return nil, err

@@ -88,7 +88,7 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup.GET("/workouts/statistics", a.workoutsStatisticsHandler)
 	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
 	secureGroup.POST("/workouts/add", a.addWorkout)
-	secureGroup.POST("/map", a.mapHandler)
+	secureGroup.POST("/map", a.workoutsShowHandler)
 }
 
 func (a *App) Serve() error {

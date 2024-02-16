@@ -6,11 +6,11 @@
   }
 
   input {
-    @apply rounded-xl px-4 py-1 dark:bg-neutral-800;
+    @apply rounded-xl px-4 py-1 dark:bg-neutral-700;
   }
 
   textarea {
-    @apply rounded-xl px-4 py-1 dark:bg-neutral-800;
+    @apply rounded-xl px-4 py-1 dark:bg-neutral-700;
   }
 
   button[type="submit"] {
@@ -23,12 +23,15 @@
   }
   h2,
   h3 {
-    @apply text-2xl mt-10 mb-5 dark:text-zinc-200;
+    @apply text-2xl mb-5 dark:text-zinc-200;
   }
   a {
     @apply hover:text-amber-300;
   }
 
+  form {
+    @apply my-5;
+  }
   form .form-row {
     @apply mb-2;
   }
@@ -71,6 +74,20 @@
   }
   .content {
     @apply rounded-xl p-10 dark:bg-neutral-700;
+  }
+  .inner-form {
+    @apply rounded-xl p-5 dark:bg-neutral-800 mb-5;
+  }
+
+  .notice {
+    @apply bg-green-100 border border-green-400 text-green-700;
+  }
+  .alert {
+    @apply bg-red-100 border border-red-400 text-red-700;
+  }
+  .notice,
+  .alert {
+    @apply px-4 py-3 mb-5 rounded-md relative;
   }
 }
 

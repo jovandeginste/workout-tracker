@@ -1,34 +1,41 @@
 package app
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
-func uploadedGPXFile(c echo.Context) (*gpx.GPX, error) {
+func uploadedGPXFile(c echo.Context) (string, *gpx.GPX, error) {
 	file, err := c.FormFile("file")
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	src, err := file.Open()
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 	defer src.Close()
-
-	gpxContent, err := ParseGPX(src)
+	// Read all from r into a bytes slice
+	gpxBytes, err := io.ReadAll(src)
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
-	return gpxContent, nil
+	gpxContent, err := ParseGPX(gpxBytes)
+	if err != nil {
+		return "", nil, err
+	}
+
+	return string(gpxBytes), gpxContent, nil
 }
 
 func (a *App) addWorkout(c echo.Context) error {
-	gpxContent, err := uploadedGPXFile(c)
+	content, gpxContent, err := uploadedGPXFile(c)
 	if err != nil {
 		a.setError(c, err)
 		return c.Redirect(http.StatusMovedPermanently, "/workouts/add")
@@ -36,12 +43,13 @@ func (a *App) addWorkout(c echo.Context) error {
 
 	notes := c.FormValue("notes")
 
-	if err := a.getUser(c).AddWorkout(a.db, notes, gpxContent); err != nil {
+	w, err := a.getUser(c).AddWorkout(a.db, notes, content, gpxContent)
+	if err != nil {
 		a.setError(c, err)
 		return c.Redirect(http.StatusMovedPermanently, "/workouts/add")
 	}
 
-	a.setNotice(c, "new workout was added")
+	a.setNotice(c, fmt.Sprintf("A new workout was added: %s", w.Name))
 
 	return c.Redirect(http.StatusMovedPermanently, "/workouts")
 }
