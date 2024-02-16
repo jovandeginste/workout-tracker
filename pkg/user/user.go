@@ -4,7 +4,6 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/tkrajina/gpxgo/gpx"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -89,8 +88,22 @@ func (u *User) UpdateUser(db *gorm.DB) error {
 	return db.Save(u).Error
 }
 
-func (u *User) AddWorkout(db *gorm.DB, notes string, content string, gpxContent *gpx.GPX) (*Workout, error) {
-	w := NewWorkout(u, notes, content, gpxContent)
+func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
+	var w *Workout
 
-	return w, w.Create(db)
+	if err := db.Where(&Workout{UserID: u.ID}).First(&w, id).Error; err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
+func (u *User) AddWorkout(db *gorm.DB, notes string, content []byte) (*Workout, error) {
+	w := NewWorkout(u, notes, content)
+
+	if err := w.Create(db); err != nil {
+		return nil, err
+	}
+
+	return w, nil
 }

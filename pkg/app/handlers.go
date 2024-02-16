@@ -2,17 +2,32 @@ package app
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) redirectWithError(c echo.Context, err error) error {
+	a.setError(c, err)
+
+	return c.Redirect(http.StatusMovedPermanently, "/")
+}
+
 func (a *App) workoutsShowHandler(c echo.Context) error {
-	_, gpxContent, err := uploadedGPXFile(c)
+	data := a.defaultData(c)
+
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return err
+		return a.redirectWithError(c, err)
 	}
 
-	data := gpxAsMapData(gpxContent)
+	w, err := a.getUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, err)
+	}
+
+	data["workout"] = w
+	data["workout_map_data"] = w.MapData()
 
 	return c.Render(http.StatusOK, "workouts_show.html", data)
 }

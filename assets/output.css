@@ -560,6 +560,9 @@ form {
 
 form .form-row {
   margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 form .form-row label {
@@ -570,12 +573,6 @@ form .form-row label {
 
 form .form-row input {
   grid-column: span 2 / span 2;
-}
-
-form .form-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
 }
 
 .menu {
@@ -733,6 +730,17 @@ form .form-row {
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.workout-info-row {
+  margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.workout-info-label {
+  text-align: right;
 }
 
 *, ::before, ::after {
@@ -971,10 +979,6 @@ form .form-row {
 .px-20 {
   padding-left: 5rem;
   padding-right: 5rem;
-}
-
-.text-center {
-  text-align: center;
 }
 
 .uppercase {

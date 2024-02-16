@@ -42,7 +42,10 @@
       <div class="workouts-list">
         <ol>
           {{ range .workouts }}
-          <li><a href="/workouts/{{ .ID }}">{{ .Name | html }}</a></li>
+          <li>
+            <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
+            ({{ .Date | html }})
+          </li>
           {{ end }}
         </ol>
       </div>

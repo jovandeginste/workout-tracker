@@ -33,7 +33,7 @@
     @apply my-5;
   }
   form .form-row {
-    @apply mb-2;
+    @apply mb-2 grid grid-cols-3 gap-4;
   }
   form .form-row label {
     @apply text-right py-1;
@@ -41,10 +41,6 @@
 
   form .form-row input {
     @apply col-span-2;
-  }
-
-  form .form-row {
-    @apply grid grid-cols-3 gap-4;
   }
 
   .menu {
@@ -88,6 +84,17 @@
   .notice,
   .alert {
     @apply px-4 py-3 mb-5 rounded-md relative;
+  }
+
+  .workout-info-row {
+    @apply mb-2 grid grid-cols-2 gap-4;
+  }
+  .workout-info-label {
+    @apply text-right;
+  }
+
+  .workout-info-input {
+    @apply font-mono;
   }
 }
 

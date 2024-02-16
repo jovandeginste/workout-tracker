@@ -1,22 +1,30 @@
 package user
 
 import (
+	"time"
+
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 )
 
 type Workout struct {
 	gorm.Model
-	Name    string `gorm:"nut null"`
-	UserID  uint   `gorm:"not null;index"`
+	Name    string     `gorm:"nut null"`
+	Date    *time.Time `gorm:"not null"`
+	UserID  uint       `gorm:"not null;index"`
 	User    *User
 	Notes   string
 	Type    string
-	GPXData string `gorm:"type:mediumtext"`
+	GPXData []byte `gorm:"type:mediumtext"`
 }
 
-func NewWorkout(u *User, notes string, content string, gpxContent *gpx.GPX) *Workout {
+func NewWorkout(u *User, notes string, content []byte) *Workout {
 	if u == nil {
+		return nil
+	}
+
+	gpxContent, err := parseGPX(content)
+	if err != nil {
 		return nil
 	}
 
@@ -24,8 +32,9 @@ func NewWorkout(u *User, notes string, content string, gpxContent *gpx.GPX) *Wor
 		User:    u,
 		UserID:  u.ID,
 		GPXData: content,
-		Name:    gpxContent.Name,
+		Name:    gpxName(gpxContent),
 		Notes:   notes,
+		Date:    gpxContent.Time,
 	}
 
 	return &w
@@ -33,4 +42,13 @@ func NewWorkout(u *User, notes string, content string, gpxContent *gpx.GPX) *Wor
 
 func (w *Workout) Create(db *gorm.DB) error {
 	return db.Create(w).Error
+}
+
+func (w *Workout) AsGPX() (*gpx.GPX, error) {
+	return parseGPX(w.GPXData)
+}
+
+func (w *Workout) MapData() MapData {
+	gpxContent, _ := w.AsGPX()
+	return gpxAsMapData(gpxContent)
 }
