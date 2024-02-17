@@ -57,7 +57,13 @@ func (w *Workout) AsGPX() (*gpx.GPX, error) {
 	return parseGPX(w.GPXData)
 }
 
-func (w *Workout) MapData() MapData {
-	gpxContent, _ := w.AsGPX()
-	return gpxAsMapData(gpxContent)
+func (w *Workout) UpdateData(db *gorm.DB) error {
+	gpxContent, err := parseGPX(w.GPXData)
+	if err != nil {
+		return err
+	}
+
+	w.Data = gpxAsMapData(gpxContent)
+
+	return db.Save(w).Error
 }
