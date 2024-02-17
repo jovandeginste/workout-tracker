@@ -76,10 +76,9 @@ func parseViewTemplates() *template.Template {
 
 	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
 		if strings.Contains(path, ".html") {
-			_, err := templ.ParseFiles(path)
-			if err != nil {
-				log.Warn(err)
-				return err
+			if _, myErr := templ.ParseFiles(path); err != nil {
+				log.Warn(myErr)
+				return myErr
 			}
 		}
 
@@ -121,8 +120,8 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup.GET("/workouts/:id", a.workoutsShowHandler)
 	secureGroup.GET("/workouts/statistics", a.workoutsStatisticsHandler)
 	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
+	secureGroup.GET("/user/profile", a.userProfileHandler)
 	secureGroup.POST("/workouts/add", a.addWorkout)
-	secureGroup.POST("/map", a.workoutsShowHandler)
 }
 
 func (a *App) Serve() error {

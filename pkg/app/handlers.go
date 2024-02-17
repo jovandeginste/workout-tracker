@@ -62,3 +62,8 @@ func (a *App) workoutsStatisticsHandler(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "workouts_statistics.html", data)
 }
+
+func (a *App) userProfileHandler(c echo.Context) error {
+	data := a.defaultData(c)
+	return c.Render(http.StatusOK, "user_profile.html", data)
+}
