@@ -16,8 +16,9 @@ type Workout struct {
 	User     *User
 	Notes    string
 	Type     string
-	Checksum []byte `gorm:"not null;uniqueIndex"`
-	GPXData  []byte `gorm:"type:mediumtext"`
+	Data     MapData `gorm:"serializer:json"`
+	Checksum []byte  `gorm:"not null;uniqueIndex"`
+	GPXData  []byte  `gorm:"type:mediumtext"`
 }
 
 func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
@@ -38,6 +39,7 @@ func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 		UserID:   u.ID,
 		GPXData:  content,
 		Name:     gpxName(gpxContent),
+		Data:     gpxAsMapData(gpxContent),
 		Notes:    notes,
 		Type:     workoutType,
 		Date:     gpxContent.Time,

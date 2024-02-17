@@ -38,31 +38,31 @@
             <div class="workout-info-row">
               <div class="workout-info-label">Total duration</div>
               <div class="workout-info-value">
-                {{ .workout_map_data.TotalDuration }}
+                {{ .workout.Data.TotalDuration }}
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Total distance</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.TotalDistance }} km
+                {{ printf "%.2f" .workout.Data.TotalDistance }} km
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Average speed</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.AverageSpeed }} km/h
+                {{ printf "%.2f" .workout.Data.AverageSpeed }} km/h
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Max speed</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.MaxSpeed }} km/h
+                {{ printf "%.2f" .workout.Data.MaxSpeed }} km/h
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Time pauzed</div>
               <div class="workout-info-value">
-                {{ .workout_map_data.PauzeDuration }}
+                {{ .workout.Data.PauzeDuration }}
               </div>
             </div>
           </div>
@@ -70,25 +70,25 @@
             <div class="workout-info-row">
               <div class="workout-info-label">Min elevation</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.MinElevation }} m
+                {{ printf "%.2f" .workout.Data.MinElevation }} m
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Max elevation</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.MaxElevation }} m
+                {{ printf "%.2f" .workout.Data.MaxElevation }} m
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Total up</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.TotalUp }} m
+                {{ printf "%.2f" .workout.Data.TotalUp }} m
               </div>
             </div>
             <div class="workout-info-row">
               <div class="workout-info-label">Total down</div>
               <div class="workout-info-value">
-                {{ printf "%.2f" .workout_map_data.TotalDown }} m
+                {{ printf "%.2f" .workout.Data.TotalDown }} m
               </div>
             </div>
           </div>
@@ -97,12 +97,12 @@
     </div>
     <script>
       let points = [
-        {{- range $idx, $pt := .workout_map_data.Points }}
+        {{- range $idx, $pt := .workout.Data.Points }}
         {{ if $idx }},{{ end -}}
         { "lat": {{ $pt.Lat }}, "lng": {{ $pt.Lng -}}, "title": {{ $pt.Title }} }
         {{- end }}
       ];
-      let center = [{{ .workout_map_data.Center.Lat }}, {{ .workout_map_data.Center.Lng }}];
+      let center = [{{ .workout.Data.Center.Lat }}, {{ .workout.Data.Center.Lng }}];
     </script>
     <script src="/assets/map.js"></script>
   </body>

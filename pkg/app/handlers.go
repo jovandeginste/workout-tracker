@@ -27,7 +27,6 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 	}
 
 	data["workout"] = w
-	data["workout_map_data"] = w.MapData()
 
 	return c.Render(http.StatusOK, "workouts_show.html", data)
 }
