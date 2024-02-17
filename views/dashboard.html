@@ -5,6 +5,7 @@
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
     {{template "header" .}}
+
     <div class="content">
       {{ if .notice }}
       <div class="notice" role="alert">
@@ -24,5 +25,7 @@
         class="icon-solid icon-baseline icon-before icon-chevron-right icon-space-sm"
       ></span>
     </div>
+
+    {{template "footer" .}}
   </body>
 </html>

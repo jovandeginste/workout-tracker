@@ -13,6 +13,8 @@ var (
 	//go:embed assets/*
 	assets   embed.FS
 	AssetsFS = echo.MustSubFS(assets, "assets")
+
+	version = "0.0.0-dev"
 )
 
 func main() {
@@ -20,6 +22,7 @@ func main() {
 
 	a := app.NewApp(logger)
 	a.Assets = AssetsFS
+	a.Version = version
 
 	if err := a.Configure(); err != nil {
 		panic(err)

@@ -11,6 +11,7 @@ import (
 )
 
 type App struct {
+	Version        string
 	echo           *echo.Echo
 	log            *slog.Logger
 	db             *gorm.DB

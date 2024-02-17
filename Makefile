@@ -1,3 +1,5 @@
+GIT_TAG ?= $(shell git describe --tags)
+
 .PHONY: all clean test
 
 all: build-all serve
@@ -8,7 +10,7 @@ clean:
 build-all: build-tw build-server
 
 build-server:
-	go build -o ./tmp/main ./
+	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./
 
 build-tw:
 	npx tailwindcss -i ./assets/main.css -o ./assets/output.css

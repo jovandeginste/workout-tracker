@@ -48,9 +48,15 @@
     @apply underline text-amber-100 hover:text-amber-300;
   }
 
+  .footer,
   .menu {
-    @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300;
-    @apply items-baseline grid grid-cols-5 gap-4;
+    @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300 items-baseline;
+  }
+  .footer {
+    @apply flex justify-center gap-10;
+  }
+  .menu {
+    @apply grid grid-cols-5 gap-4;
   }
   .menu a {
     @apply icon-solid icon-baseline icon-before;

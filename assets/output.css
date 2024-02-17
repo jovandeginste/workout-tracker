@@ -592,9 +592,11 @@ form .form-row input {
   color: rgb(252 211 77 / var(--tw-text-opacity));
 }
 
-.menu {
+.footer,
+  .menu {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  align-items: baseline;
   border-radius: 0.75rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -603,6 +605,7 @@ form .form-row input {
 }
 
 @media (prefers-color-scheme: dark) {
+  .footer,
   .menu {
     --tw-bg-opacity: 1;
     background-color: rgb(38 38 38 / var(--tw-bg-opacity));
@@ -611,10 +614,15 @@ form .form-row input {
   }
 }
 
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
 .menu {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: baseline;
   gap: 1rem;
 }
 
@@ -1102,6 +1110,10 @@ form .form-row input {
   font-weight: 900;
 }
 
+.icon-brands.icon-inline,.icon-brands::before,.icon-brands::after {
+  font-family: "Font Awesome 5 Brands";
+}
+
 .icon-space-xs.icon-before::before {
   margin-right: 0.25rem;
 }
@@ -1244,6 +1256,14 @@ form .form-row input {
 
 .icon-gear::after {
   content: "\f013";
+}
+
+.icon-github::before {
+  content: "\f09b";
+}
+
+.icon-github::after {
+  content: "\f09b";
 }
 
 .icon-hourglass::before {

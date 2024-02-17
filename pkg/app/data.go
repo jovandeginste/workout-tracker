@@ -5,6 +5,7 @@ import (
 	"github.com/jovandeginste/workouts/pkg/user"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 )
 
 func (a *App) setUser(c echo.Context) {
@@ -41,7 +42,10 @@ func (a *App) getUser(c echo.Context) *user.User {
 }
 
 func (a *App) defaultData(c echo.Context) map[string]interface{} {
+	log.Warn("Version: " + a.Version)
 	data := map[string]interface{}{}
+
+	data["version"] = a.Version
 
 	a.addUserInfo(data, c)
 	a.addError(data, c)

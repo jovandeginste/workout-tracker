@@ -5,6 +5,7 @@
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
     {{template "header" .}}
+
     <div class="content">
       {{ if .notice }}
       <div class="notice" role="alert">
@@ -21,5 +22,7 @@
         Statistics
       </h2>
     </div>
+
+    {{template "footer" .}}
   </body>
 </html>
