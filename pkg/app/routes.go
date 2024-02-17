@@ -4,6 +4,9 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/alexedwards/scs/gormstore"
@@ -53,7 +56,7 @@ func (a *App) Configure() error {
 
 	e.Use(session.LoadAndSave(a.sessionManager))
 
-	e.Renderer = &Template{template.Must(template.ParseGlob("views/*.html"))}
+	e.Renderer = &Template{parseViewTemplates()}
 
 	e.Static("/assets", "assets")
 	e.GET("/user/signin", a.loginHandler)
@@ -66,6 +69,27 @@ func (a *App) Configure() error {
 	a.echo = e
 
 	return nil
+}
+
+func parseViewTemplates() *template.Template {
+	templ := template.New("views")
+
+	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
+		if strings.Contains(path, ".html") {
+			_, err := templ.ParseFiles(path)
+			if err != nil {
+				log.Warn(err)
+				return err
+			}
+		}
+
+		return err
+	})
+	if err != nil {
+		log.Warn(err)
+	}
+
+	return templ
 }
 
 func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
