@@ -581,13 +581,15 @@ form .form-row input {
   grid-column: span 2 / span 2;
 }
 
-.content a {
+.footer a,
+  .content a {
   --tw-text-opacity: 1;
   color: rgb(254 243 199 / var(--tw-text-opacity));
   text-decoration-line: underline;
 }
 
-.content a:hover {
+.footer a:hover,
+  .content a:hover {
   --tw-text-opacity: 1;
   color: rgb(252 211 77 / var(--tw-text-opacity));
 }

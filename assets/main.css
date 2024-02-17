@@ -44,6 +44,7 @@
     @apply col-span-2;
   }
 
+  .footer a,
   .content a {
     @apply underline text-amber-100 hover:text-amber-300;
   }
