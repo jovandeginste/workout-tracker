@@ -1,6 +1,7 @@
 package user
 
 import (
+	"crypto/sha256"
 	"time"
 
 	"github.com/tkrajina/gpxgo/gpx"
@@ -9,13 +10,14 @@ import (
 
 type Workout struct {
 	gorm.Model
-	Name    string     `gorm:"nut null;uniqueIndex"`
-	Date    *time.Time `gorm:"not null"`
-	UserID  uint       `gorm:"not null;index"`
-	User    *User
-	Notes   string
-	Type    string
-	GPXData []byte `gorm:"type:mediumtext"`
+	Name     string     `gorm:"nut null"`
+	Date     *time.Time `gorm:"not null"`
+	UserID   uint       `gorm:"not null;index"`
+	User     *User
+	Notes    string
+	Type     string
+	Checksum []byte `gorm:"not null;uniqueIndex"`
+	GPXData  []byte `gorm:"type:mediumtext"`
 }
 
 func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
@@ -28,14 +30,18 @@ func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 		return nil
 	}
 
+	h := sha256.New()
+	h.Write(content)
+
 	w := Workout{
-		User:    u,
-		UserID:  u.ID,
-		GPXData: content,
-		Name:    gpxName(gpxContent),
-		Notes:   notes,
-		Type:    workoutType,
-		Date:    gpxContent.Time,
+		User:     u,
+		UserID:   u.ID,
+		GPXData:  content,
+		Name:     gpxName(gpxContent),
+		Notes:    notes,
+		Type:     workoutType,
+		Date:     gpxContent.Time,
+		Checksum: h.Sum(nil),
 	}
 
 	return &w
