@@ -92,10 +92,13 @@
   }
 
   .workout-info-row {
-    @apply mb-2 grid grid-cols-2 gap-4;
+    @apply mb-2 grid grid-cols-2 gap-2;
+  }
+  .workout-info-icon {
+    @apply font-bold;
   }
   .workout-info-label {
-    @apply text-right font-bold after:content-[':'];
+    @apply font-bold after:content-[':'] ml-5;
   }
 
   .workout-info-input {

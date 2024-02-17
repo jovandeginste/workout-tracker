@@ -32,61 +32,115 @@
           id="map"
           class="border-2 border-black rounded-xl"
           style="height: 600px"
-        ></div>
+        >
+          <script>
+            let points = [
+              {{- range $idx, $pt := .workout.Data.Points }}
+              {{ if $idx }},{{ end -}}
+              { "lat": {{ $pt.Lat }}, "lng": {{ $pt.Lng -}}, "title": {{ $pt.Title }} }
+              {{- end }}
+            ];
+            let center = [{{ .workout.Data.Center.Lat }}, {{ .workout.Data.Center.Lng }}];
+          </script>
+          <script src="/assets/map.js"></script>
+        </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="inner-form">
             <div class="workout-info-row">
-              <div class="workout-info-label">Total duration</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-regular icon-baseline icon-space-sm icon-outside icon-clock"
+                ></span>
+                Total duration
+              </div>
               <div class="workout-info-value">
                 {{ .workout.Data.TotalDuration }}
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Total distance</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-road"
+                ></span>
+                Total distance
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.TotalDistance }} km
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Average speed</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-gauge"
+                ></span>
+                Average speed
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.AverageSpeed }} km/h
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Max speed</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-gauge-high"
+                ></span>
+                Max speed
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.MaxSpeed }} km/h
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Time pauzed</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-hourglass"
+                ></span>
+                Time pauzed
+              </div>
               <div class="workout-info-value">
                 {{ .workout.Data.PauzeDuration }}
               </div>
             </div>
-          </div>
-          <div class="inner-form">
             <div class="workout-info-row">
-              <div class="workout-info-label">Min elevation</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-mountain"
+                ></span>
+                Min elevation
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.MinElevation }} m
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Max elevation</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-mountain"
+                ></span>
+                Max elevation
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.MaxElevation }} m
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Total up</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-chevron-up"
+                ></span>
+                Total up
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.TotalUp }} m
               </div>
             </div>
             <div class="workout-info-row">
-              <div class="workout-info-label">Total down</div>
+              <div class="workout-info-label">
+                <span
+                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-chevron-down"
+                ></span>
+                Total down
+              </div>
               <div class="workout-info-value">
                 {{ printf "%.2f" .workout.Data.TotalDown }} m
               </div>
@@ -95,15 +149,5 @@
         </div>
       </div>
     </div>
-    <script>
-      let points = [
-        {{- range $idx, $pt := .workout.Data.Points }}
-        {{ if $idx }},{{ end -}}
-        { "lat": {{ $pt.Lat }}, "lng": {{ $pt.Lng -}}, "title": {{ $pt.Title }} }
-        {{- end }}
-      ];
-      let center = [{{ .workout.Data.Center.Lat }}, {{ .workout.Data.Center.Lng }}];
-    </script>
-    <script src="/assets/map.js"></script>
   </body>
 </html>

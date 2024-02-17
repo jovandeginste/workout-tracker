@@ -753,11 +753,15 @@ form .form-row input {
   margin-bottom: 0.5rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0.5rem;
+}
+
+.workout-info-icon {
+  font-weight: 700;
 }
 
 .workout-info-label {
-  text-align: right;
+  margin-left: 1.25rem;
   font-weight: 700;
 }
 
@@ -1079,6 +1083,17 @@ form .form-row input {
   content: "" !important;
 }
 
+.icon-outside::before {
+  font-family: "Font Awesome 5 Free";
+  vertical-align: middle;
+  position: absolute;
+  transform: translateX(-1.5em);
+}
+
+.icon-outside::after {
+  content: "" !important;
+}
+
 .icon-regular::before,.icon-regular::after {
   font-weight: 400;
 }
@@ -1151,12 +1166,28 @@ form .form-row input {
   content: "\e473";
 }
 
+.icon-chevron-down::before {
+  content: "\f078";
+}
+
+.icon-chevron-down::after {
+  content: "\f078";
+}
+
 .icon-chevron-right::before {
   content: "\f054";
 }
 
 .icon-chevron-right::after {
   content: "\f054";
+}
+
+.icon-chevron-up::before {
+  content: "\f077";
+}
+
+.icon-chevron-up::after {
+  content: "\f077";
 }
 
 .icon-circle-plus::before {
@@ -1175,12 +1206,36 @@ form .form-row input {
   content: "\f2bd";
 }
 
+.icon-clock::before {
+  content: "\f017";
+}
+
+.icon-clock::after {
+  content: "\f017";
+}
+
 .icon-dumbbell::before {
   content: "\f44b";
 }
 
 .icon-dumbbell::after {
   content: "\f44b";
+}
+
+.icon-gauge::before {
+  content: "\f624";
+}
+
+.icon-gauge::after {
+  content: "\f624";
+}
+
+.icon-gauge-high::before {
+  content: "\f625";
+}
+
+.icon-gauge-high::after {
+  content: "\f625";
 }
 
 .icon-gear::before {
@@ -1191,12 +1246,36 @@ form .form-row input {
   content: "\f013";
 }
 
+.icon-hourglass::before {
+  content: "\f254";
+}
+
+.icon-hourglass::after {
+  content: "\f254";
+}
+
+.icon-mountain::before {
+  content: "\f6fc";
+}
+
+.icon-mountain::after {
+  content: "\f6fc";
+}
+
 .icon-right-to-bracket::before {
   content: "\f2f6";
 }
 
 .icon-right-to-bracket::after {
   content: "\f2f6";
+}
+
+.icon-road::before {
+  content: "\f018";
+}
+
+.icon-road::after {
+  content: "\f018";
 }
 
 .icon-user-plus::before {
