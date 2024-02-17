@@ -68,20 +68,29 @@ func (a *App) Configure() error {
 	return nil
 }
 
+func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		if err := a.setUser(ctx); err != nil {
+			log.Warn(err.Error())
+			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
+		}
+
+		return next(ctx)
+	}
+}
+
 func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup := e.Group("")
 
 	secureGroup.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  a.jwtSecret,
 		TokenLookup: "cookie:token",
-		SuccessHandler: func(c echo.Context) {
-			a.setUser(c)
-		},
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.Redirect(http.StatusMovedPermanently, "/user/signin")
+			return c.Redirect(http.StatusMovedPermanently, "/user/signout")
 		},
 	}))
+	secureGroup.Use(a.ValidateUserMiddleware)
 
 	secureGroup.GET("/", a.dashboardHandler)
 	secureGroup.GET("/workouts", a.workoutsHandler)

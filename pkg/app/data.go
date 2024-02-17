@@ -5,26 +5,31 @@ import (
 	"github.com/jovandeginste/workouts/pkg/user"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 )
 
-func (a *App) setUser(c echo.Context) {
+func (a *App) setUser(c echo.Context) error {
 	token, ok := c.Get("user").(*jwt.Token)
 	if !ok {
-		return
+		return ErrInvalidJWTToken
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return
+		return ErrInvalidJWTToken
 	}
 
 	dbUser, err := user.GetUser(a.db, claims["name"].(string))
 	if err != nil {
-		return
+		return err
+	}
+
+	if !dbUser.IsActive() {
+		return ErrInvalidJWTToken
 	}
 
 	c.Set("user_info", dbUser)
+
+	return nil
 }
 
 func (a *App) getUser(c echo.Context) *user.User {
@@ -42,7 +47,6 @@ func (a *App) getUser(c echo.Context) *user.User {
 }
 
 func (a *App) defaultData(c echo.Context) map[string]interface{} {
-	log.Warn("Version: " + a.Version)
 	data := map[string]interface{}{}
 
 	data["version"] = a.Version

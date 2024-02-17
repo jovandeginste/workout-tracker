@@ -45,12 +45,20 @@ type Profile struct {
 
 type ThemePreference string
 
-func (u *User) ValidLogin(password string) bool {
+func (u *User) IsActive() bool {
 	if u == nil {
 		return false
 	}
 
 	if !u.Active || u.Password == "" || u.Username == "" {
+		return false
+	}
+
+	return true
+}
+
+func (u *User) ValidLogin(password string) bool {
+	if !u.IsActive() {
 		return false
 	}
 

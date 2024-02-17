@@ -57,7 +57,7 @@ func (a *App) SignOut(c echo.Context) error {
 		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusMovedPermanently, "/user/signin")
 }
 
 // Register will be executed after registration submission.
