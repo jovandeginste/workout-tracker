@@ -974,6 +974,10 @@ form .form-row input {
   flex-grow: 1;
 }
 
+.table-auto {
+  table-layout: auto;
+}
+
 .rotate-180 {
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -990,14 +994,6 @@ form .form-row input {
 
 .resize {
   resize: both;
-}
-
-.auto-cols-max {
-  grid-auto-columns: max-content;
-}
-
-.grid-flow-col {
-  grid-auto-flow: column;
 }
 
 .grid-cols-2 {
@@ -1036,6 +1032,10 @@ form .form-row input {
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .px-20 {

@@ -1,0 +1,9 @@
+{{define "alerts"}} {{ if .notice }}
+<div class="notice" role="alert">
+  <span class="block sm:inline"> {{ .notice | html }} </span>
+</div>
+{{ end }} {{ if .error }}
+<div class="alert" role="alert">
+  <span class="block sm:inline"> {{ .error | html }} </span>
+</div>
+{{ end }} {{ end }}

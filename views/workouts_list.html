@@ -7,29 +7,30 @@
     {{template "header" .}}
 
     <div class="content">
-      {{ if .notice }}
-      <div class="notice" role="alert">
-        <span class="block sm:inline"> {{ .notice | html }} </span>
-      </div>
-      {{ end }} {{ if .error }}
-      <div class="alert" role="alert">
-        <span class="block sm:inline"> {{ .error | html }} </span>
-      </div>
-      {{ end }}
+      {{template "alerts" .}}
+
       <h2
         class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
       >
         Workouts
       </h2>
 
-      <div class="workouts-list">
-        {{ range .workouts }}
-        <div class="grid grid-flow-col auto-cols-max gap-4">
-          <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
-          <div class="italic">({{ .Date | html }})</div>
-        </div>
-        {{ end }}
-      </div>
+      <table class="workouts-list table-auto gap-4">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .workouts }}
+          <tr>
+            <td><a href="/workouts/{{ .ID }}">{{ .Name | html }}</a></td>
+            <td class="italic">({{ .Date | html }})</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
     </div>
 
     {{template "footer" .}}
