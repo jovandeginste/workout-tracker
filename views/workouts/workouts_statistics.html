@@ -1,14 +1,11 @@
 <!doctype html>
 <html>
   <head>
-    {{template "head" .}}
+    {{ template "head" . }}
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
-    {{template "header" .}}
-
+    {{ template "header" . }} {{ template "alerts" . }}
     <div class="content">
-      {{template "alerts" .}}
-
       <h2
         class="icon-solid icon-baseline icon-space-sm icon-before icon-chart-simple"
       >
@@ -16,6 +13,6 @@
       </h2>
     </div>
 
-    {{template "footer" .}}
+    {{ template "footer" . }}
   </body>
 </html>

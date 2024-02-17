@@ -6,11 +6,8 @@
     <link href="/assets/leaflet.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
-    {{template "header" .}}
-
+    {{ template "header" . }} {{ template "alerts" . }}
     <div class="content">
-      {{ template "alerts" . }}
-
       <div class="grid grid-cols-3">
         <h2
           class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
@@ -28,12 +25,12 @@
         >
           <script>
             let points = [
-              {{- range $idx, $pt := .workout.Data.Points }}
-              {{ if $idx }},{{ end -}}
-              { "lat": {{ $pt.Lat }}, "lng": {{ $pt.Lng -}}, "title": {{ $pt.Title }} }
-              {{- end }}
+              {{ - range $idx, $pt := .workout.Data.Points  }}
+              {{  if $idx  }},{{  end - }}
+              { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng - }}, "title": {{  $pt.Title  }} }
+              {{ - end  }}
             ];
-            let center = [{{ .workout.Data.Center.Lat }}, {{ .workout.Data.Center.Lng }}];
+            let center = [{{  .workout.Data.Center.Lat  }}, {{  .workout.Data.Center.Lng  }}];
           </script>
           <script src="/assets/map.js"></script>
         </div>
@@ -143,6 +140,6 @@
       </div>
     </div>
 
-    {{template "footer" .}}
+    {{ template "footer" . }}
   </body>
 </html>
