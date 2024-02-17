@@ -1,28 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet" />
-    <link href="/assets/output.css" rel="stylesheet" />
+    {{template "head" .}}
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
-    <div class="menu">
-      <h1><a href="/">Workout Tracker</a></h1>
-      <div class="main">
-        <a class="icon-chart-line" href="/">Dashboard</a>
-        <a class="icon-dumbbell" href="/workouts">Workouts</a>
-        <a class="icon-chart-simple" href="/workouts/statistics">Statistics</a>
-        <a class="icon-circle-plus" href="/workouts/add">Add workout</a>
-      </div>
-      <div class="user">
-        <a class="icon-regular icon-user-circle" href="/user/profile"
-          >{{ .user.Username | html }}</a
-        >
-        <a class="icon-gear" href="/admin/">Manage</a>
-        <a class="icon-arrow-right-from-bracket" href="/user/signout">Logout</a>
-      </div>
-    </div>
+    {{template "header" .}}
     <div class="content">
       {{ if .notice }}
       <div class="notice" role="alert">
