@@ -60,11 +60,10 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 }
 
 func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
-	u := a.getUser(c)
-
-	if err := a.db.Preload("Workouts").Find(&u).Error; err != nil {
-		return
+	w, err := a.getUser(c).GetWorkouts(a.db)
+	if err != nil {
+		a.addError(data, c)
 	}
 
-	data["workouts"] = u.Workouts
+	data["workouts"] = w
 }

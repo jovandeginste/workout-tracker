@@ -15,7 +15,7 @@ var (
 )
 
 func (a *App) loginError(c echo.Context, err error) error {
-	a.setError(c, err)
+	a.setError(c, err.Error())
 
 	return c.Redirect(http.StatusMovedPermanently, "/user/signin")
 }

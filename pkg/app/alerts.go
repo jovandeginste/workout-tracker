@@ -18,10 +18,10 @@ func (a *App) setNotice(c echo.Context, msg string) {
 	a.sessionManager.Put(c.Request().Context(), "notice", msg)
 }
 
-func (a *App) setError(c echo.Context, err error) {
-	if err == nil {
+func (a *App) setError(c echo.Context, err string) {
+	if err == "" {
 		return
 	}
 
-	a.sessionManager.Put(c.Request().Context(), "error", err.Error())
+	a.sessionManager.Put(c.Request().Context(), "error", err)
 }

@@ -98,8 +98,18 @@ func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	return w, nil
 }
 
-func (u *User) AddWorkout(db *gorm.DB, notes string, content []byte) (*Workout, error) {
-	w := NewWorkout(u, notes, content)
+func (u *User) GetWorkouts(db *gorm.DB) ([]Workout, error) {
+	var w []Workout
+
+	if err := db.Where(&Workout{UserID: u.ID}).Order("date DESC").Find(&w).Error; err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
+func (u *User) AddWorkout(db *gorm.DB, workoutType, notes string, content []byte) (*Workout, error) {
+	w := NewWorkout(u, workoutType, notes, content)
 
 	if err := w.Create(db); err != nil {
 		return nil, err

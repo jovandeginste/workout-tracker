@@ -9,7 +9,7 @@ import (
 
 type Workout struct {
 	gorm.Model
-	Name    string     `gorm:"nut null"`
+	Name    string     `gorm:"nut null;uniqueIndex"`
 	Date    *time.Time `gorm:"not null"`
 	UserID  uint       `gorm:"not null;index"`
 	User    *User
@@ -18,7 +18,7 @@ type Workout struct {
 	GPXData []byte `gorm:"type:mediumtext"`
 }
 
-func NewWorkout(u *User, notes string, content []byte) *Workout {
+func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 	if u == nil {
 		return nil
 	}
@@ -34,6 +34,7 @@ func NewWorkout(u *User, notes string, content []byte) *Workout {
 		GPXData: content,
 		Name:    gpxName(gpxContent),
 		Notes:   notes,
+		Type:    workoutType,
 		Date:    gpxContent.Time,
 	}
 

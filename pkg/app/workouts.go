@@ -1,19 +1,14 @@
 package app
 
 import (
-	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
-func uploadedGPXFile(c echo.Context) ([]byte, error) {
-	file, err := c.FormFile("file")
-	if err != nil {
-		return nil, err
-	}
-
+func uploadedGPXFile(file *multipart.FileHeader) ([]byte, error) {
 	src, err := file.Open()
 	if err != nil {
 		return nil, err
@@ -29,21 +24,42 @@ func uploadedGPXFile(c echo.Context) ([]byte, error) {
 }
 
 func (a *App) addWorkout(c echo.Context) error {
-	content, err := uploadedGPXFile(c)
+	form, err := c.MultipartForm()
 	if err != nil {
-		a.setError(c, err)
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/add")
+		return err
 	}
 
-	notes := c.FormValue("notes")
+	files := form.File["file"]
 
-	w, err := a.getUser(c).AddWorkout(a.db, notes, content)
-	if err != nil {
-		a.setError(c, err)
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/add")
+	msg := ""
+	errMsg := ""
+
+	for _, file := range files {
+		content, parseErr := uploadedGPXFile(file)
+		if parseErr != nil {
+			errMsg += parseErr.Error() + "\n"
+			continue
+		}
+
+		notes := c.FormValue("notes")
+		workoutType := c.FormValue("type")
+
+		w, addErr := a.getUser(c).AddWorkout(a.db, workoutType, notes, content)
+		if addErr != nil {
+			errMsg += addErr.Error() + "\n"
+			continue
+		}
+
+		msg += "- " + w.Name + "\n"
 	}
 
-	a.setNotice(c, fmt.Sprintf("A new workout was added: %s", w.Name))
+	if errMsg != "" {
+		a.setError(c, errMsg)
+	}
+
+	if msg != "" {
+		a.setNotice(c, "A new workout was added:\n"+msg)
+	}
 
 	return c.Redirect(http.StatusMovedPermanently, "/workouts")
 }
