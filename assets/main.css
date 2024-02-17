@@ -95,7 +95,7 @@
   }
   .notice,
   .alert {
-    @apply px-4 py-3 mb-5 rounded-md relative;
+    @apply px-4 py-3 m-5 rounded-md relative;
   }
 
   .workout-info-row {

@@ -751,7 +751,7 @@ form .form-row input {
 .notice,
   .alert {
   position: relative;
-  margin-bottom: 1.25rem;
+  margin: 1.25rem;
   border-radius: 0.375rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1032,10 +1032,6 @@ form .form-row input {
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-
-.p-4 {
-  padding: 1rem;
 }
 
 .px-20 {
