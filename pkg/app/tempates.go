@@ -16,6 +16,13 @@ func viewTemplateFunctions() template.FuncMap {
 			return t.Local().Format("2006-01-02 15:04")
 		},
 		"RelativeDate": humanize.Time,
+		"FAIconName": func(wType string) string {
+			if wType == "running" {
+				return "person-running"
+			}
+
+			return "question"
+		},
 	}
 }
 

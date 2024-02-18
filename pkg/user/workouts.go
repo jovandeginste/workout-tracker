@@ -10,16 +10,15 @@ import (
 
 type Workout struct {
 	gorm.Model
-	Name       string     `gorm:"nut null"`
-	Date       *time.Time `gorm:"not null"`
-	UserID     uint       `gorm:"not null;index"`
-	User       *User
-	Notes      string
-	Type       string
-	Data       MapData `gorm:"serializer:json"`
-	Checksum   []byte  `gorm:"not null;uniqueIndex"`
-	GPXData    []byte  `gorm:"type:mediumtext"`
-	FAIconName string
+	Name     string     `gorm:"nut null"`
+	Date     *time.Time `gorm:"not null"`
+	UserID   uint       `gorm:"not null;index"`
+	User     *User
+	Notes    string
+	Type     string
+	Data     MapData `gorm:"serializer:json"`
+	Checksum []byte  `gorm:"not null;uniqueIndex"`
+	GPXData  []byte  `gorm:"type:mediumtext"`
 }
 
 func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
@@ -38,16 +37,15 @@ func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 	h.Write(content)
 
 	w := Workout{
-		User:       u,
-		UserID:     u.ID,
-		GPXData:    content,
-		Name:       gpxName(gpxContent),
-		Data:       data,
-		Notes:      notes,
-		Type:       workoutType,
-		Date:       gpxContent.Time,
-		Checksum:   h.Sum(nil),
-		FAIconName: faIconNameFor(workoutType),
+		User:     u,
+		UserID:   u.ID,
+		GPXData:  content,
+		Name:     gpxName(gpxContent),
+		Data:     data,
+		Notes:    notes,
+		Type:     workoutType,
+		Date:     gpxContent.Time,
+		Checksum: h.Sum(nil),
 	}
 
 	return &w
@@ -70,12 +68,4 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.Data = gpxAsMapData(gpxContent)
 
 	return db.Save(w).Error
-}
-
-func faIconNameFor(wType string) string {
-	if wType == "running" {
-		return "person-running"
-	}
-
-	return "question"
 }
