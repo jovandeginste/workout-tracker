@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/jovandeginste/workouts/pkg/user"
+	"github.com/jovandeginste/workouts/pkg/database"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,7 +18,7 @@ func (a *App) setUser(c echo.Context) error {
 		return ErrInvalidJWTToken
 	}
 
-	dbUser, err := user.GetUser(a.db, claims["name"].(string))
+	dbUser, err := database.GetUser(a.db, claims["name"].(string))
 	if err != nil {
 		return err
 	}
@@ -32,13 +32,13 @@ func (a *App) setUser(c echo.Context) error {
 	return nil
 }
 
-func (a *App) getUser(c echo.Context) *user.User {
+func (a *App) getUser(c echo.Context) *database.User {
 	d := c.Get("user_info")
 	if d == nil {
 		return nil
 	}
 
-	u, ok := d.(*user.User)
+	u, ok := d.(*database.User)
 	if !ok {
 		return nil
 	}

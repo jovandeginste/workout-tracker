@@ -6,13 +6,13 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/jovandeginste/workouts/pkg/user"
+	"github.com/jovandeginste/workouts/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
 var ErrInvalidJWTToken = errors.New("invalid JWT token")
 
-func (a *App) createToken(u *user.User, c echo.Context) error {
+func (a *App) createToken(u *database.User, c echo.Context) error {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims, ok := token.Claims.(jwt.MapClaims)

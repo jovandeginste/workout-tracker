@@ -2,7 +2,6 @@ package database
 
 import (
 	"github.com/glebarez/sqlite"
-	"github.com/jovandeginste/workouts/pkg/user"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +11,7 @@ func Connect() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err := db.AutoMigrate(&user.User{}, &user.Profile{}, user.Workout{}); err != nil {
+	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}); err != nil {
 		return nil, err
 	}
 

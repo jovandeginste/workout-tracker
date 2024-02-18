@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/jovandeginste/workouts/pkg/user"
+	"github.com/jovandeginste/workouts/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
@@ -23,14 +23,14 @@ func (a *App) loginError(c echo.Context, err error) error {
 // SignIn will be executed after SignInForm submission.
 func (a *App) SignIn(c echo.Context) error {
 	// Initiate a new User struct.
-	u := new(user.User)
+	u := new(database.User)
 
 	// Parse the submitted data and fill the User struct with the data from the SignIn form.
 	if err := c.Bind(u); err != nil {
 		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	storedUser, err := user.GetUser(a.db, u.Username)
+	storedUser, err := database.GetUser(a.db, u.Username)
 	if err != nil {
 		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
@@ -63,7 +63,7 @@ func (a *App) SignOut(c echo.Context) error {
 // Register will be executed after registration submission.
 func (a *App) Register(c echo.Context) error {
 	// Initiate a new User struct.
-	u := new(user.User)
+	u := new(database.User)
 
 	// Parse the submitted data and fill the User struct with the data from the registration form.
 	if err := c.Bind(u); err != nil {
