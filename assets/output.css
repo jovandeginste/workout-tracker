@@ -1345,22 +1345,6 @@ table {
   content: "\f254";
 }
 
-.icon-location-dot::before {
-  content: "\f3c5";
-}
-
-.icon-location-dot::after {
-  content: "\f3c5";
-}
-
-.icon-map::before {
-  content: "\f279";
-}
-
-.icon-map::after {
-  content: "\f279";
-}
-
 .icon-map-location-dot::before {
   content: "\f5a0";
 }

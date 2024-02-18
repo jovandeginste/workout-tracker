@@ -2,11 +2,12 @@ package app
 
 import (
 	"html/template"
-	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/dustin/go-humanize"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 )
 
@@ -29,13 +30,22 @@ func viewTemplateFunctions() template.FuncMap {
 	}
 }
 
-func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		if err := a.setUser(ctx); err != nil {
-			log.Warn(err.Error())
-			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
+func parseViewTemplates() *template.Template {
+	templ := template.New("views").Funcs(viewTemplateFunctions())
+
+	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
+		if strings.Contains(path, ".html") {
+			if _, myErr := templ.ParseFiles(path); err != nil {
+				log.Warn(myErr)
+				return myErr
+			}
 		}
 
-		return next(ctx)
+		return err
+	})
+	if err != nil {
+		log.Warn(err)
 	}
+
+	return templ
 }
