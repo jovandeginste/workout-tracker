@@ -758,7 +758,8 @@ table {
 .workout-info {
   --tw-border-opacity: 1;
   border-color: rgb(64 64 64 / var(--tw-border-opacity));
-  td {
+  th,
+    td {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -1033,16 +1034,6 @@ table {
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-
-.px-20 {
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 .text-center {
@@ -1368,17 +1359,5 @@ table {
 @media (min-width: 640px) {
   .sm\:inline {
     display: inline;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .dark\:bg-neutral-900 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(23 23 23 / var(--tw-bg-opacity));
-  }
-
-  .dark\:text-zinc-100 {
-    --tw-text-opacity: 1;
-    color: rgb(244 244 245 / var(--tw-text-opacity));
   }
 }

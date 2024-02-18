@@ -122,6 +122,7 @@
   .workout-info {
     @apply border-neutral-700;
 
+    th,
     td {
       @apply px-2;
     }
