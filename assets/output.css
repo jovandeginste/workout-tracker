@@ -1039,6 +1039,10 @@ table {
   overflow: hidden;
 }
 
+.overflow-clip {
+  overflow: clip;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
@@ -1058,6 +1062,11 @@ table {
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .text-center {

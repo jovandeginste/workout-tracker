@@ -31,15 +31,28 @@
               locale: "nl-BE",
               firstDay: 1,
               aspectRatio: 2,
+              eventContent: function(arg) {
+                let eventSpan = document.createElement('div')
+
+                eventSpan.innerHTML = arg.event.title
+                eventSpan.classList.add(
+                  "px-2", "icon-baseline", "icon-before", "icon-space-sm", "overflow-hidden",
+                  arg.event.extendedProps.iconClass, arg.event.extendedProps.iconName
+                )
+
+                return { domNodes: [ eventSpan ] }
+              },
               events: [
                 {{ range $idx, $w := .workouts }}
                 {
-                  classNames: [
-                    "icon-baseline", "icon-before",
-                    "icon-{{ $w.Type | FAIconClass }}", "icon-{{ $w.Type | FAIconName }}"
-                  ],
+                  title: "{{ $w.Type }}",
                   start: "{{ $w.Date | LocalDate }}",
                   url: "/workouts/{{ $w.ID }}",
+                  display: 'block',
+                  extendedProps: {
+                    iconClass: "icon-{{ $w.Type | FAIconClass }}",
+                    iconName: "icon-{{ $w.Type | FAIconName }}",
+                  },
                 },
                 {{ end }}
               ],
