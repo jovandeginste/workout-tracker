@@ -97,20 +97,6 @@
     @apply px-4 py-3 m-5 rounded-md relative;
   }
 
-  .workout-info-row {
-    @apply mb-2 grid grid-cols-2 gap-2;
-  }
-  .workout-info-icon {
-    @apply font-bold;
-  }
-  .workout-info-label {
-    @apply font-bold after:content-[':'] ml-5;
-  }
-
-  .workout-info-input {
-    @apply font-mono;
-  }
-
   table {
     @apply text-sm w-full text-left rtl:text-right table-auto;
     @apply border dark:border-neutral-800;
@@ -130,6 +116,20 @@
           @apply whitespace-nowrap;
         }
       }
+    }
+  }
+
+  .workout-info {
+    @apply dark:border-neutral-700;
+
+    td {
+      @apply px-2;
+    }
+    tr {
+      @apply mb-2;
+    }
+    th {
+      @apply font-bold after:content-[':'];
     }
   }
 }

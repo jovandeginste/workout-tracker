@@ -5,6 +5,14 @@ github.com/alexedwards/scs/gormstore
 ## explicit; go 1.12
 github.com/alexedwards/scs/v2
 github.com/alexedwards/scs/v2/memstore
+# github.com/codingsince1985/geo-golang v1.8.3
+## explicit; go 1.19
+github.com/codingsince1985/geo-golang
+github.com/codingsince1985/geo-golang/openstreetmap
+github.com/codingsince1985/geo-golang/osm
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
 # github.com/dustin/go-humanize v1.0.1
 ## explicit; go 1.16
 github.com/dustin/go-humanize

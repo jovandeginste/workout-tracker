@@ -1,0 +1,4 @@
+{{ define "snippet_location" }} {{ if and . .City }} {{ .City }}, {{
+.CountryCode }} {{ else }}
+<span class="italic">(unknown location)</span>
+{{ end }} {{ end }}

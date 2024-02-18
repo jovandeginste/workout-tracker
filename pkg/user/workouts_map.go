@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/codingsince1985/geo-golang"
+	"github.com/codingsince1985/geo-golang/openstreetmap"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
@@ -21,6 +23,7 @@ type MapData struct {
 	Name          string
 	Date          string
 	Center        MapCenter
+	Address       *geo.Address
 	TotalDistance float64
 	TotalDuration time.Duration
 	AverageSpeed  float64
@@ -43,7 +46,7 @@ type MapPoint struct {
 }
 
 // center returns the center point (lat, lng) of gpx points
-func center(gpxContent *gpx.GPX) (float64, float64) {
+func center(gpxContent *gpx.GPX) MapCenter {
 	lat, lng := 0.0, 0.0
 	points := allGPXPoints(gpxContent)
 
@@ -54,7 +57,21 @@ func center(gpxContent *gpx.GPX) (float64, float64) {
 
 	size := float64(len(points))
 
-	return lat / size, lng / size
+	return MapCenter{
+		Lat: lat / size,
+		Lng: lng / size,
+	}
+}
+
+func (m *MapCenter) Address() *geo.Address {
+	geocoder := openstreetmap.Geocoder()
+
+	address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)
+	if err != nil {
+		return nil
+	}
+
+	return address
 }
 
 // allGPXPoints returns the first track segment's points
@@ -81,7 +98,7 @@ func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 	points := allGPXPoints(gpxContent)
 
-	clat, clng := center(gpxContent)
+	mapCenter := center(gpxContent)
 
 	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
 	totalDuration := time.Duration(gpxContent.Tracks[0].Segments[0].Duration()) * time.Second
@@ -89,11 +106,9 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
 	data := MapData{
-		Name: gpxName(gpxContent),
-		Center: MapCenter{
-			Lat: clat,
-			Lng: clng,
-		},
+		Name:          gpxName(gpxContent),
+		Center:        mapCenter,
+		Address:       mapCenter.Address(),
 		TotalDistance: totalDistance / 1000.0,
 		TotalDuration: totalDuration,
 		AverageSpeed:  3.6 * totalDistance / totalDuration.Seconds(),

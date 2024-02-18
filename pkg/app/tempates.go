@@ -23,6 +23,9 @@ func viewTemplateFunctions() template.FuncMap {
 
 			return "question"
 		},
+		"FAIconClass": func(wType string) string {
+			return "solid"
+		},
 	}
 }
 

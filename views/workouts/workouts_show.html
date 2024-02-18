@@ -8,19 +8,12 @@
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
     {{ template "header" . }} {{ template "alerts" . }}
     <div class="content">
-      <div class="grid grid-cols-3">
-        <h2
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
-        >
-          {{ .workout.Name | html }}
-        </h2>
-        <div class="italic">{{ .workout.Type }}</div>
-        <div class="workout-date">
-          <span title="{{ .workout.Date | LocalDate }}">
-            {{ .workout.Date | RelativeDate }}
-          </span>
-        </div>
-      </div>
+      <h2
+        class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
+                    icon-{{ .workout.Type | FAIconName }}"
+      >
+        {{ .workout.Name | html }}
+      </h2>
       <div class="grid grid-cols-2 gap-4">
         <div
           id="map"
@@ -40,105 +33,100 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="inner-form">
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-regular icon-baseline icon-space-sm icon-outside icon-clock"
-                ></span>
-                Total duration
-              </div>
-              <div class="workout-info-value">
-                {{ .workout.Data.TotalDuration }}
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-road"
-                ></span>
-                Total distance
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.TotalDistance }} km
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-gauge"
-                ></span>
-                Average speed
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.AverageSpeed }} km/h
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-gauge-high"
-                ></span>
-                Max speed
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.MaxSpeed }} km/h
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-hourglass"
-                ></span>
-                Time pauzed
-              </div>
-              <div class="workout-info-value">
-                {{ .workout.Data.PauzeDuration }}
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-mountain"
-                ></span>
-                Min elevation
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.MinElevation }} m
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-mountain"
-                ></span>
-                Max elevation
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.MaxElevation }} m
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-chevron-up"
-                ></span>
-                Total up
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.TotalUp }} m
-              </div>
-            </div>
-            <div class="workout-info-row">
-              <div class="workout-info-label">
-                <span
-                  class="workout-info-icon icon-solid icon-baseline icon-space-sm icon-outside icon-chevron-down"
-                ></span>
-                Total down
-              </div>
-              <div class="workout-info-value">
-                {{ printf "%.2f" .workout.Data.TotalDown }} m
-              </div>
-            </div>
+            <table class="workout-info">
+              <tbody>
+                <tr>
+                  <td
+                    class="icon-regular icon-baseline icon-space-sm icon-before icon-calendar"
+                  ></td>
+                  <th>Date</th>
+                  <td>
+                    <span title="{{ .workout.Date | LocalDate }}">
+                      {{ .workout.Date | RelativeDate }}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-map-location-dot"
+                  ></td>
+                  <th>Location</th>
+                  <td>
+                    {{ template "snippet_location" .workout.Data.Address }}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
+                  ></td>
+                  <th>Type</th>
+                  <td>{{ .workout.Type }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-regular icon-baseline icon-before icon-space-sm icon-clock"
+                  ></td>
+                  <th>Total duration</th>
+                  <td>{{ .workout.Data.TotalDuration }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
+                  ></td>
+                  <th>Total distance</th>
+                  <td>{{ printf "%.2f" .workout.Data.TotalDistance }} km</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+                  ></td>
+                  <th>Average speed</th>
+                  <td>{{ printf "%.2f" .workout.Data.AverageSpeed }} km/h</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
+                  ></td>
+                  <th>Max speed</th>
+                  <td>{{ printf "%.2f" .workout.Data.MaxSpeed }} km/h</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-hourglass"
+                  ></td>
+                  <th>Time pauzed</th>
+                  <td>{{ .workout.Data.PauzeDuration }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+                  ></td>
+                  <th>Min elevation</th>
+                  <td>{{ printf "%.2f" .workout.Data.MinElevation }} m</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+                  ></td>
+                  <th>Max elevation</th>
+                  <td>{{ printf "%.2f" .workout.Data.MaxElevation }} m</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
+                  ></td>
+                  <th>Total up</th>
+                  <td>{{ printf "%.2f" .workout.Data.TotalUp }} m</td>
+                </tr>
+                <tr>
+                  <td
+                    class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
+                  ></td>
+                  <th>Total down</th>
+                  <td>{{ printf "%.2f" .workout.Data.TotalDown }} m</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

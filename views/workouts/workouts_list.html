@@ -18,6 +18,7 @@
             <th></th>
             <th>Name</th>
             <th>Date</th>
+            <th>Location</th>
             <th>Distance</th>
             <th>Duration</th>
             <th>Average speed</th>
@@ -29,7 +30,7 @@
           <tr>
             <td class="text-center">
               <div
-                class="icon-solid icon-baseline icon-space-sm icon-before
+                class="icon-{{ .Type | FAIconClass }} icon-baseline icon-space-sm icon-before
                     icon-{{ .Type | FAIconName }}"
               ></div>
             </td>
@@ -41,6 +42,7 @@
                 {{ .Date | RelativeDate }}
               </span>
             </td>
+            <td>{{ template "snippet_location" .Data.Address }}</td>
             <td>{{ printf "%.2f" .Data.TotalDistance }} km</td>
             <td>{{ .Data.TotalDuration }}</td>
             <td>{{ printf "%.2f" .Data.AverageSpeed }} km/h</td>
