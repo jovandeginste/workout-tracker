@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    {{ template "head" . }}
+    {{ template "head" }}
     <script src="/assets/leaflet.js"></script>
     <link href="/assets/leaflet.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20">
-    {{ template "header" . }} {{ template "alerts" . }}
+    {{ template "header" . }}
     <div class="content">
       <h2
         class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
@@ -132,6 +132,6 @@
       </div>
     </div>
 
-    {{ template "footer" . }}
+    {{ template "footer" }}
   </body>
 </html>
