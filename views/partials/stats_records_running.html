@@ -1,0 +1,58 @@
+{{ define "stats_records_running" }} {{ if .Active }}
+<h3>
+  <span
+    class="icon-baseline icon-before icon-{{ `running` | FAIconClass }} icon-{{ `running` | FAIconName }}"
+  ></span>
+  Running records
+</h3>
+<table class="workout-info">
+  <tbody>
+    {{ with .AverageSpeed }}
+    <tr>
+      <th>Average speed</th>
+      <td>{{ .Value | HumanSpeed }}</td>
+      <td>
+        <a href="/workouts/{{ .ID }}"> {{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
+    {{ end }} {{ with .MaxSpeed }}
+    <tr>
+      <th>Max speed</th>
+      <td>{{ .Value | HumanSpeed }}</td>
+      <td>
+        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
+    {{ end }} {{ with .Distance }}
+    <tr>
+      <th>Total distance</th>
+      <td>{{ .Value | HumanDistance }}</td>
+      <td>
+        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
+    {{ end }} {{ with .TotalUp }}
+    <tr>
+      <th>Total up</th>
+      <td>{{ .Value | HumanDistance }}</td>
+      <td>
+        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
+    {{ end }} {{ with .Duration }}
+    <tr>
+      <th>Total duration</th>
+      <td>{{ .Value }}</td>
+      <td>
+        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
+{{ end }} {{ end }}
