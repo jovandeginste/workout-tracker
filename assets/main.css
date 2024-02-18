@@ -2,28 +2,28 @@
 
 @layer base {
   body {
-    @apply bg-gray-300 dark:bg-neutral-900 dark:text-zinc-100 px-20;
+    @apply bg-neutral-900 text-zinc-100 px-20;
   }
 
   input {
-    @apply rounded-xl px-4 py-1 dark:bg-neutral-700;
+    @apply rounded-xl px-4 py-1 bg-neutral-700;
   }
 
   textarea {
-    @apply rounded-xl px-4 py-1 dark:bg-neutral-700;
+    @apply rounded-xl px-4 py-1 bg-neutral-700;
   }
 
   button[type="submit"] {
-    @apply bg-blue-500 hover:bg-blue-700 dark:bg-zinc-500 dark:hover:bg-zinc-400;
+    @apply bg-zinc-500 hover:bg-zinc-400;
     @apply font-bold rounded-xl px-4 py-1;
   }
 
   h1 {
-    @apply text-3xl dark:text-white;
+    @apply text-3xl text-white;
   }
   h2,
   h3 {
-    @apply text-2xl mb-5 dark:text-zinc-200;
+    @apply text-2xl mb-5 text-zinc-200;
   }
   a {
     @apply hover:text-amber-300;
@@ -54,7 +54,7 @@
 
   .footer,
   .menu {
-    @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300 items-baseline;
+    @apply rounded-xl my-2 px-6 py-3 bg-neutral-800 text-zinc-300 items-baseline;
   }
   .menu {
     @apply grid grid-cols-5 gap-4;
@@ -80,10 +80,10 @@
     }
   }
   .content {
-    @apply rounded-xl p-10 dark:bg-neutral-700;
+    @apply rounded-xl p-10 bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-5 dark:bg-neutral-800 mb-5;
+    @apply rounded-xl p-5 bg-neutral-800 mb-5;
   }
 
   .notice {
@@ -99,11 +99,11 @@
 
   table {
     @apply text-sm w-full text-left rtl:text-right table-auto;
-    @apply border dark:border-neutral-800;
+    @apply border border-neutral-800;
     thead {
       @apply uppercase;
       tr {
-        @apply border dark:border-neutral-800;
+        @apply border border-neutral-800;
       }
     }
     th {
@@ -111,7 +111,7 @@
     }
     tbody {
       tr {
-        @apply even:dark:bg-neutral-700 odd:dark:bg-neutral-800;
+        @apply even:bg-neutral-700 odd:bg-neutral-800;
         th {
           @apply whitespace-nowrap;
         }
@@ -120,7 +120,7 @@
   }
 
   .workout-info {
-    @apply dark:border-neutral-700;
+    @apply border-neutral-700;
 
     td {
       @apply px-2;
