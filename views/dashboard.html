@@ -11,6 +11,15 @@
       >
         Dashboard
       </h2>
+
+      <div class="grid grid-cols-3 gap-4">
+        {{ template "statistic_tile" (BuildDecoratedAttribute "dumbbell"
+        "workouts" .UserStatistics.Total.Workouts) }} {{ template
+        "statistic_tile" (BuildDecoratedAttribute "road" "distance"
+        (.UserStatistics.Total.Distance | HumanDistance) ) }} {{ template
+        "statistic_tile" (BuildDecoratedAttribute "clock" "duration"
+        .UserStatistics.Total.Duration) }}
+      </div>
     </div>
 
     {{ template "footer" }}

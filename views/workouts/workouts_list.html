@@ -43,10 +43,10 @@
               </span>
             </td>
             <td>{{ template "snippet_location" .Data.Address }}</td>
-            <td>{{ printf "%.2f" .Data.TotalDistance }} km</td>
+            <td>{{ .Data.TotalDistance | HumanDistance }}</td>
             <td>{{ .Data.TotalDuration }}</td>
-            <td>{{ printf "%.2f" .Data.AverageSpeed }} km/h</td>
-            <td>{{ printf "%.2f" .Data.MaxSpeed }} km/h</td>
+            <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
+            <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
           </tr>
           {{ end }}
         </tbody>

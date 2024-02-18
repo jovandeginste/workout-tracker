@@ -33,6 +33,9 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 
 func (a *App) dashboardHandler(c echo.Context) error {
 	data := a.defaultData(c)
+
+	data["UserStatistics"] = a.getUser(c).Statistics(a.db)
+
 	return c.Render(http.StatusOK, "dashboard.html", data)
 }
 

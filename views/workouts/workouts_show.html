@@ -74,21 +74,21 @@
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
                   ></td>
                   <th>Total distance</th>
-                  <td>{{ printf "%.2f" .workout.Data.TotalDistance }} km</td>
+                  <td>{{ .workout.Data.TotalDistance | HumanDistance }}</td>
                 </tr>
                 <tr>
                   <td
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                   ></td>
                   <th>Average speed</th>
-                  <td>{{ printf "%.2f" .workout.Data.AverageSpeed }} km/h</td>
+                  <td>{{ .workout.Data.AverageSpeed | HumanSpeed }}</td>
                 </tr>
                 <tr>
                   <td
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
                   ></td>
                   <th>Max speed</th>
-                  <td>{{ printf "%.2f" .workout.Data.MaxSpeed }} km/h</td>
+                  <td>{{ .workout.Data.MaxSpeed | HumanSpeed }}</td>
                 </tr>
                 <tr>
                   <td
@@ -102,28 +102,28 @@
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
                   ></td>
                   <th>Min elevation</th>
-                  <td>{{ printf "%.2f" .workout.Data.MinElevation }} m</td>
+                  <td>{{ .workout.Data.MinElevation | HumanDistance }}</td>
                 </tr>
                 <tr>
                   <td
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
                   ></td>
                   <th>Max elevation</th>
-                  <td>{{ printf "%.2f" .workout.Data.MaxElevation }} m</td>
+                  <td>{{ .workout.Data.MaxElevation | HumanDistance }}</td>
                 </tr>
                 <tr>
                   <td
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
                   ></td>
                   <th>Total up</th>
-                  <td>{{ printf "%.2f" .workout.Data.TotalUp }} m</td>
+                  <td>{{ .workout.Data.TotalUp | HumanDistance }}</td>
                 </tr>
                 <tr>
                   <td
                     class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
                   ></td>
                   <th>Total down</th>
-                  <td>{{ printf "%.2f" .workout.Data.TotalDown }} m</td>
+                  <td>{{ .workout.Data.TotalDown | HumanDistance }}</td>
                 </tr>
               </tbody>
             </table>

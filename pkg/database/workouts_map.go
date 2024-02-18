@@ -109,10 +109,10 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		Name:          gpxName(gpxContent),
 		Center:        mapCenter,
 		Address:       mapCenter.Address(),
-		TotalDistance: totalDistance / 1000.0,
+		TotalDistance: totalDistance,
 		TotalDuration: totalDuration,
-		AverageSpeed:  3.6 * totalDistance / totalDuration.Seconds(),
-		MaxSpeed:      3.6 * gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
+		AverageSpeed:  totalDistance / totalDuration.Seconds(),
+		MaxSpeed:      gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
 		PauzeDuration: time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second,
 		MinElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation,
 		MaxElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation,
@@ -139,7 +139,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 			pt.Timestamp.Format("15:04"), // HH:MM
 			dist/1000,
 			time.Duration(t)*time.Second,
-			3.6*speedMPS,
+			speedMPS,
 			pt.Elevation.Value(),
 		)
 

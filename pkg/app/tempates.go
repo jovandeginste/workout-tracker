@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -17,6 +18,17 @@ func viewTemplateFunctions() template.FuncMap {
 			return t.Local().Format("2006-01-02 15:04")
 		},
 		"RelativeDate": humanize.Time,
+		"HumanDistance": func(d float64) string {
+			value, prefix := humanize.ComputeSI(d)
+
+			return fmt.Sprintf("%.2f %sm", value, prefix)
+		},
+		"HumanSpeed": func(mps float64) string {
+			mph := mps * 3600
+			value, prefix := humanize.ComputeSI(mph)
+
+			return fmt.Sprintf("%.2f %sm/h", value, prefix)
+		},
 		"FAIconName": func(wType string) string {
 			if wType == "running" {
 				return "person-running"
@@ -26,6 +38,18 @@ func viewTemplateFunctions() template.FuncMap {
 		},
 		"FAIconClass": func(wType string) string {
 			return "solid"
+		},
+
+		"BuildDecoratedAttribute": func(icon, name string, value interface{}) interface{} {
+			return struct {
+				Icon  string
+				Name  string
+				Value interface{}
+			}{
+				Icon:  icon,
+				Name:  name,
+				Value: value,
+			}
 		},
 	}
 }
