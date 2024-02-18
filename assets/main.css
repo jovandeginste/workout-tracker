@@ -112,6 +112,7 @@
     tbody {
       tr {
         @apply even:bg-neutral-700 odd:bg-neutral-800;
+        @apply hover:bg-zinc-800;
         th {
           @apply whitespace-nowrap;
         }
