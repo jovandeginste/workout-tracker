@@ -95,7 +95,6 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup.GET("/", a.dashboardHandler)
 	secureGroup.GET("/workouts", a.workoutsHandler)
 	secureGroup.GET("/workouts/:id", a.workoutsShowHandler)
-	secureGroup.GET("/workouts/statistics", a.workoutsStatisticsHandler)
 	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
 	secureGroup.GET("/user/profile", a.userProfileHandler)
 	secureGroup.POST("/workouts/add", a.addWorkout)

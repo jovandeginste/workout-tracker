@@ -34,7 +34,8 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 func (a *App) dashboardHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
-	data["UserStatistics"] = a.getUser(c).Statistics(a.db)
+	a.addWorkouts(data, c)
+	a.addUserStatistics(data, c)
 
 	return c.Render(http.StatusOK, "dashboard.html", data)
 }
@@ -56,14 +57,6 @@ func (a *App) workoutsHandler(c echo.Context) error {
 func (a *App) workoutsAddHandler(c echo.Context) error {
 	data := a.defaultData(c)
 	return c.Render(http.StatusOK, "workouts_add.html", data)
-}
-
-func (a *App) workoutsStatisticsHandler(c echo.Context) error {
-	data := a.defaultData(c)
-
-	a.addWorkouts(data, c)
-
-	return c.Render(http.StatusOK, "workouts_statistics.html", data)
 }
 
 func (a *App) userProfileHandler(c echo.Context) error {

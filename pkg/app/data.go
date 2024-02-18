@@ -75,3 +75,7 @@ func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
 
 	data["workouts"] = w
 }
+
+func (a *App) addUserStatistics(data map[string]interface{}, c echo.Context) {
+	data["UserStatistics"] = a.getUser(c).Statistics(a.db)
+}

@@ -12,13 +12,115 @@
         Dashboard
       </h2>
 
-      <div class="grid grid-cols-3 gap-4">
-        {{ template "statistic_tile" (BuildDecoratedAttribute "dumbbell"
-        "workouts" .UserStatistics.Total.Workouts) }} {{ template
-        "statistic_tile" (BuildDecoratedAttribute "road" "distance"
-        (.UserStatistics.Total.Distance | HumanDistance) ) }} {{ template
-        "statistic_tile" (BuildDecoratedAttribute "clock" "duration"
-        .UserStatistics.Total.Duration) }}
+      <div class="grid grid-cols-4 gap-4">
+        {{ template "statistic_tile"
+        (BuildDecoratedAttribute "dumbbell" "workouts" .UserStatistics.Total.Workouts) }}
+
+        {{ template "statistic_tile"
+        (BuildDecoratedAttribute "road" "distance" (.UserStatistics.Total.Distance | HumanDistance)) }}
+
+        {{ template "statistic_tile"
+        (BuildDecoratedAttribute "mountain" "up" (.UserStatistics.Total.Up | HumanDistance)) }}
+
+        {{ template "statistic_tile"
+        (BuildDecoratedAttribute "clock" "duration" .UserStatistics.Total.Duration) }}
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="inner-form">
+          <h3>
+            <span class="
+                    icon-baseline icon-before
+                    icon-{{ "running" | FAIconClass }} icon-{{ "running" | FAIconName }}"
+                  ></span>
+          Running records</h3>
+          <table class="workout-info">
+            <tbody>
+              <tr>
+                <th>Average speed</th>
+                <td>
+                  {{ .UserStatistics.Records.AverageSpeed.Value | HumanSpeed }}
+                </td>
+                <td>
+                  <a
+                    href="/workouts/{{ .UserStatistics.Records.AverageSpeed.ID }}"
+                  >
+                    {{ .UserStatistics.Records.AverageSpeed.Date | LocalDate
+                    }}</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <th>Max speed</th>
+                <td>
+                  {{ .UserStatistics.Records.MaxSpeed.Value | HumanSpeed }}
+                </td>
+                <td>
+                  <a href="/workouts/{{ .UserStatistics.Records.MaxSpeed.ID }}"
+                    >{{ .UserStatistics.Records.MaxSpeed.Date | LocalDate }}</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <th>Total distance</th>
+                <td>
+                  {{ .UserStatistics.Records.Distance.Value | HumanDistance }}
+                </td>
+                <td>
+                  <a href="/workouts/{{ .UserStatistics.Records.Distance.ID }}"
+                    >{{ .UserStatistics.Records.Distance.Date | LocalDate }}</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <th>Total up</th>
+                <td>
+                  {{ .UserStatistics.Records.TotalUp.Value | HumanDistance }}
+                </td>
+                <td>
+                  <a href="/workouts/{{ .UserStatistics.Records.TotalUp.ID }}"
+                    >{{ .UserStatistics.Records.TotalUp.Date | LocalDate }}</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <th>Total duration</th>
+                <td>{{ .UserStatistics.Records.Duration.Value }}</td>
+                <td>
+                  <a href="/workouts/{{ .UserStatistics.Records.Duration.ID }}"
+                    >{{ .UserStatistics.Records.Duration.Date | LocalDate }}</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="inner-form" id="calendar"></div>
+        <script src="/assets/fullcalendar.min.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var calendarEl = document.getElementById("calendar");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              timeZone: "Belgium",
+              initialView: "dayGridMonth",
+              locale: "nl-BE",
+              firstDay: 1,
+              aspectRatio: 2,
+              events: [
+                {{ range $idx, $w := .workouts }}
+                {
+                  classNames: [
+                    "icon-baseline", "icon-before",
+                    "icon-{{ $w.Type | FAIconClass }}", "icon-{{ $w.Type | FAIconName }}"
+                  ],
+                  start: "{{ $w.Date | LocalDate }}",
+                  url: "/workouts/{{ $w.ID }}",
+                },
+                {{ end }}
+              ],
+            });
+            calendar.render();
+          });
+        </script>
       </div>
     </div>
 
