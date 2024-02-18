@@ -83,7 +83,7 @@
     @apply rounded-xl p-10 bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-5 bg-neutral-800 mb-5;
+    @apply rounded-xl p-5 bg-neutral-800 border border-neutral-800 hover:border-neutral-500 mb-5;
   }
 
   .notice {

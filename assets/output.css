@@ -670,9 +670,17 @@ form {
 .inner-form {
   margin-bottom: 1.25rem;
   border-radius: 0.75rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(38 38 38 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(38 38 38 / var(--tw-bg-opacity));
   padding: 1.25rem;
+}
+
+.inner-form:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
 }
 
 .notice {
@@ -929,6 +937,10 @@ table {
   visibility: collapse;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -949,8 +961,28 @@ table {
   inset-inline-end: 0.25rem;
 }
 
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 .block {
   display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
 }
 
 .table {
@@ -971,6 +1003,29 @@ table {
 
 .h-1 {
   height: 0.25rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-min {
+  width: -moz-min-content;
+  width: min-content;
+}
+
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .shrink {
@@ -1013,6 +1068,10 @@ table {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded-xl {
@@ -1059,6 +1118,10 @@ table {
   line-height: 1.25rem;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -1069,6 +1132,16 @@ table {
 
 .italic {
   font-style: italic;
+}
+
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgb(34 197 94 / var(--tw-text-opacity));
+}
+
+.text-orange-600 {
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1108,6 +1181,20 @@ table {
   transition-duration: 150ms;
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .icon-before::before {
   font-family: "Font Awesome 5 Free";
   vertical-align: middle;
@@ -1115,6 +1202,15 @@ table {
 
 .icon-before::after {
   content: "" !important;
+}
+
+.icon-after::before {
+  content: "" !important;
+}
+
+.icon-after::after {
+  font-family: "Font Awesome 5 Free";
+  vertical-align: middle;
 }
 
 .icon-outside::before {
@@ -1144,6 +1240,10 @@ table {
   margin-right: 0.25rem;
 }
 
+.icon-space-xs.icon-after::after {
+  margin-left: 0.25rem;
+}
+
 .icon-space-sm.icon-before::before {
   margin-right: 0.5rem;
 }
@@ -1156,20 +1256,40 @@ table {
   margin-right: 0.75rem;
 }
 
+.icon-space-md.icon-after::after {
+  margin-left: 0.75rem;
+}
+
 .icon-space-lg.icon-before::before {
   margin-right: 1rem;
+}
+
+.icon-space-lg.icon-after::after {
+  margin-left: 1rem;
 }
 
 .icon-space-xl.icon-before::before {
   margin-right: 1.25rem;
 }
 
+.icon-space-xl.icon-after::after {
+  margin-left: 1.25rem;
+}
+
 .icon-space-2xl.icon-before::before {
   margin-right: 1.5rem;
 }
 
+.icon-space-2xl.icon-after::after {
+  margin-left: 1.5rem;
+}
+
 .icon-space-3xl.icon-before::before {
   margin-right: 1.75rem;
+}
+
+.icon-space-3xl.icon-after::after {
+  margin-left: 1.75rem;
 }
 
 .icon-baseline::before {
@@ -1180,12 +1300,28 @@ table {
   vertical-align: baseline !important;
 }
 
+.icon-arrow-down-long::before {
+  content: "\f175";
+}
+
+.icon-arrow-down-long::after {
+  content: "\f175";
+}
+
 .icon-arrow-right-from-bracket::before {
   content: "\f08b";
 }
 
 .icon-arrow-right-from-bracket::after {
   content: "\f08b";
+}
+
+.icon-arrow-up-long::before {
+  content: "\f176";
+}
+
+.icon-arrow-up-long::after {
+  content: "\f176";
 }
 
 .icon-calendar::before {
@@ -1332,6 +1468,14 @@ table {
   content: "\e5ff";
 }
 
+.icon-quote-left::before {
+  content: "\f10d";
+}
+
+.icon-quote-left::after {
+  content: "\f10d";
+}
+
 .icon-right-to-bracket::before {
   content: "\f2f6";
 }
@@ -1354,6 +1498,11 @@ table {
 
 .icon-user-plus::after {
   content: "\f234";
+}
+
+.hover\:h-fit:hover {
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 @media (min-width: 640px) {

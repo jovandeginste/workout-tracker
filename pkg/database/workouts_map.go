@@ -27,6 +27,7 @@ type MapData struct {
 	TotalDistance float64
 	TotalDuration time.Duration
 	AverageSpeed  float64
+	AverageTempo  float64
 	MaxSpeed      float64
 	PauzeDuration time.Duration
 	MinElevation  float64
@@ -40,9 +41,13 @@ type MapCenter struct {
 	Lng float64
 }
 type MapPoint struct {
-	Lat   float64
-	Lng   float64
-	Title string
+	Lat           float64
+	Lng           float64
+	Distance      float64
+	TotalDistance float64
+	Duration      time.Duration
+	TotalDuration time.Duration
+	Title         string
 }
 
 // center returns the center point (lat, lng) of gpx points
@@ -120,33 +125,43 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		TotalDown:     updown.Downhill,
 	}
 
-	dist := 0.0
-	t := 0.0
+	totalDist := 0.0
+	totalTime := 0.0
 	prevPoint := points[0]
 	speedMPS := 0.0
 
 	for i, pt := range points {
+		dist := 0.0
+		t := 0.0
+
 		if i > 0 {
-			dist += distanceBetween(prevPoint, pt)
-			t += pt.TimeDiff(&prevPoint)
+			dist = distanceBetween(prevPoint, pt)
+			t = pt.TimeDiff(&prevPoint)
 			speedMPS = pt.SpeedBetween(&prevPoint, true)
 
 			prevPoint = pt
 		}
 
+		totalDist += dist
+		totalTime += t
+
 		title := fmt.Sprintf(
 			"<b>Time:</b> %s<br/><b>Distance:</b> %.2f km<br/><b>Duration:</b> %s<br/><b>Speed:</b> %.2f km/h<br /><b>Height:</b> %.2f m",
 			pt.Timestamp.Format("15:04"), // HH:MM
-			dist/1000,
-			time.Duration(t)*time.Second,
+			totalDist/1000,
+			time.Duration(totalTime)*time.Second,
 			speedMPS,
 			pt.Elevation.Value(),
 		)
 
 		data.Points = append(data.Points, MapPoint{
-			Lat:   pt.Point.Latitude,
-			Lng:   pt.Point.Longitude,
-			Title: title,
+			Lat:           pt.Point.Latitude,
+			Lng:           pt.Point.Longitude,
+			Distance:      dist,
+			TotalDistance: totalDist,
+			Duration:      time.Duration(t) * time.Second,
+			TotalDuration: time.Duration(totalTime) * time.Second,
+			Title:         title,
 		})
 	}
 

@@ -29,6 +29,12 @@ func viewTemplateFunctions() template.FuncMap {
 
 			return fmt.Sprintf("%.2f %sm/h", value, prefix)
 		},
+		"HumanTempo": func(mps float64) string {
+			mpk := 1000000 / (mps * 60)
+			value, prefix := humanize.ComputeSI(mpk)
+
+			return fmt.Sprintf("%.2f min/%sm", value, prefix)
+		},
 		"FAIconName": func(wType string) string {
 			if wType == "running" {
 				return "person-running"

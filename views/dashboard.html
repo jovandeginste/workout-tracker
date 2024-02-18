@@ -27,6 +27,7 @@
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="inner-form">
+          {{ if .UserStatistics.Records.Active }}
           <h3>
             <span class="
                     icon-baseline icon-before
@@ -93,6 +94,7 @@
               </tr>
             </tbody>
           </table>
+          {{ end }}
         </div>
         <div class="inner-form" id="calendar"></div>
         <script src="/assets/fullcalendar.min.js"></script>

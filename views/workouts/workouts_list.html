@@ -22,6 +22,7 @@
             <th>Distance</th>
             <th>Duration</th>
             <th>Average speed</th>
+            <th>Average tempo</th>
             <th>Max speed</th>
           </tr>
         </thead>
@@ -46,6 +47,7 @@
             <td>{{ .Data.TotalDistance | HumanDistance }}</td>
             <td>{{ .Data.TotalDuration }}</td>
             <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
+            <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
             <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
           </tr>
           {{ end }}

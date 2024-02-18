@@ -13,24 +13,6 @@ func (a *App) redirectWithError(c echo.Context, err error) error {
 	return c.Redirect(http.StatusMovedPermanently, "/")
 }
 
-func (a *App) workoutsShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
-
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	w, err := a.getUser(c).GetWorkout(a.db, id)
-	if err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	data["workout"] = w
-
-	return c.Render(http.StatusOK, "workouts_show.html", data)
-}
-
 func (a *App) dashboardHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
@@ -52,6 +34,25 @@ func (a *App) workoutsHandler(c echo.Context) error {
 	a.addWorkouts(data, c)
 
 	return c.Render(http.StatusOK, "workouts_list.html", data)
+}
+
+func (a *App) workoutsShowHandler(c echo.Context) error {
+	data := a.defaultData(c)
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, err)
+	}
+
+	w, err := a.getUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, err)
+	}
+
+	data["workout"] = w
+	data["workoutStatistics"] = w.StatisticsPerKilometer()
+
+	return c.Render(http.StatusOK, "workouts_show.html", data)
 }
 
 func (a *App) workoutsAddHandler(c echo.Context) error {

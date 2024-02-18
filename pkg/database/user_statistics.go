@@ -20,6 +20,7 @@ type UserStatistics struct {
 		Duration time.Duration
 	}
 	Records struct {
+		Active       bool
 		AverageSpeed record
 		MaxSpeed     record
 		Distance     record
@@ -51,6 +52,11 @@ func (u *User) Statistics(db *gorm.DB) *UserStatistics {
 	us.Total.Workouts = len(workouts)
 
 	for _, w := range workouts {
+		if w.Type != "running" {
+			continue
+		}
+
+		us.Records.Active = true
 		us.Total.Distance += w.Data.TotalDistance
 		us.Total.Duration += w.Data.TotalDuration
 		us.Total.Up += w.Data.TotalUp
