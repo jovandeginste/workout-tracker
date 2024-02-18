@@ -12,7 +12,7 @@
         Workouts
       </h2>
 
-      <table class="workouts-list table-auto gap-4">
+      <table class="workouts-list">
         <thead>
           <tr>
             <th>Name</th>
@@ -22,7 +22,7 @@
         <tbody>
           {{ range .workouts }}
           <tr>
-            <td><a href="/workouts/{{   .ID  }}">{{ .Name | html }}</a></td>
+            <th><a href="/workouts/{{   .ID  }}">{{ .Name | html }}</a></th>
             <td class="italic">({{ .Date | html }})</td>
           </tr>
           {{ end }}

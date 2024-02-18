@@ -31,19 +31,22 @@
 
   form {
     @apply my-5;
-  }
-  form .form-row {
-    @apply mb-2 grid grid-cols-3 gap-4;
-  }
-  form .form-row label {
-    @apply text-right py-1;
-    @apply font-bold after:content-[':'];
+    .form-row {
+      @apply mb-2 grid grid-cols-3 gap-4;
+      label {
+        @apply text-right py-1;
+        @apply font-bold after:content-[':'];
+      }
+
+      input {
+        @apply col-span-2;
+      }
+    }
   }
 
-  form .form-row input {
-    @apply col-span-2;
+  .footer {
+    @apply flex justify-center gap-10;
   }
-
   .footer a,
   .content a {
     @apply underline text-amber-100 hover:text-amber-300;
@@ -53,32 +56,28 @@
   .menu {
     @apply rounded-xl my-2 px-6 py-3 dark:bg-neutral-800 dark:text-zinc-300 items-baseline;
   }
-  .footer {
-    @apply flex justify-center gap-10;
-  }
   .menu {
     @apply grid grid-cols-5 gap-4;
-  }
-  .menu a {
-    @apply icon-solid icon-baseline icon-before;
-  }
-  .menu a::before {
-    @apply pr-2;
-  }
-  .menu h1,
-  .menu .user {
-    @apply col-span-1;
-  }
-  .menu .main {
-    @apply col-span-3;
-  }
-  .menu .main a,
-  .menu .user a {
-    @apply mt-5 mr-5;
-  }
-  .menu .main,
-  .menu .user {
-    @apply flex-wrap -mt-5 -mr-5;
+    a {
+      @apply icon-solid icon-baseline icon-before;
+    }
+    a::before {
+      @apply pr-2;
+    }
+    h1,
+    .user {
+      @apply col-span-1;
+    }
+    .main {
+      @apply col-span-3;
+    }
+    .main,
+    .user {
+      @apply flex-wrap -mt-5 -mr-5;
+      a {
+        @apply mt-5 mr-5;
+      }
+    }
   }
   .content {
     @apply rounded-xl p-10 dark:bg-neutral-700;
@@ -110,6 +109,28 @@
 
   .workout-info-input {
     @apply font-mono;
+  }
+
+  table {
+    @apply w-full text-left rtl:text-right;
+    @apply border dark:border-neutral-800;
+    thead {
+      @apply uppercase;
+      tr {
+        @apply border dark:border-neutral-800;
+      }
+    }
+    th {
+      @apply py-1;
+    }
+    tbody {
+      tr {
+        @apply even:dark:bg-neutral-700 odd:dark:bg-neutral-800;
+        th {
+          @apply whitespace-nowrap;
+        }
+      }
+    }
   }
 }
 
