@@ -49,7 +49,7 @@
   }
   .footer a,
   .content a {
-    @apply underline text-amber-100 hover:text-amber-300;
+    @apply text-amber-100 hover:text-amber-300;
   }
 
   .footer,
@@ -112,7 +112,7 @@
   }
 
   table {
-    @apply w-full text-left rtl:text-right;
+    @apply text-sm w-full text-left rtl:text-right table-auto;
     @apply border dark:border-neutral-800;
     thead {
       @apply uppercase;
@@ -121,7 +121,7 @@
       }
     }
     th {
-      @apply py-1;
+      @apply py-2;
     }
     tbody {
       tr {

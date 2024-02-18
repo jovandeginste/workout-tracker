@@ -15,7 +15,11 @@
           {{ .workout.Name | html }}
         </h2>
         <div class="italic">{{ .workout.Type }}</div>
-        <div class="workout-date">{{ .workout.Date }}</div>
+        <div class="workout-date">
+          <span title="{{ .workout.Date | LocalDate }}">
+            {{ .workout.Date | RelativeDate }}
+          </span>
+        </div>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div
@@ -25,10 +29,10 @@
         >
           <script>
             let points = [
-              {{ - range $idx, $pt := .workout.Data.Points  }}
-              {{  if $idx  }},{{  end - }}
-              { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng - }}, "title": {{  $pt.Title  }} }
-              {{ - end  }}
+              {{- range $idx, $pt := .workout.Data.Points }}
+              {{  if $idx  }},{{  end -}}
+              { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng -}}, "title": {{  $pt.Title  }} }
+              {{- end  }}
             ];
             let center = [{{  .workout.Data.Center.Lat  }}, {{  .workout.Data.Center.Lng  }}];
           </script>

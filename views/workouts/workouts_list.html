@@ -15,15 +15,36 @@
       <table class="workouts-list">
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Date</th>
+            <th>Distance</th>
+            <th>Duration</th>
+            <th>Average speed</th>
+            <th>Max speed</th>
           </tr>
         </thead>
         <tbody>
           {{ range .workouts }}
           <tr>
-            <th><a href="/workouts/{{   .ID  }}">{{ .Name | html }}</a></th>
-            <td class="italic">({{ .Date | html }})</td>
+            <td class="text-center">
+              <div
+                class="icon-solid icon-baseline icon-space-sm icon-before
+                    icon-{{ .FAIconName }}"
+              ></div>
+            </td>
+            <th>
+              <a href="/workouts/{{   .ID  }}">{{ .Name | html }}</a>
+            </th>
+            <td>
+              <span title="{{ .Date | LocalDate }}">
+                {{ .Date | RelativeDate }}
+              </span>
+            </td>
+            <td>{{ printf "%.2f" .Data.TotalDistance }} km</td>
+            <td>{{ .Data.TotalDuration }}</td>
+            <td>{{ printf "%.2f" .Data.AverageSpeed }} km/h</td>
+            <td>{{ printf "%.2f" .Data.MaxSpeed }} km/h</td>
           </tr>
           {{ end }}
         </tbody>

@@ -5,4 +5,9 @@ module.exports = {
     extend: {},
   },
   plugins: [require("tailwind-fontawesome")],
+  safelist: [
+    {
+      pattern: /icon-(person-running)/,
+    },
+  ],
 };

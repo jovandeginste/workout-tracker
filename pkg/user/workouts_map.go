@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dustin/go-humanize"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
@@ -20,7 +19,6 @@ func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
 
 type MapData struct {
 	Name          string
-	Type          string
 	Date          string
 	Center        MapCenter
 	TotalDistance float64
@@ -92,8 +90,6 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 
 	data := MapData{
 		Name: gpxName(gpxContent),
-		Type: "running",
-		Date: fmt.Sprintf("%s (%s)", gpxContent.Time.Local().Format("2006-01-02 15:04"), humanize.Time(*gpxContent.Time)),
 		Center: MapCenter{
 			Lat: clat,
 			Lng: clng,

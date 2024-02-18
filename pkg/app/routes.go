@@ -72,7 +72,7 @@ func (a *App) Configure() error {
 }
 
 func parseViewTemplates() *template.Template {
-	templ := template.New("views")
+	templ := template.New("views").Funcs(viewTemplateFunctions())
 
 	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
 		if strings.Contains(path, ".html") {
@@ -89,17 +89,6 @@ func parseViewTemplates() *template.Template {
 	}
 
 	return templ
-}
-
-func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		if err := a.setUser(ctx); err != nil {
-			log.Warn(err.Error())
-			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
-		}
-
-		return next(ctx)
-	}
 }
 
 func (a *App) addSecureRoutes(e *echo.Echo) {
