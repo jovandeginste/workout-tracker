@@ -13,27 +13,24 @@
       </h2>
 
       <div class="grid grid-cols-4 gap-4">
-        {{ template "statistic_tile"
-        (BuildDecoratedAttribute "dumbbell" "workouts" .UserStatistics.Total.Workouts) }}
-
-        {{ template "statistic_tile"
-        (BuildDecoratedAttribute "road" "distance" (.UserStatistics.Total.Distance | HumanDistance)) }}
-
-        {{ template "statistic_tile"
-        (BuildDecoratedAttribute "mountain" "up" (.UserStatistics.Total.Up | HumanDistance)) }}
-
-        {{ template "statistic_tile"
-        (BuildDecoratedAttribute "clock" "duration" .UserStatistics.Total.Duration) }}
+        {{ template "statistic_tile" (BuildDecoratedAttribute "dumbbell"
+        "workouts" .UserStatistics.Total.Workouts) }} {{ template
+        "statistic_tile" (BuildDecoratedAttribute "road" "distance"
+        (.UserStatistics.Total.Distance | HumanDistance)) }} {{ template
+        "statistic_tile" (BuildDecoratedAttribute "mountain" "up"
+        (.UserStatistics.Total.Up | HumanDistance)) }} {{ template
+        "statistic_tile" (BuildDecoratedAttribute "clock" "duration"
+        .UserStatistics.Total.Duration) }}
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="inner-form">
           {{ if .UserStatistics.Records.Active }}
           <h3>
-            <span class="
-                    icon-baseline icon-before
-                    icon-{{ "running" | FAIconClass }} icon-{{ "running" | FAIconName }}"
-                  ></span>
-          Running records</h3>
+            <span
+              class="icon-baseline icon-before icon-{{ `running` | FAIconClass }} icon-{{ `running` | FAIconName }}"
+            ></span>
+            Running records
+          </h3>
           <table class="workout-info">
             <tbody>
               <tr>
@@ -48,6 +45,8 @@
                     {{ .UserStatistics.Records.AverageSpeed.Date | LocalDate
                     }}</a
                   >
+                  ({{ .UserStatistics.Records.AverageSpeed.Date | RelativeDate
+                  }})
                 </td>
               </tr>
               <tr>
