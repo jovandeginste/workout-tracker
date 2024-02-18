@@ -15,7 +15,7 @@ import (
 func viewTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"LocalDate": func(t time.Time) string {
-			return t.Local().Format("2006-01-02 15:04")
+			return t.Local().Format("2006-01-02 15:04") //nolint:gosmopolitan
 		},
 		"RelativeDate": humanize.Time,
 		"HumanDistance": func(d float64) string {
@@ -42,7 +42,7 @@ func viewTemplateFunctions() template.FuncMap {
 
 			return "question"
 		},
-		"FAIconClass": func(wType string) string {
+		"FAIconClass": func(_ string) string {
 			return "solid"
 		},
 

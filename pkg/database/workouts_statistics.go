@@ -2,8 +2,6 @@ package database
 
 import (
 	"time"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 type StatisticsItem struct {
@@ -54,8 +52,6 @@ func (w *Workout) StatisticsPerKilometer() []StatisticsItem {
 	}
 
 	calculateBestAndWorst(items)
-
-	spew.Dump(items)
 
 	return items
 }

@@ -100,9 +100,7 @@ func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 	return gpx.HaversineDistance(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude)
 }
 
-func gpxAsMapData(gpxContent *gpx.GPX) MapData {
-	points := allGPXPoints(gpxContent)
-
+func createMapData(gpxContent *gpx.GPX) *MapData {
 	mapCenter := center(gpxContent)
 
 	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
@@ -110,7 +108,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 
 	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
-	data := MapData{
+	data := &MapData{
 		Name:          gpxName(gpxContent),
 		Center:        mapCenter,
 		Address:       mapCenter.Address(),
@@ -124,6 +122,13 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		TotalUp:       updown.Uphill,
 		TotalDown:     updown.Downhill,
 	}
+
+	return data
+}
+
+func gpxAsMapData(gpxContent *gpx.GPX) MapData {
+	data := createMapData(gpxContent)
+	points := allGPXPoints(gpxContent)
 
 	totalDist := 0.0
 	totalTime := 0.0
@@ -165,5 +170,5 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		})
 	}
 
-	return data
+	return *data
 }
