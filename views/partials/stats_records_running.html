@@ -16,6 +16,17 @@
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
+    {{ end }} {{ with .AverageSpeedNoPauze }}
+    <tr>
+      <th>
+        <span class="{{ IconFor `speed` }}">Average speed (no pauze)</span>
+      </th>
+      <td class="font-mono">{{ .Value | HumanSpeed }}</td>
+      <td>
+        <a href="{{ RouteFor `workout-show` .ID }}"> {{ .Date | LocalDate }}</a>
+        ({{ .Date | RelativeDate }})
+      </td>
+    </tr>
     {{ end }} {{ with .MaxSpeed }}
     <tr>
       <th>

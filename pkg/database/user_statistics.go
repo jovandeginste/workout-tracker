@@ -20,12 +20,13 @@ type UserStatistics struct {
 		Duration time.Duration
 	}
 	Records struct {
-		Active       bool
-		AverageSpeed record
-		MaxSpeed     record
-		Distance     record
-		TotalUp      record
-		Duration     struct {
+		Active              bool
+		AverageSpeed        record
+		AverageSpeedNoPauze record
+		MaxSpeed            record
+		Distance            record
+		TotalUp             record
+		Duration            struct {
 			Value time.Duration
 			Date  time.Time
 			ID    uint
@@ -60,6 +61,12 @@ func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 		us.Total.Distance += w.Data.TotalDistance
 		us.Total.Duration += w.Data.TotalDuration
 		us.Total.Up += w.Data.TotalUp
+
+		us.Records.AverageSpeedNoPauze.CheckAndSwap(
+			w.Data.AverageSpeedNoPauze,
+			w.ID,
+			w.Date,
+		)
 
 		us.Records.AverageSpeed.CheckAndSwap(
 			w.Data.AverageSpeed,

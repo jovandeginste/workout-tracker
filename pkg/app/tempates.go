@@ -12,8 +12,9 @@ import (
 
 func (a *App) viewTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
+		"NumericDuration":         templatehelpers.NumericDuration,
+		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
 		"LocalDate":               templatehelpers.LocalDate,
-		"RelativeDate":            humanize.Time,
 		"HumanDistance":           templatehelpers.HumanDistance,
 		"HumanSpeed":              templatehelpers.HumanSpeed,
 		"HumanTempo":              templatehelpers.HumanTempo,
@@ -21,6 +22,8 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BoolToHTML":              templatehelpers.BoolToHTML,
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
+
+		"RelativeDate": humanize.Time,
 
 		"RouteFor": func(name string, params ...interface{}) string {
 			rev := a.echo.Reverse(name, params...)

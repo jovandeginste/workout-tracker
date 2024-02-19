@@ -6,7 +6,16 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize"
+	emojiflag "github.com/jayco/go-emoji-flag"
 )
+
+func NumericDuration(d time.Duration) float64 {
+	return d.Seconds()
+}
+
+func CountryCodeToFlag(cc string) string {
+	return emojiflag.GetFlag(cc)
+}
 
 func LocalDate(t time.Time) string {
 	return t.Local().Format("2006-01-02 15:04") //nolint:gosmopolitan

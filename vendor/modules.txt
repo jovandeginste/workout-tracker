@@ -28,6 +28,9 @@ github.com/golang-jwt/jwt/v5
 # github.com/google/uuid v1.3.0
 ## explicit
 github.com/google/uuid
+# github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
+## explicit; go 1.12
+github.com/jayco/go-emoji-flag
 # github.com/jinzhu/inflection v1.0.0
 ## explicit
 github.com/jinzhu/inflection

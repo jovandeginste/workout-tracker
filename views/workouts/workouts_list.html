@@ -2,13 +2,14 @@
 <html>
   <head>
     {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/sorttable.js"></script>
   </head>
   <body>
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `workout` }}">Workouts ({{ len .workouts }})</h2>
 
-      <table class="workout-info">
+      <table class="workout-info sortable">
         <thead>
           <tr>
             <th></th>
@@ -32,17 +33,29 @@
             <td>
               <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name | html }}</a>
             </td>
-            <td>
+            <td sorttable_customkey="{{ .Date }}">
               <span title="{{ .Date | LocalDate }}">
                 {{ .Date | RelativeDate }}
               </span>
             </td>
             <td>{{ template "snippet_location" .Data.Address }}</td>
-            <td>{{ .Data.TotalDistance | HumanDistance }}</td>
-            <td>{{ .Data.TotalDuration }}</td>
-            <td>{{ .Data.AverageSpeedNoPauze | HumanSpeed }}</td>
-            <td>{{ .Data.AverageSpeedNoPauze | HumanTempo }}</td>
-            <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
+            <td sorttable_customkey="{{ .Data.TotalDistance }}">
+              {{ .Data.TotalDistance | HumanDistance }}
+            </td>
+            <td
+              sorttable_customkey="{{ .Data.TotalDuration | NumericDuration }}"
+            >
+              {{ .Data.TotalDuration }}
+            </td>
+            <td sorttable_customkey="{{ .Data.AverageSpeedNoPauze }}">
+              {{ .Data.AverageSpeedNoPauze | HumanSpeed }}
+            </td>
+            <td sorttable_customkey="{{ .Data.AverageSpeedNoPauze }}">
+              {{ .Data.AverageSpeedNoPauze | HumanTempo }}
+            </td>
+            <td sorttable_customkey="{{ .Data.MaxSpeed }}">
+              {{ .Data.MaxSpeed | HumanSpeed }}
+            </td>
             <td>
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>
