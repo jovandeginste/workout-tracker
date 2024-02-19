@@ -4,22 +4,40 @@ import (
 	"errors"
 	"io/fs"
 	"log/slog"
+	"os"
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/jovandeginste/workouts/pkg/database"
+	"github.com/jovandeginste/workouts/pkg/util"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
 
 type App struct {
-	Version        string
+	Version string
+	Config  Config
+	Assets  fs.FS
+	Views   fs.FS
+
 	echo           *echo.Echo
 	log            *slog.Logger
 	db             *gorm.DB
-	Assets         fs.FS
-	Views          fs.FS
 	sessionManager *scs.SessionManager
-	jwtSecret      []byte
+}
+
+func (a *App) jwtSecret() []byte {
+	if a.Config.JWTEncryptionKey == "" {
+		a.log.Error("JWTEncryptionKey is not set; generating a random string at startup")
+
+		s, err := util.GenerateRandomString(32)
+		if err != nil {
+			panic(err)
+		}
+
+		a.Config.JWTEncryptionKey = s
+	}
+
+	return []byte(a.Config.JWTEncryptionKey)
 }
 
 func (a *App) Connect() error {
@@ -42,11 +60,12 @@ func (a *App) Connect() error {
 	return a.createAdminUser()
 }
 
-func NewApp(l *slog.Logger) *App {
-	return &App{
-		log:       l,
-		jwtSecret: []byte("secret"), // TODO: change to configuration
+func NewApp() *App {
+	a := &App{
+		log: slog.New(slog.NewTextHandler(os.Stdout, nil)),
 	}
+
+	return a
 }
 
 func (a *App) createAdminUser() error {

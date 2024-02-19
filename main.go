@@ -2,8 +2,6 @@ package main
 
 import (
 	"embed"
-	"log/slog"
-	"os"
 
 	"github.com/jovandeginste/workouts/pkg/app"
 	"github.com/labstack/echo/v4"
@@ -22,9 +20,7 @@ var (
 )
 
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-
-	a := app.NewApp(logger)
+	a := app.NewApp()
 	a.Assets = AssetsFS
 	a.Views = ViewsFS
 	a.Version = version

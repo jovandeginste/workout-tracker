@@ -25,7 +25,7 @@ func (a *App) createToken(u *database.User, c echo.Context) error {
 	claims["name"] = u.Username
 	claims["exp"] = exp.Unix()
 
-	t, err := token.SignedString(a.jwtSecret)
+	t, err := token.SignedString(a.jwtSecret())
 	if err != nil {
 		return err
 	}

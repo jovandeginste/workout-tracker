@@ -35,8 +35,13 @@ func newEcho() *echo.Echo {
 }
 
 func (a *App) Configure() error {
-	err := a.Connect()
-	if err != nil {
+	var err error
+
+	if err = a.ReadConfiguration(); err != nil {
+		return err
+	}
+
+	if err = a.Connect(); err != nil {
 		return err
 	}
 
@@ -110,7 +115,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	secureGroup := e.Group("")
 
 	secureGroup.Use(echojwt.WithConfig(echojwt.Config{
-		SigningKey:  a.jwtSecret,
+		SigningKey:  a.jwtSecret(),
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
