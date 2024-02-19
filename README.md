@@ -68,6 +68,18 @@ cookies and JWT tokens). The storage is a single SQLite database.
   - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
 - Docker
 
+## Configuration
+
+The web server looks for a file `workout-tracker.yaml` (or `json` or `toml`) in the current directory, or takes it's
+configuration from environment variables. The only important variable is the JWT encryption key. If you don't provide
+it, the key is randomly generated every time the server starts, invalidating all current sessions.
+
+Generate a secure key and write it to `workout-tracker.yaml`:
+
+```bash
+echo "jwt_encryption_key: $(pwgen -c 32)" > workout-tracker.yaml
+```
+
 ## Build and run it yourself
 
 - install go
