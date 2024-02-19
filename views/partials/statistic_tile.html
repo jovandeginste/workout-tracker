@@ -1,9 +1,7 @@
 {{ define "statistic_tile" }}
 <div class="inner-form grid grid-cols-2 gap-4 overflow-hidden">
   <div class="text-5xl text-center">
-    <span
-      class="icon-solid icon-baseline icon-space-sm icon-before icon-{{ .Icon }}"
-    ></span>
+    <span class="{{ IconFor .Icon }}"></span>
   </div>
   <div class="grid grid-cols-1">
     <div class="text-3xl text-right">{{ .Value }}</div>

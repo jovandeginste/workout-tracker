@@ -1,7 +1,38 @@
 {{ define "workout_item" }}
-<a
-  class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
-  href="{{ RouteFor `workout-show` .ID }}"
-  >{{ .User.Username | html }}</a
->
+<div class="w-1/4 p-1">
+  <div
+    class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
+  >
+    <div min-w-40>
+      <a class="{{ IconFor .Type }}" href="{{ RouteFor `workout-show` .ID }}"
+        >{{ .Name | html }}</a
+      >
+    </div>
+    <div class="grid grid-cols-2 gap-4 text-sm text-neutral-400 mb-2">
+      <div>
+        <span title="{{ .Date | LocalDate }}">
+          {{ .Date | RelativeDate }}
+        </span>
+      </div>
+      <div>{{ template "snippet_location" .Data.Address }}</div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <div class="workout-tile-info {{ IconFor `distance` }}">
+        {{ .Data.TotalDistance | HumanDistance }}
+      </div>
+      <div class="workout-tile-info {{ IconFor `duration` }}">
+        {{ .Data.TotalDuration }}
+      </div>
+      <div class="workout-tile-info {{ IconFor `speed` }}">
+        {{ .Data.AverageSpeedNoPauze | HumanSpeed }}
+      </div>
+      <div class="workout-tile-info {{ IconFor `tempo` }}">
+        {{ .Data.AverageSpeedNoPauze | HumanTempo }}
+      </div>
+      <div class="workout-tile-info {{ IconFor `max-speed` }}">
+        {{ .Data.MaxSpeed | HumanSpeed }}
+      </div>
+    </div>
+  </div>
+</div>
 {{ end }}

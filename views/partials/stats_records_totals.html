@@ -1,9 +1,10 @@
 {{ define "stats_records_total" }}
 <div class="grid grid-cols-4 gap-4">
-  {{ template "statistic_tile" (BuildDecoratedAttribute "dumbbell" "workouts"
-  .Workouts) }} {{ template "statistic_tile" (BuildDecoratedAttribute "road"
+  {{ template "statistic_tile" (BuildDecoratedAttribute "workout" "workouts"
+  .Workouts) }} {{ template "statistic_tile" (BuildDecoratedAttribute "distance"
   "distance" (.Distance | HumanDistance)) }} {{ template "statistic_tile"
-  (BuildDecoratedAttribute "mountain" "up" (.Up | HumanDistance)) }} {{ template
-  "statistic_tile" (BuildDecoratedAttribute "clock" "duration" .Duration) }}
+  (BuildDecoratedAttribute "elevation" "up" (.Up | HumanDistance)) }} {{
+  template "statistic_tile" (BuildDecoratedAttribute "duration" "duration"
+  .Duration) }}
 </div>
 {{ end }}

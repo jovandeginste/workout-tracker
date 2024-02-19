@@ -16,12 +16,7 @@
         </span>
         {{ end }}
 
-        <h2
-          class="icon-{{ .Type | FAIconClass }} icon-baseline icon-space-sm icon-before
-                    icon-{{ .Type | FAIconName }}"
-        >
-          {{ .Name | html }}
-        </h2>
+        <h2 class="{{ IconFor .Type }}">{{ .Name | html }}</h2>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div
@@ -44,9 +39,7 @@
           {{ if .Notes }}
           <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
             <div class="flex">
-              <div
-                class="font-bold rounded-xl icon-solid icon-baseline icon-space-sm icon-before icon-quote-left"
-              ></div>
+              <div class="font-bold rounded-xl {{ IconFor `note` }}"></div>
               {{ .Notes }}
             </div>
           </div>
@@ -56,9 +49,7 @@
               <table class="workout-info">
                 <tbody>
                   <tr>
-                    <td
-                      class="icon-regular icon-baseline icon-space-sm icon-before icon-calendar"
-                    ></td>
+                    <td class="{{ IconFor `date` }}"></td>
                     <th>Date</th>
                     <td>
                       <span title="{{ .Date | LocalDate }}">
@@ -67,100 +58,72 @@
                     </td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-map-location-dot"
-                    ></td>
+                    <td class="{{ IconFor `location` }}"></td>
                     <th>Location</th>
                     <td>{{ template "snippet_location" .Data.Address }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
-                    ></td>
+                    <td class="{{ IconFor `workout` }}"></td>
                     <th>Type</th>
                     <td>{{ .Type }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-regular icon-baseline icon-before icon-space-sm icon-clock"
-                    ></td>
+                    <td class="{{ IconFor `duration` }}"></td>
                     <th>Total duration</th>
                     <td>{{ .Data.TotalDuration }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
-                    ></td>
+                    <td class="{{ IconFor `distance` }}"></td>
                     <th>Total distance</th>
                     <td>{{ .Data.TotalDistance | HumanDistance }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
-                    ></td>
+                    <td class="{{ IconFor `speed` }}"></td>
                     <th>Average speed</th>
                     <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
-                    ></td>
+                    <td class="{{ IconFor `speed` }}"></td>
                     <th>Average speed (no pauze)</th>
                     <td>{{ .Data.AverageSpeedNoPauze | HumanSpeed }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
-                    ></td>
+                    <td class="{{ IconFor `tempo` }}"></td>
                     <th>Average tempo</th>
                     <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
-                    ></td>
+                    <td class="{{ IconFor `tempo` }}"></td>
                     <th>Average tempo (no pauze)</th>
                     <td>{{ .Data.AverageSpeedNoPauze | HumanTempo }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
-                    ></td>
+                    <td class="{{ IconFor `max-speed` }}"></td>
                     <th>Max speed</th>
                     <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-hourglass"
-                    ></td>
+                    <td class="{{ IconFor `pauze` }}"></td>
                     <th>Time pauzed</th>
                     <td>{{ .Data.PauzeDuration }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
-                    ></td>
+                    <td class="{{ IconFor `elevation` }}"></td>
                     <th>Min elevation</th>
                     <td>{{ .Data.MinElevation | HumanDistance }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
-                    ></td>
+                    <td class="{{ IconFor `elevation` }}"></td>
                     <th>Max elevation</th>
                     <td>{{ .Data.MaxElevation | HumanDistance }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
-                    ></td>
+                    <td class="{{ IconFor `up` }}"></td>
                     <th>Total up</th>
                     <td>{{ .Data.TotalUp | HumanDistance }}</td>
                   </tr>
                   <tr>
-                    <td
-                      class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
-                    ></td>
+                    <td class="{{ IconFor `down` }}"></td>
                     <th>Total down</th>
                     <td>{{ .Data.TotalDown | HumanDistance }}</td>
                   </tr>
@@ -183,13 +146,9 @@
                   <tr>
                     <td>
                       {{ if .IsWorst }}
-                      <span
-                        class="icon-baseline icon-space-sm text-orange-600 icon-solid icon-after icon-arrow-down-long"
-                      ></span
+                      <span class="text-orange-600 {{ IconFor `worst` }}"></span
                       >{{ end }} {{ if .IsBest }}
-                      <span
-                        class="icon-baseline icon-space-sm text-green-500 icon-solid icon-after icon-arrow-up-long"
-                      ></span
+                      <span class="text-green-500 {{ IconFor `best` }}"></span
                       >{{ end }}
                     </td>
                     <td class="text-center">{{ .Kilometer }}</td>

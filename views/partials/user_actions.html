@@ -1,12 +1,12 @@
 {{ define "user_actions" }}
 <form action="{{ RouteFor `admin-user-edit` .ID }}" method="get">
   <button class="edit">
-    <a class="icon-pen-to-square"></a>
+    <a class="{{ IconFor `edit` }}"></a>
   </button>
 </form>
 <form onsubmit="return false">
   <button onclick="openModal('modalConfirmDelete_{{ .ID }}')" class="dangerous">
-    <a class="icon-trash"></a>
+    <a class="{{ IconFor `delete` }}"></a>
   </button>
 </form>
 
@@ -18,7 +18,7 @@
         type="button"
         class="close-modal"
       >
-        <a class="icon-xmark"></a>
+        <a class="{{ IconFor `close` }}"></a>
       </button>
     </div>
 

@@ -16,11 +16,7 @@
         </div>
         <div>
           <div class="inner-form">
-            <h3
-              class="icon-solid icon-baseline icon-space-sm icon-before icon-right-to-bracket"
-            >
-              Sign In
-            </h3>
+            <h3 class="{{ IconFor `user-signin` }}">Sign In</h3>
             <form method="post" action="{{ RouteFor `user-signin` }}">
               <div class="form-row">
                 <label for="username">Username</label>
@@ -47,11 +43,7 @@
           </div>
 
           <div class="inner-form">
-            <h3
-              class="icon-solid icon-baseline icon-space-sm icon-before icon-user-plus"
-            >
-              Create a new account
-            </h3>
+            <h3 class="{{ IconFor `user-register` }}">Create a new account</h3>
             <form method="post" action="{{ RouteFor `user-register` }}">
               <div class="form-row">
                 <label for="username">Username</label>

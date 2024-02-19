@@ -3,24 +3,26 @@
   <h1><a href="{{ RouteFor `dashboard` }}">Workout Tracker</a></h1>
   <div class="main">
     {{ if .currentUser }}
-    <a class="icon-chart-line" href="{{ RouteFor `dashboard` }}">Dashboard</a>
-    <a class="icon-dumbbell" href="{{ RouteFor `workouts` }}">Workouts</a>
-    <a class="icon-circle-plus" href="{{ RouteFor `workout-add` }}"
+    <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
+      >Dashboard</a
+    >
+    <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
+      >Workouts</a
+    >
+    <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
       >Add workout</a
     >
     {{ end }}
   </div>
   <div class="user">
     {{ with .currentUser }}
-    <a class="icon-regular icon-user-circle" href="{{ RouteFor `user-profile`}}"
+    <a class="{{ IconFor `user-profile` }}" href="{{ RouteFor `user-profile`}}"
       >{{ .Username | html }}</a
     >
     {{ if .Admin }}
-    <a class="icon-gear" href="{{ RouteFor `admin` }}">Manage</a>
+    <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}">Manage</a>
     {{ end }}
-    <a
-      class="icon-arrow-right-from-bracket"
-      href="{{ RouteFor `user-signout` }}"
+    <a class="{{ IconFor `user-signout` }}" href="{{ RouteFor `user-signout` }}"
       >Logout</a
     >
     {{ end }}

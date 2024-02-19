@@ -588,46 +588,6 @@ form {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
   a::before {
-    font-family: "Font Awesome 5 Free";
-    vertical-align: middle;
-  }
-  a::after {
-    content: "";
-  }
-  a::before,a::after {
-    font-weight: 900;
-  }
-  a::before,a::after {
-    font-weight: 900;
-  }
-  a.icon-space-xs::before {
-    margin-right: 0.25rem;
-  }
-  a.icon-space-sm::before {
-    margin-right: 0.5rem;
-  }
-  a.icon-space-md::before {
-    margin-right: 0.75rem;
-  }
-  a.icon-space-lg::before {
-    margin-right: 1rem;
-  }
-  a.icon-space-xl::before {
-    margin-right: 1.25rem;
-  }
-  a.icon-space-2xl::before {
-    margin-right: 1.5rem;
-  }
-  a.icon-space-3xl::before {
-    margin-right: 1.75rem;
-  }
-  a::before {
-    vertical-align: baseline;
-  }
-  a::after {
-    vertical-align: baseline;
-  }
-  a::before {
     padding-right: 0.5rem;
   }
   h1,
@@ -748,45 +708,8 @@ form {
         --tw-text-opacity: 1;
         color: rgb(255 255 255 / var(--tw-text-opacity));
       }
-      a::before {
-        font-family: "Font Awesome 5 Free";
-        vertical-align: middle;
-      }
-      a::after {
-        content: "";
-      }
-      a::before,a::after {
-        font-weight: 900;
-      }
-      a::before,a::after {
-        font-weight: 900;
-      }
-      a.icon-space-xs::before {
-        margin-right: 0.25rem;
-      }
-      a.icon-space-sm::before {
-        margin-right: 0.5rem;
-      }
-      a.icon-space-md::before {
-        margin-right: 0.75rem;
-      }
-      a.icon-space-lg::before {
-        margin-right: 1rem;
-      }
-      a.icon-space-xl::before {
-        margin-right: 1.25rem;
-      }
-      a.icon-space-2xl::before {
-        margin-right: 1.5rem;
-      }
-      a.icon-space-3xl::before {
-        margin-right: 1.75rem;
-      }
-      a::before {
-        vertical-align: baseline;
-      }
-      a::after {
-        vertical-align: baseline;
+      a {
+        text-align: center;
       }
     }
   }
@@ -919,6 +842,17 @@ table {
   }
 }
 
+.workout-tile-info {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .modal {
   position: fixed;
   inset: 0px;
@@ -991,46 +925,6 @@ table {
       a:hover {
         --tw-text-opacity: 1;
         color: rgb(17 24 39 / var(--tw-text-opacity));
-      }
-      a::before {
-        font-family: "Font Awesome 5 Free";
-        vertical-align: middle;
-      }
-      a::after {
-        content: "";
-      }
-      a::before,a::after {
-        font-weight: 900;
-      }
-      a::before,a::after {
-        font-weight: 900;
-      }
-      a.icon-space-xs::before {
-        margin-right: 0.25rem;
-      }
-      a.icon-space-sm::before {
-        margin-right: 0.5rem;
-      }
-      a.icon-space-md::before {
-        margin-right: 0.75rem;
-      }
-      a.icon-space-lg::before {
-        margin-right: 1rem;
-      }
-      a.icon-space-xl::before {
-        margin-right: 1.25rem;
-      }
-      a.icon-space-2xl::before {
-        margin-right: 1.5rem;
-      }
-      a.icon-space-3xl::before {
-        margin-right: 1.75rem;
-      }
-      a::before {
-        vertical-align: baseline;
-      }
-      a::after {
-        vertical-align: baseline;
       }
     }
     .modal-content {
@@ -1348,6 +1242,10 @@ table {
   float: right;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1378,6 +1276,14 @@ table {
 
 .h-16 {
   height: 4rem;
+}
+
+.w-1\/4 {
+  width: 25%;
+}
+
+.min-w-40 {
+  min-width: 10rem;
 }
 
 .shrink {
@@ -1430,6 +1336,10 @@ table {
   justify-content: flex-end;
 }
 
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -1475,6 +1385,10 @@ table {
 .bg-neutral-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .p-2 {
@@ -1769,15 +1683,6 @@ table {
   content: "" !important;
 }
 
-.icon-after::before {
-  content: "" !important;
-}
-
-.icon-after::after {
-  font-family: "Font Awesome 5 Free";
-  vertical-align: middle;
-}
-
 .icon-outside::before {
   font-family: "Font Awesome 5 Free";
   vertical-align: middle;
@@ -1805,10 +1710,6 @@ table {
   margin-right: 0.25rem;
 }
 
-.icon-space-xs.icon-after::after {
-  margin-left: 0.25rem;
-}
-
 .icon-space-sm.icon-before::before {
   margin-right: 0.5rem;
 }
@@ -1821,40 +1722,20 @@ table {
   margin-right: 0.75rem;
 }
 
-.icon-space-md.icon-after::after {
-  margin-left: 0.75rem;
-}
-
 .icon-space-lg.icon-before::before {
   margin-right: 1rem;
-}
-
-.icon-space-lg.icon-after::after {
-  margin-left: 1rem;
 }
 
 .icon-space-xl.icon-before::before {
   margin-right: 1.25rem;
 }
 
-.icon-space-xl.icon-after::after {
-  margin-left: 1.25rem;
-}
-
 .icon-space-2xl.icon-before::before {
   margin-right: 1.5rem;
 }
 
-.icon-space-2xl.icon-after::after {
-  margin-left: 1.5rem;
-}
-
 .icon-space-3xl.icon-before::before {
   margin-right: 1.75rem;
-}
-
-.icon-space-3xl.icon-after::after {
-  margin-left: 1.75rem;
 }
 
 .icon-baseline::before {
@@ -1871,14 +1752,6 @@ table {
 
 .icon-arrow-down-long::after {
   content: "\f175";
-}
-
-.icon-arrow-right-from-bracket::before {
-  content: "\f08b";
-}
-
-.icon-arrow-right-from-bracket::after {
-  content: "\f08b";
 }
 
 .icon-arrow-up-long::before {
@@ -2049,12 +1922,28 @@ table {
   content: "\e5ff";
 }
 
+.icon-question::before {
+  content: "\3f";
+}
+
+.icon-question::after {
+  content: "\3f";
+}
+
 .icon-quote-left::before {
   content: "\f10d";
 }
 
 .icon-quote-left::after {
   content: "\f10d";
+}
+
+.icon-right-from-bracket::before {
+  content: "\f2f5";
+}
+
+.icon-right-from-bracket::after {
+  content: "\f2f5";
 }
 
 .icon-right-to-bracket::before {
@@ -2071,6 +1960,14 @@ table {
 
 .icon-road::after {
   content: "\f018";
+}
+
+.icon-stopwatch::before {
+  content: "\f2f2";
+}
+
+.icon-stopwatch::after {
+  content: "\f2f2";
 }
 
 .icon-trash::before {

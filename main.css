@@ -58,9 +58,6 @@
   }
   .menu {
     @apply grid grid-cols-5 gap-4;
-    a {
-      @apply icon-solid icon-baseline icon-before;
-    }
     a::before {
       @apply pr-2;
     }
@@ -96,7 +93,7 @@
         @apply hover:bg-green-500 bg-green-700 transition;
         a {
           @apply text-white hover:text-white;
-          @apply icon-solid icon-baseline icon-before;
+          @apply text-center;
         }
       }
     }
@@ -157,6 +154,10 @@
     }
   }
 
+  .workout-tile-info {
+    @apply border rounded-lg py-1 px-2 text-sm;
+  }
+
   .modal {
     @apply hidden fixed inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 z-[3000];
     .window {
@@ -165,7 +166,6 @@
       button.close-modal {
         a {
           @apply text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center;
-          @apply icon-solid icon-baseline icon-before;
         }
       }
 

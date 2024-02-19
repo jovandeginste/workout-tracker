@@ -6,9 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-chart-line"
-      >
+      <h2 class="{{ IconFor `dashboard` }}">
         Dashboard for {{ .user.Username | html }}
       </h2>
 
@@ -38,22 +36,20 @@
 
                 eventSpan.innerHTML = arg.event.title
                 eventSpan.classList.add(
-                  "px-2", "icon-baseline", "icon-before", "icon-space-sm", "overflow-hidden",
-                  arg.event.extendedProps.iconClass, arg.event.extendedProps.iconName
+                  "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
                 )
 
                 return { domNodes: [ eventSpan ] }
               },
               events: [
-                {{ range $idx, $w := .workouts }}
+                {{ range .workouts }}
                 {
-                  title: "{{ $w.Type }}",
-                  start: "{{ $w.Date | LocalDate }}",
-                  url: "/workouts/{{ $w.ID }}",
+                  title: "{{ .Type }}",
+                  start: "{{ .Date | LocalDate }}",
+                  url: "/workouts/{{ .ID }}",
                   display: 'block',
                   extendedProps: {
-                    iconClass: "icon-{{ $w.Type | FAIconClass }}",
-                    iconName: "icon-{{ $w.Type | FAIconName }}",
+                    iconClass: "{{ IconFor .Type }}",
                   },
                 },
                 {{ end }}
@@ -64,11 +60,7 @@
         </script>
       </div>
       <div class="inner-form">
-        <h3
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-users"
-        >
-          Other users
-        </h3>
+        <h3 class="{{ IconFor `users` }}">Other users</h3>
 
         <div class="flex flex-wrap gap-5">
           {{ range .users }} {{ if ne .ID $.user.ID }}
@@ -81,12 +73,8 @@
         </div>
       </div>
       <div class="inner-form">
-        <h3
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
-        >
-          Recent activity
-        </h3>
-        <div class="flex gap-5">
+        <h3 class="{{ IconFor `workout` }}">Recent activity</h3>
+        <div class="flex flex-wrap">
           {{ range .recentWorkouts }} {{ template "workout_item" . }} {{ end }}
         </div>
       </div>

@@ -7,11 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <div class="inner-form">
-        <h2
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-circle-plus"
-        >
-          Add a workout
-        </h2>
+        <h2 class="{{ IconFor `workout-add` }}">Add a workout</h2>
         <form
           method="post"
           action="{{ RouteFor `workouts-create` }}"

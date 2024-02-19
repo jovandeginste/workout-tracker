@@ -6,11 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-user-circle"
-      >
-        Your profile
-      </h2>
+      <h2 class="{{ IconFor `user-profile` }}">Your profile</h2>
     </div>
 
     {{ template "footer" . }}

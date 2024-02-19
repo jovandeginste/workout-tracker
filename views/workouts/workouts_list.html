@@ -6,11 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
-      >
-        Workouts
-      </h2>
+      <h2 class="{{ IconFor `workout` }}">Workouts</h2>
 
       <table class="workout-info">
         <thead>
@@ -31,10 +27,7 @@
           {{ range .workouts }}
           <tr>
             <td class="text-center">
-              <div
-                class="icon-{{ .Type | FAIconClass }} icon-baseline icon-space-sm icon-before
-                    icon-{{ .Type | FAIconName }}"
-              ></div>
+              <div class="{{ IconFor .Type }}"></div>
             </td>
             <td>
               <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name | html }}</a>

@@ -1,8 +1,6 @@
 {{ define "stats_records_running" }} {{ if .Active }}
 <h3>
-  <span
-    class="icon-baseline icon-space-sm icon-before icon-{{ `running` | FAIconClass }} icon-{{ `running` | FAIconName }}"
-  ></span>
+  <span class="{{ IconFor `running` }}"></span>
   Running records
 </h3>
 <table class="workout-info table-auto">
@@ -10,11 +8,7 @@
     {{ with .AverageSpeed }}
     <tr>
       <th>
-        <span
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
-        >
-          Average speed</span
-        >
+        <span class="{{ IconFor `speed` }}">Average speed</span>
       </th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
@@ -25,10 +19,7 @@
     {{ end }} {{ with .MaxSpeed }}
     <tr>
       <th>
-        <span
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
-          >Max speed</span
-        >
+        <span class="{{ IconFor `max-speed` }}">Max speed</span>
       </th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
@@ -39,10 +30,7 @@
     {{ end }} {{ with .Distance }}
     <tr>
       <th>
-        <span
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
-          >Total distance</span
-        >
+        <span class="{{ IconFor `distance` }}">Total distance</span>
       </th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
@@ -53,10 +41,7 @@
     {{ end }} {{ with .TotalUp }}
     <tr>
       <th>
-        <span
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
-          >Total up</span
-        >
+        <span class="{{ IconFor `elevation` }}">Total up</span>
       </th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
@@ -67,11 +52,7 @@
     {{ end }} {{ with .Duration }}
     <tr>
       <th>
-        <span
-          class="icon-solid icon-baseline icon-space-sm icon-before icon-clock"
-        >
-          Total duration</span
-        >
+        <span class="{{ IconFor `duration` }}"> Total duration</span>
       </th>
       <td>{{ .Value }}</td>
       <td>
