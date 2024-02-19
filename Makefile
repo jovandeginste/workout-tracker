@@ -13,7 +13,7 @@ build-server:
 	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./
 
 build-docker:
-	docker build -t workouts --pull=always .
+	docker build -t workouts --pull .
 
 build-tw:
 	npx tailwindcss -i ./assets/main.css -o ./assets/output.css

@@ -37,7 +37,7 @@
               ></div>
             </td>
             <td>
-              <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
+              <a href="{{ RouteFor "workout-show" .ID }}">{{ .Name | html }}</a>
             </td>
             <td>
               <span title="{{ .Date | LocalDate }}">

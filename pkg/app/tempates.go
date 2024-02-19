@@ -12,7 +12,7 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-func viewTemplateFunctions() template.FuncMap {
+func (a *App) viewTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"LocalDate": func(t time.Time) string {
 			return t.Local().Format("2006-01-02 15:04") //nolint:gosmopolitan
@@ -59,7 +59,14 @@ func viewTemplateFunctions() template.FuncMap {
 
 			return ""
 		},
+		"RouteFor": func(name string, params ...interface{}) string {
+			rev := a.echo.Reverse(name, params...)
+			if rev == "" {
+				return "/invalid/route/#" + name
+			}
 
+			return rev
+		},
 		"BuildDecoratedAttribute": func(icon, name string, value interface{}) interface{} {
 			return struct {
 				Icon  string
@@ -74,8 +81,8 @@ func viewTemplateFunctions() template.FuncMap {
 	}
 }
 
-func parseViewTemplates() *template.Template {
-	templ := template.New("views").Funcs(viewTemplateFunctions())
+func (a *App) parseViewTemplates() *template.Template {
+	templ := template.New("views").Funcs(a.viewTemplateFunctions())
 
 	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
 		if strings.Contains(path, ".html") {

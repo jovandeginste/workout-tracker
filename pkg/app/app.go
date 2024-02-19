@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"io/fs"
 	"log/slog"
 
@@ -28,11 +29,16 @@ func (a *App) Connect() error {
 
 	a.db = db
 
-	if err := db.First(&database.User{}).Error; err != nil {
-		a.createAdminUser()
+	err = db.First(&database.User{}).Error
+	if err == nil {
+		return nil
 	}
 
-	return nil
+	if !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+
+	return a.createAdminUser()
 }
 
 func NewApp(l *slog.Logger) *App {

@@ -12,7 +12,7 @@
       <th>Average speed</th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
-        <a href="/workouts/{{ .ID }}"> {{ .Date | LocalDate }}</a>
+        <a href="{{ RouteFor "workout-show" .ID }}"> {{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
@@ -21,7 +21,7 @@
       <th>Max speed</th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
-        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        <a href="{{ RouteFor "workout-show" .ID }}">{{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
@@ -30,7 +30,7 @@
       <th>Total distance</th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
-        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        <a href="{{ RouteFor "workout-show" .ID }}">{{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
@@ -39,7 +39,7 @@
       <th>Total up</th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
-        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        <a href="{{ RouteFor "workout-show" .ID }}">{{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
@@ -48,7 +48,7 @@
       <th>Total duration</th>
       <td>{{ .Value }}</td>
       <td>
-        <a href="/workouts/{{ .ID }}">{{ .Date | LocalDate }}</a>
+        <a href="{{ RouteFor "workout-show" .ID }}">{{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})
       </td>
     </tr>

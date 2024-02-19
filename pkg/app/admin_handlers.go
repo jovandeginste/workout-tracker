@@ -38,7 +38,7 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 		}
 	}
 
-	if err := u.Save(a.db.Debug()); err != nil {
+	if err := u.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 

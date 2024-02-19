@@ -2,8 +2,8 @@
 <html>
   <head>
     {{ template "head" }}
-    <script src="/assets/leaflet.js"></script>
-    <link href="/assets/leaflet.css" rel="stylesheet" />
+    <script src="{{ RouteFor "assets" }}/leaflet.js"></script>
+    <link href="{{ RouteFor "assets" }}/leaflet.css" rel="stylesheet" />
   </head>
   <body>
     {{ template "header" . }}
@@ -35,7 +35,7 @@
             ];
             let center = [{{  .workout.Data.Center.Lat  }}, {{  .workout.Data.Center.Lng  }}];
           </script>
-          <script src="/assets/map.js"></script>
+          <script src="{{ RouteFor "assets" }}/map.js"></script>
         </div>
         <div class="grid grid-cols-1">
           {{ if .workout.Notes }}

@@ -18,7 +18,6 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /workouts ./workouts
 COPY views ./views
-COPY assets ./assets
 
 ENTRYPOINT ["/app/workouts"]
 EXPOSE 8080

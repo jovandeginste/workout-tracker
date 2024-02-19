@@ -29,6 +29,7 @@ func newEcho() *echo.Echo {
 	e.Use(middleware.Secure())
 	e.Use(middleware.CORS())
 	e.Use(middleware.Gzip())
+	e.Pre(middleware.RemoveTrailingSlash())
 
 	return e
 }
@@ -53,12 +54,15 @@ func (a *App) Configure() error {
 
 	e.Use(session.LoadAndSave(a.sessionManager))
 
-	e.Renderer = &Template{parseViewTemplates()}
+	e.Renderer = &Template{a.parseViewTemplates()}
 
 	publicGroup := e.Group("")
 
-	publicGroup.Static("/assets", "assets")
+	publicGroup.StaticFS("/assets", a.Assets)
 
+	publicGroup.GET("/assets", func(c echo.Context) error {
+		return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
+	}).Name = "assets"
 	publicGroup.GET("/user/signin", a.loginHandler).Name = "user-login"
 	publicGroup.POST("/user/signin", a.SignIn).Name = "user-signin"
 	publicGroup.POST("/user/register", a.Register).Name = "user-register"
@@ -77,7 +81,7 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		u := a.getCurrentUser(ctx)
 		if u == nil || !u.IsActive() {
 			log.Warn("User is not found")
-			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		}
 
 		if !u.Admin {
@@ -93,7 +97,7 @@ func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		if err := a.setUser(ctx); err != nil {
 			log.Warn(err.Error())
-			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		}
 
 		return next(ctx)
@@ -108,7 +112,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
+			return c.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		},
 	}))
 	secureGroup.Use(a.ValidateUserMiddleware)
@@ -133,7 +137,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	adminGroup := e.Group("/admin")
 	adminGroup.Use(a.ValidateAdminMiddleware)
 
-	adminGroup.GET("/", a.adminRootHandler).Name = "admin"
+	adminGroup.GET("", a.adminRootHandler).Name = "admin"
 
 	adminUsersGroup := adminGroup.Group("/users")
 	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"

@@ -6,7 +6,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workouts/pkg/database"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/labstack/echo/v4"
 )
 
@@ -53,8 +52,6 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	data := map[string]interface{}{}
 
 	data["version"] = a.Version
-	// data["routes"] = a.Routes()
-	spew.Dump(a.echo.Routes())
 
 	a.addUserInfo(data, c)
 	a.addError(data, c)
