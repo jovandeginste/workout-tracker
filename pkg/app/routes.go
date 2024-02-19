@@ -63,10 +63,11 @@ func (a *App) Configure() error {
 	publicGroup.GET("/assets", func(c echo.Context) error {
 		return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
 	}).Name = "assets"
-	publicGroup.GET("/user/signin", a.loginHandler).Name = "user-login"
-	publicGroup.POST("/user/signin", a.SignIn).Name = "user-signin"
-	publicGroup.POST("/user/register", a.Register).Name = "user-register"
-	publicGroup.GET("/user/signout", a.SignOut).Name = "user-signout"
+	publicGroup.GET("/user/signin", a.userLoginHandler).Name = "user-login"
+	publicGroup.POST("/user/signin", a.userSigninHandler).Name = "user-signin"
+	publicGroup.POST("/user/register", a.userRegisterHandler).Name = "user-register"
+	publicGroup.GET("/user/signout", a.userSignoutHandler).Name = "user-signout"
+	publicGroup.GET("/user/:id", a.userShowHandler).Name = "user-show"
 
 	sec := a.secureRoutes(publicGroup)
 	a.adminRoutes(sec)

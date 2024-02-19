@@ -14,8 +14,8 @@ var (
 	ErrInternalError = errors.New("something went wrong")
 )
 
-// SignIn will be executed after SignInForm submission.
-func (a *App) SignIn(c echo.Context) error {
+// userSigninHandler will be executed after SignInForm submission.
+func (a *App) userSigninHandler(c echo.Context) error {
 	// Initiate a new User struct.
 	u := new(database.User)
 
@@ -43,8 +43,8 @@ func (a *App) SignIn(c echo.Context) error {
 	return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
 }
 
-// SignOut will log a user out
-func (a *App) SignOut(c echo.Context) error {
+// userSignoutHandler will log a user out
+func (a *App) userSignoutHandler(c echo.Context) error {
 	a.clearTokenCookie(c)
 
 	if err := a.sessionManager.Destroy(c.Request().Context()); err != nil {
@@ -54,8 +54,8 @@ func (a *App) SignOut(c echo.Context) error {
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
 }
 
-// Register will be executed after registration submission.
-func (a *App) Register(c echo.Context) error {
+// userRegisterHandler will be executed after registration submission.
+func (a *App) userRegisterHandler(c echo.Context) error {
 	// Initiate a new User struct.
 	u := new(database.User)
 
@@ -79,4 +79,14 @@ func (a *App) Register(c echo.Context) error {
 	a.setNotice(c, "Your account has been created, but needs to be activated.")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
+}
+
+func (a *App) userProfileHandler(c echo.Context) error {
+	data := a.defaultData(c)
+	return c.Render(http.StatusOK, "user_profile.html", data)
+}
+
+func (a *App) userShowHandler(c echo.Context) error {
+	data := a.defaultData(c)
+	return c.Render(http.StatusOK, "user_show.html", data)
 }
