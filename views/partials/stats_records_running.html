@@ -5,11 +5,17 @@
   ></span>
   Running records
 </h3>
-<table class="workout-info">
+<table class="workout-info table-auto">
   <tbody>
     {{ with .AverageSpeed }}
     <tr>
-      <th>Average speed</th>
+      <th>
+        <span
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+        >
+          Average speed</span
+        >
+      </th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}"> {{ .Date | LocalDate }}</a>
@@ -18,7 +24,12 @@
     </tr>
     {{ end }} {{ with .MaxSpeed }}
     <tr>
-      <th>Max speed</th>
+      <th>
+        <span
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
+          >Max speed</span
+        >
+      </th>
       <td>{{ .Value | HumanSpeed }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
@@ -27,7 +38,12 @@
     </tr>
     {{ end }} {{ with .Distance }}
     <tr>
-      <th>Total distance</th>
+      <th>
+        <span
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
+          >Total distance</span
+        >
+      </th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
@@ -36,7 +52,12 @@
     </tr>
     {{ end }} {{ with .TotalUp }}
     <tr>
-      <th>Total up</th>
+      <th>
+        <span
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+          >Total up</span
+        >
+      </th>
       <td>{{ .Value | HumanDistance }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
@@ -45,7 +66,13 @@
     </tr>
     {{ end }} {{ with .Duration }}
     <tr>
-      <th>Total duration</th>
+      <th>
+        <span
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-clock"
+        >
+          Total duration</span
+        >
+      </th>
       <td>{{ .Value }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
