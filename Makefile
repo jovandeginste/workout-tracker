@@ -16,7 +16,10 @@ build-docker:
 	docker build -t workouts --pull .
 
 build-tw:
-	npx tailwindcss -i ./assets/main.css -o ./assets/output.css
+	npx tailwindcss -i ./main.css -o ./assets/output.css
+
+watch-tw:
+	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
 serve:
 	./tmp/main

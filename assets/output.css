@@ -1996,14 +1996,6 @@ table {
   content: "\f044";
 }
 
-.icon-pencil::before {
-  content: "\f303";
-}
-
-.icon-pencil::after {
-  content: "\f303";
-}
-
 .icon-person-running::before {
   content: "\f70c";
 }
