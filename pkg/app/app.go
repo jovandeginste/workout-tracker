@@ -45,13 +45,12 @@ func NewApp(l *slog.Logger) *App {
 func (a *App) createAdminUser() error {
 	u := &database.User{
 		Username: "admin",
-		Password: "admin",
 		Name:     "Administrator",
 		Active:   true,
 		Admin:    true,
 	}
 
-	if err := u.CryptPassword(); err != nil {
+	if err := u.SetPassword("admin"); err != nil {
 		return err
 	}
 

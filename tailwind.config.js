@@ -13,4 +13,7 @@ module.exports = {
       pattern: /text-(green|rose)-500/,
     },
   ],
+  variants: {
+    customPlugin: ["responsive", "hover"],
+  },
 };

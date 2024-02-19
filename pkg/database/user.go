@@ -4,6 +4,7 @@ import (
 	"errors"
 	"regexp"
 
+	"github.com/jovandeginste/workouts/pkg/util"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -17,11 +18,12 @@ var (
 
 type User struct {
 	gorm.Model
-	Password string `form:"password" json:"password"`
-	Username string `form:"username" gorm:"uniqueIndex;not null" json:"username"`
-	Name     string `form:"name"     json:"name"`
-	Active   bool   `form:"active"   json:"active"`
-	Admin    bool   `form:"admin"    json:"admin"`
+	Password string `form:"-" gorm:"type:varchar(128);not null"`
+	Salt     string `form:"-" gorm:"type:varchar(16);not null"`
+	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(20)"`
+	Name     string `form:"name" gorm:"type:varchar(64);not null"`
+	Active   bool   `form:"active"`
+	Admin    bool   `form:"admin"`
 
 	Profile  Profile
 	Workouts []Workout
@@ -35,6 +37,16 @@ func GetUsers(db *gorm.DB) ([]User, error) {
 	}
 
 	return u, nil
+}
+
+func GetUserByID(db *gorm.DB, userID int) (*User, error) {
+	var u User
+
+	if err := db.First(&u, userID).Error; err != nil {
+		return nil, db.Error
+	}
+
+	return &u, nil
 }
 
 func GetUser(db *gorm.DB, username string) (*User, error) {
@@ -72,7 +84,11 @@ func (u *User) ValidLogin(password string) bool {
 		return false
 	}
 
-	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password)) == nil
+	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(u.AddSalt(password))) == nil
+}
+
+func (u *User) AddSalt(password string) string {
+	return u.Salt + password
 }
 
 func (u *User) IsValid() error {
@@ -87,8 +103,12 @@ func (u *User) IsValid() error {
 	return nil
 }
 
-func (u *User) CryptPassword() error {
-	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+func (u *User) SetPassword(password string) error {
+	if err := u.GenerateSalt(); err != nil {
+		return err
+	}
+
+	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(u.AddSalt(password)), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
@@ -99,11 +119,33 @@ func (u *User) CryptPassword() error {
 }
 
 func (u *User) Create(db *gorm.DB) error {
+	if err := u.GenerateSalt(); err != nil {
+		return err
+	}
+
 	return db.Create(u).Error
 }
 
-func (u *User) UpdateUser(db *gorm.DB) error {
+func (u *User) GenerateSalt() error {
+	if u.Salt != "" {
+		return nil
+	}
+
+	var err error
+
+	if u.Salt, err = util.GenerateRandomString(8); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (u *User) Save(db *gorm.DB) error {
 	return db.Save(u).Error
+}
+
+func (u *User) Delete(db *gorm.DB) error {
+	return db.Unscoped().Delete(u).Error
 }
 
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {

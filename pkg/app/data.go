@@ -1,9 +1,12 @@
 package app
 
 import (
+	"strconv"
+
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workouts/pkg/database"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/labstack/echo/v4"
 )
 
@@ -32,7 +35,7 @@ func (a *App) setUser(c echo.Context) error {
 	return nil
 }
 
-func (a *App) getUser(c echo.Context) *database.User {
+func (a *App) getCurrentUser(c echo.Context) *database.User {
 	d := c.Get("user_info")
 	if d == nil {
 		return nil
@@ -50,6 +53,8 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	data := map[string]interface{}{}
 
 	data["version"] = a.Version
+	// data["routes"] = a.Routes()
+	spew.Dump(a.echo.Routes())
 
 	a.addUserInfo(data, c)
 	a.addError(data, c)
@@ -59,7 +64,7 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 }
 
 func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
-	u := a.getUser(c)
+	u := a.getCurrentUser(c)
 	if u == nil {
 		return
 	}
@@ -68,7 +73,7 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 }
 
 func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
-	w, err := a.getUser(c).GetWorkouts(a.db)
+	w, err := a.getCurrentUser(c).GetWorkouts(a.db)
 	if err != nil {
 		a.addError(data, c)
 	}
@@ -77,5 +82,19 @@ func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
 }
 
 func (a *App) addUserStatistics(data map[string]interface{}, c echo.Context) {
-	data["UserStatistics"] = a.getUser(c).Statistics(a.db)
+	data["UserStatistics"] = a.getCurrentUser(c).Statistics(a.db)
+}
+
+func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return nil, err
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return w, nil
 }

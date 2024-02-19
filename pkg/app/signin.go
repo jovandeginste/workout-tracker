@@ -14,12 +14,6 @@ var (
 	ErrInternalError = errors.New("something went wrong")
 )
 
-func (a *App) loginError(c echo.Context, err error) error {
-	a.setError(c, err.Error())
-
-	return c.Redirect(http.StatusFound, "/user/signin")
-}
-
 // SignIn will be executed after SignInForm submission.
 func (a *App) SignIn(c echo.Context) error {
 	// Initiate a new User struct.
@@ -27,16 +21,16 @@ func (a *App) SignIn(c echo.Context) error {
 
 	// Parse the submitted data and fill the User struct with the data from the SignIn form.
 	if err := c.Bind(u); err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	storedUser, err := database.GetUser(a.db, u.Username)
 	if err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	if !storedUser.ValidLogin(u.Password) {
-		return a.loginError(c, ErrLoginFailed)
+	if !storedUser.ValidLogin(c.FormValue("password")) {
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), ErrLoginFailed)
 	}
 
 	// If password is correct, generate tokens and set cookies.
@@ -46,7 +40,7 @@ func (a *App) SignIn(c echo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusFound, "/")
+	return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
 }
 
 // SignOut will log a user out
@@ -54,10 +48,10 @@ func (a *App) SignOut(c echo.Context) error {
 	a.clearTokenCookie(c)
 
 	if err := a.sessionManager.Destroy(c.Request().Context()); err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	return c.Redirect(http.StatusFound, "/user/signin")
+	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
 }
 
 // Register will be executed after registration submission.
@@ -67,22 +61,22 @@ func (a *App) Register(c echo.Context) error {
 
 	// Parse the submitted data and fill the User struct with the data from the registration form.
 	if err := c.Bind(u); err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	if err := u.IsValid(); err != nil {
-		return a.loginError(c, err)
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
-	if err := u.CryptPassword(); err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+	if err := u.SetPassword(c.FormValue("password")); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	if err := u.Create(a.db); err != nil {
-		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	a.setNotice(c, "Your account has been created, but needs to be activated.")
 
-	return c.Redirect(http.StatusFound, "/")
+	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
 }

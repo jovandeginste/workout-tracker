@@ -4,8 +4,8 @@
     <a class="icon-pen-to-square"></a>
   </button>
 </form>
-<form action="/workouts/{{ .ID }}" method="post">
-  <button name="action" value="refresh">
+<form action="/workouts/{{ .ID }}/refresh" method="post">
+  <button>
     <a class="icon-arrows-rotate"></a>
   </button>
 </form>
@@ -30,8 +30,8 @@
     <div class="modal-content">
       <h3>Are you sure you want to delete this workout?</h3>
       <div class="flex">
-        <form method="post" action="/workouts/{{ .ID }}">
-          <button name="action" value="delete" class="confirm">Continue</button>
+        <form method="post" action="/workouts/{{ .ID }}/delete">
+          <button class="confirm">Continue</button>
         </form>
         <form onsubmit="return false">
           <button

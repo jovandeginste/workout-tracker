@@ -1,6 +1,43 @@
 {{ define "user_actions" }}
-<a
-  class="icon-solid icon-baseline icon-space-sm icon-before icon-pencil"
-  href="/admin/users/{{ .ID }}/edit"
-></a>
+<form action="/admin/users/{{ .ID }}/edit" method="get">
+  <button class="edit">
+    <a class="icon-pen-to-square"></a>
+  </button>
+</form>
+<form onsubmit="return false">
+  <button onclick="openModal('modalConfirmDelete_{{ .ID }}')" class="dangerous">
+    <a class="icon-trash"></a>
+  </button>
+</form>
+
+<div id="modalConfirmDelete_{{ .ID }}" class="modal">
+  <div class="window">
+    <div class="flex justify-end p-2">
+      <button
+        onclick="closeModal('modalConfirmDelete_{{ .ID }}')"
+        type="button"
+        class="close-modal"
+      >
+        <a class="icon-xmark"></a>
+      </button>
+    </div>
+
+    <div class="modal-content">
+      <h3>Are you sure you want to delete this user?</h3>
+      <div class="flex">
+        <form method="post" action="/admin/users/{{ .ID }}/delete">
+          <button class="confirm">Continue</button>
+        </form>
+        <form onsubmit="return false">
+          <button
+            onclick="closeModal('modalConfirmDelete_{{ .ID }}')"
+            class="cancel"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {{ end }}

@@ -5,14 +5,13 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/jovandeginste/workouts/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) redirectWithError(c echo.Context, err error) error {
+func (a *App) redirectWithError(c echo.Context, target string, err error) error {
 	a.setError(c, err.Error())
 
-	return c.Redirect(http.StatusFound, "/")
+	return c.Redirect(http.StatusFound, target)
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
@@ -43,12 +42,12 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, err)
+		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	w, err := a.getUser(c).GetWorkout(a.db, id)
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, err)
+		return a.redirectWithError(c, "/workouts", err)
 	}
 
 	data["workout"] = w
@@ -63,39 +62,39 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsDeleteHandler(c echo.Context) error {
-	workout, ok := c.Get("workout").(*database.Workout)
-	if !ok {
-		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	if err := workout.Delete(a.db); err != nil {
-		return a.redirectWithError(c, err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been deleted.", workout.Name))
 
-	return c.Redirect(http.StatusFound, "/workouts")
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
-	workout, ok := c.Get("workout").(*database.Workout)
-	if !ok {
-		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	if err := workout.UpdateData(a.db); err != nil {
-		return a.redirectWithError(c, err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been refreshed.", workout.Name))
 
-	return c.Redirect(http.StatusFound, fmt.Sprintf("/workouts/%d", workout.ID))
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
 
 func (a *App) workoutsUpdateHandler(c echo.Context) error {
-	workout, ok := c.Get("workout").(*database.Workout)
-	if !ok {
-		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	workout.Name = c.FormValue("name")
@@ -103,56 +102,20 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	workout.Type = c.FormValue("type")
 
 	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been updated.", workout.Name))
 
-	return c.Redirect(http.StatusFound, fmt.Sprintf("/workouts/%d", workout.ID))
-}
-
-func (a *App) workoutsPostHandler(c echo.Context) error {
-	if err := a.addWorkoutToContext(c); err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	action := c.FormValue("action")
-	switch action {
-	case "delete":
-		return a.workoutsDeleteHandler(c)
-	case "refresh":
-		return a.workoutsRefreshHandler(c)
-	default:
-		return a.workoutsUpdateHandler(c)
-	}
-}
-
-func (a *App) addWorkoutToContext(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	w, err := a.getUser(c).GetWorkout(a.db, id)
-	if err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	c.Set("workout", w)
-
-	return nil
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
 
 func (a *App) workoutsEditHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
-	if err := a.addWorkoutToContext(c); err != nil {
-		return a.redirectWithError(c, err)
-	}
-
-	workout, ok := c.Get("workout").(*database.Workout)
-	if !ok {
-		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, "/workouts", err)
 	}
 
 	data["workout"] = workout

@@ -23,7 +23,7 @@
           {{ range .adminUsers }}
           <tr>
             <th>
-              <a href="/admin/users/{{ .ID }}/edit">{{ .Username | html }}</a>
+              <a href="/admin/users/{{ .ID }}">{{ .Username | html }}</a>
             </th>
             <td>{{ .Name | html }}</td>
             <td>{{ .Active | BoolToHTML }}</td>

@@ -44,7 +44,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		notes := c.FormValue("notes")
 		workoutType := c.FormValue("type")
 
-		w, addErr := a.getUser(c).AddWorkout(a.db, workoutType, notes, content)
+		w, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, content)
 		if addErr != nil {
 			errMsg += addErr.Error() + "\n"
 			continue
@@ -61,5 +61,5 @@ func (a *App) addWorkout(c echo.Context) error {
 		a.setNotice(c, "A new workout was added:\n"+msg)
 	}
 
-	return c.Redirect(http.StatusFound, "/workouts")
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }

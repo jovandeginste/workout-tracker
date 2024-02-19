@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <h2 class="icon-solid icon-baseline icon-space-sm icon-before icon-gear">
+        Manage
+      </h2>
+      {{ with .adminUser }}
+      <form action="/admin/users/{{ .ID }}" method="post" class="inner-form">
+        <div class="form-row">
+          <label for="username">Name</label>
+          <div>
+            <input
+              id="username"
+              name="username"
+              size="20"
+              value="{{ .Username }}"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <div>
+            <input id="name" name="name" size="20" value="{{ .Name }}" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="name">Password</label>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              size="20"
+              placeholder="Leave blank to keep current password"
+              value=""
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="active">Active</label>
+          <div>
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              size="20"
+              {{
+              .Active
+              |
+              BoolToCheckbox
+              }}
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="admin">Admin</label>
+          <div>
+            <input
+              type="checkbox"
+              id="admin"
+              name="admin"
+              size="20"
+              {{
+              .Admin
+              |
+              BoolToCheckbox
+              }}
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div></div>
+          <button type="submit" size="20">Update user</button>
+        </div>
+      </form>
+      {{ end }}
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

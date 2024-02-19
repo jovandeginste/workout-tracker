@@ -52,6 +52,13 @@ func viewTemplateFunctions() template.FuncMap {
 
 			return `<i class="text-rose-500 fas fa-times"></i>`
 		},
+		"BoolToCheckbox": func(b bool) template.HTML {
+			if b {
+				return "checked"
+			}
+
+			return ""
+		},
 
 		"BuildDecoratedAttribute": func(icon, name string, value interface{}) interface{} {
 			return struct {

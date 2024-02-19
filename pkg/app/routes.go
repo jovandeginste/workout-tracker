@@ -58,10 +58,11 @@ func (a *App) Configure() error {
 	publicGroup := e.Group("")
 
 	publicGroup.Static("/assets", "assets")
-	publicGroup.GET("/user/signin", a.loginHandler)
-	publicGroup.POST("/user/signin", a.SignIn)
-	publicGroup.POST("/user/register", a.Register)
-	publicGroup.GET("/user/signout", a.SignOut)
+
+	publicGroup.GET("/user/signin", a.loginHandler).Name = "user-login"
+	publicGroup.POST("/user/signin", a.SignIn).Name = "user-signin"
+	publicGroup.POST("/user/register", a.Register).Name = "user-register"
+	publicGroup.GET("/user/signout", a.SignOut).Name = "user-signout"
 
 	sec := a.secureRoutes(publicGroup)
 	a.adminRoutes(sec)
@@ -73,15 +74,15 @@ func (a *App) Configure() error {
 
 func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
-		u := a.getUser(ctx)
+		u := a.getCurrentUser(ctx)
 		if u == nil || !u.IsActive() {
 			log.Warn("User is not found")
-			return ctx.Redirect(http.StatusFound, "/user/signout")
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
 		}
 
 		if !u.Admin {
 			log.Warn("User is not an admin")
-			return ctx.Redirect(http.StatusFound, "/")
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
 		}
 
 		return next(ctx)
@@ -92,7 +93,7 @@ func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		if err := a.setUser(ctx); err != nil {
 			log.Warn(err.Error())
-			return ctx.Redirect(http.StatusFound, "/user/signout")
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
 		}
 
 		return next(ctx)
@@ -107,19 +108,23 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.Redirect(http.StatusFound, "/user/signout")
+			return c.Redirect(http.StatusFound, a.echo.Reverse("user-logout"))
 		},
 	}))
 	secureGroup.Use(a.ValidateUserMiddleware)
 
-	secureGroup.GET("/", a.dashboardHandler)
-	secureGroup.GET("/workouts", a.workoutsHandler)
-	secureGroup.GET("/workouts/:id", a.workoutsShowHandler)
-	secureGroup.GET("/workouts/:id/edit", a.workoutsEditHandler)
-	secureGroup.POST("/workouts/:id", a.workoutsPostHandler)
-	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
-	secureGroup.GET("/user/profile", a.userProfileHandler)
-	secureGroup.POST("/workouts/add", a.addWorkout)
+	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
+	secureGroup.GET("/user/profile", a.userProfileHandler).Name = "user-profile"
+
+	workoutsGroup := secureGroup.Group("/workouts")
+	workoutsGroup.GET("", a.workoutsHandler).Name = "workouts"
+	workoutsGroup.POST("", a.addWorkout).Name = "workout-create"
+	workoutsGroup.GET("/:id", a.workoutsShowHandler).Name = "workout-show"
+	workoutsGroup.POST("/:id", a.workoutsUpdateHandler).Name = "workout-update"
+	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
+	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
+	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
+	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
 
 	return secureGroup
 }
@@ -128,7 +133,15 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	adminGroup := e.Group("/admin")
 	adminGroup.Use(a.ValidateAdminMiddleware)
 
-	adminGroup.GET("/", a.adminRootHandler)
+	adminGroup.GET("/", a.adminRootHandler).Name = "admin"
+
+	adminUsersGroup := adminGroup.Group("/users")
+	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"
+	adminUsersGroup.POST("/:id", a.adminUserUpdateHandler).Name = "admin-user-update"
+	adminUsersGroup.POST("/:id/delete", a.adminUserDeleteHandler).Name = "admin-user-delete"
+	adminUsersGroup.GET("/:id", func(c echo.Context) error {
+		return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-edit", c.Param("id")))
+	}).Name = "admin-user-show"
 
 	return adminGroup
 }
