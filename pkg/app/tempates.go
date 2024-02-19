@@ -3,8 +3,7 @@ package app
 import (
 	"fmt"
 	"html/template"
-	"os"
-	"path/filepath"
+	"io/fs"
 	"strings"
 	"time"
 
@@ -82,11 +81,11 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 }
 
 func (a *App) parseViewTemplates() *template.Template {
-	templ := template.New("views").Funcs(a.viewTemplateFunctions())
+	templ := template.New("").Funcs(a.viewTemplateFunctions())
 
-	err := filepath.Walk("./views", func(path string, _ os.FileInfo, err error) error {
+	err := fs.WalkDir(a.Views, ".", func(path string, d fs.DirEntry, err error) error {
 		if strings.Contains(path, ".html") {
-			if _, myErr := templ.ParseFiles(path); err != nil {
+			if _, myErr := templ.ParseFS(a.Views, path); err != nil {
 				log.Warn(myErr)
 				return myErr
 			}

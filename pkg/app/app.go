@@ -17,6 +17,7 @@ type App struct {
 	log            *slog.Logger
 	db             *gorm.DB
 	Assets         fs.FS
+	Views          fs.FS
 	sessionManager *scs.SessionManager
 	jwtSecret      []byte
 }

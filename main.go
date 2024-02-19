@@ -14,6 +14,10 @@ var (
 	assets   embed.FS
 	AssetsFS = echo.MustSubFS(assets, "assets")
 
+	//go:embed views/*
+	views   embed.FS
+	ViewsFS = echo.MustSubFS(views, "views")
+
 	version = "0.0.0-dev"
 )
 
@@ -22,6 +26,7 @@ func main() {
 
 	a := app.NewApp(logger)
 	a.Assets = AssetsFS
+	a.Views = ViewsFS
 	a.Version = version
 
 	if err := a.Configure(); err != nil {
