@@ -18,60 +18,92 @@
           <div class="inner-form">
             <h3 class="{{ IconFor `user-signin` }}">Sign In</h3>
             <form method="post" action="{{ RouteFor `user-signin` }}">
-              <div class="form-row">
-                <label for="username">Username</label>
-                <div>
-                  <input type="text" id="username" name="username" size="20" />
-                </div>
-              </div>
-              <div class="form-row">
-                <label for="password">Password</label>
-                <div>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    size="20"
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div></div>
-                <button type="submit" size="20">Sign In</button>
-              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label for="username">Username</label>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        size="40"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="password">Password</label>
+                    </td>
+                    <td>
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        size="40"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit" size="40">Sign In</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           </div>
 
           <div class="inner-form">
             <h3 class="{{ IconFor `user-register` }}">Create a new account</h3>
             <form method="post" action="{{ RouteFor `user-register` }}">
-              <div class="form-row">
-                <label for="username">Username</label>
-                <div>
-                  <input type="text" id="username" name="username" size="20" />
-                </div>
-              </div>
-              <div class="form-row">
-                <label for="name">Name</label>
-                <div>
-                  <input type="text" id="name" name="name" size="20" />
-                </div>
-              </div>
-              <div class="form-row">
-                <label for="password">Password</label>
-                <div>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    size="20"
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div></div>
-                <button type="submit" size="20">Register</button>
-              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label for="username">Username</label>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        size="40"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="name">Name</label>
+                    </td>
+                    <td>
+                      <input type="text" id="name" name="name" size="40" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="password">Password</label>
+                    </td>
+                    <td>
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        size="40"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit" size="40">Register</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           </div>
         </div>

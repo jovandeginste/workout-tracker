@@ -12,17 +12,14 @@
     @apply bg-neutral-900 text-zinc-100 px-20;
   }
 
+  button[type="submit"],
+  textarea,
   input {
-    @apply rounded-xl px-4 py-1 bg-neutral-700;
+    @apply rounded-xl px-6 py-2 bg-zinc-900 border border-zinc-700 hover:border-amber-500;
+    @apply placeholder:text-slate-500;
   }
-
-  textarea {
-    @apply rounded-xl px-4 py-1 bg-neutral-700;
-  }
-
   button[type="submit"] {
-    @apply bg-zinc-500 hover:bg-zinc-400;
-    @apply font-bold rounded-xl px-4 py-1;
+    @apply font-bold;
   }
 
   h1 {
@@ -38,15 +35,11 @@
 
   form {
     @apply my-5;
-    .form-row {
-      @apply mb-2 grid grid-cols-3 gap-4;
+    tr {
+      @apply mb-2 gap-4;
       label {
-        @apply text-right py-1;
+        @apply text-right py-1 block;
         @apply font-bold after:content-[':'];
-      }
-
-      input {
-        @apply col-span-2;
       }
     }
   }

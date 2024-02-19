@@ -6,79 +6,97 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `admin` }}">Manage</h2>
+      <h2 class="{{ IconFor `admin` }}">
+        Manage user '{{ .user.Username | html }}'
+      </h2>
       {{ with .user }}
       <form
         action="{{ RouteFor `admin-user-update` .ID }}"
         method="post"
         class="inner-form"
       >
-        <div class="form-row">
-          <label for="username">Name</label>
-          <div>
-            <input
-              id="username"
-              name="username"
-              size="20"
-              value="{{ .Username }}"
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="name">Name</label>
-          <div>
-            <input id="name" name="name" size="20" value="{{ .Name }}" />
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="name">Password</label>
-          <div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              size="20"
-              placeholder="Leave blank to keep current password"
-              value=""
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="active">Active</label>
-          <div>
-            <input
-              type="checkbox"
-              id="active"
-              name="active"
-              size="20"
-              {{
-              .Active
-              |
-              BoolToCheckbox
-              }}
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="admin">Admin</label>
-          <div>
-            <input
-              type="checkbox"
-              id="admin"
-              name="admin"
-              size="20"
-              {{
-              .Admin
-              |
-              BoolToCheckbox
-              }}
-            />
-          </div>
-        </div>
-        <div class="form-row">
-          <div></div>
-          <button type="submit" size="20">Update user</button>
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label for="username">Username</label>
+              </td>
+              <td>
+                <input
+                  id="username"
+                  name="username"
+                  size="40"
+                  value="{{ .Username }}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="name">Name</label>
+              </td>
+              <td>
+                <input id="name" name="name" size="40" value="{{ .Name }}" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="name">Password</label>
+              </td>
+              <td>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  size="40"
+                  placeholder="Leave blank to keep current password"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="active">Active</label>
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  id="active"
+                  name="active"
+                  size="40"
+                  {{
+                  .Active
+                  |
+                  BoolToCheckbox
+                  }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="admin">Admin</label>
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  id="admin"
+                  name="admin"
+                  size="40"
+                  {{
+                  .Admin
+                  |
+                  BoolToCheckbox
+                  }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <button type="submit" size="40">Update user</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </form>
       {{ end }}
     </div>

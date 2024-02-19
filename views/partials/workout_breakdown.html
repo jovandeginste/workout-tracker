@@ -1,0 +1,29 @@
+{{ define "workout_breakdown" }}
+<table class="workout-info">
+  <thead>
+    <tr>
+      <th></th>
+      <th>KM</th>
+      <th>Duration</th>
+      <th>Speed</th>
+      <th>Tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range . }}
+    <tr>
+      <td>
+        {{ if .IsWorst }}
+        <span class="text-orange-600 {{ IconFor `worst` }}"></span>{{ end }} {{
+        if .IsBest }}
+        <span class="text-green-500 {{ IconFor `best` }}"></span>{{ end }}
+      </td>
+      <td class="text-center">{{ .Kilometer }}</td>
+      <td>{{ .Duration }}</td>
+      <td>{{ .Speed | HumanSpeed }}</td>
+      <td>{{ .Speed | HumanTempo }}</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
+{{ end }}

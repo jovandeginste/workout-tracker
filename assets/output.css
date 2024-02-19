@@ -460,42 +460,41 @@ body {
   color: rgb(244 244 245 / var(--tw-text-opacity));
 }
 
-input {
+button[type="submit"],
+  textarea,
+  input {
   border-radius: 0.75rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(63 63 70 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-textarea {
-  border-radius: 0.75rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+button[type="submit"]:hover,
+  textarea:hover,
+  input:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(245 158 11 / var(--tw-border-opacity));
+}
+
+button[type="submit"]::-moz-placeholder, textarea::-moz-placeholder, input::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+
+button[type="submit"]::placeholder,
+  textarea::placeholder,
+  input::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 button[type="submit"] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
-}
-
-button[type="submit"]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(161 161 170 / var(--tw-bg-opacity));
-}
-
-button[type="submit"] {
-  border-radius: 0.75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
   font-weight: 700;
 }
 
@@ -523,19 +522,16 @@ a:hover {
 form {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  .form-row {
+  tr {
     margin-bottom: 0.5rem;
   }
-  .form-row {
-    display: grid;
-  }
-  .form-row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .form-row {
+  tr {
     gap: 1rem;
   }
-  .form-row {
+  tr {
+    label {
+      display: block;
+    }
     label {
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
@@ -549,9 +545,6 @@ form {
     label::after {
       --tw-content: ':';
       content: var(--tw-content);
-    }
-    input {
-      grid-column: span 2 / span 2;
     }
   }
 }
