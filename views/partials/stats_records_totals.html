@@ -2,7 +2,7 @@
 <div class="grid grid-cols-4 gap-4">
   {{ template "statistic_tile" (BuildDecoratedAttribute "workout" "workouts"
   .Workouts) }} {{ template "statistic_tile" (BuildDecoratedAttribute "distance"
-  "distance" (.Distance | HumanDistance)) }} {{ template "statistic_tile"
+  "distance" (.Distance | ToKilometer )) }} {{ template "statistic_tile"
   (BuildDecoratedAttribute "elevation" "up" (.Up | HumanDistance)) }} {{
   template "statistic_tile" (BuildDecoratedAttribute "duration" "duration"
   .Duration) }}

@@ -15,6 +15,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
 		"LocalDate":               templatehelpers.LocalDate,
+		"ToKilometer":             templatehelpers.ToKilometer,
 		"HumanDistance":           templatehelpers.HumanDistance,
 		"HumanSpeed":              templatehelpers.HumanSpeed,
 		"HumanTempo":              templatehelpers.HumanTempo,

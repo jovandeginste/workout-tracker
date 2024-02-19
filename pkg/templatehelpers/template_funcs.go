@@ -21,6 +21,10 @@ func LocalDate(t time.Time) string {
 	return t.Local().Format("2006-01-02 15:04") //nolint:gosmopolitan
 }
 
+func ToKilometer(d float64) string {
+	return fmt.Sprintf("%.2f km", d/1000.0)
+}
+
 func HumanDistance(d float64) string {
 	value, prefix := humanize.ComputeSI(d)
 
