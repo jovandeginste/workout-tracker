@@ -1,8 +1,11 @@
 {{ define "head" }}
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" type="image/png" href="{{ RouteFor "assets" }}/dumbbell.png" />
-<link href="{{ RouteFor "assets" }}/fontawesome/css/all.min.css" rel="stylesheet" />
-<link href="{{ RouteFor "assets" }}/output.css" rel="stylesheet" />
-<script src="{{ RouteFor "assets" }}/common.js"></script>
+<link rel="icon" type="image/png" href="{{ RouteFor `assets` }}/dumbbell.png" />
+<link
+  href="{{ RouteFor `assets` }}/dist/fontawesome/css/all.min.css"
+  rel="stylesheet"
+/>
+<link href="{{ RouteFor `assets` }}/output.css" rel="stylesheet" />
+<script src="{{ RouteFor `assets` }}/common.js"></script>
 {{ end }}

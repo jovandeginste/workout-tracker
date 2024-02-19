@@ -23,3 +23,13 @@ watch-tw:
 
 serve:
 	./tmp/main
+
+test: test-views test-go test-assets
+test-views:
+	prettier --check views/
+test-assets:
+	prettier --check assets/
+
+test-go:
+	go test -short -count 1 -mod vendor ./...
+	golangci-lint run --allow-parallel-runners --fix
