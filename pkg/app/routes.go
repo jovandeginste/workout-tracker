@@ -127,7 +127,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 
 	workoutsGroup := secureGroup.Group("/workouts")
 	workoutsGroup.GET("", a.workoutsHandler).Name = "workouts"
-	workoutsGroup.POST("", a.addWorkout).Name = "workout-create"
+	workoutsGroup.POST("", a.addWorkout).Name = "workouts-create"
 	workoutsGroup.GET("/:id", a.workoutsShowHandler).Name = "workout-show"
 	workoutsGroup.POST("/:id", a.workoutsUpdateHandler).Name = "workout-update"
 	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
