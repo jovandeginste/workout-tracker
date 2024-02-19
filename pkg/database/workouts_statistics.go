@@ -57,6 +57,10 @@ func (w *Workout) StatisticsPerKilometer() []StatisticsItem {
 }
 
 func calculateBestAndWorst(items []StatisticsItem) {
+	if len(items) == 0 {
+		return
+	}
+
 	worst := 0
 	best := 0
 
