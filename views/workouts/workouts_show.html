@@ -36,14 +36,6 @@
           <script src="{{ RouteFor `assets` }}/map.js"></script>
         </div>
         <div class="grid grid-cols-1">
-          {{ if .Notes }}
-          <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
-            <div class="flex">
-              <div class="font-bold rounded-xl {{ IconFor `note` }}"></div>
-              {{ .Notes }}
-            </div>
-          </div>
-          {{ end }}
           <div class="grid grid-cols-2 gap-4">
             <div class="inner-form">{{ template "workout_details" . }}</div>
             <div class="inner-form">
@@ -52,7 +44,14 @@
           </div>
         </div>
       </div>
-      {{ end }}
+      {{ if .Notes }}
+      <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
+        <div class="flex">
+          <div class="font-bold rounded-xl {{ IconFor `note` }}"></div>
+          {{ .Notes }}
+        </div>
+      </div>
+      {{ end }} {{ end }}
     </div>
 
     {{ template "footer" . }}

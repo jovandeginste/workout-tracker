@@ -8,6 +8,7 @@ type Config struct {
 	Bind             string `mapstructure:"bind"`
 	JWTEncryptionKey string `mapstructure:"jwt_encryption_key"`
 	Debug            bool   `mapstructure:"debug"`
+	DatabaseFile     string `mapstructure:"database_file"`
 }
 
 func (a *App) ReadConfiguration() error {
@@ -17,6 +18,7 @@ func (a *App) ReadConfiguration() error {
 
 	viper.SetDefault("bind", "[::]:8080")
 	viper.SetDefault("debug", "false")
+	viper.SetDefault("database_file", "./database.db")
 
 	if err := viper.BindEnv("jwt_encryption_key"); err != nil {
 		return err

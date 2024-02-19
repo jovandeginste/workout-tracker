@@ -3,6 +3,7 @@ package app
 import (
 	"html/template"
 	"io"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -18,11 +19,13 @@ import (
 	session "github.com/spazzymoto/echo-scs-session"
 )
 
-func newEcho() *echo.Echo {
+func newEcho(logger *slog.Logger) *echo.Echo {
 	e := echo.New()
 
 	e.HideBanner = true
+	e.HidePort = true
 
+	e.Use(slogecho.New(logger.With("module", "webserver")))
 	e.Use(middleware.Recover())
 	e.Use(middleware.Secure())
 	e.Use(middleware.CORS())
@@ -43,9 +46,8 @@ func (a *App) Configure() error {
 		return err
 	}
 
-	e := newEcho()
+	e := newEcho(a.log)
 	e.Debug = a.Config.Debug
-	e.Use(slogecho.New(a.log))
 
 	a.sessionManager = scs.New()
 	a.sessionManager.Cookie.Path = "/"

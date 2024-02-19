@@ -41,7 +41,7 @@ func (a *App) jwtSecret() []byte {
 }
 
 func (a *App) Connect() error {
-	db, err := database.Connect()
+	db, err := database.Connect(a.Config.DatabaseFile, a.log.With("module", "database"))
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (a *App) Connect() error {
 
 func NewApp() *App {
 	a := &App{
-		log: slog.New(slog.NewTextHandler(os.Stdout, nil)),
+		log: slog.New(slog.NewJSONHandler(os.Stdout, nil)),
 	}
 
 	return a
