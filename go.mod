@@ -6,7 +6,6 @@ require (
 	github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6
 	github.com/alexedwards/scs/v2 v2.4.0
 	github.com/codingsince1985/geo-golang v1.8.3
-	github.com/davecgh/go-spew v1.1.1
 	github.com/dustin/go-humanize v1.0.1
 	github.com/glebarez/sqlite v1.10.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
