@@ -7,6 +7,9 @@ all: clean test build-all
 clean:
 	rm ./tmp/main ./assets/output.css
 
+dev:
+	air
+
 build-all: build-tw build-server build-docker
 
 build-server: build-tw
