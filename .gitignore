@@ -3,3 +3,4 @@ input/
 *.db
 *.db-journal
 node_modules/
+workout-tracker.yaml

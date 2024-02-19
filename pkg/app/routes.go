@@ -21,9 +21,7 @@ import (
 func newEcho() *echo.Echo {
 	e := echo.New()
 
-	e.Debug = true
 	e.HideBanner = true
-	e.HidePort = true
 
 	e.Use(middleware.Recover())
 	e.Use(middleware.Secure())
@@ -46,6 +44,7 @@ func (a *App) Configure() error {
 	}
 
 	e := newEcho()
+	e.Debug = a.Config.Debug
 	e.Use(slogecho.New(a.log))
 
 	a.sessionManager = scs.New()
@@ -161,7 +160,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) Serve() error {
-	return a.echo.Start(":8080")
+	return a.echo.Start(a.Config.Bind)
 }
 
 type Template struct {

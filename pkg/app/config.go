@@ -5,8 +5,9 @@ import (
 )
 
 type Config struct {
-	Port             int    `mapstructure:"port"`
+	Bind             string `mapstructure:"bind"`
 	JWTEncryptionKey string `mapstructure:"jwt_encryption_key"`
+	Debug            bool   `mapstructure:"debug"`
 }
 
 func (a *App) ReadConfiguration() error {
@@ -14,7 +15,8 @@ func (a *App) ReadConfiguration() error {
 	viper.AddConfigPath(".")
 	viper.SetEnvPrefix("WORKOUT_TRACKER")
 
-	viper.SetDefault("port", 8080)
+	viper.SetDefault("bind", "[::]:8080")
+	viper.SetDefault("debug", "false")
 
 	if err := viper.BindEnv("jwt_encryption_key"); err != nil {
 		return err

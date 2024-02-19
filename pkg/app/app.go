@@ -46,6 +46,10 @@ func (a *App) Connect() error {
 		return err
 	}
 
+	if a.Config.Debug {
+		db = db.Debug()
+	}
+
 	a.db = db
 
 	err = db.First(&database.User{}).Error
