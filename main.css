@@ -1,6 +1,13 @@
 @tailwind base;
 
 @layer base {
+  table.sortable
+    th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(
+      .sorttable_nosort
+    ):after {
+    content: " \25B4\25BE";
+  }
+
   body {
     @apply bg-neutral-900 text-zinc-100 px-20;
   }

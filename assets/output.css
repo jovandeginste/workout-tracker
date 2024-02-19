@@ -444,6 +444,13 @@ video {
   display: none;
 }
 
+table.sortable
+    th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(
+      .sorttable_nosort
+    ):after {
+  content: " \25B4\25BE";
+}
+
 body {
   --tw-bg-opacity: 1;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity));
