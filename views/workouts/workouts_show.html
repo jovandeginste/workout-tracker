@@ -8,16 +8,17 @@
   <body>
     {{ template "header" . }}
     <div class="content">
+      {{ with .workout }}
       <div class="gap-4">
         <span class="float-right actions">
-          {{ template "workout_actions" .workout }}
+          {{ template "workout_actions" . }}
         </span>
 
         <h2
-          class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
-                    icon-{{ .workout.Type | FAIconName }}"
+          class="icon-{{ .Type | FAIconClass }} icon-baseline icon-space-sm icon-before
+                    icon-{{ .Type | FAIconName }}"
         >
-          {{ .workout.Name | html }}
+          {{ .Name | html }}
         </h2>
       </div>
       <div class="grid grid-cols-2 gap-4">
@@ -28,23 +29,23 @@
         >
           <script>
             let points = [
-              {{- range $idx, $pt := .workout.Data.Points }}
+              {{- range $idx, $pt := .Data.Points }}
               {{  if $idx  }},{{  end -}}
               { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng -}}, "title": {{  $pt.Title  }} }
               {{- end  }}
             ];
-            let center = [{{  .workout.Data.Center.Lat  }}, {{  .workout.Data.Center.Lng  }}];
+            let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
           </script>
           <script src="{{ RouteFor `assets` }}/map.js"></script>
         </div>
         <div class="grid grid-cols-1">
-          {{ if .workout.Notes }}
+          {{ if .Notes }}
           <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
             <div class="flex">
               <div
                 class="font-bold rounded-xl icon-solid icon-baseline icon-space-sm icon-before icon-quote-left"
               ></div>
-              {{ .workout.Notes }}
+              {{ .Notes }}
             </div>
           </div>
           {{ end }}
@@ -58,8 +59,8 @@
                     ></td>
                     <th>Date</th>
                     <td>
-                      <span title="{{ .workout.Date | LocalDate }}">
-                        {{ .workout.Date | RelativeDate }}
+                      <span title="{{ .Date | LocalDate }}">
+                        {{ .Date | RelativeDate }}
                       </span>
                     </td>
                   </tr>
@@ -68,104 +69,98 @@
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-map-location-dot"
                     ></td>
                     <th>Location</th>
-                    <td>
-                      {{ template "snippet_location" .workout.Data.Address }}
-                    </td>
+                    <td>{{ template "snippet_location" .Data.Address }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
                     ></td>
                     <th>Type</th>
-                    <td>{{ .workout.Type }}</td>
+                    <td>{{ .Type }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-regular icon-baseline icon-before icon-space-sm icon-clock"
                     ></td>
                     <th>Total duration</th>
-                    <td>{{ .workout.Data.TotalDuration }}</td>
+                    <td>{{ .Data.TotalDuration }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
                     ></td>
                     <th>Total distance</th>
-                    <td>{{ .workout.Data.TotalDistance | HumanDistance }}</td>
+                    <td>{{ .Data.TotalDistance | HumanDistance }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                     ></td>
                     <th>Average speed</th>
-                    <td>{{ .workout.Data.AverageSpeed | HumanSpeed }}</td>
+                    <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                     ></td>
                     <th>Average speed (no pauze)</th>
-                    <td>
-                      {{ .workout.Data.AverageSpeedNoPauze | HumanSpeed }}
-                    </td>
+                    <td>{{ .Data.AverageSpeedNoPauze | HumanSpeed }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                     ></td>
                     <th>Average tempo</th>
-                    <td>{{ .workout.Data.AverageSpeed | HumanTempo }}</td>
+                    <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                     ></td>
                     <th>Average tempo (no pauze)</th>
-                    <td>
-                      {{ .workout.Data.AverageSpeedNoPauze | HumanTempo }}
-                    </td>
+                    <td>{{ .Data.AverageSpeedNoPauze | HumanTempo }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
                     ></td>
                     <th>Max speed</th>
-                    <td>{{ .workout.Data.MaxSpeed | HumanSpeed }}</td>
+                    <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-hourglass"
                     ></td>
                     <th>Time pauzed</th>
-                    <td>{{ .workout.Data.PauzeDuration }}</td>
+                    <td>{{ .Data.PauzeDuration }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
                     ></td>
                     <th>Min elevation</th>
-                    <td>{{ .workout.Data.MinElevation | HumanDistance }}</td>
+                    <td>{{ .Data.MinElevation | HumanDistance }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
                     ></td>
                     <th>Max elevation</th>
-                    <td>{{ .workout.Data.MaxElevation | HumanDistance }}</td>
+                    <td>{{ .Data.MaxElevation | HumanDistance }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
                     ></td>
                     <th>Total up</th>
-                    <td>{{ .workout.Data.TotalUp | HumanDistance }}</td>
+                    <td>{{ .Data.TotalUp | HumanDistance }}</td>
                   </tr>
                   <tr>
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
                     ></td>
                     <th>Total down</th>
-                    <td>{{ .workout.Data.TotalDown | HumanDistance }}</td>
+                    <td>{{ .Data.TotalDown | HumanDistance }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -182,7 +177,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{ range .workoutStatistics }}
+                  {{ range $.workoutStatistics }}
                   <tr>
                     <td>
                       {{ if .IsWorst }}
@@ -207,6 +202,7 @@
           </div>
         </div>
       </div>
+      {{ end }}
     </div>
 
     {{ template "footer" . }}

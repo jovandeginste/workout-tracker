@@ -66,7 +66,7 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 		return
 	}
 
-	data["user"] = u
+	data["currentUser"] = u
 }
 
 func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {

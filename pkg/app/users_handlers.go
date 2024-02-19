@@ -88,5 +88,13 @@ func (a *App) userProfileHandler(c echo.Context) error {
 
 func (a *App) userShowHandler(c echo.Context) error {
 	data := a.defaultData(c)
+
+	u, err := a.getUser(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	}
+
+	data["user"] = u
+
 	return c.Render(http.StatusOK, "user_show.html", data)
 }

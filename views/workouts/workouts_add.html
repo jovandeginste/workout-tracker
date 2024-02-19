@@ -12,7 +12,11 @@
         >
           Add a workout
         </h2>
-        <form method="post" action="/workouts" enctype="multipart/form-data">
+        <form
+          method="post"
+          action="{{ RouteFor `workouts-create` }}"
+          enctype="multipart/form-data"
+        >
           <div class="form-row">
             <label for="file">File</label>
             <div>

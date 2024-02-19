@@ -10,7 +10,11 @@
         Manage
       </h2>
       {{ with .adminUser }}
-      <form action="/admin/users/{{ .ID }}" method="post" class="inner-form">
+      <form
+        action="{{ RouteFor `admin-user-update` .ID }}"
+        method="post"
+        class="inner-form"
+      >
         <div class="form-row">
           <label for="username">Name</label>
           <div>

@@ -21,7 +21,7 @@
             >
               Sign In
             </h3>
-            <form method="post" action="/user/signin">
+            <form method="post" action="{{ RouteFor `user-signin` }}">
               <div class="form-row">
                 <label for="username">Username</label>
                 <div>
@@ -52,7 +52,7 @@
             >
               Create a new account
             </h3>
-            <form method="post" action="/user/register">
+            <form method="post" action="{{ RouteFor `user-register` }}">
               <div class="form-row">
                 <label for="username">Username</label>
                 <div>
