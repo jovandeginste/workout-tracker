@@ -133,6 +133,7 @@ make clean # Removes build artifacts
 
 ## TODO
 
+- write tests!!!!!
 - aggregated statistics and graphs
   - eg. number of kilometers per month
 - add support for authentication through a reverse proxy
