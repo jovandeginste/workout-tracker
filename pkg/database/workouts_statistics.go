@@ -32,6 +32,11 @@ func (w *Workout) StatisticsPerKilometer() []StatisticsItem {
 			nextItem.Point = &w.Data.Points[i]
 		}
 
+		// m/s -> km/h, cut-off is speed less than 1 km/h
+		if p.AverageSpeed()*3.6 < 1.0 {
+			continue
+		}
+
 		if !nextItem.CanHave(p.Distance) {
 			nextItem.CalcultateSpeed()
 			items = append(items, nextItem)

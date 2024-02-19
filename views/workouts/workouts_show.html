@@ -104,8 +104,26 @@
                     <td
                       class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
                     ></td>
+                    <th>Average speed (no pauze)</th>
+                    <td>
+                      {{ .workout.Data.AverageSpeedNoPauze | HumanSpeed }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+                    ></td>
                     <th>Average tempo</th>
                     <td>{{ .workout.Data.AverageSpeed | HumanTempo }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+                    ></td>
+                    <th>Average tempo (no pauze)</th>
+                    <td>
+                      {{ .workout.Data.AverageSpeedNoPauze | HumanTempo }}
+                    </td>
                   </tr>
                   <tr>
                     <td
@@ -153,7 +171,7 @@
               </table>
             </div>
             <div class="inner-form">
-              <table class="workouts-list">
+              <table class="workout-info">
                 <thead>
                   <tr>
                     <th></th>

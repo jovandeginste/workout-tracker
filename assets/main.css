@@ -121,12 +121,13 @@
 
   table {
     @apply text-sm w-full text-left rtl:text-right table-auto;
-    @apply border border-neutral-800;
+    @apply border border-neutral-500;
     thead {
       @apply uppercase;
-      tr {
-        @apply border border-neutral-800;
-      }
+    }
+    tr {
+      @apply border border-neutral-500;
+      @apply hover:border-amber-500;
     }
     td,
     th {
@@ -144,8 +145,6 @@
   }
 
   .workout-info {
-    @apply border-neutral-700;
-
     th,
     td {
       @apply px-2;
@@ -153,7 +152,7 @@
     tr {
       @apply mb-2;
     }
-    th {
+    tbody th {
       @apply font-bold after:content-[':'];
     }
   }

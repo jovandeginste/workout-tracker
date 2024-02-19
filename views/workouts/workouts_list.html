@@ -12,7 +12,7 @@
         Workouts
       </h2>
 
-      <table class="workouts-list">
+      <table class="workout-info">
         <thead>
           <tr>
             <th></th>
@@ -36,9 +36,9 @@
                     icon-{{ .Type | FAIconName }}"
               ></div>
             </td>
-            <th>
+            <td>
               <a href="/workouts/{{ .ID }}">{{ .Name | html }}</a>
-            </th>
+            </td>
             <td>
               <span title="{{ .Date | LocalDate }}">
                 {{ .Date | RelativeDate }}
@@ -47,8 +47,8 @@
             <td>{{ template "snippet_location" .Data.Address }}</td>
             <td>{{ .Data.TotalDistance | HumanDistance }}</td>
             <td>{{ .Data.TotalDuration }}</td>
-            <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
-            <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
+            <td>{{ .Data.AverageSpeedNoPauze | HumanSpeed }}</td>
+            <td>{{ .Data.AverageSpeedNoPauze | HumanTempo }}</td>
             <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
             <td>
               <span class="actions"> {{ template "workout_actions" . }} </span>

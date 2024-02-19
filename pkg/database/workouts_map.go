@@ -20,21 +20,21 @@ func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
 }
 
 type MapData struct {
-	Name          string
-	Date          string
-	Center        MapCenter
-	Address       *geo.Address
-	TotalDistance float64
-	TotalDuration time.Duration
-	AverageSpeed  float64
-	AverageTempo  float64
-	MaxSpeed      float64
-	PauzeDuration time.Duration
-	MinElevation  float64
-	MaxElevation  float64
-	TotalUp       float64
-	TotalDown     float64
-	Points        []MapPoint
+	Name                string
+	Date                string
+	Center              MapCenter
+	Address             *geo.Address
+	TotalDistance       float64
+	TotalDuration       time.Duration
+	AverageSpeed        float64
+	AverageSpeedNoPauze float64
+	MaxSpeed            float64
+	PauzeDuration       time.Duration
+	MinElevation        float64
+	MaxElevation        float64
+	TotalUp             float64
+	TotalDown           float64
+	Points              []MapPoint
 }
 type MapCenter struct {
 	Lat float64
@@ -48,6 +48,10 @@ type MapPoint struct {
 	Duration      time.Duration
 	TotalDuration time.Duration
 	Title         string
+}
+
+func (m *MapPoint) AverageSpeed() float64 {
+	return m.Distance / m.Duration.Seconds()
 }
 
 // center returns the center point (lat, lng) of gpx points
@@ -105,22 +109,24 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 
 	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
 	totalDuration := time.Duration(gpxContent.Tracks[0].Segments[0].Duration()) * time.Second
+	pauzeDuration := time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second
 
 	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
 	data := &MapData{
-		Name:          gpxName(gpxContent),
-		Center:        mapCenter,
-		Address:       mapCenter.Address(),
-		TotalDistance: totalDistance,
-		TotalDuration: totalDuration,
-		AverageSpeed:  totalDistance / totalDuration.Seconds(),
-		MaxSpeed:      gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
-		PauzeDuration: time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second,
-		MinElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation,
-		MaxElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation,
-		TotalUp:       updown.Uphill,
-		TotalDown:     updown.Downhill,
+		Name:                gpxName(gpxContent),
+		Center:              mapCenter,
+		Address:             mapCenter.Address(),
+		TotalDistance:       totalDistance,
+		TotalDuration:       totalDuration,
+		AverageSpeed:        totalDistance / totalDuration.Seconds(),
+		AverageSpeedNoPauze: totalDistance / (totalDuration - pauzeDuration).Seconds(),
+		MaxSpeed:            gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
+		PauzeDuration:       pauzeDuration,
+		MinElevation:        gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation,
+		MaxElevation:        gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation,
+		TotalUp:             updown.Uphill,
+		TotalDown:           updown.Downhill,
 	}
 
 	return data

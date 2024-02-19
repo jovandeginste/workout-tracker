@@ -861,18 +861,20 @@ table:where([dir="rtl"], [dir="rtl"] *) {
 table {
   border-width: 1px;
   --tw-border-opacity: 1;
-  border-color: rgb(38 38 38 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
   thead {
     text-transform: uppercase;
   }
-  thead {
-    tr {
-      border-width: 1px;
-    }
-    tr {
-      --tw-border-opacity: 1;
-      border-color: rgb(38 38 38 / var(--tw-border-opacity));
-    }
+  tr {
+    border-width: 1px;
+  }
+  tr {
+    --tw-border-opacity: 1;
+    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  }
+  tr:hover {
+    --tw-border-opacity: 1;
+    border-color: rgb(245 158 11 / var(--tw-border-opacity));
   }
   td,
     th {
@@ -900,8 +902,6 @@ table {
 }
 
 .workout-info {
-  --tw-border-opacity: 1;
-  border-color: rgb(64 64 64 / var(--tw-border-opacity));
   th,
     td {
     padding-left: 0.5rem;
@@ -910,10 +910,10 @@ table {
   tr {
     margin-bottom: 0.5rem;
   }
-  th {
+  tbody th {
     font-weight: 700;
   }
-  th::after {
+  tbody th::after {
     --tw-content: ':';
     content: var(--tw-content);
   }
