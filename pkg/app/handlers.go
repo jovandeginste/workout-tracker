@@ -26,6 +26,14 @@ func (a *App) dashboardHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
+	if err := a.addUsers(data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
+
+	if err := a.addRecentWorkouts(data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
+
 	data["user"] = u
 
 	return c.Render(http.StatusOK, "user_show.html", data)

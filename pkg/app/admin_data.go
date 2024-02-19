@@ -7,30 +7,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) adminAddUsers(data map[string]interface{}, c echo.Context) {
-	users, err := database.GetUsers(a.db)
-	if err != nil {
-		a.addError(data, c)
-		return
-	}
-
-	data["adminUsers"] = users
-}
-
 func (a *App) adminAddUser(data map[string]interface{}, c echo.Context) {
-	userID, err := strconv.Atoi(c.Param("id"))
+	user, err := a.getUser(c)
 	if err != nil {
 		a.addError(data, c)
 		return
 	}
 
-	user, err := database.GetUserByID(a.db, userID)
-	if err != nil {
-		a.addError(data, c)
-		return
-	}
-
-	data["adminUser"] = user
+	data["user"] = user
 }
 
 func (a *App) getUser(c echo.Context) (*database.User, error) {

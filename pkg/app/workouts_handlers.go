@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/jovandeginste/workouts/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,7 +27,7 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := database.GetWorkout(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}

@@ -10,9 +10,11 @@
     <div class="content">
       {{ with .workout }}
       <div class="gap-4">
+        {{ if eq .User.ID $.currentUser.ID }}
         <span class="float-right actions">
           {{ template "workout_actions" . }}
         </span>
+        {{ end }}
 
         <h2
           class="icon-{{ .Type | FAIconClass }} icon-baseline icon-space-sm icon-before

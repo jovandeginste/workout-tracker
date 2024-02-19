@@ -9,7 +9,10 @@ import (
 
 func (a *App) adminRootHandler(c echo.Context) error {
 	data := a.defaultData(c)
-	a.adminAddUsers(data, c)
+
+	if err := a.addUsers(data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
 
 	return c.Render(http.StatusOK, "admin_root.html", data)
 }

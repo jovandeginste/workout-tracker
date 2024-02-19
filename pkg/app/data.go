@@ -80,6 +80,28 @@ func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
 	return nil
 }
 
+func (a *App) addRecentWorkouts(data map[string]interface{}) error {
+	w, err := database.GetRecentWorkouts(a.db, 10)
+	if err != nil {
+		return err
+	}
+
+	data["recentWorkouts"] = w
+
+	return nil
+}
+
+func (a *App) addUsers(data map[string]interface{}) error {
+	users, err := database.GetUsers(a.db)
+	if err != nil {
+		return err
+	}
+
+	data["users"] = users
+
+	return nil
+}
+
 func (a *App) addUserStatistics(u *database.User, data map[string]interface{}) error {
 	us, err := u.Statistics(a.db)
 	if err != nil {

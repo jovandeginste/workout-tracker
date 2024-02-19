@@ -51,6 +51,26 @@ func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 	return &w
 }
 
+func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {
+	var w []Workout
+
+	if err := db.Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
+func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
+	var w Workout
+
+	if err := db.Preload("User").First(&w, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &w, nil
+}
+
 func (w *Workout) Delete(db *gorm.DB) error {
 	return db.Unscoped().Delete(w).Error
 }

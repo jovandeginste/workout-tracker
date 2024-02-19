@@ -63,6 +63,33 @@
           });
         </script>
       </div>
+      <div class="inner-form">
+        <h3
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-users"
+        >
+          Other users
+        </h3>
+
+        <div class="flex flex-wrap gap-5">
+          {{ range .users }} {{ if ne .ID $.user.ID }}
+          <a
+            class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
+            href="{{ RouteFor `user-show` .ID }}"
+            >{{ .Username | html }}</a
+          >
+          {{ end }} {{ end }}
+        </div>
+      </div>
+      <div class="inner-form">
+        <h3
+          class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
+        >
+          Recent activity
+        </h3>
+        <div class="flex gap-5">
+          {{ range .recentWorkouts }} {{ template "workout_item" . }} {{ end }}
+        </div>
+      </div>
     </div>
 
     {{ template "footer" . }}

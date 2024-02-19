@@ -9,7 +9,7 @@
       <h2 class="icon-solid icon-baseline icon-space-sm icon-before icon-gear">
         Manage
       </h2>
-      {{ with .adminUser }}
+      {{ with .user }}
       <form
         action="{{ RouteFor `admin-user-update` .ID }}"
         method="post"

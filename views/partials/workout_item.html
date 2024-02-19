@@ -1,0 +1,7 @@
+{{ define "workout_item" }}
+<a
+  class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
+  href="{{ RouteFor `workout-show` .ID }}"
+  >{{ .User.Username | html }}</a
+>
+{{ end }}
