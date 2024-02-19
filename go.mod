@@ -1,6 +1,6 @@
 module github.com/jovandeginste/workouts
 
-go 1.21.5
+go 1.21
 
 require (
 	github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6
