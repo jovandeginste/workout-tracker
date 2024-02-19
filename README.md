@@ -38,6 +38,8 @@ Details of a workout, with:
 - green and red circle are beginning and and of the track
 - every point on the track has a tooltip with a summary at that moment
 
+![](docs/track_tooltip.gif)
+
 ### Upload your files
 
 ![](docs/upload_workouts.jpg)
