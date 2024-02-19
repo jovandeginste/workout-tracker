@@ -46,6 +46,7 @@ func (a *App) createAdminUser() error {
 	u := &database.User{
 		Username: "admin",
 		Password: "admin",
+		Name:     "Administrator",
 		Active:   true,
 		Admin:    true,
 	}
