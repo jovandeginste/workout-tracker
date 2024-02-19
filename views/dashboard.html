@@ -26,8 +26,9 @@
           document.addEventListener("DOMContentLoaded", function () {
             var calendarEl = document.getElementById("calendar");
             var calendar = new FullCalendar.Calendar(calendarEl, {
-              timeZone: "Belgium",
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
               initialView: "dayGridMonth",
+              locale: Intl.DateTimeFormat().resolvedOptions().locale,
               firstDay: 1,
               aspectRatio: 2,
               eventContent: function(arg) {
