@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <div class="gap-4">
+        <h2
+          class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
+                    icon-{{ .workout.Type | FAIconName }}"
+        >
+          {{ .workout.Name | html }}
+        </h2>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="inner-form">
+          <form method="post" action="/workouts/{{ .workout.ID }}">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <div>
+                <input
+                  id="name"
+                  name="name"
+                  size="20"
+                  value="{{ .workout.Name }}"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="type">Type</label>
+              <div>
+                <input
+                  id="type"
+                  name="type"
+                  size="20"
+                  value="{{ .workout.Type }}"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="notes">Notes</label>
+              <div>
+                <textarea type="text" id="notes" name="notes" size="20">
+{{ .workout.Notes }}</textarea
+                >
+              </div>
+            </div>
+            <div class="form-row">
+              <div></div>
+              <button type="submit" size="20">Update workout</button>
+            </div>
+          </form>
+        </div>
+        <div class="grid grid-cols-1">
+          {{ if .workout.Notes }}
+          <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
+            <div class="flex">
+              <div
+                class="font-bold rounded-xl icon-solid icon-baseline icon-space-sm icon-before icon-quote-left"
+              ></div>
+              {{ .workout.Notes }}
+            </div>
+          </div>
+          {{ end }}
+          <div class="grid grid-cols-2 gap-4">
+            <div class="inner-form">
+              <table class="workout-info">
+                <tbody>
+                  <tr>
+                    <td
+                      class="icon-regular icon-baseline icon-space-sm icon-before icon-calendar"
+                    ></td>
+                    <th>Date</th>
+                    <td>
+                      <span title="{{ .workout.Date | LocalDate }}">
+                        {{ .workout.Date | RelativeDate }}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-map-location-dot"
+                    ></td>
+                    <th>Location</th>
+                    <td>
+                      {{ template "snippet_location" .workout.Data.Address }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
+                    ></td>
+                    <th>Type</th>
+                    <td>{{ .workout.Type }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-regular icon-baseline icon-before icon-space-sm icon-clock"
+                    ></td>
+                    <th>Total duration</th>
+                    <td>{{ .workout.Data.TotalDuration }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-road"
+                    ></td>
+                    <th>Total distance</th>
+                    <td>{{ .workout.Data.TotalDistance | HumanDistance }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+                    ></td>
+                    <th>Average speed</th>
+                    <td>{{ .workout.Data.AverageSpeed | HumanSpeed }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+                    ></td>
+                    <th>Average tempo</th>
+                    <td>{{ .workout.Data.AverageSpeed | HumanTempo }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
+                    ></td>
+                    <th>Max speed</th>
+                    <td>{{ .workout.Data.MaxSpeed | HumanSpeed }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-hourglass"
+                    ></td>
+                    <th>Time pauzed</th>
+                    <td>{{ .workout.Data.PauzeDuration }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+                    ></td>
+                    <th>Min elevation</th>
+                    <td>{{ .workout.Data.MinElevation | HumanDistance }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+                    ></td>
+                    <th>Max elevation</th>
+                    <td>{{ .workout.Data.MaxElevation | HumanDistance }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
+                    ></td>
+                    <th>Total up</th>
+                    <td>{{ .workout.Data.TotalUp | HumanDistance }}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
+                    ></td>
+                    <th>Total down</th>
+                    <td>{{ .workout.Data.TotalDown | HumanDistance }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="inner-form">
+              <table class="workouts-list">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>KM</th>
+                    <th>Duration</th>
+                    <th>Speed</th>
+                    <th>Tempo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{ range .workoutStatistics }}
+                  <tr>
+                    <td>
+                      {{ if .IsWorst }}
+                      <span
+                        class="icon-baseline icon-space-sm text-orange-600 icon-solid icon-after icon-arrow-down-long"
+                      ></span
+                      >{{ end }} {{ if .IsBest }}
+                      <span
+                        class="icon-baseline icon-space-sm text-green-500 icon-solid icon-after icon-arrow-up-long"
+                      ></span
+                      >{{ end }}
+                    </td>
+                    <td class="text-center">{{ .Kilometer }}</td>
+                    <td>{{ .Duration }}</td>
+                    <td>{{ .Speed | HumanSpeed }}</td>
+                    <td>{{ .Speed | HumanTempo }}</td>
+                  </tr>
+                  {{ end }}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ template "footer" }}
+  </body>
+</html>

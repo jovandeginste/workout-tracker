@@ -89,6 +89,21 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsUpdateHandler(c echo.Context) error {
+	workout, ok := c.Get("workout").(*database.Workout)
+	if !ok {
+		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+	}
+
+	workout.Name = c.FormValue("name")
+	workout.Notes = c.FormValue("notes")
+	workout.Type = c.FormValue("type")
+
+	workout.Save(a.db)
+
+	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
+}
+
+func (a *App) workoutsPostHandler(c echo.Context) error {
 	if err := a.addWorkoutToContext(c); err != nil {
 		return a.redirectWithError(c, err)
 	}
@@ -100,8 +115,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	case "refresh":
 		return a.workoutsRefreshHandler(c)
 	default:
-		data := a.defaultData(c)
-		return c.Render(http.StatusOK, "workouts_update.html", data)
+		return a.workoutsUpdateHandler(c)
 	}
 }
 

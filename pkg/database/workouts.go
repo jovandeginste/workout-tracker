@@ -59,6 +59,10 @@ func (w *Workout) Create(db *gorm.DB) error {
 	return db.Create(w).Error
 }
 
+func (w *Workout) Save(db *gorm.DB) error {
+	return db.Save(w).Error
+}
+
 func (w *Workout) AsGPX() (*gpx.GPX, error) {
 	return parseGPX(w.GPXData)
 }
