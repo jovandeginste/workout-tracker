@@ -65,16 +65,24 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 func (a *App) workoutsDeleteHandler(c echo.Context) error {
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", c.Param("id")))
+		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
+	if err := workout.Delete(a.db); err != nil {
+		return a.redirectWithError(c, err)
+	}
+
+	return c.Redirect(http.StatusMovedPermanently, "/workouts")
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", c.Param("id")))
+		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+	}
+
+	if err := workout.UpdateData(a.db); err != nil {
+		return a.redirectWithError(c, err)
 	}
 
 	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))

@@ -51,6 +51,10 @@ func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
 	return &w
 }
 
+func (w *Workout) Delete(db *gorm.DB) error {
+	return db.Unscoped().Delete(w).Error
+}
+
 func (w *Workout) Create(db *gorm.DB) error {
 	return db.Create(w).Error
 }
