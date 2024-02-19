@@ -160,13 +160,3 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "workouts_edit.html", data)
 }
-
-func (a *App) userProfileHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "user_profile.html", data)
-}
-
-func (a *App) adminRootHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "admin_root.html", data)
-}
