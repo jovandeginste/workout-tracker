@@ -8,12 +8,65 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2
-        class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
+      <div class="gap-4">
+        <span class="actions">
+          <form action="/workouts/edit/{{ .workout.ID }}" method="get">
+            <button>
+              <a class="icon-pen-to-square"></a>
+            </button>
+          </form>
+          <form action="/workouts/{{ .workout.ID }}" method="post">
+            <button name="action" value="refresh">
+              <a class="icon-arrows-rotate"></a>
+            </button>
+          </form>
+          <form onsubmit="return false">
+            <button onclick="openModal('modalConfirmDelete')">
+              <a class="icon-trash"></a>
+            </button>
+          </form>
+
+          <div id="modalConfirmDelete" class="modal">
+            <div class="window">
+              <div class="flex justify-end p-2">
+                <button
+                  onclick="closeModal('modalConfirmDelete')"
+                  type="button"
+                  class="close-modal"
+                >
+                  <a class="icon-xmark"></a>
+                </button>
+              </div>
+
+              <div class="modal-content">
+                <h3>Are you sure you want to delete this workout?</h3>
+                <div class="flex">
+                  <form method="post" action="/workouts/{{ .workout.ID }}">
+                    <button name="action" value="delete" class="confirm">
+                      Continue
+                    </button>
+                  </form>
+                  <form onsubmit="return false">
+                    <button
+                      onclick="closeModal('modalConfirmDelete')"
+                      class="cancel"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+
+        <h2
+          class="icon-{{ .workout.Type | FAIconClass }} icon-baseline icon-space-sm icon-before
                     icon-{{ .workout.Type | FAIconName }}"
-      >
-        {{ .workout.Name | html }}
-      </h2>
+        >
+          {{ .workout.Name | html }}
+        </h2>
+      </div>
       <div class="grid grid-cols-2 gap-4">
         <div
           id="map"
