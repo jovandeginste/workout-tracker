@@ -69,17 +69,26 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 	data["currentUser"] = u
 }
 
-func (a *App) addWorkouts(data map[string]interface{}, c echo.Context) {
-	w, err := a.getCurrentUser(c).GetWorkouts(a.db)
+func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
+	w, err := u.GetWorkouts(a.db)
 	if err != nil {
-		a.addError(data, c)
+		return err
 	}
 
 	data["workouts"] = w
+
+	return nil
 }
 
-func (a *App) addUserStatistics(data map[string]interface{}, c echo.Context) {
-	data["UserStatistics"] = a.getCurrentUser(c).Statistics(a.db)
+func (a *App) addUserStatistics(u *database.User, data map[string]interface{}) error {
+	us, err := u.Statistics(a.db)
+	if err != nil {
+		return err
+	}
+
+	data["UserStatistics"] = us
+
+	return nil
 }
 
 func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {

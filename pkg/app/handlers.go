@@ -7,18 +7,28 @@ import (
 )
 
 func (a *App) redirectWithError(c echo.Context, target string, err error) error {
-	a.setError(c, err.Error())
+	if err != nil {
+		a.setError(c, err.Error())
+	}
 
 	return c.Redirect(http.StatusFound, target)
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
 	data := a.defaultData(c)
+	u := a.getCurrentUser(c)
 
-	a.addWorkouts(data, c)
-	a.addUserStatistics(data, c)
+	if err := a.addWorkouts(u, data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
 
-	return c.Render(http.StatusOK, "dashboard.html", data)
+	if err := a.addUserStatistics(u, data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
+
+	data["user"] = u
+
+	return c.Render(http.StatusOK, "user_show.html", data)
 }
 
 func (a *App) userLoginHandler(c echo.Context) error {

@@ -24,7 +24,7 @@
             {{ range .adminUsers }}
             <tr>
               <th>
-                <a href="{{ RouteFor `admin-user-show` .ID }}"
+                <a href="{{ RouteFor `user-show` .ID }}"
                   >{{ .Username | html }}</a
                 >
               </th>

@@ -7,10 +7,62 @@
     {{ template "header" . }}
     <div class="content">
       <h2
-        class="icon-solid icon-baseline icon-space-sm icon-before icon-user-circle"
+        class="icon-solid icon-baseline icon-space-sm icon-before icon-chart-line"
       >
-        Your profile
+        Dashboard for {{ .user.Username | html }}
       </h2>
+
+      {{ template "stats_records_total" .UserStatistics.Total }}
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          {{ if len .workouts }}
+          <div class="inner-form">
+            {{ template "stats_records_running" .UserStatistics.Records }}
+          </div>
+          {{ end }}
+        </div>
+        <div class="inner-form" id="calendar"></div>
+        <script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var calendarEl = document.getElementById("calendar");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              initialView: "dayGridMonth",
+              locale: Intl.DateTimeFormat().resolvedOptions().locale,
+              firstDay: 1,
+              aspectRatio: 2,
+              eventContent: function(arg) {
+                let eventSpan = document.createElement('div')
+
+                eventSpan.innerHTML = arg.event.title
+                eventSpan.classList.add(
+                  "px-2", "icon-baseline", "icon-before", "icon-space-sm", "overflow-hidden",
+                  arg.event.extendedProps.iconClass, arg.event.extendedProps.iconName
+                )
+
+                return { domNodes: [ eventSpan ] }
+              },
+              events: [
+                {{ range $idx, $w := .workouts }}
+                {
+                  title: "{{ $w.Type }}",
+                  start: "{{ $w.Date | LocalDate }}",
+                  url: "/workouts/{{ $w.ID }}",
+                  display: 'block',
+                  extendedProps: {
+                    iconClass: "icon-{{ $w.Type | FAIconClass }}",
+                    iconName: "icon-{{ $w.Type | FAIconName }}",
+                  },
+                },
+                {{ end }}
+              ],
+            });
+            calendar.render();
+          });
+        </script>
+      </div>
     </div>
 
     {{ template "footer" . }}

@@ -41,12 +41,12 @@ func (r *record) CheckAndSwap(value float64, id uint, date *time.Time) {
 	}
 }
 
-func (u *User) Statistics(db *gorm.DB) *UserStatistics {
+func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 	us := &UserStatistics{}
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {
-		return us
+		return nil, err
 	}
 
 	us.Total.Workouts = len(workouts)
@@ -92,5 +92,5 @@ func (u *User) Statistics(db *gorm.DB) *UserStatistics {
 		}
 	}
 
-	return us
+	return us, nil
 }

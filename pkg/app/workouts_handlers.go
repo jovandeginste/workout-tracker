@@ -11,7 +11,9 @@ import (
 func (a *App) workoutsHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
-	a.addWorkouts(data, c)
+	if err := a.addWorkouts(a.getCurrentUser(c), data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	}
 
 	return c.Render(http.StatusOK, "workouts_list.html", data)
 }
