@@ -7,7 +7,7 @@ all: build-all serve
 clean:
 	rm ./tmp/main ./assets/output.css
 
-build-all: build-tw build-server
+build-all: build-tw build-server build-docker
 
 build-server:
 	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./
