@@ -59,6 +59,7 @@
           });
         </script>
       </div>
+      {{ if .users }}
       <div class="inner-form">
         <h3 class="{{ IconFor `users` }}">Other users</h3>
 
@@ -75,11 +76,11 @@
       <div class="inner-form">
         <h3 class="{{ IconFor `workout` }}">Recent activity</h3>
         <div class="flex flex-wrap">
-          {{ range .recentWorkouts }} {{ template "workout_item" . }} {{ end }}
+          {{ range .recentWorkouts }} {{ if ne .User.ID $.currentUser.ID }} {{
+          template "workout_item" . }} {{ end }}{{ end }}
         </div>
       </div>
     </div>
-
-    {{ template "footer" . }}
+    {{ end }} {{ template "footer" . }}
   </body>
 </html>

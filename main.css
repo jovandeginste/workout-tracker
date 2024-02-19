@@ -155,7 +155,7 @@
   }
 
   .workout-tile-info {
-    @apply border rounded-lg py-1 px-2 text-sm;
+    @apply border rounded-lg py-1 px-2 text-sm font-mono;
   }
 
   .modal {

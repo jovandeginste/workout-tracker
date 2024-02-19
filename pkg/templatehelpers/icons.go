@@ -106,6 +106,8 @@ func utilityIcon(what string) string {
 		return "icon-solid icon-baseline icon-space-sm icon-before icon-right-from-bracket"
 	case "user-register":
 		return "icon-solid icon-baseline icon-space-sm icon-before icon-user-plus"
+	case "user":
+		return "icon-solid icon-baseline icon-space-sm icon-before icon-user"
 	default:
 		return ""
 	}

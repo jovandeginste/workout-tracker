@@ -849,6 +849,7 @@ table {
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
@@ -1418,6 +1419,10 @@ table {
   text-align: right;
 }
 
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -1976,6 +1981,14 @@ table {
 
 .icon-trash::after {
   content: "\f1f8";
+}
+
+.icon-user::before {
+  content: "\f007";
+}
+
+.icon-user::after {
+  content: "\f007";
 }
 
 .icon-user-plus::before {

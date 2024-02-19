@@ -3,6 +3,14 @@
   <div
     class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
   >
+    <span class="float-right text-sm">
+      <a
+        class="{{ IconFor `user` }}"
+        href="{{ RouteFor `user-show` .User.ID }}"
+      >
+        {{ .User.Name | html }}</a
+      >
+    </span>
     <div min-w-40>
       <a class="{{ IconFor .Type }}" href="{{ RouteFor `workout-show` .ID }}"
         >{{ .Name | html }}</a
