@@ -1,16 +1,16 @@
 GIT_TAG ?= $(shell git describe --tags)
 
-.PHONY: all clean test
+.PHONY: all clean test build
 
-all: clean test build-all
+all: clean test build
 
 clean:
-	rm ./tmp/main ./assets/output.css
+	rm ./tmp/main ./assets/output.css ./workouts
 
 dev:
 	air
 
-build-all: build-tw build-server build-docker
+build: build-tw build-server build-docker
 
 build-server: build-tw
 	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./

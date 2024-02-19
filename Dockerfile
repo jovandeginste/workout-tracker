@@ -1,4 +1,18 @@
-FROM golang:alpine as builder
+FROM node:alpine as tailwind
+
+WORKDIR /app
+
+RUN npm install tailwindcss
+COPY tailwind.config.js ./tailwind.config.js
+COPY node_modules ./node_modules
+COPY main.css ./main.css
+COPY pkg ./pkg
+COPY views ./views
+COPY assets ./assets
+
+RUN npx tailwindcss -i ./main.css -o ./assets/output.css
+
+FROM golang:alpine as gobuilder
 
 WORKDIR /app
 
@@ -10,13 +24,14 @@ COPY pkg ./pkg
 COPY vendor ./vendor
 COPY views ./views
 COPY assets ./assets
+COPY --from=tailwind /app/assets/output.css ./assets/output.css
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /workouts
 
 FROM alpine:latest
 
 WORKDIR /app
-COPY --from=builder /workouts ./workouts
+COPY --from=gobuilder /workouts ./workouts
 
 ENTRYPOINT ["/app/workouts"]
 EXPOSE 8080
