@@ -28,6 +28,10 @@ func (a *App) Connect() error {
 
 	a.db = db
 
+	if err := db.First(&database.User{}).Error; err != nil {
+		a.createAdminUser()
+	}
+
 	return nil
 }
 
@@ -36,4 +40,21 @@ func NewApp(l *slog.Logger) *App {
 		log:       l,
 		jwtSecret: []byte("secret"), // TODO: change to configuration
 	}
+}
+
+func (a *App) createAdminUser() error {
+	u := &database.User{
+		Username: "admin",
+		Password: "admin",
+		Active:   true,
+		Admin:    true,
+	}
+
+	if err := u.CryptPassword(); err != nil {
+		return err
+	}
+
+	a.log.Info("Creating admin user 'admin/admin'")
+
+	return u.Create(a.db)
 }
