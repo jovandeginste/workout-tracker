@@ -80,6 +80,8 @@ Generate a secure key and write it to `workout-tracker.yaml`:
 echo "jwt_encryption_key: $(pwgen -c 32)" > workout-tracker.yaml
 ```
 
+See `workout-tracker.example.yaml` for more options and details.
+
 ## Build and run it yourself
 
 - install go
