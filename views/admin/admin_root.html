@@ -9,6 +9,33 @@
       <h2 class="icon-solid icon-baseline icon-space-sm icon-before icon-gear">
         Manage
       </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th>Admin</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .adminUsers }}
+          <tr>
+            <th>
+              <a href="/admin/users/{{ .ID }}">{{ .Username | html }}</a>
+            </th>
+            <td>{{ .Name | html }}</td>
+            <td>{{ .Active | BoolToHTML }}</td>
+            <td>{{ .Admin | BoolToHTML }}</td>
+            <td>
+              <span class="actions"> {{ template "user_actions" . }} </span>
+            </td>
+          </tr>
+
+          {{ end }}
+        </tbody>
+      </table>
     </div>
 
     {{ template "footer" . }}

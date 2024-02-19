@@ -874,9 +874,9 @@ table {
       border-color: rgb(38 38 38 / var(--tw-border-opacity));
     }
   }
-  th {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  td,
+    th {
+    padding: 0.5rem;
   }
   tbody {
     tr:nth-child(odd) {
@@ -1508,9 +1508,182 @@ table {
   color: rgb(34 197 94 / var(--tw-text-opacity));
 }
 
+.text-green-500\/0 {
+  color: rgb(34 197 94 / 0);
+}
+
+.text-green-500\/10 {
+  color: rgb(34 197 94 / 0.1);
+}
+
+.text-green-500\/100 {
+  color: rgb(34 197 94 / 1);
+}
+
+.text-green-500\/15 {
+  color: rgb(34 197 94 / 0.15);
+}
+
+.text-green-500\/20 {
+  color: rgb(34 197 94 / 0.2);
+}
+
+.text-green-500\/25 {
+  color: rgb(34 197 94 / 0.25);
+}
+
+.text-green-500\/30 {
+  color: rgb(34 197 94 / 0.3);
+}
+
+.text-green-500\/35 {
+  color: rgb(34 197 94 / 0.35);
+}
+
+.text-green-500\/40 {
+  color: rgb(34 197 94 / 0.4);
+}
+
+.text-green-500\/45 {
+  color: rgb(34 197 94 / 0.45);
+}
+
+.text-green-500\/5 {
+  color: rgb(34 197 94 / 0.05);
+}
+
+.text-green-500\/50 {
+  color: rgb(34 197 94 / 0.5);
+}
+
+.text-green-500\/55 {
+  color: rgb(34 197 94 / 0.55);
+}
+
+.text-green-500\/60 {
+  color: rgb(34 197 94 / 0.6);
+}
+
+.text-green-500\/65 {
+  color: rgb(34 197 94 / 0.65);
+}
+
+.text-green-500\/70 {
+  color: rgb(34 197 94 / 0.7);
+}
+
+.text-green-500\/75 {
+  color: rgb(34 197 94 / 0.75);
+}
+
+.text-green-500\/80 {
+  color: rgb(34 197 94 / 0.8);
+}
+
+.text-green-500\/85 {
+  color: rgb(34 197 94 / 0.85);
+}
+
+.text-green-500\/90 {
+  color: rgb(34 197 94 / 0.9);
+}
+
+.text-green-500\/95 {
+  color: rgb(34 197 94 / 0.95);
+}
+
 .text-orange-600 {
   --tw-text-opacity: 1;
   color: rgb(234 88 12 / var(--tw-text-opacity));
+}
+
+.text-rose-500 {
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity));
+}
+
+.text-rose-500\/0 {
+  color: rgb(244 63 94 / 0);
+}
+
+.text-rose-500\/10 {
+  color: rgb(244 63 94 / 0.1);
+}
+
+.text-rose-500\/100 {
+  color: rgb(244 63 94 / 1);
+}
+
+.text-rose-500\/15 {
+  color: rgb(244 63 94 / 0.15);
+}
+
+.text-rose-500\/20 {
+  color: rgb(244 63 94 / 0.2);
+}
+
+.text-rose-500\/25 {
+  color: rgb(244 63 94 / 0.25);
+}
+
+.text-rose-500\/30 {
+  color: rgb(244 63 94 / 0.3);
+}
+
+.text-rose-500\/35 {
+  color: rgb(244 63 94 / 0.35);
+}
+
+.text-rose-500\/40 {
+  color: rgb(244 63 94 / 0.4);
+}
+
+.text-rose-500\/45 {
+  color: rgb(244 63 94 / 0.45);
+}
+
+.text-rose-500\/5 {
+  color: rgb(244 63 94 / 0.05);
+}
+
+.text-rose-500\/50 {
+  color: rgb(244 63 94 / 0.5);
+}
+
+.text-rose-500\/55 {
+  color: rgb(244 63 94 / 0.55);
+}
+
+.text-rose-500\/60 {
+  color: rgb(244 63 94 / 0.6);
+}
+
+.text-rose-500\/65 {
+  color: rgb(244 63 94 / 0.65);
+}
+
+.text-rose-500\/70 {
+  color: rgb(244 63 94 / 0.7);
+}
+
+.text-rose-500\/75 {
+  color: rgb(244 63 94 / 0.75);
+}
+
+.text-rose-500\/80 {
+  color: rgb(244 63 94 / 0.8);
+}
+
+.text-rose-500\/85 {
+  color: rgb(244 63 94 / 0.85);
+}
+
+.text-rose-500\/90 {
+  color: rgb(244 63 94 / 0.9);
+}
+
+.text-rose-500\/95 {
+  color: rgb(244 63 94 / 0.95);
 }
 
 .underline {
@@ -1821,6 +1994,14 @@ table {
 
 .icon-pen-to-square::after {
   content: "\f044";
+}
+
+.icon-pencil::before {
+  content: "\f303";
+}
+
+.icon-pencil::after {
+  content: "\f303";
 }
 
 .icon-person-running::before {

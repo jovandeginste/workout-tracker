@@ -27,14 +27,24 @@ type User struct {
 	Workouts []Workout
 }
 
+func GetUsers(db *gorm.DB) ([]User, error) {
+	var u []User
+
+	if err := db.Find(&u).Error; err != nil {
+		return nil, db.Error
+	}
+
+	return u, nil
+}
+
 func GetUser(db *gorm.DB, username string) (*User, error) {
-	var u *User
+	var u User
 
 	if err := db.Where(&User{Username: username}).First(&u).Error; err != nil {
 		return nil, db.Error
 	}
 
-	return u, nil
+	return &u, nil
 }
 
 type Profile struct {

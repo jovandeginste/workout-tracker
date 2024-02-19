@@ -9,5 +9,8 @@ module.exports = {
     {
       pattern: /icon-(person-running)/,
     },
+    {
+      pattern: /text-(green|rose)-500/,
+    },
   ],
 };

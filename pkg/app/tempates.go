@@ -45,6 +45,13 @@ func viewTemplateFunctions() template.FuncMap {
 		"FAIconClass": func(_ string) string {
 			return "solid"
 		},
+		"BoolToHTML": func(b bool) template.HTML {
+			if b {
+				return `<i class="text-green-500 fas fa-check"></i>`
+			}
+
+			return `<i class="text-rose-500 fas fa-times"></i>`
+		},
 
 		"BuildDecoratedAttribute": func(icon, name string, value interface{}) interface{} {
 			return struct {

@@ -128,8 +128,9 @@
         @apply border border-neutral-800;
       }
     }
+    td,
     th {
-      @apply py-2;
+      @apply p-2;
     }
     tbody {
       tr {
