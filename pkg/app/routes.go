@@ -55,14 +55,16 @@ func (a *App) Configure() error {
 
 	e.Renderer = &Template{parseViewTemplates()}
 
-	e.Static("/assets", "assets")
-	e.GET("/user/signin", a.loginHandler)
-	e.POST("/user/signin", a.SignIn)
-	e.POST("/user/register", a.Register)
-	e.GET("/user/signout", a.SignOut)
+	publicGroup := e.Group("")
 
-	a.addSecureRoutes(e)
-	a.addAdminRoutes(e)
+	publicGroup.Static("/assets", "assets")
+	publicGroup.GET("/user/signin", a.loginHandler)
+	publicGroup.POST("/user/signin", a.SignIn)
+	publicGroup.POST("/user/register", a.Register)
+	publicGroup.GET("/user/signout", a.SignOut)
+
+	sec := a.secureRoutes(publicGroup)
+	a.adminRoutes(sec)
 
 	a.echo = e
 
@@ -97,7 +99,7 @@ func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func (a *App) addSecureRoutes(e *echo.Echo) {
+func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	secureGroup := e.Group("")
 
 	secureGroup.Use(echojwt.WithConfig(echojwt.Config{
@@ -113,27 +115,22 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup.GET("/", a.dashboardHandler)
 	secureGroup.GET("/workouts", a.workoutsHandler)
 	secureGroup.GET("/workouts/:id", a.workoutsShowHandler)
-	secureGroup.GET("/workouts/edit/:id", a.workoutsEditHandler)
+	secureGroup.GET("/workouts/:id/edit", a.workoutsEditHandler)
 	secureGroup.POST("/workouts/:id", a.workoutsPostHandler)
 	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
 	secureGroup.GET("/user/profile", a.userProfileHandler)
 	secureGroup.POST("/workouts/add", a.addWorkout)
+
+	return secureGroup
 }
 
-func (a *App) addAdminRoutes(e *echo.Echo) {
+func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	adminGroup := e.Group("/admin")
-	adminGroup.Use(echojwt.WithConfig(echojwt.Config{
-		SigningKey:  a.jwtSecret,
-		TokenLookup: "cookie:token",
-		ErrorHandler: func(c echo.Context, err error) error {
-			log.Warn(err.Error())
-			return c.Redirect(http.StatusFound, "/user/signout")
-		},
-	}))
-	adminGroup.Use(a.ValidateUserMiddleware)
 	adminGroup.Use(a.ValidateAdminMiddleware)
 
 	adminGroup.GET("/", a.adminRootHandler)
+
+	return adminGroup
 }
 
 func (a *App) Serve() error {
