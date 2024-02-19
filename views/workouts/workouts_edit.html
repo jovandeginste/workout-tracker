@@ -39,6 +39,7 @@
                       name="type"
                       size="40"
                       value="{{ .Type }}"
+                      readonly
                     />
                   </td>
                 </tr>
@@ -47,7 +48,13 @@
                     <label for="notes">Notes</label>
                   </td>
                   <td>
-                    <textarea type="text" id="notes" name="notes" size="40">
+                    <textarea
+                      type="text"
+                      id="notes"
+                      name="notes"
+                      rows="10"
+                      cols="40"
+                    >
 {{ .Notes }}</textarea
                     >
                   </td>

@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
   <head>
     {{ template "head" }}
@@ -13,39 +12,56 @@
           action="{{ RouteFor `workouts-create` }}"
           enctype="multipart/form-data"
         >
-          <div class="form-row">
-            <label for="file">File</label>
-            <div>
-              <input type="file" id="file" name="file" accept=".gpx" multiple />
-            </div>
-          </div>
-          <div class="form-row">
-            <label for="type">Type</label>
-            <div>
-              <input
-                type="type"
-                id="type"
-                name="type"
-                size="20"
-                value="running"
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <label for="notes">Notes</label>
-            <div>
-              <textarea
-                type="text"
-                id="notes"
-                name="notes"
-                size="20"
-              ></textarea>
-            </div>
-          </div>
-          <div class="form-row">
-            <div></div>
-            <button type="submit" size="20">Add workout</button>
-          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td><label for="file">File</label></td>
+                <td>
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    accept=".gpx"
+                    size="40"
+                    multiple
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="type">Type</label>
+                </td>
+                <td>
+                  <input
+                    type="type"
+                    id="type"
+                    name="type"
+                    size="40"
+                    value="running"
+                    readonly
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="notes">Notes</label>
+                </td>
+                <td>
+                  <textarea
+                    type="text"
+                    id="notes"
+                    name="notes"
+                    rows="10"
+                    cols="40"
+                  ></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><button type="submit" size="40">Add workouts</button></td>
+              </tr>
+            </tbody>
+          </table>
         </form>
       </div>
     </div>
