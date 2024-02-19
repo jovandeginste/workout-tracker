@@ -13,7 +13,9 @@
     <a class="icon-regular icon-user-circle" href="/user/profile"
       >{{ .user.Username | html }}</a
     >
+    {{ if .user.Admin }}
     <a class="icon-gear" href="/admin/">Manage</a>
+    {{ end }}
     <a class="icon-arrow-right-from-bracket" href="/user/signout">Logout</a>
     {{ end }}
   </div>

@@ -62,10 +62,28 @@ func (a *App) Configure() error {
 	e.GET("/user/signout", a.SignOut)
 
 	a.addSecureRoutes(e)
+	a.addAdminRoutes(e)
 
 	a.echo = e
 
 	return nil
+}
+
+func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		u := a.getUser(ctx)
+		if u == nil || !u.IsActive() {
+			log.Warn("User is not found")
+			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
+		}
+
+		if !u.Admin {
+			log.Warn("User is not an admin")
+			return ctx.Redirect(http.StatusMovedPermanently, "/")
+		}
+
+		return next(ctx)
+	}
 }
 
 func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
@@ -100,6 +118,22 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 	secureGroup.GET("/workouts/add", a.workoutsAddHandler)
 	secureGroup.GET("/user/profile", a.userProfileHandler)
 	secureGroup.POST("/workouts/add", a.addWorkout)
+}
+
+func (a *App) addAdminRoutes(e *echo.Echo) {
+	adminGroup := e.Group("/admin")
+	adminGroup.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey:  a.jwtSecret,
+		TokenLookup: "cookie:token",
+		ErrorHandler: func(c echo.Context, err error) error {
+			log.Warn(err.Error())
+			return c.Redirect(http.StatusMovedPermanently, "/user/signout")
+		},
+	}))
+	adminGroup.Use(a.ValidateUserMiddleware)
+	adminGroup.Use(a.ValidateAdminMiddleware)
+
+	adminGroup.GET("/", a.adminRootHandler)
 }
 
 func (a *App) Serve() error {
