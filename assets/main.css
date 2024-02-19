@@ -80,17 +80,25 @@
     }
   }
   .actions {
-    @apply gap-3 text-base float-right items-baseline flex;
-  }
-  .actions > button,
-  .actions > form {
-    @apply my-0;
-  }
-  .actions > form > button {
-    @apply hover:bg-rose-500 text-white rounded-md px-4 py-2 bg-rose-700 transition;
-    a {
-      @apply text-white hover:text-white;
-      @apply icon-solid icon-baseline icon-before;
+    @apply gap-3 float-right items-baseline flex;
+    > button,
+    > form {
+      @apply my-0;
+
+      > button.edit {
+        @apply hover:bg-amber-300 bg-amber-500 transition;
+      }
+      > button.dangerous {
+        @apply hover:bg-rose-500 bg-rose-700 transition;
+      }
+      > button {
+        @apply text-white rounded-md px-2 py-1 transition;
+        @apply hover:bg-green-500 bg-green-700 transition;
+        a {
+          @apply text-white hover:text-white;
+          @apply icon-solid icon-baseline icon-before;
+        }
+      }
     }
   }
   .content {
@@ -126,7 +134,7 @@
     tbody {
       tr {
         @apply even:bg-neutral-700 odd:bg-neutral-800;
-        @apply hover:bg-zinc-800;
+        @apply hover:bg-amber-800;
         th {
           @apply whitespace-nowrap;
         }

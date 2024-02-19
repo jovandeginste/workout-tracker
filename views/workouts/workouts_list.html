@@ -24,6 +24,7 @@
             <th>Average speed</th>
             <th>Average tempo</th>
             <th>Max speed</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,9 @@
             <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
             <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
             <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
+            <td>
+              <span class="actions"> {{ template "workout_actions" . }} </span>
+            </td>
           </tr>
           {{ end }}
         </tbody>

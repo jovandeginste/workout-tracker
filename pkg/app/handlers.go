@@ -72,6 +72,8 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error {
 		return a.redirectWithError(c, err)
 	}
 
+	a.setNotice(c, fmt.Sprintf("The workout '%s' has been deleted.", workout.Name))
+
 	return c.Redirect(http.StatusMovedPermanently, "/workouts")
 }
 
@@ -84,6 +86,8 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 	if err := workout.UpdateData(a.db); err != nil {
 		return a.redirectWithError(c, err)
 	}
+
+	a.setNotice(c, fmt.Sprintf("The workout '%s' has been refreshed.", workout.Name))
 
 	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
 }
@@ -98,7 +102,11 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	workout.Notes = c.FormValue("notes")
 	workout.Type = c.FormValue("type")
 
-	workout.Save(a.db)
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, err)
+	}
+
+	a.setNotice(c, fmt.Sprintf("The workout '%s' has been updated.", workout.Name))
 
 	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
 }
@@ -142,7 +150,13 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 		return a.redirectWithError(c, err)
 	}
 
-	data["workout"] = c.Get("workout")
+	workout, ok := c.Get("workout").(*database.Workout)
+	if !ok {
+		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+	}
+
+	data["workout"] = workout
+	data["workoutStatistics"] = workout.StatisticsPerKilometer()
 
 	return c.Render(http.StatusOK, "workouts_edit.html", data)
 }
