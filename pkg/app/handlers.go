@@ -12,7 +12,7 @@ import (
 func (a *App) redirectWithError(c echo.Context, err error) error {
 	a.setError(c, err.Error())
 
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusFound, "/")
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
@@ -65,7 +65,7 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 func (a *App) workoutsDeleteHandler(c echo.Context) error {
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
 	}
 
 	if err := workout.Delete(a.db); err != nil {
@@ -74,13 +74,13 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error {
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been deleted.", workout.Name))
 
-	return c.Redirect(http.StatusMovedPermanently, "/workouts")
+	return c.Redirect(http.StatusFound, "/workouts")
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
 	}
 
 	if err := workout.UpdateData(a.db); err != nil {
@@ -89,13 +89,13 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been refreshed.", workout.Name))
 
-	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
+	return c.Redirect(http.StatusFound, fmt.Sprintf("/workouts/%d", workout.ID))
 }
 
 func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
 	}
 
 	workout.Name = c.FormValue("name")
@@ -108,7 +108,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 
 	a.setNotice(c, fmt.Sprintf("The workout '%s' has been updated.", workout.Name))
 
-	return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/workouts/%d", workout.ID))
+	return c.Redirect(http.StatusFound, fmt.Sprintf("/workouts/%d", workout.ID))
 }
 
 func (a *App) workoutsPostHandler(c echo.Context) error {
@@ -152,7 +152,7 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 
 	workout, ok := c.Get("workout").(*database.Workout)
 	if !ok {
-		return c.Redirect(http.StatusMovedPermanently, "/workouts/"+c.Param("id"))
+		return c.Redirect(http.StatusFound, "/workouts/"+c.Param("id"))
 	}
 
 	data["workout"] = workout

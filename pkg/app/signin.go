@@ -17,7 +17,7 @@ var (
 func (a *App) loginError(c echo.Context, err error) error {
 	a.setError(c, err.Error())
 
-	return c.Redirect(http.StatusMovedPermanently, "/user/signin")
+	return c.Redirect(http.StatusFound, "/user/signin")
 }
 
 // SignIn will be executed after SignInForm submission.
@@ -46,7 +46,7 @@ func (a *App) SignIn(c echo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusFound, "/")
 }
 
 // SignOut will log a user out
@@ -57,7 +57,7 @@ func (a *App) SignOut(c echo.Context) error {
 		return a.loginError(c, fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, "/user/signin")
+	return c.Redirect(http.StatusFound, "/user/signin")
 }
 
 // Register will be executed after registration submission.
@@ -84,5 +84,5 @@ func (a *App) Register(c echo.Context) error {
 
 	a.setNotice(c, "Your account has been created, but needs to be activated.")
 
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusFound, "/")
 }

@@ -61,5 +61,5 @@ func (a *App) addWorkout(c echo.Context) error {
 		a.setNotice(c, "A new workout was added:\n"+msg)
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, "/workouts")
+	return c.Redirect(http.StatusFound, "/workouts")
 }

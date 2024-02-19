@@ -74,12 +74,12 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		u := a.getUser(ctx)
 		if u == nil || !u.IsActive() {
 			log.Warn("User is not found")
-			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
+			return ctx.Redirect(http.StatusFound, "/user/signout")
 		}
 
 		if !u.Admin {
 			log.Warn("User is not an admin")
-			return ctx.Redirect(http.StatusMovedPermanently, "/")
+			return ctx.Redirect(http.StatusFound, "/")
 		}
 
 		return next(ctx)
@@ -90,7 +90,7 @@ func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		if err := a.setUser(ctx); err != nil {
 			log.Warn(err.Error())
-			return ctx.Redirect(http.StatusMovedPermanently, "/user/signout")
+			return ctx.Redirect(http.StatusFound, "/user/signout")
 		}
 
 		return next(ctx)
@@ -105,7 +105,7 @@ func (a *App) addSecureRoutes(e *echo.Echo) {
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.Redirect(http.StatusMovedPermanently, "/user/signout")
+			return c.Redirect(http.StatusFound, "/user/signout")
 		},
 	}))
 	secureGroup.Use(a.ValidateUserMiddleware)
@@ -127,7 +127,7 @@ func (a *App) addAdminRoutes(e *echo.Echo) {
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.Redirect(http.StatusMovedPermanently, "/user/signout")
+			return c.Redirect(http.StatusFound, "/user/signout")
 		},
 	}))
 	adminGroup.Use(a.ValidateUserMiddleware)
