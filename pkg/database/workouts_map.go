@@ -134,7 +134,11 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 
 func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 	data := createMapData(gpxContent)
+
 	points := allGPXPoints(gpxContent)
+	if len(points) == 0 {
+		return *data
+	}
 
 	totalDist := 0.0
 	totalTime := 0.0

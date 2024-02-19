@@ -1,9 +1,11 @@
 package app
 
 import (
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -31,13 +33,13 @@ func (a *App) addWorkout(c echo.Context) error {
 
 	files := form.File["file"]
 
-	msg := ""
-	errMsg := ""
+	msg := []string{}
+	errMsg := []string{}
 
 	for _, file := range files {
 		content, parseErr := uploadedGPXFile(file)
 		if parseErr != nil {
-			errMsg += parseErr.Error() + "\n"
+			errMsg = append(errMsg, parseErr.Error())
 			continue
 		}
 
@@ -46,19 +48,19 @@ func (a *App) addWorkout(c echo.Context) error {
 
 		w, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, content)
 		if addErr != nil {
-			errMsg += addErr.Error() + "\n"
+			errMsg = append(errMsg, addErr.Error())
 			continue
 		}
 
-		msg += "- " + w.Name + "\n"
+		msg = append(msg, w.Name)
 	}
 
-	if errMsg != "" {
-		a.setError(c, errMsg)
+	if len(errMsg) > 0 {
+		a.setError(c, fmt.Sprintf("Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; ")))
 	}
 
-	if msg != "" {
-		a.setNotice(c, "A new workout was added:\n"+msg)
+	if len(msg) > 0 {
+		a.setNotice(c, fmt.Sprintf("Added %d new workout(s): %s", len(msg), strings.Join(msg, "; ")))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))

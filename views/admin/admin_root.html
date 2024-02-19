@@ -6,7 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `admin` }}">Manage</h2>
+      <h2 class="{{ IconFor `admin` }}">Manage users ({{ len .users }})</h2>
       <div class="inner-form">
         <table>
           <thead>
