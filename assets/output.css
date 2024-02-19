@@ -1290,10 +1290,6 @@ table {
   width: 300px;
 }
 
-.min-w-40 {
-  min-width: 10rem;
-}
-
 .shrink {
   flex-shrink: 1;
 }
