@@ -81,7 +81,7 @@ func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
 }
 
 func (a *App) addRecentWorkouts(data map[string]interface{}) error {
-	w, err := database.GetRecentWorkouts(a.db, 10)
+	w, err := database.GetRecentWorkouts(a.db, 20)
 	if err != nil {
 		return err
 	}

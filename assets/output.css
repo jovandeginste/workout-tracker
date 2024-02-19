@@ -853,8 +853,8 @@ table {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .modal {
@@ -1286,8 +1286,8 @@ table {
   height: 4rem;
 }
 
-.w-1\/4 {
-  width: 25%;
+.w-\[300px\] {
+  width: 300px;
 }
 
 .min-w-40 {
@@ -1346,6 +1346,10 @@ table {
 
 .justify-end {
   justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .gap-2 {

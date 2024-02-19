@@ -75,9 +75,8 @@
       </div>
       <div class="inner-form">
         <h3 class="{{ IconFor `workout` }}">Recent activity</h3>
-        <div class="flex flex-wrap">
-          {{ range .recentWorkouts }} {{ if ne .User.ID $.currentUser.ID }} {{
-          template "workout_item" . }} {{ end }}{{ end }}
+        <div class="flex flex-wrap justify-center">
+          {{ range .recentWorkouts }}{{ template "workout_item" . }}{{ end }}
         </div>
       </div>
     </div>
