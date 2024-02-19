@@ -36,7 +36,7 @@ func categoryIcon(what string) string {
 		return "icon-regular icon-baseline icon-space-sm icon-before icon-map-location-dot"
 	case "date":
 		return "icon-regular icon-baseline icon-space-sm icon-before icon-calendar"
-	case "pauze":
+	case "pause":
 		return "icon-regular icon-baseline icon-space-sm icon-before icon-hourglass"
 	case "up":
 		return "icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"

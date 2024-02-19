@@ -16,10 +16,10 @@
         ({{ .Date | RelativeDate }})
       </td>
     </tr>
-    {{ end }} {{ with .AverageSpeedNoPauze }}
+    {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
       <th>
-        <span class="{{ IconFor `speed` }}">Average speed (no pauze)</span>
+        <span class="{{ IconFor `speed` }}">Average speed (no pause)</span>
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
       <td>

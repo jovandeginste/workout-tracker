@@ -37,8 +37,8 @@
     </tr>
     <tr>
       <td class="{{ IconFor `speed` }}"></td>
-      <th>Average speed (no pauze)</th>
-      <td>{{ .Data.AverageSpeedNoPauze | HumanSpeed }}</td>
+      <th>Average speed (no pause)</th>
+      <td>{{ .Data.AverageSpeedNoPause | HumanSpeed }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `tempo` }}"></td>
@@ -47,8 +47,8 @@
     </tr>
     <tr>
       <td class="{{ IconFor `tempo` }}"></td>
-      <th>Average tempo (no pauze)</th>
-      <td>{{ .Data.AverageSpeedNoPauze | HumanTempo }}</td>
+      <th>Average tempo (no pause)</th>
+      <td>{{ .Data.AverageSpeedNoPause | HumanTempo }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `max-speed` }}"></td>
@@ -56,9 +56,9 @@
       <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
     </tr>
     <tr>
-      <td class="{{ IconFor `pauze` }}"></td>
-      <th>Time pauzed</th>
-      <td>{{ .Data.PauzeDuration }}</td>
+      <td class="{{ IconFor `pause` }}"></td>
+      <th>Time paused</th>
+      <td>{{ .Data.PauseDuration }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>

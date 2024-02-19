@@ -34,10 +34,10 @@
         {{ .Data.TotalDuration }}
       </div>
       <div class="workout-tile-info {{ IconFor `speed` }}">
-        {{ .Data.AverageSpeedNoPauze | HumanSpeed }}
+        {{ .Data.AverageSpeedNoPause | HumanSpeed }}
       </div>
       <div class="workout-tile-info {{ IconFor `tempo` }}">
-        {{ .Data.AverageSpeedNoPauze | HumanTempo }}
+        {{ .Data.AverageSpeedNoPause | HumanTempo }}
       </div>
       <div class="workout-tile-info {{ IconFor `max-speed` }}">
         {{ .Data.MaxSpeed | HumanSpeed }}

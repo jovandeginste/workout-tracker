@@ -27,9 +27,9 @@ type MapData struct {
 	TotalDistance       float64
 	TotalDuration       time.Duration
 	AverageSpeed        float64
-	AverageSpeedNoPauze float64
+	AverageSpeedNoPause float64
 	MaxSpeed            float64
-	PauzeDuration       time.Duration
+	PauseDuration       time.Duration
 	MinElevation        float64
 	MaxElevation        float64
 	TotalUp             float64
@@ -109,7 +109,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 
 	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
 	totalDuration := time.Duration(gpxContent.Tracks[0].Segments[0].Duration()) * time.Second
-	pauzeDuration := time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second
+	pauseDuration := time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second
 
 	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
@@ -120,9 +120,9 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDistance:       totalDistance,
 		TotalDuration:       totalDuration,
 		AverageSpeed:        totalDistance / totalDuration.Seconds(),
-		AverageSpeedNoPauze: totalDistance / (totalDuration - pauzeDuration).Seconds(),
+		AverageSpeedNoPause: totalDistance / (totalDuration - pauseDuration).Seconds(),
 		MaxSpeed:            gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
-		PauzeDuration:       pauzeDuration,
+		PauseDuration:       pauseDuration,
 		MinElevation:        gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation,
 		MaxElevation:        gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation,
 		TotalUp:             updown.Uphill,
