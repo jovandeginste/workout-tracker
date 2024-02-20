@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
+	"github.com/cat-dealer/go-rand/v2"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/util"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"
@@ -41,12 +41,7 @@ func (a *App) jwtSecret() []byte {
 	if a.Config.JWTEncryptionKey == "" {
 		a.logger.Error("JWTEncryptionKey is not set; generating a random string at startup")
 
-		s, err := util.GenerateRandomString(32)
-		if err != nil {
-			panic(err)
-		}
-
-		a.Config.JWTEncryptionKey = s
+		a.Config.JWTEncryptionKey = rand.String(32, rand.GetAlphaNumericPool())
 	}
 
 	return []byte(a.Config.JWTEncryptionKey)

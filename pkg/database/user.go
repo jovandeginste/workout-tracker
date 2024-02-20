@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/mail"
 
-	"github.com/jovandeginste/workout-tracker/pkg/util"
+	"github.com/cat-dealer/go-rand/v2"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -150,11 +150,7 @@ func (u *User) GenerateSalt() error {
 		return nil
 	}
 
-	var err error
-
-	if u.Salt, err = util.GenerateRandomString(8); err != nil {
-		return err
-	}
+	u.Salt = rand.String(8, rand.GetAlphaNumericPool())
 
 	return nil
 }

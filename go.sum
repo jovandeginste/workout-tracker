@@ -4,6 +4,8 @@ github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6 h1:vZ0DB
 github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6/go.mod h1:71Tjis42WRntbMZN27G3GjS/GcRVDwEDQO8zTowqu/s=
 github.com/alexedwards/scs/v2 v2.4.0 h1:XfnMamKnvp1muJVNr1WzikQTclopsBXWZtzz0NBjOK0=
 github.com/alexedwards/scs/v2 v2.4.0/go.mod h1:ToaROZxyKukJKT/xLcVQAChi5k6+Pn1Gvmdl7h3RRj8=
+github.com/cat-dealer/go-rand/v2 v2.0.0 h1:qTmQ5R61Izk7yc0Si/Onavmr3gK68HeAexoeDc+4e/Q=
+github.com/cat-dealer/go-rand/v2 v2.0.0/go.mod h1:Wgsphs+k2b3jDbgFpJk8kAX2P3fZPCWqejERhISCZA4=
 github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMeY4+DwBQ=
 github.com/codingsince1985/geo-golang v1.8.3 h1:73TRG/poj1IUiYOoaEM7gD/+ZBSRg+BPnWoGpAg+NHc=
 github.com/codingsince1985/geo-golang v1.8.3/go.mod h1:IQXA9sjsQ1hTJfijQcsQInvnzdn7B0rx+VTNDLpaqiw=
