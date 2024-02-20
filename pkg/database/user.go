@@ -10,7 +10,15 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	PasswordMinimumLength = 4
+	PasswordMaximumLength = 128
+	UsernameMinimumLength = 1
+	UsernameMaximumLength = 32
+)
+
 var (
+	ErrPasswordInvalidLength = errors.New("password has invalid length")
 	ErrUsernameInvalidLength = errors.New("username has invalid length")
 	ErrUsernameInvalid       = errors.New("username is not a mail address")
 )
@@ -19,13 +27,17 @@ type User struct {
 	gorm.Model
 	Password string `form:"-" gorm:"type:varchar(128);not null"`
 	Salt     string `form:"-" gorm:"type:varchar(16);not null"`
-	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(20)"`
+	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"`
 	Name     string `form:"name" gorm:"type:varchar(64);not null"`
 	Active   bool   `form:"active"`
 	Admin    bool   `form:"admin"`
 
 	Profile  Profile
 	Workouts []Workout
+}
+
+func (u *User) BeforeSave(_ *gorm.DB) error {
+	return u.IsValid()
 }
 
 func GetUsers(db *gorm.DB) ([]User, error) {
@@ -91,7 +103,11 @@ func (u *User) AddSalt(password string) string {
 }
 
 func (u *User) IsValid() error {
-	if len(u.Username) < 2 || len(u.Username) > 32 {
+	if u.Password == "" {
+		return ErrPasswordInvalidLength
+	}
+
+	if len(u.Username) < UsernameMinimumLength || len(u.Username) > UsernameMaximumLength {
 		return ErrUsernameInvalidLength
 	}
 
@@ -103,6 +119,10 @@ func (u *User) IsValid() error {
 }
 
 func (u *User) SetPassword(password string) error {
+	if len(password) < PasswordMinimumLength || len(password) > PasswordMaximumLength {
+		return ErrPasswordInvalidLength
+	}
+
 	if err := u.GenerateSalt(); err != nil {
 		return err
 	}

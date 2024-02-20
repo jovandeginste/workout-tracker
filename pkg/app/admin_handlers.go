@@ -11,7 +11,7 @@ func (a *App) adminRootHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
 	if err := a.addUsers(data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	return c.Render(http.StatusOK, "admin_root.html", data)
@@ -37,12 +37,12 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 
 	if c.FormValue("password") != "" {
 		if err := u.SetPassword(c.FormValue("password")); err != nil {
-			return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
+			return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), fmt.Errorf("%w: %s", ErrInternalError, err))
 		}
 	}
 
 	if err := u.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	a.setNotice(c, fmt.Sprintf("The user '%s' has been updated.", u.Name))
@@ -53,11 +53,11 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 func (a *App) adminUserDeleteHandler(c echo.Context) error {
 	u, err := a.getUser(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
+		return a.redirectWithError(c, a.echo.Reverse("admin"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	if err := u.Delete(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
 	a.setNotice(c, fmt.Sprintf("The user '%s' has been deleted.", u.Name))

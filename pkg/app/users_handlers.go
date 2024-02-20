@@ -64,10 +64,6 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	if err := u.IsValid(); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
-	}
-
 	if err := u.SetPassword(c.FormValue("password")); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
