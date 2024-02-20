@@ -2,13 +2,14 @@ GIT_TAG ?= $(shell git describe --tags)
 
 .PHONY: all clean test build
 
-all: clean test build
+all: clean install-deps test build
 
 install-deps:
-	npm install -D tailwindcss
+	npm install
 
 clean:
 	rm -fv ./tmp/main ./assets/output.css ./workouts
+	rm -rf ./node_modules/
 
 dev:
 	air
