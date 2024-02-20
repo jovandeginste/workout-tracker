@@ -16,8 +16,14 @@ import (
 	"gorm.io/gorm"
 )
 
+type Version struct {
+	BuildTime string
+	Ref       string
+	Commit    string
+}
+
 type App struct {
-	Version string
+	Version Version
 	Config  Config
 	Assets  fs.FS
 	Views   fs.FS
@@ -100,7 +106,7 @@ func newLogger() slog.Handler {
 	return slog.NewJSONHandler(w, nil)
 }
 
-func NewApp(version string) *App {
+func NewApp(version Version) *App {
 	logger := slog.New(newLogger()).
 		With("app", "workout-tracker", "version", version)
 

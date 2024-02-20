@@ -1,4 +1,6 @@
-GIT_TAG ?= $(shell git describe --tags)
+GIT_REF ?= $(shell git describe --tags)
+GIT_SHA ?= $(shell git rev-parse --short HEAD)
+BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 
 .PHONY: all clean test build
 
@@ -16,8 +18,10 @@ dev:
 
 build: build-tw build-server build-docker
 
-build-server: build-tw
-	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./
+build-server:
+	go build \
+		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_SHA)' -X 'main.gitRef=$(GIT_REF)'" \
+		-o ./tmp/main ./
 
 build-docker:
 	docker build -t workout-tracker --pull .

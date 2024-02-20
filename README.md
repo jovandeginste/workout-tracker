@@ -31,8 +31,8 @@ docker run -p 8080:8080 \
 Download a pre-built binary or build it yourself (see [Development](#development) below).
 
 ```bash
-wget https://github.com/jovandeginste/workout-tracker/releases/download/v0.2.2/workout-tracker-v0.2.2-linux-amd64.tar.gz
-tar xf workout-tracker-v0.2.2-linux-amd64.tar.gz
+wget https://github.com/jovandeginste/workout-tracker/releases/download/v0.3.0/workout-tracker-v0.3.0-linux-amd64.tar.gz
+tar xf workout-tracker-v0.3.0-linux-amd64.tar.gz
 ./workout-tracker
 ```
 

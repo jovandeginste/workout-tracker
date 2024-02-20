@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/app"
 	"github.com/labstack/echo/v4"
@@ -16,11 +17,17 @@ var (
 	views   embed.FS
 	ViewsFS = echo.MustSubFS(views, "views")
 
-	version = "0.0.0-dev"
+	gitRef    = "0.0.0-dev"
+	gitCommit = "unknown"
+	buildTime = time.Now().Format(time.RFC3339)
 )
 
 func main() {
-	a := app.NewApp(version)
+	a := app.NewApp(app.Version{
+		BuildTime: buildTime,
+		Ref:       gitRef,
+		Commit:    gitCommit,
+	})
 	a.Assets = AssetsFS
 	a.Views = ViewsFS
 
