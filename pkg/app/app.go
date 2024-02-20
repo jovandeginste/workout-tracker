@@ -87,7 +87,7 @@ func (a *App) createAdminUser() error {
 		return err
 	}
 
-	a.log.Info("Creating admin user 'admin/admin'")
+	a.log.Warn("Creating admin user 'admin/admin'")
 
 	return u.Create(a.db)
 }
