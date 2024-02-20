@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: update tailwindcss
-        uses: ZoeyVid/tailwindcss-update@main
-        with:
-          input: ./main.css
-          output: ./assets/output.css
-          params: "--minify"
+
+      - name: Install dependencies
+        run: make install-deps
+
+      - name: Build Tailwind CSS output
+        run: make build-tw
+
       - uses: wangyoucao577/go-release-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
