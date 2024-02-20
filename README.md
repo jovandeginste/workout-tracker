@@ -12,10 +12,19 @@ Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 Run the latest master image from GitHub Container Registry:
 
 ```bash
-docker run --rm -i -p 8080:8080 ghcr.io/jovandeginste/workouts:master
+docker run -p 8080:8080 ghcr.io/jovandeginste/workouts:master
 ```
 
 Open your browser at `http://localhost:8080`
+
+To persist data and sessions, run:
+
+```bash
+docker run -p 8080:8080 \
+    -e WT_JWT_ENCRYPTION_KEY=my-secret-key \
+    -v $PWD/data:/data \
+    ghcr.io/jovandeginste/workouts:master
+```
 
 ### Natively
 
@@ -23,6 +32,13 @@ Download a pre-built binary or build it yourself (see [Development](#development
 
 ```bash
 chmod a+x ./workouts
+./workouts
+```
+
+To persist sessions, run:
+
+```bash
+export WT_JWT_ENCRYPTION_KEY=my-secret-key
 ./workouts
 ```
 
