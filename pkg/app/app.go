@@ -19,7 +19,9 @@ import (
 type Version struct {
 	BuildTime string
 	Ref       string
-	Commit    string
+	RefName   string
+	RefType   string
+	Sha       string
 }
 
 type App struct {

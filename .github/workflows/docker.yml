@@ -44,5 +44,7 @@ jobs:
             BUILD_TIME=${{ env.BUILD_TIME }}
             GIT_COMMIT=${{ github.sha }}
             GIT_REF=${{ github.ref }}
+            GIT_REF_NAME=${{ github.ref_name }}
+            GIT_REF_TYPE=${{ github.ref_type }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,4 +1,6 @@
-GIT_REF ?= $(shell git describe --tags)
+GIT_REF ?= $(shell git rev-parse HEAD)
+GIT_REF_NAME ?= $(shell git branch --show-current)
+GIT_REF_TYPE ?= branch
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD)
 BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 OUTPUT_FILE ?= tmp/main
@@ -29,6 +31,8 @@ build-docker:
 		--build-arg BUILD_TIME="$(BUILD_TIME)" \
 		--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
 		--build-arg GIT_REF="$(GIT_REF)" \
+		--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
+		--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
 		.
 
 build-tw:

@@ -25,6 +25,8 @@ jobs:
             goos: windows
     steps:
       - uses: actions/checkout@v4
+      - name: Set BUILD_TIME env
+        run: echo BUILD_TIME=$(date) >> ${GITHUB_ENV}
 
       - name: Install dependencies
         run: make install-deps
@@ -37,4 +39,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          ldflags: -X "main.buildTime=${{ env.BUILD_TIME }}" -X main.gitCommit=${{ github.sha }} -X main.gitRef=${{ github.ref }}
+          ldflags: |
+            -X "main.buildTime=${{ env.BUILD_TIME }}"
+            -X main.gitCommit=${{ github.sha }}
+            -X main.gitRef=${{ github.ref }}
+            -X main.gitRefName=${{ github.ref_name }}
+            -X main.gitRefType=${{ github.ref_type }}

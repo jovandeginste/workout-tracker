@@ -17,16 +17,20 @@ var (
 	views   embed.FS
 	ViewsFS = echo.MustSubFS(views, "views")
 
-	gitRef    = "0.0.0-dev"
-	gitCommit = "unknown"
-	buildTime = time.Now().Format(time.RFC3339)
+	gitRef     = "0.0.0-dev"
+	gitRefName = "local"
+	gitRefType = "local"
+	gitCommit  = "local"
+	buildTime  = time.Now().Format(time.RFC3339)
 )
 
 func main() {
 	a := app.NewApp(app.Version{
 		BuildTime: buildTime,
 		Ref:       gitRef,
-		Commit:    gitCommit,
+		RefName:   gitRefName,
+		RefType:   gitRefType,
+		Sha:       gitCommit,
 	})
 	a.Assets = AssetsFS
 	a.Views = ViewsFS
