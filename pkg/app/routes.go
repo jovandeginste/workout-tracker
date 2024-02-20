@@ -172,6 +172,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) Serve() error {
+	a.log.Info("Starting web server on " + a.Config.Bind)
 	return a.echo.Start(a.Config.Bind)
 }
 
