@@ -4,7 +4,7 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/jovandeginste/workouts/pkg/util"
+	"github.com/jovandeginste/workout-tracker/pkg/util"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

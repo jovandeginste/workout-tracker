@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/dustin/go-humanize"
-	"github.com/jovandeginste/workouts/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
 )
 

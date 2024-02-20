@@ -3,7 +3,7 @@ package main
 import (
 	"embed"
 
-	"github.com/jovandeginste/workouts/pkg/app"
+	"github.com/jovandeginste/workout-tracker/pkg/app"
 	"github.com/labstack/echo/v4"
 )
 

@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/jovandeginste/workouts/pkg/database"
-	"github.com/jovandeginste/workouts/pkg/util"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/util"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"

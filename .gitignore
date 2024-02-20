@@ -3,4 +3,4 @@ tmp/
 *.db-journal
 node_modules/
 workout-tracker.yaml
-./workouts
+/workout-tracker
