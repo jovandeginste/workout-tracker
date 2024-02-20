@@ -40,5 +40,9 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            BUILD_TIME=${{ env.BUILD_TIME }}
+            GIT_COMMIT=${{ github.sha }}
+            GIT_REF=${{ github.ref }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
