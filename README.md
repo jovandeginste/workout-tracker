@@ -5,6 +5,29 @@ Self-hosted, everything included.
 
 Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 
+## Getting started
+
+### Docker
+
+Run the latest master image from GitHub Container Registry:
+
+```bash
+docker run --rm -i -p 8080:8080 ghcr.io/jovandeginste/workouts:master
+```
+
+Open your browser at `http://localhost:8080`
+
+### Natively
+
+Download a pre-built binary or build it yourself (see [Development](#development) below).
+
+```bash
+chmod a+x ./workouts
+./workouts
+```
+
+This will create a new database file in the current directory and start the web server at `http://localhost:8080`.
+
 ## Screenshots
 
 ### Dashboard
@@ -35,7 +58,7 @@ Details of a workout, with:
 
 ![](docs/track_tooltip.png)
 
-- green and red circle are beginning and and of the track
+- green and red circle are start and end points of the track
 - every point on the track has a tooltip with a summary at that moment
 
 ![](docs/track_tooltip.gif)
@@ -46,33 +69,10 @@ Details of a workout, with:
 Upload one or multiple GPX files.
 The files are parsed when uploaded, statistics and other information are calculated and stored in the database (serialized).
 
-## What is this, technically?
-
-A single binary that runs on any platform, with no dependencies.
-
-The binary contains all assets to serve a web interface, through which you can upload your GPX files, visualize your
-tracks and see their statistics and graphs. The web interface is multi-user (with simple authentication form, session
-cookies and JWT tokens). A new account can be registered through a registration form, but are inactive by default. An
-admin user can activate (or edit, delete) accounts. The storage is a single SQLite database.
-
-## What technologies are used
-
-- Go, with some notable libraries
-  - [gpxgo](github.com/tkrajina/gpxgo)
-  - [Echo](https://echo.labstack.com/)
-  - [Gorm](https://gorm.io)
-- HTML, CSS and JS
-  - [Tailwind CSS](https://tailwindcss.com/)
-  - [Font Awesome](https://fontawesome.com/)
-  - [FullCalendar](https://fullcalendar.io/)
-  - [Leaflet](https://leafletjs.com/)
-  - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
-- Docker
-
 ## Configuration
 
 The web server looks for a file `workout-tracker.yaml` (or `json` or `toml`) in the current directory, or takes it's
-configuration from environment variables. The only important variable is the JWT encryption key. If you don't provide
+configuration from environment variables. The most important variable is the JWT encryption key. If you don't provide
 it, the key is randomly generated every time the server starts, invalidating all current sessions.
 
 Generate a secure key and write it to `workout-tracker.yaml`:
@@ -85,8 +85,8 @@ See `workout-tracker.example.yaml` for more options and details.
 
 After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
 
-If not users are in the database, a default `admin` user is created with password `admin` (which you should obviously
-change immediately).
+If no users are in the database (eg. when starting with an empty database), a default `admin` user is created with
+password `admin`. You should change this password in a production environment.
 
 ## Development
 
@@ -99,6 +99,8 @@ change immediately).
 go build ./
 ./workouts
 ```
+
+This does not require npm or Tailwind, since the compiled css is included in the repository.
 
 ### Do some development
 
@@ -131,6 +133,29 @@ make watch-tw # Runs the Tailwind CSS watcher (not useful unless you're debuggin
 # Cleanin' up
 make clean # Removes build artifacts
 ```
+
+## What is this, technically?
+
+A single binary that runs on any platform, with no dependencies.
+
+The binary contains all assets to serve a web interface, through which you can upload your GPX files, visualize
+your tracks and see their statistics and graphs. The web application is multi-user, with a simple registration and
+authentication form, session cookies and JWT tokens). New accounts are inactive by default. An admin user can activate
+(or edit, delete) accounts. The storage is a single SQLite database.
+
+## What technologies are used
+
+- Go, with some notable libraries
+  - [gpxgo](github.com/tkrajina/gpxgo)
+  - [Echo](https://echo.labstack.com/)
+  - [Gorm](https://gorm.io)
+- HTML, CSS and JS
+  - [Tailwind CSS](https://tailwindcss.com/)
+  - [Font Awesome](https://fontawesome.com/)
+  - [FullCalendar](https://fullcalendar.io/)
+  - [Leaflet](https://leafletjs.com/)
+  - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
+- Docker
 
 ## TODO
 
