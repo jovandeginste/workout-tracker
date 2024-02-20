@@ -26,13 +26,13 @@ COPY views ./views
 COPY assets ./assets
 COPY --from=tailwind /app/assets/output.css ./assets/output.css
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /workouts
+RUN CGO_ENABLED=0 GOOS=linux go build -o /workout-tracker
 
 FROM alpine:latest
 
 VOLUME /data
 WORKDIR /app
-COPY --from=gobuilder /workouts ./workouts
+COPY --from=gobuilder /workout-tracker ./workout-tracker
 
 WORKDIR /data
 ENTRYPOINT ["/app/workout-tracker"]

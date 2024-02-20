@@ -8,7 +8,7 @@ install-deps:
 	npm install
 
 clean:
-	rm -fv ./tmp/main ./assets/output.css ./workouts
+	rm -fv ./tmp/main ./assets/output.css ./workout-tracker
 	rm -rf ./node_modules/
 
 dev:
@@ -20,7 +20,7 @@ build-server: build-tw
 	go build -ldflags "-X main.version=$(GIT_TAG)" -o ./tmp/main ./
 
 build-docker:
-	docker build -t workouts --pull .
+	docker build -t workout-tracker --pull .
 
 build-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css
