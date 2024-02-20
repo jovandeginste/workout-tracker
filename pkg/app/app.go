@@ -115,7 +115,7 @@ func NewApp(version string) *App {
 
 func (a *App) createAdminUser() error {
 	u := &database.User{
-		Username: "admin",
+		Username: "admin@localhost",
 		Name:     "Administrator",
 		Active:   true,
 		Admin:    true,
@@ -125,7 +125,7 @@ func (a *App) createAdminUser() error {
 		return err
 	}
 
-	a.logger.Warn("Creating admin user 'admin/admin'")
+	a.logger.Warn("Creating admin user '" + u.Username + "', with password 'admin'")
 
 	return u.Create(a.db)
 }

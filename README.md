@@ -102,7 +102,7 @@ See `workout-tracker.example.yaml` for more options and details.
 
 After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
 
-If no users are in the database (eg. when starting with an empty database), a default `admin` user is created with
+If no users are in the database (eg. when starting with an empty database), a default `admin@localhost` user is created with
 password `admin`. You should change this password in a production environment.
 
 ## Development
