@@ -86,6 +86,11 @@ Details of a workout, with:
 Upload one or multiple GPX files.
 The files are parsed when uploaded, statistics and other information are calculated and stored in the database (serialized).
 
+### Statistics to follow your progress
+
+![](docs/statistics.jpg)
+Graphs showing monthly aggregated statistics.
+
 ## Configuration
 
 The web server looks for a file `workout-tracker.yaml` (or `json` or `toml`) in the current directory, or takes it's
