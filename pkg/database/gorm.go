@@ -14,7 +14,7 @@ const thresholdSlowQueries = 100 * time.Millisecond
 
 func Connect(file string, debug bool, logger *slog.Logger) (*gorm.DB, error) {
 	loggerOptions := []slogGorm.Option{
-		slogGorm.WithLogger(logger),
+		slogGorm.WithLogger(logger.With("module", "database")),
 		slogGorm.WithSlowThreshold(thresholdSlowQueries),
 	}
 

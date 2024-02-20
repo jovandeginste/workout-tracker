@@ -35,28 +35,10 @@ func newEcho(logger *slog.Logger) *echo.Echo {
 	return e
 }
 
-func (a *App) Configure() error {
-	if err := a.ReadConfiguration(); err != nil {
-		return err
-	}
-
-	if err := a.ConfigureDatabase(); err != nil {
-		return err
-	}
-
-	if err := a.ConfigureWebserver(); err != nil {
-		return err
-	}
-
-	a.log = a.log.With("module", "app")
-
-	return nil
-}
-
 func (a *App) ConfigureWebserver() error {
 	var err error
 
-	e := newEcho(a.log)
+	e := newEcho(a.rawLogger)
 	e.Debug = a.Config.Debug
 
 	a.sessionManager = scs.New()
@@ -172,7 +154,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) Serve() error {
-	a.log.Info("Starting web server on " + a.Config.Bind)
+	a.logger.Info("Starting web server on " + a.Config.Bind)
 	return a.echo.Start(a.Config.Bind)
 }
 

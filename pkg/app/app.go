@@ -23,14 +23,15 @@ type App struct {
 	Views   fs.FS
 
 	echo           *echo.Echo
-	log            *slog.Logger
+	logger         *slog.Logger
+	rawLogger      *slog.Logger
 	db             *gorm.DB
 	sessionManager *scs.SessionManager
 }
 
 func (a *App) jwtSecret() []byte {
 	if a.Config.JWTEncryptionKey == "" {
-		a.log.Error("JWTEncryptionKey is not set; generating a random string at startup")
+		a.logger.Error("JWTEncryptionKey is not set; generating a random string at startup")
 
 		s, err := util.GenerateRandomString(32)
 		if err != nil {
@@ -43,8 +44,28 @@ func (a *App) jwtSecret() []byte {
 	return []byte(a.Config.JWTEncryptionKey)
 }
 
+func (a *App) Configure() error {
+	if err := a.ReadConfiguration(); err != nil {
+		return err
+	}
+
+	if err := a.ConfigureDatabase(); err != nil {
+		return err
+	}
+
+	if err := a.ConfigureWebserver(); err != nil {
+		return err
+	}
+
+	a.logger = a.logger.With("module", "app")
+
+	return nil
+}
+
 func (a *App) ConfigureDatabase() error {
-	db, err := database.Connect(a.Config.DatabaseFile, a.Config.Debug, a.log.With("module", "database"))
+	a.logger.Info("Connecting to the database: " + a.Config.DatabaseFile)
+
+	db, err := database.Connect(a.Config.DatabaseFile, a.Config.Debug, a.rawLogger)
 	if err != nil {
 		return err
 	}
@@ -84,8 +105,9 @@ func NewApp(version string) *App {
 		With("app", "workout-tracker", "version", version)
 
 	a := &App{
-		log:     logger,
-		Version: version,
+		rawLogger: logger,
+		logger:    logger.With("module", "app"),
+		Version:   version,
 	}
 
 	return a
@@ -103,7 +125,7 @@ func (a *App) createAdminUser() error {
 		return err
 	}
 
-	a.log.Warn("Creating admin user 'admin/admin'")
+	a.logger.Warn("Creating admin user 'admin/admin'")
 
 	return u.Create(a.db)
 }
