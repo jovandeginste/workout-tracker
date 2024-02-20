@@ -30,7 +30,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /workouts
 
 FROM alpine:latest
 
-WORKDIR /app
+VOLUME /data
+WORKDIR /data
 COPY --from=gobuilder /workouts ./workouts
 
 ENTRYPOINT ["/app/workouts"]
