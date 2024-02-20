@@ -13,6 +13,9 @@ COPY assets ./assets
 RUN npx tailwindcss -i ./main.css -o ./assets/output.css
 
 FROM golang:alpine as gobuilder
+ARG BUILD_TIME
+ARG GIT_COMMIT
+ARG GIT_REF
 
 WORKDIR /app
 
@@ -26,9 +29,10 @@ COPY views ./views
 COPY assets ./assets
 COPY --from=tailwind /app/assets/output.css ./assets/output.css
 
-RUN env
-
-RUN CGO_ENABLED=0 GOOS=linux go build -o /workout-tracker
+ENV CGO_ENABLED=0 GOOS=linux
+RUN go build \
+	-ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}'" \
+	-o /workout-tracker ./
 
 FROM alpine:latest
 
