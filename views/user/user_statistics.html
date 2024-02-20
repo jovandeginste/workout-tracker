@@ -8,7 +8,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `statistics` }}">Your progress</h2>
+      <h2 class="{{ IconFor `statistics` }}">Your progress the past year</h2>
       <div class="grid grid-cols-3 gap-4">
         <div class="inner-form">
           <h3>Workouts</h3>
@@ -39,6 +39,116 @@
     {{ template "footer" . }}
 
     <script>
+      xAxisScale = {
+        type: "time",
+        time: {
+          unit: "month",
+          tooltipFormat: "MMM yyyy",
+        },
+        min: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+      };
+
+      speedChartOptions = {
+        scales: {
+          x: xAxisScale,
+          y: {
+            ticks: {
+              callback: function (value) {
+                return (
+                  value.toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  }) + " km/h"
+                );
+              },
+            },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                if (context.parsed.y !== null) {
+                  label +=
+                    context.parsed.y.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    }) + " km/h";
+                }
+                return label;
+              },
+            },
+          },
+        },
+      };
+
+      distanceChartOptions = {
+        scales: {
+          x: xAxisScale,
+          y: {
+            ticks: {
+              callback: function (value) {
+                return formatDuration(value);
+              },
+            },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                if (context.parsed.y !== null) {
+                  label +=
+                    context.parsed.y.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    }) + " km";
+                }
+                return label;
+              },
+            },
+          },
+        },
+      };
+      durationChartOptions = {
+        scales: {
+          x: xAxisScale,
+          y: {
+            ticks: {
+              callback: function (value) {
+                return formatDuration(value);
+              },
+            },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                if (context.parsed.y !== null) {
+                  label += formatDuration(context.parsed.y);
+                }
+                return label;
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <script>
       new Chart(document.getElementById("workouts-per-month"), {
         type: "bar",
         data: {
@@ -53,10 +163,9 @@
             ]
           }],
         },
-        options: { scales: { x: {
-          type: "time",
-          time: { unit: "month" },
-        } } },
+        options: { scales: {
+          x: xAxisScale,
+        } },
       });
 
       new Chart(document.getElementById("duration-per-month"), {
@@ -73,29 +182,7 @@
             ]
           }],
         },
-        options: {
-          scales: { x: {
-            type: "time",
-            time: { unit: "month", round: "month" },
-          } },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-
-                  if (label) {
-                    label += ': ';
-                  }
-                  if (context.parsed.y !== null) {
-                    label += formatDuration(context.parsed.y);
-                  }
-                  return label;
-                }
-              }
-            }
-          }
-        },
+        options: durationChartOptions,
       });
 
       new Chart(document.getElementById("distance-per-month"), {
@@ -106,34 +193,13 @@
             data: [
               {{ range $y, $yv := .UserStatistics.PerMonth -}}
               {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} },
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} / 1000 },
               {{ end -}}
               {{- end }}
             ]
           }],
         },
-        options: { scales: { x: {
-          type: "time",
-          time: { unit: "month" },
-        } },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-
-                  if (label) {
-                    label += ': ';
-                  }
-                  if (context.parsed.y !== null) {
-                    label += (context.parsed.y / 1000).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km";
-                  }
-                  return label;
-                }
-              }
-            }
-          }
-        },
+        options: distanceChartOptions,
       });
 
       new Chart(document.getElementById("average-speed-per-month"), {
@@ -144,34 +210,13 @@
             data: [
               {{ range $y, $yv := .UserStatistics.PerMonth -}}
               {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
               {{ end -}}
               {{- end }}
             ]
           }],
         },
-        options: { scales: { x: {
-          type: "time",
-          time: { unit: "month" },
-        } },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-
-                  if (label) {
-                    label += ': ';
-                  }
-                  if (context.parsed.y !== null) {
-                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
-                  }
-                  return label;
-                }
-              }
-            }
-          }
-        },
+        options: speedChartOptions,
       });
 
       new Chart(document.getElementById("average-speed-no-pause-per-month"), {
@@ -182,34 +227,13 @@
             data: [
               {{ range $y, $yv := .UserStatistics.PerMonth -}}
               {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
               {{ end -}}
               {{- end }}
             ]
           }],
         },
-        options: { scales: { x: {
-          type: "time",
-          time: { unit: "month" },
-        } },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-
-                  if (label) {
-                    label += ': ';
-                  }
-                  if (context.parsed.y !== null) {
-                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
-                  }
-                  return label;
-                }
-              }
-            }
-          }
-        },
+        options: speedChartOptions,
       });
 
       new Chart(document.getElementById("max-speed-per-month"), {
@@ -220,34 +244,13 @@
             data: [
               {{ range $y, $yv := .UserStatistics.PerMonth -}}
               {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
               {{ end -}}
               {{- end }}
             ]
           }],
         },
-        options: { scales: { x: {
-          type: "time",
-          time: { unit: "month" },
-        } },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-
-                  if (label) {
-                    label += ': ';
-                  }
-                  if (context.parsed.y !== null) {
-                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
-                  }
-                  return label;
-                }
-              }
-            }
-          }
-        },
+        options: speedChartOptions,
       });
     </script>
   </body>
