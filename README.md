@@ -183,8 +183,6 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 ## TODO
 
 - write tests!!!!!
-- aggregated statistics and graphs
-  - eg. number of kilometers per month
 - add support for authentication through a reverse proxy
 - internationalization
 - provide a light theme
