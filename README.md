@@ -96,21 +96,16 @@ go build ./
 
 ### Tailwind
 
-You probably will need to install npm and Tailwind CLI
-
-```bash
-npm install -D tailwindcss
-```
-
-The Tailwind modules used are in the `node_modules` folder.
-
-### Test, build, run
+You need to install Golang and npm.
 
 Because I keep forgetting how to build every component, I created a Makefile.
 
 ```bash
 # Make everything. This is also the default target.
 make all # Run tests and build all components
+
+# Install system dependencies
+make install-deps
 
 # Testing
 make test # Runs all the tests
