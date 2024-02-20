@@ -19,6 +19,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"HumanDistance":           templatehelpers.HumanDistance,
 		"HumanSpeed":              templatehelpers.HumanSpeed,
 		"HumanTempo":              templatehelpers.HumanTempo,
+		"HumanDuration":           templatehelpers.HumanDuration,
 		"IconFor":                 templatehelpers.IconFor,
 		"BoolToHTML":              templatehelpers.BoolToHTML,
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,

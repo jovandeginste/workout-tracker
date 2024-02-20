@@ -23,7 +23,7 @@
     <tr>
       <td class="{{ IconFor `duration` }}"></td>
       <th>Total duration</th>
-      <td>{{ .Data.TotalDuration }}</td>
+      <td>{{ .Data.TotalDuration | HumanDuration }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `distance` }}"></td>

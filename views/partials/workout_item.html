@@ -39,7 +39,7 @@
         class="workout-tile-info {{ IconFor `duration` }}"
         title="Total duration"
       >
-        {{ .Data.TotalDuration }}
+        {{ .Data.TotalDuration | HumanDuration }}
       </div>
       <div
         class="workout-tile-info {{ IconFor `speed` }}"

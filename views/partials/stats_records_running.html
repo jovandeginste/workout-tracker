@@ -63,9 +63,9 @@
     {{ end }} {{ with .Duration }}
     <tr>
       <th>
-        <span class="{{ IconFor `duration` }}"> Total duration</span>
+        <span class="{{ IconFor `duration` }}">Total duration</span>
       </th>
-      <td class="font-mono">{{ .Value }}</td>
+      <td class="font-mono">{{ .Value | HumanDuration }}</td>
       <td>
         <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
         ({{ .Date | RelativeDate }})

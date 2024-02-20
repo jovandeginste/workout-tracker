@@ -5,6 +5,6 @@
   "distance" (.Distance | ToKilometer )) }} {{ template "statistic_tile"
   (BuildDecoratedAttribute "elevation" "up" (.Up | HumanDistance)) }} {{
   template "statistic_tile" (BuildDecoratedAttribute "duration" "duration"
-  .Duration) }}
+  (.Duration | HumanDuration)) }}
 </div>
 {{ end }}
