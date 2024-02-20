@@ -3,8 +3,6 @@
 on:
   release:
     types: [created]
-  push:
-    branches: ["*"]
 
 permissions:
   contents: read
