@@ -5,11 +5,14 @@ import (
 	"io/fs"
 	"log/slog"
 	"os"
+	"time"
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/jovandeginste/workouts/pkg/database"
 	"github.com/jovandeginste/workouts/pkg/util"
 	"github.com/labstack/echo/v4"
+	"github.com/lmittmann/tint"
+	"github.com/mattn/go-isatty"
 	"gorm.io/gorm"
 )
 
@@ -64,9 +67,22 @@ func (a *App) ConfigureDatabase() error {
 	return a.createAdminUser()
 }
 
+func newLogger() slog.Handler {
+	w := os.Stdout
+	if isatty.IsTerminal(w.Fd()) {
+		return tint.NewHandler(os.Stdout, &tint.Options{
+			Level:      slog.LevelDebug,
+			TimeFormat: time.Kitchen,
+		})
+	}
+
+	return slog.NewJSONHandler(w, nil)
+}
+
 func NewApp(version string) *App {
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil)).
+	logger := slog.New(newLogger()).
 		With("app", "workout-tracker", "version", version)
+
 	a := &App{
 		log:     logger,
 		Version: version,

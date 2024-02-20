@@ -1,6 +1,8 @@
 module github.com/jovandeginste/workouts
 
-go 1.21
+go 1.21.0
+
+toolchain go1.21.5
 
 require (
 	github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6
@@ -13,6 +15,9 @@ require (
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/labstack/gommon v0.4.2
+	github.com/lmittmann/tint v1.0.4
+	github.com/mattn/go-isatty v0.0.20
+	github.com/orandin/slog-gorm v1.1.0
 	github.com/samber/slog-echo v1.12.2
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/viper v1.18.2
@@ -31,9 +36,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/orandin/slog-gorm v1.1.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect

@@ -64,6 +64,9 @@ github.com/labstack/echo/v4/middleware
 github.com/labstack/gommon/bytes
 github.com/labstack/gommon/color
 github.com/labstack/gommon/log
+# github.com/lmittmann/tint v1.0.4
+## explicit; go 1.21
+github.com/lmittmann/tint
 # github.com/magiconair/properties v1.8.7
 ## explicit; go 1.19
 github.com/magiconair/properties
