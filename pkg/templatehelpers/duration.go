@@ -41,12 +41,16 @@ func (d *duration) String() string {
 		components = append(components, fmt.Sprintf("%dh", d.Hours))
 	}
 
-	if d.Minutes > 0 {
-		components = append(components, fmt.Sprintf("%dm", d.Minutes))
-	}
+	if d.Days == 0 {
+		if d.Minutes > 0 {
+			components = append(components, fmt.Sprintf("%dm", d.Minutes))
+		}
 
-	if d.Seconds > 0 {
-		components = append(components, fmt.Sprintf("%ds", d.Seconds))
+		if d.Hours == 0 {
+			if d.Seconds > 0 {
+				components = append(components, fmt.Sprintf("%ds", d.Seconds))
+			}
+		}
 	}
 
 	return strings.Join(components, " ")
@@ -64,7 +68,7 @@ func (d *duration) calculate() {
 		return
 	}
 
-	if d.duration < 60 {
+	if d.duration < 80 {
 		d.Seconds = d.duration
 		return
 	}
@@ -74,7 +78,7 @@ func (d *duration) calculate() {
 }
 
 func (d *duration) calculateMinutes(minutes int) {
-	if d.duration < 60 {
+	if minutes < 80 {
 		d.Minutes = minutes
 		return
 	}
@@ -84,7 +88,7 @@ func (d *duration) calculateMinutes(minutes int) {
 }
 
 func (d *duration) calculateHours(hours int) {
-	if d.duration < 24 {
+	if hours < 30 {
 		d.Hours = hours
 		return
 	}
