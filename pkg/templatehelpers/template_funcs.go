@@ -61,12 +61,14 @@ func BoolToCheckbox(b bool) template.HTML {
 	return ""
 }
 
-func BuildDecoratedAttribute(icon, name string, value interface{}) interface{} {
-	return struct {
-		Icon  string
-		Name  string
-		Value interface{}
-	}{
+type DecoratedAttribute struct {
+	Icon  string
+	Name  string
+	Value interface{}
+}
+
+func BuildDecoratedAttribute(icon, name string, value interface{}) DecoratedAttribute {
+	return DecoratedAttribute{
 		Icon:  icon,
 		Name:  name,
 		Value: value,

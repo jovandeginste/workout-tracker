@@ -1,6 +1,8 @@
 package templatehelpers
 
-func IconFor(what string) string {
+import "html/template"
+
+func IconFor(what string) template.HTML {
 	iconFunctions := []func(string) string{
 		categoryIcon,
 		sportIcon,
@@ -11,11 +13,11 @@ func IconFor(what string) string {
 
 	for _, f := range iconFunctions {
 		if icon := f(what); icon != "" {
-			return icon
+			return template.HTML(icon) //nolint:gosec
 		}
 	}
 
-	return "icon-solid icon-baseline icon-space-sm icon-before icon-question"
+	return template.HTML("icon-solid icon-baseline icon-space-sm icon-before icon-question")
 }
 
 func categoryIcon(what string) string {

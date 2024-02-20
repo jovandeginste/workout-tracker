@@ -1,0 +1,69 @@
+package templatehelpers
+
+import (
+	"html/template"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func TestNumericDuration(t *testing.T) {
+	assert.InDelta(t, 1, NumericDuration(time.Second), 0)
+	assert.InDelta(t, 3600, NumericDuration(time.Hour), 0)
+}
+
+func TestCountryCodeToFlag(t *testing.T) {
+	assert.Equal(t, "🇺🇦", CountryCodeToFlag("UA"))
+	assert.Equal(t, "🇧🇪", CountryCodeToFlag("BE"))
+}
+
+func TestLocalDate(t *testing.T) {
+	d := time.Date(2020, 1, 1, 15, 4, 0, 0, time.UTC)
+	localDate := d.Local()
+
+	assert.Equal(t, localDate.Format("2006-01-02 15:04"), LocalDate(d))
+}
+
+func TestToKilometer(t *testing.T) {
+	assert.Equal(t, "0.00 km", ToKilometer(1.23))
+	assert.Equal(t, "1.23 km", ToKilometer(1234))
+	assert.Equal(t, "1234.57 km", ToKilometer(1234567))
+}
+
+func TestHumanDistance(t *testing.T) {
+	assert.Equal(t, "1.23 m", HumanDistance(1.23))
+	assert.Equal(t, "1.23 km", ToKilometer(1234))
+	assert.Equal(t, "1.23 Mm", HumanDistance(1234567))
+}
+
+func TestHumanSpeed(t *testing.T) {
+	assert.Equal(t, "4.43 km/h", HumanSpeed(1.23))
+	assert.Equal(t, "10.01 km/h", HumanSpeed(2.78))
+	assert.Equal(t, "17.96 km/h", HumanSpeed(4.99))
+}
+
+func TestHumanTempo(t *testing.T) {
+	assert.Equal(t, "13.55 min/km", HumanTempo(1.23))
+	assert.Equal(t, "6.00 min/km", HumanTempo(2.78))
+	assert.Equal(t, "3.34 min/km", HumanTempo(4.99))
+}
+
+func TestBoolToHTML(t *testing.T) {
+	assert.Equal(t, template.HTML("<i class=\"text-green-500 fas fa-check\"></i>"), BoolToHTML(true))
+	assert.Equal(t, template.HTML("<i class=\"text-rose-500 fas fa-times\"></i>"), BoolToHTML(false))
+}
+
+func TestBoolToCheckbox(t *testing.T) {
+	assert.Equal(t, template.HTML("checked"), BoolToCheckbox(true))
+	assert.Equal(t, template.HTML(""), BoolToCheckbox(false))
+}
+
+func TestBuildDecoratedAttribute(t *testing.T) {
+	r := BuildDecoratedAttribute("the-icon", "the-name", "the-value")
+
+	assert.NotNil(t, r)
+	assert.Equal(t, "the-icon", r.Icon)
+	assert.Equal(t, "the-name", r.Name)
+	assert.Equal(t, "the-value", r.Value)
+}
