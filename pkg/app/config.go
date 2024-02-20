@@ -14,14 +14,21 @@ type Config struct {
 func (a *App) ReadConfiguration() error {
 	viper.SetConfigName("workout-tracker")
 	viper.AddConfigPath(".")
-	viper.SetEnvPrefix("WORKOUT_TRACKER")
+	viper.SetEnvPrefix("WT")
 
 	viper.SetDefault("bind", "[::]:8080")
 	viper.SetDefault("debug", "false")
 	viper.SetDefault("database_file", "./database.db")
 
-	if err := viper.BindEnv("jwt_encryption_key"); err != nil {
-		return err
+	for _, envVar := range []string{
+		"bind",
+		"jwt_encryption_key",
+		"debug",
+		"database_file",
+	} {
+		if err := viper.BindEnv(envVar); err != nil {
+			return err
+		}
 	}
 
 	if err := viper.ReadInConfig(); err != nil { // Handle errors reading the config file
