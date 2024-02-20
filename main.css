@@ -57,23 +57,11 @@
     @apply rounded-xl my-2 px-6 py-3 bg-neutral-800 text-zinc-300 items-baseline;
   }
   .menu {
-    @apply grid grid-cols-5 gap-4;
     a::before {
       @apply pr-2;
     }
-    h1,
-    .user {
-      @apply col-span-1;
-    }
-    .main {
-      @apply col-span-3;
-    }
-    .main,
-    .user {
-      @apply flex-wrap -mt-5 -mr-5;
-      a {
-        @apply mt-5 mr-5;
-      }
+    a {
+      @apply mt-5 mr-5;
     }
   }
   .actions {

@@ -7,7 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `dashboard` }}">
-        Dashboard for {{ .user.Username | html }}
+        Dashboard for {{ .user.Name | html }}
       </h2>
 
       {{ template "stats_records_total" .UserStatistics.Total }}
@@ -68,7 +68,7 @@
           <a
             class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
             href="{{ RouteFor `user-show` .ID }}"
-            >{{ .Username | html }}</a
+            >{{ .Name | html }}</a
           >
           {{ end }} {{ end }}
         </div>

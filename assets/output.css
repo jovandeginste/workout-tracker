@@ -584,39 +584,14 @@ form {
 }
 
 .menu {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1rem;
   a::before {
     padding-right: 0.5rem;
   }
-  h1,
-    .user {
-    grid-column: span 1 / span 1;
+  a {
+    margin-top: 1.25rem;
   }
-  .main {
-    grid-column: span 3 / span 3;
-  }
-  .main,
-    .user {
-    margin-top: -1.25rem;
-  }
-  .main,
-    .user {
-    margin-right: -1.25rem;
-  }
-  .main,
-    .user {
-    flex-wrap: wrap;
-  }
-  .main,
-    .user {
-    a {
-      margin-top: 1.25rem;
-    }
-    a {
-      margin-right: 1.25rem;
-    }
+  a {
+    margin-right: 1.25rem;
   }
 }
 
@@ -1248,6 +1223,14 @@ table {
 
 .float-right {
   float: right;
+}
+
+.-mr-5 {
+  margin-right: -1.25rem;
+}
+
+.-mt-5 {
+  margin-top: -1.25rem;
 }
 
 .mb-2 {

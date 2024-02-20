@@ -1,7 +1,9 @@
 {{ define "header" }}
-<div class="menu">
-  <h1><a href="{{ RouteFor `dashboard` }}">Workout Tracker</a></h1>
-  <div class="main">
+<div class="menu flex flex-wrap gap-4">
+  <h1>
+    <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
+  </h1>
+  <div class="grow flex flex-wrap -mt-5 -mr-5">
     {{ if .currentUser }}
     <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
       >Dashboard</a
@@ -14,10 +16,10 @@
     >
     {{ end }}
   </div>
-  <div class="user">
+  <div class="flex-wrap -mt-5 -mr-5">
     {{ with .currentUser }}
     <a class="{{ IconFor `user-profile` }}" href="{{ RouteFor `user-profile`}}"
-      >{{ .Username | html }}</a
+      >{{ .Name | html }}</a
     >
     {{ if .Admin }}
     <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}">Manage</a>
