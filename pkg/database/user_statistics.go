@@ -14,10 +14,13 @@ type (
 	}
 
 	Totals struct {
-		Workouts int
-		Distance float64
-		Up       float64
-		Duration time.Duration
+		Workouts            int
+		Distance            float64
+		Up                  float64
+		Duration            time.Duration
+		AverageSpeed        float64
+		AverageSpeedNoPause float64
+		MaxSpeed            float64
 	}
 	UserStatistics struct {
 		Total    Totals
@@ -52,6 +55,9 @@ func (us *UserStatistics) Add(w *Workout) {
 	us.Total.Distance += w.Data.TotalDistance
 	us.Total.Duration += w.Data.TotalDuration
 	us.Total.Up += w.Data.TotalUp
+	us.Total.AverageSpeed += w.Data.AverageSpeed
+	us.Total.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	us.Total.MaxSpeed += w.Data.MaxSpeed
 
 	d := w.Date
 	year := d.Year()
@@ -69,10 +75,13 @@ func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
 	entry, ok := us.PerMonth[year][month]
 	if !ok {
 		us.PerMonth[year][month] = &Totals{
-			Workouts: 1,
-			Distance: w.Data.TotalDistance,
-			Up:       w.Data.TotalUp,
-			Duration: w.Data.TotalDuration,
+			Workouts:            1,
+			Distance:            w.Data.TotalDistance,
+			Up:                  w.Data.TotalUp,
+			Duration:            w.Data.TotalDuration,
+			AverageSpeed:        w.Data.AverageSpeed,
+			AverageSpeedNoPause: w.Data.AverageSpeedNoPause,
+			MaxSpeed:            w.Data.MaxSpeed,
 		}
 
 		return
@@ -82,16 +91,22 @@ func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
 	entry.Distance += w.Data.TotalDistance
 	entry.Duration += w.Data.TotalDuration
 	entry.Up += w.Data.TotalUp
+	entry.AverageSpeed += w.Data.AverageSpeed
+	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	entry.MaxSpeed += w.Data.MaxSpeed
 }
 
 func (us *UserStatistics) AddYear(year int, w *Workout) {
 	entry, ok := us.PerYear[year]
 	if !ok {
 		us.PerYear[year] = &Totals{
-			Workouts: 1,
-			Distance: w.Data.TotalDistance,
-			Up:       w.Data.TotalUp,
-			Duration: w.Data.TotalDuration,
+			Workouts:            1,
+			Distance:            w.Data.TotalDistance,
+			Up:                  w.Data.TotalUp,
+			Duration:            w.Data.TotalDuration,
+			AverageSpeed:        w.Data.AverageSpeed,
+			AverageSpeedNoPause: w.Data.AverageSpeedNoPause,
+			MaxSpeed:            w.Data.MaxSpeed,
 		}
 
 		return
@@ -101,6 +116,9 @@ func (us *UserStatistics) AddYear(year int, w *Workout) {
 	entry.Distance += w.Data.TotalDistance
 	entry.Duration += w.Data.TotalDuration
 	entry.Up += w.Data.TotalUp
+	entry.AverageSpeed += w.Data.AverageSpeed
+	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	entry.MaxSpeed += w.Data.MaxSpeed
 }
 
 func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {

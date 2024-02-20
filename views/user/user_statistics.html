@@ -9,41 +9,246 @@
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `statistics` }}">Your progress</h2>
-      <div class="inner-form">
-        <div class="h-64">
-          <canvas id="myChart"></canvas>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="inner-form">
+          <h3>Workouts</h3>
+          <canvas id="workouts-per-month"></canvas>
         </div>
-        <script>
-          const ctx = document.getElementById("myChart");
-
-          new Chart(ctx, {
-            type: "bar",
-            data: {
-              datasets: [{
-                label: "running",
-                data: [
-                  {{ range $y, $yv := .UserStatistics.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
-                  {{ end -}}
-                  {{- end }}
-                ]
-              }],
-            },
-            options: {
-              scales: {
-                x: {
-                  type: "time",
-                  time: {
-                    unit: "month",
-                  },
-                },
-              },
-            },
-          });
-        </script>
+        <div class="inner-form">
+          <h3>Duration</h3>
+          <canvas id="duration-per-month"></canvas>
+        </div>
+        <div class="inner-form">
+          <h3>Distance</h3>
+          <canvas id="distance-per-month"></canvas>
+        </div>
+        <div class="inner-form">
+          <h3>Average speed</h3>
+          <canvas id="average-speed-per-month"></canvas>
+        </div>
+        <div class="inner-form">
+          <h3>Average speed (no pause)</h3>
+          <canvas id="average-speed-no-pause-per-month"></canvas>
+        </div>
+        <div class="inner-form">
+          <h3>Max speed</h3>
+          <canvas id="max-speed-per-month"></canvas>
+        </div>
       </div>
     </div>
     {{ template "footer" . }}
+
+    <script>
+      new Chart(document.getElementById("workouts-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: { scales: { x: {
+          type: "time",
+          time: { unit: "month" },
+        } } },
+      });
+
+      new Chart(document.getElementById("duration-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Duration | NumericDuration }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: {
+          scales: { x: {
+            type: "time",
+            time: { unit: "month", round: "month" },
+          } },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += formatDuration(context.parsed.y);
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        },
+      });
+
+      new Chart(document.getElementById("distance-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: { scales: { x: {
+          type: "time",
+          time: { unit: "month" },
+        } },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += (context.parsed.y / 1000).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km";
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        },
+      });
+
+      new Chart(document.getElementById("average-speed-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: { scales: { x: {
+          type: "time",
+          time: { unit: "month" },
+        } },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        },
+      });
+
+      new Chart(document.getElementById("average-speed-no-pause-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: { scales: { x: {
+          type: "time",
+          time: { unit: "month" },
+        } },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        },
+      });
+
+      new Chart(document.getElementById("max-speed-per-month"), {
+        type: "bar",
+        data: {
+          datasets: [{
+            label: "running",
+            data: [
+              {{ range $y, $yv := .UserStatistics.PerMonth -}}
+              {{- range $m, $mv := $yv -}}
+              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
+              {{ end -}}
+              {{- end }}
+            ]
+          }],
+        },
+        options: { scales: { x: {
+          type: "time",
+          time: { unit: "month" },
+        } },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += (context.parsed.y * 3.6).toLocaleString(undefined, { maximumFractionDigits: 2 }) + " km/h";
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        },
+      });
+    </script>
   </body>
 </html>
