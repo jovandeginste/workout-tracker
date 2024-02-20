@@ -8,8 +8,8 @@ install-deps:
 	npm install
 
 clean:
-	rm -fv ./tmp/main ./assets/output.css ./workout-tracker
-	rm -rf ./node_modules/
+	rm -fv ./assets/output.css ./workout-tracker
+	rm -rf ./tmp/ ./node_modules/
 
 dev:
 	air
