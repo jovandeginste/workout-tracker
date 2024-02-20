@@ -4,8 +4,11 @@ GIT_TAG ?= $(shell git describe --tags)
 
 all: clean test build
 
+install-deps:
+	npm install -D tailwindcss
+
 clean:
-	rm ./tmp/main ./assets/output.css ./workouts
+	rm -fv ./tmp/main ./assets/output.css ./workouts
 
 dev:
 	air
