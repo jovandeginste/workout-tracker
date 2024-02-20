@@ -2,7 +2,8 @@ package database
 
 import (
 	"errors"
-	"regexp"
+	"fmt"
+	"net/mail"
 
 	"github.com/jovandeginste/workout-tracker/pkg/util"
 	"golang.org/x/crypto/bcrypt"
@@ -11,9 +12,7 @@ import (
 
 var (
 	ErrUsernameInvalidLength = errors.New("username has invalid length")
-	ErrUsernameInvalidChars  = errors.New("username contains invalid characters")
-
-	UsernameValidRegex = regexp.MustCompile(`^[a-zA-Z0-9]{3,20}$`)
+	ErrUsernameInvalid       = errors.New("username is not a mail address")
 )
 
 type User struct {
@@ -92,12 +91,12 @@ func (u *User) AddSalt(password string) string {
 }
 
 func (u *User) IsValid() error {
-	if len(u.Username) < 3 || len(u.Username) > 20 {
+	if len(u.Username) < 2 || len(u.Username) > 32 {
 		return ErrUsernameInvalidLength
 	}
 
-	if !UsernameValidRegex.MatchString(u.Username) {
-		return ErrUsernameInvalidChars
+	if _, err := mail.ParseAddress(u.Username); err != nil {
+		return fmt.Errorf("%w: %s", ErrUsernameInvalid, err)
 	}
 
 	return nil
