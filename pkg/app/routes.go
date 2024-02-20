@@ -36,15 +36,25 @@ func newEcho(logger *slog.Logger) *echo.Echo {
 }
 
 func (a *App) Configure() error {
+	if err := a.ReadConfiguration(); err != nil {
+		return err
+	}
+
+	if err := a.ConfigureDatabase(); err != nil {
+		return err
+	}
+
+	if err := a.ConfigureWebserver(); err != nil {
+		return err
+	}
+
+	a.log = a.log.With("module", "app")
+
+	return nil
+}
+
+func (a *App) ConfigureWebserver() error {
 	var err error
-
-	if err = a.ReadConfiguration(); err != nil {
-		return err
-	}
-
-	if err = a.Connect(); err != nil {
-		return err
-	}
 
 	e := newEcho(a.log)
 	e.Debug = a.Config.Debug

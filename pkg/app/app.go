@@ -40,7 +40,7 @@ func (a *App) jwtSecret() []byte {
 	return []byte(a.Config.JWTEncryptionKey)
 }
 
-func (a *App) Connect() error {
+func (a *App) ConfigureDatabase() error {
 	db, err := database.Connect(a.Config.DatabaseFile, a.Config.Debug, a.log.With("module", "database"))
 	if err != nil {
 		return err
@@ -64,9 +64,12 @@ func (a *App) Connect() error {
 	return a.createAdminUser()
 }
 
-func NewApp() *App {
+func NewApp(version string) *App {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil)).
+		With("app", "workout-tracker", "version", version)
 	a := &App{
-		log: slog.New(slog.NewJSONHandler(os.Stdout, nil)),
+		log:     logger,
+		Version: version,
 	}
 
 	return a

@@ -20,10 +20,9 @@ var (
 )
 
 func main() {
-	a := app.NewApp()
+	a := app.NewApp(version)
 	a.Assets = AssetsFS
 	a.Views = ViewsFS
-	a.Version = version
 
 	if err := a.Configure(); err != nil {
 		panic(err)
