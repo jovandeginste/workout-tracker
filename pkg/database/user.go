@@ -37,6 +37,10 @@ type User struct {
 }
 
 func (u *User) BeforeSave(_ *gorm.DB) error {
+	if err := u.GenerateSalt(); err != nil {
+		return err
+	}
+
 	return u.IsValid()
 }
 
@@ -138,10 +142,6 @@ func (u *User) SetPassword(password string) error {
 }
 
 func (u *User) Create(db *gorm.DB) error {
-	if err := u.GenerateSalt(); err != nil {
-		return err
-	}
-
 	return db.Create(u).Error
 }
 
