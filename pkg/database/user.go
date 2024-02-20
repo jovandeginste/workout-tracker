@@ -173,8 +173,8 @@ func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	return w, nil
 }
 
-func (u *User) GetWorkouts(db *gorm.DB) ([]Workout, error) {
-	var w []Workout
+func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
+	var w []*Workout
 
 	if err := db.Where(&Workout{UserID: u.ID}).Order("date DESC").Find(&w).Error; err != nil {
 		return nil, err

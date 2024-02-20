@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/chart.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <h2 class="{{ IconFor `statistics` }}">Your progress</h2>
+      <div class="inner-form">
+        <div class="h-64">
+          <canvas id="myChart"></canvas>
+        </div>
+        <script>
+          const ctx = document.getElementById("myChart");
+
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              datasets: [{
+                label: "running",
+                data: [
+                  {{ range $y, $yv := .UserStatistics.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
+                  {{ end -}}
+                  {{- end }}
+                ]
+              }],
+            },
+            options: {
+              scales: {
+                x: {
+                  type: "time",
+                  time: {
+                    unit: "month",
+                  },
+                },
+              },
+            },
+          });
+        </script>
+      </div>
+    </div>
+    {{ template "footer" . }}
+  </body>
+</html>

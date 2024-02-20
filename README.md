@@ -172,6 +172,7 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
   - [FullCalendar](https://fullcalendar.io/)
   - [Leaflet](https://leafletjs.com/)
   - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
+  - [Chart.js](https://cdn.jsdelivr.net/npm/chart.js)
 - Docker
 
 ## TODO

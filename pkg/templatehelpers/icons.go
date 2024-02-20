@@ -73,6 +73,8 @@ func pageIcon(what string) string {
 	switch what {
 	case "dashboard":
 		return "icon-solid icon-baseline icon-space-sm icon-before icon-chart-line"
+	case "statistics":
+		return "icon-solid icon-baseline icon-space-sm icon-before icon-chart-simple"
 	case "admin":
 		return "icon-solid icon-baseline icon-space-sm icon-before icon-gear"
 	case "user-profile":

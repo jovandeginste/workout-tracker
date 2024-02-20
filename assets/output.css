@@ -1197,6 +1197,10 @@ table {
   visibility: collapse;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -1267,6 +1271,10 @@ table {
 
 .h-16 {
   height: 4rem;
+}
+
+.h-64 {
+  height: 16rem;
 }
 
 .w-\[300px\] {
@@ -1783,6 +1791,14 @@ table {
 
 .icon-chart-line::after {
   content: "\f201";
+}
+
+.icon-chart-simple::before {
+  content: "\e473";
+}
+
+.icon-chart-simple::after {
+  content: "\e473";
 }
 
 .icon-chevron-down::before {

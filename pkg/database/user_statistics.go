@@ -6,33 +6,38 @@ import (
 	"gorm.io/gorm"
 )
 
-type record struct {
-	Value float64
-	Date  time.Time
-	ID    uint
-}
+type (
+	record struct {
+		Value float64
+		Date  time.Time
+		ID    uint
+	}
 
-type UserStatistics struct {
-	Total struct {
+	Totals struct {
 		Workouts int
 		Distance float64
 		Up       float64
 		Duration time.Duration
 	}
-	Records struct {
-		Active              bool
-		AverageSpeed        record
-		AverageSpeedNoPause record
-		MaxSpeed            record
-		Distance            record
-		TotalUp             record
-		Duration            struct {
-			Value time.Duration
-			Date  time.Time
-			ID    uint
+	UserStatistics struct {
+		Total    Totals
+		PerYear  map[int]*Totals
+		PerMonth map[int]map[int]*Totals
+		Records  struct {
+			Active              bool
+			AverageSpeed        record
+			AverageSpeedNoPause record
+			MaxSpeed            record
+			Distance            record
+			TotalUp             record
+			Duration            struct {
+				Value time.Duration
+				Date  time.Time
+				ID    uint
+			}
 		}
 	}
-}
+)
 
 func (r *record) CheckAndSwap(value float64, id uint, date *time.Time) {
 	if r.Value < value {
@@ -42,15 +47,72 @@ func (r *record) CheckAndSwap(value float64, id uint, date *time.Time) {
 	}
 }
 
+func (us *UserStatistics) Add(w *Workout) {
+	us.Total.Workouts++
+	us.Total.Distance += w.Data.TotalDistance
+	us.Total.Duration += w.Data.TotalDuration
+	us.Total.Up += w.Data.TotalUp
+
+	d := w.Date
+	year := d.Year()
+	month := int(d.Month())
+
+	us.AddYear(year, w)
+	us.AddMonth(year, month, w)
+}
+
+func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
+	if _, ok := us.PerMonth[year]; !ok {
+		us.PerMonth[year] = map[int]*Totals{}
+	}
+
+	entry, ok := us.PerMonth[year][month]
+	if !ok {
+		us.PerMonth[year][month] = &Totals{
+			Workouts: 1,
+			Distance: w.Data.TotalDistance,
+			Up:       w.Data.TotalUp,
+			Duration: w.Data.TotalDuration,
+		}
+
+		return
+	}
+
+	entry.Workouts++
+	entry.Distance += w.Data.TotalDistance
+	entry.Duration += w.Data.TotalDuration
+	entry.Up += w.Data.TotalUp
+}
+
+func (us *UserStatistics) AddYear(year int, w *Workout) {
+	entry, ok := us.PerYear[year]
+	if !ok {
+		us.PerYear[year] = &Totals{
+			Workouts: 1,
+			Distance: w.Data.TotalDistance,
+			Up:       w.Data.TotalUp,
+			Duration: w.Data.TotalDuration,
+		}
+
+		return
+	}
+
+	entry.Workouts++
+	entry.Distance += w.Data.TotalDistance
+	entry.Duration += w.Data.TotalDuration
+	entry.Up += w.Data.TotalUp
+}
+
 func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 	us := &UserStatistics{}
+
+	us.PerYear = map[int]*Totals{}
+	us.PerMonth = map[int]map[int]*Totals{}
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {
 		return nil, err
 	}
-
-	us.Total.Workouts = len(workouts)
 
 	for _, w := range workouts {
 		if w.Type != "running" {
@@ -58,9 +120,7 @@ func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 		}
 
 		us.Records.Active = true
-		us.Total.Distance += w.Data.TotalDistance
-		us.Total.Duration += w.Data.TotalDuration
-		us.Total.Up += w.Data.TotalUp
+		us.Add(w)
 
 		us.Records.AverageSpeedNoPause.CheckAndSwap(
 			w.Data.AverageSpeedNoPause,

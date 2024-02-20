@@ -118,6 +118,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	secureGroup.Use(a.ValidateUserMiddleware)
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
+	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
 	secureGroup.GET("/user/profile", a.userProfileHandler).Name = "user-profile"
 
 	usersGroup := secureGroup.Group("/users")
