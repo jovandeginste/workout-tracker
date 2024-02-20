@@ -2,9 +2,9 @@ FROM node:alpine as tailwind
 
 WORKDIR /app
 
-RUN npm install tailwindcss
+COPY package.json package-lock.json ./
+RUN npm install
 COPY tailwind.config.js ./tailwind.config.js
-COPY node_modules ./node_modules
 COPY main.css ./main.css
 COPY pkg ./pkg
 COPY views ./views
