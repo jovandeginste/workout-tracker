@@ -1,7 +1,4 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
+name: Test the code
 
 on:
   push:
@@ -20,8 +17,9 @@ jobs:
         with:
           go-version: "1.21"
 
-      - name: Build
-        run: go build -v ./...
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Test
-        run: go test -v ./...
+        run: make test
