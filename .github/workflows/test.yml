@@ -17,9 +17,9 @@ jobs:
         with:
           go-version: "1.21"
 
-      - name: Run Prettier
-        id: prettier-run
-        uses: rutajdash/prettier-cli-action@v1.0.0
+      - uses: actionsx/prettier@v2
+        with:
+          args: --check .
 
       - name: Run Go tests
         run: go test -v ./...
