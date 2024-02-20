@@ -1,12 +1,15 @@
 {{ define "footer" }}
 <div class="footer">
   <div>
-    Workout Tracker
+    Workout Tracker{{ with .version }},
     <a
       target="_blank"
-      href="https://github.com/jovandeginste/workout-tracker/tags/"
-      >{{ .version.Ref }}</a
+      href="https://github.com/jovandeginste/workout-tracker/tree/{{ .RefName }}"
     >
+      {{ if eq .RefType "branch" }}{{ .RefType }} {{ end }}{{ .RefName }} ({{
+      printf "%.8s" .Sha }})</a
+    >
+    {{ end }}
   </div>
   <a
     class="icon-brands icon-baseline icon-space-sm icon-outside icon-github"

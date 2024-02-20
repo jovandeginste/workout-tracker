@@ -1,7 +1,7 @@
-GIT_REF ?= $(shell git rev-parse HEAD)
+GIT_REF ?= $(shell git symbolic-ref HEAD)
 GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch
-GIT_COMMIT ?= $(shell git rev-parse --short HEAD)
+GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 OUTPUT_FILE ?= tmp/main
 
@@ -23,7 +23,7 @@ build: build-tw build-server build-docker
 
 build-server:
 	go build \
-		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)'" \
+		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(OUTPUT_FILE) ./
 
 build-docker:
