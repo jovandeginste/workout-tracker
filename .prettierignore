@@ -1,2 +1,4 @@
-assets/dist/
-assets/output.css
+/assets/dist/
+/assets/output.css
+/vendor/
+/pkg/
