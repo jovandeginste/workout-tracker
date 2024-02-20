@@ -31,8 +31,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /workouts
 FROM alpine:latest
 
 VOLUME /data
-WORKDIR /data
+WORKDIR /app
 COPY --from=gobuilder /workouts ./workouts
 
-ENTRYPOINT ["/app/workouts"]
+WORKDIR /data
+ENTRYPOINT ["/app/workout-tracker"]
 EXPOSE 8080
