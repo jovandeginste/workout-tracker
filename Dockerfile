@@ -26,6 +26,8 @@ COPY views ./views
 COPY assets ./assets
 COPY --from=tailwind /app/assets/output.css ./assets/output.css
 
+RUN env
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o /workout-tracker
 
 FROM alpine:latest
