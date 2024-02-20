@@ -52,7 +52,8 @@ A single binary that runs on any platform, with no dependencies.
 
 The binary contains all assets to serve a web interface, through which you can upload your GPX files, visualize your
 tracks and see their statistics and graphs. The web interface is multi-user (with simple authentication form, session
-cookies and JWT tokens). The storage is a single SQLite database.
+cookies and JWT tokens). A new account can be registered through a registration form, but are inactive by default. An
+admin user can activate (or edit, delete) accounts. The storage is a single SQLite database.
 
 ## What technologies are used
 
@@ -82,7 +83,14 @@ echo "jwt_encryption_key: $(pwgen -c 32)" > workout-tracker.yaml
 
 See `workout-tracker.example.yaml` for more options and details.
 
-## Build and run it yourself
+After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
+
+If not users are in the database, a default `admin` user is created with password `admin` (which you should obviously
+change immediately).
+
+## Development
+
+### Build and run it yourself
 
 - install go
 - clone the repository
@@ -92,9 +100,7 @@ go build ./
 ./workouts
 ```
 
-## Do some development
-
-### Tailwind
+### Do some development
 
 You need to install Golang and npm.
 
