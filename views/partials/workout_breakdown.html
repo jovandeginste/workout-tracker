@@ -12,7 +12,7 @@
   <tbody>
     {{ $distance := 0 }} {{ range . }} {{ $distance = .Distance }}
     <tr
-      onmouseover="set_marker('{{ .Point.Title }}', {{.Point.Lat}}, {{.Point.Lng}})"
+      onmouseover="set_marker('{{ template `workout_point_title` .Point }}', {{.Point.Lat}}, {{.Point.Lng}})"
       onmouseout="clear_marker()"
     >
       <td>

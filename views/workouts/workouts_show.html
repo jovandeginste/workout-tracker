@@ -27,10 +27,13 @@
             >
               <script>
                 let points = [
-                  {{- range $idx, $pt := .Data.Points }}
-                  {{  if $idx  }},{{  end -}}
-                  { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng -}}, "title": {{  $pt.Title  }} }
-                  {{- end  }}
+                  {{ range .Data.Points }}
+                  {
+                    "lat": {{ .Lat }},
+                    "lng": {{ .Lng }},
+                    "title": '{{ template "workout_point_title" . }}',
+                  },
+                  {{ end  }}
                 ];
                 let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
               </script>

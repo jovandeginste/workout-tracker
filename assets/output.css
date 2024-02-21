@@ -2155,14 +2155,6 @@ table {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-
-  .sm\:icon-space-sm.icon-before::before {
-    margin-right: 0.5rem;
-  }
-
-  .sm\:icon-space-sm.icon-after::after {
-    margin-left: 0.5rem;
-  }
 }
 
 @media (min-width: 768px) {

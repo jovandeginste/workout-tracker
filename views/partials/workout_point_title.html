@@ -1,0 +1,17 @@
+{# This should be a string with no newlines, because it is injected in a
+Javascript string. I hope to find a better solution than this... #} {{- define
+"workout_point_title" -}}
+<ol>
+  {{- "" -}}
+  <li><b>Time:</b> {{ .Time.Format "15:04" }}</li>
+  {{- "" -}}
+  <li><b>Distance:</b> {{ .TotalDistance | HumanDistance }}</li>
+  {{- "" -}}
+  <li><b>Duration:</b> {{ .TotalDuration | HumanDuration }}</li>
+  {{- "" -}}
+  <li><b>Speed:</b> {{ .AverageSpeed | HumanSpeed }}</li>
+  {{- "" -}}
+  <li><b>Height:</b> {{ .Height | HumanDistance }}</li>
+  {{- "" -}}
+</ol>
+{{- end -}}

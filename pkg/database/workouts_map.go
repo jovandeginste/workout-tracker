@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
@@ -47,7 +46,8 @@ type MapPoint struct {
 	TotalDistance float64
 	Duration      time.Duration
 	TotalDuration time.Duration
-	Title         string
+	Time          time.Time
+	Height        float64
 }
 
 func (m *MapPoint) AverageSpeed() float64 {
@@ -143,7 +143,6 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 	totalDist := 0.0
 	totalTime := 0.0
 	prevPoint := points[0]
-	speedMPS := 0.0
 
 	for i, pt := range points {
 		dist := 0.0
@@ -152,7 +151,6 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		if i > 0 {
 			dist = distanceBetween(prevPoint, pt)
 			t = pt.TimeDiff(&prevPoint)
-			speedMPS = pt.SpeedBetween(&prevPoint, true)
 
 			prevPoint = pt
 		}
@@ -160,23 +158,15 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		totalDist += dist
 		totalTime += t
 
-		title := fmt.Sprintf(
-			"<b>Time:</b> %s<br/><b>Distance:</b> %.2f km<br/><b>Duration:</b> %s<br/><b>Speed:</b> %.2f km/h<br /><b>Height:</b> %.2f m",
-			pt.Timestamp.Format("15:04"), // HH:MM
-			totalDist/1000,
-			time.Duration(totalTime)*time.Second,
-			3.6*speedMPS,
-			pt.Elevation.Value(),
-		)
-
 		data.Points = append(data.Points, MapPoint{
 			Lat:           pt.Point.Latitude,
 			Lng:           pt.Point.Longitude,
+			Time:          pt.Timestamp,
 			Distance:      dist,
 			TotalDistance: totalDist,
 			Duration:      time.Duration(t) * time.Second,
 			TotalDuration: time.Duration(totalTime) * time.Second,
-			Title:         title,
+			Height:        pt.Elevation.Value(),
 		})
 	}
 
