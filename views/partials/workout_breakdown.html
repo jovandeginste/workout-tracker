@@ -11,7 +11,10 @@
   </thead>
   <tbody>
     {{ range . }}
-    <tr>
+    <tr
+      onmouseover="set_marker('{{ .Point.Title }}', {{.Point.Lat}}, {{.Point.Lng}})"
+      onmouseout="clear_marker()"
+    >
       <td>
         {{ if .IsWorst }}
         <span class="text-orange-600 {{ IconFor `worst` }}"></span>{{ end }} {{
