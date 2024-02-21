@@ -184,6 +184,7 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 
 - write tests!!!!!
 - make the web application look better on mobile
+  - workouts table is too wide
 - add support for authentication through a reverse proxy
 - internationalization
 - provide a light theme
