@@ -165,7 +165,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 			pt.Timestamp.Format("15:04"), // HH:MM
 			totalDist/1000,
 			time.Duration(totalTime)*time.Second,
-			speedMPS,
+			3.6*speedMPS,
 			pt.Elevation.Value(),
 		)
 
