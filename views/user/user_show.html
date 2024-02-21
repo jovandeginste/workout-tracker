@@ -12,70 +12,72 @@
 
       {{ template "stats_records_total" .UserStatistics.Total }}
 
-      <div class="grid grid-cols-2 gap-4">
-        <div>
+      <div class="flex flex-wrap">
+        <div class="basis-1/2">
           {{ if len .workouts }}
           <div class="inner-form">
             {{ template "stats_records_running" .UserStatistics.Records }}
           </div>
           {{ end }}
         </div>
-        <div class="inner-form" id="calendar"></div>
-        <script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            var calendarEl = document.getElementById("calendar");
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              initialView: "dayGridMonth",
-              locale: Intl.DateTimeFormat().resolvedOptions().locale,
-              firstDay: 1,
-              aspectRatio: 2,
-              eventContent: function(arg) {
-                let eventSpan = document.createElement('div')
+        <div class="basis-1/2">
+          <div class="inner-form min-h-[450px]" id="calendar"></div>
+          <script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              var calendarEl = document.getElementById("calendar");
+              var calendar = new FullCalendar.Calendar(calendarEl, {
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                initialView: "dayGridMonth",
+                locale: Intl.DateTimeFormat().resolvedOptions().locale,
+                firstDay: 1,
+                aspectRatio: 2,
+                eventContent: function(arg) {
+                  let eventSpan = document.createElement('div')
 
-                eventSpan.innerHTML = arg.event.title
-                eventSpan.classList.add(
-                  "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
-                )
+                  eventSpan.innerHTML = arg.event.title
+                  eventSpan.classList.add(
+                    "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
+                  )
 
-                return { domNodes: [ eventSpan ] }
-              },
-              events: [
-                {{ range .workouts }}
-                {
-                  title: "{{ .Type }}",
-                  start: "{{ .Date | LocalDate }}",
-                  url: "/workouts/{{ .ID }}",
-                  display: 'block',
-                  extendedProps: {
-                    iconClass: "{{ IconFor .Type }}",
-                  },
+                  return { domNodes: [ eventSpan ] }
                 },
-                {{ end }}
-              ],
+                events: [
+                  {{ range .workouts }}
+                  {
+                    title: "{{ .Type }}",
+                    start: "{{ .Date | LocalDate }}",
+                    url: "/workouts/{{ .ID }}",
+                    display: 'block',
+                    extendedProps: {
+                      iconClass: "{{ IconFor .Type }}",
+                    },
+                  },
+                  {{ end }}
+                ],
+              });
+              calendar.render();
             });
-            calendar.render();
-          });
-        </script>
+          </script>
+        </div>
       </div>
       {{ if .users }}
       <div class="inner-form">
         <h3 class="{{ IconFor `users` }}">Other users</h3>
 
-        <div class="flex flex-wrap gap-5">
+        <div class="sm:flex sm:flex-wrap gap-5">
           {{ range .users }} {{ if ne .ID $.user.ID }}
-          <a
-            class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
-            href="{{ RouteFor `user-show` .ID }}"
-            >{{ .Name | html }}</a
+          <span
+            class="inline-block rounded-xl my-3 m-2 min-w-[150px] py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500 text-center"
           >
+            <a href="{{ RouteFor `user-show` .ID }}">{{ .Name | html }}</a>
+          </span>
           {{ end }} {{ end }}
         </div>
       </div>
       <div class="inner-form">
         <h3 class="{{ IconFor `workout` }}">Recent activity</h3>
-        <div class="flex flex-wrap justify-center">
+        <div class="sm:flex sm:flex-wrap justify-center">
           {{ range .recentWorkouts }}{{ template "workout_item" . }}{{ end }}
         </div>
       </div>

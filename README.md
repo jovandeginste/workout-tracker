@@ -183,6 +183,7 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 ## TODO
 
 - write tests!!!!!
+- make the web application look better on mobile
 - add support for authentication through a reverse proxy
 - internationalization
 - provide a light theme

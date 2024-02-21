@@ -17,33 +17,33 @@ func IconFor(what string) template.HTML {
 		}
 	}
 
-	return template.HTML("icon-solid icon-baseline icon-space-sm icon-before icon-question")
+	return template.HTML("icon-solid icon-baseline sm:icon-space-sm icon-before icon-question")
 }
 
 func categoryIcon(what string) string {
 	switch what {
 	case "distance":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-road"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-road"
 	case "speed":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-gauge"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gauge"
 	case "max-speed":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-gauge-high"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gauge-high"
 	case "tempo":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-stopwatch"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-stopwatch"
 	case "duration":
-		return "icon-regular icon-baseline icon-space-sm icon-before icon-clock"
+		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-clock"
 	case "elevation":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-mountain"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-mountain"
 	case "location":
-		return "icon-regular icon-baseline icon-space-sm icon-before icon-map-location-dot"
+		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-map-location-dot"
 	case "date":
-		return "icon-regular icon-baseline icon-space-sm icon-before icon-calendar"
+		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-calendar"
 	case "pause":
-		return "icon-regular icon-baseline icon-space-sm icon-before icon-hourglass"
+		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-hourglass"
 	case "up":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-chevron-up"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chevron-up"
 	case "down":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-chevron-down"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chevron-down"
 	default:
 		return ""
 	}
@@ -52,9 +52,9 @@ func categoryIcon(what string) string {
 func miscIcon(what string) string {
 	switch what {
 	case "best":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-arrow-up-long"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrow-up-long"
 	case "worst":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-arrow-down-long"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrow-down-long"
 	default:
 		return ""
 	}
@@ -63,7 +63,7 @@ func miscIcon(what string) string {
 func sportIcon(what string) string {
 	switch what {
 	case "running":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-person-running"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-person-running"
 	default:
 		return ""
 	}
@@ -72,19 +72,19 @@ func sportIcon(what string) string {
 func pageIcon(what string) string {
 	switch what {
 	case "dashboard":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-chart-line"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chart-line"
 	case "statistics":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-chart-simple"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chart-simple"
 	case "admin":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-gear"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gear"
 	case "user-profile":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-user-circle"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-circle"
 	case "user-add":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-user-plus"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-plus"
 	case "workout":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-dumbbell"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-dumbbell"
 	case "workout-add":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-circle-plus"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-circle-plus"
 	default:
 		return ""
 	}
@@ -93,25 +93,25 @@ func pageIcon(what string) string {
 func utilityIcon(what string) string {
 	switch what {
 	case "close":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-xmark"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-xmark"
 	case "edit":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-pen-to-square"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-pen-to-square"
 	case "auto-update", "refresh":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-arrows-rotate"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrows-rotate"
 	case "delete":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-trash"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-trash"
 	case "note":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-quote-left"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-quote-left"
 	case "users":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-users"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-users"
 	case "user-signin":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-right-to-bracket"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-right-to-bracket"
 	case "user-signout":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-right-from-bracket"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-right-from-bracket"
 	case "user-register":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-user-plus"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-plus"
 	case "user":
-		return "icon-solid icon-baseline icon-space-sm icon-before icon-user"
+		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user"
 	default:
 		return ""
 	}

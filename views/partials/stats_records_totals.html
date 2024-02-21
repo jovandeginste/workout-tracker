@@ -1,10 +1,10 @@
 {{ define "stats_records_total" }}
-<div class="grid grid-cols-4 gap-4">
+<div class="md:flex md:flex-wrap">
   {{ template "statistic_tile" (BuildDecoratedAttribute "workout" "workouts"
   .Workouts) }} {{ template "statistic_tile" (BuildDecoratedAttribute "distance"
   "distance" (.Distance | ToKilometer )) }} {{ template "statistic_tile"
-  (BuildDecoratedAttribute "elevation" "up" (.Up | HumanDistance)) }} {{
-  template "statistic_tile" (BuildDecoratedAttribute "duration" "duration"
-  (.Duration | HumanDuration)) }}
+  (BuildDecoratedAttribute "up" "up" (.Up | HumanDistance)) }} {{ template
+  "statistic_tile" (BuildDecoratedAttribute "duration" "duration" (.Duration |
+  HumanDuration)) }}
 </div>
 {{ end }}

@@ -6,15 +6,17 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <h2
-            class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
-          >
-            Welcome!
-          </h2>
+      <div class="flex flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <h2
+              class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
+            >
+              Welcome!
+            </h2>
+          </div>
         </div>
-        <div>
+        <div class="basis-1/2">
           <div class="inner-form">
             <h3 class="{{ IconFor `user-signin` }}">Sign In</h3>
             <form method="post" action="{{ RouteFor `user-signin` }}">
@@ -25,12 +27,7 @@
                       <label for="username">Username (email)</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        size="40"
-                      />
+                      <input type="text" id="username" name="username" />
                     </td>
                   </tr>
                   <tr>
@@ -38,18 +35,13 @@
                       <label for="password">Password</label>
                     </td>
                     <td>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        size="40"
-                      />
+                      <input type="password" id="password" name="password" />
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit" size="40">Sign In</button>
+                      <button type="submit">Sign In</button>
                     </td>
                   </tr>
                 </tbody>
@@ -67,12 +59,7 @@
                       <label for="username">Username (email)</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        size="40"
-                      />
+                      <input type="text" id="username" name="username" />
                     </td>
                   </tr>
                   <tr>
@@ -80,7 +67,7 @@
                       <label for="name">Name</label>
                     </td>
                     <td>
-                      <input type="text" id="name" name="name" size="40" />
+                      <input type="text" id="name" name="name" />
                     </td>
                   </tr>
                   <tr>
@@ -88,18 +75,13 @@
                       <label for="password">Password</label>
                     </td>
                     <td>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        size="40"
-                      />
+                      <input type="password" id="password" name="password" />
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit" size="40">Register</button>
+                      <button type="submit">Register</button>
                     </td>
                   </tr>
                 </tbody>

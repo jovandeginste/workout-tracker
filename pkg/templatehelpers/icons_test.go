@@ -15,7 +15,7 @@ func TestIconForDefault(t *testing.T) {
 		d := IconFor(dummy)
 		assert.Contains(t, d, "icon-solid")
 		assert.Contains(t, d, "icon-baseline")
-		assert.Contains(t, d, "icon-space-sm")
+		assert.Contains(t, d, "sm:icon-space-sm")
 		assert.Contains(t, d, "icon-before")
 		assert.Contains(t, d, "icon-question")
 	}

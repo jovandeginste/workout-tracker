@@ -1,35 +1,56 @@
 {{ define "header" }}
-<div class="menu flex flex-wrap gap-4">
-  <h1>
+<div class="menu sm:flex sm:flex-wrap gap-4">
+  <h1 class="text-xl sm:text-3xl text-white">
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
-  <div class="grow flex flex-wrap -mt-5 -mr-5">
+  <div
+    class="sm:grow flex py-3 sm:py-0 my-3 sm:my-0 flex-wrap justify-end sm:justify-start border-neutral-500 border-y-2 sm:border-y-0"
+  >
     {{ if .currentUser }}
-    <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-      >Dashboard</a
-    >
-    <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-      >Statistics</a
-    >
-    <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-      >Workouts</a
-    >
-    <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
-      >Add workout</a
-    >
+    <div>
+      <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
+        ><span class="hidden sm:contents">Dashboard</span></a
+      >
+    </div>
+    <div>
+      <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
+        ><span class="hidden sm:contents">Statistics</span></a
+      >
+    </div>
+    <div>
+      <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
+        ><span class="hidden sm:contents">Workouts</span></a
+      >
+    </div>
+    <div>
+      <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
+        ><span class="hidden sm:contents">Add workout</span></a
+      >
+    </div>
     {{ end }}
   </div>
-  <div class="flex-wrap -mt-5 -mr-5">
-    {{ with .currentUser }}
-    <a class="{{ IconFor `user-profile` }}" href="{{ RouteFor `user-profile`}}"
-      >{{ .Name | html }}</a
-    >
-    {{ if .Admin }}
-    <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}">Manage</a>
+  <div class="flex flex-wrap sm:min-w-[400px] justify-end">
+    {{ with .currentUser }} {{ if .Admin }}
+    <div>
+      <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
+        ><span class="hidden sm:contents">Manage</span></a
+      >
+    </div>
     {{ end }}
-    <a class="{{ IconFor `user-signout` }}" href="{{ RouteFor `user-signout` }}"
-      >Logout</a
-    >
+    <div>
+      <a
+        class="{{ IconFor `user-profile` }}"
+        href="{{ RouteFor `user-profile`}}"
+        >{{ .Name | html }}</a
+      >
+    </div>
+    <div>
+      <a
+        class="{{ IconFor `user-signout` }}"
+        href="{{ RouteFor `user-signout` }}"
+        ><span class="hidden sm:contents">Logout</span></a
+      >
+    </div>
     {{ end }}
   </div>
 </div>

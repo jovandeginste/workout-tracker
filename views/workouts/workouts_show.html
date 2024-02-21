@@ -18,28 +18,35 @@
 
         <h2 class="{{ IconFor .Type }}">{{ .Name | html }}</h2>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div
-          id="map"
-          class="border-2 border-black rounded-xl"
-          style="height: 600px"
-        >
-          <script>
-            let points = [
-              {{- range $idx, $pt := .Data.Points }}
-              {{  if $idx  }},{{  end -}}
-              { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng -}}, "title": {{  $pt.Title  }} }
-              {{- end  }}
-            ];
-            let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
-          </script>
-          <script src="{{ RouteFor `assets` }}/map.js"></script>
+      <div class="flex flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <div
+              id="map"
+              class="border-2 border-black rounded-xl min-w-[400px] min-h-[600px]"
+            >
+              <script>
+                let points = [
+                  {{- range $idx, $pt := .Data.Points }}
+                  {{  if $idx  }},{{  end -}}
+                  { "lat": {{  $pt.Lat  }}, "lng": {{  $pt.Lng -}}, "title": {{  $pt.Title  }} }
+                  {{- end  }}
+                ];
+                let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
+              </script>
+              <script src="{{ RouteFor `assets` }}/map.js"></script>
+            </div>
+          </div>
         </div>
-        <div class="grid grid-cols-1">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="inner-form">{{ template "workout_details" . }}</div>
-            <div class="inner-form">
-              {{ template "workout_breakdown" $.workoutStatistics }}
+        <div class="basis-1/2">
+          <div class="flex flex-wrap">
+            <div class="basis-1/2">
+              <div class="inner-form">{{ template "workout_details" . }}</div>
+            </div>
+            <div class="basis-1/2">
+              <div class="inner-form">
+                {{ template "workout_breakdown" $.workoutStatistics }}
+              </div>
             </div>
           </div>
         </div>

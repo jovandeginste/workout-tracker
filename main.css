@@ -22,9 +22,6 @@
     @apply font-bold;
   }
 
-  h1 {
-    @apply text-3xl text-white;
-  }
   h2,
   h3 {
     @apply text-2xl mb-5 text-zinc-200;
@@ -90,7 +87,7 @@
     @apply rounded-xl p-10 bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-5 bg-neutral-800 border border-neutral-800 hover:border-neutral-500 mb-5;
+    @apply rounded-xl p-5 m-2 bg-neutral-800 border border-neutral-800 hover:border-neutral-500;
   }
 
   .notice {
