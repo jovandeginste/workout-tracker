@@ -31,11 +31,15 @@
                   {
                     "lat": {{ .Lat }},
                     "lng": {{ .Lng }},
+                    "speed": {{ .AverageSpeed }},
+                    "elevation": {{ .Elevation }},
                     "title": '{{ template "workout_point_title" . }}',
                   },
                   {{ end  }}
                 ];
                 let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
+                let minElevation = {{ .Data.MinElevation }};
+                let maxElevation = {{ .Data.MaxElevation }};
               </script>
               <script src="{{ RouteFor `assets` }}/map.js"></script>
             </div>

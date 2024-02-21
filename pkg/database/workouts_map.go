@@ -45,7 +45,7 @@ type MapPoint struct {
 	Duration      time.Duration
 	TotalDuration time.Duration
 	Time          time.Time
-	Height        float64
+	Elevation     float64
 }
 
 func (m *MapData) AverageSpeed() float64 {
@@ -170,7 +170,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 			TotalDistance: totalDist,
 			Duration:      time.Duration(t) * time.Second,
 			TotalDuration: time.Duration(totalTime) * time.Second,
-			Height:        pt.Elevation.Value(),
+			Elevation:     pt.Elevation.Value(),
 		})
 	}
 

@@ -12,27 +12,35 @@ function on_loaded() {
   L.control.scale().addTo(map);
 
   var group = new L.featureGroup();
-  var p = [];
   var polyLineProperties = {
     weight: 4,
     interactive: false,
   };
 
+  var prevPoint;
   // Add points with tooltip to map.
   points.forEach((pt) => {
-    p.push([pt.lat, pt.lng]);
-    group.addLayer(
-      L.circleMarker([pt.lat, pt.lng], {
-        opacity: 0,
-        fill: false,
-        radius: 4,
-      })
-        .addTo(map)
-        .bindTooltip(pt.title),
-    );
-  });
+    p = [pt.lat, pt.lng];
 
-  L.polyline(p, polyLineProperties).addTo(map);
+    if (prevPoint) {
+      group.addLayer(
+        L.circleMarker([pt.lat, pt.lng], {
+          opacity: 0,
+          fill: false,
+          radius: 4,
+        })
+          .addTo(map)
+          .bindTooltip(pt.title),
+      );
+
+      polyLineProperties["color"] = getColor(
+        (pt.elevation - minElevation) / (maxElevation - minElevation),
+      );
+      L.polyline([prevPoint, p], polyLineProperties).addTo(map);
+    }
+
+    prevPoint = p;
+  });
 
   var last = points[points.length - 1];
   group.addLayer(
@@ -72,6 +80,12 @@ function set_marker(title, lat, lon) {
 }
 function clear_marker() {
   hoverMarker.closeTooltip();
+}
+
+function getColor(value) {
+  //value from 0 to 1
+  var hue = (240 + value * 120).toString(10);
+  return ["hsl(", hue, ",100%,50%)"].join("");
 }
 
 document.addEventListener("DOMContentLoaded", on_loaded);
