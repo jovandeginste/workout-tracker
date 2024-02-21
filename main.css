@@ -106,10 +106,12 @@
   }
 
   table {
-    @apply text-sm w-full text-left rtl:text-right table-auto;
+    @apply text-sm w-full text-left table-auto;
     @apply border border-neutral-500;
+    tfoot,
     thead {
-      @apply uppercase;
+      @apply uppercase font-bold;
+      @apply bg-zinc-900;
     }
     tr {
       @apply border border-neutral-500;
@@ -160,7 +162,7 @@
 
       button.close-modal {
         a {
-          @apply text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center;
+          @apply text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex;
         }
       }
 

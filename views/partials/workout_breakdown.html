@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    {{ range . }}
+    {{ $distance := 0 }} {{ range . }} {{ $distance = .Distance }}
     <tr
       onmouseover="set_marker('{{ .Point.Title }}', {{.Point.Lat}}, {{.Point.Lng}})"
       onmouseout="clear_marker()"
@@ -28,5 +28,11 @@
     </tr>
     {{ end }}
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2"></td>
+      <td colspan="3">Last distance: {{ $distance | HumanDistance }}</td>
+    </tr>
+  </tfoot>
 </table>
 {{ end }}

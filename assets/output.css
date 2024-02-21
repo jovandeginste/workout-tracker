@@ -784,18 +784,21 @@ table {
   text-align: left;
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-table:where([dir="rtl"], [dir="rtl"] *) {
-  text-align: right;
-}
-
-table {
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(115 115 115 / var(--tw-border-opacity));
-  thead {
+  tfoot,
+    thead {
+    font-weight: 700;
+  }
+  tfoot,
+    thead {
     text-transform: uppercase;
+  }
+  tfoot,
+    thead {
+    --tw-bg-opacity: 1;
+    background-color: rgb(24 24 27 / var(--tw-bg-opacity));
   }
   tr {
     border-width: 1px;
@@ -916,9 +919,6 @@ table {
       }
       a {
         display: inline-flex;
-      }
-      a {
-        align-items: center;
       }
       a {
         border-radius: 0.5rem;
