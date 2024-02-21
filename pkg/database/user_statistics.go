@@ -55,8 +55,8 @@ func (us *UserStatistics) Add(w *Workout) {
 	us.Total.Distance += w.Data.TotalDistance
 	us.Total.Duration += w.Data.TotalDuration
 	us.Total.Up += w.Data.TotalUp
-	us.Total.AverageSpeed += w.Data.AverageSpeed
-	us.Total.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	us.Total.AverageSpeed += w.Data.AverageSpeed()
+	us.Total.AverageSpeedNoPause += w.Data.AverageSpeedNoPause()
 	us.Total.MaxSpeed += w.Data.MaxSpeed
 
 	d := w.Date
@@ -79,8 +79,8 @@ func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
 			Distance:            w.Data.TotalDistance,
 			Up:                  w.Data.TotalUp,
 			Duration:            w.Data.TotalDuration,
-			AverageSpeed:        w.Data.AverageSpeed,
-			AverageSpeedNoPause: w.Data.AverageSpeedNoPause,
+			AverageSpeed:        w.Data.AverageSpeed(),
+			AverageSpeedNoPause: w.Data.AverageSpeedNoPause(),
 			MaxSpeed:            w.Data.MaxSpeed,
 		}
 
@@ -91,8 +91,8 @@ func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
 	entry.Distance += w.Data.TotalDistance
 	entry.Duration += w.Data.TotalDuration
 	entry.Up += w.Data.TotalUp
-	entry.AverageSpeed += w.Data.AverageSpeed
-	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	entry.AverageSpeed += w.Data.AverageSpeed()
+	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause()
 	entry.MaxSpeed += w.Data.MaxSpeed
 }
 
@@ -104,8 +104,8 @@ func (us *UserStatistics) AddYear(year int, w *Workout) {
 			Distance:            w.Data.TotalDistance,
 			Up:                  w.Data.TotalUp,
 			Duration:            w.Data.TotalDuration,
-			AverageSpeed:        w.Data.AverageSpeed,
-			AverageSpeedNoPause: w.Data.AverageSpeedNoPause,
+			AverageSpeed:        w.Data.AverageSpeed(),
+			AverageSpeedNoPause: w.Data.AverageSpeedNoPause(),
 			MaxSpeed:            w.Data.MaxSpeed,
 		}
 
@@ -116,8 +116,8 @@ func (us *UserStatistics) AddYear(year int, w *Workout) {
 	entry.Distance += w.Data.TotalDistance
 	entry.Duration += w.Data.TotalDuration
 	entry.Up += w.Data.TotalUp
-	entry.AverageSpeed += w.Data.AverageSpeed
-	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause
+	entry.AverageSpeed += w.Data.AverageSpeed()
+	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause()
 	entry.MaxSpeed += w.Data.MaxSpeed
 }
 
@@ -141,13 +141,13 @@ func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 		us.Add(w)
 
 		us.Records.AverageSpeedNoPause.CheckAndSwap(
-			w.Data.AverageSpeedNoPause,
+			w.Data.AverageSpeedNoPause(),
 			w.ID,
 			w.Date,
 		)
 
 		us.Records.AverageSpeed.CheckAndSwap(
-			w.Data.AverageSpeed,
+			w.Data.AverageSpeed(),
 			w.ID,
 			w.Date,
 		)

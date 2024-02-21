@@ -5,17 +5,19 @@ import (
 )
 
 type StatisticsItem struct {
-	Kilometer int
-	Distance  float64
-	Duration  time.Duration
-	Speed     float64
-	Point     *MapPoint
-	IsBest    bool
-	IsWorst   bool
+	Kilometer     int
+	Distance      float64
+	TotalDistance float64
+	Duration      time.Duration
+	Speed         float64
+	FirstPoint    *MapPoint
+	LastPoint     *MapPoint
+	IsBest        bool
+	IsWorst       bool
 }
 
 func (si *StatisticsItem) CanHave(distance float64) bool {
-	return si.Distance+distance < 1000
+	return int(si.TotalDistance+distance) < si.Kilometer*1000
 }
 
 func (si *StatisticsItem) CalcultateSpeed() {
@@ -25,33 +27,35 @@ func (si *StatisticsItem) CalcultateSpeed() {
 func (w *Workout) StatisticsPerKilometer() []StatisticsItem {
 	var items []StatisticsItem
 
-	nextItem := StatisticsItem{Kilometer: 1}
+	nextItem := StatisticsItem{
+		Kilometer:  1,
+		FirstPoint: &w.Data.Points[0],
+	}
 
 	for i, p := range w.Data.Points {
-		if nextItem.Point == nil {
-			nextItem.Point = &w.Data.Points[i]
-		}
-
-		// m/s -> km/h, cut-off is speed less than 1 km/h
-		if p.AverageSpeed()*3.6 < 1.0 {
-			continue
-		}
-
 		if !nextItem.CanHave(p.Distance) {
+			nextItem.LastPoint = &w.Data.Points[i]
 			nextItem.CalcultateSpeed()
 			items = append(items, nextItem)
 			nextItem = StatisticsItem{
-				Kilometer: nextItem.Kilometer + 1,
+				Kilometer:     nextItem.Kilometer + 1,
+				TotalDistance: nextItem.TotalDistance,
+				FirstPoint:    &w.Data.Points[i],
 			}
-
-			continue
 		}
 
 		nextItem.Distance += p.Distance
-		nextItem.Duration += p.Duration
+		nextItem.TotalDistance += p.Distance
+
+		// m/s -> km/h, cut-off is speed less than 1 km/h
+		if p.AverageSpeed()*3.6 >= 1.0 {
+			nextItem.Duration += p.Duration
+		}
 	}
 
-	if nextItem.Point != nil {
+	nextItem.LastPoint = &w.Data.Points[len(w.Data.Points)-1]
+
+	if nextItem.FirstPoint != nil {
 		nextItem.CalcultateSpeed()
 		items = append(items, nextItem)
 	}
