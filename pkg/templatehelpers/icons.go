@@ -19,7 +19,7 @@ func IconFor(what string) template.HTML {
 		}
 	}
 
-	return template.HTML(iconDefaults + " icon-solid icon-question")
+	return template.HTML(iconDefaults + " icon-solid icon-question") //nolint:gosec
 }
 
 func categoryIcon(what string) string {
