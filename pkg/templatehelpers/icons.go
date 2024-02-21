@@ -2,6 +2,8 @@ package templatehelpers
 
 import "html/template"
 
+const iconDefaults = "icon-baseline icon-space-sm icon-before"
+
 func IconFor(what string) template.HTML {
 	iconFunctions := []func(string) string{
 		categoryIcon,
@@ -17,33 +19,33 @@ func IconFor(what string) template.HTML {
 		}
 	}
 
-	return template.HTML("icon-solid icon-baseline sm:icon-space-sm icon-before icon-question")
+	return template.HTML(iconDefaults + " icon-solid icon-question")
 }
 
 func categoryIcon(what string) string {
 	switch what {
 	case "distance":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-road"
+		return iconDefaults + " icon-solid icon-road"
 	case "speed":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gauge"
+		return iconDefaults + " icon-solid icon-gauge"
 	case "max-speed":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gauge-high"
+		return iconDefaults + " icon-solid icon-gauge-high"
 	case "tempo":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-stopwatch"
+		return iconDefaults + " icon-solid icon-stopwatch"
 	case "duration":
-		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-clock"
+		return iconDefaults + " icon-regular icon-clock"
 	case "elevation":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-mountain"
+		return iconDefaults + " icon-solid icon-mountain"
 	case "location":
-		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-map-location-dot"
+		return iconDefaults + " icon-regular icon-map-location-dot"
 	case "date":
-		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-calendar"
+		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":
-		return "icon-regular icon-baseline sm:icon-space-sm icon-before icon-hourglass"
+		return iconDefaults + " icon-regular icon-hourglass"
 	case "up":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chevron-up"
+		return iconDefaults + " icon-solid icon-chevron-up"
 	case "down":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chevron-down"
+		return iconDefaults + " icon-solid icon-chevron-down"
 	default:
 		return ""
 	}
@@ -52,9 +54,9 @@ func categoryIcon(what string) string {
 func miscIcon(what string) string {
 	switch what {
 	case "best":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrow-up-long"
+		return iconDefaults + " icon-solid icon-arrow-up-long"
 	case "worst":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrow-down-long"
+		return iconDefaults + " icon-solid icon-arrow-down-long"
 	default:
 		return ""
 	}
@@ -63,7 +65,7 @@ func miscIcon(what string) string {
 func sportIcon(what string) string {
 	switch what {
 	case "running":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-person-running"
+		return iconDefaults + " icon-solid icon-person-running"
 	default:
 		return ""
 	}
@@ -72,19 +74,19 @@ func sportIcon(what string) string {
 func pageIcon(what string) string {
 	switch what {
 	case "dashboard":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chart-line"
+		return iconDefaults + " icon-solid icon-chart-line"
 	case "statistics":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-chart-simple"
+		return iconDefaults + " icon-solid icon-chart-simple"
 	case "admin":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-gear"
+		return iconDefaults + " icon-solid icon-gear"
 	case "user-profile":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-circle"
+		return iconDefaults + " icon-solid icon-user-circle"
 	case "user-add":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-plus"
+		return iconDefaults + " icon-solid icon-user-plus"
 	case "workout":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-dumbbell"
+		return iconDefaults + " icon-solid icon-dumbbell"
 	case "workout-add":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-circle-plus"
+		return iconDefaults + " icon-solid icon-circle-plus"
 	default:
 		return ""
 	}
@@ -93,25 +95,25 @@ func pageIcon(what string) string {
 func utilityIcon(what string) string {
 	switch what {
 	case "close":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-xmark"
+		return iconDefaults + " icon-solid icon-xmark"
 	case "edit":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-pen-to-square"
+		return iconDefaults + " icon-solid icon-pen-to-square"
 	case "auto-update", "refresh":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-arrows-rotate"
+		return iconDefaults + " icon-solid icon-arrows-rotate"
 	case "delete":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-trash"
+		return iconDefaults + " icon-solid icon-trash"
 	case "note":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-quote-left"
+		return iconDefaults + " icon-solid icon-quote-left"
 	case "users":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-users"
+		return iconDefaults + " icon-solid icon-users"
 	case "user-signin":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-right-to-bracket"
+		return iconDefaults + " icon-solid icon-right-to-bracket"
 	case "user-signout":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-right-from-bracket"
+		return iconDefaults + " icon-solid icon-right-from-bracket"
 	case "user-register":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user-plus"
+		return iconDefaults + " icon-solid icon-user-plus"
 	case "user":
-		return "icon-solid icon-baseline sm:icon-space-sm icon-before icon-user"
+		return iconDefaults + " icon-solid icon-user"
 	default:
 		return ""
 	}

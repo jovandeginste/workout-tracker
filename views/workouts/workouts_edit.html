@@ -10,71 +10,61 @@
       <div class="gap-4">
         <h2 class="{{ IconFor .Type }}">{{ .Name | html }}</h2>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="inner-form">
-          <form method="post" action="{{ RouteFor `workout-update` .ID }}">
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <label for="name">Name</label>
-                  </td>
+      <div class="sm:flex sm:flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <form method="post" action="{{ RouteFor `workout-update` .ID }}">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label for="name">Name</label>
+                    </td>
 
-                  <td>
-                    <input
-                      id="name"
-                      name="name"
-                      size="40"
-                      value="{{ .Name }}"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="type">Type</label>
-                  </td>
-                  <td>
-                    <input
-                      id="type"
-                      name="type"
-                      size="40"
-                      value="{{ .Type }}"
-                      readonly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="notes">Notes</label>
-                  </td>
-                  <td>
-                    <textarea
-                      type="text"
-                      id="notes"
-                      name="notes"
-                      rows="10"
-                      cols="40"
-                    >
+                    <td>
+                      <input id="name" name="name" value="{{ .Name }}" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="type">Type</label>
+                    </td>
+                    <td>
+                      <input
+                        id="type"
+                        name="type"
+                        value="{{ .Type }}"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="notes">Notes</label>
+                    </td>
+                    <td>
+                      <textarea type="text" id="notes" name="notes" rows="10">
 {{ .Notes }}</textarea
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <button type="submit" size="40">Update workout</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit">Update workout</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
         </div>
-        <div class="grid grid-cols-1">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="inner-form">{{ template "workout_details" . }}</div>
-            <div class="inner-form">
-              {{ template "workout_breakdown" $.workoutStatistics }}
-            </div>
+        <div class="basis-1/4">
+          <div class="inner-form">{{ template "workout_details" . }}</div>
+        </div>
+        <div class="basis-1/4">
+          <div class="inner-form">
+            {{ template "workout_breakdown" $.workoutStatistics }}
           </div>
         </div>
       </div>
