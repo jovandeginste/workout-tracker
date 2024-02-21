@@ -10,6 +10,10 @@ function on_loaded() {
 
   var group = new L.featureGroup();
   var p = [];
+  var polyLineProperties = {
+    weight: 4,
+    interactive: false,
+  };
 
   var first = points.shift();
   var last = points.pop();
@@ -29,8 +33,9 @@ function on_loaded() {
     p.push([pt.lat, pt.lng]);
     group.addLayer(
       L.circleMarker([pt.lat, pt.lng], {
-        color: "blue",
-        radius: 2,
+        opacity: 0,
+        fill: false,
+        radius: 4,
       })
         .addTo(map)
         .bindTooltip(pt.title),
@@ -47,7 +52,7 @@ function on_loaded() {
       .bindTooltip(last.title),
   );
 
-  L.polyline(p).addTo(map);
+  L.polyline(p, polyLineProperties).addTo(map);
 
   map.fitBounds(group.getBounds());
 }
