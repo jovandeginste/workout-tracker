@@ -454,10 +454,15 @@ table.sortable
 body {
   --tw-bg-opacity: 1;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity));
-  padding-left: 5rem;
-  padding-right: 5rem;
   --tw-text-opacity: 1;
   color: rgb(244 244 245 / var(--tw-text-opacity));
+}
+
+@media (min-width: 640px) {
+  body {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
 
 button[type="submit"],
@@ -498,8 +503,19 @@ button[type="submit"] {
   font-weight: 700;
 }
 
-h2,
-  h3 {
+h2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+
+h3 {
   margin-bottom: 1.25rem;
   font-size: 1.5rem;
   line-height: 2rem;
@@ -687,7 +703,17 @@ form {
   border-radius: 0.75rem;
   --tw-bg-opacity: 1;
   background-color: rgb(64 64 64 / var(--tw-bg-opacity));
-  padding: 2.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .content {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
 .inner-form {
@@ -698,12 +724,18 @@ form {
   border-color: rgb(38 38 38 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(38 38 38 / var(--tw-bg-opacity));
-  padding: 1.25rem;
+  padding: 0.5rem;
 }
 
 .inner-form:hover {
   --tw-border-opacity: 1;
   border-color: rgb(115 115 115 / var(--tw-border-opacity));
+}
+
+@media (min-width: 640px) {
+  .inner-form {
+    padding: 1.25rem;
+  }
 }
 
 .notice {
@@ -1279,10 +1311,6 @@ table {
   min-height: 600px;
 }
 
-.w-\[300px\] {
-  width: 300px;
-}
-
 .min-w-\[150px\] {
   min-width: 150px;
 }
@@ -1301,10 +1329,6 @@ table {
 
 .basis-1\/2 {
   flex-basis: 50%;
-}
-
-.basis-1\/3 {
-  flex-basis: 33.333333%;
 }
 
 .table-auto {
@@ -2082,6 +2106,10 @@ table {
     display: contents;
   }
 
+  .sm\:w-\[300px\] {
+    width: 300px;
+  }
+
   .sm\:min-w-\[400px\] {
     min-width: 400px;
   }
@@ -2151,6 +2179,10 @@ table {
 }
 
 @media (min-width: 1024px) {
+  .lg\:basis-1\/3 {
+    flex-basis: 33.333333%;
+  }
+
   .lg\:basis-1\/4 {
     flex-basis: 25%;
   }

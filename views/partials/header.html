@@ -30,13 +30,7 @@
     {{ end }}
   </div>
   <div class="flex flex-wrap sm:min-w-[400px] justify-end">
-    {{ with .currentUser }} {{ if .Admin }}
-    <div>
-      <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-        ><span class="hidden sm:contents">Manage</span></a
-      >
-    </div>
-    {{ end }}
+    {{ with .currentUser }}
     <div>
       <a
         class="{{ IconFor `user-profile` }}"
@@ -44,6 +38,13 @@
         >{{ .Name | html }}</a
       >
     </div>
+    {{ if .Admin }}
+    <div>
+      <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
+        ><span class="hidden sm:contents">Manage</span></a
+      >
+    </div>
+    {{ end }}
     <div>
       <a
         class="{{ IconFor `user-signout` }}"

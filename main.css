@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply bg-neutral-900 text-zinc-100 px-20;
+    @apply bg-neutral-900 text-zinc-100 sm:px-20;
   }
 
   button[type="submit"],
@@ -22,7 +22,9 @@
     @apply font-bold;
   }
 
-  h2,
+  h2 {
+    @apply text-2xl mb-5 text-zinc-200 mx-2 px-2;
+  }
   h3 {
     @apply text-2xl mb-5 text-zinc-200;
   }
@@ -84,10 +86,10 @@
     }
   }
   .content {
-    @apply rounded-xl p-10 bg-neutral-700;
+    @apply rounded-xl py-5 px-1 sm:px-10 bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-5 m-2 bg-neutral-800 border border-neutral-800 hover:border-neutral-500;
+    @apply rounded-xl p-2 sm:p-5 m-2 bg-neutral-800 border border-neutral-800 hover:border-neutral-500;
   }
 
   .notice {
