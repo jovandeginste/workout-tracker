@@ -82,6 +82,27 @@ func (a *App) userProfileHandler(c echo.Context) error {
 	return c.Render(http.StatusOK, "user_profile.html", data)
 }
 
+func (a *App) userRefreshHandler(c echo.Context) error {
+	u := a.getCurrentUser(c)
+
+	workouts, err := u.GetWorkouts(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
+
+	for _, w := range workouts {
+		a.logger.Debug("Refreshing workout: " + w.Name)
+
+		if err := w.UpdateData(a.db); err != nil {
+			return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+		}
+	}
+
+	a.setNotice(c, "All workouts have been refreshed.")
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
+}
+
 func (a *App) userShowHandler(c echo.Context) error {
 	data := a.defaultData(c)
 

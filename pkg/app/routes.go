@@ -120,6 +120,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
 	secureGroup.GET("/user/profile", a.userProfileHandler).Name = "user-profile"
+	secureGroup.POST("/user/refresh", a.userRefreshHandler).Name = "user-refresh"
 
 	usersGroup := secureGroup.Group("/users")
 	usersGroup.GET("/:id", a.userShowHandler).Name = "user-show"
