@@ -594,13 +594,22 @@ form {
 
 .menu {
   a::before {
-    padding-right: 0.5rem;
   }
   a {
     margin-top: 1.25rem;
   }
   a {
     margin-right: 1.25rem;
+  }
+  a {
+    span {
+      display: none;
+    }
+    @media (min-width: 640px) {
+      span {
+        display: contents;
+      }
+    }
   }
 }
 
@@ -802,6 +811,12 @@ table {
   td,
     th {
     padding: 0.5rem;
+  }
+  td,
+    th {
+    label {
+      vertical-align: top;
+    }
   }
   tbody {
     tr:nth-child(odd) {
@@ -1303,20 +1318,16 @@ table {
   height: 4rem;
 }
 
+.h-\[300px\] {
+  height: 300px;
+}
+
 .min-h-\[450px\] {
   min-height: 450px;
 }
 
-.min-h-\[600px\] {
-  min-height: 600px;
-}
-
 .min-w-\[150px\] {
   min-width: 150px;
-}
-
-.min-w-\[400px\] {
-  min-width: 400px;
 }
 
 .shrink {
@@ -1329,6 +1340,10 @@ table {
 
 .basis-1\/2 {
   flex-basis: 50%;
+}
+
+.basis-1\/4 {
+  flex-basis: 25%;
 }
 
 .table-auto {
@@ -2102,8 +2117,8 @@ table {
     display: flex;
   }
 
-  .sm\:contents {
-    display: contents;
+  .sm\:h-\[400px\] {
+    height: 400px;
   }
 
   .sm\:w-\[300px\] {
@@ -2159,6 +2174,10 @@ table {
     height: 2rem;
   }
 
+  .md\:h-\[600px\] {
+    height: 600px;
+  }
+
   .md\:basis-1\/2 {
     flex-basis: 50%;
   }
@@ -2179,11 +2198,23 @@ table {
 }
 
 @media (min-width: 1024px) {
-  .lg\:basis-1\/3 {
-    flex-basis: 33.333333%;
-  }
-
   .lg\:basis-1\/4 {
     flex-basis: 25%;
+  }
+}
+
+.\[\&\>\*\]\:basis-1\/2>* {
+  flex-basis: 50%;
+}
+
+@media (min-width: 768px) {
+  .\[\&\>\*\]\:md\:basis-1\/2>* {
+    flex-basis: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .\[\&\>\*\]\:lg\:basis-1\/3>* {
+    flex-basis: 33.333333%;
   }
 }

@@ -6,8 +6,8 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <div class="flex flex-wrap">
-        <div class="basis-1/2">
+      <div class="flex flex-wrap [&>*]:basis-1/2">
+        <div>
           <div class="inner-form">
             <h2
               class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
@@ -16,7 +16,7 @@
             </h2>
           </div>
         </div>
-        <div class="basis-1/2">
+        <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `user-signin` }}">Sign In</h3>
             <form method="post" action="{{ RouteFor `user-signin` }}">

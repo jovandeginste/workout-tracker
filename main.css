@@ -57,10 +57,12 @@
   }
   .menu {
     a::before {
-      @apply pr-2;
     }
     a {
       @apply mt-5 mr-5;
+      span {
+        @apply hidden sm:contents;
+      }
     }
   }
   .actions {
@@ -116,6 +118,9 @@
     td,
     th {
       @apply p-2;
+      label {
+        @apply align-top;
+      }
     }
     tbody {
       tr {

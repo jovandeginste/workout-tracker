@@ -12,15 +12,15 @@
 
       {{ template "stats_records_total" .UserStatistics.Total }}
 
-      <div class="sm:flex sm:flex-wrap">
-        <div class="basis-1/2">
+      <div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+        <div>
           {{ if len .workouts }}
           <div class="inner-form">
             {{ template "stats_records_running" .UserStatistics.Records }}
           </div>
           {{ end }}
         </div>
-        <div class="basis-1/2">
+        <div>
           <div class="inner-form min-h-[450px]" id="calendar"></div>
           <script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
           <script>

@@ -9,22 +9,22 @@
     {{ if .currentUser }}
     <div>
       <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-        ><span class="hidden sm:contents">Dashboard</span></a
+        ><span>Dashboard</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-        ><span class="hidden sm:contents">Statistics</span></a
+        ><span>Statistics</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-        ><span class="hidden sm:contents">Workouts</span></a
+        ><span>Workouts</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
-        ><span class="hidden sm:contents">Add workout</span></a
+        ><span>Add workout</span></a
       >
     </div>
     {{ end }}
@@ -41,7 +41,7 @@
     {{ if .Admin }}
     <div>
       <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-        ><span class="hidden sm:contents">Manage</span></a
+        ><span>Manage</span></a
       >
     </div>
     {{ end }}
@@ -49,7 +49,7 @@
       <a
         class="{{ IconFor `user-signout` }}"
         href="{{ RouteFor `user-signout` }}"
-        ><span class="hidden sm:contents">Logout</span></a
+        ><span>Logout</span></a
       >
     </div>
     {{ end }}
