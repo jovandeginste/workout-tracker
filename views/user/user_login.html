@@ -12,19 +12,21 @@
             <h2
               class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
             >
-              Welcome!
+              {{ .T.Get "Welcome!" }}
             </h2>
           </div>
         </div>
         <div>
           <div class="inner-form">
-            <h3 class="{{ IconFor `user-signin` }}">Sign In</h3>
+            <h3 class="{{ IconFor `user-signin` }}">{{ .T.Get "Sign in" }}</h3>
             <form method="post" action="{{ RouteFor `user-signin` }}">
               <table>
                 <tbody>
                   <tr>
                     <td>
-                      <label for="username">Username (email)</label>
+                      <label for="username"
+                        >{{ .T.Get "Username (email)" }}</label
+                      >
                     </td>
                     <td>
                       <input type="text" id="username" name="username" />
@@ -32,7 +34,7 @@
                   </tr>
                   <tr>
                     <td>
-                      <label for="password">Password</label>
+                      <label for="password">{{ .T.Get "Password" }}</label>
                     </td>
                     <td>
                       <input type="password" id="password" name="password" />
@@ -41,7 +43,7 @@
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit">Sign In</button>
+                      <button type="submit">{{ .T.Get "Sign in" }}</button>
                     </td>
                   </tr>
                 </tbody>
@@ -50,13 +52,17 @@
           </div>
 
           <div class="inner-form">
-            <h3 class="{{ IconFor `user-register` }}">Create a new account</h3>
+            <h3 class="{{ IconFor `user-register` }}">
+              {{ .T.Get "Create a new account" }}
+            </h3>
             <form method="post" action="{{ RouteFor `user-register` }}">
               <table>
                 <tbody>
                   <tr>
                     <td>
-                      <label for="username">Username (email)</label>
+                      <label for="username"
+                        >{{ .T.Get "Username (email)" }}</label
+                      >
                     </td>
                     <td>
                       <input type="text" id="username" name="username" />
@@ -64,7 +70,7 @@
                   </tr>
                   <tr>
                     <td>
-                      <label for="name">Name</label>
+                      <label for="name">{{ .T.Get "Name" }}</label>
                     </td>
                     <td>
                       <input type="text" id="name" name="name" />
@@ -72,7 +78,7 @@
                   </tr>
                   <tr>
                     <td>
-                      <label for="password">Password</label>
+                      <label for="password">{{ .T.Get "Password" }}</label>
                     </td>
                     <td>
                       <input type="password" id="password" name="password" />
@@ -81,7 +87,7 @@
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit">Register</button>
+                      <button type="submit">{{ .T.Get "Register" }}</button>
                     </td>
                   </tr>
                 </tbody>

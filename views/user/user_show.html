@@ -7,7 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `dashboard` }}">
-        Dashboard for {{ .user.Name | html }}
+        {{ .T.Getf "Dashboard for %s" (.user.Name | html) }}
       </h2>
 
       {{ template "stats_records_total" .UserStatistics.Total }}

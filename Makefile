@@ -5,6 +5,9 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 OUTPUT_FILE ?= tmp/main
 
+I18N_LANGUAGES ?= en nl
+LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
+
 .PHONY: all clean test build
 
 all: clean install-deps test build
@@ -40,6 +43,15 @@ build-tw:
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
+
+generate-messages:
+	xspreak -p ./locale/ -f json --template-prefix "T" -t "views/**/*.html"
+
+generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
+
+$(patsubst %,generate-translation-%, $(I18N_LANGUAGES)):
+	xspreak merge -i locale/messages.json \
+		-o locale/${LANG_TO_GENERATE}.json -l ${LANG_TO_GENERATE}
 
 serve:
 	$(OUTPUT_FILE)

@@ -1,0 +1,65 @@
+run:
+  timeout: 5m
+
+  skip-dirs-use-default: true
+  skip-dirs:
+    - humanize/locale
+
+linters:
+  enable:
+    - gofmt
+    - revive
+    - gosimple
+    - exportloopref
+    - unconvert
+    - misspell
+    - goimports
+    - errcheck
+    - forbidigo
+    - godot
+    - goimports
+    # - dupl
+    # - cyclop
+
+issues:
+  fix: true
+
+linters-settings:
+  cyclop:
+    # The maximal code complexity to report.
+    max-complexity: 15
+    # The maximal average package complexity.
+    # If it's higher than 0.0 (float) the check is enabled
+    # Default: 0.0
+    package-average: 0.0
+    # Should ignore tests.
+    # Default: false
+    skip-tests: false
+
+  forbidigo:
+    # Forbid the following identifiers (list of regexp).
+    forbid:
+      - 'fmt\.Print.*'
+    exclude_godoc_examples: true
+    tests: false
+
+  godot:
+    # Comments to be checked: `declarations`, `toplevel`, or `all`.
+    # Default: declarations
+    scope: declarations
+    # List of regexps for excluding particular comment lines from check.
+    exclude:
+      # Exclude todo and fixme comments.
+      - "^fixme:"
+      - "^todo:"
+    # Check that each sentence ends with a period.
+    # Default: true
+    period: true
+    # Check that each sentence starts with a capital letter.
+    # Default: false
+    capital: false
+
+  goimports:
+    # Put imports beginning with prefix after 3rd-party packages.
+    # It's a comma-separated list of prefixes.
+    local-prefixes: github.com/vorlif/spreak

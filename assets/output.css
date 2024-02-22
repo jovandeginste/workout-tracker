@@ -467,6 +467,7 @@ body {
 
 button[type="submit"],
   textarea,
+  select,
   input {
   border-radius: 0.75rem;
   border-width: 1px;
@@ -482,18 +483,20 @@ button[type="submit"],
 
 button[type="submit"]:hover,
   textarea:hover,
+  select:hover,
   input:hover {
   --tw-border-opacity: 1;
   border-color: rgb(245 158 11 / var(--tw-border-opacity));
 }
 
-button[type="submit"]::-moz-placeholder, textarea::-moz-placeholder, input::-moz-placeholder {
+button[type="submit"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 button[type="submit"]::placeholder,
   textarea::placeholder,
+  select::placeholder,
   input::placeholder {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
@@ -1282,6 +1285,10 @@ table {
   margin-bottom: 0.5rem;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1420,13 +1427,16 @@ table {
   border-width: 1px;
 }
 
+.border-0 {
+  border-width: 0px;
+}
+
 .border-2 {
   border-width: 2px;
 }
 
-.border-y-2 {
+.border-t-2 {
   border-top-width: 2px;
-  border-bottom-width: 2px;
 }
 
 .border-none {
@@ -1471,9 +1481,8 @@ table {
   padding-bottom: 0.5rem;
 }
 
-.py-3 {
+.pt-3 {
   padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .text-center {
@@ -2104,9 +2113,8 @@ table {
 }
 
 @media (min-width: 640px) {
-  .sm\:my-0 {
+  .sm\:mt-0 {
     margin-top: 0px;
-    margin-bottom: 0px;
   }
 
   .sm\:inline {
@@ -2141,14 +2149,12 @@ table {
     justify-content: flex-start;
   }
 
-  .sm\:border-y-0 {
+  .sm\:border-t-0 {
     border-top-width: 0px;
-    border-bottom-width: 0px;
   }
 
-  .sm\:py-0 {
+  .sm\:pt-0 {
     padding-top: 0px;
-    padding-bottom: 0px;
   }
 
   .sm\:text-3xl {

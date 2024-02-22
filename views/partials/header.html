@@ -3,34 +3,34 @@
   <h1 class="text-xl sm:text-3xl text-white">
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
+  {{ if .currentUser }} {{ with .currentUser }}
   <div
-    class="sm:grow flex py-3 sm:py-0 my-3 sm:my-0 flex-wrap justify-end sm:justify-start border-neutral-500 border-y-2 sm:border-y-0"
+    class="sm:grow flex flex-wrap justify-end sm:justify-start mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
   >
-    {{ if .currentUser }}
     <div>
       <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-        ><span>Dashboard</span></a
+        ><span>{{ $.T.Getf "Dashboard" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-        ><span>Statistics</span></a
+        ><span>{{ $.T.Getf "Statistics" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-        ><span>Workouts</span></a
+        ><span>{{ $.T.Getf "Workouts" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
-        ><span>Add workout</span></a
+        ><span>{{ $.T.Getf "Add workout" }}</span></a
       >
     </div>
-    {{ end }}
   </div>
-  <div class="flex flex-wrap sm:min-w-[400px] justify-end">
-    {{ with .currentUser }}
+  <div
+    class="flex flex-wrap sm:min-w-[400px] justify-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
+  >
     <div>
       <a
         class="{{ IconFor `user-profile` }}"
@@ -41,7 +41,7 @@
     {{ if .Admin }}
     <div>
       <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-        ><span>Manage</span></a
+        ><span>{{ $.T.Getf "Manage" }}</span></a
       >
     </div>
     {{ end }}
@@ -49,10 +49,19 @@
       <a
         class="{{ IconFor `user-signout` }}"
         href="{{ RouteFor `user-signout` }}"
-        ><span>Logout</span></a
+        ><span>{{ $.T.Getf "Logout" }}</span></a
       >
     </div>
-    {{ end }}
   </div>
+  {{ end }} {{ else }}
+  <div class="sm:grow flex flex-wrap justify-end sm:justify-start"></div>
+  {{ end }} {{ if or (eq .userProfileLanguage nil) (eq .userProfileLanguage "")
+  (eq .userProfileLanguage "browser") }}
+  <div
+    class="flex flex-wrap sm:min-w-[400px] justify-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
+  >
+    {{ template "language" . }}
+  </div>
+  {{ end }}
 </div>
 {{ template "alerts" . }} {{ end }}

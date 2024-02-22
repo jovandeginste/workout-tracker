@@ -7,6 +7,8 @@ import (
 
 	"github.com/dustin/go-humanize"
 	emojiflag "github.com/jayco/go-emoji-flag"
+	"golang.org/x/text/language"
+	"golang.org/x/text/language/display"
 )
 
 func NumericDuration(d time.Duration) float64 {
@@ -73,4 +75,30 @@ func BuildDecoratedAttribute(icon, name string, value interface{}) DecoratedAttr
 		Name:  name,
 		Value: value,
 	}
+}
+
+type LanguageInformation struct {
+	Code        string
+	EnglishName string
+	LocalName   string
+	Flag        string
+}
+
+func ToLanguageInformation(code string) LanguageInformation {
+	l := LanguageInformation{
+		Code: code,
+		Flag: emojiflag.GetFlag(code),
+	}
+
+	if l.Flag == "" {
+		l.Flag = "🌎"
+	}
+
+	localTag := language.MustParse(code)
+	l.LocalName = display.Self.Name(localTag)
+
+	englishTag := display.English.Languages()
+	l.EnglishName = englishTag.Name(localTag)
+
+	return l
 }

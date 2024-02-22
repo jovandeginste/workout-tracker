@@ -14,6 +14,7 @@
 
   button[type="submit"],
   textarea,
+  select,
   input {
     @apply rounded-xl px-6 py-2 bg-zinc-900 border border-zinc-700 hover:border-amber-500;
     @apply placeholder:text-slate-500;

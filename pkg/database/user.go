@@ -67,7 +67,7 @@ func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 func GetUser(db *gorm.DB, username string) (*User, error) {
 	var u User
 
-	if err := db.Where(&User{Username: username}).First(&u).Error; err != nil {
+	if err := db.Preload("Profile").Where(&User{Username: username}).First(&u).Error; err != nil {
 		return nil, db.Error
 	}
 
@@ -76,8 +76,9 @@ func GetUser(db *gorm.DB, username string) (*User, error) {
 
 type Profile struct {
 	gorm.Model
-	UserID int
-	Theme  ThemePreference
+	UserID   int
+	Theme    ThemePreference
+	Language string
 }
 
 type ThemePreference string

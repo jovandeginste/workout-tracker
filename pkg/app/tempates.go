@@ -24,6 +24,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BoolToHTML":              templatehelpers.BoolToHTML,
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
+		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
 
 		"RelativeDate": humanize.Time,
 

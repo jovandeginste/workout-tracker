@@ -186,7 +186,10 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 - make the web application look better on mobile
   - workouts table is too wide
 - add support for authentication through a reverse proxy
-- internationalization
+- internationalization:
+  - translate all strings
+  - add more translations
+  - embed translations into the binary
 - provide a light theme
 - add more activity types
 - see if htmx is worth using

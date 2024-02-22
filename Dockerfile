@@ -29,6 +29,7 @@ COPY pkg ./pkg
 COPY vendor ./vendor
 COPY views ./views
 COPY assets ./assets
+COPY locale ./locale
 COPY --from=tailwind /app/assets/output.css ./assets/output.css
 
 ENV CGO_ENABLED=0 GOOS=linux
@@ -41,6 +42,8 @@ FROM alpine:latest
 VOLUME /data
 WORKDIR /app
 COPY --from=gobuilder /workout-tracker ./workout-tracker
+COPY locale /locale
+ENV WT_LOCALE_DIRECTORY=/locale
 
 WORKDIR /data
 ENTRYPOINT ["/app/workout-tracker"]

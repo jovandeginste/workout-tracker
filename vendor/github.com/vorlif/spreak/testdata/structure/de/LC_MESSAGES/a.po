@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Poedit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Project 1.0\n"
+"Report-Msgid-Bugs-To: help@example.com\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2022-04-29 23:17+0200\n"
+"Last-Translator: Florian Vogt\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+msgid "id"
+msgstr "ID"
+
+msgid "empty translation"
+msgstr ""
+
+msgid "Test with special characters “%s”"
+msgstr "Test mit Sonderzeichen “%s”"
+
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d Tag"
+msgstr[1] "%d Tage"
+
+msgctxt "context"
+msgid "Test with context"
+msgstr "Test mit Context"
+
+msgctxt "context"
+msgid "%d result"
+msgid_plural "%d results"
+msgstr[0] "%d Ergebniss"
+msgstr[1] "%d Ergebnisse"
+
+msgid "Line %d of file “%s” is corrupted (not valid %s data)."
+msgstr "Zeile %d der Datei »%s« ist beschädigt (ungültige %s-Daten)."
+
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "Es wurde %d Problem mit der Übersetzung gefunden."
+msgstr[1] "Es wurden %d Probleme mit der Übersetzung gefunden."
