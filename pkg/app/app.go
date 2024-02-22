@@ -30,10 +30,11 @@ type Version struct {
 }
 
 type App struct {
-	Version Version
-	Config  Config
-	Assets  fs.FS
-	Views   fs.FS
+	Version      Version
+	Config       Config
+	Assets       fs.FS
+	Views        fs.FS
+	Translations fs.FS
 
 	echo           *echo.Echo
 	logger         *slog.Logger
@@ -59,7 +60,7 @@ func (a *App) ConfigureLocalizer() error {
 		// Set the language used in the program code/templates
 		spreak.WithSourceLanguage(language.English),
 		// Set the path from which the translations should be loaded
-		spreak.WithDomainPath(spreak.NoDomain, a.Config.LocaleDirectory),
+		spreak.WithDomainFs(spreak.NoDomain, a.Translations),
 		// Specify the languages you want to load
 		spreak.WithLanguage(language.Dutch),
 	)

@@ -17,6 +17,10 @@ var (
 	views   embed.FS
 	ViewsFS = echo.MustSubFS(views, "views")
 
+	//go:embed translations/*
+	translations   embed.FS
+	TranslationsFS = echo.MustSubFS(translations, "translations")
+
 	gitRef     = "0.0.0-dev"
 	gitRefName = "local"
 	gitRefType = "local"
@@ -34,6 +38,7 @@ func main() {
 	})
 	a.Assets = AssetsFS
 	a.Views = ViewsFS
+	a.Translations = TranslationsFS
 
 	if err := a.Configure(); err != nil {
 		panic(err)

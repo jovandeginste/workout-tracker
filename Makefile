@@ -45,13 +45,13 @@ watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
 generate-messages:
-	xspreak -p ./locale/ -f json --template-prefix "T" -t "views/**/*.html"
+	xspreak -p ./translations/ -f json --template-prefix "T" -t "views/**/*.html"
 
 generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
 
 $(patsubst %,generate-translation-%, $(I18N_LANGUAGES)):
-	xspreak merge -i locale/messages.json \
-		-o locale/${LANG_TO_GENERATE}.json -l ${LANG_TO_GENERATE}
+	xspreak merge -i translations/messages.json \
+		-o translations/${LANG_TO_GENERATE}.json -l ${LANG_TO_GENERATE}
 
 serve:
 	$(OUTPUT_FILE)
