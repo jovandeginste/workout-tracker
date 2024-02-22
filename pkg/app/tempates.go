@@ -6,13 +6,13 @@ import (
 	"io/fs"
 	"strings"
 
-	legHumanize "github.com/dustin/go-humanize"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
+	"golang.org/x/text/language"
 )
 
 type Template struct {
@@ -46,9 +46,13 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 	}
 
 	tr := spreak.NewLocalizer(t.app.translator, clientLanguages...)
+	h := t.app.humanizer.CreateHumanizer(clientLanguages...)
+
 	r.Funcs(template.FuncMap{
-		"i18n":     tr.Getf,
-		"language": tr.Language().String,
+		"i18n":         tr.Getf,
+		"language":     tr.Language().String,
+		"humanizer":    func() *humanize.Humanizer { return h },
+		"RelativeDate": h.NaturalTime,
 	})
 
 	return r.ExecuteTemplate(w, name, data)
@@ -59,11 +63,13 @@ func echoFunc(key string, _ ...interface{}) string {
 }
 
 func (a *App) viewTemplateFunctions() template.FuncMap {
+	h := a.humanizer.CreateHumanizer(language.English)
+
 	return template.FuncMap{
 		"i18n":               echoFunc,
 		"language":           func() string { return DefaultLanguage },
 		"supportedLanguages": a.translator.SupportedLanguages,
-		"humanizer":          func() *humanize.Collection { return a.humanizer },
+		"humanizer":          func() *humanize.Humanizer { return h },
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
@@ -79,7 +85,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
 
-		"RelativeDate": legHumanize.Time,
+		"RelativeDate": h.NaturalTime,
 
 		"RouteFor": func(name string, params ...interface{}) string {
 			rev := a.echo.Reverse(name, params...)
