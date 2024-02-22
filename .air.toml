@@ -6,7 +6,7 @@
   exclude_file      = ["assets/output.css"]
   exclude_regex     = ["_test.go"]
   exclude_unchanged = false
-  include_ext       = ["css", "go", "html", "js", "tmpl", "tpl"]
+  include_ext       = ["css", "go", "html", "js", "json", "tmpl", "tpl"]
   pre_cmd           = ["make build-tw"]
   stop_on_error     = false
 
