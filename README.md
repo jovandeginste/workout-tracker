@@ -139,7 +139,7 @@ make install-deps
 
 # Testing
 make test # Runs all the tests
-make test-views test-assets test-go # Run tests for the individual components
+make test-assets test-go # Run tests for the individual components
 
 # Building
 make build # Builds all components

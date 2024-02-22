@@ -56,11 +56,10 @@ $(patsubst %,generate-translation-%, $(I18N_LANGUAGES)):
 serve:
 	$(OUTPUT_FILE)
 
-test: test-views test-go test-assets
-test-views:
-	prettier --check views/
+test: test-go test-assets
+
 test-assets:
-	prettier --check assets/
+	prettier --check .
 
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
