@@ -21,6 +21,11 @@ import (
 	"github.com/vorlif/spreak/humanize/locale/nl"
 )
 
+const (
+	DefaultTheme    = "browser"
+	DefaultLanguage = "browser"
+)
+
 type Version struct {
 	BuildTime string
 	Ref       string

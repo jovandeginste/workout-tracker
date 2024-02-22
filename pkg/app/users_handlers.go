@@ -68,8 +68,8 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	u.Profile.Theme = "browser"
-	u.Profile.Language = "browser"
+	u.Profile.Theme = DefaultLanguage
+	u.Profile.Language = DefaultLanguage
 
 	if err := u.Create(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))

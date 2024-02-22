@@ -61,7 +61,7 @@ func echoFunc(key string, _ ...interface{}) string {
 func (a *App) viewTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"i18n":               echoFunc,
-		"language":           func() string { return "browser" },
+		"language":           func() string { return DefaultLanguage },
 		"supportedLanguages": a.translator.SupportedLanguages,
 		"humanizer":          func() *humanize.Collection { return a.humanizer },
 
