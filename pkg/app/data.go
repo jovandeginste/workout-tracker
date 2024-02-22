@@ -5,7 +5,6 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/vorlif/spreak"
 
 	"github.com/labstack/echo/v4"
 )
@@ -56,23 +55,8 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	a.addUserInfo(data, c)
 	a.addError(data, c)
 	a.addNotice(data, c)
-	a.addLocale(data, c)
 
 	return data
-}
-
-func (a *App) addLocale(data map[string]interface{}, c echo.Context) {
-	clientLanguages := []interface{}{
-		c.QueryParam("lang"),
-		data["userProfileLanguages"],
-		c.Request().Header.Get("Accept-Language"),
-	}
-
-	t := spreak.NewLocalizer(a.translator, clientLanguages...)
-	data["T"] = t
-	data["humanizer"] = a.humanizer
-	data["language"] = t.Language()
-	data["supportedLanguages"] = a.translator.SupportedLanguages()
 }
 
 func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {

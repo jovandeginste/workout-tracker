@@ -1,8 +1,6 @@
 package app
 
 import (
-	"html/template"
-	"io"
 	"log/slog"
 	"net/http"
 	"time"
@@ -52,7 +50,10 @@ func (a *App) ConfigureWebserver() error {
 
 	e.Use(session.LoadAndSave(a.sessionManager))
 
-	e.Renderer = &Template{a.parseViewTemplates()}
+	e.Renderer = &Template{
+		app:       a,
+		templates: a.parseViewTemplates(),
+	}
 
 	publicGroup := e.Group("")
 
@@ -158,12 +159,4 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 func (a *App) Serve() error {
 	a.logger.Info("Starting web server on " + a.Config.Bind)
 	return a.echo.Start(a.Config.Bind)
-}
-
-type Template struct {
-	templates *template.Template
-}
-
-func (t *Template) Render(w io.Writer, name string, data interface{}, _ echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
 }

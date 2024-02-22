@@ -1,13 +1,13 @@
 {{ define "language" }}
 <select class="border-0" onchange="changeLanguage(this.value)">
-  {{ range .supportedLanguages }} {{ $linf := .String | ToLanguageInformation }}
+  {{ range supportedLanguages }} {{ $linf := .String | ToLanguageInformation }}
   <option
     value="{{ $linf.Code }}"
     {{
     if
     eq
     $linf.Code
-    $.language.String
+    language
     }}selected{{
     end
     }}

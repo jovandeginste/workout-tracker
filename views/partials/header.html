@@ -9,22 +9,22 @@
   >
     <div>
       <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-        ><span>{{ $.T.Getf "Dashboard" }}</span></a
+        ><span>{{ i18n "Dashboard" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-        ><span>{{ $.T.Getf "Statistics" }}</span></a
+        ><span>{{ i18n "Statistics" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-        ><span>{{ $.T.Getf "Workouts" }}</span></a
+        ><span>{{ i18n "Workouts" }}</span></a
       >
     </div>
     <div>
       <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
-        ><span>{{ $.T.Getf "Add workout" }}</span></a
+        ><span>{{ i18n "Add workout" }}</span></a
       >
     </div>
   </div>
@@ -41,7 +41,7 @@
     {{ if .Admin }}
     <div>
       <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-        ><span>{{ $.T.Getf "Manage" }}</span></a
+        ><span>{{ i18n "Manage" }}</span></a
       >
     </div>
     {{ end }}
@@ -49,7 +49,7 @@
       <a
         class="{{ IconFor `user-signout` }}"
         href="{{ RouteFor `user-signout` }}"
-        ><span>{{ $.T.Getf "Logout" }}</span></a
+        ><span>{{ i18n "Logout" }}</span></a
       >
     </div>
   </div>
