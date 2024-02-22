@@ -1,5 +1,7 @@
 {
+  "Add a workout": "Add a workout",
   "Add workout": "Add workout",
+  "Add workouts": "Add workouts",
   "Average speed": "Average speed",
   "Average speed (no pause)": "Average speed (no pause)",
   "Create a new account": "Create a new account",
@@ -7,10 +9,12 @@
   "Dashboard for %s": "Dashboard for %s",
   "Distance": "Distance",
   "Duration": "Duration",
+  "File": "File",
   "Logout": "Logout",
   "Manage": "Manage",
   "Max speed": "Max speed",
   "Name": "Name",
+  "Notes": "Notes",
   "Other users": "Other users",
   "Password": "Password",
   "Recent activity": "Recent activity",
@@ -21,11 +25,13 @@
   "Total distance": "Total distance",
   "Total duration": "Total duration",
   "Total up": "Total up",
+  "Type": "Type",
   "Username (email)": "Username (email)",
   "Welcome!": "Welcome!",
   "Workouts": "Workouts",
   "Your progress the past year": "Your progress the past year",
   "distance": "distance",
   "duration": "duration",
-  "up": "up"
+  "up": "up",
+  "workouts": "workouts"
 }

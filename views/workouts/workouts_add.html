@@ -6,7 +6,7 @@
     {{ template "header" . }}
     <div class="content">
       <div class="inner-form">
-        <h2 class="{{ IconFor `workout-add` }}">Add a workout</h2>
+        <h2 class="{{ IconFor `workout-add` }}">{{ i18n "Add a workout" }}</h2>
         <form
           method="post"
           action="{{ RouteFor `workouts-create` }}"
@@ -15,7 +15,7 @@
           <table>
             <tbody>
               <tr>
-                <td><label for="file">File</label></td>
+                <td><label for="file">{{ i18n "File" }}</label></td>
                 <td>
                   <input
                     type="file"
@@ -28,7 +28,7 @@
               </tr>
               <tr>
                 <td>
-                  <label for="type">Type</label>
+                  <label for="type">{{ i18n "Type" }}</label>
                 </td>
                 <td>
                   <input
@@ -42,7 +42,7 @@
               </tr>
               <tr>
                 <td>
-                  <label for="notes">Notes</label>
+                  <label for="notes">{{ i18n "Notes" }}</label>
                 </td>
                 <td>
                   <textarea
@@ -55,7 +55,9 @@
               </tr>
               <tr>
                 <td></td>
-                <td><button type="submit">Add workouts</button></td>
+                <td>
+                  <button type="submit">{{ i18n "Add workouts" }}</button>
+                </td>
               </tr>
             </tbody>
           </table>

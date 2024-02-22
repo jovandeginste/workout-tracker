@@ -1,5 +1,7 @@
 {
+  "Add a workout": "Voeg een workout toe",
   "Add workout": "Workout toevoegen",
+  "Add workouts": "Workouts toevoegen",
   "Average speed": "Gemiddelde snelheid",
   "Average speed (no pause)": "Gemiddelde snelheid (zonder pauze)",
   "Create a new account": "Maak een nieuwe account",
@@ -7,10 +9,12 @@
   "Dashboard for %s": "Dashboard voor %s",
   "Distance": "Afstand",
   "Duration": "Duur",
+  "File": "Bestand",
   "Logout": "Afmelden",
   "Manage": "Beheer",
   "Max speed": "Maximale snelheid",
   "Name": "Naam",
+  "Notes": "Notities",
   "Other users": "Andere gebruikers",
   "Password": "Wachtwoord",
   "Recent activity": "Recente activiteit",
@@ -21,11 +25,13 @@
   "Total distance": "Totale afstand",
   "Total duration": "Totale duur",
   "Total up": "Totaal omhoog",
+  "Type": "Type",
   "Username (email)": "Gebruikersnaam (e-mailadres)",
   "Welcome!": "Welkom!",
   "Workouts": "Workouts",
   "Your progress the past year": "Jouw vooruitgang afgelopen jaar",
   "distance": "afstand",
   "duration": "duur",
-  "up": "omhoog"
+  "up": "omhoog",
+  "workouts": "workouts"
 }
