@@ -1,14 +1,14 @@
 {{ define "stats_records_running" }} {{ if .Active }}
 <h3>
   <span class="{{ IconFor `running` }}"></span>
-  Running records
+  {{ i18n "Running records" }}
 </h3>
 <table class="workout-info table-auto">
   <tbody>
     {{ with .AverageSpeed }}
     <tr>
       <th>
-        <span class="{{ IconFor `speed` }}">Average speed</span>
+        <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
       <td>
@@ -19,7 +19,9 @@
     {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
       <th>
-        <span class="{{ IconFor `speed` }}">Average speed (no pause)</span>
+        <span class="{{ IconFor `speed` }}"
+          >{{ i18n "Average speed (no pause)" }}</span
+        >
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
       <td>
@@ -30,7 +32,7 @@
     {{ end }} {{ with .MaxSpeed }}
     <tr>
       <th>
-        <span class="{{ IconFor `max-speed` }}">Max speed</span>
+        <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
       <td>
@@ -41,7 +43,9 @@
     {{ end }} {{ with .Distance }}
     <tr>
       <th>
-        <span class="{{ IconFor `distance` }}">Total distance</span>
+        <span class="{{ IconFor `distance` }}"
+          >{{ i18n "Total distance" }}</span
+        >
       </th>
       <td class="font-mono">{{ .Value | HumanDistance }}</td>
       <td>
@@ -52,7 +56,7 @@
     {{ end }} {{ with .TotalUp }}
     <tr>
       <th>
-        <span class="{{ IconFor `up` }}">Total up</span>
+        <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanDistance }}</td>
       <td>
@@ -63,7 +67,9 @@
     {{ end }} {{ with .Duration }}
     <tr>
       <th>
-        <span class="{{ IconFor `duration` }}">Total duration</span>
+        <span class="{{ IconFor `duration` }}"
+          >{{ i18n "Total duration" }}</span
+        >
       </th>
       <td class="font-mono">{{ .Value | HumanDuration }}</td>
       <td>

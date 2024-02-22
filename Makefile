@@ -5,7 +5,7 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 OUTPUT_FILE ?= tmp/main
 
-I18N_LANGUAGES ?= en nl
+I18N_LANGUAGES ?= nl
 LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
 
 .PHONY: all clean test build

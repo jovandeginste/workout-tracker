@@ -1,10 +1,11 @@
 {{ define "stats_records_total" }}
 <div class="md:flex md:flex-wrap">
-  {{ template "statistic_tile" (BuildDecoratedAttribute "workout" "workouts"
-  .Workouts) }} {{ template "statistic_tile" (BuildDecoratedAttribute "distance"
-  "distance" (.Distance | ToKilometer )) }} {{ template "statistic_tile"
-  (BuildDecoratedAttribute "up" "up" (.Up | HumanDistance)) }} {{ template
-  "statistic_tile" (BuildDecoratedAttribute "duration" "duration" (.Duration |
+  {{ template "statistic_tile" (BuildDecoratedAttribute "workout" ( i18n
+  "workouts" ) .Workouts) }} {{ template "statistic_tile"
+  (BuildDecoratedAttribute "distance" ( i18n "distance" ) (.Distance |
+  ToKilometer )) }} {{ template "statistic_tile" (BuildDecoratedAttribute "up" (
+  i18n "up" ) (.Up | HumanDistance)) }} {{ template "statistic_tile"
+  (BuildDecoratedAttribute "duration" ( i18n "duration" ) (.Duration |
   HumanDuration)) }}
 </div>
 {{ end }}

@@ -63,7 +63,7 @@
       </div>
       {{ if .users }}
       <div class="inner-form">
-        <h3 class="{{ IconFor `users` }}">Other users</h3>
+        <h3 class="{{ IconFor `users` }}">{{ i18n "Other users" }}</h3>
 
         <div class="sm:flex sm:flex-wrap gap-5">
           {{ range .users }} {{ if ne .ID $.user.ID }}
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="inner-form">
-        <h3 class="{{ IconFor `workout` }}">Recent activity</h3>
+        <h3 class="{{ IconFor `workout` }}">{{ i18n "Recent activity" }}</h3>
         <div class="sm:flex sm:flex-wrap justify-center">
           {{ range .recentWorkouts }}{{ template "workout_item" . }}{{ end }}
         </div>
