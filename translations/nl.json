@@ -5,6 +5,8 @@
   "Create a new account": "Maak een nieuwe account",
   "Dashboard": "Dashboard",
   "Dashboard for %s": "Dashboard voor %s",
+  "Distance": "Afstand",
+  "Duration": "Duur",
   "Logout": "Afmelden",
   "Manage": "Beheer",
   "Max speed": "Maximale snelheid",
@@ -22,8 +24,8 @@
   "Username (email)": "Gebruikersnaam (e-mailadres)",
   "Welcome!": "Welkom!",
   "Workouts": "Workouts",
+  "Your progress the past year": "Jouw vooruitgang afgelopen jaar",
   "distance": "afstand",
   "duration": "duur",
-  "up": "omhoog",
-  "workouts ": "workouts "
+  "up": "omhoog"
 }

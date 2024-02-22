@@ -5,6 +5,8 @@
   "Create a new account": "Create a new account",
   "Dashboard": "Dashboard",
   "Dashboard for %s": "Dashboard for %s",
+  "Distance": "Distance",
+  "Duration": "Duration",
   "Logout": "Logout",
   "Manage": "Manage",
   "Max speed": "Max speed",
@@ -22,8 +24,8 @@
   "Username (email)": "Username (email)",
   "Welcome!": "Welcome!",
   "Workouts": "Workouts",
+  "Your progress the past year": "Your progress the past year",
   "distance": "distance",
   "duration": "duration",
-  "up": "up",
-  "workouts ": "workouts "
+  "up": "up"
 }
