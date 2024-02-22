@@ -45,7 +45,7 @@ watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
 generate-messages:
-	xspreak -p ./translations/ -f json --template-prefix "T" -t "views/**/*.html"
+	xspreak -p ./translations/ -f json --template-keyword "i18n" -t "views/**/*.html"
 
 generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
 
