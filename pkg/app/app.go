@@ -137,7 +137,7 @@ func newLogger() slog.Handler {
 
 func NewApp(version Version) *App {
 	logger := slog.New(newLogger()).
-		With("app", "workout-tracker", "version", version)
+		With("app", "workout-tracker", "version", version.RefName, "sha", version.Sha)
 
 	a := &App{
 		rawLogger: logger,

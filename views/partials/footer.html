@@ -4,6 +4,7 @@
     Workout Tracker{{ with .version }},
     <a
       target="_blank"
+      title="Build time: {{ .BuildTime }}"
       href="https://github.com/jovandeginste/workout-tracker/tree/{{ .RefName }}"
     >
       {{ if eq .RefType "branch" }}{{ .RefType }} {{ end }}{{ .RefName }} ({{
