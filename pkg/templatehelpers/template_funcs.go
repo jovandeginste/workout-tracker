@@ -3,6 +3,7 @@ package templatehelpers
 import (
 	"fmt"
 	"html/template"
+	"strings"
 	"time"
 
 	"github.com/dustin/go-humanize"
@@ -10,6 +11,8 @@ import (
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 )
+
+var englishTag = display.English.Languages()
 
 func NumericDuration(d time.Duration) float64 {
 	return d.Seconds()
@@ -85,19 +88,26 @@ type LanguageInformation struct {
 }
 
 func ToLanguageInformation(code string) LanguageInformation {
+	cc := code
+	if strings.Contains(cc, "-") {
+		cc = strings.Split(cc, "-")[1]
+	}
+
+	if cc == "en" {
+		cc = "us"
+	}
+
 	l := LanguageInformation{
 		Code: code,
-		Flag: emojiflag.GetFlag(code),
+		Flag: emojiflag.GetFlag(cc),
 	}
 
 	if l.Flag == "" {
-		l.Flag = "🌎"
+		l.Flag = "👽"
 	}
 
 	localTag := language.MustParse(code)
 	l.LocalName = display.Self.Name(localTag)
-
-	englishTag := display.English.Languages()
 	l.EnglishName = englishTag.Name(localTag)
 
 	return l
