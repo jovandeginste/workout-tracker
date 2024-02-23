@@ -512,18 +512,32 @@ h2 {
   margin-bottom: 1.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   --tw-text-opacity: 1;
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
+@media (min-width: 640px) {
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
 h3 {
   margin-bottom: 1.25rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   --tw-text-opacity: 1;
   color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+
+@media (min-width: 640px) {
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 a:hover {
@@ -581,10 +595,10 @@ form {
 
 .footer,
   .menu {
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   align-items: baseline;
-  border-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
   --tw-bg-opacity: 1;
   background-color: rgb(38 38 38 / var(--tw-bg-opacity));
   padding-left: 1.5rem;
@@ -1280,6 +1294,10 @@ table {
   margin-bottom: 0.5rem;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -1314,10 +1332,6 @@ table {
 
 .h-1 {
   height: 0.25rem;
-}
-
-.h-16 {
-  height: 4rem;
 }
 
 .h-\[300px\] {
@@ -1414,6 +1428,10 @@ table {
   overflow-y: hidden;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
@@ -1428,6 +1446,10 @@ table {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-t-2 {
@@ -1476,6 +1498,10 @@ table {
   padding-bottom: 0.5rem;
 }
 
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
 }
@@ -1505,10 +1531,6 @@ table {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
-}
-
-.font-bold {
-  font-weight: 700;
 }
 
 .uppercase {
@@ -2097,17 +2119,16 @@ table {
   content: "\f00d";
 }
 
-.hover\:h-fit:hover {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .hover\:bg-neutral-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(82 82 82 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {
+  .sm\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .sm\:mt-0 {
     margin-top: 0px;
   }
@@ -2144,8 +2165,16 @@ table {
     justify-content: flex-start;
   }
 
+  .sm\:border-b-0 {
+    border-bottom-width: 0px;
+  }
+
   .sm\:border-t-0 {
     border-top-width: 0px;
+  }
+
+  .sm\:pb-0 {
+    padding-bottom: 0px;
   }
 
   .sm\:pt-0 {

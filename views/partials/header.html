@@ -1,56 +1,59 @@
 {{ define "header" }}
 <div class="menu sm:flex sm:flex-wrap gap-4">
-  <h1 class="text-xl sm:text-3xl text-white">
+  <h1
+    class="text-xl sm:text-3xl text-white border-neutral-500 border-b-2 sm:border-b-0 mb-3 sm:mb-0 pb-3 sm:pb-0"
+  >
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
   {{ if .currentUser }} {{ with .currentUser }}
-  <div
-    class="sm:grow flex flex-wrap justify-end sm:justify-start mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
-  >
-    <div>
-      <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-        ><span>{{ i18n "Dashboard" }}</span></a
-      >
+  <div class="grow flex flex-wrap justify-end">
+    <div class="sm:grow flex flex-wrap justify-end sm:justify-start">
+      <div>
+        <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
+          ><span>{{ i18n "Dashboard" }}</span></a
+        >
+      </div>
+      <div>
+        <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
+          ><span>{{ i18n "Statistics" }}</span></a
+        >
+      </div>
+      <div>
+        <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
+          ><span>{{ i18n "Workouts" }}</span></a
+        >
+      </div>
+      <div>
+        <a
+          class="{{ IconFor `workout-add` }}"
+          href="{{ RouteFor `workout-add` }}"
+          ><span>{{ i18n "Add workout" }}</span></a
+        >
+      </div>
     </div>
-    <div>
-      <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-        ><span>{{ i18n "Statistics" }}</span></a
-      >
-    </div>
-    <div>
-      <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-        ><span>{{ i18n "Workouts" }}</span></a
-      >
-    </div>
-    <div>
-      <a class="{{ IconFor `workout-add` }}" href="{{ RouteFor `workout-add` }}"
-        ><span>{{ i18n "Add workout" }}</span></a
-      >
-    </div>
-  </div>
-  <div
-    class="flex flex-wrap sm:min-w-[400px] justify-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
-  >
-    <div>
-      <a
-        class="{{ IconFor `user-profile` }}"
-        href="{{ RouteFor `user-profile`}}"
-        >{{ .Name | html }}</a
-      >
-    </div>
-    {{ if .Admin }}
-    <div>
-      <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-        ><span>{{ i18n "Manage" }}</span></a
-      >
-    </div>
-    {{ end }}
-    <div>
-      <a
-        class="{{ IconFor `user-signout` }}"
-        href="{{ RouteFor `user-signout` }}"
-        ><span>{{ i18n "Logout" }}</span></a
-      >
+    <div class="flex flex-wrap sm:min-w-[400px] justify-end">
+      {{ if .Admin }}
+      <div>
+        <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
+          ><span>{{ i18n "Manage" }}</span></a
+        >
+      </div>
+      {{ end }}
+
+      <div>
+        <a
+          class="{{ IconFor `user-profile` }}"
+          href="{{ RouteFor `user-profile`}}"
+          >{{ .Name | html }}</a
+        >
+      </div>
+      <div>
+        <a
+          class="{{ IconFor `user-signout` }}"
+          href="{{ RouteFor `user-signout` }}"
+          ><span>{{ i18n "Logout" }}</span></a
+        >
+      </div>
     </div>
   </div>
   {{ end }} {{ else }}

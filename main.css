@@ -24,10 +24,10 @@
   }
 
   h2 {
-    @apply text-2xl mb-5 text-zinc-200 mx-2 px-2;
+    @apply text-xl sm:text-2xl mb-5 text-zinc-200 mx-2 px-2;
   }
   h3 {
-    @apply text-2xl mb-5 text-zinc-200;
+    @apply text-base sm:text-xl mb-5 text-zinc-200;
   }
   a {
     @apply hover:text-amber-300;
@@ -54,7 +54,7 @@
 
   .footer,
   .menu {
-    @apply rounded-xl my-2 px-6 py-3 bg-neutral-800 text-zinc-300 items-baseline;
+    @apply rounded-b-xl mb-2 px-6 py-3 bg-neutral-800 text-zinc-300 items-baseline;
   }
   .menu {
     a::before {
