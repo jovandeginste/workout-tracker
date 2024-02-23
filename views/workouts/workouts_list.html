@@ -16,49 +16,64 @@
           <tr>
             <th></th>
             <th>{{ i18n "Name" }}</th>
-            <th>{{ i18n "Date" }}</th>
-            <th>{{ i18n "Location" }}</th>
+            <th class="hidden sm:table-cell">{{ i18n "Date" }}</th>
+            <th class="hidden xl:table-cell">{{ i18n "Location" }}</th>
             <th>{{ i18n "Distance" }}</th>
-            <th>{{ i18n "Duration" }}</th>
-            <th>{{ i18n "Avg speed" }}</th>
-            <th>{{ i18n "Avg tempo" }}</th>
-            <th>{{ i18n "Max speed" }}</th>
-            <th></th>
+            <th class="hidden sm:table-cell">{{ i18n "Duration" }}</th>
+            <th class="hidden 2xl:table-cell">{{ i18n "Avg speed" }}</th>
+            <th class="hidden 2xl:table-cell">{{ i18n "Avg tempo" }}</th>
+            <th class="hidden 2xl:table-cell">{{ i18n "Max speed" }}</th>
+            <th class="hidden lg:table-cell"></th>
           </tr>
         </thead>
         <tbody>
           {{ range .workouts }}
           <tr>
             <td class="text-center">
-              <div class="{{ IconFor .Type }}"></div>
+              <div class="{{ IconFor .Type }}" title="{{ i18n .Type }}"></div>
             </td>
             <td>
-              <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name | html }}</a>
+              <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>
             </td>
-            <td sorttable_customkey="{{ .Date }}">
-              <span title="{{ .Date | LocalDate }}">
+            <td class="hidden sm:table-cell" sorttable_customkey="{{ .Date }}">
+              <span class="hidden lg:inline" title="{{ .Date | LocalDate }}">
                 {{ .Date | RelativeDate }}
               </span>
+              <span class="lg:hidden" title="{{ .Date | LocalDate }}">
+                {{ .Date.Format "2006-01-02" }}
+              </span>
             </td>
-            <td>{{ template "snippet_location" .Data.Address }}</td>
+            <td class="hidden xl:table-cell">
+              {{ template "snippet_location" .Data.Address }}
+            </td>
             <td sorttable_customkey="{{ .Data.TotalDistance }}">
               {{ .Data.TotalDistance | HumanDistance }}
             </td>
             <td
+              class="hidden sm:table-cell"
               sorttable_customkey="{{ .Data.TotalDuration | NumericDuration }}"
             >
               {{ .Data.TotalDuration }}
             </td>
-            <td sorttable_customkey="{{ .Data.AverageSpeedNoPause }}">
+            <td
+              class="hidden 2xl:table-cell"
+              sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
+            >
               {{ .Data.AverageSpeedNoPause | HumanSpeed }}
             </td>
-            <td sorttable_customkey="{{ .Data.AverageSpeedNoPause }}">
+            <td
+              class="hidden 2xl:table-cell"
+              sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
+            >
               {{ .Data.AverageSpeedNoPause | HumanTempo }}
             </td>
-            <td sorttable_customkey="{{ .Data.MaxSpeed }}">
+            <td
+              class="hidden 2xl:table-cell"
+              sorttable_customkey="{{ .Data.MaxSpeed }}"
+            >
               {{ .Data.MaxSpeed | HumanSpeed }}
             </td>
-            <td>
+            <td class="hidden lg:table-cell">
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>
           </tr>

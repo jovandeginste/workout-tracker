@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply bg-neutral-900 text-zinc-100 sm:px-20;
+    @apply bg-neutral-900 text-zinc-100 md:px-20;
   }
 
   button[type="submit"],
@@ -24,10 +24,10 @@
   }
 
   h2 {
-    @apply text-xl sm:text-2xl mb-5 text-zinc-200 mx-2 px-2;
+    @apply text-xl md:text-2xl mb-5 text-zinc-200 mx-2 px-2;
   }
   h3 {
-    @apply text-base sm:text-xl mb-5 text-zinc-200;
+    @apply text-base md:text-xl mb-5 text-zinc-200;
   }
   a {
     @apply hover:text-amber-300;
@@ -61,7 +61,7 @@
     a {
       @apply mt-5 mr-5;
       span {
-        @apply hidden sm:contents;
+        @apply hidden md:contents;
       }
     }
   }
@@ -88,10 +88,10 @@
     }
   }
   .content {
-    @apply rounded-xl py-5 px-1 sm:px-10 bg-neutral-700;
+    @apply rounded-xl py-5 px-1 md:px-10 bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-2 sm:p-5 m-2 bg-neutral-800 border border-neutral-800 hover:border-neutral-500;
+    @apply rounded-xl p-2 md:p-5 m-2 bg-neutral-800 border border-neutral-800 hover:border-neutral-500;
   }
 
   .notice {
