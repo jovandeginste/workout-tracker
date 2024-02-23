@@ -1,4 +1,19 @@
-{{ define "stats_records_running" }} {{ if .Active }}
+{{ define "starts_record_running_date" }}
+<span class="hidden 2xl:inline" title="{{ .Date | LocalDate }}">
+  <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
+  ({{ .Date | RelativeDate }})
+</span>
+<span class="hidden xl:inline 2xl:hidden" title="{{ .Date | LocalDate }}">
+  <a href="{{ RouteFor `workout-show` .ID }}"
+    >{{ .Date.Format "2006-01-02 15:04" }}</a
+  >
+</span>
+<span class="xl:hidden" title="{{ .Date | LocalDate }}">
+  <a href="{{ RouteFor `workout-show` .ID }}"
+    >{{ .Date.Format "2006-01-02" }}</a
+  >
+</span>
+{{ end }} {{ define "stats_records_running" }} {{ if .Active }}
 <h3>
   <span class="{{ IconFor `running` }}"></span>
   {{ i18n "Running records" }}
@@ -11,10 +26,7 @@
         <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}"> {{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
@@ -24,10 +36,7 @@
         >
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}"> {{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }} {{ with .MaxSpeed }}
     <tr>
@@ -35,10 +44,7 @@
         <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanSpeed }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }} {{ with .Distance }}
     <tr>
@@ -48,10 +54,7 @@
         >
       </th>
       <td class="font-mono">{{ .Value | HumanDistance }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }} {{ with .TotalUp }}
     <tr>
@@ -59,10 +62,7 @@
         <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
       </th>
       <td class="font-mono">{{ .Value | HumanDistance }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }} {{ with .Duration }}
     <tr>
@@ -72,10 +72,7 @@
         >
       </th>
       <td class="font-mono">{{ .Value | HumanDuration }}</td>
-      <td>
-        <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-        ({{ .Date | RelativeDate }})
-      </td>
+      <td>{{ template "starts_record_running_date" . }}</td>
     </tr>
     {{ end }}
   </tbody>

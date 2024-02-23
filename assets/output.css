@@ -2225,14 +2225,30 @@ table {
 }
 
 @media (min-width: 1280px) {
+  .xl\:inline {
+    display: inline;
+  }
+
   .xl\:table-cell {
     display: table-cell;
+  }
+
+  .xl\:hidden {
+    display: none;
   }
 }
 
 @media (min-width: 1536px) {
+  .\32xl\:inline {
+    display: inline;
+  }
+
   .\32xl\:table-cell {
     display: table-cell;
+  }
+
+  .\32xl\:hidden {
+    display: none;
   }
 }
 
