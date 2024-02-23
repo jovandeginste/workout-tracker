@@ -7,20 +7,22 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `workout` }}">Workouts ({{ len .workouts }})</h2>
+      <h2 class="{{ IconFor `workout` }}">
+        {{ i18n "Workouts" }} ({{ len .workouts }})
+      </h2>
 
       <table class="workout-info sortable">
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Distance</th>
-            <th>Duration</th>
-            <th>Average speed</th>
-            <th>Average tempo</th>
-            <th>Max speed</th>
+            <th>{{ i18n "Name" }}</th>
+            <th>{{ i18n "Date" }}</th>
+            <th>{{ i18n "Location" }}</th>
+            <th>{{ i18n "Distance" }}</th>
+            <th>{{ i18n "Duration" }}</th>
+            <th>{{ i18n "Avg speed" }}</th>
+            <th>{{ i18n "Avg tempo" }}</th>
+            <th>{{ i18n "Max speed" }}</th>
             <th></th>
           </tr>
         </thead>

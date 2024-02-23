@@ -3,10 +3,10 @@
   <thead>
     <tr>
       <th></th>
-      <th>KM</th>
-      <th>Duration</th>
-      <th>Speed</th>
-      <th>Tempo</th>
+      <th>{{ i18n "KM" }}</th>
+      <th>{{ i18n "Duration" }}</th>
+      <th>{{ i18n "Speed" }}</th>
+      <th>{{ i18n "Tempo" }}</th>
     </tr>
   </thead>
   <tbody>
@@ -38,7 +38,9 @@
   <tfoot>
     <tr>
       <td colspan="2"></td>
-      <td colspan="3">Last distance: {{ $distance | HumanDistance }}</td>
+      <td colspan="3">
+        {{ i18n "Last distance" }}: {{ $distance | HumanDistance }}
+      </td>
     </tr>
   </tfoot>
 </table>

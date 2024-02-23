@@ -129,9 +129,6 @@
       tr {
         @apply even:bg-neutral-700 odd:bg-neutral-800;
         @apply hover:bg-amber-800;
-        th {
-          @apply whitespace-nowrap;
-        }
       }
     }
   }

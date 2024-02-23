@@ -837,11 +837,6 @@ table {
       --tw-bg-opacity: 1;
       background-color: rgb(146 64 14 / var(--tw-bg-opacity));
     }
-    tr {
-      th {
-        white-space: nowrap;
-      }
-    }
   }
 }
 
