@@ -63,4 +63,4 @@ test-assets:
 
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
-	golangci-lint run --allow-parallel-runners --fix
+	golangci-lint run --allow-parallel-runners
