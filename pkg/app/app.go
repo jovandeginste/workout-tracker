@@ -18,12 +18,6 @@ import (
 
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
-	"github.com/vorlif/spreak/humanize/locale/nl"
-)
-
-const (
-	DefaultTheme    = "browser"
-	DefaultLanguage = "browser"
 )
 
 type Version struct {
@@ -67,7 +61,7 @@ func (a *App) ConfigureLocalizer() error {
 		// Set the path from which the translations should be loaded
 		spreak.WithDomainFs(spreak.NoDomain, a.Translations),
 		// Specify the languages you want to load
-		spreak.WithLanguage(language.Dutch),
+		spreak.WithLanguage(translations()...),
 	)
 	if err != nil {
 		return err
@@ -76,10 +70,17 @@ func (a *App) ConfigureLocalizer() error {
 	a.translator = bundle
 
 	a.humanizer = humanize.MustNew(
-		humanize.WithLocale(nl.New()),
+		humanize.WithLocale(humanLocales()...),
 	)
 
 	return nil
+}
+
+func (a *App) Serve() error {
+	go a.BackgroundWorker()
+
+	a.logger.Info("Starting web server on " + a.Config.Bind)
+	return a.echo.Start(a.Config.Bind)
 }
 
 func (a *App) Configure() error {
@@ -168,4 +169,27 @@ func (a *App) createAdminUser() error {
 	a.logger.Warn("Creating admin user '" + u.Username + "', with password 'admin'")
 
 	return u.Create(a.db)
+}
+
+func (a *App) BackgroundWorker() {
+	l := a.logger.With("module", "worker")
+
+	for {
+		l.Info("Worker started...")
+
+		var w []database.Workout
+
+		if err := a.db.Where(&database.Workout{Dirty: true}).Limit(10).Find(&w).Error; err != nil {
+			l.Error("Worker error: " + err.Error())
+		}
+
+		for _, v := range w {
+			if err := v.UpdateData(a.db); err != nil {
+				l.Error("Worker error: " + err.Error())
+			}
+		}
+
+		l.Info("Worker finished...")
+		time.Sleep(time.Minute)
+	}
 }

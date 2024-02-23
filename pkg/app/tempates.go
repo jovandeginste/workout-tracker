@@ -84,6 +84,8 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
+		"supportedLanguaged":      a.translator.SupportedLanguages,
+		"supportedThemes":         themes,
 
 		"RelativeDate": h.NaturalTime,
 

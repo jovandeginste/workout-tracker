@@ -8,6 +8,33 @@
     <div class="content">
       <h2 class="{{ IconFor `user-profile` }}">Your profile</h2>
       <div class="inner-form">
+        <form method="post" action="{{ RouteFor `user-profile-update` }}">
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  <label for="theme">{{ i18n "Theme" }}</label>
+                </th>
+                <td>{{ template "user_profile_theme" .userProfileTheme }}</td>
+              </tr>
+              <tr>
+                <th>
+                  <label for="language">{{ i18n "Language" }}</label>
+                </th>
+                <td>
+                  {{ template "user_profile_language" .userProfileLanguage }}
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <button type="submit">{{ i18n "Update profile" }}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+
         <form method="post" action="{{ RouteFor `user-refresh` }}">
           <label for="refresh">Refresh all your workouts</label>
           <button type="submit">

@@ -13,6 +13,7 @@ type Workout struct {
 	Name     string     `gorm:"nut null"`
 	Date     *time.Time `gorm:"not null"`
 	UserID   uint       `gorm:"not null;index"`
+	Dirty    bool
 	User     *User
 	Notes    string
 	Type     string
@@ -94,6 +95,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	}
 
 	w.Data = gpxAsMapData(gpxContent)
+	w.Dirty = false
 
 	return db.Save(w).Error
 }

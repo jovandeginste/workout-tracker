@@ -77,11 +77,13 @@ func GetUser(db *gorm.DB, username string) (*User, error) {
 type Profile struct {
 	gorm.Model
 	UserID   int
-	Theme    ThemePreference
-	Language string
+	Theme    string `form:"theme"`
+	Language string `form:"language"`
 }
 
-type ThemePreference string
+func (p *Profile) Save(db *gorm.DB) error {
+	return db.Save(p).Error
+}
 
 func (u *User) IsActive() bool {
 	if u == nil {
@@ -172,6 +174,10 @@ func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	}
 
 	return w, nil
+}
+
+func (u *User) MarkWorkoutsDirty(db *gorm.DB) error {
+	return db.Model(&Workout{}).Where(&Workout{UserID: u.ID}).Update("dirty", true).Error
 }
 
 func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {

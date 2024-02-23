@@ -67,6 +67,7 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 
 	data["currentUser"] = u
 	data["userProfileLanguage"] = u.Profile.Language
+	data["userProfileTheme"] = u.Profile.Theme
 }
 
 func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {

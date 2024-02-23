@@ -39,7 +39,6 @@
       @apply mb-2 gap-4;
       label {
         @apply text-right py-1 block;
-        @apply font-bold after:content-[':'];
       }
     }
   }
@@ -138,14 +137,8 @@
     td {
       @apply px-2;
     }
-    td {
-      @apply font-mono;
-    }
     tr {
       @apply mb-2;
-    }
-    tbody th {
-      @apply font-bold after:content-[':'];
     }
   }
 

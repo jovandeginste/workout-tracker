@@ -565,13 +565,6 @@ form {
     label {
       text-align: right;
     }
-    label {
-      font-weight: 700;
-    }
-    label::after {
-      --tw-content: ':';
-      content: var(--tw-content);
-    }
   }
 }
 
@@ -860,18 +853,8 @@ table {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-  td {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  }
   tr {
     margin-bottom: 0.5rem;
-  }
-  tbody th {
-    font-weight: 700;
-  }
-  tbody th::after {
-    --tw-content: ':';
-    content: var(--tw-content);
   }
 }
 

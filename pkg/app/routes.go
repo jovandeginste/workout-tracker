@@ -120,8 +120,11 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
-	secureGroup.GET("/user/profile", a.userProfileHandler).Name = "user-profile"
-	secureGroup.POST("/user/refresh", a.userRefreshHandler).Name = "user-refresh"
+
+	selfGroup := secureGroup.Group("/user")
+	selfGroup.GET("/profile", a.userProfileHandler).Name = "user-profile"
+	selfGroup.POST("/profile", a.userProfileUpdateHandler).Name = "user-profile-update"
+	selfGroup.POST("/refresh", a.userRefreshHandler).Name = "user-refresh"
 
 	usersGroup := secureGroup.Group("/users")
 	usersGroup.GET("/:id", a.userShowHandler).Name = "user-show"
@@ -154,9 +157,4 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	}).Name = "admin-user-show"
 
 	return adminGroup
-}
-
-func (a *App) Serve() error {
-	a.logger.Info("Starting web server on " + a.Config.Bind)
-	return a.echo.Start(a.Config.Bind)
 }
