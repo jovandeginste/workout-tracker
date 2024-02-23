@@ -55,11 +55,9 @@
         </div>
       </div>
       {{ if .Notes }}
-      <div class="inner-form text-sm h-16 hover:h-fit overflow-hidden">
-        <div class="flex">
-          <div class="font-bold rounded-xl {{ IconFor `note` }}"></div>
-          {{ .Notes }}
-        </div>
+      <div class="inner-form">
+        <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
+        <div>{{ .Notes }}</div>
       </div>
       {{ end }} {{ end }}
     </div>
