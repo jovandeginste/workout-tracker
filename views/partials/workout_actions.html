@@ -28,17 +28,18 @@
     </div>
 
     <div class="modal-content">
-      <h3>Are you sure you want to delete this workout?</h3>
+      {{ $w := i18n "workout" }}
+      <h3>{{ i18n "Are you sure you want to delete this %s?" $w }}</h3>
       <div class="flex">
         <form method="post" action="{{ RouteFor `workout-delete` .ID }}">
-          <button class="confirm">Continue</button>
+          <button class="confirm">{{ i18n "Continue" }}</button>
         </form>
         <form onsubmit="return false">
           <button
             onclick="closeModal('modalConfirmDelete_{{ .ID }}')"
             class="cancel"
           >
-            Cancel
+            {{ i18n "Cancel" }}
           </button>
         </form>
       </div>

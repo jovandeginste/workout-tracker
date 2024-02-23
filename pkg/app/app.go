@@ -80,6 +80,7 @@ func (a *App) Serve() error {
 	go a.BackgroundWorker()
 
 	a.logger.Info("Starting web server on " + a.Config.Bind)
+
 	return a.echo.Start(a.Config.Bind)
 }
 

@@ -6,15 +6,17 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `admin` }}">Manage users ({{ len .users }})</h2>
+      <h2 class="{{ IconFor `admin` }}">
+        {{ i18n "Manage users" }} ({{ len .users }})
+      </h2>
       <div class="inner-form">
         <table>
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Active</th>
-              <th>Admin</th>
+              <th>{{ i18n "Username" }}</th>
+              <th>{{ i18n "Name" }}</th>
+              <th>{{ i18n "Active" }}</th>
+              <th>{{ i18n "Admin" }}</th>
               <th></th>
             </tr>
           </thead>

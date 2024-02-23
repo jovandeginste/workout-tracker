@@ -25,10 +25,10 @@ var (
 
 type User struct {
 	gorm.Model
-	Password string `form:"-" gorm:"type:varchar(128);not null"`
-	Salt     string `form:"-" gorm:"type:varchar(16);not null"`
+	Password string `form:"-"        gorm:"type:varchar(128);not null"`
+	Salt     string `form:"-"        gorm:"type:varchar(16);not null"`
 	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"`
-	Name     string `form:"name" gorm:"type:varchar(64);not null"`
+	Name     string `form:"name"     gorm:"type:varchar(64);not null"`
 	Active   bool   `form:"active"`
 	Admin    bool   `form:"admin"`
 

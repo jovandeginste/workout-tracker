@@ -7,7 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `admin` }}">
-        Manage user '{{ .user.Username | html }}'
+        {{ i18n "Manage user '%s'" (.user.Name | html) }}
       </h2>
       {{ with .user }}
       <form
@@ -19,7 +19,7 @@
           <tbody>
             <tr>
               <td>
-                <label for="username">Username</label>
+                <label for="username">{{ i18n "Username" }}</label>
               </td>
               <td>
                 <input
@@ -32,7 +32,7 @@
             </tr>
             <tr>
               <td>
-                <label for="name">Name</label>
+                <label for="name">{{ i18n "Name" }}</label>
               </td>
               <td>
                 <input id="name" name="name" size="40" value="{{ .Name }}" />
@@ -40,7 +40,7 @@
             </tr>
             <tr>
               <td>
-                <label for="name">Password</label>
+                <label for="name">{{ i18n "Password" }}</label>
               </td>
               <td>
                 <input
@@ -48,14 +48,14 @@
                   id="password"
                   name="password"
                   size="40"
-                  placeholder="Leave blank to keep current password"
+                  placeholder="{{ i18n `Leave blank to keep current password` }}"
                   value=""
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <label for="active">Active</label>
+                <label for="active">{{ i18n "Active" }}</label>
               </td>
               <td>
                 <input
@@ -73,7 +73,7 @@
             </tr>
             <tr>
               <td>
-                <label for="admin">Admin</label>
+                <label for="admin">{{ i18n "Admin" }}</label>
               </td>
               <td>
                 <input
@@ -92,7 +92,9 @@
             <tr>
               <td></td>
               <td>
-                <button type="submit" size="40">Update user</button>
+                <button type="submit" size="40">
+                  {{ i18n "Update user" }}
+                </button>
               </td>
             </tr>
           </tbody>
