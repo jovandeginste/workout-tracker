@@ -1,16 +1,20 @@
 {{ define "workout_actions" }}
 <form action="{{ RouteFor `workout-edit` .ID }}" method="get">
-  <button class="edit">
+  <button class="edit" title="{{ i18n `edit` }}">
     <a class="{{ IconFor `edit` }}"></a>
   </button>
 </form>
 <form action="{{ RouteFor `workout-refresh` .ID }}" method="post">
-  <button>
+  <button title="{{ i18n `refresh` }}">
     <a class="{{ IconFor `refresh` }}"></a>
   </button>
 </form>
 <form onsubmit="return false">
-  <button onclick="openModal('modalConfirmDelete_{{ .ID }}')" class="dangerous">
+  <button
+    onclick="openModal('modalConfirmDelete_{{ .ID }}')"
+    class="dangerous"
+    title="{{ i18n `delete` }}"
+  >
     <a class="{{ IconFor `delete` }}"></a>
   </button>
 </form>

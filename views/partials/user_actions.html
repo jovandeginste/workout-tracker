@@ -1,11 +1,15 @@
 {{ define "user_actions" }}
 <form action="{{ RouteFor `admin-user-edit` .ID }}" method="get">
-  <button class="edit">
+  <button class="edit" title="{{ i18n `edit` }}">
     <a class="{{ IconFor `edit` }}"></a>
   </button>
 </form>
 <form onsubmit="return false">
-  <button onclick="openModal('modalConfirmDelete_{{ .ID }}')" class="dangerous">
+  <button
+    onclick="openModal('modalConfirmDelete_{{ .ID }}')"
+    class="dangerous"
+    title="{{ i18n `delete` }}"
+  >
     <a class="{{ IconFor `delete` }}"></a>
   </button>
 </form>
