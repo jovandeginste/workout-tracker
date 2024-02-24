@@ -80,21 +80,24 @@ Details of a workout, with:
 - every point on the track has a tooltip with a summary at that moment
 - hover over the breakdown per kilometer to highlight the point
 
-
 ### Upload your files
 
 ![](docs/upload_workouts.jpg)
-Upload one or multiple GPX files.
-The files are parsed when uploaded, statistics and other information are calculated and stored in the database (serialized).
+
+- Upload one or multiple GPX files.
+- The files are parsed when uploaded, statistics and other information are calculated and stored in the database (serialized).
+- Re-calculate all uploaded workouts (useful while developing)
 
 ### Statistics to follow your progress
 
 ![](docs/statistics.jpg)
-Graphs showing monthly aggregated statistics.
+
+- Graphs showing monthly aggregated statistics.
 
 ### Basic multi-language support
 
 ![](docs/i18n.gif)
+
 - switch between (supported) languages
 - use the language configured in the browser (default)
 - very limited amount of languages supported for now :smile:
