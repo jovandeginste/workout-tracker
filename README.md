@@ -70,15 +70,16 @@ Details of a workout, with:
 - a zoomable, dragable map of the GPX track with more details per point
 - many summarized statistics
 - a breakdown per kilometer
+- track color based on elevation of the segment
 
 ### Tooltips for even more information
 
-![](docs/track_tooltip.png)
+![](docs/track.gif)
 
 - green and red circle are start and end points of the track
 - every point on the track has a tooltip with a summary at that moment
+- hover over the breakdown per kilometer to highlight the point
 
-![](docs/track_tooltip.gif)
 
 ### Upload your files
 
@@ -90,6 +91,13 @@ The files are parsed when uploaded, statistics and other information are calcula
 
 ![](docs/statistics.jpg)
 Graphs showing monthly aggregated statistics.
+
+### Basic multi-language support
+
+![](docs/i18n.gif)
+- switch between (supported) languages
+- use the language configured in the browser (default)
+- very limited amount of languages supported for now :smile:
 
 ## Configuration
 
