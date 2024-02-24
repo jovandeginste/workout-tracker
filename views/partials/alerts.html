@@ -1,11 +1,11 @@
 <div class="messages">
   {{ define "alerts" }} {{ if .notice }}
   <div class="notice" role="alert">
-    <span class="block sm:inline"> {{ .notice | html }} </span>
+    <span class="block sm:inline"> {{ .notice }} </span>
   </div>
   {{ end }} {{ if .error }}
   <div class="alert" role="alert">
-    <span class="block sm:inline"> {{ .error | html }} </span>
+    <span class="block sm:inline"> {{ .error }} </span>
   </div>
   {{ end }} {{ end }}
 </div>

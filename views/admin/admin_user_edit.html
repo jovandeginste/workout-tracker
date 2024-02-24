@@ -7,7 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <h2 class="{{ IconFor `admin` }}">
-        {{ i18n "Manage user '%s'" (.user.Name | html) }}
+        {{ i18n "Manage user '%s'" .user.Name }}
       </h2>
       {{ with .user }}
       <form

@@ -24,11 +24,9 @@
             {{ range .users }}
             <tr>
               <th>
-                <a href="{{ RouteFor `user-show` .ID }}"
-                  >{{ .Username | html }}</a
-                >
+                <a href="{{ RouteFor `user-show` .ID }}">{{ .Username }}</a>
               </th>
-              <td>{{ .Name | html }}</td>
+              <td>{{ .Name }}</td>
               <td>{{ .Active | BoolToHTML }}</td>
               <td>{{ .Admin | BoolToHTML }}</td>
               <td>

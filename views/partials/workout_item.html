@@ -6,7 +6,7 @@
     <div class="flex flex-wrap gap-2">
       <div class="grow">
         <a class="{{ IconFor .Type }}" href="{{ RouteFor `workout-show` .ID }}"
-          >{{ .Name | html }}</a
+          >{{ .Name }}</a
         >
       </div>
       <div class="text-right text-sm">
@@ -14,7 +14,7 @@
           class="{{ IconFor `user` }}"
           href="{{ RouteFor `user-show` .User.ID }}"
         >
-          {{ .User.Name | html }}</a
+          {{ .User.Name }}</a
         >
       </div>
     </div>
