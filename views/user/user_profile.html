@@ -6,7 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `user-profile` }}">Your profile</h2>
+      <h2 class="{{ IconFor `user-profile` }}">{{ i18n "Your profile" }}</h2>
       <div class="inner-form">
         <form method="post" action="{{ RouteFor `user-profile-update` }}">
           <table>
@@ -36,7 +36,7 @@
         </form>
 
         <form method="post" action="{{ RouteFor `user-refresh` }}">
-          <label for="refresh">Refresh all your workouts</label>
+          <label for="refresh">{{ i18n "Refresh all your workouts" }}</label>
           <button type="submit">
             <a class="{{ IconFor `refresh` }}"></a>
           </button>
