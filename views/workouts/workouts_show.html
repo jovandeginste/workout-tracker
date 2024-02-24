@@ -16,7 +16,7 @@
         </span>
         {{ end }}
 
-        <h2 class="{{ IconFor .Type }}">{{ .Name | html }}</h2>
+        <h2 class="{{ IconFor .Type.String }}">{{ .Name }}</h2>
       </div>
       <div class="sm:flex sm:flex-wrap">
         <div class="basis-1/2">

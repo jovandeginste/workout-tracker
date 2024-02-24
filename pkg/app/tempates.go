@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"strings"
 
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -53,6 +54,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 		"supportedLanguages": a.translator.SupportedLanguages,
 		"supportedThemes":    themes,
+		"workoutTypes":       database.WorkoutTypes,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,

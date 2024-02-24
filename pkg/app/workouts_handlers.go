@@ -81,7 +81,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 
 	workout.Name = c.FormValue("name")
 	workout.Notes = c.FormValue("notes")
-	workout.Type = c.FormValue("type")
+	workout.Type = database.WorkoutType(c.FormValue("type"))
 
 	if err := workout.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)

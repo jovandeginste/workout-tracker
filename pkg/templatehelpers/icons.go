@@ -66,6 +66,8 @@ func sportIcon(what string) string {
 	switch what {
 	case "running":
 		return iconDefaults + " icon-solid icon-person-running"
+	case "cycling":
+		return iconDefaults + " icon-solid icon-person-biking"
 	default:
 		return ""
 	}

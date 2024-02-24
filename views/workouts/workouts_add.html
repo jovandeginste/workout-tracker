@@ -31,13 +31,11 @@
                   <label for="type">{{ i18n "Type" }}</label>
                 </td>
                 <td>
-                  <input
-                    type="type"
-                    id="type"
-                    name="type"
-                    value="running"
-                    readonly
-                  />
+                  <select id="type" name="type">
+                    {{ range workoutTypes }}
+                    <option value="{{ .String }}">{{ .String }}</option>
+                    {{ end }}
+                  </select>
                 </td>
               </tr>
               <tr>

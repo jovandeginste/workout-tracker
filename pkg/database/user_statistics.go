@@ -133,7 +133,7 @@ func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 	}
 
 	for _, w := range workouts {
-		if w.Type != "running" {
+		if !w.Type.IsDistance() {
 			continue
 		}
 

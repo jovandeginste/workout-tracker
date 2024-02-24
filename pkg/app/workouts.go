@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
@@ -44,7 +45,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		}
 
 		notes := c.FormValue("notes")
-		workoutType := c.FormValue("type")
+		workoutType := database.WorkoutType(c.FormValue("type"))
 
 		w, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, content)
 		if addErr != nil {

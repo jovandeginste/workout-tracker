@@ -2,11 +2,35 @@ package database
 
 import (
 	"crypto/sha256"
+	"slices"
 	"time"
 
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 )
+
+type WorkoutType string
+
+const (
+	WorkoutTypeRunning WorkoutType = "running"
+	WorkoutTypeCycling WorkoutType = "cycling"
+)
+
+func WorkoutTypes() []WorkoutType {
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling}
+}
+
+func DistanceWorkoutTypes() []WorkoutType {
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling}
+}
+
+func (wt WorkoutType) String() string {
+	return string(wt)
+}
+
+func (wt WorkoutType) IsDistance() bool {
+	return slices.Contains(DistanceWorkoutTypes(), wt)
+}
 
 type Workout struct {
 	gorm.Model
@@ -16,13 +40,13 @@ type Workout struct {
 	Dirty    bool
 	User     *User
 	Notes    string
-	Type     string
+	Type     WorkoutType
 	Data     MapData `gorm:"serializer:json"`
 	Checksum []byte  `gorm:"not null;uniqueIndex"`
 	GPXData  []byte  `gorm:"type:mediumtext"`
 }
 
-func NewWorkout(u *User, workoutType, notes string, content []byte) *Workout {
+func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) *Workout {
 	if u == nil {
 		return nil
 	}

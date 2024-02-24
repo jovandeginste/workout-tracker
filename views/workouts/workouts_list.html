@@ -30,7 +30,10 @@
           {{ range .workouts }}
           <tr>
             <td class="text-center">
-              <div class="{{ IconFor .Type }}" title="{{ i18n .Type }}"></div>
+              <div
+                class="{{ IconFor .Type.String }}"
+                title="{{ i18n .Type.String }}"
+              ></div>
             </td>
             <td>
               <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>

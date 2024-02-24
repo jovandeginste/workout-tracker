@@ -2002,6 +2002,14 @@ table {
   content: "\f044";
 }
 
+.icon-person-biking::before {
+  content: "\f84a";
+}
+
+.icon-person-biking::after {
+  content: "\f84a";
+}
+
 .icon-person-running::before {
   content: "\f70c";
 }
