@@ -30,6 +30,8 @@ func (a *App) setUser(c echo.Context) error {
 	}
 
 	c.Set("user_info", dbUser)
+	c.Set("user_theme", dbUser.Profile.Theme)
+	c.Set("user_language", dbUser.Profile.Language)
 
 	return nil
 }

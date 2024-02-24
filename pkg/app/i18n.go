@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak/humanize"
 	"github.com/vorlif/spreak/humanize/locale/nl"
 	"golang.org/x/text/language"
@@ -37,4 +38,12 @@ type Theme struct {
 	Code string
 	Icon string
 	Name string
+}
+
+func langFromContext(ctx echo.Context) []interface{} {
+	return []interface{}{
+		ctx.QueryParam("lang"),
+		ctx.Get("user_language"),
+		ctx.Request().Header.Get("Accept-Language"),
+	}
 }

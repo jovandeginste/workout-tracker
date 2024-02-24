@@ -6,7 +6,6 @@ import (
 	"io/fs"
 	"strings"
 
-	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -26,25 +25,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		return err
 	}
 
-	viewContext, isMap := data.(map[string]interface{})
-	if !isMap {
-		return r.ExecuteTemplate(w, name, data)
-	}
-
-	userLang := ""
-
-	u, ok := viewContext["currentUser"].(*database.User)
-	if ok {
-		userLang = u.Profile.Language
-	}
-
-	viewContext["context"] = ctx
-	clientLanguages := []interface{}{
-		ctx.QueryParam("lang"),
-		userLang,
-		ctx.Request().Header.Get("Accept-Language"),
-	}
-
+	clientLanguages := langFromContext(ctx)
 	tr := spreak.NewLocalizer(t.app.translator, clientLanguages...)
 	h := t.app.humanizer.CreateHumanizer(clientLanguages...)
 
