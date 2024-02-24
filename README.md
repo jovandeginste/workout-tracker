@@ -182,6 +182,7 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
   - [gpxgo](github.com/tkrajina/gpxgo)
   - [Echo](https://echo.labstack.com/)
   - [Gorm](https://gorm.io)
+  - [Spreak](https://github.com/vorlif/spreak)
 - HTML, CSS and JS
   - [Tailwind CSS](https://tailwindcss.com/)
   - [Font Awesome](https://fontawesome.com/)
