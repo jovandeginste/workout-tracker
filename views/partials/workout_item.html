@@ -5,7 +5,9 @@
   >
     <div class="flex flex-wrap gap-2">
       <div class="grow">
-        <a class="{{ IconFor .Type }}" href="{{ RouteFor `workout-show` .ID }}"
+        <a
+          class="{{ IconFor .Type.String }}"
+          href="{{ RouteFor `workout-show` .ID }}"
           >{{ .Name }}</a
         >
       </div>

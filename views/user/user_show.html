@@ -45,12 +45,12 @@
                 events: [
                   {{ range .workouts }}
                   {
-                    title: "{{ .Type }}",
+                    title: "{{ .Type.String }}",
                     start: "{{ .Date | LocalDate }}",
                     url: "/workouts/{{ .ID }}",
                     display: 'block',
                     extendedProps: {
-                      iconClass: "{{ IconFor .Type }}",
+                      iconClass: "{{ IconFor .Type.String }}",
                     },
                   },
                   {{ end }}
