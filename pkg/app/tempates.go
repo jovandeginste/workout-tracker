@@ -47,10 +47,12 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 	h := a.humanizer.CreateHumanizer(language.English)
 
 	return template.FuncMap{
-		"i18n":               echoFunc,
-		"language":           func() string { return DefaultLanguage },
+		"i18n":      echoFunc,
+		"language":  func() string { return DefaultLanguage },
+		"humanizer": func() *humanize.Humanizer { return h },
+
 		"supportedLanguages": a.translator.SupportedLanguages,
-		"humanizer":          func() *humanize.Humanizer { return h },
+		"supportedThemes":    themes,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
@@ -65,8 +67,6 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
-		"supportedLanguaged":      a.translator.SupportedLanguages,
-		"supportedThemes":         themes,
 
 		"RelativeDate": h.NaturalTime,
 
