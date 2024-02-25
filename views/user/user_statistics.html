@@ -168,16 +168,22 @@
       new Chart(document.getElementById("workouts-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: { scales: {
           x: xAxisScale,
@@ -187,16 +193,22 @@
       new Chart(document.getElementById("duration-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Duration | NumericDuration }} },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Duration | NumericDuration }} },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: durationChartOptions,
       });
@@ -204,16 +216,22 @@
       new Chart(document.getElementById("distance-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} / 1000 },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} / 1000 },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: distanceChartOptions,
       });
@@ -221,16 +239,22 @@
       new Chart(document.getElementById("average-speed-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: speedChartOptions,
       });
@@ -238,16 +262,22 @@
       new Chart(document.getElementById("average-speed-no-pause-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: speedChartOptions,
       });
@@ -255,16 +285,22 @@
       new Chart(document.getElementById("max-speed-per-month"), {
         type: "bar",
         data: {
-          datasets: [{
-            label: "running",
-            data: [
-              {{ range $y, $yv := .UserStatistics.PerMonth -}}
-              {{- range $m, $mv := $yv -}}
-              { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
-              {{ end -}}
-              {{- end }}
-            ]
-          }],
+          datasets: [
+            {{ range $type, $stats := .UserStatistics }}
+              {{ if $stats.WorkoutType.IsDistance }}
+              {
+                label: "{{ $stats.WorkoutType.String }}",
+                data: [
+                  {{ range $y, $yv := $stats.PerMonth -}}
+                  {{- range $m, $mv := $yv -}}
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
+                  {{ end -}}
+                  {{- end }}
+                ],
+              },
+              {{ end }}
+            {{ end }}
+          ],
         },
         options: speedChartOptions,
       });
