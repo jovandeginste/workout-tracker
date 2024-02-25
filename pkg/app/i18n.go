@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
 	"github.com/vorlif/spreak/humanize/locale/nl"
 	"golang.org/x/text/language"
@@ -46,4 +47,16 @@ func langFromContext(ctx echo.Context) []interface{} {
 		ctx.Get("user_language"),
 		ctx.Request().Header.Get("Accept-Language"),
 	}
+}
+
+func (a *App) i18n(ctx echo.Context, message string, vars ...interface{}) string {
+	return a.translatorFromContext(ctx).Getf(message, vars...)
+}
+
+func (a *App) translatorFromContext(ctx echo.Context) *spreak.Localizer {
+	return spreak.NewLocalizer(a.translator, langFromContext(ctx)...)
+}
+
+func (a *App) humanizerFromContext(ctx echo.Context) *humanize.Humanizer {
+	return a.humanizer.CreateHumanizer(langFromContext(ctx)...)
 }

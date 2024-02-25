@@ -27,6 +27,10 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
+	if err := a.setUser(c); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
+	}
+
 	a.setNotice(c, "Profile updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))

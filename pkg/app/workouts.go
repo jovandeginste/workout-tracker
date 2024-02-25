@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -57,11 +56,11 @@ func (a *App) addWorkout(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.setError(c, fmt.Sprintf("Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; ")))
+		a.setError(c, "Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.setNotice(c, fmt.Sprintf("Added %d new workout(s): %s", len(msg), strings.Join(msg, "; ")))
+		a.setNotice(c, "Added %d new workout(s): %s", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))

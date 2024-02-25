@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -53,7 +52,7 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, fmt.Sprintf("The workout '%s' has been deleted.", workout.Name))
+	a.setNotice(c, "The workout '%s' has been deleted.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -68,7 +67,7 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, fmt.Sprintf("The workout '%s' has been refreshed.", workout.Name))
+	a.setNotice(c, "The workout '%s' has been refreshed.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -87,7 +86,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, fmt.Sprintf("The workout '%s' has been updated.", workout.Name))
+	a.setNotice(c, "The workout '%s' has been updated.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }

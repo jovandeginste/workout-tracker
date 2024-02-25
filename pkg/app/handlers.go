@@ -6,9 +6,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) redirectWithError(c echo.Context, target string, err error) error {
+func (a *App) redirectWithError(c echo.Context, target string, err error, vars ...interface{}) error {
 	if err != nil {
-		a.setError(c, err.Error())
+		a.setError(c, err.Error(), vars...)
 	}
 
 	return c.Redirect(http.StatusFound, target)

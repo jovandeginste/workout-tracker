@@ -10,7 +10,6 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
 	"golang.org/x/text/language"
 )
@@ -26,9 +25,8 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		return err
 	}
 
-	clientLanguages := langFromContext(ctx)
-	tr := spreak.NewLocalizer(t.app.translator, clientLanguages...)
-	h := t.app.humanizer.CreateHumanizer(clientLanguages...)
+	tr := t.app.translatorFromContext(ctx)
+	h := t.app.humanizerFromContext(ctx)
 
 	r.Funcs(template.FuncMap{
 		"i18n":         tr.Getf,
