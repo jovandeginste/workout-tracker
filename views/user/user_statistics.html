@@ -172,7 +172,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
@@ -197,7 +197,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
@@ -220,7 +220,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
@@ -243,7 +243,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
@@ -266,7 +266,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
@@ -289,7 +289,7 @@
             {{ range $type, $stats := .UserStatistics }}
               {{ if $stats.WorkoutType.IsDistance }}
               {
-                label: "{{ $stats.WorkoutType.String }}",
+                label: "{{ i18n $stats.WorkoutType.String }}",
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
