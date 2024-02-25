@@ -2,6 +2,7 @@ package database
 
 import (
 	"crypto/sha256"
+	"errors"
 	"slices"
 	"time"
 
@@ -15,6 +16,8 @@ const (
 	WorkoutTypeRunning WorkoutType = "running"
 	WorkoutTypeCycling WorkoutType = "cycling"
 )
+
+var ErrInvalidGPXData = errors.New("invalid gpx data")
 
 func WorkoutTypes() []WorkoutType {
 	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling}
@@ -41,9 +44,9 @@ type Workout struct {
 	User     *User
 	Notes    string
 	Type     WorkoutType
-	Data     MapData `gorm:"serializer:json"`
-	Checksum []byte  `gorm:"not null;uniqueIndex"`
-	GPXData  []byte  `gorm:"type:mediumtext"`
+	Data     *MapData `gorm:"serializer:json"`
+	Checksum []byte   `gorm:"not null;uniqueIndex"`
+	GPXData  []byte   `gorm:"type:mediumtext"`
 }
 
 func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) *Workout {
@@ -101,10 +104,18 @@ func (w *Workout) Delete(db *gorm.DB) error {
 }
 
 func (w *Workout) Create(db *gorm.DB) error {
+	if w.Data == nil {
+		return ErrInvalidGPXData
+	}
+
 	return db.Create(w).Error
 }
 
 func (w *Workout) Save(db *gorm.DB) error {
+	if w.Data == nil {
+		return ErrInvalidGPXData
+	}
+
 	return db.Save(w).Error
 }
 

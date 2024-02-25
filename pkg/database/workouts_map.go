@@ -91,6 +91,16 @@ func (m *MapCenter) Address() *geo.Address {
 
 // allGPXPoints returns the first track segment's points
 func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
+	gpxContent.ReduceGpxToSingleTrack()
+
+	if len(gpxContent.Tracks) == 0 {
+		return nil
+	}
+
+	if len(gpxContent.Tracks[0].Segments) == 0 {
+		return nil
+	}
+
 	return gpxContent.Tracks[0].Segments[0].Points
 }
 
@@ -111,6 +121,16 @@ func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 }
 
 func createMapData(gpxContent *gpx.GPX) *MapData {
+	gpxContent.ReduceGpxToSingleTrack()
+
+	if len(gpxContent.Tracks) == 0 {
+		return nil
+	}
+
+	if len(gpxContent.Tracks[0].Segments) == 0 {
+		return nil
+	}
+
 	mapCenter := center(gpxContent)
 
 	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
@@ -136,12 +156,12 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	return data
 }
 
-func gpxAsMapData(gpxContent *gpx.GPX) MapData {
+func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 	data := createMapData(gpxContent)
 
 	points := allGPXPoints(gpxContent)
 	if len(points) == 0 {
-		return *data
+		return data
 	}
 
 	totalDist := 0.0
@@ -174,5 +194,5 @@ func gpxAsMapData(gpxContent *gpx.GPX) MapData {
 		})
 	}
 
-	return *data
+	return data
 }
