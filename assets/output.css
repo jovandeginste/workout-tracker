@@ -2026,6 +2026,14 @@ table {
   content: "\e5ff";
 }
 
+.icon-person-walking::before {
+  content: "\f554";
+}
+
+.icon-person-walking::after {
+  content: "\f554";
+}
+
 .icon-question::before {
   content: "\3f";
 }

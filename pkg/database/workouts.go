@@ -13,18 +13,20 @@ import (
 type WorkoutType string
 
 const (
-	WorkoutTypeRunning WorkoutType = "running"
-	WorkoutTypeCycling WorkoutType = "cycling"
+	WorkoutTypeAutoDetect WorkoutType = "auto"
+	WorkoutTypeRunning    WorkoutType = "running"
+	WorkoutTypeCycling    WorkoutType = "cycling"
+	WorkoutTypeWalking    WorkoutType = "walking"
 )
 
 var ErrInvalidGPXData = errors.New("invalid gpx data")
 
 func WorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling}
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking}
 }
 
 func DistanceWorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling}
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking}
 }
 
 func (wt WorkoutType) String() string {
@@ -64,6 +66,10 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) 
 	h := sha256.New()
 	h.Write(content)
 
+	if workoutType == WorkoutTypeAutoDetect {
+		workoutType = autoDetectWorkoutType(data)
+	}
+
 	w := Workout{
 		User:     u,
 		UserID:   u.ID,
@@ -77,6 +83,18 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) 
 	}
 
 	return &w
+}
+
+func autoDetectWorkoutType(data *MapData) WorkoutType {
+	if 3.6*data.AverageSpeedNoPause() > 15.0 {
+		return WorkoutTypeCycling
+	}
+
+	if 3.6*data.AverageSpeedNoPause() > 5.0 {
+		return WorkoutTypeRunning
+	}
+
+	return WorkoutTypeWalking
 }
 
 func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {

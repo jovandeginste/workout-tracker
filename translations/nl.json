@@ -1,4 +1,5 @@
 {
+  "%s records": "%s records",
   "Active": "Actief",
   "Add a workout": "Voeg een workout toe",
   "Add workout": "Workout toevoegen",
@@ -7,6 +8,7 @@
   "Admin": "Beheerder",
   "All workouts will be refreshed in the coming minutes.": "Alle workouts worden vernieuwd in de komende minuten.",
   "Are you sure you want to delete this %s?": "Weet je zeker dat je deze %s wilt verwijderen?",
+  "Auto-detect": "Automatisch detecteren",
   "Average speed": "Gemiddelde snelheid",
   "Average speed (no pause)": "Gemiddelde snelheid (zonder pauze)",
   "Average tempo": "Gemiddelde tempo",
@@ -43,7 +45,6 @@
   "Recent activity": "Recente activiteit",
   "Refresh all your workouts": "Vernieuw al jouw workouts",
   "Register": "Registreren",
-  "Running records": "Loop records",
   "Sign in": "Aanmelden",
   "Speed": "Snelheid",
   "Statistics": "Statistieken",
@@ -79,6 +80,7 @@
   "running": "lopen",
   "up": "omhoog",
   "user": "gebruiker",
+  "walking": "wandelen",
   "workout": "workout",
   "workouts": "workouts"
 }
