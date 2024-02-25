@@ -1,5 +1,4 @@
 {
-  "%s records": "%s records",
   "Active": "Active",
   "Add a workout": "Add a workout",
   "Add workout": "Add workout",
@@ -43,6 +42,7 @@
   "Password": "Password",
   "Profile updated": "Profile updated",
   "Recent activity": "Recent activity",
+  "Records for %s": "Records for %s",
   "Refresh all your workouts": "Refresh all your workouts",
   "Register": "Register",
   "Sign in": "Sign in",

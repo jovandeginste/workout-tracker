@@ -1,5 +1,4 @@
 {
-  "%s records": "%s records",
   "Active": "Actief",
   "Add a workout": "Voeg een workout toe",
   "Add workout": "Workout toevoegen",
@@ -43,6 +42,7 @@
   "Password": "Wachtwoord",
   "Profile updated": "Profiel bijgewerkt",
   "Recent activity": "Recente activiteit",
+  "Records for %s": "Records voor %s",
   "Refresh all your workouts": "Vernieuw al jouw workouts",
   "Register": "Registreren",
   "Sign in": "Aanmelden",

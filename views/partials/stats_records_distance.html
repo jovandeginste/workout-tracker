@@ -16,7 +16,7 @@
 {{ end }} {{ define "stats_records_distance" }} {{ if .Active }}
 <h3>
   <span class="{{ IconFor .WorkoutType.String }}"></span>
-  {{ i18n "%s records" .WorkoutType.String }}
+  {{ i18n "Records for %s" (i18n .WorkoutType.String) }}
 </h3>
 <table class="workout-info table-auto">
   <tbody>
