@@ -1,4 +1,4 @@
-{{ define "starts_record_running_date" }}
+{{ define "stats_record_distance_date" }}
 <span class="hidden 2xl:inline" title="{{ .Date | LocalDate }}">
   <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
   ({{ .Date | RelativeDate }})
@@ -13,10 +13,10 @@
     >{{ .Date.Format "2006-01-02" }}</a
   >
 </span>
-{{ end }} {{ define "stats_records_running" }} {{ if .Active }}
+{{ end }} {{ define "stats_records_distance" }} {{ if .Active }}
 <h3>
-  <span class="{{ IconFor `running` }}"></span>
-  {{ i18n "Running records" }}
+  <span class="{{ IconFor .WorkoutType.String }}"></span>
+  {{ i18n "%s records" .WorkoutType.String }}
 </h3>
 <table class="workout-info table-auto">
   <tbody>
@@ -26,7 +26,7 @@
         <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
@@ -36,7 +36,7 @@
         >
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .MaxSpeed }}
     <tr>
@@ -44,7 +44,7 @@
         <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .Distance }}
     <tr>
@@ -54,7 +54,7 @@
         >
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanDistance }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .TotalUp }}
     <tr>
@@ -62,7 +62,7 @@
         <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanDistance }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .Duration }}
     <tr>
@@ -72,7 +72,7 @@
         >
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanDuration }}</td>
-      <td>{{ template "starts_record_running_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }}
   </tbody>

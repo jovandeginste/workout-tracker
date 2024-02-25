@@ -18,7 +18,9 @@
     <tr>
       <td class="{{ IconFor `workout` }}"></td>
       <th>{{ i18n "Type" }}</th>
-      <td>{{ .Type.String }}</td>
+      <td>
+        <span class="{{ IconFor .Type.String }}">{{ i18n .Type.String }}</span>
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `duration` }}"></td>

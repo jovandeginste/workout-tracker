@@ -13,7 +13,18 @@ type (
 		ID    uint
 	}
 
+	WorkoutStatistics map[string]*WorkoutStatistic
+
+	WorkoutStatistic struct {
+		WorkoutType WorkoutType
+		Total       Totals
+		PerYear     map[int]*Totals
+		PerMonth    map[int]map[int]*Totals
+		Records     WorkoutRecord
+	}
+
 	Totals struct {
+		WorkoutType         WorkoutType
 		Workouts            int
 		Distance            float64
 		Up                  float64
@@ -22,25 +33,32 @@ type (
 		AverageSpeedNoPause float64
 		MaxSpeed            float64
 	}
-	UserStatistics struct {
-		Total    Totals
-		PerYear  map[int]*Totals
-		PerMonth map[int]map[int]*Totals
-		Records  struct {
-			Active              bool
-			AverageSpeed        record
-			AverageSpeedNoPause record
-			MaxSpeed            record
-			Distance            record
-			TotalUp             record
-			Duration            struct {
-				Value time.Duration
-				Date  time.Time
-				ID    uint
-			}
+
+	WorkoutRecord struct {
+		WorkoutType         WorkoutType
+		Active              bool
+		AverageSpeed        record
+		AverageSpeedNoPause record
+		MaxSpeed            record
+		Distance            record
+		TotalUp             record
+		Duration            struct {
+			Value time.Duration
+			Date  time.Time
+			ID    uint
 		}
 	}
 )
+
+func NewWorkoutStatistic(t WorkoutType) *WorkoutStatistic {
+	return &WorkoutStatistic{
+		WorkoutType: t,
+		Records:     WorkoutRecord{WorkoutType: t},
+		Total:       Totals{WorkoutType: t},
+		PerYear:     map[int]*Totals{},
+		PerMonth:    map[int]map[int]*Totals{},
+	}
+}
 
 func (r *record) CheckAndSwap(value float64, id uint, date *time.Time) {
 	if r.Value < value {
@@ -50,7 +68,7 @@ func (r *record) CheckAndSwap(value float64, id uint, date *time.Time) {
 	}
 }
 
-func (us *UserStatistics) Add(w *Workout) {
+func (us *WorkoutStatistic) Add(w *Workout) {
 	us.Total.Workouts++
 	us.Total.Distance += w.Data.TotalDistance
 	us.Total.Duration += w.Data.TotalDuration
@@ -63,69 +81,61 @@ func (us *UserStatistics) Add(w *Workout) {
 	year := d.Year()
 	month := int(d.Month())
 
-	us.AddYear(year, w)
-	us.AddMonth(year, month, w)
+	us.AddYear(us.WorkoutType, year, w)
+	us.AddMonth(us.WorkoutType, year, month, w)
 }
 
-func (us *UserStatistics) AddMonth(year, month int, w *Workout) {
+func NewTotal(t WorkoutType, d *MapData) *Totals {
+	return &Totals{
+		Workouts:            1,
+		WorkoutType:         t,
+		Distance:            d.TotalDistance,
+		Up:                  d.TotalUp,
+		Duration:            d.TotalDuration,
+		AverageSpeed:        d.AverageSpeed(),
+		AverageSpeedNoPause: d.AverageSpeedNoPause(),
+		MaxSpeed:            d.MaxSpeed,
+	}
+}
+
+func (t *Totals) Add(d *MapData) {
+	t.Workouts++
+	t.Distance += d.TotalDistance
+	t.Duration += d.TotalDuration
+	t.Up += d.TotalUp
+	t.AverageSpeed += d.AverageSpeed()
+	t.AverageSpeedNoPause += d.AverageSpeedNoPause()
+	t.MaxSpeed += d.MaxSpeed
+}
+
+func (us *WorkoutStatistic) AddMonth(t WorkoutType, year, month int, w *Workout) {
 	if _, ok := us.PerMonth[year]; !ok {
 		us.PerMonth[year] = map[int]*Totals{}
 	}
 
 	entry, ok := us.PerMonth[year][month]
 	if !ok {
-		us.PerMonth[year][month] = &Totals{
-			Workouts:            1,
-			Distance:            w.Data.TotalDistance,
-			Up:                  w.Data.TotalUp,
-			Duration:            w.Data.TotalDuration,
-			AverageSpeed:        w.Data.AverageSpeed(),
-			AverageSpeedNoPause: w.Data.AverageSpeedNoPause(),
-			MaxSpeed:            w.Data.MaxSpeed,
-		}
+		us.PerMonth[year][month] = NewTotal(t, w.Data)
 
 		return
 	}
 
-	entry.Workouts++
-	entry.Distance += w.Data.TotalDistance
-	entry.Duration += w.Data.TotalDuration
-	entry.Up += w.Data.TotalUp
-	entry.AverageSpeed += w.Data.AverageSpeed()
-	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause()
-	entry.MaxSpeed += w.Data.MaxSpeed
+	entry.Add(w.Data)
 }
 
-func (us *UserStatistics) AddYear(year int, w *Workout) {
+func (us *WorkoutStatistic) AddYear(t WorkoutType, year int, w *Workout) {
 	entry, ok := us.PerYear[year]
 	if !ok {
-		us.PerYear[year] = &Totals{
-			Workouts:            1,
-			Distance:            w.Data.TotalDistance,
-			Up:                  w.Data.TotalUp,
-			Duration:            w.Data.TotalDuration,
-			AverageSpeed:        w.Data.AverageSpeed(),
-			AverageSpeedNoPause: w.Data.AverageSpeedNoPause(),
-			MaxSpeed:            w.Data.MaxSpeed,
-		}
+		us.PerYear[year] = NewTotal(t, w.Data)
 
 		return
 	}
 
-	entry.Workouts++
-	entry.Distance += w.Data.TotalDistance
-	entry.Duration += w.Data.TotalDuration
-	entry.Up += w.Data.TotalUp
-	entry.AverageSpeed += w.Data.AverageSpeed()
-	entry.AverageSpeedNoPause += w.Data.AverageSpeedNoPause()
-	entry.MaxSpeed += w.Data.MaxSpeed
+	entry.Add(w.Data)
 }
 
-func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
-	us := &UserStatistics{}
-
-	us.PerYear = map[int]*Totals{}
-	us.PerMonth = map[int]map[int]*Totals{}
+func (u *User) Statistics(db *gorm.DB) (WorkoutStatistics, error) {
+	us := WorkoutStatistics{}
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {
@@ -137,45 +147,55 @@ func (u *User) Statistics(db *gorm.DB) (*UserStatistics, error) {
 			continue
 		}
 
-		us.Records.Active = true
-		us.Add(w)
-
-		us.Records.AverageSpeedNoPause.CheckAndSwap(
-			w.Data.AverageSpeedNoPause(),
-			w.ID,
-			w.Date,
-		)
-
-		us.Records.AverageSpeed.CheckAndSwap(
-			w.Data.AverageSpeed(),
-			w.ID,
-			w.Date,
-		)
-
-		us.Records.MaxSpeed.CheckAndSwap(
-			w.Data.MaxSpeed,
-			w.ID,
-			w.Date,
-		)
-
-		us.Records.Distance.CheckAndSwap(
-			w.Data.TotalDistance,
-			w.ID,
-			w.Date,
-		)
-
-		us.Records.TotalUp.CheckAndSwap(
-			w.Data.TotalUp,
-			w.ID,
-			w.Date,
-		)
-
-		if w.Data.TotalDuration > us.Records.Duration.Value {
-			us.Records.Duration.Value = w.Data.TotalDuration
-			us.Records.Duration.ID = w.ID
-			us.Records.Duration.Date = *w.Date
+		s, ok := us[w.Type.String()]
+		if !ok {
+			s = NewWorkoutStatistic(w.Type)
+			us[w.Type.String()] = s
 		}
+
+		s.Records.Active = true
+		s.Add(w)
+
+		s.Records.CheckAndSwap(w)
 	}
 
 	return us, nil
+}
+
+func (wr *WorkoutRecord) CheckAndSwap(w *Workout) {
+	wr.AverageSpeedNoPause.CheckAndSwap(
+		w.Data.AverageSpeedNoPause(),
+		w.ID,
+		w.Date,
+	)
+
+	wr.AverageSpeed.CheckAndSwap(
+		w.Data.AverageSpeed(),
+		w.ID,
+		w.Date,
+	)
+
+	wr.MaxSpeed.CheckAndSwap(
+		w.Data.MaxSpeed,
+		w.ID,
+		w.Date,
+	)
+
+	wr.Distance.CheckAndSwap(
+		w.Data.TotalDistance,
+		w.ID,
+		w.Date,
+	)
+
+	wr.TotalUp.CheckAndSwap(
+		w.Data.TotalUp,
+		w.ID,
+		w.Date,
+	)
+
+	if w.Data.TotalDuration > wr.Duration.Value {
+		wr.Duration.Value = w.Data.TotalDuration
+		wr.Duration.ID = w.ID
+		wr.Duration.Date = *w.Date
+	}
 }

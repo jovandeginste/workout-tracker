@@ -10,15 +10,17 @@
         {{ i18n "Dashboard for %s" .user.Name }}
       </h2>
 
-      {{ template "stats_records_total" .UserStatistics.Total }}
+      {{ template "stats_records_total" (index .UserStatistics "running").Total
+      }}
 
       <div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
         <div>
-          {{ if len .workouts }}
+          {{ range $type, $stats := .UserStatistics }} {{ if
+          $stats.WorkoutType.IsDistance }}
           <div class="inner-form">
-            {{ template "stats_records_running" .UserStatistics.Records }}
+            {{ template "stats_records_distance" $stats.Records }}
           </div>
-          {{ end }}
+          {{ end }} {{ end }}
         </div>
         <div>
           <div class="inner-form min-h-[450px]" id="calendar"></div>
