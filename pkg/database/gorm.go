@@ -55,7 +55,7 @@ func dialectorFor(driver, dsn string) (gorm.Dialector, error) {
 	case "sqlite":
 		return sqlite.Open(dsn), nil
 	case "memory":
-		return sqlite.Open("file::memory:?cache=shared"), nil
+		return sqlite.Open(":memory:"), nil
 	case "mysql":
 		return mysql.Open(dsn), nil
 	default:

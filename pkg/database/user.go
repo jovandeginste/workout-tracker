@@ -195,6 +195,9 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 
 func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, content []byte) (*Workout, error) {
 	w := NewWorkout(u, workoutType, notes, content)
+	if w == nil {
+		return nil, ErrInvalidGPXData
+	}
 
 	if err := w.Create(db); err != nil {
 		return nil, err

@@ -64,3 +64,8 @@ test-assets:
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
 	golangci-lint run --allow-parallel-runners
+
+go-cover:
+	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
+	go tool cover -func=coverage.out
+	rm -vf coverage.out

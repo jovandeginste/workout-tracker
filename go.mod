@@ -10,6 +10,7 @@ require (
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.3
 	github.com/dustin/go-humanize v1.0.1
+	github.com/fsouza/slognil v0.4.0
 	github.com/glebarez/sqlite v1.10.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da

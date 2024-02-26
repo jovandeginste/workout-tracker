@@ -22,6 +22,9 @@ github.com/dustin/go-humanize
 # github.com/fsnotify/fsnotify v1.7.0
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
+# github.com/fsouza/slognil v0.4.0
+## explicit; go 1.21
+github.com/fsouza/slognil
 # github.com/glebarez/go-sqlite v1.21.2
 ## explicit; go 1.17
 github.com/glebarez/go-sqlite
