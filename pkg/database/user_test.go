@@ -9,7 +9,7 @@ import (
 
 func TestUserIsValid(t *testing.T) {
 	u := User{
-		Username: "my-username@localhost",
+		Username: "my-username",
 		Password: "my-password",
 		Active:   true,
 	}
@@ -21,7 +21,8 @@ func TestUserIsValid(t *testing.T) {
 func TestUserPasswordIsValid(t *testing.T) {
 	pwd := "my-password"
 	u := User{
-		Username: "my-username@localhost",
+		Username: "my-username",
+		Name:     "my-name",
 		Active:   true,
 	}
 
@@ -42,7 +43,7 @@ func TestUserPasswordIsValid(t *testing.T) {
 
 func TestUserIsNotActive(t *testing.T) {
 	u := User{
-		Username: "my-username@localhost",
+		Username: "my-username",
 		Password: "my-password",
 		Active:   false,
 	}
@@ -51,19 +52,37 @@ func TestUserIsNotActive(t *testing.T) {
 	assert.False(t, u.IsActive())
 }
 
-func TestUserUsernameIsNotEmail(t *testing.T) {
+func TestUserUsernameIsEmail(t *testing.T) {
 	u := User{
-		Username: "my-username",
+		Username: "my-username@localhost",
 		Password: "my-password",
 	}
 
-	require.ErrorIs(t, u.IsValid(), ErrUsernameInvalid)
+	require.NoError(t, u.IsValid())
 	assert.False(t, u.IsActive())
+}
+
+func TestUserUsernameIsNotValid(t *testing.T) {
+	for _, username := range []string{
+		"invalid-char-;",
+		"invalid-char-@",
+		"invalid-char-<script>",
+		"invalid-char space",
+	} {
+		u := User{
+			Username: username,
+			Password: "my-password",
+			Name:     "my-name",
+		}
+
+		require.ErrorIs(t, u.IsValid(), ErrUsernameInvalid)
+		assert.False(t, u.IsActive())
+	}
 }
 
 func TestUserUsernameIsTooLong(t *testing.T) {
 	u := User{
-		Username: "diezi6moo1oogo9kohth9Zu3aethahF4@localhost",
+		Username: "too-long-too-long-too-long-too-long-too-long-too-long-too-long-too-long",
 		Password: "my-password",
 	}
 

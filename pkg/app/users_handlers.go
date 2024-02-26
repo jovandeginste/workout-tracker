@@ -9,10 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-var (
-	ErrLoginFailed   = errors.New("username or password incorrect")
-	ErrInternalError = errors.New("something went wrong")
-)
+var ErrLoginFailed = errors.New("username or password incorrect")
 
 // userSigninHandler will be executed after SignInForm submission.
 func (a *App) userSigninHandler(c echo.Context) error {
@@ -21,12 +18,12 @@ func (a *App) userSigninHandler(c echo.Context) error {
 
 	// Parse the submitted data and fill the User struct with the data from the SignIn form.
 	if err := c.Bind(u); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	storedUser, err := database.GetUser(a.db, u.Username)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	if !storedUser.ValidLogin(c.FormValue("password")) {
@@ -48,7 +45,7 @@ func (a *App) userSignoutHandler(c echo.Context) error {
 	a.clearTokenCookie(c)
 
 	if err := a.sessionManager.Destroy(c.Request().Context()); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
@@ -61,18 +58,18 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 
 	// Parse the submitted data and fill the User struct with the data from the registration form.
 	if err := c.Bind(u); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	if err := u.SetPassword(c.FormValue("password")); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	u.Profile.TotalsShow = DefaultTotalsShow
 	u.Profile.Language = BrowserLanguage
 
 	if err := u.Create(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
 	a.setNotice(c, "Your account has been created, but needs to be activated.")

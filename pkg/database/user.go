@@ -2,7 +2,6 @@ package database
 
 import (
 	"errors"
-	"fmt"
 	"net/mail"
 
 	"github.com/cat-dealer/go-rand/v2"
@@ -20,7 +19,7 @@ const (
 var (
 	ErrPasswordInvalidLength = errors.New("password has invalid length")
 	ErrUsernameInvalidLength = errors.New("username has invalid length")
-	ErrUsernameInvalid       = errors.New("username is not a mail address")
+	ErrUsernameInvalid       = errors.New("username is not valid")
 )
 
 type User struct {
@@ -118,8 +117,12 @@ func (u *User) IsValid() error {
 		return ErrUsernameInvalidLength
 	}
 
+	// Validate whether the username is a valid complete email address,
+	// or a local part of a valid email address
 	if _, err := mail.ParseAddress(u.Username); err != nil {
-		return fmt.Errorf("%w: %s", ErrUsernameInvalid, err)
+		if _, err := mail.ParseAddress(u.Username + "@localhost"); err != nil {
+			return ErrUsernameInvalid
+		}
 	}
 
 	return nil
