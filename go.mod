@@ -27,6 +27,7 @@ require (
 	github.com/vorlif/spreak v0.6.0
 	golang.org/x/crypto v0.17.0
 	golang.org/x/text v0.14.0
+	gorm.io/driver/mysql v1.5.4
 	gorm.io/gorm v1.25.7
 )
 
@@ -34,6 +35,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

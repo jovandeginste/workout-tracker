@@ -28,6 +28,9 @@ github.com/glebarez/go-sqlite
 # github.com/glebarez/sqlite v1.10.0
 ## explicit; go 1.18
 github.com/glebarez/sqlite
+# github.com/go-sql-driver/mysql v1.7.0
+## explicit; go 1.13
+github.com/go-sql-driver/mysql
 # github.com/golang-jwt/jwt v3.2.2+incompatible
 ## explicit
 github.com/golang-jwt/jwt
@@ -259,6 +262,9 @@ gopkg.in/ini.v1
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
+# gorm.io/driver/mysql v1.5.4
+## explicit; go 1.14
+gorm.io/driver/mysql
 # gorm.io/gorm v1.25.7
 ## explicit; go 1.18
 gorm.io/gorm

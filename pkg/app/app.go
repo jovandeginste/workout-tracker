@@ -106,9 +106,9 @@ func (a *App) Configure() error {
 }
 
 func (a *App) ConfigureDatabase() error {
-	a.logger.Info("Connecting to the database: " + a.Config.DatabaseFile)
+	a.logger.Info("Connecting to the database '" + a.Config.DatabaseDriver + "': " + a.Config.DSN)
 
-	db, err := database.Connect(a.Config.DatabaseFile, a.Config.Debug, a.rawLogger)
+	db, err := database.Connect(a.Config.DatabaseDriver, a.Config.DSN, a.Config.Debug, a.rawLogger)
 	if err != nil {
 		return err
 	}
