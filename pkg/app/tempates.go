@@ -51,7 +51,6 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"humanizer": func() *humanize.Humanizer { return h },
 
 		"supportedLanguages": a.translator.SupportedLanguages,
-		"supportedThemes":    themes,
 		"workoutTypes":       database.WorkoutTypes,
 
 		"NumericDuration":         templatehelpers.NumericDuration,

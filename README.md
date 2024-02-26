@@ -197,9 +197,8 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 - write tests!!!!!
 - add support for authentication through a reverse proxy
 - provide a light theme
-- add more activity types
-- see if htmx is worth using
 - make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
 - add support for other types of import files (eg. Garmin fit files)
 - add support for auto-import from a folder (per user)
+- see if htmx is worth using

@@ -12,8 +12,6 @@ import (
 var (
 	BrowserLanguage = "browser"
 
-	BrowserTheme      = Theme{Name: "System default", Code: "browser", Icon: "🌐"}
-	DarkTheme         = Theme{Name: "Dark theme", Code: "dark", Icon: "🌑"}
 	DefaultTotalsShow = database.WorkoutTypeRunning
 )
 
@@ -28,19 +26,6 @@ func humanLocales() []*humanize.LocaleData {
 	return []*humanize.LocaleData{
 		nl.New(),
 	}
-}
-
-func themes() []Theme {
-	return []Theme{
-		BrowserTheme,
-		DarkTheme,
-	}
-}
-
-type Theme struct {
-	Code string
-	Icon string
-	Name string
 }
 
 func langFromContext(ctx echo.Context) []interface{} {

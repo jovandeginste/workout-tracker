@@ -1,8 +1,0 @@
-{{ define "user_profile_theme" }}{{ $userTheme := . }}
-<select id="theme" name="theme">
-  {{ range supportedThemes }} {{ $selected := "" }} {{ if eq .Code $userTheme }}
-  {{ $selected = "selected" }} {{ end }}
-  <option value="{{ .Code }}" {{ $selected }}>{{ .Icon }} {{ .Name }}</option>
-  {{ end }}
-</select>
-{{ end }}

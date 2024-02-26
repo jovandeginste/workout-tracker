@@ -68,7 +68,6 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), fmt.Errorf("%w: %s", ErrInternalError, err))
 	}
 
-	u.Profile.Theme = BrowserTheme.Code
 	u.Profile.TotalsShow = DefaultTotalsShow
 	u.Profile.Language = BrowserLanguage
 
