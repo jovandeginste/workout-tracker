@@ -188,9 +188,9 @@
   }
 
   .modal {
-    @apply hidden fixed inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4 z-[3000];
-    @apply bg-gray-100;
-    @apply dark:bg-gray-900;
+    @apply hidden fixed inset-0 overflow-y-auto h-full w-full px-4 z-[3000];
+    @apply bg-gray-100 bg-opacity-80;
+    @apply dark:bg-gray-900 dark:bg-opacity-60;
     .window {
       @apply relative top-40 mx-auto shadow-xl rounded-3xl max-w-md;
       @apply bg-neutral-100;

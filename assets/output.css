@@ -1191,14 +1191,14 @@ table {
   overflow-y: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.8;
 }
 
 @media (prefers-color-scheme: dark) {
   .modal {
-    --tw-bg-opacity: 1;
     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+    --tw-bg-opacity: 0.6;
   }
 }
 
