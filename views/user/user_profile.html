@@ -13,6 +13,17 @@
             <tbody>
               <tr>
                 <th>
+                  <label for="totals_show"
+                    >{{ i18n "Totals to show on dashboard" }}</label
+                  >
+                </th>
+                <td>
+                  {{ template "user_profile_totals_show" .userProfileTotalsShow
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <th>
                   <label for="theme">{{ i18n "Theme" }}</label>
                 </th>
                 <td>{{ template "user_profile_theme" .userProfileTheme }}</td>

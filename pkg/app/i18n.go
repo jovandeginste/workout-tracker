@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
@@ -9,10 +10,11 @@ import (
 )
 
 var (
-	DefaultLanguage = "browser"
+	BrowserLanguage = "browser"
 
-	DefaultTheme = Theme{Name: "System default", Code: "browser", Icon: "🌐"}
-	DarkTheme    = Theme{Name: "Dark theme", Code: "dark", Icon: "🌑"}
+	BrowserTheme      = Theme{Name: "System default", Code: "browser", Icon: "🌐"}
+	DarkTheme         = Theme{Name: "Dark theme", Code: "dark", Icon: "🌑"}
+	DefaultTotalsShow = database.WorkoutTypeRunning
 )
 
 func translations() []interface{} {
@@ -30,7 +32,7 @@ func humanLocales() []*humanize.LocaleData {
 
 func themes() []Theme {
 	return []Theme{
-		DefaultTheme,
+		BrowserTheme,
 		DarkTheme,
 	}
 }

@@ -76,9 +76,10 @@ func GetUser(db *gorm.DB, username string) (*User, error) {
 
 type Profile struct {
 	gorm.Model
-	UserID   int
-	Theme    string `form:"theme"`
-	Language string `form:"language"`
+	UserID     int
+	Theme      string      `form:"theme"`
+	Language   string      `form:"language"`
+	TotalsShow WorkoutType `form:"totals_show"`
 }
 
 func (p *Profile) Save(db *gorm.DB) error {

@@ -10,8 +10,8 @@
         {{ i18n "Dashboard for %s" .user.Name }}
       </h2>
 
-      {{ template "stats_records_total" (index .UserStatistics "running").Total
-      }}
+      {{ with (index .UserStatistics .userProfileTotalsShow.String) }} {{
+      template "stats_records_total" .Total }} {{ end }}
 
       <div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
         <div>
@@ -22,46 +22,7 @@
           </div>
           {{ end }} {{ end }}
         </div>
-        <div>
-          <div class="inner-form min-h-[450px]" id="calendar"></div>
-          <script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              var calendarEl = document.getElementById("calendar");
-              var calendar = new FullCalendar.Calendar(calendarEl, {
-                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                initialView: "dayGridMonth",
-                locale: Intl.DateTimeFormat().resolvedOptions().locale,
-                firstDay: 1,
-                aspectRatio: 2,
-                eventContent: function(arg) {
-                  let eventSpan = document.createElement('div')
-
-                  eventSpan.innerHTML = arg.event.title
-                  eventSpan.classList.add(
-                    "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
-                  )
-
-                  return { domNodes: [ eventSpan ] }
-                },
-                events: [
-                  {{ range .workouts }}
-                  {
-                    title: "{{ .Type.String }}",
-                    start: "{{ .Date | LocalDate }}",
-                    url: "/workouts/{{ .ID }}",
-                    display: 'block',
-                    extendedProps: {
-                      iconClass: "{{ IconFor .Type.String }}",
-                    },
-                  },
-                  {{ end }}
-                ],
-              });
-              calendar.render();
-            });
-          </script>
-        </div>
+        <div>{{ template "user_profile_calendar" . }}</div>
       </div>
       {{ if .users }}
       <div class="inner-form">

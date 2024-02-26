@@ -30,8 +30,9 @@ func (a *App) setUser(c echo.Context) error {
 	}
 
 	c.Set("user_info", dbUser)
-	c.Set("user_theme", dbUser.Profile.Theme)
 	c.Set("user_language", dbUser.Profile.Language)
+	c.Set("user_theme", dbUser.Profile.Theme)
+	c.Set("user_totals_show", dbUser.Profile.TotalsShow)
 
 	return nil
 }
@@ -70,6 +71,7 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 	data["currentUser"] = u
 	data["userProfileLanguage"] = u.Profile.Language
 	data["userProfileTheme"] = u.Profile.Theme
+	data["userProfileTotalsShow"] = u.Profile.TotalsShow
 }
 
 func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {

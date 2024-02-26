@@ -47,7 +47,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 	return template.FuncMap{
 		"i18n":      echoFunc,
-		"language":  func() string { return DefaultLanguage },
+		"language":  func() string { return BrowserLanguage },
 		"humanizer": func() *humanize.Humanizer { return h },
 
 		"supportedLanguages": a.translator.SupportedLanguages,

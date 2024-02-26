@@ -1,0 +1,40 @@
+{{ define "user_profile_calendar" }}
+<div class="inner-form min-h-[450px]" id="calendar"></div>
+<script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      initialView: "dayGridMonth",
+      locale: Intl.DateTimeFormat().resolvedOptions().locale,
+      firstDay: 1,
+      aspectRatio: 2,
+      eventContent: function(arg) {
+        let eventSpan = document.createElement('div')
+
+        eventSpan.innerHTML = arg.event.title
+        eventSpan.classList.add(
+          "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
+        )
+
+        return { domNodes: [ eventSpan ] }
+      },
+      events: [
+        {{ range .workouts }}
+        {
+          title: "{{ .Type.String }}",
+          start: "{{ .Date | LocalDate }}",
+          url: "/workouts/{{ .ID }}",
+          display: 'block',
+          extendedProps: {
+            iconClass: "{{ IconFor .Type.String }}",
+          },
+        },
+        {{ end }}
+      ],
+    });
+    calendar.render();
+  });
+</script>
+{{ end }}

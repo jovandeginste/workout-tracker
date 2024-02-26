@@ -1,0 +1,8 @@
+{{ define "user_profile_totals_show" }}{{ $userTotalsShow := . }}
+<select id="totals_show" name="totals_show">
+  {{ range workoutTypes }} {{ if .IsDistance }} {{ $selected := "" }} {{ if eq
+  .String $userTotalsShow }} {{ $selected = "selected" }} {{ end }}
+  <option value="{{ .String }}" {{ $selected }}>{{ i18n .String }}</option>
+  {{ end }} {{ end }}
+</select>
+{{ end }}
