@@ -8,6 +8,7 @@ function on_loaded() {
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    className: "map-tiles",
   }).addTo(map);
   L.control.scale().addTo(map);
 

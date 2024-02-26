@@ -30,9 +30,7 @@
 
         <div class="sm:flex sm:flex-wrap gap-5">
           {{ range .users }} {{ if ne .ID $.user.ID }}
-          <span
-            class="inline-block rounded-full my-3 m-2 min-w-[150px] py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500 text-center"
-          >
+          <span class="user-pill">
             <a href="{{ RouteFor `user-show` .ID }}">{{ .Name }}</a>
           </span>
           {{ end }} {{ end }}

@@ -196,7 +196,6 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
 
 - write tests!!!!!
 - add support for authentication through a reverse proxy
-- provide a light theme
 - make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
 - add support for other types of import files (eg. Garmin fit files)

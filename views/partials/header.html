@@ -1,8 +1,6 @@
 {{ define "header" }}
 <div class="menu sm:flex sm:flex-wrap gap-4">
-  <h1
-    class="text-xl sm:text-3xl text-white border-neutral-500 border-b-2 sm:border-b-0 mb-3 sm:mb-0 pb-3 sm:pb-0"
-  >
+  <h1>
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
   {{ if .currentUser }} {{ with .currentUser }}

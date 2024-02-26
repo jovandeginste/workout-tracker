@@ -1,8 +1,6 @@
 {{ define "workout_item" }}
 <div class="sm:w-[300px] p-1">
-  <div
-    class="rounded-xl py-2 px-5 bg-neutral-700 hover:bg-neutral-600 border border-neutral-500"
-  >
+  <div class="workout-item">
     <div class="flex flex-wrap gap-2">
       <div class="grow">
         <a
@@ -20,7 +18,7 @@
         >
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-4 text-sm text-neutral-400 mb-2">
+    <div class="meta grid grid-cols-2 gap-4 text-sm mb-2">
       <div>
         <span title="{{ .Date | LocalDate }}">
           {{ .Date | RelativeDate }}
