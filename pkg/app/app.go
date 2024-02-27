@@ -151,7 +151,7 @@ func NewApp(version Version) *App {
 
 func (a *App) createAdminUser() error {
 	u := &database.User{
-		Username: "admin@localhost",
+		Username: "admin",
 		Name:     "Administrator",
 		Active:   true,
 		Admin:    true,
