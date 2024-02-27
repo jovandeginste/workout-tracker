@@ -3,15 +3,15 @@ Javascript string. I hope to find a better solution than this... #} {{- define
 "workout_point_title" -}}
 <ol>
   {{- "" -}}
-  <li><b>Time:</b> {{ .Time.Format "15:04" }}</li>
+  <li><b>{{ i18n "Time" }}:</b> {{ .Time.Format "15:04" }}</li>
   {{- "" -}}
-  <li><b>Distance:</b> {{ .TotalDistance | HumanDistance }}</li>
+  <li><b>{{ i18n "Distance" }}:</b> {{ .TotalDistance | HumanDistance }}</li>
   {{- "" -}}
-  <li><b>Duration:</b> {{ .TotalDuration | HumanDuration }}</li>
+  <li><b>{{ i18n "Duration" }}:</b> {{ .TotalDuration | HumanDuration }}</li>
   {{- "" -}}
-  <li><b>Speed:</b> {{ .AverageSpeed | HumanSpeed }}</li>
+  <li><b>{{ i18n "Speed" }}:</b> {{ .AverageSpeed | HumanSpeed }}</li>
   {{- "" -}}
-  <li><b>Elevation:</b> {{ .Elevation | HumanDistance }}</li>
+  <li><b>{{ i18n "Elevation" }}:</b> {{ .Elevation | HumanDistance }}</li>
   {{- "" -}}
 </ol>
 {{- end -}}

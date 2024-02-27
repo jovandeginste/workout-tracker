@@ -4,6 +4,8 @@
     {{ template "head" }}
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
+    <script src="{{ RouteFor `assets` }}/dist/chart.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   </head>
   <body>
     {{ template "header" . }}
@@ -59,7 +61,111 @@
         <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
         <div>{{ .Notes }}</div>
       </div>
-      {{ end }} {{ end }}
+      {{ end }}
+      <div class="sm:flex sm:flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <h3 class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</h3>
+            <canvas id="speed-chart"></canvas>
+          </div>
+        </div>
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <h3 class="{{ IconFor `elevation` }}">{{ i18n "Elevation" }}</h3>
+            <canvas id="elevation-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        let xAxisScale = {
+          type: "time",
+          time: {
+            unit: "minute",
+            tooltipFormat: "HH:mm",
+            displayFormats: {
+              minute: "HH:mm",
+            },
+          },
+        };
+      </script>
+
+      <script>
+        new Chart(document.getElementById("speed-chart"), {
+          type: "line",
+          data: {
+            datasets: [{
+              label: "{{ i18n `Average speed` }}",
+              data: [
+                {{ $min := 10000.0 }}
+                {{ range .Data.Points }}
+                {{ if gt $min .AverageSpeed }}{{ $min = .AverageSpeed }}{{ end }}
+                { "x": {{ .Time }}, "y": 3.6 * {{ .AverageSpeed }}, },
+                {{ end  }}
+              ],
+            }],
+          },
+          options: {
+            scales: {
+              x: xAxisScale,
+              y: {
+                min: Math.floor(3.6 * {{ $min }}),
+                ticks: {
+                  callback: function (value) {
+                    return (
+                      value.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      }) + " km/h"
+                    );
+                  },
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    let label = context.dataset.label || "";
+
+                    if (label) {
+                      label += ": ";
+                    }
+                    if (context.parsed.y !== null) {
+                      label +=
+                        context.parsed.y.toLocaleString(undefined, {
+                          maximumFractionDigits: 2,
+                        }) + " km/h";
+                    }
+                    return label;
+                  },
+                },
+              },
+            },
+          },
+        });
+        new Chart(document.getElementById("elevation-chart"), {
+          type: "line",
+          data: {
+            datasets: [{
+              label: "{{ i18n `Elevation` }}",
+              data: [
+                {{ range .Data.Points }}
+                { "x": {{ .Time }}, "y": {{ .Elevation }}, },
+                {{ end  }}
+              ],
+            }],
+          },
+          options: { scales: {
+            x: xAxisScale,
+            y: {
+              min: Math.floor(minElevation),
+              max: Math.ceil(maxElevation),
+            },
+          } },
+        });
+      </script>
+
+      {{ end }}
     </div>
 
     {{ template "footer" . }}
