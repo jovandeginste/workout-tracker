@@ -1,28 +1,15 @@
 package app
 
 import (
-	"embed"
 	"log/slog"
 	"testing"
 
 	"github.com/fsouza/slognil"
-	"github.com/labstack/echo/v4"
+	appassets "github.com/jovandeginste/workout-tracker/assets"
+	apptranslations "github.com/jovandeginste/workout-tracker/translations"
+	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-)
-
-var (
-	//go:embed test_assets/*
-	assetsFS embed.FS
-	AssetsFS = echo.MustSubFS(assetsFS, "assets")
-
-	//go:embed test_views/*
-	viewsFS embed.FS
-	ViewsFS = echo.MustSubFS(viewsFS, "views")
-
-	//go:embed test_translations/*
-	translationsFS embed.FS
-	TranslationsFS = echo.MustSubFS(translationsFS, "translations")
 )
 
 func defaultApp(t *testing.T) *App {
@@ -30,9 +17,9 @@ func defaultApp(t *testing.T) *App {
 
 	a := NewApp(Version{RefName: "test"})
 
-	a.Assets = AssetsFS
-	a.Views = ViewsFS
-	a.Translations = TranslationsFS
+	a.Assets = appassets.FS()
+	a.Views = appviews.FS()
+	a.Translations = apptranslations.FS()
 
 	return a
 }

@@ -1,26 +1,15 @@
 package main
 
 import (
-	"embed"
 	"time"
 
+	appassets "github.com/jovandeginste/workout-tracker/assets"
 	"github.com/jovandeginste/workout-tracker/pkg/app"
-	"github.com/labstack/echo/v4"
+	apptranslations "github.com/jovandeginste/workout-tracker/translations"
+	appviews "github.com/jovandeginste/workout-tracker/views"
 )
 
 var (
-	//go:embed assets/*
-	assets   embed.FS
-	AssetsFS = echo.MustSubFS(assets, "assets")
-
-	//go:embed views/*
-	views   embed.FS
-	ViewsFS = echo.MustSubFS(views, "views")
-
-	//go:embed translations/*
-	translations   embed.FS
-	TranslationsFS = echo.MustSubFS(translations, "translations")
-
 	gitRef     = "0.0.0-dev"
 	gitRefName = "local"
 	gitRefType = "local"
@@ -36,9 +25,9 @@ func main() {
 		RefType:   gitRefType,
 		Sha:       gitCommit,
 	})
-	a.Assets = AssetsFS
-	a.Views = ViewsFS
-	a.Translations = TranslationsFS
+	a.Assets = appassets.FS()
+	a.Views = appviews.FS()
+	a.Translations = apptranslations.FS()
 
 	if err := a.Configure(); err != nil {
 		panic(err)

@@ -73,6 +73,10 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 }
 
 func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
+	if u == nil {
+		return nil
+	}
+
 	w, err := u.GetWorkouts(a.db)
 	if err != nil {
 		return err
@@ -106,6 +110,10 @@ func (a *App) addUsers(data map[string]interface{}) error {
 }
 
 func (a *App) addUserStatistics(u *database.User, data map[string]interface{}) error {
+	if u == nil {
+		return nil
+	}
+
 	us, err := u.Statistics(a.db)
 	if err != nil {
 		return err

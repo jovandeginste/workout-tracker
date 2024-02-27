@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"io/fs"
@@ -93,7 +94,7 @@ func (a *App) parseViewTemplates() *template.Template {
 
 		if strings.HasSuffix(path, ".html") {
 			if _, myErr := templ.ParseFS(a.Views, path); err != nil {
-				log.Warn(myErr)
+				a.logger.Warn(fmt.Sprintf("Error loading template: %v", myErr))
 				return myErr
 			}
 		}
@@ -101,7 +102,8 @@ func (a *App) parseViewTemplates() *template.Template {
 		return err
 	})
 	if err != nil {
-		log.Warn(err)
+		a.logger.Warn(fmt.Sprintf("Error loading template: %v", err))
+		log.Warn(fmt.Sprintf("Error loading template: %v", err))
 	}
 
 	return templ
