@@ -261,7 +261,7 @@ func TestDatabaseProfileSave(t *testing.T) {
 
 func TestDatabaseUserWorkouts(t *testing.T) {
 	db := createMemoryDB(t)
-	populateGPXFS(t)
+	populateGPXFS()
 
 	u := defaultUser()
 	require.NoError(t, u.Create(db))
