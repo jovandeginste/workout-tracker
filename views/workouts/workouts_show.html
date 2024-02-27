@@ -97,11 +97,18 @@
             datasets: [{
               label: "{{ i18n `Average speed` }}",
               data: [
-                {{ $min := 10000.0 }}
-                {{ range .Data.Points }}
-                {{ if gt $min .AverageSpeed }}{{ $min = .AverageSpeed }}{{ end }}
-                { "x": {{ .Time }}, "y": 3.6 * {{ .AverageSpeed }}, },
-                {{ end  }}
+                {{ $minSpeed := 10000.0 }}
+                {{ $maxSpeed := (index .Data.Points 0).AverageSpeed }}
+                {{ $minute := (index .Data.Points 0).Time.Minute }}
+                {{ range .Data.Points -}}
+                  {{ if gt $minSpeed .AverageSpeed }}{{ $minSpeed = .AverageSpeed }}{{ end }}
+                  {{- if ne (.Time.Minute) $minute -}}
+                    { "x": {{ .Time }}, "y": 3.6 * {{ $maxSpeed }}, },
+                    {{- $maxSpeed = .AverageSpeed -}}
+                    {{- $minute = .Time.Minute -}}
+                  {{- end -}}
+                  {{- if gt .AverageSpeed $maxSpeed }}{{ $maxSpeed = .AverageSpeed }}{{ end -}}
+                {{- end  }}
               ],
             }],
           },
@@ -109,7 +116,7 @@
             scales: {
               x: xAxisScale,
               y: {
-                min: Math.floor(3.6 * {{ $min }}),
+                min: Math.floor(3.6 * {{ $minSpeed }}),
                 ticks: {
                   callback: function (value) {
                     return (
@@ -149,9 +156,16 @@
             datasets: [{
               label: "{{ i18n `Elevation` }}",
               data: [
-                {{ range .Data.Points }}
-                { "x": {{ .Time }}, "y": {{ .Elevation }}, },
-                {{ end  }}
+                {{ $maxElevation := (index .Data.Points 0).Elevation }}
+                {{ $minute := (index .Data.Points 0).Time.Minute }}
+                {{ range .Data.Points -}}
+                  {{- if ne (.Time.Minute) $minute -}}
+                    { "x": {{ .Time }}, "y": {{ $maxElevation }}, },
+                    {{- $maxElevation = .Elevation -}}
+                    {{- $minute = .Time.Minute -}}
+                  {{- end -}}
+                  {{- if gt .Elevation $maxElevation }}{{ $maxElevation = .Elevation }}{{ end -}}
+                {{- end  }}
               ],
             }],
           },
