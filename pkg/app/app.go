@@ -10,11 +10,11 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/cat-dealer/go-rand/v2"
+	"github.com/fsouza/slognil"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"
-	"golang.org/x/text/language"
 	"gorm.io/gorm"
 
 	"github.com/vorlif/spreak"
@@ -55,28 +55,6 @@ func (a *App) jwtSecret() []byte {
 	return []byte(a.Config.JWTEncryptionKey)
 }
 
-func (a *App) ConfigureLocalizer() error {
-	bundle, err := spreak.NewBundle(
-		// Set the language used in the program code/templates
-		spreak.WithSourceLanguage(language.English),
-		// Set the path from which the translations should be loaded
-		spreak.WithDomainFs(spreak.NoDomain, a.Translations),
-		// Specify the languages you want to load
-		spreak.WithLanguage(translations()...),
-	)
-	if err != nil {
-		return err
-	}
-
-	a.translator = bundle
-
-	a.humanizer = humanize.MustNew(
-		humanize.WithLocale(humanLocales()...),
-	)
-
-	return nil
-}
-
 func (a *App) Serve() error {
 	go a.BackgroundWorker()
 
@@ -89,6 +67,8 @@ func (a *App) Configure() error {
 	if err := a.ReadConfiguration(); err != nil {
 		return err
 	}
+
+	a.ConfigureLogger()
 
 	if err := a.ConfigureLocalizer(); err != nil {
 		return err
@@ -131,7 +111,15 @@ func (a *App) ConfigureDatabase() error {
 	return a.createAdminUser()
 }
 
-func newLogger() slog.Handler {
+func newLogger(enabled bool) *slog.Logger {
+	if !enabled {
+		return slognil.NewLogger()
+	}
+
+	return slog.New(newLogHandler())
+}
+
+func newLogHandler() slog.Handler {
 	w := os.Stdout
 	if isatty.IsTerminal(w.Fd()) {
 		return tint.NewHandler(os.Stdout, &tint.Options{
@@ -143,17 +131,22 @@ func newLogger() slog.Handler {
 	return slog.NewJSONHandler(w, nil)
 }
 
+func (a *App) ConfigureLogger() {
+	logger := newLogger(a.Config.Logging).
+		With("app", "workout-tracker").
+		With("version", a.Version.RefName).
+		With("sha", a.Version.Sha)
+
+	a.rawLogger = logger
+	a.logger = logger.With("module", "app")
+}
+
 func NewApp(version Version) *App {
-	logger := slog.New(newLogger()).
-		With("app", "workout-tracker", "version", version.RefName, "sha", version.Sha)
-
-	a := &App{
-		rawLogger: logger,
-		logger:    logger.With("module", "app"),
+	return &App{
 		Version:   version,
+		logger:    newLogger(false),
+		rawLogger: newLogger(false),
 	}
-
-	return a
 }
 
 func (a *App) createAdminUser() error {

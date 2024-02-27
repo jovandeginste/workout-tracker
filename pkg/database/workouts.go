@@ -3,39 +3,13 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
-	"slices"
 	"time"
 
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 )
 
-type WorkoutType string
-
-const (
-	WorkoutTypeAutoDetect WorkoutType = "auto"
-	WorkoutTypeRunning    WorkoutType = "running"
-	WorkoutTypeCycling    WorkoutType = "cycling"
-	WorkoutTypeWalking    WorkoutType = "walking"
-)
-
 var ErrInvalidGPXData = errors.New("invalid gpx data")
-
-func WorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking}
-}
-
-func DistanceWorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking}
-}
-
-func (wt WorkoutType) String() string {
-	return string(wt)
-}
-
-func (wt WorkoutType) IsDistance() bool {
-	return slices.Contains(DistanceWorkoutTypes(), wt)
-}
 
 type Workout struct {
 	gorm.Model
@@ -142,7 +116,7 @@ func (w *Workout) AsGPX() (*gpx.GPX, error) {
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
-	gpxContent, err := parseGPX(w.GPXData)
+	gpxContent, err := w.AsGPX()
 	if err != nil {
 		return err
 	}

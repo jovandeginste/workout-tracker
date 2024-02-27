@@ -7,6 +7,7 @@ import (
 type Config struct {
 	Bind             string `mapstructure:"bind"`
 	JWTEncryptionKey string `mapstructure:"jwt_encryption_key"`
+	Logging          bool   `mapstructure:"logging"`
 	Debug            bool   `mapstructure:"debug"`
 	DatabaseDriver   string `mapstructure:"database_driver"`
 	DSN              string `mapstructure:"dsn"`
@@ -18,6 +19,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetEnvPrefix("WT")
 
 	viper.SetDefault("bind", "[::]:8080")
+	viper.SetDefault("logging", "true")
 	viper.SetDefault("debug", "false")
 	viper.SetDefault("database_driver", "sqlite")
 	viper.SetDefault("dsn", "./database.db")
@@ -25,6 +27,7 @@ func (a *App) ReadConfiguration() error {
 	for _, envVar := range []string{
 		"bind",
 		"jwt_encryption_key",
+		"logging",
 		"debug",
 		"database_driver",
 		"dsn",

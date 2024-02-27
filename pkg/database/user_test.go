@@ -17,6 +17,16 @@ func defaultUser() *User {
 	}
 }
 
+func dummyMapData() *MapData {
+	return dummyMapDataWithName("dummy map data")
+}
+
+func dummyMapDataWithName(name string) *MapData {
+	return &MapData{
+		Name: name,
+	}
+}
+
 func createMemoryDB(t *testing.T) *gorm.DB {
 	db, err := Connect("memory", "", false, slognil.NewLogger())
 	require.NoError(t, err)
@@ -28,7 +38,7 @@ func createDefaultUser(t *testing.T, db *gorm.DB) {
 	require.NoError(t, defaultUser().Create(db))
 }
 
-func TestUserIsValid(t *testing.T) {
+func TestUser_IsValid(t *testing.T) {
 	u := defaultUser()
 	u.Active = true
 
@@ -36,7 +46,7 @@ func TestUserIsValid(t *testing.T) {
 	assert.True(t, u.IsActive())
 }
 
-func TestUserPasswordIsValid(t *testing.T) {
+func TestUser_PasswordIsValid(t *testing.T) {
 	pwd := "my-password"
 	u := defaultUser()
 	u.Active = true
@@ -57,7 +67,7 @@ func TestUserPasswordIsValid(t *testing.T) {
 	assert.False(t, u.ValidLogin(pwd+pwd))
 }
 
-func TestUserIsNotActive(t *testing.T) {
+func TestUser_IsNotActive(t *testing.T) {
 	u := User{
 		Username: "my-username",
 		Password: "my-password",
@@ -68,7 +78,7 @@ func TestUserIsNotActive(t *testing.T) {
 	assert.False(t, u.IsActive())
 }
 
-func TestUserUsernameIsEmail(t *testing.T) {
+func TestUser_UsernameIsEmail(t *testing.T) {
 	u := User{
 		Username: "my-username@localhost",
 		Password: "my-password",
@@ -78,7 +88,7 @@ func TestUserUsernameIsEmail(t *testing.T) {
 	assert.False(t, u.IsActive())
 }
 
-func TestUserUsernameIsNotValid(t *testing.T) {
+func TestUser_UsernameIsNotValid(t *testing.T) {
 	for _, username := range []string{
 		"invalid-char-;",
 		"invalid-char-@",
@@ -96,7 +106,7 @@ func TestUserUsernameIsNotValid(t *testing.T) {
 	}
 }
 
-func TestUserUsernameIsTooLong(t *testing.T) {
+func TestUser_UsernameIsTooLong(t *testing.T) {
 	u := User{
 		Username: "too-long-too-long-too-long-too-long-too-long-too-long-too-long-too-long",
 		Password: "my-password",
@@ -106,7 +116,7 @@ func TestUserUsernameIsTooLong(t *testing.T) {
 	assert.False(t, u.IsActive())
 }
 
-func TestUserPasswordNotSet(t *testing.T) {
+func TestUser_PasswordNotSet(t *testing.T) {
 	u := User{
 		Username: "username",
 		Password: "",
@@ -116,7 +126,7 @@ func TestUserPasswordNotSet(t *testing.T) {
 	assert.False(t, u.IsActive())
 }
 
-func TestDatabaseUserBeforeCreateNoPassword(t *testing.T) {
+func TestUser_BeforeCreateNoPassword(t *testing.T) {
 	db := createMemoryDB(t)
 	u := &User{
 		Username: "username",

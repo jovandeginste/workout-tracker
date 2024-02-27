@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIconForDefault(t *testing.T) {
+func TestIconFor_Default(t *testing.T) {
 	for _, dummy := range []string{
 		"",
 		"invalid-value-to-get-icon",
@@ -21,7 +21,7 @@ func TestIconForDefault(t *testing.T) {
 	}
 }
 
-func TestIconFor(t *testing.T) {
+func TestIconFor_Types(t *testing.T) {
 	assert.Contains(t, IconFor("distance"), "icon-road")
 	assert.Contains(t, IconFor("close"), "icon-xmark")
 	assert.Contains(t, IconFor("dashboard"), "icon-chart-line")

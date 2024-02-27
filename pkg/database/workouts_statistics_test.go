@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCalcultateSpeed(t *testing.T) {
+func TestStatisticsItem_CalcultateSpeed(t *testing.T) {
 	si := &StatisticsItem{
 		Distance: 1000,
 		Duration: 60 * time.Second,
@@ -19,7 +19,7 @@ func TestCalcultateSpeed(t *testing.T) {
 	assert.InDelta(t, 16.67, si.Speed, 0.01)
 }
 
-func TestCanHave(t *testing.T) {
+func TestStatisticsItem_CanHave(t *testing.T) {
 	si := &StatisticsItem{
 		TotalDistance: 1800,
 		Kilometer:     2,
@@ -31,7 +31,7 @@ func TestCanHave(t *testing.T) {
 	assert.False(t, si.CanHave(203))
 }
 
-func TestStatisticsPerKilometer(t *testing.T) {
+func TestStatisticsItem_StatisticsPerKilometer(t *testing.T) {
 	w := defaultWorkout(t)
 	assert.NotNil(t, w)
 

@@ -9,11 +9,40 @@ import (
 	"golang.org/x/text/language"
 )
 
-var (
-	BrowserLanguage = "browser"
-
+const (
+	BrowserLanguage   = "browser"
 	DefaultTotalsShow = database.WorkoutTypeRunning
 )
+
+func (a *App) ConfigureLocalizer() error {
+	var domain spreak.FsOption
+
+	if a.Translations != nil {
+		domain = spreak.WithFs(a.Translations)
+	} else {
+		domain = spreak.WithPath(".")
+	}
+
+	bundle, err := spreak.NewBundle(
+		// Set the language used in the program code/templates
+		spreak.WithSourceLanguage(language.English),
+		// Set the path from which the translations should be loaded
+		spreak.WithFilesystemLoader(spreak.NoDomain, domain),
+		// Specify the languages you want to load
+		spreak.WithLanguage(translations()...),
+	)
+	if err != nil {
+		return err
+	}
+
+	a.translator = bundle
+
+	a.humanizer = humanize.MustNew(
+		humanize.WithLocale(humanLocales()...),
+	)
+
+	return nil
+}
 
 func translations() []interface{} {
 	return []interface{}{

@@ -82,9 +82,12 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 func (a *App) parseViewTemplates() *template.Template {
 	templ := template.New("").Funcs(a.viewTemplateFunctions())
+	if a.Views == nil {
+		return templ
+	}
 
 	err := fs.WalkDir(a.Views, ".", func(path string, d fs.DirEntry, err error) error {
-		if d.IsDir() {
+		if d != nil && d.IsDir() {
 			return err
 		}
 

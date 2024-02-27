@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGorm(t *testing.T) {
+func TestGorm_Connect(t *testing.T) {
 	db, err := Connect("memory", "", false, slog.Default())
 	require.NoError(t, err)
 	assert.NotNil(t, db)

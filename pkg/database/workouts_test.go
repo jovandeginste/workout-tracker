@@ -24,7 +24,7 @@ func defaultWorkout(t *testing.T) *Workout {
 	return w
 }
 
-func TestParseWorkoutWithType(t *testing.T) {
+func TestWorkout_ParseWithType(t *testing.T) {
 	u := defaultUser()
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)
@@ -42,7 +42,7 @@ func TestParseWorkoutWithType(t *testing.T) {
 	assert.Equal(t, WorkoutTypeWalking, w.Type)
 }
 
-func TestParseWorkout(t *testing.T) {
+func TestWorkout_Parse(t *testing.T) {
 	w := defaultWorkout(t)
 
 	assert.NotNil(t, w)
@@ -55,4 +55,39 @@ func TestParseWorkout(t *testing.T) {
 	assert.Equal(t, "Untitled", w.Name)
 	assert.Equal(t, "US", w.Data.Address.CountryCode)
 	assert.Equal(t, "Washington", w.Data.Address.City)
+}
+
+func TestWorkout_UpdateData(t *testing.T) {
+	db := createMemoryDB(t)
+	w := defaultWorkout(t)
+
+	require.NoError(t, w.Save(db))
+
+	ud := w.UpdatedAt
+	d := w.Data
+
+	w.Data = dummyMapData()
+	require.NoError(t, w.Save(db))
+
+	assert.NotEqual(t, d, w.Data)
+	assert.NotEqual(t, ud, w.UpdatedAt)
+	ud = w.UpdatedAt
+
+	require.NoError(t, w.UpdateData(db))
+	assert.Equal(t, d, w.Data)
+	assert.NotEqual(t, ud, w.UpdatedAt)
+}
+
+func TestWorkout_SaveAndGet(t *testing.T) {
+	db := createMemoryDB(t)
+	w := defaultWorkout(t)
+
+	assert.Zero(t, w.UpdatedAt)
+	require.NoError(t, w.Save(db))
+	assert.NotZero(t, w.UpdatedAt)
+
+	newW, err := GetWorkout(db, int(w.ID))
+	require.NoError(t, err)
+	assert.Equal(t, w.ID, newW.ID)
+	assert.Equal(t, w.Data, newW.Data)
 }
