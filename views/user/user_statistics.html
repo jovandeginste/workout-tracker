@@ -107,7 +107,11 @@
           y: {
             ticks: {
               callback: function (value) {
-                return formatDuration(value);
+                return (
+                  value.toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  }) + " km"
+                );
               },
             },
           },
