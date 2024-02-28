@@ -174,7 +174,7 @@ func (a *App) BackgroundWorker() {
 
 		var wID []int
 
-		q := a.db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(10).Pluck("ID", &wID)
+		q := a.db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(1000).Pluck("ID", &wID)
 		if err := q.Error; err != nil {
 			l.Error("Worker error: " + err.Error())
 		}
