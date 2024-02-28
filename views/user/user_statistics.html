@@ -251,7 +251,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} / {{ $mv.Workouts }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} },
                   {{ end -}}
                   {{- end }}
                 ],
@@ -274,7 +274,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} / {{ $mv.Workouts }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} },
                   {{ end -}}
                   {{- end }}
                 ],
@@ -297,7 +297,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} / {{ $mv.Workouts }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} },
                   {{ end -}}
                   {{- end }}
                 ],
