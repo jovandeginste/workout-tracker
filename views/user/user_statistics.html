@@ -251,7 +251,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeed }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedKPH }} },
                   {{ end -}}
                   {{- end }}
                 ],
@@ -274,7 +274,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.AverageSpeedNoPause }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedNoPauseKPH }} },
                   {{ end -}}
                   {{- end }}
                 ],
@@ -297,7 +297,7 @@
                 data: [
                   {{ range $y, $yv := $stats.PerMonth -}}
                   {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: 3.6 * {{ $mv.MaxSpeed }} },
+                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.MaxSpeedKPH }} },
                   {{ end -}}
                   {{- end }}
                 ],

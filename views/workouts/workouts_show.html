@@ -98,7 +98,7 @@
               label: "{{ i18n `Average speed` }}",
               data: [
                 {{ range $.workoutStatisticsPerMin -}}
-                  { "x": {{ .FirstPoint.Time }}, "y": 3.6 * {{ .Speed }}, },
+                  { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
                 {{- end  }}
               ],
             }],

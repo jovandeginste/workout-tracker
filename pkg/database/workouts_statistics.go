@@ -18,6 +18,10 @@ type StatisticsItem struct {
 	IsWorst       bool
 }
 
+func (si *StatisticsItem) SpeedKPH() float64 {
+	return 3.6 * si.Speed
+}
+
 func (si *StatisticsItem) createNext(fp *MapPoint) StatisticsItem {
 	return StatisticsItem{
 		Unit:          si.Unit,

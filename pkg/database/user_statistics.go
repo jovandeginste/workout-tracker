@@ -50,6 +50,18 @@ type (
 	}
 )
 
+func (t *Totals) AverageSpeedKPH() float64 {
+	return 3.6 * t.AverageSpeed
+}
+
+func (t *Totals) AverageSpeedNoPauseKPH() float64 {
+	return 3.6 * t.AverageSpeedNoPause
+}
+
+func (t *Totals) MaxSpeedKPH() float64 {
+	return 3.6 * t.MaxSpeed
+}
+
 func NewWorkoutStatistic(t WorkoutType) *WorkoutStatistic {
 	return &WorkoutStatistic{
 		WorkoutType: t,
