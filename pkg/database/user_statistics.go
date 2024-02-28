@@ -98,14 +98,23 @@ func NewTotal(t WorkoutType, d *MapData) *Totals {
 	}
 }
 
+func calcNewAvg(oldValue, newValue float64, newCounter int) float64 {
+	c := float64(newCounter)
+	return ((oldValue * (c - 1)) + newValue) / c
+}
+
 func (t *Totals) Add(d *MapData) {
 	t.Workouts++
 	t.Distance += d.TotalDistance
 	t.Duration += d.TotalDuration
 	t.Up += d.TotalUp
-	t.AverageSpeed += d.AverageSpeed()
-	t.AverageSpeedNoPause += d.AverageSpeedNoPause()
-	t.MaxSpeed += d.MaxSpeed
+
+	t.AverageSpeed = calcNewAvg(t.AverageSpeed, d.AverageSpeed(), t.Workouts)
+	t.AverageSpeedNoPause = calcNewAvg(t.AverageSpeedNoPause, d.AverageSpeedNoPause(), t.Workouts)
+
+	if d.MaxSpeed > t.MaxSpeed {
+		t.MaxSpeed = d.MaxSpeed
+	}
 }
 
 func (us *WorkoutStatistic) AddMonth(t WorkoutType, year, month int, w *Workout) {
@@ -163,35 +172,11 @@ func (u *User) Statistics(db *gorm.DB) (WorkoutStatistics, error) {
 }
 
 func (wr *WorkoutRecord) CheckAndSwap(w *Workout) {
-	wr.AverageSpeedNoPause.CheckAndSwap(
-		w.Data.AverageSpeedNoPause(),
-		w.ID,
-		w.Date,
-	)
-
-	wr.AverageSpeed.CheckAndSwap(
-		w.Data.AverageSpeed(),
-		w.ID,
-		w.Date,
-	)
-
-	wr.MaxSpeed.CheckAndSwap(
-		w.Data.MaxSpeed,
-		w.ID,
-		w.Date,
-	)
-
-	wr.Distance.CheckAndSwap(
-		w.Data.TotalDistance,
-		w.ID,
-		w.Date,
-	)
-
-	wr.TotalUp.CheckAndSwap(
-		w.Data.TotalUp,
-		w.ID,
-		w.Date,
-	)
+	wr.AverageSpeedNoPause.CheckAndSwap(w.Data.AverageSpeedNoPause(), w.ID, w.Date)
+	wr.AverageSpeed.CheckAndSwap(w.Data.AverageSpeed(), w.ID, w.Date)
+	wr.MaxSpeed.CheckAndSwap(w.Data.MaxSpeed, w.ID, w.Date)
+	wr.Distance.CheckAndSwap(w.Data.TotalDistance, w.ID, w.Date)
+	wr.TotalUp.CheckAndSwap(w.Data.TotalUp, w.ID, w.Date)
 
 	if w.Data.TotalDuration > wr.Duration.Value {
 		wr.Duration.Value = w.Data.TotalDuration

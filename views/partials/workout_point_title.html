@@ -3,7 +3,7 @@ Javascript string. I hope to find a better solution than this... #} {{- define
 "workout_point_title" -}}
 <ol>
   {{- "" -}}
-  <li><b>{{ i18n "Time" }}:</b> {{ .Time.Format "15:04" }}</li>
+  <li><b>{{ i18n "Time" }}:</b> {{ .Time.Local.Format "15:04" }}</li>
   {{- "" -}}
   <li><b>{{ i18n "Distance" }}:</b> {{ .TotalDistance | HumanDistance }}</li>
   {{- "" -}}

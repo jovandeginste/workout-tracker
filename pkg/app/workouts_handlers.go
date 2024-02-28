@@ -32,7 +32,8 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 	}
 
 	data["workout"] = w
-	data["workoutStatistics"] = w.StatisticsPerKilometer()
+	data["workoutStatisticsPerKM"] = w.StatisticsPerKilometer()
+	data["workoutStatisticsPerMin"] = w.StatisticsPerMinute()
 
 	return c.Render(http.StatusOK, "workouts_show.html", data)
 }
@@ -100,7 +101,8 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 	}
 
 	data["workout"] = workout
-	data["workoutStatistics"] = workout.StatisticsPerKilometer()
+	data["workoutStatisticsPerKM"] = workout.StatisticsPerKilometer()
+	data["workoutStatisticsPerMin"] = workout.StatisticsPerMinute()
 
 	return c.Render(http.StatusOK, "workouts_edit.html", data)
 }
