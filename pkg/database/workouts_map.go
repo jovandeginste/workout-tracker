@@ -8,6 +8,8 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
+var online = true
+
 // parseGPX parses a GPX file, returns GPX.
 func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
 	gpxContent, err := gpx.ParseBytes(gpxBytes)
@@ -79,6 +81,10 @@ func center(gpxContent *gpx.GPX) MapCenter {
 }
 
 func (m *MapCenter) Address() *geo.Address {
+	if !online {
+		return nil
+	}
+
 	geocoder := openstreetmap.Geocoder()
 
 	address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)

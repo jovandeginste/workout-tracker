@@ -7,6 +7,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func init() { //nolint:gochecknoinits
+	online = false
+}
+
 func defaultWorkout(t *testing.T) *Workout {
 	u := defaultUser()
 	f1, err := gpxFS.ReadFile("sample1.gpx")
@@ -53,8 +57,7 @@ func TestWorkout_Parse(t *testing.T) {
 	assert.InDelta(t, 3.297, w.Data.AverageSpeed(), 0.01)
 	assert.InDelta(t, 3.297, w.Data.AverageSpeedNoPause(), 0.01)
 	assert.Equal(t, "Untitled", w.Name)
-	assert.Equal(t, "US", w.Data.Address.CountryCode)
-	assert.Equal(t, "Washington", w.Data.Address.City)
+	assert.Nil(t, w.Data.Address)
 }
 
 func TestWorkout_UpdateData(t *testing.T) {

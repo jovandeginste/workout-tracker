@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+func init() { //nolint:gochecknoinits
+	online = false
+}
+
 func defaultUser() *User {
 	return &User{
 		Username: "my-username",
@@ -260,8 +264,9 @@ func TestDatabaseProfileSave(t *testing.T) {
 }
 
 func TestDatabaseUserWorkouts(t *testing.T) {
-	db := createMemoryDB(t)
 	populateGPXFS()
+
+	db := createMemoryDB(t)
 
 	u := defaultUser()
 	require.NoError(t, u.Create(db))
