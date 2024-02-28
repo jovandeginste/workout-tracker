@@ -90,6 +90,11 @@
           data: {
             datasets: [{
               label: "{{ i18n `Average speed` }}",
+              borderWidth: 1,
+              pointBorderWidth: 1,
+              pointRadius: 1,
+              pointHitRadius: 5,
+              tension: 0.5,
               data: [
                 {{ range $.workoutStatisticsPerMin -}}
                   { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
@@ -139,6 +144,11 @@
           data: {
             datasets: [{
               label: "{{ i18n `Elevation` }}",
+              borderWidth: 1,
+              pointBorderWidth: 1,
+              pointRadius: 1,
+              pointHitRadius: 5,
+              tension: 0.5,
               data: [
                 {{ range $.workoutStatisticsPerMin -}}
                   { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
