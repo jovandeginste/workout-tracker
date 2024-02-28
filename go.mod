@@ -26,6 +26,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/tkrajina/gpxgo v1.3.1
 	github.com/vorlif/spreak v0.6.0
+	github.com/westphae/geomag v1.0.2
 	golang.org/x/crypto v0.17.0
 	golang.org/x/text v0.14.0
 	gorm.io/driver/mysql v1.5.4

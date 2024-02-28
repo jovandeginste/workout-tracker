@@ -6,9 +6,21 @@ import (
 	"github.com/codingsince1985/geo-golang"
 	"github.com/codingsince1985/geo-golang/openstreetmap"
 	"github.com/tkrajina/gpxgo/gpx"
+	"github.com/westphae/geomag/pkg/egm96"
 )
 
 var online = true
+
+func correctAltitude(lat, long, alt float64) float64 {
+	loc := egm96.NewLocationGeodetic(lat, long, alt)
+
+	h, err := loc.HeightAboveMSL()
+	if err != nil {
+		return alt
+	}
+
+	return h
+}
 
 // parseGPX parses a GPX file, returns GPX.
 func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
@@ -153,8 +165,8 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDuration: totalDuration,
 		MaxSpeed:      gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
 		PauseDuration: pauseDuration,
-		MinElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation,
-		MaxElevation:  gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation,
+		MinElevation:  correctAltitude(mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation),
+		MaxElevation:  correctAltitude(mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation),
 		TotalUp:       updown.Uphill,
 		TotalDown:     updown.Downhill,
 	}
@@ -196,7 +208,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 			TotalDistance: totalDist,
 			Duration:      time.Duration(t) * time.Second,
 			TotalDuration: time.Duration(totalTime) * time.Second,
-			Elevation:     pt.Elevation.Value(),
+			Elevation:     correctAltitude(pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()),
 		})
 	}
 
