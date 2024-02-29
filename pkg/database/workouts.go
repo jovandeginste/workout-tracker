@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/jovandeginste/workout-tracker/pkg/converters"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 )
@@ -23,14 +24,15 @@ type Workout struct {
 	Data     *MapData `gorm:"serializer:json"`
 	Checksum []byte   `gorm:"not null;uniqueIndex"`
 	GPXData  []byte   `gorm:"type:mediumtext"`
+	Filename string
 }
 
-func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) *Workout {
+func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) *Workout {
 	if u == nil {
 		return nil
 	}
 
-	gpxContent, err := parseGPX(content)
+	gpxContent, err := converters.Parse(filename, content)
 	if err != nil {
 		return nil
 	}
@@ -54,6 +56,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, content []byte) 
 		Type:     workoutType,
 		Date:     gpxContent.Time,
 		Checksum: h.Sum(nil),
+		Filename: filename,
 	}
 
 	return &w
@@ -112,7 +115,7 @@ func (w *Workout) Save(db *gorm.DB) error {
 }
 
 func (w *Workout) AsGPX() (*gpx.GPX, error) {
-	return parseGPX(w.GPXData)
+	return converters.Parse(w.Filename, w.GPXData)
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {

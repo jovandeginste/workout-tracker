@@ -1,0 +1,50 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+*.exe
+*.test
+*.prof
+
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# go-fuzz
+workdir
+fit-fuzz.zip
+
+# binaries
+cmd/fitgen/fitgen
+
+# testing related
+*.current
+*.current.gz
+*.current.in
+
+# repo scope bin directory
+bin/
+
+# idea
+.idea

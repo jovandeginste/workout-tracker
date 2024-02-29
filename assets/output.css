@@ -2369,6 +2369,14 @@ table {
   content: "\f44b";
 }
 
+.icon-file::before {
+  content: "\f15b";
+}
+
+.icon-file::after {
+  content: "\f15b";
+}
+
 .icon-gauge::before {
   content: "\f624";
 }
