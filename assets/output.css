@@ -2586,6 +2586,10 @@ table {
     flex-grow: 1;
   }
 
+  .sm\:table-fixed {
+    table-layout: fixed;
+  }
+
   .sm\:flex-wrap {
     flex-wrap: wrap;
   }
