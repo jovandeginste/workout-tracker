@@ -22,7 +22,7 @@ clean:
 dev:
 	air
 
-build: build-tw build-server build-docker
+build: build-dist build-tw build-server build-docker
 
 build-server:
 	go build \
