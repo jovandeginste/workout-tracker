@@ -279,6 +279,7 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 		db,
 		WorkoutTypeAutoDetect,
 		"some notes",
+		"file.gpx",
 		[]byte("invalid content"),
 	)
 	require.ErrorIs(t, err, ErrInvalidGPXData)
@@ -295,6 +296,7 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 		db,
 		WorkoutTypeAutoDetect,
 		"some notes",
+		"file.gpx",
 		f1,
 	)
 	require.NoError(t, err)

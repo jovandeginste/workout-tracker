@@ -20,6 +20,7 @@ func defaultWorkout(t *testing.T) *Workout {
 		u,
 		WorkoutTypeAutoDetect,
 		"some notes",
+		"file.gpx",
 		f1,
 	)
 
@@ -37,6 +38,7 @@ func TestWorkout_ParseWithType(t *testing.T) {
 		u,
 		WorkoutTypeWalking,
 		"some notes",
+		"file.gpx",
 		f1,
 	)
 

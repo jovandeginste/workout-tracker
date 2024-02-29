@@ -30,16 +30,6 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 	return h
 }
 
-// parseGPX parses a GPX file, returns GPX.
-func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
-	gpxContent, err := gpx.ParseBytes(gpxBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	return gpxContent, nil
-}
-
 type MapData struct {
 	Creator       string
 	Name          string

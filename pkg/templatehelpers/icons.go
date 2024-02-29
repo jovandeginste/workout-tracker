@@ -26,6 +26,8 @@ func categoryIcon(what string) string {
 	switch what {
 	case "source":
 		return iconDefaults + " icon-solid icon-bookmark"
+	case "file":
+		return iconDefaults + " icon-solid icon-file"
 	case "distance":
 		return iconDefaults + " icon-solid icon-road"
 	case "speed":
