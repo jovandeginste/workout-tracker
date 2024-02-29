@@ -108,6 +108,10 @@ Details of a workout, with:
 
 - usable on small and medium screens
 
+### Light and dark mode
+
+![](docs/single_workout-theme.jpg)
+
 ## Configuration
 
 The web server looks for a file `workout-tracker.yaml` (or `json` or `toml`) in the current directory, or takes it's
