@@ -201,7 +201,7 @@ func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, fi
 
 	w, err := NewWorkout(u, workoutType, notes, filename, content)
 	if err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidGPXData, err)
+		return nil, fmt.Errorf("%w: %s", ErrInvalidData, err)
 	}
 
 	if err := w.Create(db); err != nil {

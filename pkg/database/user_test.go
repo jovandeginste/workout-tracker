@@ -282,7 +282,7 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 		"file.gpx",
 		[]byte("invalid content"),
 	)
-	require.ErrorIs(t, err, ErrInvalidGPXData)
+	require.ErrorIs(t, err, ErrInvalidData)
 	assert.Nil(t, w1)
 
 	workouts, err = u.GetWorkouts(db)

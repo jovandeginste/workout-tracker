@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var ErrInvalidGPXData = errors.New("invalid gpx data")
+var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
@@ -100,7 +100,7 @@ func (w *Workout) Delete(db *gorm.DB) error {
 
 func (w *Workout) Create(db *gorm.DB) error {
 	if w.Data == nil {
-		return ErrInvalidGPXData
+		return ErrInvalidData
 	}
 
 	return db.Create(w).Error
@@ -108,7 +108,7 @@ func (w *Workout) Create(db *gorm.DB) error {
 
 func (w *Workout) Save(db *gorm.DB) error {
 	if w.Data == nil {
-		return ErrInvalidGPXData
+		return ErrInvalidData
 	}
 
 	return db.Save(w).Error
