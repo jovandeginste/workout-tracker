@@ -26,7 +26,7 @@ docker run -p 8080:8080 \
     ghcr.io/jovandeginste/workout-tracker:master
 ```
 
-or use docker compose 
+or use docker compose
 
 ```bash
 # Create directory that stores your data

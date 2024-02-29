@@ -9,4 +9,4 @@ services:
     volumes:
       - ./data:/data
     environment:
-      - WT_JWT_ENCRYPTION_KEY=my-secret-key 
+      - WT_JWT_ENCRYPTION_KEY=my-secret-key
