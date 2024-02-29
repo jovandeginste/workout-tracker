@@ -4,8 +4,8 @@
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
   {{ if .currentUser }} {{ with .currentUser }}
-  <div class="grow flex flex-wrap justify-end">
-    <div class="sm:grow flex flex-wrap justify-end sm:justify-start">
+  <div class="grow flex flex-wrap">
+    <div class="grow flex flex-wrap justify-start">
       <div>
         <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
           ><span>{{ i18n "Dashboard" }}</span></a
@@ -38,7 +38,7 @@
           >{{ .Name }}</a
         >
       </div>
-      <div>
+      <div class="-mr-5">
         <a
           class="{{ IconFor `user-signout` }}"
           href="{{ RouteFor `user-signout` }}"
