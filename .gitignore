@@ -5,3 +5,4 @@ node_modules/
 workout-tracker.yaml
 /workout-tracker
 coverage.out
+/assets/dist/

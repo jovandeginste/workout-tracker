@@ -1,18 +1,20 @@
-FROM node:alpine as tailwind
+FROM node:alpine as frontend
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+RUN apk --no-cache add make
+
+COPY Makefile package.json package-lock.json ./
+RUN make install-deps
 COPY tailwind.config.js ./tailwind.config.js
 COPY main.css ./main.css
 COPY pkg ./pkg
 COPY views ./views
 COPY assets ./assets
 
-RUN npx tailwindcss -i ./main.css -o ./assets/output.css
+RUN make build-dist build-tw
 
-FROM golang:alpine as gobuilder
+FROM golang:alpine as backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
@@ -30,7 +32,8 @@ COPY vendor ./vendor
 COPY views ./views
 COPY assets ./assets
 COPY translations ./translations
-COPY --from=tailwind /app/assets/output.css ./assets/output.css
+COPY --from=frontend /app/assets/output.css ./assets/output.css
+COPY --from=frontend /app/assets/dist ./assets/dist
 
 ENV CGO_ENABLED=0 GOOS=linux
 RUN go build \
@@ -41,7 +44,7 @@ FROM alpine:latest
 
 VOLUME /data
 WORKDIR /app
-COPY --from=gobuilder /workout-tracker ./workout-tracker
+COPY --from=backend /workout-tracker ./workout-tracker
 
 WORKDIR /data
 ENTRYPOINT ["/app/workout-tracker"]

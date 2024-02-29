@@ -1,1 +1,3 @@
 .git
+/assets/dist/
+/node_modules/
