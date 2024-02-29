@@ -33,6 +33,7 @@ func parseGPX(gpxBytes []byte) (*gpx.GPX, error) {
 }
 
 type MapData struct {
+	Creator       string
 	Name          string
 	Date          string
 	Center        MapCenter
@@ -158,6 +159,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
 	data := &MapData{
+		Creator:       gpxContent.Creator,
 		Name:          gpxName(gpxContent),
 		Center:        mapCenter,
 		Address:       mapCenter.Address(),
