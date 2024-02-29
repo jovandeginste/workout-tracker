@@ -27,14 +27,14 @@ type Workout struct {
 	Filename string
 }
 
-func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) *Workout {
+func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
 	if u == nil {
-		return nil
+		return nil, nil
 	}
 
 	gpxContent, err := converters.Parse(filename, content)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	data := gpxAsMapData(gpxContent)
@@ -59,7 +59,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		Filename: filename,
 	}
 
-	return &w
+	return &w, nil
 }
 
 func autoDetectWorkoutType(data *MapData) WorkoutType {

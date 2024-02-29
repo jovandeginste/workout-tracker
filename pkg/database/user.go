@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"net/mail"
 
 	"github.com/cat-dealer/go-rand/v2"
@@ -194,9 +195,13 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 }
 
 func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
-	w := NewWorkout(u, workoutType, notes, filename, content)
-	if w == nil {
-		return nil, ErrInvalidGPXData
+	if u == nil {
+		return nil, nil
+	}
+
+	w, err := NewWorkout(u, workoutType, notes, filename, content)
+	if err != nil {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidGPXData, err)
 	}
 
 	if err := w.Create(db); err != nil {

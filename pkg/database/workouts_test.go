@@ -16,7 +16,7 @@ func defaultWorkout(t *testing.T) *Workout {
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)
 
-	w := NewWorkout(
+	w, err := NewWorkout(
 		u,
 		WorkoutTypeAutoDetect,
 		"some notes",
@@ -34,7 +34,7 @@ func TestWorkout_ParseWithType(t *testing.T) {
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)
 
-	w := NewWorkout(
+	w, err := NewWorkout(
 		u,
 		WorkoutTypeWalking,
 		"some notes",
