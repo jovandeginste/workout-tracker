@@ -2265,6 +2265,14 @@ table {
   content: "\f021";
 }
 
+.icon-bookmark::before {
+  content: "\f02e";
+}
+
+.icon-bookmark::after {
+  content: "\f02e";
+}
+
 .icon-calendar::before {
   content: "\f133";
 }

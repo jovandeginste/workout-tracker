@@ -16,6 +16,11 @@
       <td>{{ template "snippet_location" .Data.Address }}</td>
     </tr>
     <tr>
+      <td class="{{ IconFor `source` }}"></td>
+      <th>{{ i18n "Source" }}</th>
+      <td>{{ .Data.Creator }}</td>
+    </tr>
+    <tr>
       <td class="{{ IconFor `workout` }}"></td>
       <th>{{ i18n "Type" }}</th>
       <td>

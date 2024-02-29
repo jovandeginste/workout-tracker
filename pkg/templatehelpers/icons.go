@@ -24,6 +24,8 @@ func IconFor(what string) template.HTML {
 
 func categoryIcon(what string) string {
 	switch what {
+	case "source":
+		return iconDefaults + " icon-solid icon-bookmark"
 	case "distance":
 		return iconDefaults + " icon-solid icon-road"
 	case "speed":
@@ -37,7 +39,7 @@ func categoryIcon(what string) string {
 	case "elevation":
 		return iconDefaults + " icon-solid icon-mountain"
 	case "location":
-		return iconDefaults + " icon-regular icon-map-location-dot"
+		return iconDefaults + " icon-solid icon-map-location-dot"
 	case "date":
 		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":
