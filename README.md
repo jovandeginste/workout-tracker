@@ -102,6 +102,12 @@ Details of a workout, with:
 - use the language configured in the browser (default)
 - very limited amount of languages supported for now :smile:
 
+### Responsive design
+
+![](docs/responsive.jpg)
+
+- usable on small and medium screens
+
 ## Configuration
 
 The web server looks for a file `workout-tracker.yaml` (or `json` or `toml`) in the current directory, or takes it's
