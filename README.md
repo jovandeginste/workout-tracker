@@ -105,7 +105,7 @@ Details of a workout, with:
 
 ### Responsive design
 
-![](docs/responsive.jpg)
+![](docs/responsive.png)
 
 - Usable on small and medium screens
 
