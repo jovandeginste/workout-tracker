@@ -211,6 +211,14 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
   - [Chart.js](https://cdn.jsdelivr.net/npm/chart.js)
 - Docker
 
+## Compatiblity
+
+This is a work in progress. If you find any problems, please let us know. The application is tested with GPX files from
+these sources:
+
+- Garmin Connect (export to GPX)
+- FitoTrack (automatic export to GPX)
+
 ## TODO
 
 - write tests!!!!!
