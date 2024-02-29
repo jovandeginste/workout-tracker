@@ -15,6 +15,7 @@ Run the latest master image from GitHub Container Registry:
 docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:master
 ```
 
+
 Open your browser at `http://localhost:8080`
 
 To persist data and sessions, run:
@@ -24,6 +25,20 @@ docker run -p 8080:8080 \
     -e WT_JWT_ENCRYPTION_KEY=my-secret-key \
     -v $PWD/data:/data \
     ghcr.io/jovandeginste/workout-tracker:master
+```
+
+or use docker compose 
+
+```
+# Create directory that stores your data
+mkdir -p /opt/workout-tracker
+cd /opt/workout-tracker
+
+# Download the compose.yaml
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/compose.yaml --output compose.yaml
+
+# Start the server
+docker compose up -d
 ```
 
 ### Natively
