@@ -193,7 +193,7 @@ A single binary that runs on any platform, with no dependencies.
 The binary contains all assets to serve a web interface, through which you can upload your GPX files, visualize
 your tracks and see their statistics and graphs. The web application is multi-user, with a simple registration and
 authentication form, session cookies and JWT tokens). New accounts are inactive by default. An admin user can activate
-(or edit, delete) accounts. The storage is a single SQLite database.
+(or edit, delete) accounts. The default database storage is a single SQLite file.
 
 ## What technologies are used
 
@@ -210,6 +210,8 @@ authentication form, session cookies and JWT tokens). New accounts are inactive 
   - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
   - [Chart.js](https://cdn.jsdelivr.net/npm/chart.js)
 - Docker
+
+The application uses OpenStreetMap as its map provider and for geocoding a GPS coordinate to a location.
 
 ## Compatiblity
 
