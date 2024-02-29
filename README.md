@@ -127,6 +127,12 @@ Generate a secure key and write it to `workout-tracker.yaml`:
 echo "jwt_encryption_key: $(pwgen -c 32)" > workout-tracker.yaml
 ```
 
+or export it as an environment variable:
+
+```bash
+export WT_JWT_ENCRYPTION_KEY="$(pwgen -c 32)"
+```
+
 See `workout-tracker.example.yaml` for more options and details.
 
 After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
