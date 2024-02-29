@@ -26,6 +26,20 @@ docker run -p 8080:8080 \
     ghcr.io/jovandeginste/workout-tracker:master
 ```
 
+or use docker compose
+
+```bash
+# Create directory that stores your data
+mkdir -p /opt/workout-tracker
+cd /opt/workout-tracker
+
+# Download the compose.yaml
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/compose.yaml --output compose.yaml
+
+# Start the server
+docker compose up -d
+```
+
 ### Natively
 
 Download a pre-built binary or build it yourself (see [Development](#development) below).

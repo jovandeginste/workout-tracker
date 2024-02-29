@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  workout-tracker:
+    image: ghcr.io/jovandeginste/workout-tracker:master
+    restart: unless-stopped
+    ports:
+      # Host Port:Container Port
+      - 8080:8080
+    volumes:
+      - ./data:/data
+    environment:
+      - WT_JWT_ENCRYPTION_KEY=my-secret-key
