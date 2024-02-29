@@ -85,8 +85,8 @@ Details of a workout, with:
 ![](docs/upload_workouts.jpg)
 
 - Upload one or multiple GPX files.
-- The files are parsed when uploaded, statistics and other information are calculated and stored in the database (serialized).
-- Re-calculate all uploaded workouts (useful while developing)
+- Pick the type (running, cycling, ...) or let the application guess based on average speed
+- The files are parsed when uploaded: statistics and other information are calculated and stored in the database (serialized).
 
 ### Statistics to follow your progress
 
@@ -98,19 +98,22 @@ Details of a workout, with:
 
 ![](docs/i18n.gif)
 
-- switch between (supported) languages
-- use the language configured in the browser (default)
-- very limited amount of languages supported for now :smile:
+- Switch between (supported) languages
+- Use the language configured in the browser (default)
+- Very limited amount of languages supported for now :smile:
+- Re-calculate all previously uploaded workouts (useful while developing)
 
 ### Responsive design
 
 ![](docs/responsive.jpg)
 
-- usable on small and medium screens
+- Usable on small and medium screens
 
 ### Light and dark mode
 
 ![](docs/single_workout-theme.jpg)
+
+- Browser decides whether to use light or dark mode, based on your preferences
 
 ## Configuration
 
