@@ -11,7 +11,15 @@ import (
 
 var online = true
 
-func correctAltitude(lat, long, alt float64) float64 {
+func creatorNeedsCorrection(creator string) bool {
+	return creator != "Garmin Connect"
+}
+
+func correctAltitude(creator string, lat, long, alt float64) float64 {
+	if !creatorNeedsCorrection(creator) {
+		return alt
+	}
+
 	loc := egm96.NewLocationGeodetic(lat, long, alt)
 
 	h, err := loc.HeightAboveMSL()
@@ -167,8 +175,8 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDuration: totalDuration,
 		MaxSpeed:      gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
 		PauseDuration: pauseDuration,
-		MinElevation:  correctAltitude(mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation),
-		MaxElevation:  correctAltitude(mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation),
+		MinElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation),
+		MaxElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation),
 		TotalUp:       updown.Uphill,
 		TotalDown:     updown.Downhill,
 	}
@@ -210,7 +218,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 			TotalDistance: totalDist,
 			Duration:      time.Duration(t) * time.Second,
 			TotalDuration: time.Duration(totalTime) * time.Second,
-			Elevation:     correctAltitude(pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()),
+			Elevation:     correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()),
 		})
 	}
 
