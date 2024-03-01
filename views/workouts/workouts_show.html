@@ -6,6 +6,15 @@
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
     <script src="{{ RouteFor `assets` }}/dist/chart.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link
+      href="{{ RouteFor `assets` }}/dist/shareon.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="{{ RouteFor `assets` }}/dist/shareon.iife.js"
+      defer
+      init
+    ></script>
   </head>
   <body>
     {{ template "header" . }}
@@ -30,7 +39,7 @@
               <script>
                 let points = [
                   {{ range .Data.Points -}}
-                  { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .Elevation }}, "title": '{{ template "workout_point_title" . }}', },
+                  { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .Elevation }}, "title": "{{ template `workout_point_title` . }}", },
                   {{ end  }}
                 ];
                 let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
@@ -39,6 +48,7 @@
               </script>
               <script src="{{ RouteFor `assets` }}/map.js"></script>
             </div>
+            {{ template "workout_social" .}}
           </div>
         </div>
         <div class="basis-1/4">

@@ -47,11 +47,13 @@ clean-dist:
 build-dist: clean-dist
 	mkdir -p ./assets/dist/
 	cp -v ./node_modules/chart.js/dist/chart.umd.js ./assets/dist/chart.js
-	cp -v ./node_modules/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js ./assets/dist/chartjs-adapter-date-fns.bundle.min.js
+	cp -v ./node_modules/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js ./assets/dist/
 	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
-	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/leaflet.css
-	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/leaflet.js
-	cp -v ./node_modules/sorttable/sorttable.js ./assets/dist/sorttable.js
+	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/
+	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
+	cp -v ./node_modules/sorttable/sorttable.js ./assets/dist/
+	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
+	cp -v ./node_modules/shareon/dist/shareon.min.css ./assets/dist/
 	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
 
 

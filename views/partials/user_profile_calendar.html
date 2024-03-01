@@ -11,7 +11,7 @@
       firstDay: 1,
       aspectRatio: 2,
       eventContent: function(arg) {
-        let eventSpan = document.createElement('div')
+        let eventSpan = document.createElement("div")
 
         eventSpan.innerHTML = arg.event.title
         eventSpan.classList.add(
@@ -26,7 +26,7 @@
           title: "{{ .Type.String }}",
           start: "{{ .Date | LocalDate }}",
           url: "/workouts/{{ .ID }}",
-          display: 'block',
+          display: "block",
           extendedProps: {
             iconClass: "{{ IconFor .Type.String }}",
           },

@@ -1,0 +1,17 @@
+{{ define "workout_social" }}
+<div
+  class="shareon"
+  data-url=" "
+  data-title="{{ i18n `I completed a workout: %s.` (i18n .Type.String) }} {{ i18n `It took me %s to go %s. I averaged %s.` (.Data.TotalDuration | HumanDuration) (.Data.TotalDistance | HumanDistance) (.Data.AverageSpeed | HumanSpeed) }}"
+  data-hashtags="workout,{{ i18n .Type.String }},{{ .Data.Address.City }}"
+>
+  <a class="twitter"></a>
+  <a class="mastodon"></a>
+  <a class="pinterest"></a>
+  <a class="reddit"></a>
+  <a class="teams"></a>
+  <a class="whatsapp"></a>
+  <a class="copy-url"></a>
+  <a class="print"></a>
+</div>
+{{ end }}
