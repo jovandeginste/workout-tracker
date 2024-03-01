@@ -70,116 +70,14 @@
         </div>
         {{ end }}
       </div>
-      <div class="sm:flex sm:flex-wrap">
-        <div class="basis-1/2">
-          <div class="inner-form">
-            <h3 class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</h3>
-            <canvas id="speed-chart"></canvas>
-          </div>
-        </div>
-        <div class="basis-1/2">
-          <div class="inner-form">
-            <h3 class="{{ IconFor `elevation` }}">{{ i18n "Elevation" }}</h3>
-            <canvas id="elevation-chart"></canvas>
-          </div>
-        </div>
+      <div class="inner-form h-[300px] md:h-[500px] print:hidden">
+        <h3>
+          <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
+          /
+          <span class="{{ IconFor `elevation` }}">{{ i18n "Elevation" }}</span>
+        </h3>
+        {{ template "workout_show_stats" $.workoutStatisticsPerMin }}
       </div>
-
-      <script>
-        let xAxisScale = {
-          type: "time",
-          time: {
-            unit: "minute",
-            tooltipFormat: "HH:mm",
-            displayFormats: {
-              minute: "HH:mm",
-            },
-          },
-        };
-      </script>
-
-      <script>
-        new Chart(document.getElementById("speed-chart"), {
-          type: "line",
-          data: {
-            datasets: [{
-              label: "{{ i18n `Average speed` }}",
-              borderWidth: 1,
-              pointBorderWidth: 1,
-              pointRadius: 1,
-              pointHitRadius: 5,
-              tension: 0.5,
-              data: [
-                {{ range $.workoutStatisticsPerMin -}}
-                  { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
-                {{- end  }}
-              ],
-            }],
-          },
-          options: {
-            scales: {
-              x: xAxisScale,
-              y: {
-                ticks: {
-                  callback: function (value) {
-                    return (
-                      value.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                      }) + " km/h"
-                    );
-                  },
-                },
-              },
-            },
-            plugins: {
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    let label = context.dataset.label || "";
-
-                    if (label) {
-                      label += ": ";
-                    }
-                    if (context.parsed.y !== null) {
-                      label +=
-                        context.parsed.y.toLocaleString(undefined, {
-                          maximumFractionDigits: 2,
-                        }) + " km/h";
-                    }
-                    return label;
-                  },
-                },
-              },
-            },
-          },
-        });
-        new Chart(document.getElementById("elevation-chart"), {
-          type: "line",
-          data: {
-            datasets: [{
-              label: "{{ i18n `Elevation` }}",
-              borderWidth: 1,
-              pointBorderWidth: 1,
-              pointRadius: 1,
-              pointHitRadius: 5,
-              tension: 0.5,
-              data: [
-                {{ range $.workoutStatisticsPerMin -}}
-                  { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
-                {{- end  }}
-              ],
-            }],
-          },
-          options: { scales: {
-            x: xAxisScale,
-            y: {
-              min: Math.floor(minElevation),
-              max: Math.ceil(maxElevation),
-            },
-          } },
-        });
-      </script>
-
       {{ end }}
     </div>
 
