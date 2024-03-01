@@ -9,6 +9,7 @@
     "chartjs-adapter-date-fns": "^3.0.0",
     "fullcalendar": "^6.1.11",
     "leaflet": "^1.9.4",
+    "shareon": "^2.5.0",
     "sorttable": "^1.0.2",
     "tailwind-fontawesome": "^0.6.0"
   }

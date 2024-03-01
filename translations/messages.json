@@ -28,6 +28,8 @@
   "Enable API access": "Enable API access",
   "Encountered %d problems while adding workouts: %s": "Encountered %d problems while adding workouts: %s",
   "File": "File",
+  "I completed a workout: %s.": "I completed a workout: %s.",
+  "It took me %s to go %s. I averaged %s.": "It took me %s to go %s. I averaged %s.",
   "KM": "KM",
   "Language": "Language",
   "Last distance": "Last distance",
