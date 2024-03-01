@@ -241,6 +241,11 @@ these sources:
 - add support for authentication through a reverse proxy
 - make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
+  - added support for MySQL, but untested so far
 - add support for other types of import files (eg. Garmin fit files)
+  - importing fit files works, kinda: there seems to be an issue with the elevation
+  - see https://github.com/tormoder/fit/issues/87
+  - https://www.fitfileviewer.com/ gives the same elevation issue
 - add support for auto-import from a folder (per user)
 - see if htmx is worth using
+  - first I need a use case
