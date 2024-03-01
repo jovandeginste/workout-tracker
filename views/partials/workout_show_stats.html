@@ -1,0 +1,115 @@
+{{ define "workout_show_stats" }}
+<canvas id="speed-elevation-chart"></canvas>
+
+<script>
+  let defaultDatasetOptions = {
+    borderWidth: 2,
+    pointBorderWidth: 2,
+    pointRadius: 2,
+    pointHitRadius: 10,
+    tension: 0.5,
+  };
+  let chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "minute",
+          tooltipFormat: "HH:mm",
+          displayFormats: { minute: "HH:mm" },
+        },
+      },
+      y: {
+        ticks: {
+          callback: function (value) {
+            return (
+              value.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              }) + " km/h"
+            );
+          },
+        },
+      },
+      y1: {
+        min: Math.floor(minElevation),
+        max: Math.ceil(maxElevation),
+        position: "right",
+        ticks: {
+          callback: function (value) {
+            return (
+              value.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              }) + " m"
+            );
+          },
+        },
+      },
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || "";
+
+            if (label) {
+              label += ": ";
+            }
+
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              });
+
+              if (context.dataset.yAxisID === "y") {
+                label += " km/h";
+              } else if (context.dataset.yAxisID === "y1") {
+                label += " m";
+              }
+            }
+            return label;
+          },
+        },
+      },
+    },
+  };
+</script>
+
+<script>
+  new Chart(document.getElementById("speed-elevation-chart"), {
+    type: "line",
+    data: {
+      datasets: [
+        {
+          label: "{{ i18n `Average speed` }}",
+          ...defaultDatasetOptions,
+          yAxisID: 'y',
+          data: [
+            {{ range . -}}
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
+            {{- end  }}
+          ],
+        },
+        {
+          label: "{{ i18n `Elevation` }}",
+          ...defaultDatasetOptions,
+          yAxisID: 'y1',
+          fill: true,
+          data: [
+            {{ range . -}}
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
+            {{- end  }}
+          ],
+        },
+      ],
+    },
+    options: chartOptions,
+  });
+</script>
+
+{{ end }}

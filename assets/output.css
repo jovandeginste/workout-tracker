@@ -2702,6 +2702,10 @@ table {
     height: 2rem;
   }
 
+  .md\:h-\[500px\] {
+    height: 500px;
+  }
+
   .md\:h-\[600px\] {
     height: 600px;
   }
