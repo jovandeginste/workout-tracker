@@ -444,6 +444,13 @@ video {
   display: none;
 }
 
+@media print {
+  .pagebreak {
+    clear: both;
+    page-break-after: always;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .map-tiles {
     --tw-brightness: brightness(0.6);
@@ -703,6 +710,15 @@ form {
   }
 }
 
+.footer,
+  .menu {
+  @media print {
+    > div {
+      display: none;
+    }
+  }
+}
+
 .footer {
   margin-top: 0.5rem;
   border-top-left-radius: 0.75rem;
@@ -788,6 +804,15 @@ form {
   display: flex;
   align-items: baseline;
   gap: 0.75rem;
+}
+
+@media print {
+  .actions {
+    display: none;
+  }
+}
+
+.actions {
   > button,
     > form {
     margin-top: 0px;
@@ -951,6 +976,12 @@ form {
   }
 }
 
+@media print {
+  .inner-form {
+    border-width: 0px;
+  }
+}
+
 .inner-form {
   --tw-border-opacity: 1;
   border-color: rgb(229 229 229 / var(--tw-border-opacity));
@@ -1107,6 +1138,12 @@ table {
   td,
     th {
     padding: 0.5rem;
+  }
+  @media print {
+    td,
+    th {
+      padding: 0px;
+    }
   }
   td,
     th {
@@ -2746,6 +2783,24 @@ table {
   .dark\:text-neutral-400 {
     --tw-text-opacity: 1;
     color: rgb(163 163 163 / var(--tw-text-opacity));
+  }
+}
+
+@media print {
+  .print\:block {
+    display: block;
+  }
+
+  .print\:hidden {
+    display: none;
+  }
+
+  .print\:h-\[600px\] {
+    height: 600px;
+  }
+
+  .print\:w-full {
+    width: 100%;
   }
 }
 
