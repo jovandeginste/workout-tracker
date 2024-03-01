@@ -32,7 +32,7 @@ jobs:
         run: make install-deps
 
       - name: Build Tailwind CSS output
-        run: make build-tw
+        run: make build-dist build-tw
 
       - uses: wangyoucao577/go-release-action@v1
         with:
