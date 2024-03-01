@@ -29,7 +29,7 @@ type Workout struct {
 
 func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
 	if u == nil {
-		return nil, nil
+		return nil, ErrNoUser
 	}
 
 	gpxContent, err := converters.Parse(filename, content)

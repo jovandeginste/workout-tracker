@@ -1720,6 +1720,11 @@ table {
   float: right;
 }
 
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+
 .-mr-5 {
   margin-right: -1.25rem;
 }
@@ -1828,6 +1833,10 @@ table {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .items-baseline {
@@ -2337,6 +2346,14 @@ table {
   content: "\f077";
 }
 
+.icon-circle-exclamation::before {
+  content: "\f06a";
+}
+
+.icon-circle-exclamation::after {
+  content: "\f06a";
+}
+
 .icon-circle-plus::before {
   content: "\f055";
 }
@@ -2353,6 +2370,14 @@ table {
   content: "\f2bd";
 }
 
+.icon-clipboard::before {
+  content: "\f328";
+}
+
+.icon-clipboard::after {
+  content: "\f328";
+}
+
 .icon-clock::before {
   content: "\f017";
 }
@@ -2367,6 +2392,22 @@ table {
 
 .icon-dumbbell::after {
   content: "\f44b";
+}
+
+.icon-eye::before {
+  content: "\f06e";
+}
+
+.icon-eye::after {
+  content: "\f06e";
+}
+
+.icon-eye-slash::before {
+  content: "\f070";
+}
+
+.icon-eye-slash::after {
+  content: "\f070";
 }
 
 .icon-file::before {

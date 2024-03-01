@@ -20,6 +20,7 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
+	u.Profile.APIActive = p.APIActive
 	u.Profile.Language = p.Language
 	u.Profile.TotalsShow = p.TotalsShow
 
@@ -32,6 +33,20 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 	}
 
 	a.setNotice(c, "Profile updated")
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
+}
+
+func (a *App) userProfileResetAPIKeyHandler(c echo.Context) error {
+	u := a.getCurrentUser(c)
+
+	u.GenerateAPIKey(true)
+
+	if err := u.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
+	}
+
+	a.setNotice(c, "API key updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
