@@ -1,6 +1,13 @@
 @tailwind base;
 
 @layer base {
+  @media print {
+    .pagebreak {
+      clear: both;
+      page-break-after: always;
+    }
+  }
+
   .map-tiles {
     @apply dark:brightness-[0.6] dark:invert dark:contrast-[3] dark:hue-rotate-[200deg] dark:saturate-[0.3];
   }
@@ -69,6 +76,9 @@
     @apply px-6 py-3 items-baseline;
     @apply bg-neutral-200 text-zinc-700;
     @apply dark:bg-neutral-800 dark:text-zinc-300;
+    > div {
+      @apply print:hidden;
+    }
   }
   .footer {
     @apply rounded-t-xl mt-2;
@@ -88,7 +98,7 @@
     }
   }
   .actions {
-    @apply gap-3 float-right items-baseline flex;
+    @apply gap-3 float-right items-baseline flex print:hidden;
     > button,
     > form {
       @apply my-0;
@@ -119,7 +129,7 @@
     @apply dark:bg-neutral-700;
   }
   .inner-form {
-    @apply rounded-xl p-2 md:p-5 m-2 border;
+    @apply rounded-xl p-2 md:p-5 m-2 border print:border-0;
     @apply bg-neutral-200 border-neutral-200 hover:border-neutral-500;
     @apply dark:bg-neutral-800 dark:border-neutral-800 dark:hover:border-neutral-500;
   }
@@ -156,7 +166,7 @@
     }
     td,
     th {
-      @apply p-2;
+      @apply p-2 print:p-0;
       label {
         @apply align-top;
       }
