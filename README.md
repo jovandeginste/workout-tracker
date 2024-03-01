@@ -149,6 +149,16 @@ export WT_JWT_ENCRYPTION_KEY="$(pwgen -c 32)"
 
 See `workout-tracker.example.yaml` for more options and details.
 
+Other environment variables, with their default values:
+
+```bash
+WT_BIND="[::]:8080"
+WT_LOGGING="true"
+WT_DEBUG="false"
+WT_DATABASE_DRIVER="sqlite"
+WT_DSN="./database.db"
+```
+
 After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
 
 If no users are in the database (eg. when starting with an empty database), a default `admin` user is created with
