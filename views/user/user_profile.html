@@ -13,6 +13,23 @@
             <tbody>
               <tr>
                 <th>
+                  <label for="api_active">{{ i18n "Enable API access" }}</label>
+                </th>
+                <td>
+                  <input
+                    type="checkbox"
+                    id="api_active"
+                    name="api_active"
+                    value="true"
+                    {{
+                    BoolToCheckbox
+                    CurrentUser.Profile.APIActive
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
                   <label for="totals_show"
                     >{{ i18n "Totals to show on dashboard" }}</label
                   >
@@ -39,6 +56,53 @@
             </tbody>
           </table>
         </form>
+        {{ if CurrentUser.Profile.APIActive }}
+        <table class="table-fixed">
+          <tbody>
+            <tr>
+              <th>
+                <label for="api_key">{{ i18n "API key" }}</label>
+              </th>
+              <td>
+                <div class="flex flex-wrap items-center">
+                  <input
+                    type="password"
+                    id="api_key"
+                    name="api_key"
+                    size="40"
+                    value="{{ CurrentUser.APIKey }}"
+                    readonly
+                  />
+
+                  <form
+                    class="flex flex-wrap items-center mx-5"
+                    method="post"
+                    action="{{ RouteFor `user-profile-reset-api-key` }}"
+                  >
+                    <button
+                      class="{{ IconFor `show` }}"
+                      title="{{ i18n `show/hide` }}"
+                      onclick="toggleTextPassword(this, 'api_key'); return false;"
+                    />
+                    <button
+                      class="{{ IconFor `copy` }}"
+                      title="{{ i18n `copy to clipboard` }}"
+                      onclick="copyToClipboard('api_key'); return false;"
+                    />
+                    <button
+                      class="{{ IconFor `refresh` }}"
+                      title="{{ i18n `generate a new API key` }}"
+                    />
+                  </form>
+                  <span class="alert {{ IconFor `attention` }}">
+                    API is not yet implemented!
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {{ end }}
 
         <form method="post" action="{{ RouteFor `user-refresh` }}">
           <label for="refresh">{{ i18n "Refresh all your workouts" }}</label>

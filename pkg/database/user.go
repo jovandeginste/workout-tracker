@@ -21,6 +21,7 @@ var (
 	ErrPasswordInvalidLength = errors.New("password has invalid length")
 	ErrUsernameInvalidLength = errors.New("username has invalid length")
 	ErrUsernameInvalid       = errors.New("username is not valid")
+	ErrNoUser                = errors.New("no user attached")
 )
 
 type User struct {
@@ -29,6 +30,7 @@ type User struct {
 	Salt     string `form:"-"        gorm:"type:varchar(16);not null"`
 	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"`
 	Name     string `form:"name"     gorm:"type:varchar(64);not null"`
+	APIKey   string `gorm:"type:varchar(32)"`
 	Active   bool   `form:"active"`
 	Admin    bool   `form:"admin"`
 
@@ -37,9 +39,8 @@ type User struct {
 }
 
 func (u *User) BeforeSave(_ *gorm.DB) error {
-	if err := u.GenerateSalt(); err != nil {
-		return err
-	}
+	u.GenerateAPIKey(false)
+	u.GenerateSalt()
 
 	return u.IsValid()
 }
@@ -71,18 +72,23 @@ func GetUser(db *gorm.DB, username string) (*User, error) {
 		return nil, db.Error
 	}
 
+	if u.ID == u.Profile.UserID {
+		u.Profile.User = &u
+	}
+
 	return &u, nil
 }
 
-type Profile struct {
-	gorm.Model
-	UserID     int
-	Language   string      `form:"language"`
-	TotalsShow WorkoutType `form:"totals_show"`
-}
+func (u *User) APIActive() bool {
+	if u == nil {
+		return false
+	}
 
-func (p *Profile) Save(db *gorm.DB) error {
-	return db.Save(p).Error
+	if !u.Profile.APIActive {
+		return false
+	}
+
+	return u.APIKey != ""
 }
 
 func (u *User) IsActive() bool {
@@ -134,9 +140,7 @@ func (u *User) SetPassword(password string) error {
 		return ErrPasswordInvalidLength
 	}
 
-	if err := u.GenerateSalt(); err != nil {
-		return err
-	}
+	u.GenerateSalt()
 
 	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(u.AddSalt(password)), bcrypt.DefaultCost)
 	if err != nil {
@@ -152,14 +156,20 @@ func (u *User) Create(db *gorm.DB) error {
 	return db.Create(u).Error
 }
 
-func (u *User) GenerateSalt() error {
+func (u *User) GenerateAPIKey(force bool) {
+	if !force && u.APIKey != "" {
+		return
+	}
+
+	u.APIKey = rand.String(32, rand.GetAlphaNumericPool())
+}
+
+func (u *User) GenerateSalt() {
 	if u.Salt != "" {
-		return nil
+		return
 	}
 
 	u.Salt = rand.String(8, rand.GetAlphaNumericPool())
-
-	return nil
 }
 
 func (u *User) Save(db *gorm.DB) error {
@@ -196,7 +206,7 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 
 func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
 	if u == nil {
-		return nil, nil
+		return nil, ErrNoUser
 	}
 
 	w, err := NewWorkout(u, workoutType, notes, filename, content)

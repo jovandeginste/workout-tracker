@@ -47,7 +47,30 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 		return nil, err
 	}
 
+	if err := setUserAPIKeys(db); err != nil {
+		return nil, err
+	}
+
 	return db, nil
+}
+
+func setUserAPIKeys(db *gorm.DB) error {
+	users, err := GetUsers(db)
+	if err != nil {
+		return err
+	}
+
+	for _, u := range users {
+		if u.APIKey != "" {
+			continue
+		}
+
+		if err := u.Save(db); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func dialectorFor(driver, dsn string) (gorm.Dialector, error) {

@@ -37,3 +37,31 @@ const formatDuration = (s) => {
     .map(([key, val]) => `${val}${key}`)
     .join(" ");
 };
+
+function toggleTextPassword(el, id) {
+  var x = document.getElementById(id);
+
+  if (x.type === "password") {
+    // Remove class from span
+    el.classList.remove("icon-eye");
+    el.classList.add("icon-eye-slash");
+    x.type = "text";
+  } else {
+    el.classList.remove("icon-eye-slash");
+    el.classList.add("icon-eye");
+    x.type = "password";
+  }
+}
+
+function copyToClipboard(id) {
+  // Get the text field
+  var copyText = document.getElementById(id);
+
+  // Select the text field
+  copyText.select();
+  // Get the text field
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+}

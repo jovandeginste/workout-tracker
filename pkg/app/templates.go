@@ -34,6 +34,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		"language":     tr.Language().String,
 		"humanizer":    func() *humanize.Humanizer { return h },
 		"RelativeDate": h.NaturalTime,
+		"CurrentUser":  func() *database.User { return t.app.getCurrentUser(ctx) },
 	})
 
 	return r.ExecuteTemplate(w, name, data)
@@ -47,9 +48,10 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 	h := a.humanizer.CreateHumanizer(language.English)
 
 	return template.FuncMap{
-		"i18n":      echoFunc,
-		"language":  func() string { return BrowserLanguage },
-		"humanizer": func() *humanize.Humanizer { return h },
+		"i18n":        echoFunc,
+		"language":    func() string { return BrowserLanguage },
+		"humanizer":   func() *humanize.Humanizer { return h },
+		"CurrentUser": func() *database.User { return nil },
 
 		"supportedLanguages": a.translator.SupportedLanguages,
 		"workoutTypes":       database.WorkoutTypes,
