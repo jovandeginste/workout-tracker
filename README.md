@@ -244,6 +244,7 @@ these sources:
 
 - Garmin Connect (export to GPX)
 - FitoTrack (automatic export to GPX)
+- Workoutdoors (export to GPX)
 
 ## TODO
 
