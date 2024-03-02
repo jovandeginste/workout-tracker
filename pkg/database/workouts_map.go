@@ -133,6 +133,26 @@ func gpxName(gpxContent *gpx.GPX) string {
 	return gpxContent.Tracks[0].Name
 }
 
+// Determines the date to use for the workout
+func gpxDate(gpxContent *gpx.GPX) *time.Time {
+	// If a date is specified in the metadata, use that (not all apps have this, notably Workoutdoors doesn't)
+	if gpxContent.Time != nil {
+		return gpxContent.Time
+	}
+
+	// Otherwise use the first track's first segment's timestamp
+	if len(gpxContent.Tracks) > 0 {
+		if len(gpxContent.Tracks[0].Segments) > 0 {
+			if len(gpxContent.Tracks[0].Segments[0].Points) > 0 {
+				return &gpxContent.Tracks[0].Segments[0].Points[0].Timestamp
+			}
+		}
+	}
+
+	// This is not good as the database requires date to be set, but we don't know any suitable date...
+	return nil
+}
+
 func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 	return gpx.HaversineDistance(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude)
 }
