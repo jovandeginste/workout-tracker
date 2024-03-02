@@ -208,6 +208,7 @@ github.com/vorlif/spreak/catalog/po
 github.com/vorlif/spreak/catalog/poplural
 github.com/vorlif/spreak/catalog/poplural/ast
 github.com/vorlif/spreak/humanize
+github.com/vorlif/spreak/humanize/locale/de
 github.com/vorlif/spreak/humanize/locale/nl
 github.com/vorlif/spreak/internal/calendar
 github.com/vorlif/spreak/internal/mo
