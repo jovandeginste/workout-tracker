@@ -54,7 +54,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		Data:     data,
 		Notes:    notes,
 		Type:     workoutType,
-		Date:     gpxContent.Time,
+		Date:     gpxDate(gpxContent),
 		Checksum: h.Sum(nil),
 		Filename: filename,
 	}
