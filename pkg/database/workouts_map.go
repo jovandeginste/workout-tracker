@@ -108,17 +108,15 @@ func (m *MapCenter) Address() *geo.Address {
 
 // allGPXPoints returns the first track segment's points
 func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
-	gpxContent.ReduceGpxToSingleTrack()
+	var points []gpx.GPXPoint
 
-	if len(gpxContent.Tracks) == 0 {
-		return nil
+	for _, track := range gpxContent.Tracks {
+		for _, segment := range track.Segments {
+			points = append(points, segment.Points...)
+		}
 	}
 
-	if len(gpxContent.Tracks[0].Segments) == 0 {
-		return nil
-	}
-
-	return gpxContent.Tracks[0].Segments[0].Points
+	return points
 }
 
 func gpxName(gpxContent *gpx.GPX) string {
@@ -158,23 +156,47 @@ func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 }
 
 func createMapData(gpxContent *gpx.GPX) *MapData {
-	gpxContent.ReduceGpxToSingleTrack()
-
 	if len(gpxContent.Tracks) == 0 {
 		return nil
 	}
 
-	if len(gpxContent.Tracks[0].Segments) == 0 {
-		return nil
+	var totalDistance float64 = 0.0
+	var totalDuration time.Duration
+	var pauseDuration time.Duration
+	var minElevation float64 = 0.0
+	var maxElevation float64 = 0.0
+	var uphill float64 = 0.0
+	var downhill float64 = 0.0
+	var maxSpeed float64 = 0.0
+	var lastSegmentEnd *time.Time
+
+	for _, track := range gpxContent.Tracks {
+		for _, segment := range track.Segments {
+			if len(segment.Points) > 0 {
+				totalDistance += segment.Length3D()
+				totalDuration += time.Duration(segment.Duration()) * time.Second
+				pauseDuration += (time.Duration(segment.MovingData().StoppedTime)) * time.Second
+				minElevation = min(minElevation, segment.ElevationBounds().MinElevation)
+				maxElevation = max(maxElevation, segment.ElevationBounds().MaxElevation)
+				uphill += segment.UphillDownhill().Uphill
+				downhill += segment.UphillDownhill().Downhill
+				maxSpeed = max(maxSpeed, segment.MovingData().MaxSpeed)
+
+				firstPoint := &segment.Points[0]
+				if lastSegmentEnd != nil {
+					// Calculate time between this segment's first point and last segment's last point, and add to pause time
+					pauseDuration += firstPoint.Timestamp.Sub(*lastSegmentEnd)
+				}
+
+				lastPoint := &segment.Points[len(segment.Points)-1]
+				lastSegmentEnd = &lastPoint.Timestamp
+			}
+		}
 	}
 
+	// Now reduce the whole GPX to a single track to calculate the center
+	gpxContent.ReduceGpxToSingleTrack()
 	mapCenter := center(gpxContent)
-
-	totalDistance := gpxContent.Tracks[0].Segments[0].Length3D()
-	totalDuration := time.Duration(gpxContent.Tracks[0].Segments[0].Duration()) * time.Second
-	pauseDuration := time.Duration(gpxContent.Tracks[0].Segments[0].MovingData().StoppedTime) * time.Second
-
-	updown := gpxContent.Tracks[0].Segments[0].UphillDownhill()
 
 	data := &MapData{
 		Creator:       gpxContent.Creator,
@@ -183,12 +205,12 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		Address:       mapCenter.Address(),
 		TotalDistance: totalDistance,
 		TotalDuration: totalDuration,
-		MaxSpeed:      gpxContent.Tracks[0].Segments[0].MovingData().MaxSpeed,
+		MaxSpeed:      maxSpeed,
 		PauseDuration: pauseDuration,
-		MinElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MinElevation),
-		MaxElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, gpxContent.Tracks[0].Segments[0].ElevationBounds().MaxElevation),
-		TotalUp:       updown.Uphill,
-		TotalDown:     updown.Downhill,
+		MinElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
+		MaxElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
+		TotalUp:       uphill,
+		TotalDown:     downhill,
 	}
 
 	return data
