@@ -193,7 +193,7 @@ func (a *App) BackgroundWorker() {
 }
 
 func (a *App) UpdateWorkout(i int) error {
-	w, err := database.GetWorkout(a.db, i)
+	w, err := database.GetWorkout(a.db.Preload("GPX"), i)
 	if err != nil {
 		return err
 	}
