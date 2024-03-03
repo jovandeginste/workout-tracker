@@ -163,6 +163,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	var (
 		totalDistance, maxElevation, minElevation, uphill, downhill, maxSpeed float64
 		totalDuration, pauseDuration                                          time.Duration
+		lastSegmentEnd                                                        *gpx.GPXPoint
 	)
 
 	for _, track := range gpxContent.Tracks {
@@ -176,6 +177,15 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 				uphill += segment.UphillDownhill().Uphill
 				downhill += segment.UphillDownhill().Downhill
 				maxSpeed = max(maxSpeed, segment.MovingData().MaxSpeed)
+
+				firstPoint := &segment.Points[0]
+				if lastSegmentEnd != nil {
+					// Calculate time between this segment's first point and last segment's last point, and add to pause time
+					pauseDuration += firstPoint.Timestamp.Sub(lastSegmentEnd.Timestamp)
+				}
+
+				lastPoint := &segment.Points[len(segment.Points)-1]
+				lastSegmentEnd = lastPoint
 			}
 		}
 	}
