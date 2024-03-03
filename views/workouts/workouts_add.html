@@ -34,7 +34,7 @@
                   <select id="type" name="type">
                     <option value="auto">{{ i18n "Auto-detect" }}</option>
                     {{ range workoutTypes }}
-                    <option value="{{ .String }}">{{ .String }}</option>
+                    <option value="{{ .String }}">{{ i18n .String }}</option>
                     {{ end }}
                   </select>
                 </td>

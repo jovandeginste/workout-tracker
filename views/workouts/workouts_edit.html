@@ -34,7 +34,9 @@
                     <td>
                       <select id="type" name="type">
                         {{ range workoutTypes }}
-                        <option value="{{ .String }}">{{ .String }}</option>
+                        <option value="{{ .String }}">
+                          {{ i18n .String }}
+                        </option>
                         {{ end }}
                       </select>
                     </td>
