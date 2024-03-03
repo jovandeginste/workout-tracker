@@ -10,6 +10,7 @@ type Profile struct {
 	APIActive  bool        `form:"api_active"`
 	Language   string      `form:"language"`
 	TotalsShow WorkoutType `form:"totals_show"`
+	Timezone   string      `form:"timezone"`
 
 	User *User `gorm:"foreignKey:UserID"`
 }
