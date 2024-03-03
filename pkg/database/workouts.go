@@ -83,24 +83,24 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	return &w, nil
 }
 
-func workoutTypeFromGpxTrackType(gpxType string) (workoutType WorkoutType, err error) {
+func workoutTypeFromGpxTrackType(gpxType string) (workoutType WorkoutType, ok bool) {
 	switch strings.ToLower(gpxType) {
 	case "running", "run":
-		return WorkoutTypeRunning, nil
+		return WorkoutTypeRunning, true
 	case "walking", "walk":
-		return WorkoutTypeWalking, nil
+		return WorkoutTypeWalking, true
 	case "cycling", "cycle":
-		return WorkoutTypeCycling, nil
+		return WorkoutTypeCycling, true
 	case "snowboarding":
-		return WorkoutTypeSnowboarding, nil
+		return WorkoutTypeSnowboarding, true
 	case "skiing":
-		return WorkoutTypeSkiing, nil
+		return WorkoutTypeSkiing, true
 	case "swimming":
-		return WorkoutTypeSwimming, nil
+		return WorkoutTypeSwimming, true
 	case "kayaking":
-		return WorkoutTypeKayaking, nil
+		return WorkoutTypeKayaking, true
 	default:
-		return WorkoutTypeAutoDetect, errors.New("unrecognized workout type in gpx")
+		return WorkoutTypeAutoDetect, false
 	}
 }
 
@@ -109,8 +109,7 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 	if len(gpxContent.Tracks) > 0 {
 		firstTrack := &gpxContent.Tracks[0]
 
-		workoutType, err := workoutTypeFromGpxTrackType((firstTrack.Type))
-		if err == nil {
+		if workoutType, ok := workoutTypeFromGpxTrackType(firstTrack.Type); ok {
 			return workoutType
 		}
 	}
