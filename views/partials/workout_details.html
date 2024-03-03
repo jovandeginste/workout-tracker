@@ -30,62 +30,74 @@
     <tr>
       <td class="{{ IconFor `duration` }}"></td>
       <th>{{ i18n "Total duration" }}</th>
-      <td>{{ .Data.TotalDuration | HumanDuration }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.TotalDuration | HumanDuration }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `distance` }}"></td>
       <th>{{ i18n "Total distance" }}</th>
-      <td>{{ .Data.TotalDistance | HumanDistance }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.TotalDistance | HumanDistance }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `speed` }}"></td>
       <th>{{ i18n "Average speed" }}</th>
-      <td>{{ .Data.AverageSpeed | HumanSpeed }}</td>
+      <td class="whitespace-nowrap">{{ .Data.AverageSpeed | HumanSpeed }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `speed` }}"></td>
       <th>{{ i18n "Average speed (no pause)" }}</th>
-      <td>{{ .Data.AverageSpeedNoPause | HumanSpeed }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.AverageSpeedNoPause | HumanSpeed }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `tempo` }}"></td>
       <th>{{ i18n "Average tempo" }}</th>
-      <td>{{ .Data.AverageSpeed | HumanTempo }}</td>
+      <td class="whitespace-nowrap">{{ .Data.AverageSpeed | HumanTempo }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `tempo` }}"></td>
       <th>{{ i18n "Average tempo (no pause)" }}</th>
-      <td>{{ .Data.AverageSpeedNoPause | HumanTempo }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.AverageSpeedNoPause | HumanTempo }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `max-speed` }}"></td>
       <th>{{ i18n "Max speed" }}</th>
-      <td>{{ .Data.MaxSpeed | HumanSpeed }}</td>
+      <td class="whitespace-nowrap">{{ .Data.MaxSpeed | HumanSpeed }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `pause` }}"></td>
       <th>{{ i18n "Time paused" }}</th>
-      <td>{{ .Data.PauseDuration }}</td>
+      <td class="whitespace-nowrap">{{ .Data.PauseDuration }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>
       <th>{{ i18n "Min elevation" }}</th>
-      <td>{{ .Data.MinElevation | HumanDistance }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.MinElevation | HumanDistance }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>
       <th>{{ i18n "Max elevation" }}</th>
-      <td>{{ .Data.MaxElevation | HumanDistance }}</td>
+      <td class="whitespace-nowrap">
+        {{ .Data.MaxElevation | HumanDistance }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `up` }}"></td>
       <th>{{ i18n "Total up" }}</th>
-      <td>{{ .Data.TotalUp | HumanDistance }}</td>
+      <td class="whitespace-nowrap">{{ .Data.TotalUp | HumanDistance }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `down` }}"></td>
       <th>{{ i18n "Total down" }}</th>
-      <td>{{ .Data.TotalDown | HumanDistance }}</td>
+      <td class="whitespace-nowrap">{{ .Data.TotalDown | HumanDistance }}</td>
     </tr>
   </tbody>
 </table>

@@ -30,31 +30,31 @@
     </div>
     <div class="flex flex-wrap gap-2">
       <div
-        class="workout-tile-info {{ IconFor `distance` }}"
+        class="workout-tile-info {{ IconFor `distance` }} whitespace-nowrap"
         title="Total distance"
       >
         {{ .Data.TotalDistance | HumanDistance }}
       </div>
       <div
-        class="workout-tile-info {{ IconFor `duration` }}"
+        class="workout-tile-info {{ IconFor `duration` }} whitespace-nowrap"
         title="Total duration"
       >
         {{ .Data.TotalDuration | HumanDuration }}
       </div>
       <div
-        class="workout-tile-info {{ IconFor `speed` }}"
+        class="workout-tile-info {{ IconFor `speed` }} whitespace-nowrap"
         title="Average speed (no pause)"
       >
         {{ .Data.AverageSpeedNoPause | HumanSpeed }}
       </div>
       <div
-        class="workout-tile-info {{ IconFor `tempo` }}"
+        class="workout-tile-info {{ IconFor `tempo` }} whitespace-nowrap"
         title="Average tempo (no pause)"
       >
         {{ .Data.AverageSpeedNoPause | HumanTempo }}
       </div>
       <div
-        class="workout-tile-info {{ IconFor `max-speed` }}"
+        class="workout-tile-info {{ IconFor `max-speed` }} whitespace-nowrap"
         title="Max speed"
       >
         {{ .Data.MaxSpeed | HumanSpeed }}
