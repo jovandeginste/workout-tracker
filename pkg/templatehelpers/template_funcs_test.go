@@ -37,9 +37,10 @@ func TestHumanSpeed(t *testing.T) {
 }
 
 func TestHumanTempo(t *testing.T) {
-	assert.Equal(t, "13.55 min/km", HumanTempo(1.23))
-	assert.Equal(t, "6.00 min/km", HumanTempo(2.78))
-	assert.Equal(t, "3.34 min/km", HumanTempo(4.99))
+	assert.Equal(t, "13:33 min/km", HumanTempo(1.23))
+	assert.Equal(t, "5:59 min/km", HumanTempo(2.78))
+	assert.Equal(t, "3:20 min/km", HumanTempo(4.99))
+	assert.Equal(t, "5:01 min/km", HumanTempo(3.32))
 }
 
 func TestBoolToHTML(t *testing.T) {
