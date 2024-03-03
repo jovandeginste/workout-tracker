@@ -89,14 +89,11 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 		firstTrack := &gpxContent.Tracks[0]
 
 		switch strings.ToLower(firstTrack.Type) {
-		case "running":
-		case "run":
+		case "running", "run":
 			return WorkoutTypeRunning
-		case "walking":
-		case "walk":
+		case "walking", "walk":
 			return WorkoutTypeWalking
-		case "cycling":
-		case "cycle":
+		case "cycling", "cycle":
 			return WorkoutTypeCycling
 		case "snowboarding":
 			return WorkoutTypeSnowboarding
