@@ -83,7 +83,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	return &w, nil
 }
 
-func workoutTypeFromGpxTrackType(gpxType string) (workoutType WorkoutType, ok bool) {
+func workoutTypeFromGpxTrackType(gpxType string) (WorkoutType, bool) {
 	switch strings.ToLower(gpxType) {
 	case "running", "run":
 		return WorkoutTypeRunning, true
