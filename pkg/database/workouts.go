@@ -3,6 +3,7 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
@@ -61,7 +62,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	h.Write(content)
 
 	if workoutType == WorkoutTypeAutoDetect {
-		workoutType = autoDetectWorkoutType(data)
+		workoutType = autoDetectWorkoutType(data, gpxContent)
 	}
 
 	w := Workout{
@@ -82,7 +83,32 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	return &w, nil
 }
 
-func autoDetectWorkoutType(data *MapData) WorkoutType {
+func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
+	// If the GPX file mentions a workout type, use it
+	if len(gpxContent.Tracks) > 0 {
+		firstTrack := &gpxContent.Tracks[0]
+
+		switch strings.ToLower(firstTrack.Type) {
+		case "running":
+		case "run":
+			return WorkoutTypeRunning
+		case "walking":
+		case "walk":
+			return WorkoutTypeWalking
+		case "cycling":
+		case "cycle":
+			return WorkoutTypeCycling
+		case "snowboarding":
+			return WorkoutTypeSnowboarding
+		case "skiing":
+			return WorkoutTypeSkiing
+		case "swimming":
+			return WorkoutTypeSwimming
+		case "kayaking":
+			return WorkoutTypeKayaking
+		}
+	}
+
 	if 3.6*data.AverageSpeedNoPause() > 15.0 {
 		return WorkoutTypeCycling
 	}

@@ -94,5 +94,9 @@
   "user": "Benutzer",
   "walking": "Wandern",
   "workout": "Trainingseinheit",
-  "workouts": "Trainingseinheiten"
+  "workouts": "Trainingseinheiten",
+  "skiing": "skifahren",
+  "snowboarding": "snowboarden",
+  "kayaking": "kajakfahren",
+  "swimming": "schwimmen"
 }
