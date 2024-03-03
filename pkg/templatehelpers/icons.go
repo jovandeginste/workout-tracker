@@ -68,12 +68,12 @@ func miscIcon(what string) string {
 
 func sportIcon(what string) string {
 	switch what {
-	case "running":
-		return iconDefaults + " icon-solid icon-person-running"
 	case "cycling":
 		return iconDefaults + " icon-solid icon-person-biking"
-	case "walking":
-		return iconDefaults + " icon-solid icon-person-walking"
+	case "kayaking":
+		return iconDefaults + " icon-solid icon-person-sailboat"
+	case "running", "walking", "swimming", "skiing", "snowboarding":
+		return iconDefaults + " icon-solid icon-person-" + what
 	default:
 		return ""
 	}
