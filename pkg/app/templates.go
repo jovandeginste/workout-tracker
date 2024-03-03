@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/fs"
 	"strings"
+	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
@@ -28,13 +29,16 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 
 	tr := t.app.translatorFromContext(ctx)
 	h := t.app.humanizerFromContext(ctx)
+	u := t.app.getCurrentUser(ctx)
 
 	r.Funcs(template.FuncMap{
 		"i18n":         tr.Getf,
 		"language":     tr.Language().String,
 		"humanizer":    func() *humanize.Humanizer { return h },
 		"RelativeDate": h.NaturalTime,
-		"CurrentUser":  func() *database.User { return t.app.getCurrentUser(ctx) },
+		"CurrentUser":  func() *database.User { return u },
+		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
+		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
 	})
 
 	return r.ExecuteTemplate(w, name, data)
@@ -52,13 +56,14 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"language":    func() string { return BrowserLanguage },
 		"humanizer":   func() *humanize.Humanizer { return h },
 		"CurrentUser": func() *database.User { return nil },
+		"LocalTime":   func(t time.Time) time.Time { return t.UTC() },
+		"LocalDate":   func(t time.Time) string { return t.UTC().Format("2006-01-02 15:04") },
 
 		"supportedLanguages": a.translator.SupportedLanguages,
 		"workoutTypes":       database.WorkoutTypes,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
-		"LocalDate":               templatehelpers.LocalDate,
 		"ToKilometer":             templatehelpers.ToKilometer,
 		"HumanDistance":           templatehelpers.HumanDistance,
 		"HumanSpeed":              templatehelpers.HumanSpeed,
@@ -69,6 +74,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BoolToCheckbox":          templatehelpers.BoolToCheckbox,
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
+		"Timezones":               templatehelpers.Timezones,
 
 		"RelativeDate": h.NaturalTime,
 

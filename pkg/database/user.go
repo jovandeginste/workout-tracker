@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/mail"
+	"time"
 
 	"github.com/cat-dealer/go-rand/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -36,6 +37,19 @@ type User struct {
 
 	Profile  Profile
 	Workouts []Workout
+}
+
+func (u *User) Timezone() *time.Location {
+	if u == nil || u.Profile.Timezone == "" {
+		return time.UTC
+	}
+
+	loc, err := time.LoadLocation(u.Profile.Timezone)
+	if err != nil {
+		return time.UTC
+	}
+
+	return loc
 }
 
 func (u *User) BeforeSave(_ *gorm.DB) error {
