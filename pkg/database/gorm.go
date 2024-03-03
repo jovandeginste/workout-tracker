@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -43,7 +44,11 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 		return nil, err
 	}
 
-	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}); err != nil {
+	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}, &GPXData{}); err != nil {
+		return nil, err
+	}
+
+	if err := convertWorkoutGPXData(db); err != nil {
 		return nil, err
 	}
 
@@ -66,6 +71,38 @@ func setUserAPIKeys(db *gorm.DB) error {
 		}
 
 		if err := u.Save(db); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func convertWorkoutGPXData(db *gorm.DB) error {
+	workouts, err := GetWorkouts(db.Preload("GPX"))
+	if err != nil {
+		return err
+	}
+
+	for _, w := range workouts {
+		if w.GPX != nil {
+			continue
+		}
+
+		db.Logger.Info(context.Background(), fmt.Sprintf("Converting workout: %d", w.ID))
+
+		w.GPX = &GPXData{
+			Content:  w.GPXData,
+			Filename: w.Filename,
+			Checksum: w.Checksum,
+		}
+
+		if err := w.GPX.Save(db); err != nil {
+			return err
+		}
+
+		w.GPXData = nil
+		if err := w.Save(db); err != nil {
 			return err
 		}
 	}
