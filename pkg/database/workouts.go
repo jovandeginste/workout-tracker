@@ -3,6 +3,7 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
@@ -61,7 +62,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	h.Write(content)
 
 	if workoutType == WorkoutTypeAutoDetect {
-		workoutType = autoDetectWorkoutType(data)
+		workoutType = autoDetectWorkoutType(data, gpxContent)
 	}
 
 	w := Workout{
@@ -82,7 +83,37 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	return &w, nil
 }
 
-func autoDetectWorkoutType(data *MapData) WorkoutType {
+func workoutTypeFromGpxTrackType(gpxType string) (workoutType WorkoutType, ok bool) {
+	switch strings.ToLower(gpxType) {
+	case "running", "run":
+		return WorkoutTypeRunning, true
+	case "walking", "walk":
+		return WorkoutTypeWalking, true
+	case "cycling", "cycle":
+		return WorkoutTypeCycling, true
+	case "snowboarding":
+		return WorkoutTypeSnowboarding, true
+	case "skiing":
+		return WorkoutTypeSkiing, true
+	case "swimming":
+		return WorkoutTypeSwimming, true
+	case "kayaking":
+		return WorkoutTypeKayaking, true
+	default:
+		return WorkoutTypeAutoDetect, false
+	}
+}
+
+func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
+	// If the GPX file mentions a workout type (for the first track), use it
+	if len(gpxContent.Tracks) > 0 {
+		firstTrack := &gpxContent.Tracks[0]
+
+		if workoutType, ok := workoutTypeFromGpxTrackType(firstTrack.Type); ok {
+			return workoutType
+		}
+	}
+
 	if 3.6*data.AverageSpeedNoPause() > 15.0 {
 		return WorkoutTypeCycling
 	}
