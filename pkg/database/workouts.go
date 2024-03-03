@@ -114,6 +114,10 @@ func GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	return w, nil
 }
 
+func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
+	return GetWorkout(db.Preload("GPX"), id)
+}
+
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
