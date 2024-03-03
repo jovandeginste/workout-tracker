@@ -12,7 +12,7 @@ import (
 var online = true
 
 func creatorNeedsCorrection(creator string) bool {
-	return creator != "Garmin Connect"
+	return creator != "Garmin Connect" && creator != "Apple Watch"
 }
 
 func correctAltitude(creator string, lat, long, alt float64) float64 {
