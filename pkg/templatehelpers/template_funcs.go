@@ -3,6 +3,7 @@ package templatehelpers
 import (
 	"fmt"
 	"html/template"
+	"math"
 	"strings"
 	"time"
 
@@ -47,7 +48,10 @@ func HumanTempo(mps float64) string {
 	mpk := 1000000 / (mps * 60)
 	value, prefix := humanize.ComputeSI(mpk)
 
-	return fmt.Sprintf("%.2f min/%sm", value, prefix)
+	wholeMinutes := math.Floor(value)
+	seconds := (value - wholeMinutes) * 60
+
+	return fmt.Sprintf("%d:%02d min/%sm", int(wholeMinutes), int(seconds), prefix)
 }
 
 func BoolToHTML(b bool) template.HTML {
