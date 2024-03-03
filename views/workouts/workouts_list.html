@@ -60,30 +60,30 @@
             </td>
             <td
               sorttable_customkey="{{ .Data.TotalDistance }}"
-              class="whitespace-nowrap"
+              class="whitespace-nowrap font-mono"
             >
               {{ .Data.TotalDistance | HumanDistance }}
             </td>
             <td
-              class="hidden sm:table-cell whitespace-nowrap"
+              class="hidden sm:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.TotalDuration | NumericDuration }}"
             >
               {{ .Data.TotalDuration }}
             </td>
             <td
-              class="hidden 2xl:table-cell whitespace-nowrap"
+              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
             >
               {{ .Data.AverageSpeedNoPause | HumanSpeed }}
             </td>
             <td
-              class="hidden 2xl:table-cell whitespace-nowrap"
+              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
             >
               {{ .Data.AverageSpeedNoPause | HumanTempo }}
             </td>
             <td
-              class="hidden 2xl:table-cell whitespace-nowrap"
+              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.MaxSpeed }}"
             >
               {{ .Data.MaxSpeed | HumanSpeed }}

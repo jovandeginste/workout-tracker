@@ -30,8 +30,8 @@
       </td>
       <td class="text-center">{{ .Counter }}</td>
       <td>{{ .Duration }}</td>
-      <td class="whitespace-nowrap">{{ .Speed | HumanSpeed }}</td>
-      <td class="whitespace-nowrap">{{ .Speed | HumanTempo }}</td>
+      <td class="whitespace-nowrap font-mono">{{ .Speed | HumanSpeed }}</td>
+      <td class="whitespace-nowrap font-mono">{{ .Speed | HumanTempo }}</td>
     </tr>
     {{ end }}
   </tbody>
@@ -40,7 +40,9 @@
       <td colspan="2"></td>
       <td colspan="3">
         {{ i18n "Last distance" }}:
-        <span class="whitespace-nowrap">{{ $distance | HumanDistance }}</span>
+        <span class="whitespace-nowrap font-mono"
+          >{{ $distance | HumanDistance }}</span
+        >
       </td>
     </tr>
   </tfoot>
