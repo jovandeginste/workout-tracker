@@ -12,6 +12,20 @@ import (
 
 var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
+// Workout type excluding the larger fields to speed up querying for lists
+type WorkoutAPI struct {
+	gorm.Model
+	Name     string     `gorm:"nut null"`
+	Date     *time.Time `gorm:"not null"`
+	UserID   uint       `gorm:"not null;index"`
+	Dirty    bool
+	User     *User
+	Notes    string
+	Type     WorkoutType
+	Data     *MapData `gorm:"serializer:json"`
+	Filename string
+}
+
 type Workout struct {
 	gorm.Model
 	Name     string     `gorm:"nut null"`

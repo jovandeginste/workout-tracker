@@ -77,7 +77,7 @@ func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
 		return nil
 	}
 
-	w, err := u.GetWorkouts(a.db)
+	w, err := u.GetWorkoutsAPI(a.db)
 	if err != nil {
 		return err
 	}

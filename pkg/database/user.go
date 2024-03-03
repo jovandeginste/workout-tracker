@@ -204,6 +204,16 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	return w, nil
 }
 
+func (u *User) GetWorkoutsAPI(db *gorm.DB) ([]*WorkoutAPI, error) {
+	var w []*WorkoutAPI
+
+	if err := db.Model(&Workout{}).Where(&Workout{UserID: u.ID}).Order("date DESC").Find(&w).Error; err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
 func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
 	if u == nil {
 		return nil, ErrNoUser
