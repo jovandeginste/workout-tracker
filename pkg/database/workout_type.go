@@ -5,6 +5,9 @@ import "slices"
 type WorkoutType string
 
 const (
+	// We need to add each of these types to the "messages.html" partial view.
+	// Then it gets picked up by the i18n system, added to the list of translatable
+	// strings, etc.
 	WorkoutTypeAutoDetect   WorkoutType = "auto"
 	WorkoutTypeRunning      WorkoutType = "running"
 	WorkoutTypeCycling      WorkoutType = "cycling"

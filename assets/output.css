@@ -2535,12 +2535,28 @@ table {
   content: "\f70c";
 }
 
-.icon-person-running-fast::before {
-  content: "\e5ff";
+.icon-person-skiing::before {
+  content: "\f7c9";
 }
 
-.icon-person-running-fast::after {
-  content: "\e5ff";
+.icon-person-skiing::after {
+  content: "\f7c9";
+}
+
+.icon-person-snowboarding::before {
+  content: "\f7ce";
+}
+
+.icon-person-snowboarding::after {
+  content: "\f7ce";
+}
+
+.icon-person-swimming::before {
+  content: "\f5c4";
+}
+
+.icon-person-swimming::after {
+  content: "\f5c4";
 }
 
 .icon-person-walking::before {
@@ -2589,6 +2605,14 @@ table {
 
 .icon-road::after {
   content: "\f018";
+}
+
+.icon-sailboat::before {
+  content: "\e445";
+}
+
+.icon-sailboat::after {
+  content: "\e445";
 }
 
 .icon-stopwatch::before {
