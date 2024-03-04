@@ -27,7 +27,7 @@ type Workout struct {
 
 	GPXData  []byte `gorm:"type:mediumtext"`
 	Filename string
-	Checksum []byte
+	Checksum []byte `gorm:"default:legacy"`
 }
 
 type GPXData struct {
@@ -160,7 +160,7 @@ func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func (w *Workout) Delete(db *gorm.DB) error {
-	return db.Unscoped().Delete(w).Error
+	return db.Unscoped().Select("GPX").Delete(w).Error
 }
 
 func (w *Workout) Create(db *gorm.DB) error {
