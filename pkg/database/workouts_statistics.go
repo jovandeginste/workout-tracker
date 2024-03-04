@@ -86,7 +86,7 @@ func (w *Workout) StatisticsPerMinute() []StatisticsItem {
 }
 
 func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
-	if len(w.Data.Points) == 0 {
+	if len(w.Data.Details.Points) == 0 {
 		return nil
 	}
 
@@ -95,15 +95,15 @@ func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
 	nextItem := StatisticsItem{
 		Unit:       unit,
 		Counter:    1,
-		FirstPoint: &w.Data.Points[0],
+		FirstPoint: &w.Data.Details.Points[0],
 	}
 
-	for i, p := range w.Data.Points {
-		if !nextItem.canHave(unit, &w.Data.Points[i]) {
-			nextItem.LastPoint = &w.Data.Points[i]
+	for i, p := range w.Data.Details.Points {
+		if !nextItem.canHave(unit, &w.Data.Details.Points[i]) {
+			nextItem.LastPoint = &w.Data.Details.Points[i]
 			nextItem.CalcultateSpeed()
 			items = append(items, nextItem)
-			nextItem = nextItem.createNext(&w.Data.Points[i])
+			nextItem = nextItem.createNext(&w.Data.Details.Points[i])
 		}
 
 		nextItem.Distance += p.Distance
@@ -116,7 +116,7 @@ func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
 		}
 	}
 
-	nextItem.LastPoint = &w.Data.Points[len(w.Data.Points)-1]
+	nextItem.LastPoint = &w.Data.Details.Points[len(w.Data.Details.Points)-1]
 
 	if nextItem.FirstPoint != nil {
 		nextItem.CalcultateSpeed()

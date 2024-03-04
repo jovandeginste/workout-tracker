@@ -29,7 +29,7 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	w, err := database.GetWorkout(a.db, id)
+	w, err := database.GetWorkoutDetails(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}
