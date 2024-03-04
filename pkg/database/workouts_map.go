@@ -7,6 +7,7 @@ import (
 	"github.com/codingsince1985/geo-golang/openstreetmap"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
+	"gorm.io/gorm"
 )
 
 var online = true
@@ -31,11 +32,13 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 }
 
 type MapData struct {
+	gorm.Model
+	WorkoutID     uint `gorm:"not null"`
 	Creator       string
 	Name          string
 	Date          string
-	Center        MapCenter
-	Address       *geo.Address
+	Center        MapCenter    `gorm:"serializer:json"`
+	Address       *geo.Address `gorm:"serializer:json"`
 	TotalDistance float64
 	TotalDuration time.Duration
 	MaxSpeed      float64
@@ -44,7 +47,7 @@ type MapData struct {
 	MaxElevation  float64
 	TotalUp       float64
 	TotalDown     float64
-	Points        []MapPoint
+	Points        []MapPoint `gorm:"serializer:json"`
 }
 type MapCenter struct {
 	Lat float64
@@ -59,6 +62,10 @@ type MapPoint struct {
 	TotalDuration time.Duration
 	Time          time.Time
 	Elevation     float64
+}
+
+func (m *MapData) Save(db *gorm.DB) error {
+	return db.Save(m).Error
 }
 
 func (m *MapData) AverageSpeed() float64 {
