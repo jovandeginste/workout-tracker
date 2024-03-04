@@ -67,13 +67,23 @@ func miscIcon(what string) string {
 }
 
 func sportIcon(what string) string {
+	// We need every icon fully qualified here. Otherwise Tailwind will not pick
+	// it up and not add it to the generated CSS file.
 	switch what {
 	case "cycling":
 		return iconDefaults + " icon-solid icon-person-biking"
+	case "running":
+		return iconDefaults + " icon-solid icon-person-running"
+	case "walking":
+		return iconDefaults + " icon-solid icon-person-walking"
+	case "swimming":
+		return iconDefaults + " icon-solid icon-person-swimming"
+	case "skiing":
+		return iconDefaults + " icon-solid icon-person-skiing"
+	case "snowboarding":
+		return iconDefaults + " icon-solid icon-person-snowboarding"
 	case "kayaking":
-		return iconDefaults + " icon-solid icon-person-sailboat"
-	case "running", "walking", "swimming", "skiing", "snowboarding":
-		return iconDefaults + " icon-solid icon-person-" + what
+		return iconDefaults + " icon-solid icon-sailboat"
 	default:
 		return ""
 	}
