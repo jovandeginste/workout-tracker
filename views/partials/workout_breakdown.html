@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    {{ $distance := 0 }} {{ range . }} {{ $distance = .Distance }}
+    {{ $distance := 0.0 }} {{ range . }} {{ $distance = .Distance }}
     <tr
       {{
       with

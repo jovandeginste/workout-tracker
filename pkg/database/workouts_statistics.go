@@ -86,6 +86,10 @@ func (w *Workout) StatisticsPerMinute() []StatisticsItem {
 }
 
 func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
+	if len(w.Data.Points) == 0 {
+		return nil
+	}
+
 	var items []StatisticsItem
 
 	nextItem := StatisticsItem{

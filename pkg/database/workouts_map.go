@@ -1,6 +1,7 @@
 package database
 
 import (
+	"math"
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
@@ -75,8 +76,13 @@ func (m *MapPoint) AverageSpeed() float64 {
 
 // center returns the center point (lat, lng) of gpx points
 func center(gpxContent *gpx.GPX) MapCenter {
-	lat, lng := 0.0, 0.0
 	points := allGPXPoints(gpxContent)
+
+	if len(points) == 0 {
+		return MapCenter{}
+	}
+
+	lat, lng := 0.0, 0.0
 
 	for _, pt := range points {
 		lat += pt.Point.Latitude
@@ -112,11 +118,25 @@ func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
 
 	for _, track := range gpxContent.Tracks {
 		for _, segment := range track.Segments {
-			points = append(points, segment.Points...)
+			for _, p := range segment.Points {
+				if !pointHasDistance(p) {
+					continue
+				}
+
+				points = append(points, p)
+			}
 		}
 	}
 
 	return points
+}
+
+func pointHasDistance(p gpx.GPXPoint) bool {
+	if math.IsNaN(p.Latitude) || math.IsNaN(p.Longitude) {
+		return false
+	}
+
+	return true
 }
 
 func gpxName(gpxContent *gpx.GPX) string {
@@ -207,7 +227,31 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDown:     downhill,
 	}
 
+	data.correctNaN()
+
 	return data
+}
+
+func (m *MapData) correctNaN() {
+	if math.IsNaN(m.MinElevation) {
+		m.MinElevation = 0
+	}
+
+	if math.IsNaN(m.MaxElevation) {
+		m.MaxElevation = 0
+	}
+
+	if math.IsNaN(m.TotalDistance) {
+		m.TotalDistance = 0
+	}
+
+	if math.IsNaN(m.TotalDown) {
+		m.TotalDown = 0
+	}
+
+	if math.IsNaN(m.TotalUp) {
+		m.TotalUp = 0
+	}
 }
 
 func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
@@ -223,6 +267,10 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 	prevPoint := points[0]
 
 	for i, pt := range points {
+		if !pointHasDistance(pt) {
+			continue
+		}
+
 		dist := 0.0
 		t := 0.0
 
