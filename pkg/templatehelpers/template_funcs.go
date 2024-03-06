@@ -41,6 +41,10 @@ func HumanSpeed(mps float64) string {
 }
 
 func HumanTempo(mps float64) string {
+	if mps == 0 {
+		return "0 min/m"
+	}
+
 	mpk := 1000000 / (mps * 60)
 	value, prefix := humanize.ComputeSI(mpk)
 

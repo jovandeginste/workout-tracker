@@ -3,6 +3,7 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"log"
 	"strings"
 	"time"
 
@@ -167,6 +168,8 @@ func (w *Workout) Create(db *gorm.DB) error {
 	if w.Data == nil {
 		return ErrInvalidData
 	}
+
+	log.Printf("%#v\n", w.Data)
 
 	return db.Create(w).Error
 }
