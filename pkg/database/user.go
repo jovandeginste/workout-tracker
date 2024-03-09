@@ -72,7 +72,7 @@ func GetUsers(db *gorm.DB) ([]User, error) {
 func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 	var u User
 
-	if err := db.First(&u, userID).Error; err != nil {
+	if err := db.Preload("Profile").First(&u, userID).Error; err != nil {
 		return nil, db.Error
 	}
 

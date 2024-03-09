@@ -24,6 +24,7 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 	u.Profile.Language = p.Language
 	u.Profile.TotalsShow = p.TotalsShow
 	u.Profile.Timezone = p.Timezone
+	u.Profile.AutoImportDirectory = p.AutoImportDirectory
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)

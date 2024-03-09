@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"io/fs"
 	"log/slog"
 	"os"
@@ -164,39 +163,4 @@ func (a *App) createAdminUser() error {
 	a.logger.Warn("Creating admin user '" + u.Username + "', with password 'admin'")
 
 	return u.Create(a.db)
-}
-
-func (a *App) BackgroundWorker() {
-	l := a.logger.With("module", "worker")
-
-	for {
-		l.Info("Worker started...")
-
-		var wID []int
-
-		q := a.db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(1000).Pluck("ID", &wID)
-		if err := q.Error; err != nil {
-			l.Error("Worker error: " + err.Error())
-		}
-
-		for _, i := range wID {
-			l.Info(fmt.Sprintf("Updating workout %d", i))
-
-			if err := a.UpdateWorkout(i); err != nil {
-				l.Error("Worker error: " + err.Error())
-			}
-		}
-
-		l.Info("Worker finished...")
-		time.Sleep(time.Minute)
-	}
-}
-
-func (a *App) UpdateWorkout(i int) error {
-	w, err := database.GetWorkoutWithGPX(a.db, i)
-	if err != nil {
-		return err
-	}
-
-	return w.UpdateData(a.db)
 }

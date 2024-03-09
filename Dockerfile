@@ -43,7 +43,7 @@ RUN go build \
 FROM alpine:latest
 
 RUN apk add --no-cache tzdata
-VOLUME /data
+VOLUME /data /imports
 WORKDIR /app
 COPY --from=backend /workout-tracker ./workout-tracker
 
