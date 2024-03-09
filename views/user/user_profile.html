@@ -54,6 +54,23 @@
                 </td>
               </tr>
               <tr>
+                <th>
+                  <label for="auto_import_directory"
+                    >{{ i18n "Auto import directory" }}</label
+                  >
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="auto_import_directory"
+                    name="auto_import_directory"
+                    size="40"
+                    value="{{ CurrentUser.Profile.AutoImportDirectory }}"
+                    placeholder="/imports/{{ CurrentUser.Username }}/"
+                  />
+                </td>
+              </tr>
+              <tr>
                 <td></td>
                 <td>
                   <button type="submit">{{ i18n "Update profile" }}</button>
