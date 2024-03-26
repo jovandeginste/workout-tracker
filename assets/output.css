@@ -492,6 +492,20 @@ body {
   }
 }
 
+ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  list-style-position: inside;
+  list-style-type: decimal;
+}
+
+ul {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  list-style-position: inside;
+  list-style-type: disc;
+}
+
 button[type="submit"],
   textarea,
   select,

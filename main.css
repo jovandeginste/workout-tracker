@@ -25,6 +25,14 @@
     @apply dark:bg-neutral-900 dark:text-zinc-100;
   }
 
+  ol {
+    @apply list-decimal list-inside my-5;
+  }
+
+  ul {
+    @apply list-disc list-inside my-5;
+  }
+
   button[type="submit"],
   textarea,
   select,

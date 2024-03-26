@@ -66,7 +66,7 @@
         {{ if .Notes }}
         <div class="inner-form">
           <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
-          <div>{{ .Notes }}</div>
+          <div>{{ .MarkdownNotes }}</div>
         </div>
         {{ end }}
       </div>
