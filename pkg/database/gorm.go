@@ -44,11 +44,11 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 		return nil, err
 	}
 
-	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}, &GPXData{}); err != nil {
+	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}, &GPXData{}, &MapData{}); err != nil {
 		return nil, err
 	}
 
-	if err := convertWorkoutGPXData(db); err != nil {
+	if err := convertWorkouts(db); err != nil {
 		return nil, err
 	}
 
@@ -78,30 +78,39 @@ func setUserAPIKeys(db *gorm.DB) error {
 	return nil
 }
 
-func convertWorkoutGPXData(db *gorm.DB) error {
-	workouts, err := GetWorkouts(db.Preload("GPX"))
+func convertWorkouts(db *gorm.DB) error {
+	workouts, err := GetWorkouts(db.Preload("Data").Preload("GPX").Where("gpx_data IS NOT NULL or data IS NOT NULL"))
 	if err != nil {
 		return err
 	}
 
 	for _, w := range workouts {
-		if w.GPX != nil {
-			continue
+		db.Logger.Info(context.Background(), fmt.Sprintf("Converting workout gpx data: %d", w.ID))
+
+		if w.GPXData != nil {
+			w.GPX = &GPXData{
+				WorkoutID: w.ID,
+				Content:   w.GPXData,
+				Filename:  w.Filename,
+				Checksum:  w.Checksum,
+			}
+			w.GPXData = nil
+
+			if err := w.GPX.Save(db); err != nil {
+				return err
+			}
 		}
 
-		db.Logger.Info(context.Background(), fmt.Sprintf("Converting workout: %d", w.ID))
+		if w.MapData != nil {
+			w.Data = w.MapData
+			w.Data.WorkoutID = w.ID
+			w.MapData = nil
 
-		w.GPX = &GPXData{
-			Content:  w.GPXData,
-			Filename: w.Filename,
-			Checksum: w.Checksum,
+			if err := w.Data.Save(db); err != nil {
+				return err
+			}
 		}
 
-		if err := w.GPX.Save(db); err != nil {
-			return err
-		}
-
-		w.GPXData = nil
 		if err := w.Save(db); err != nil {
 			return err
 		}

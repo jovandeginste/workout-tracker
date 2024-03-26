@@ -83,7 +83,7 @@ func TestWorkout_UpdateData(t *testing.T) {
 	ud = w.UpdatedAt
 
 	require.NoError(t, w.UpdateData(db))
-	assert.Equal(t, d, w.Data)
+	assert.Equal(t, d.Points, w.Data.Points)
 	assert.NotEqual(t, ud, w.UpdatedAt)
 }
 
@@ -98,5 +98,26 @@ func TestWorkout_SaveAndGet(t *testing.T) {
 	newW, err := GetWorkout(db, int(w.ID))
 	require.NoError(t, err)
 	assert.Equal(t, w.ID, newW.ID)
-	assert.Equal(t, w.Data, newW.Data)
+	assert.Equal(t, w.Data.Points, newW.Data.Points)
+}
+
+func TestWorkout_Recreate(t *testing.T) {
+	db := createMemoryDB(t)
+	w := defaultWorkout(t)
+
+	assert.Zero(t, w.UpdatedAt)
+	require.NoError(t, w.Save(db))
+	assert.NotZero(t, w.UpdatedAt)
+
+	require.NoError(t, w.Delete(db))
+
+	ws, err := GetWorkouts(db)
+	require.NoError(t, err)
+	assert.Empty(t, ws)
+
+	require.NoError(t, w.Save(db))
+
+	ws, err = GetWorkouts(db)
+	require.NoError(t, err)
+	assert.Len(t, ws, 1)
 }
