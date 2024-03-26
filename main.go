@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	appassets "github.com/jovandeginste/workout-tracker/assets"
 	"github.com/jovandeginste/workout-tracker/pkg/app"
 	apptranslations "github.com/jovandeginste/workout-tracker/translations"
@@ -14,7 +12,7 @@ var (
 	gitRefName = "local"
 	gitRefType = "local"
 	gitCommit  = "local"
-	buildTime  = time.Now().Format(time.RFC3339)
+	buildTime  = "now"
 )
 
 func main() {
