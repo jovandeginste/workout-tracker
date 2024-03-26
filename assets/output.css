@@ -2437,6 +2437,14 @@ table {
   content: "\f017";
 }
 
+.icon-download::before {
+  content: "\f019";
+}
+
+.icon-download::after {
+  content: "\f019";
+}
+
 .icon-dumbbell::before {
   content: "\f44b";
 }
