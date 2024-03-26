@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/cat-dealer/go-rand/v2"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -37,6 +38,48 @@ type User struct {
 
 	Profile  Profile
 	Workouts []Workout
+}
+
+func (u *User) Units() templatehelpers.Units {
+	if u == nil {
+		return templatehelpers.MetricUnits
+	}
+
+	switch u.Profile.Units {
+	case "imperial":
+		return templatehelpers.ImperialUnits
+	case "metric":
+		return templatehelpers.MetricUnits
+	default:
+		return templatehelpers.BrowserUnits
+	}
+}
+
+func (u *User) UnitDistance() string {
+	switch u.Units() { //nolint:exhaustive
+	case templatehelpers.ImperialUnits:
+		return "mi"
+	default:
+		return "km"
+	}
+}
+
+func (u *User) UnitElevation() string {
+	switch u.Units() { //nolint:exhaustive
+	case templatehelpers.ImperialUnits:
+		return "ft"
+	default:
+		return "m"
+	}
+}
+
+func (u *User) UnitPH() string {
+	switch u.Units() { //nolint:exhaustive
+	case templatehelpers.ImperialUnits:
+		return "mi/h"
+	default:
+		return "km/h"
+	}
 }
 
 func (u *User) Timezone() *time.Location {
