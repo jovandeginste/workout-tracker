@@ -138,6 +138,8 @@ func utilityIcon(what string) string {
 		return iconDefaults + " icon-solid icon-eye-slash"
 	case "copy":
 		return iconDefaults + " icon-solid icon-clipboard"
+	case "download":
+		return iconDefaults + " icon-solid icon-download"
 	case "attention":
 		return iconDefaults + " icon-solid icon-circle-exclamation"
 	default:

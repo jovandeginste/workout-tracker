@@ -1,7 +1,10 @@
 package app
 
 import (
+	"bytes"
+	"errors"
 	"net/http"
+	"path"
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
@@ -90,6 +93,25 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	a.setNotice(c, "The workout '%s' has been updated.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
+}
+
+func (a *App) workoutsDownloadHandler(c echo.Context) error {
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, "/workouts", err)
+	}
+
+	if workout.GPX == nil ||
+		workout.GPX.Filename == "" ||
+		workout.GPX.Content == nil {
+		return a.redirectWithError(c, "/workouts", errors.New("workout has no content"))
+	}
+
+	basename := path.Base(workout.GPX.Filename)
+
+	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+basename+"\"")
+
+	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(workout.GPX.Content))
 }
 
 func (a *App) workoutsEditHandler(c echo.Context) error {

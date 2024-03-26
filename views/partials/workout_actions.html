@@ -1,4 +1,9 @@
 {{ define "workout_actions" }}
+<form action="{{ RouteFor `workout-download` .ID }}" method="get">
+  <button class="download" title="{{ i18n `download` }}">
+    <a class="{{ IconFor `download` }}"></a>
+  </button>
+</form>
 <form action="{{ RouteFor `workout-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
     <a class="{{ IconFor `edit` }}"></a>
