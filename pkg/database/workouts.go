@@ -3,10 +3,15 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"html/template"
 	"strings"
 	"time"
 
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 )
@@ -36,6 +41,14 @@ type GPXData struct {
 	Content   []byte `gorm:"type:mediumtext"`
 	Checksum  []byte `gorm:"not null;uniqueIndex"`
 	Filename  string
+}
+
+func (w *Workout) MarkdownNotes() template.HTML {
+	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(w.Notes))
+	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
+	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
+
+	return template.HTML(safeHTML) //nolint:gosec // We escaped all unsafe HTML with bluemonday
 }
 
 func (d *GPXData) Save(db *gorm.DB) error {

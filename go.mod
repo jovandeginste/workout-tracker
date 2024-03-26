@@ -13,12 +13,14 @@ require (
 	github.com/fsouza/slognil v0.4.0
 	github.com/glebarez/sqlite v1.10.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
+	github.com/gomarkdown/markdown v0.0.0-20231222211730-1d6d20845b47
 	github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/labstack/gommon v0.4.2
 	github.com/lmittmann/tint v1.0.4
 	github.com/mattn/go-isatty v0.0.20
+	github.com/microcosm-cc/bluemonday v1.0.26
 	github.com/orandin/slog-gorm v1.1.0
 	github.com/samber/slog-echo v1.12.2
 	github.com/spazzymoto/echo-scs-session v1.0.0
@@ -36,6 +38,7 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/client9/misspell v0.3.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
@@ -45,6 +48,7 @@ require (
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/gordonklaus/ineffassign v0.0.0-20210914165742-4cc7213b9bc8 // indirect
+	github.com/gorilla/css v1.0.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
