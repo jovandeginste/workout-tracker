@@ -27,9 +27,15 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		return err
 	}
 
+	l := langFromBrowser(ctx)
 	tr := t.app.translatorFromContext(ctx)
 	h := t.app.humanizerFromContext(ctx)
 	u := t.app.getCurrentUser(ctx)
+
+	units := u.Units()
+	if units == templatehelpers.BrowserUnits {
+		units = templatehelpers.UnitsFromBrowserLanguage(l)
+	}
 
 	r.Funcs(template.FuncMap{
 		"i18n":         tr.Getf,
@@ -39,6 +45,10 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		"CurrentUser":  func() *database.User { return u },
 		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
 		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
+
+		"HumanDistance": templatehelpers.HumanDistance(units),
+		"HumanSpeed":    templatehelpers.HumanSpeed(units),
+		"HumanTempo":    templatehelpers.HumanTempo(units),
 	})
 
 	return r.ExecuteTemplate(w, name, data)
@@ -59,15 +69,16 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"LocalTime":   func(t time.Time) time.Time { return t.UTC() },
 		"LocalDate":   func(t time.Time) string { return t.UTC().Format("2006-01-02 15:04") },
 
+		"supportedUnits":     templatehelpers.SupportedUnits,
 		"supportedLanguages": a.translator.SupportedLanguages,
 		"workoutTypes":       database.WorkoutTypes,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
 		"ToKilometer":             templatehelpers.ToKilometer,
-		"HumanDistance":           templatehelpers.HumanDistance,
-		"HumanSpeed":              templatehelpers.HumanSpeed,
-		"HumanTempo":              templatehelpers.HumanTempo,
+		"HumanDistance":           templatehelpers.HumanDistance(templatehelpers.MetricUnits),
+		"HumanSpeed":              templatehelpers.HumanSpeed(templatehelpers.MetricUnits),
+		"HumanTempo":              templatehelpers.HumanTempo(templatehelpers.MetricUnits),
 		"HumanDuration":           templatehelpers.HumanDuration,
 		"IconFor":                 templatehelpers.IconFor,
 		"BoolToHTML":              templatehelpers.BoolToHTML,
@@ -75,6 +86,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
 		"Timezones":               templatehelpers.Timezones,
+		"LocalUnit":               templatehelpers.LocalUnit,
 
 		"RelativeDate": h.NaturalTime,
 

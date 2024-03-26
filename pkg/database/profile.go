@@ -14,6 +14,7 @@ type Profile struct {
 	Language            string      `form:"language"`
 	TotalsShow          WorkoutType `form:"totals_show"`
 	Timezone            string      `form:"timezone"`
+	Units               string      `form:"units"`
 	AutoImportDirectory string      `form:"auto_import_directory"`
 
 	User *User `gorm:"foreignKey:UserID"`

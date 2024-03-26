@@ -47,8 +47,8 @@
                   {{ end  }}
                 ];
                 let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];
-                let minElevation = {{ .Data.MinElevation }};
-                let maxElevation = {{ .Data.MaxElevation }};
+                let minElevation = {{ LocalUnit .Data.MinElevation CurrentUser.Units }};
+                let maxElevation = {{ LocalUnit .Data.MaxElevation CurrentUser.Units }};
               </script>
               <script src="{{ RouteFor `assets` }}/map.js"></script>
             </div>

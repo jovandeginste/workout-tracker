@@ -71,6 +71,7 @@ func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
 
 	data["currentUser"] = u
 	data["userProfileLanguage"] = u.Profile.Language
+	data["userProfileUnits"] = u.Profile.Units
 	data["userProfileTotalsShow"] = u.Profile.TotalsShow
 }
 

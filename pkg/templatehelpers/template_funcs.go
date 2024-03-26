@@ -3,17 +3,85 @@ package templatehelpers
 import (
 	"fmt"
 	"html/template"
-	"math"
 	"strings"
 	"time"
 
-	"github.com/dustin/go-humanize"
+	"github.com/bcicen/go-units"
 	emojiflag "github.com/jayco/go-emoji-flag"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 )
 
 var englishTag = display.English.Languages()
+
+type Units string
+
+const (
+	ImperialUnits Units = "imperial"
+	MetricUnits   Units = "metric"
+	BrowserUnits  Units = "browser"
+
+	InvalidValid = "N/A"
+)
+
+func SupportedUnits() []Units {
+	return []Units{ImperialUnits, MetricUnits}
+}
+
+func LocalUnit(v float64, u Units) float64 {
+	switch u { //nolint:exhaustive
+	case ImperialUnits:
+		value := units.NewValue(v, units.Meter)
+		f := value.MustConvert(units.Foot)
+
+		return f.Float()
+	default:
+		return v
+	}
+}
+
+func UnitsFromBrowserLanguage(l string) Units {
+	// eg.: "nl-BE,nl;q=0.7,en;q=0.3"
+	ls := strings.SplitN(l, ",", 2)
+	l = ls[0]
+
+	ls = strings.SplitN(l, ";", 2)
+	l = ls[0]
+
+	switch l {
+	case "en-US", "my":
+		return ImperialUnits
+	default:
+		return MetricUnits
+	}
+}
+
+func HumanDistance(system Units) func(v float64) string {
+	switch system { //nolint:exhaustive
+	case ImperialUnits:
+		return ImperialDistance
+	default:
+		return MetricDistance
+	}
+}
+
+func HumanSpeed(system Units) func(v float64) string {
+	switch system { //nolint:exhaustive
+	case ImperialUnits:
+		return ImperialSpeed
+	default:
+		return MetricSpeed
+	}
+}
+
+func HumanTempo(system Units) func(v float64) string {
+	switch system { //nolint:exhaustive
+	case ImperialUnits:
+		return ImperialTempo
+	default:
+		return MetricTempo
+	}
+}
 
 func NumericDuration(d time.Duration) float64 {
 	return d.Seconds()
@@ -25,37 +93,6 @@ func CountryCodeToFlag(cc string) string {
 
 func ToKilometer(d float64) string {
 	return fmt.Sprintf("%.2f km", d/1000.0)
-}
-
-func HumanDistance(d float64) string {
-	value, prefix := humanize.ComputeSI(d)
-
-	return fmt.Sprintf("%.2f %sm", value, prefix)
-}
-
-func HumanSpeed(mps float64) string {
-	if mps == 0 {
-		return "N/A"
-	}
-
-	mph := mps * 3600
-	value, prefix := humanize.ComputeSI(mph)
-
-	return fmt.Sprintf("%.2f %sm/h", value, prefix)
-}
-
-func HumanTempo(mps float64) string {
-	if mps == 0 {
-		return "N/A"
-	}
-
-	mpk := 1000000 / (mps * 60)
-	value, prefix := humanize.ComputeSI(mpk)
-
-	wholeMinutes := math.Floor(value)
-	seconds := (value - wholeMinutes) * 60
-
-	return fmt.Sprintf("%d:%02d min/%sm", int(wholeMinutes), int(seconds), prefix)
 }
 
 func BoolToHTML(b bool) template.HTML {

@@ -31,7 +31,7 @@
             return (
               value.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-              }) + " km/h"
+              }) + " {{ CurrentUser.UnitPH }}"
             );
           },
         },
@@ -45,7 +45,7 @@
             return (
               value.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-              }) + " m"
+              }) + " {{ CurrentUser.UnitElevation }}"
             );
           },
         },
@@ -67,9 +67,9 @@
               });
 
               if (context.dataset.yAxisID === "y") {
-                label += " km/h";
+                label += " {{ CurrentUser.UnitPH }}";
               } else if (context.dataset.yAxisID === "y1") {
-                label += " m";
+                label += " {{ CurrentUser.UnitElevation }}";
               }
             }
             return label;
@@ -91,7 +91,7 @@
           yAxisID: 'y',
           data: [
             {{ range . -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .HumanSpeed CurrentUser.Units }}, },
             {{- end  }}
           ],
         },
@@ -102,7 +102,7 @@
           fill: true,
           data: [
             {{ range . -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ LocalUnit .FirstPoint.Elevation CurrentUser.Units }}, },
             {{- end  }}
           ],
         },

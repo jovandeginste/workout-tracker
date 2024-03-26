@@ -64,8 +64,12 @@ func langFromContext(ctx echo.Context) []interface{} {
 	return []interface{}{
 		ctx.QueryParam("lang"),
 		ctx.Get("user_language"),
-		ctx.Request().Header.Get("Accept-Language"),
+		langFromBrowser(ctx),
 	}
+}
+
+func langFromBrowser(ctx echo.Context) string {
+	return ctx.Request().Header.Get("Accept-Language")
 }
 
 func (a *App) i18n(ctx echo.Context, message string, vars ...interface{}) string {

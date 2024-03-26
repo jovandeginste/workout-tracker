@@ -87,6 +87,12 @@
               </tr>
               <tr>
                 <th>
+                  <label for="units">{{ i18n "Units" }}</label>
+                </th>
+                <td>{{ template "user_profile_units" CurrentUser.Units }}</td>
+              </tr>
+              <tr>
+                <th>
                   <label for="auto_import_directory"
                     >{{ i18n "Auto import directory" }}</label
                   >
