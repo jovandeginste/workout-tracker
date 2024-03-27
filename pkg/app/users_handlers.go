@@ -53,6 +53,10 @@ func (a *App) userSignoutHandler(c echo.Context) error {
 
 // userRegisterHandler will be executed after registration submission.
 func (a *App) userRegisterHandler(c echo.Context) error {
+	if a.Config.RegistrationDisabled {
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), errors.New("registration is disabled"))
+	}
+
 	// Initiate a new User struct.
 	u := new(database.User)
 

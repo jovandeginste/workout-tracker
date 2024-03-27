@@ -5,12 +5,13 @@ import (
 )
 
 type Config struct {
-	Bind             string `mapstructure:"bind"`
-	JWTEncryptionKey string `mapstructure:"jwt_encryption_key"`
-	Logging          bool   `mapstructure:"logging"`
-	Debug            bool   `mapstructure:"debug"`
-	DatabaseDriver   string `mapstructure:"database_driver"`
-	DSN              string `mapstructure:"dsn"`
+	Bind                 string `mapstructure:"bind"`
+	JWTEncryptionKey     string `mapstructure:"jwt_encryption_key"`
+	Logging              bool   `mapstructure:"logging"`
+	Debug                bool   `mapstructure:"debug"`
+	DatabaseDriver       string `mapstructure:"database_driver"`
+	DSN                  string `mapstructure:"dsn"`
+	RegistrationDisabled bool   `mapstructure:"registration_disabled"`
 }
 
 func (a *App) ReadConfiguration() error {
@@ -23,6 +24,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetDefault("debug", "false")
 	viper.SetDefault("database_driver", "sqlite")
 	viper.SetDefault("dsn", "./database.db")
+	viper.SetDefault("registration_disabled", "false")
 
 	for _, envVar := range []string{
 		"bind",
@@ -31,6 +33,7 @@ func (a *App) ReadConfiguration() error {
 		"debug",
 		"database_driver",
 		"dsn",
+		"registration_disabled",
 	} {
 		if err := viper.BindEnv(envVar); err != nil {
 			return err
