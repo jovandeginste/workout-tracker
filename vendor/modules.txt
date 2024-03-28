@@ -2,6 +2,9 @@
 ## explicit; go 1.16
 github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
+# github.com/Knetic/govaluate v3.0.0+incompatible
+## explicit
+github.com/Knetic/govaluate
 # github.com/alexedwards/scs/gormstore v0.0.0-20240203174419-a38e822451b6
 ## explicit; go 1.12
 github.com/alexedwards/scs/gormstore
@@ -13,6 +16,12 @@ github.com/alexedwards/scs/v2/memstore
 ## explicit
 github.com/aymerick/douceur/css
 github.com/aymerick/douceur/parser
+# github.com/bcicen/bfstree v1.0.0
+## explicit; go 1.18
+github.com/bcicen/bfstree
+# github.com/bcicen/go-units v1.0.5
+## explicit; go 1.18
+github.com/bcicen/go-units
 # github.com/cat-dealer/go-rand/v2 v2.0.0
 ## explicit; go 1.14
 github.com/cat-dealer/go-rand/v2

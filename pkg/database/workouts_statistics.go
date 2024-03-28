@@ -2,6 +2,9 @@ package database
 
 import (
 	"time"
+
+	"github.com/bcicen/go-units"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 )
 
 type StatisticsItem struct {
@@ -16,6 +19,23 @@ type StatisticsItem struct {
 	LastPoint     *MapPoint
 	IsBest        bool
 	IsWorst       bool
+}
+
+func (si *StatisticsItem) HumanSpeed(u templatehelpers.Units) float64 {
+	switch u { //nolint:exhaustive
+	case templatehelpers.ImperialUnits:
+		return si.SpeedMPH()
+	default:
+		return si.SpeedKPH()
+	}
+}
+
+func (si *StatisticsItem) SpeedMPH() float64 {
+	value := units.NewValue(si.SpeedKPH(), units.KiloMeter)
+
+	f := value.MustConvert(units.Mile)
+
+	return f.Float()
 }
 
 func (si *StatisticsItem) SpeedKPH() float64 {

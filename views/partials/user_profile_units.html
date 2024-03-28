@@ -1,0 +1,11 @@
+{{ define "user_profile_units" }} {{ $userUnits := . }}
+<select id="units" name="units">
+  {{ $selected := "" }} {{ if eq $userUnits "browser" }} {{ $selected =
+  "selected" }}{{ end }}
+  <option value="browser" {{ $selected }}>🌐 Browser units</option>
+  {{ range supportedUnits }} {{ $selected := "" }} {{ if eq . $userUnits }} {{
+  $selected = "selected" }} {{ end }}
+  <option value="{{ . }}" {{ $selected }}>{{ . }}</option>
+  {{ end }}
+</select>
+{{ end }}
