@@ -12,6 +12,7 @@ type Config struct {
 	DatabaseDriver       string `mapstructure:"database_driver"`
 	DSN                  string `mapstructure:"dsn"`
 	RegistrationDisabled bool   `mapstructure:"registration_disabled"`
+	SocialsDisabled      bool   `mapstructure:"socials_disabled"`
 }
 
 func (a *App) ReadConfiguration() error {
@@ -25,6 +26,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetDefault("database_driver", "sqlite")
 	viper.SetDefault("dsn", "./database.db")
 	viper.SetDefault("registration_disabled", "false")
+	viper.SetDefault("socials_disabled", "false")
 
 	for _, envVar := range []string{
 		"bind",
@@ -34,6 +36,7 @@ func (a *App) ReadConfiguration() error {
 		"database_driver",
 		"dsn",
 		"registration_disabled",
+		"socials_disabled",
 	} {
 		if err := viper.BindEnv(envVar); err != nil {
 			return err

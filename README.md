@@ -158,6 +158,7 @@ WT_DEBUG="false"
 WT_DATABASE_DRIVER="sqlite"
 WT_DSN="./database.db"
 WT_REGISTRATION_DISABLED="false"
+WT_SOCIALS_DISABLED="false"
 ```
 
 After starting the server, you can access it at <http://localhost:8080> (the default port). A login form is shown.
