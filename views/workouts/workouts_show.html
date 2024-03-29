@@ -50,7 +50,8 @@
               </script>
               <script src="{{ RouteFor `assets` }}/map.js"></script>
             </div>
-            {{ template "workout_social" .}}
+            {{ if not $.SocialsDisabled }} {{ template "workout_social" .}} {{
+            end }}
           </div>
         </div>
         <div class="basis-1/4">

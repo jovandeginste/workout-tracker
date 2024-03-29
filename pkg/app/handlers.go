@@ -65,7 +65,6 @@ func (a *App) dashboardHandler(c echo.Context) error {
 
 func (a *App) userLoginHandler(c echo.Context) error {
 	data := a.defaultData(c)
-	data["RegistrationDisabled"] = a.Config.RegistrationDisabled
 
 	return c.Render(http.StatusOK, "user_login.html", data)
 }
