@@ -6,6 +6,23 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) adminRoutes(e *echo.Group) *echo.Group {
+	adminGroup := e.Group("/admin")
+	adminGroup.Use(a.ValidateAdminMiddleware)
+
+	adminGroup.GET("", a.adminRootHandler).Name = "admin"
+
+	adminUsersGroup := adminGroup.Group("/users")
+	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"
+	adminUsersGroup.POST("/:id", a.adminUserUpdateHandler).Name = "admin-user-update"
+	adminUsersGroup.POST("/:id/delete", a.adminUserDeleteHandler).Name = "admin-user-delete"
+	adminUsersGroup.GET("/:id", func(c echo.Context) error {
+		return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-edit", c.Param("id")))
+	}).Name = "admin-user-show"
+
+	return adminGroup
+}
+
 func (a *App) adminRootHandler(c echo.Context) error {
 	data := a.defaultData(c)
 

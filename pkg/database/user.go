@@ -69,6 +69,16 @@ func GetUsers(db *gorm.DB) ([]User, error) {
 	return u, nil
 }
 
+func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
+	var u User
+
+	if err := db.Preload("Profile").Where(&User{APIKey: key}).First(&u).Error; err != nil {
+		return nil, db.Error
+	}
+
+	return &u, nil
+}
+
 func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 	var u User
 

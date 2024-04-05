@@ -57,6 +57,8 @@ func (a *App) ConfigureWebserver() error {
 
 	publicGroup := e.Group("")
 
+	a.apiRoutes(publicGroup)
+
 	publicGroup.StaticFS("/assets", a.Assets)
 
 	publicGroup.GET("/assets", func(c echo.Context) error {
@@ -142,21 +144,4 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
 
 	return secureGroup
-}
-
-func (a *App) adminRoutes(e *echo.Group) *echo.Group {
-	adminGroup := e.Group("/admin")
-	adminGroup.Use(a.ValidateAdminMiddleware)
-
-	adminGroup.GET("", a.adminRootHandler).Name = "admin"
-
-	adminUsersGroup := adminGroup.Group("/users")
-	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"
-	adminUsersGroup.POST("/:id", a.adminUserUpdateHandler).Name = "admin-user-update"
-	adminUsersGroup.POST("/:id/delete", a.adminUserDeleteHandler).Name = "admin-user-delete"
-	adminUsersGroup.GET("/:id", func(c echo.Context) error {
-		return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-edit", c.Param("id")))
-	}).Name = "admin-user-show"
-
-	return adminGroup
 }
