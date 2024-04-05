@@ -69,10 +69,20 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	details := false
+	if err = echo.QueryParamsBinder(c).Bool("details", &details).BindError(); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	db := a.db
+	if details {
+		db = db.Preload("Data.Details")
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(db, id)
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
 	}
@@ -80,4 +90,10 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 	resp.Results = w
 
 	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error {
+	resp.Errors = append(resp.Errors, err.Error())
+
+	return c.JSON(http.StatusBadRequest, resp)
 }

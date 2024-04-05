@@ -48,8 +48,8 @@ type MapData struct {
 	MaxElevation  float64
 	TotalUp       float64
 	TotalDown     float64
-	Details       MapDataDetails
-	Points        []MapPoint `gorm:"serializer:json"`
+	Details       *MapDataDetails `json:",omitempty"`
+	Points        []MapPoint      `gorm:"serializer:json" json:"-"`
 }
 
 type MapDataDetails struct {
@@ -284,6 +284,8 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 	totalDist := 0.0
 	totalTime := 0.0
 	prevPoint := points[0]
+
+	data.Details = &MapDataDetails{}
 
 	for i, pt := range points {
 		if !pointHasDistance(pt) {

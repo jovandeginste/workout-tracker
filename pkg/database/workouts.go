@@ -27,13 +27,13 @@ type Workout struct {
 	User   *User
 	Notes  string
 	Type   WorkoutType
-	Data   *MapData
-	GPX    *GPXData
+	Data   *MapData `json:",omitempty"`
+	GPX    *GPXData `json:",omitempty"`
 
-	MapData  *MapData `gorm:"serializer:json;column:data"`
-	GPXData  []byte   `gorm:"type:mediumtext"`
-	Filename string
-	Checksum []byte `gorm:"default:legacy"`
+	MapData  *MapData `gorm:"serializer:json;column:data" json:"-"`
+	GPXData  []byte   `gorm:"type:mediumtext" json:"-"`
+	Filename string   `json:"-"`
+	Checksum []byte   `gorm:"default:legacy" json:"-"`
 }
 
 type GPXData struct {
