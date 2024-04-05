@@ -33,7 +33,7 @@ func (a *App) ValidateAPIKeyMiddleware() echo.MiddlewareFunc {
 			return false, ErrInvalidAPIKey
 		}
 
-		if !u.IsActive() {
+		if !u.IsActive() || !u.Profile.APIActive {
 			return false, ErrInvalidAPIKey
 		}
 
