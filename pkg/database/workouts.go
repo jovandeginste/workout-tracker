@@ -27,10 +27,11 @@ type Workout struct {
 	User   *User
 	Notes  string
 	Type   WorkoutType
-	Data   *MapData `gorm:"serializer:json"`
+	Data   *MapData
 	GPX    *GPXData
 
-	GPXData  []byte `gorm:"type:mediumtext"`
+	MapData  *MapData `gorm:"serializer:json;column:data"`
+	GPXData  []byte   `gorm:"type:mediumtext"`
 	Filename string
 	Checksum []byte `gorm:"default:legacy"`
 }
@@ -141,7 +142,7 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {
 	var w []Workout
 
-	if err := db.Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
+	if err := db.Preload("Data").Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
 		return nil, err
 	}
 
@@ -151,7 +152,7 @@ func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {
 func GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	var w []*Workout
 
-	if err := db.Order("date DESC").Find(&w).Error; err != nil {
+	if err := db.Preload("Data").Order("date DESC").Find(&w).Error; err != nil {
 		return nil, err
 	}
 
@@ -162,10 +163,14 @@ func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
 	return GetWorkout(db.Preload("GPX"), id)
 }
 
+func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
+	return GetWorkout(db.Preload("Data.Details"), id)
+}
+
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
-	if err := db.Preload("User").First(&w, id).Error; err != nil {
+	if err := db.Preload("Data").Preload("User").First(&w, id).Error; err != nil {
 		return nil, err
 	}
 
@@ -173,7 +178,7 @@ func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func (w *Workout) Delete(db *gorm.DB) error {
-	return db.Unscoped().Select("GPX").Delete(w).Error
+	return db.Unscoped().Select("GPX", "Data").Delete(w).Error
 }
 
 func (w *Workout) Create(db *gorm.DB) error {

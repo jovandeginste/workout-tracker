@@ -34,6 +34,10 @@ func HumanDistance(d float64) string {
 }
 
 func HumanSpeed(mps float64) string {
+	if mps == 0 {
+		return "N/A"
+	}
+
 	mph := mps * 3600
 	value, prefix := humanize.ComputeSI(mph)
 
@@ -42,7 +46,7 @@ func HumanSpeed(mps float64) string {
 
 func HumanTempo(mps float64) string {
 	if mps == 0 {
-		return "0 min/m"
+		return "N/A"
 	}
 
 	mpk := 1000000 / (mps * 60)

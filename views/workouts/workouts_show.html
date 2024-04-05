@@ -40,8 +40,10 @@
             >
               <script>
                 let points = [
-                  {{ range .Data.Points -}}
+                  {{ with .Data.Details }}
+                  {{ range .Points -}}
                   { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .Elevation }}, "title": "{{ template `workout_point_title` . }}", },
+                  {{ end  }}
                   {{ end  }}
                 ];
                 let center = [{{  .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}];

@@ -58,7 +58,7 @@ func TestWorkout_Parse(t *testing.T) {
 	assert.InDelta(t, 39, w.Data.Center.Lat, 1)
 	assert.InDelta(t, -77, w.Data.Center.Lng, 1)
 
-	assert.Len(t, w.Data.Points, 206)
+	assert.Len(t, w.Data.Details.Points, 206)
 	assert.InDelta(t, 3125, w.Data.TotalDistance, 1)
 	assert.InDelta(t, 3.297, w.Data.AverageSpeed(), 0.01)
 	assert.InDelta(t, 3.297, w.Data.AverageSpeedNoPause(), 0.01)
@@ -83,7 +83,7 @@ func TestWorkout_UpdateData(t *testing.T) {
 	ud = w.UpdatedAt
 
 	require.NoError(t, w.UpdateData(db))
-	assert.Equal(t, d, w.Data)
+	assert.Equal(t, d.Details.Points, w.Data.Details.Points)
 	assert.NotEqual(t, ud, w.UpdatedAt)
 }
 
@@ -95,8 +95,29 @@ func TestWorkout_SaveAndGet(t *testing.T) {
 	require.NoError(t, w.Save(db))
 	assert.NotZero(t, w.UpdatedAt)
 
-	newW, err := GetWorkout(db, int(w.ID))
+	newW, err := GetWorkoutDetails(db, int(w.ID))
 	require.NoError(t, err)
 	assert.Equal(t, w.ID, newW.ID)
-	assert.Equal(t, w.Data, newW.Data)
+	assert.Equal(t, w.Data.Details.Points, newW.Data.Details.Points)
+}
+
+func TestWorkout_Recreate(t *testing.T) {
+	db := createMemoryDB(t)
+	w := defaultWorkout(t)
+
+	assert.Zero(t, w.UpdatedAt)
+	require.NoError(t, w.Save(db))
+	assert.NotZero(t, w.UpdatedAt)
+
+	require.NoError(t, w.Delete(db))
+
+	ws, err := GetWorkouts(db)
+	require.NoError(t, err)
+	assert.Empty(t, ws)
+
+	require.NoError(t, w.Save(db))
+
+	ws, err = GetWorkouts(db)
+	require.NoError(t, err)
+	assert.Len(t, ws, 1)
 }
