@@ -69,6 +69,16 @@ func GetUsers(db *gorm.DB) ([]User, error) {
 	return u, nil
 }
 
+func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
+	var u User
+
+	if err := db.Preload("Profile").Where(&User{APIKey: key}).First(&u).Error; err != nil {
+		return nil, db.Error
+	}
+
+	return &u, nil
+}
+
 func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 	var u User
 
@@ -197,7 +207,7 @@ func (u *User) Delete(db *gorm.DB) error {
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w *Workout
 
-	if err := db.Preload("Data").Preload("GPX").Where(&Workout{UserID: u.ID}).First(&w, id).Error; err != nil {
+	if err := db.Preload("Data").Where(&Workout{UserID: u.ID}).First(&w, id).Error; err != nil {
 		return nil, err
 	}
 
