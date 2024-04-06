@@ -16,7 +16,7 @@ type Profile struct {
 	Timezone            string      `form:"timezone"`
 	AutoImportDirectory string      `form:"auto_import_directory"`
 
-	User *User `gorm:"foreignKey:UserID"`
+	User *User `gorm:"foreignKey:UserID" json:"-"`
 }
 
 func (p *Profile) Save(db *gorm.DB) error {
