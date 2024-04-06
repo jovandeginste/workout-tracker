@@ -10,8 +10,8 @@
         {{ i18n "Dashboard for %s" .user.Name }}
       </h2>
 
-      {{ with (index .UserStatistics .userProfileTotalsShow.String) }} {{
-      template "stats_records_total" .Total }} {{ end }}
+      {{ with (index .UserStatistics CurrentUser.Profile.TotalsShow.String) }}
+      {{ template "stats_records_total" .Total }} {{ end }}
 
       <div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
         <div>
