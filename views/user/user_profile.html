@@ -67,8 +67,8 @@
                   >
                 </th>
                 <td>
-                  {{ template "user_profile_totals_show" .userProfileTotalsShow
-                  }}
+                  {{ template "user_profile_totals_show"
+                  CurrentUser.Profile.TotalsShow }}
                 </td>
               </tr>
               <tr>
@@ -82,7 +82,8 @@
                   <label for="language">{{ i18n "Language" }}</label>
                 </th>
                 <td>
-                  {{ template "user_profile_language" .userProfileLanguage }}
+                  {{ template "user_profile_language"
+                  CurrentUser.Profile.Language }}
                 </td>
               </tr>
               <tr>

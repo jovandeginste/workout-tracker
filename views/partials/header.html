@@ -49,8 +49,9 @@
   </div>
   {{ end }} {{ else }}
   <div class="sm:grow flex flex-wrap justify-end sm:justify-start"></div>
-  {{ end }} {{ if or (eq .userProfileLanguage nil) (eq .userProfileLanguage "")
-  (eq .userProfileLanguage "browser") }}
+  {{ end }} {{ if or (eq CurrentUser nil) (eq CurrentUser.Profile.Language nil)
+  (eq CurrentUser.Profile.Language "") (eq CurrentUser.Profile.Language
+  "browser") }}
   <div
     class="flex flex-wrap sm:min-w-[400px] justify-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
   >
