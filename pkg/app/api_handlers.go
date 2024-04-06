@@ -6,8 +6,10 @@ import (
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
 )
 
 var ErrInvalidAPIKey = errors.New("invalid API key")
@@ -19,6 +21,18 @@ type APIResponse struct {
 
 func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup := e.Group("/api/v1")
+	apiGroup.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey:  a.jwtSecret(),
+		TokenLookup: "cookie:token",
+		ErrorHandler: func(c echo.Context, err error) error {
+			log.Warn(err.Error())
+			return c.JSON(http.StatusForbidden, "Not authorized")
+		},
+		Skipper: func(ctx echo.Context) bool {
+			return ctx.Request().Header.Get("Authorization") != ""
+		},
+		SuccessHandler: a.ValidateUserMiddleware,
+	}))
 	apiGroup.Use(a.ValidateAPIKeyMiddleware())
 
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
@@ -27,28 +41,31 @@ func (a *App) apiRoutes(e *echo.Group) {
 }
 
 func (a *App) ValidateAPIKeyMiddleware() echo.MiddlewareFunc {
-	return middleware.KeyAuth(func(key string, c echo.Context) (bool, error) {
-		u, err := database.GetUserByAPIKey(a.db, key)
-		if err != nil {
-			return false, ErrInvalidAPIKey
-		}
+	return middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+		Validator: func(key string, c echo.Context) (bool, error) {
+			u, err := database.GetUserByAPIKey(a.db, key)
+			if err != nil {
+				return false, ErrInvalidAPIKey
+			}
 
-		if !u.IsActive() || !u.Profile.APIActive {
-			return false, ErrInvalidAPIKey
-		}
+			if !u.IsActive() || !u.Profile.APIActive {
+				return false, ErrInvalidAPIKey
+			}
 
-		c.Set("user_info", u)
-		c.Set("user_language", u.Profile.Language)
-		c.Set("user_totals_show", u.Profile.TotalsShow)
+			c.Set("user_info", u)
+			c.Set("user_language", u.Profile.Language)
+			c.Set("user_totals_show", u.Profile.TotalsShow)
 
-		return true, nil
+			return true, nil
+		},
+		Skipper: func(ctx echo.Context) bool {
+			return ctx.Request().Header.Get("Authorization") == ""
+		},
 	})
 }
 
 func (a *App) apiWhoamiHandler(c echo.Context) error {
-	data := a.defaultData(c)
-
-	return c.JSON(http.StatusOK, data)
+	return c.JSON(http.StatusOK, a.getCurrentUser(c))
 }
 
 func (a *App) apiWorkoutsHandler(c echo.Context) error {

@@ -36,7 +36,7 @@ type User struct {
 	Admin    bool   `form:"admin"`
 
 	Profile  Profile
-	Workouts []Workout
+	Workouts []Workout `json:"-"`
 }
 
 func (u *User) Timezone() *time.Location {
