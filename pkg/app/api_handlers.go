@@ -38,6 +38,9 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
 	apiGroup.GET("/workout/:id", a.apiWorkoutHandler).Name = "api-workout"
+	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
+	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
+	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
 }
 
 func (a *App) ValidateAPIKeyMiddleware() echo.MiddlewareFunc {
@@ -77,6 +80,63 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 	}
 
 	resp.Results = w
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
+	resp := APIResponse{}
+
+	var workoutType string
+
+	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	s, err := a.getCurrentUser(c).GetRecords(a.db, database.AsWorkoutType(workoutType))
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	resp.Results = s
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
+	resp := APIResponse{}
+
+	var workoutType string
+
+	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	s, err := a.getCurrentUser(c).GetTotals(a.db, database.AsWorkoutType(workoutType))
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	resp.Results = s
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) apiStatisticsHandler(c echo.Context) error {
+	resp := APIResponse{}
+
+	var statConfig database.StatConfig
+
+	if err := c.Bind(&statConfig); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	s, err := a.getCurrentUser(c).GetStatistics(a.db, statConfig)
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	resp.Results = s
 
 	return c.JSON(http.StatusOK, resp)
 }

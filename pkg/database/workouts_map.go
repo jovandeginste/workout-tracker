@@ -37,7 +37,6 @@ type MapData struct {
 	WorkoutID     uint `gorm:"not null"`
 	Creator       string
 	Name          string
-	Date          string
 	Center        MapCenter    `gorm:"serializer:json"`
 	Address       *geo.Address `gorm:"serializer:json"`
 	TotalDistance float64
