@@ -35,7 +35,7 @@ COPY translations ./translations
 COPY --from=frontend /app/assets/output.css ./assets/output.css
 COPY --from=frontend /app/assets/dist ./assets/dist
 
-ENV CGO_ENABLED=0 GOOS=linux
+ENV CGO_ENABLED=0
 RUN go build \
 	-ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
 	-o /workout-tracker ./
