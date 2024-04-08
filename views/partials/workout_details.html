@@ -79,7 +79,9 @@
     <tr>
       <td class="{{ IconFor `pause` }}"></td>
       <th>{{ i18n "Time paused" }}</th>
-      <td class="whitespace-nowrap font-mono">{{ .Data.PauseDuration }}</td>
+      <td class="whitespace-nowrap font-mono">
+        {{ .Data.PauseDuration | HumanDuration }}
+      </td>
     </tr>
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>

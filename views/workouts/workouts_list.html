@@ -68,7 +68,7 @@
               class="hidden sm:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.TotalDuration | NumericDuration }}"
             >
-              {{ .Data.TotalDuration }}
+              {{ .Data.TotalDuration | HumanDuration }}
             </td>
             <td
               class="hidden 2xl:table-cell whitespace-nowrap font-mono"
