@@ -162,5 +162,7 @@ func (a *App) createAdminUser() error {
 
 	a.logger.Warn("Creating admin user '" + u.Username + "', with password 'admin'")
 
+	u.Profile.User = u
+
 	return u.Create(a.db)
 }
