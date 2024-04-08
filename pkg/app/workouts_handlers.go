@@ -62,7 +62,12 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
-	workout, err := a.getWorkout(c)
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	workout, err := a.getCurrentUser(c).GetWorkout(a.db.Preload("GPX"), id)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
