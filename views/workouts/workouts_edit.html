@@ -33,8 +33,20 @@
                     </td>
                     <td>
                       <select id="type" name="type">
-                        {{ range workoutTypes }}
-                        <option value="{{ .String }}">
+                        {{ $t := .Type }} {{ range workoutTypes }}
+                        <option
+                          value="{{ .String }}"
+                          {{
+                          if
+                          eq
+                          $t.String
+                          .String
+                          }}
+                          selected
+                          {{
+                          end
+                          }}
+                        >
                           {{ i18n .String }}
                         </option>
                         {{ end }}
