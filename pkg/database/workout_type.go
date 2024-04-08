@@ -33,3 +33,7 @@ func (wt WorkoutType) String() string {
 func (wt WorkoutType) IsDistance() bool {
 	return slices.Contains(DistanceWorkoutTypes(), wt)
 }
+
+func AsWorkoutType(s string) WorkoutType {
+	return WorkoutType(s)
+}
