@@ -52,9 +52,6 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 
 func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	data := map[string]interface{}{}
-	data["version"] = a.Version
-	data["RegistrationDisabled"] = a.Config.RegistrationDisabled
-	data["SocialsDisabled"] = a.Config.SocialsDisabled
 
 	a.addError(data, c)
 	a.addNotice(data, c)

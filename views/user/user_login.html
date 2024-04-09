@@ -51,7 +51,7 @@
             </form>
           </div>
 
-          {{ if not .RegistrationDisabled }}
+          {{ if not AppConfig.RegistrationDisabled }}
           <div class="inner-form">
             <h3 class="{{ IconFor `user-register` }}">
               {{ i18n "Create a new account" }}
