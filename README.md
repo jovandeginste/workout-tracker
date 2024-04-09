@@ -9,10 +9,19 @@ Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 
 ### Docker
 
-Run the latest master image from GitHub Container Registry:
+Run the latest master image from GitHub Container Registry (master and release images are available for amd64 and arm64):
 
 ```bash
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:master
+# Latest master build
+docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:latest
+
+# Tagged release
+docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0.11.3
+docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0.11
+docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0
+
+# Latest release
+docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:release
 ```
 
 Open your browser at `http://localhost:8080`
@@ -42,11 +51,13 @@ docker compose up -d
 
 ### Natively
 
-Download a pre-built binary or build it yourself (see [Development](#development) below).
+Download a [pre-built binary](https://github.com/jovandeginste/workout-tracker/releases) or build it yourself (see [Development](#development) below).
+
+Eg. for v0.11.3 on Linux x86_64:
 
 ```bash
-wget https://github.com/jovandeginste/workout-tracker/releases/download/v0.3.0/workout-tracker-v0.3.0-linux-amd64.tar.gz
-tar xf workout-tracker-v0.3.0-linux-amd64.tar.gz
+wget https://github.com/jovandeginste/workout-tracker/releases/download/v0.11.3/workout-tracker-v0.11.3-linux-amd64.tar.gz
+tar xf workout-tracker-v0.11.3-linux-amd64.tar.gz
 ./workout-tracker
 ```
 
