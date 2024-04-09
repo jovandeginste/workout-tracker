@@ -20,11 +20,13 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
+	u.Profile.User = u
 	u.Profile.APIActive = p.APIActive
 	u.Profile.Language = p.Language
 	u.Profile.TotalsShow = p.TotalsShow
 	u.Profile.Timezone = p.Timezone
 	u.Profile.AutoImportDirectory = p.AutoImportDirectory
+	u.Profile.SocialsDisabled = p.SocialsDisabled
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)

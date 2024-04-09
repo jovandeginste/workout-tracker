@@ -104,6 +104,25 @@
                 </td>
               </tr>
               <tr>
+                <th>
+                  <label for="socials_disabled"
+                    >{{ i18n "Disable social sharing buttons" }}</label
+                  >
+                </th>
+                <td>
+                  <input
+                    type="checkbox"
+                    id="socials_disabled"
+                    name="socials_disabled"
+                    value="true"
+                    {{
+                    BoolToCheckbox
+                    CurrentUser.Profile.SocialsDisabled
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
                 <td></td>
                 <td>
                   <button type="submit">{{ i18n "Update profile" }}</button>

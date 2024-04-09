@@ -52,8 +52,9 @@
               </script>
               <script src="{{ RouteFor `assets` }}/map.js"></script>
             </div>
-            {{ if not $.SocialsDisabled }} {{ template "workout_social" .}} {{
-            end }}
+            {{ if and (not $.SocialsDisabled) (not
+            CurrentUser.Profile.SocialsDisabled) }} {{ template "workout_social"
+            .}} {{ end }}
           </div>
         </div>
         <div class="basis-1/4">
