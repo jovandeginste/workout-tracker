@@ -3,7 +3,7 @@
   <h1>
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
-  {{ if .currentUser }} {{ with .currentUser }}
+  {{ if CurrentUser }} {{ with CurrentUser }}
   <div class="grow flex flex-wrap">
     <div class="grow flex flex-wrap justify-start">
       <div>

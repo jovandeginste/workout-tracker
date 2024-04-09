@@ -21,7 +21,7 @@
     <div class="content">
       {{ with .workout }}
       <div class="gap-4">
-        {{ if eq .User.ID $.currentUser.ID }}
+        {{ if eq .User.ID CurrentUser.ID }}
         <span class="float-right actions">
           {{ template "workout_actions" . }}
         </span>

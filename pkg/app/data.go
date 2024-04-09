@@ -56,20 +56,10 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	data["RegistrationDisabled"] = a.Config.RegistrationDisabled
 	data["SocialsDisabled"] = a.Config.SocialsDisabled
 
-	a.addUserInfo(data, c)
 	a.addError(data, c)
 	a.addNotice(data, c)
 
 	return data
-}
-
-func (a *App) addUserInfo(data map[string]interface{}, c echo.Context) {
-	u := a.getCurrentUser(c)
-	if u == nil {
-		return
-	}
-
-	data["currentUser"] = u
 }
 
 func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
