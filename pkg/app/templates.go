@@ -53,6 +53,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 	return template.FuncMap{
 		"i18n":        echoFunc,
+		"Version":     func() *Version { return &a.Version },
 		"language":    func() string { return BrowserLanguage },
 		"humanizer":   func() *humanize.Humanizer { return h },
 		"CurrentUser": func() *database.User { return nil },
