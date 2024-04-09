@@ -15,6 +15,7 @@ type Profile struct {
 	TotalsShow          WorkoutType `form:"totals_show"`
 	Timezone            string      `form:"timezone"`
 	AutoImportDirectory string      `form:"auto_import_directory"`
+	SocialsDisabled     bool        `form:"socials_disabled"`
 
 	User *User `gorm:"foreignKey:UserID" json:"-"`
 }
