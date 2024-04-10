@@ -84,7 +84,7 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (a *App) apiRecordsHandler(c echo.Context) error {
+func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
 	resp := APIResponse{}
 
 	var workoutType string
@@ -93,7 +93,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetRecords(a.db, database.AsWorkoutType(workoutType))
+	s, err := a.getCurrentUser(c).GetRecords(database.AsWorkoutType(workoutType))
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
 	}
@@ -103,7 +103,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (a *App) apiTotalsHandler(c echo.Context) error {
+func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
 	resp := APIResponse{}
 
 	var workoutType string

@@ -2,8 +2,6 @@ package database
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type StatConfig struct {
@@ -123,12 +121,27 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 	return r, nil
 }
 
-func (u *User) GetRecords(db *gorm.DB, t WorkoutType) (*WorkoutRecord, error) {
+func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
+	rs := []*WorkoutRecord{}
+
+	for _, w := range DistanceWorkoutTypes() {
+		r, err := u.GetRecords(w)
+		if err != nil {
+			return nil, err
+		}
+
+		rs = append(rs, r)
+	}
+
+	return rs, nil
+}
+
+func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 	if t == "" {
 		t = WorkoutTypeRunning
 	}
 
-	r := &WorkoutRecord{}
+	r := &WorkoutRecord{WorkoutType: t}
 
 	mapping := map[*record]string{
 		&r.Distance:            "max(total_distance)",
@@ -139,7 +152,7 @@ func (u *User) GetRecords(db *gorm.DB, t WorkoutType) (*WorkoutRecord, error) {
 	}
 
 	for k, v := range mapping {
-		err := db.
+		err := u.db.
 			Table("workouts").
 			Joins("join map_data on workouts.id = map_data.workout_id").
 			Where("user_id = ?", u.ID).
@@ -151,7 +164,7 @@ func (u *User) GetRecords(db *gorm.DB, t WorkoutType) (*WorkoutRecord, error) {
 		}
 	}
 
-	err := db.
+	err := u.db.
 		Table("workouts").
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
@@ -161,6 +174,8 @@ func (u *User) GetRecords(db *gorm.DB, t WorkoutType) (*WorkoutRecord, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	r.Active = r.Distance.Value > 0
 
 	return r, nil
 }
