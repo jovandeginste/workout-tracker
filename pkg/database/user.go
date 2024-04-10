@@ -37,6 +37,8 @@ type User struct {
 
 	Profile  Profile
 	Workouts []Workout `json:"-"`
+
+	db *gorm.DB
 }
 
 func (u *User) Timezone() *time.Location {
@@ -76,6 +78,8 @@ func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
 		return nil, db.Error
 	}
 
+	u.SetDB(db)
+
 	return &u, nil
 }
 
@@ -85,6 +89,8 @@ func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 	if err := db.Preload("Profile").First(&u, userID).Error; err != nil {
 		return nil, db.Error
 	}
+
+	u.SetDB(db)
 
 	return &u, nil
 }
@@ -100,7 +106,13 @@ func GetUser(db *gorm.DB, username string) (*User, error) {
 		u.Profile.User = &u
 	}
 
+	u.SetDB(db)
+
 	return &u, nil
+}
+
+func (u *User) SetDB(db *gorm.DB) {
+	u.db = db
 }
 
 func (u *User) APIActive() bool {

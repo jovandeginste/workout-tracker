@@ -9,6 +9,7 @@ import (
 	session "github.com/spazzymoto/echo-scs-session"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/gorm"
 )
 
 func configuredApp(t *testing.T) *App {
@@ -23,12 +24,16 @@ func configuredApp(t *testing.T) *App {
 	return a
 }
 
-func defaultUser() *database.User {
-	return &database.User{
+func defaultUser(db *gorm.DB) *database.User {
+	u := &database.User{
 		Username: "my-username",
 		Password: "my-password",
 		Name:     "my-name",
 	}
+
+	u.SetDB(db)
+
+	return u
 }
 
 func TestRoute_UserRender(t *testing.T) {
@@ -41,7 +46,7 @@ func TestRoute_UserRender(t *testing.T) {
 		rec := httptest.NewRecorder()
 
 		c := e.NewContext(req, rec)
-		c.Set("user_info", defaultUser())
+		c.Set("user_info", defaultUser(a.db))
 
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.dashboardHandler)
@@ -70,7 +75,7 @@ func TestRoute_UserRenderLang(t *testing.T) {
 			req.Header.Set("Accept-Language", lang)
 
 			c := e.NewContext(req, rec)
-			c.Set("user_info", defaultUser())
+			c.Set("user_info", defaultUser(a.db))
 
 			s := session.LoadAndSave(a.sessionManager)
 			h := s(a.dashboardHandler)

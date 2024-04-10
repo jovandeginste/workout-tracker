@@ -84,7 +84,7 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
+func (a *App) apiRecordsHandler(c echo.Context) error {
 	resp := APIResponse{}
 
 	var workoutType string
@@ -103,7 +103,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
+func (a *App) apiTotalsHandler(c echo.Context) error {
 	resp := APIResponse{}
 
 	var workoutType string
@@ -112,7 +112,7 @@ func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetTotals(a.db, database.AsWorkoutType(workoutType))
+	s, err := a.getCurrentUser(c).GetTotals(database.AsWorkoutType(workoutType))
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
 	}
@@ -131,7 +131,7 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetStatistics(a.db, statConfig)
+	s, err := a.getCurrentUser(c).GetStatistics(statConfig)
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
 	}
