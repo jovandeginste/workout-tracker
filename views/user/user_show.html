@@ -14,10 +14,10 @@
 
       <div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
         <div>
-          {{ range $type, $stats := .UserStatistics }} {{ if
-          $stats.WorkoutType.IsDistance }}
+          {{ range CurrentUser.GetAllRecords }} {{ if and
+          .WorkoutType.IsDistance .Active }}
           <div class="inner-form">
-            {{ template "stats_records_distance" $stats.Records }}
+            {{ template "stats_records_distance" . }}
           </div>
           {{ end }} {{ end }}
         </div>

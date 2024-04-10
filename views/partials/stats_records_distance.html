@@ -13,7 +13,7 @@
     >{{ .Date.Format "2006-01-02" }}</a
   >
 </span>
-{{ end }} {{ define "stats_records_distance" }} {{ if .Active }}
+{{ end }} {{ define "stats_records_distance" }}
 <h3>
   <span class="{{ IconFor .WorkoutType.String }}"></span>
   {{ i18n "Records for %s" (i18n .WorkoutType.String) }}
@@ -77,4 +77,4 @@
     {{ end }}
   </tbody>
 </table>
-{{ end }} {{ end }}
+{{ end }}
