@@ -45,13 +45,13 @@ type Bucket struct {
 	MaxSpeed            float64       `json:",omitempty"`
 }
 
-func (u *User) GetStatistics(db *gorm.DB, statConfig StatConfig) (*Statistics, error) {
+func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	r := &Statistics{
 		UserID:  u.ID,
 		Buckets: map[string]map[WorkoutType]Bucket{},
 	}
 
-	rows, err := db.
+	rows, err := u.db.
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
@@ -77,7 +77,7 @@ func (u *User) GetStatistics(db *gorm.DB, statConfig StatConfig) (*Statistics, e
 	var result Bucket
 
 	for rows.Next() {
-		if err := db.ScanRows(rows, &result); err != nil {
+		if err := u.db.ScanRows(rows, &result); err != nil {
 			return nil, err
 		}
 
@@ -91,14 +91,18 @@ func (u *User) GetStatistics(db *gorm.DB, statConfig StatConfig) (*Statistics, e
 	return r, nil
 }
 
-func (u *User) GetTotals(db *gorm.DB, t WorkoutType) (*Bucket, error) {
+func (u *User) GetDefaultTotals() (*Bucket, error) {
+	return u.GetTotals(u.Profile.TotalsShow)
+}
+
+func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 	if t == "" {
 		t = WorkoutTypeRunning
 	}
 
 	r := &Bucket{}
 
-	err := db.
+	err := u.db.
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
