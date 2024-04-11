@@ -96,21 +96,6 @@ func (a *App) addUsers(data map[string]interface{}) error {
 	return nil
 }
 
-func (a *App) addUserStatistics(u *database.User, data map[string]interface{}) error {
-	if u == nil {
-		return nil
-	}
-
-	us, err := u.Statistics(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["UserStatistics"] = us
-
-	return nil
-}
-
 func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

@@ -1,9 +1,5 @@
 package database
 
-import (
-	"time"
-)
-
 type StatConfig struct {
 	Since string `query:"since"`
 	Per   string `query:"per"`
@@ -26,27 +22,17 @@ func (sc *StatConfig) GetSince() string {
 	return sc.Since
 }
 
-type Statistics struct {
-	UserID  uint
-	Buckets map[string]map[WorkoutType]Bucket
-}
-
-type Bucket struct {
-	Bucket              string `json:",omitempty"`
-	WorkoutType         WorkoutType
-	Workouts            int
-	Distance            float64       `json:",omitempty"`
-	Up                  float64       `json:",omitempty"`
-	Duration            time.Duration `json:",omitempty"`
-	AverageSpeed        float64       `json:",omitempty"`
-	AverageSpeedNoPause float64       `json:",omitempty"`
-	MaxSpeed            float64       `json:",omitempty"`
+func (u *User) GetDefaultStatistics() (*Statistics, error) {
+	return u.GetStatistics(StatConfig{
+		Since: "-1 year",
+		Per:   "month",
+	})
 }
 
 func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	r := &Statistics{
 		UserID:  u.ID,
-		Buckets: map[string]map[WorkoutType]Bucket{},
+		Buckets: map[WorkoutType]map[string]Bucket{},
 	}
 
 	rows, err := u.db.
@@ -79,11 +65,11 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			return nil, err
 		}
 
-		if r.Buckets[result.Bucket] == nil {
-			r.Buckets[result.Bucket] = map[WorkoutType]Bucket{}
+		if r.Buckets[result.WorkoutType] == nil {
+			r.Buckets[result.WorkoutType] = map[string]Bucket{}
 		}
 
-		r.Buckets[result.Bucket][result.WorkoutType] = result
+		r.Buckets[result.WorkoutType][result.Bucket] = result
 	}
 
 	return r, nil
@@ -143,7 +129,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 
 	r := &WorkoutRecord{WorkoutType: t}
 
-	mapping := map[*record]string{
+	mapping := map[*float64Record]string{
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",

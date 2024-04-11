@@ -103,9 +103,5 @@ func (a *App) userShowHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	if err := a.addUserStatistics(u, data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
-	}
-
 	return c.Render(http.StatusOK, "user_show.html", data)
 }

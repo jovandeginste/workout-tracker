@@ -11,6 +11,8 @@
       <h2 class="{{ IconFor `statistics` }}">
         {{ i18n "Your progress the past year" }}
       </h2>
+      {{ $stats := CurrentUser.GetDefaultStatistics }}
+
       <div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
         <div>
           <div class="inner-form">
@@ -173,16 +175,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Workouts }} },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .Workouts }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
@@ -198,16 +198,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Duration | NumericDuration }} },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .Duration | NumericDuration }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
@@ -221,16 +219,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.Distance }} / 1000 },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .DistanceKM }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
@@ -244,16 +240,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedKPH }} },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedKPH }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
@@ -267,16 +261,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.AverageSpeedNoPauseKPH }} },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedNoPauseKPH }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
@@ -290,16 +282,14 @@
         type: "bar",
         data: {
           datasets: [
-            {{ range $type, $stats := .UserStatistics }}
-              {{ if $stats.WorkoutType.IsDistance }}
+            {{ range $type, $PerMonth := $stats.Buckets }}
+              {{ if $type.IsDistance }}
               {
-                label: "{{ i18n $stats.WorkoutType.String }}",
+                label: "{{ i18n $type.String }}",
                 data: [
-                  {{ range $y, $yv := $stats.PerMonth -}}
-                  {{- range $m, $mv := $yv -}}
-                  { x: "{{ $y }}-{{ printf "%02d" $m }}", y: {{ $mv.MaxSpeedKPH }} },
+                  {{- range $PerMonth -}}
+                  { x: "{{ .Bucket }}", y: {{ .MaxSpeedKPH }} },
                   {{ end -}}
-                  {{- end }}
                 ],
               },
               {{ end }}
