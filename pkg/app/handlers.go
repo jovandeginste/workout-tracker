@@ -25,10 +25,6 @@ func (a *App) statisticsHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	if err := a.addUserStatistics(u, data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
-	}
-
 	data["user"] = u
 
 	return c.Render(http.StatusOK, "user_statistics.html", data)
@@ -43,10 +39,6 @@ func (a *App) dashboardHandler(c echo.Context) error {
 	}
 
 	if err := a.addWorkouts(u, data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
-	}
-
-	if err := a.addUserStatistics(u, data); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
