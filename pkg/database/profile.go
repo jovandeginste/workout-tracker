@@ -17,7 +17,16 @@ type Profile struct {
 	AutoImportDirectory string      `form:"auto_import_directory"`
 	SocialsDisabled     bool        `form:"socials_disabled"`
 
+	PreferredUnits UserPreferredUnits `gorm:"serializer:json"`
+
 	User *User `gorm:"foreignKey:UserID" json:"-"`
+}
+
+type UserPreferredUnits struct {
+	Speed     string `form:"speed" `
+	Distance  string `form:"distance"`
+	Duration  string `form:"duration"`
+	Elevation string `form:"elevation"`
 }
 
 func (p *Profile) Save(db *gorm.DB) error {

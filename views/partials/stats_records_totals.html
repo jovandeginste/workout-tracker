@@ -4,8 +4,8 @@
   {{ $du := i18n "duration" }} {{ template "statistic_tile"
   (BuildDecoratedAttribute "workout" $w .Workouts) }} {{ template
   "statistic_tile" (BuildDecoratedAttribute "distance" $di (.Distance |
-  ToKilometer )) }} {{ template "statistic_tile" (BuildDecoratedAttribute "up"
-  $u (.Up | HumanDistance)) }} {{ template "statistic_tile"
+  HumanDistance )) }} {{ template "statistic_tile" (BuildDecoratedAttribute "up"
+  $u (.Up | HumanElevation)) }} {{ template "statistic_tile"
   (BuildDecoratedAttribute "duration" $du (.Duration | HumanDuration)) }}
 </div>
 {{ end }} {{ end }}

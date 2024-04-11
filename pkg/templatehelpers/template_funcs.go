@@ -1,19 +1,18 @@
 package templatehelpers
 
 import (
-	"fmt"
 	"html/template"
-	"math"
 	"strings"
 	"time"
 
-	"github.com/dustin/go-humanize"
 	emojiflag "github.com/jayco/go-emoji-flag"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 )
 
 var englishTag = display.English.Languages()
+
+const InvalidValue = "N/A"
 
 func NumericDuration(d time.Duration) float64 {
 	return d.Seconds()
@@ -23,39 +22,40 @@ func CountryCodeToFlag(cc string) string {
 	return emojiflag.GetFlag(cc)
 }
 
-func ToKilometer(d float64) string {
-	return fmt.Sprintf("%.2f km", d/1000.0)
-}
-
-func HumanDistance(d float64) string {
-	value, prefix := humanize.ComputeSI(d)
-
-	return fmt.Sprintf("%.2f %sm", value, prefix)
-}
-
-func HumanSpeed(mps float64) string {
-	if mps == 0 {
-		return "N/A"
+func HumanElevationFor(unit string) func(float64) string {
+	switch unit {
+	case "ft":
+		return HumanElevationFt
+	default:
+		return HumanElevationM
 	}
-
-	mph := mps * 3600
-	value, prefix := humanize.ComputeSI(mph)
-
-	return fmt.Sprintf("%.2f %sm/h", value, prefix)
 }
 
-func HumanTempo(mps float64) string {
-	if mps == 0 {
-		return "N/A"
+func HumanDistanceFor(unit string) func(float64) string {
+	switch unit {
+	case "mi":
+		return HumanDistanceMile
+	default:
+		return HumanDistanceKM
 	}
+}
 
-	mpk := 1000000 / (mps * 60)
-	value, prefix := humanize.ComputeSI(mpk)
+func HumanSpeedFor(unit string) func(float64) string {
+	switch unit {
+	case "mph":
+		return HumanSpeedMilePH
+	default:
+		return HumanSpeedKPH
+	}
+}
 
-	wholeMinutes := math.Floor(value)
-	seconds := (value - wholeMinutes) * 60
-
-	return fmt.Sprintf("%d:%02d min/%sm", int(wholeMinutes), int(seconds), prefix)
+func HumanTempoFor(unit string) func(float64) string {
+	switch unit {
+	case "mi":
+		return HumanTempoMile
+	default:
+		return HumanTempoKM
+	}
 }
 
 func BoolToHTML(b bool) template.HTML {
@@ -64,6 +64,14 @@ func BoolToHTML(b bool) template.HTML {
 	}
 
 	return `<i class="text-rose-500 fas fa-times"></i>`
+}
+
+func SelectIf(v1, v2 string) template.HTML {
+	if v1 == v2 {
+		return "selected"
+	}
+
+	return ""
 }
 
 func BoolToCheckbox(b bool) template.HTML {

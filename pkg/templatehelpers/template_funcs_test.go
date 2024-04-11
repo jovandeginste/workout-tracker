@@ -18,29 +18,29 @@ func TestCountryCodeToFlag(t *testing.T) {
 	assert.Equal(t, "🇧🇪", CountryCodeToFlag("BE"))
 }
 
-func TestToKilometer(t *testing.T) {
-	assert.Equal(t, "0.00 km", ToKilometer(1.23))
-	assert.Equal(t, "1.23 km", ToKilometer(1234))
-	assert.Equal(t, "1234.57 km", ToKilometer(1234567))
+func TestHumanDistanceKM(t *testing.T) {
+	assert.Equal(t, "0.00 km", HumanDistanceKM(1.23))
+	assert.Equal(t, "1.23 km", HumanDistanceKM(1234))
+	assert.Equal(t, "1234.57 km", HumanDistanceKM(1234567))
 }
 
 func TestHumanDistance(t *testing.T) {
-	assert.Equal(t, "1.23 m", HumanDistance(1.23))
-	assert.Equal(t, "1.23 km", ToKilometer(1234))
-	assert.Equal(t, "1.23 Mm", HumanDistance(1234567))
+	assert.Equal(t, "0.00 km", HumanDistanceKM(1.23))
+	assert.Equal(t, "1.23 km", HumanDistanceKM(1234))
+	assert.Equal(t, "1234.57 km", HumanDistanceKM(1234567))
 }
 
-func TestHumanSpeed(t *testing.T) {
-	assert.Equal(t, "4.43 km/h", HumanSpeed(1.23))
-	assert.Equal(t, "10.01 km/h", HumanSpeed(2.78))
-	assert.Equal(t, "17.96 km/h", HumanSpeed(4.99))
+func TestHumanSpeedKPH(t *testing.T) {
+	assert.Equal(t, "4.43 km/h", HumanSpeedKPH(1.23))
+	assert.Equal(t, "10.01 km/h", HumanSpeedKPH(2.78))
+	assert.Equal(t, "17.96 km/h", HumanSpeedKPH(4.99))
 }
 
-func TestHumanTempo(t *testing.T) {
-	assert.Equal(t, "13:33 min/km", HumanTempo(1.23))
-	assert.Equal(t, "5:59 min/km", HumanTempo(2.78))
-	assert.Equal(t, "3:20 min/km", HumanTempo(4.99))
-	assert.Equal(t, "5:01 min/km", HumanTempo(3.32))
+func TestHumanTempoKM(t *testing.T) {
+	assert.Equal(t, "13:33 min/km", HumanTempoKM(1.23))
+	assert.Equal(t, "5:59 min/km", HumanTempoKM(2.78))
+	assert.Equal(t, "3:20 min/km", HumanTempoKM(4.99))
+	assert.Equal(t, "5:01 min/km", HumanTempoKM(3.32))
 }
 
 func TestBoolToHTML(t *testing.T) {

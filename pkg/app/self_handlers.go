@@ -12,6 +12,29 @@ func (a *App) userProfileHandler(c echo.Context) error {
 	return c.Render(http.StatusOK, "user_profile.html", data)
 }
 
+func (a *App) userProfilePreferredUnitsUpdateHandler(c echo.Context) error {
+	u := a.getCurrentUser(c)
+	p := database.UserPreferredUnits{}
+
+	if err := c.Bind(&p); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
+	}
+
+	u.Profile.PreferredUnits = p
+
+	if err := u.Profile.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
+	}
+
+	if err := a.setUser(c); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
+	}
+
+	a.setNotice(c, "Preferred units updated")
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
+}
+
 func (a *App) userProfileUpdateHandler(c echo.Context) error {
 	u := a.getCurrentUser(c)
 	p := &database.Profile{}

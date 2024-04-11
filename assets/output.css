@@ -2624,6 +2624,14 @@ table {
   content: "\f018";
 }
 
+.icon-ruler::before {
+  content: "\f545";
+}
+
+.icon-ruler::after {
+  content: "\f545";
+}
+
 .icon-sailboat::before {
   content: "\e445";
 }

@@ -61,7 +61,7 @@
       <th>
         <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanDistance }}</td>
+      <td class="font-mono whitespace-nowrap">{{ .Value | HumanElevation }}</td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .Duration }}

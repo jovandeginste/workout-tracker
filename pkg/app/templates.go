@@ -39,6 +39,11 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		"CurrentUser":  func() *database.User { return u },
 		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
 		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
+
+		"HumanElevation": templatehelpers.HumanElevationFor(u.PreferredUnits().Elevation),
+		"HumanDistance":  templatehelpers.HumanDistanceFor(u.PreferredUnits().Distance),
+		"HumanSpeed":     templatehelpers.HumanSpeedFor(u.PreferredUnits().Speed),
+		"HumanTempo":     templatehelpers.HumanTempoFor(u.PreferredUnits().Distance),
 	})
 
 	return r.ExecuteTemplate(w, name, data)
@@ -66,10 +71,6 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
-		"ToKilometer":             templatehelpers.ToKilometer,
-		"HumanDistance":           templatehelpers.HumanDistance,
-		"HumanSpeed":              templatehelpers.HumanSpeed,
-		"HumanTempo":              templatehelpers.HumanTempo,
 		"HumanDuration":           templatehelpers.HumanDuration,
 		"IconFor":                 templatehelpers.IconFor,
 		"BoolToHTML":              templatehelpers.BoolToHTML,
@@ -77,6 +78,12 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"BuildDecoratedAttribute": templatehelpers.BuildDecoratedAttribute,
 		"ToLanguageInformation":   templatehelpers.ToLanguageInformation,
 		"Timezones":               templatehelpers.Timezones,
+		"SelectIf":                templatehelpers.SelectIf,
+
+		"HumanElevation": templatehelpers.HumanElevationM,
+		"HumanDistance":  templatehelpers.HumanDistanceKM,
+		"HumanSpeed":     templatehelpers.HumanSpeedKPH,
+		"HumanTempo":     templatehelpers.HumanTempoKM,
 
 		"RelativeDate": h.NaturalTime,
 
