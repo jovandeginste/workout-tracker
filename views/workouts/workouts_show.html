@@ -81,7 +81,7 @@
           /
           <span class="{{ IconFor `elevation` }}">{{ i18n "Elevation" }}</span>
         </h3>
-        {{ template "workout_show_stats" $.workoutStatisticsPerMin }}
+        {{ template "workout_show_stats" .StatisticsPer 1 "min" }}
       </div>
       {{ end }}
     </div>
