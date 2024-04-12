@@ -23,7 +23,7 @@
       events: [
         {{ range .workouts }}
         {
-          title: "{{ .Type.String }}",
+          title: "{{ .Distance | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}",
           start: "{{ .Date | LocalDate }}",
           url: "/workouts/{{ .ID }}",
           display: "block",
