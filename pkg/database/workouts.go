@@ -215,8 +215,23 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
+	dataID := uint(0)
+	dataCreatedAt := time.Now()
+
+	if w.Data != nil {
+		dataID = w.Data.ID
+		dataCreatedAt = w.Data.CreatedAt
+	}
+
 	w.Data = gpxAsMapData(gpxContent)
+	w.Data.ID = dataID
+	w.Data.CreatedAt = dataCreatedAt
+
+	if err := w.Data.Save(db); err != nil {
+		return err
+	}
+
 	w.Dirty = false
 
-	return db.Save(w).Error
+	return w.Save(db)
 }
