@@ -87,28 +87,28 @@
       <td class="{{ IconFor `elevation` }}"></td>
       <th>{{ i18n "Min elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.MinElevation | HumanDistance }}
+        {{ .Data.MinElevation | HumanElevation }}
       </td>
     </tr>
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>
       <th>{{ i18n "Max elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.MaxElevation | HumanDistance }}
+        {{ .Data.MaxElevation | HumanElevation }}
       </td>
     </tr>
     <tr>
       <td class="{{ IconFor `up` }}"></td>
       <th>{{ i18n "Total up" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalUp | HumanDistance }}
+        {{ .Data.TotalUp | HumanElevation }}
       </td>
     </tr>
     <tr>
       <td class="{{ IconFor `down` }}"></td>
       <th>{{ i18n "Total down" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalDown | HumanDistance }}
+        {{ .Data.TotalDown | HumanElevation }}
       </td>
     </tr>
   </tbody>

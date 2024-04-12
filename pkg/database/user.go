@@ -41,6 +41,14 @@ type User struct {
 	db *gorm.DB
 }
 
+func (u *User) PreferredUnits() *UserPreferredUnits {
+	if u == nil {
+		return &UserPreferredUnits{}
+	}
+
+	return &u.Profile.PreferredUnits
+}
+
 func (u *User) Timezone() *time.Location {
 	if u == nil || u.Profile.Timezone == "" {
 		return time.UTC

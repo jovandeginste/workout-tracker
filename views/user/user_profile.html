@@ -6,8 +6,9 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `user-profile` }}">{{ i18n "Your profile" }}</h2>
       <div class="inner-form">
+        <h2 class="{{ IconFor `user-profile` }}">{{ i18n "Your profile" }}</h2>
+        {{ with CurrentUser }}
         <form method="post" action="{{ RouteFor `user-profile-update` }}">
           <table class="table-fixed">
             <tbody>
@@ -23,17 +24,17 @@
                     value="true"
                     {{
                     BoolToCheckbox
-                    CurrentUser.Profile.APIActive
+                    .Profile.APIActive
                     }}
                   />
 
-                  {{ if CurrentUser.Profile.APIActive }}
+                  {{ if .Profile.APIActive }}
                   <input
                     type="password"
                     id="api_key"
                     name="api_key"
                     size="40"
-                    value="{{ CurrentUser.APIKey }}"
+                    value="{{ .APIKey }}"
                     readonly
                   />
 
@@ -67,8 +68,7 @@
                   >
                 </th>
                 <td>
-                  {{ template "user_profile_totals_show"
-                  CurrentUser.Profile.TotalsShow }}
+                  {{ template "user_profile_totals_show" .Profile.TotalsShow }}
                 </td>
               </tr>
               <tr>
@@ -82,8 +82,7 @@
                   <label for="language">{{ i18n "Language" }}</label>
                 </th>
                 <td>
-                  {{ template "user_profile_language"
-                  CurrentUser.Profile.Language }}
+                  {{ template "user_profile_language" .Profile.Language }}
                 </td>
               </tr>
               <tr>
@@ -98,8 +97,8 @@
                     id="auto_import_directory"
                     name="auto_import_directory"
                     size="40"
-                    value="{{ CurrentUser.Profile.AutoImportDirectory }}"
-                    placeholder="/imports/{{ CurrentUser.Username }}/"
+                    value="{{ .Profile.AutoImportDirectory }}"
+                    placeholder="/imports/{{ .Username }}/"
                   />
                 </td>
               </tr>
@@ -117,7 +116,7 @@
                     value="true"
                     {{
                     BoolToCheckbox
-                    CurrentUser.Profile.SocialsDisabled
+                    .Profile.SocialsDisabled
                     }}
                   />
                 </td>
@@ -131,7 +130,14 @@
             </tbody>
           </table>
         </form>
-
+        {{ end }}
+      </div>
+      <div class="inner-form">
+        <h2 class="{{ IconFor `units` }}">{{ i18n "Preferred units" }}</h2>
+        {{ template "user_profile_preferred_units" }}
+      </div>
+      <div class="inner-form">
+        <h2 class="{{ IconFor `actions` }}">{{ i18n "Actions" }}</h2>
         <form method="post" action="{{ RouteFor `user-refresh` }}">
           <label for="refresh">{{ i18n "Refresh all your workouts" }}</label>
           <button type="submit">

@@ -26,6 +26,8 @@ func categoryIcon(what string) string {
 	switch what {
 	case "source":
 		return iconDefaults + " icon-solid icon-bookmark"
+	case "units":
+		return iconDefaults + " icon-solid icon-ruler"
 	case "file":
 		return iconDefaults + " icon-solid icon-file"
 	case "distance":
@@ -95,7 +97,7 @@ func pageIcon(what string) string {
 		return iconDefaults + " icon-solid icon-chart-line"
 	case "statistics":
 		return iconDefaults + " icon-solid icon-chart-simple"
-	case "admin":
+	case "admin", "actions":
 		return iconDefaults + " icon-solid icon-gear"
 	case "user-profile":
 		return iconDefaults + " icon-solid icon-user-circle"
