@@ -44,6 +44,14 @@ type GPXData struct {
 	Filename  string
 }
 
+func (w *Workout) Distance() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDistance
+}
+
 func (w *Workout) MarkdownNotes() template.HTML {
 	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(w.Notes))
 	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
