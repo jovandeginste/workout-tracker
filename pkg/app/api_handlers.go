@@ -38,6 +38,7 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
 	apiGroup.GET("/workout/:id", a.apiWorkoutHandler).Name = "api-workout"
+	apiGroup.GET("/workout/:id/breakdown", a.apiWorkoutBreakdownHandler).Name = "api-workout-breakdown"
 	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
@@ -137,6 +138,38 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 	}
 
 	resp.Results = s
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
+	resp := APIResponse{}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	config := struct {
+		Unit  string  `query:"unit"`
+		Count float64 `query:"count"`
+	}{
+		Unit:  "km",
+		Count: 1.0,
+	}
+	if err = c.Bind(&config); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	resp.Results, err = w.StatisticsPer(config.Count, config.Unit)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
 
 	return c.JSON(http.StatusOK, resp)
 }

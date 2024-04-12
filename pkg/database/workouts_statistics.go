@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -39,7 +40,7 @@ func (si *StatisticsItem) canHave(count float64, unit string, fp *MapPoint) bool
 	case "distance":
 		return si.canHaveDistance(fp.Distance, float64(si.Counter)*count)
 	case "duration":
-		return si.canHaveDuration(fp.Duration, time.Duration(count))
+		return si.canHaveDuration(fp.Duration, time.Duration(float64(si.Counter)*count))
 	}
 
 	return true
@@ -50,7 +51,7 @@ func (si *StatisticsItem) canHaveDistance(distance, next float64) bool {
 }
 
 func (si *StatisticsItem) canHaveDuration(duration, next time.Duration) bool {
-	return si.Duration+duration < next
+	return si.TotalDuration+duration < next
 }
 
 func (si *StatisticsItem) CalcultateSpeed() {
@@ -124,33 +125,33 @@ func (w *Workout) statisticsWithUnit(count float64, unit string) []StatisticsIte
 }
 
 type WorkoutBreakdown struct {
-	Unit              string
-	Items             []StatisticsItem
-	RemainingDistance float64
+	Unit  string
+	Items []StatisticsItem
 }
 
-func (w *Workout) StatisticsPer(count float64, unit string) WorkoutBreakdown {
+func (w *Workout) StatisticsPer(count float64, unit string) (WorkoutBreakdown, error) {
 	wb := WorkoutBreakdown{Unit: unit}
 
 	switch unit {
+	case "m":
+		wb.Items = w.statisticsWithUnit(count, "distance")
 	case "km":
 		wb.Items = w.statisticsWithUnit(count*1000, "distance")
 	case "mi":
 		wb.Items = w.statisticsWithUnit(count*1609.344, "distance")
-	case "min": // TODO: implement
+	case "sec":
+		wb.Items = w.statisticsWithUnit(count*float64(time.Second), "duration")
+	case "min":
 		wb.Items = w.statisticsWithUnit(count*float64(time.Minute), "duration")
+	case "hour":
+		wb.Items = w.statisticsWithUnit(count*float64(time.Hour), "duration")
+	default:
+		return wb, fmt.Errorf("unknown unit: %s", unit)
 	}
 
 	if len(wb.Items) == 0 {
-		return wb
+		return wb, fmt.Errorf("no data")
 	}
 
-	lastItem := wb.Items[len(wb.Items)-1]
-
-	wb.RemainingDistance = lastItem.Distance
-	if wb.RemainingDistance < 0 {
-		wb.RemainingDistance = 0
-	}
-
-	return wb
+	return wb, nil
 }
