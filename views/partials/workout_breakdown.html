@@ -3,14 +3,15 @@
   <thead>
     <tr>
       <th></th>
-      <th>{{ i18n "KM" }}</th>
+      <th>{{ i18n "Lap" }}</th>
+      <th>{{ i18n "Distance" }}</th>
       <th>{{ i18n "Duration" }}</th>
       <th>{{ i18n "Speed" }}</th>
       <th>{{ i18n "Tempo" }}</th>
     </tr>
   </thead>
   <tbody>
-    {{ $distance := 0.0 }} {{ range . }} {{ $distance = .Distance }}
+    {{ range .Items }}
     <tr
       {{
       with
@@ -29,22 +30,12 @@
         <span class="text-green-500 {{ IconFor `best` }}"></span>{{ end }}
       </td>
       <td class="text-center">{{ .Counter }}</td>
-      <td>{{ .Duration }}</td>
+      <td>{{ .TotalDistance | HumanDistance }}</td>
+      <td>{{ .Duration | HumanDuration }}</td>
       <td class="whitespace-nowrap font-mono">{{ .Speed | HumanSpeed }}</td>
       <td class="whitespace-nowrap font-mono">{{ .Speed | HumanTempo }}</td>
     </tr>
     {{ end }}
   </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="2"></td>
-      <td colspan="3">
-        {{ i18n "Last distance" }}:
-        <span class="whitespace-nowrap font-mono"
-          >{{ $distance | HumanDistance }}</span
-        >
-      </td>
-    </tr>
-  </tfoot>
 </table>
 {{ end }}

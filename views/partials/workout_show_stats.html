@@ -90,7 +90,7 @@
           ...defaultDatasetOptions,
           yAxisID: 'y',
           data: [
-            {{ range . -}}
+            {{ range .Items -}}
             { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
             {{- end  }}
           ],
@@ -101,7 +101,7 @@
           yAxisID: 'y1',
           fill: true,
           data: [
-            {{ range . -}}
+            {{ range .Items -}}
             { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
             {{- end  }}
           ],
