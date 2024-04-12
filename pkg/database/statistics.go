@@ -23,6 +23,19 @@ func (sc *StatConfig) GetBucketString() string {
 	}
 }
 
+func (sc *StatConfig) GetPostgresBucketString() string {
+	switch sc.Per {
+	case "year":
+		return "YYYY"
+	case "week":
+		return "YYYY-WW"
+	case "day":
+		return "YYYY-MM-DD"
+	default:
+		return "YYYY-MM"
+	}
+}
+
 func (sc *StatConfig) GetSince() string {
 	if sc.Since == "" {
 		return "-1 year"
@@ -49,6 +62,18 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		Buckets:      map[WorkoutType]map[string]Bucket{},
 	}
 
+	databaseType := u.db.Dialector.Name()
+
+	bucketFormat := "strftime('" + statConfig.GetBucketString() + "', workouts.date) as bucket"
+	if databaseType == "postgres" {
+		bucketFormat = "to_char(workouts.date, '" + statConfig.GetPostgresBucketString() + "') as bucket"
+	}
+
+	dateLimit := "workouts.date > DATE(CURRENT_DATE, ?)"
+	if databaseType == "postgres" {
+		dateLimit = "workouts.date > CURRENT_DATE + cast(? as interval)"
+	}
+
 	rows, err := u.db.
 		Table("workouts").
 		Select(
@@ -60,11 +85,11 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"max(max_speed) as max_speed",
 			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
 			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
-			"strftime('"+r.BucketFormat+"', workouts.date) as bucket",
+			bucketFormat,
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where("workouts.date > DATE(CURRENT_DATE, ?)", statConfig.GetSince()).
+		Where(dateLimit, statConfig.GetSince()).
 		Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
