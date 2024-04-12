@@ -104,7 +104,7 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
-			"type as workout_type",
+			"max(type) as workout_type",
 			"sum(total_duration) as duration",
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
