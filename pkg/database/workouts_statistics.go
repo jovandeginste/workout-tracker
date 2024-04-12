@@ -5,7 +5,8 @@ import (
 )
 
 type StatisticsItem struct {
-	Unit          string
+	UnitCount     float64
+	UnitName      string
 	Counter       int
 	Distance      float64
 	TotalDistance float64
@@ -24,7 +25,8 @@ func (si *StatisticsItem) SpeedKPH() float64 {
 
 func (si *StatisticsItem) createNext(fp *MapPoint) StatisticsItem {
 	return StatisticsItem{
-		Unit:          si.Unit,
+		UnitCount:     si.UnitCount,
+		UnitName:      si.UnitName,
 		Counter:       si.Counter + 1,
 		TotalDistance: si.TotalDistance,
 		TotalDuration: si.TotalDuration,
@@ -32,23 +34,23 @@ func (si *StatisticsItem) createNext(fp *MapPoint) StatisticsItem {
 	}
 }
 
-func (si *StatisticsItem) canHave(unit string, fp *MapPoint) bool {
+func (si *StatisticsItem) canHave(count float64, unit string, fp *MapPoint) bool {
 	switch unit {
-	case "km":
-		return si.canHaveDistance(fp.Distance)
-	case "min":
-		return si.canHaveDuration(fp.Duration)
+	case "distance":
+		return si.canHaveDistance(fp.Distance, float64(si.Counter)*count)
+	case "duration":
+		return si.canHaveDuration(fp.Duration, time.Duration(count))
 	}
 
 	return true
 }
 
-func (si *StatisticsItem) canHaveDistance(distance float64) bool {
-	return int(si.TotalDistance+distance) < si.Counter*1000
+func (si *StatisticsItem) canHaveDistance(distance, next float64) bool {
+	return si.TotalDistance+distance < next
 }
 
-func (si *StatisticsItem) canHaveDuration(duration time.Duration) bool {
-	return si.Duration+duration < time.Minute
+func (si *StatisticsItem) canHaveDuration(duration, next time.Duration) bool {
+	return si.Duration+duration < next
 }
 
 func (si *StatisticsItem) CalcultateSpeed() {
@@ -77,15 +79,7 @@ func calculateBestAndWorst(items []StatisticsItem) {
 	items[best].IsBest = true
 }
 
-func (w *Workout) StatisticsPerKilometer() []StatisticsItem {
-	return w.statisticsWithUnit("km")
-}
-
-func (w *Workout) StatisticsPerMinute() []StatisticsItem {
-	return w.statisticsWithUnit("min")
-}
-
-func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
+func (w *Workout) statisticsWithUnit(count float64, unit string) []StatisticsItem {
 	if len(w.Data.Details.Points) == 0 {
 		return nil
 	}
@@ -93,13 +87,14 @@ func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
 	var items []StatisticsItem
 
 	nextItem := StatisticsItem{
-		Unit:       unit,
+		UnitCount:  count,
+		UnitName:   unit,
 		Counter:    1,
 		FirstPoint: &w.Data.Details.Points[0],
 	}
 
 	for i, p := range w.Data.Details.Points {
-		if !nextItem.canHave(unit, &w.Data.Details.Points[i]) {
+		if !nextItem.canHave(count, unit, &w.Data.Details.Points[i]) {
 			nextItem.LastPoint = &w.Data.Details.Points[i]
 			nextItem.CalcultateSpeed()
 			items = append(items, nextItem)
@@ -126,4 +121,36 @@ func (w *Workout) statisticsWithUnit(unit string) []StatisticsItem {
 	calculateBestAndWorst(items)
 
 	return items
+}
+
+type WorkoutBreakdown struct {
+	Unit              string
+	Items             []StatisticsItem
+	RemainingDistance float64
+}
+
+func (w *Workout) StatisticsPer(count float64, unit string) WorkoutBreakdown {
+	wb := WorkoutBreakdown{Unit: unit}
+
+	switch unit {
+	case "km":
+		wb.Items = w.statisticsWithUnit(count*1000, "distance")
+	case "mi":
+		wb.Items = w.statisticsWithUnit(count*1609.344, "distance")
+	case "min": // TODO: implement
+		wb.Items = w.statisticsWithUnit(count*float64(time.Minute), "duration")
+	}
+
+	if len(wb.Items) == 0 {
+		return wb
+	}
+
+	lastItem := wb.Items[len(wb.Items)-1]
+
+	wb.RemainingDistance = lastItem.Distance
+	if wb.RemainingDistance < 0 {
+		wb.RemainingDistance = 0
+	}
+
+	return wb
 }
