@@ -40,10 +40,10 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
 		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
 
-		"HumanElevation": templatehelpers.HumanElevationFor(u.PreferredUnits().Elevation),
-		"HumanDistance":  templatehelpers.HumanDistanceFor(u.PreferredUnits().Distance),
-		"HumanSpeed":     templatehelpers.HumanSpeedFor(u.PreferredUnits().Speed),
-		"HumanTempo":     templatehelpers.HumanTempoFor(u.PreferredUnits().Distance),
+		"HumanElevation": templatehelpers.HumanElevationFor(u.PreferredUnits().Elevation()),
+		"HumanDistance":  templatehelpers.HumanDistanceFor(u.PreferredUnits().Distance()),
+		"HumanSpeed":     templatehelpers.HumanSpeedFor(u.PreferredUnits().Speed()),
+		"HumanTempo":     templatehelpers.HumanTempoFor(u.PreferredUnits().Distance()),
 	})
 
 	return r.ExecuteTemplate(w, name, data)

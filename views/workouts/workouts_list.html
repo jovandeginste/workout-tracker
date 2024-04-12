@@ -62,7 +62,8 @@
               sorttable_customkey="{{ .Data.TotalDistance }}"
               class="whitespace-nowrap font-mono"
             >
-              {{ .Data.TotalDistance | HumanDistance }}
+              {{ .Data.TotalDistance | HumanDistance }} {{
+              CurrentUser.PreferredUnits.Distance }}
             </td>
             <td
               class="hidden sm:table-cell whitespace-nowrap font-mono"
@@ -74,19 +75,22 @@
               class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
             >
-              {{ .Data.AverageSpeedNoPause | HumanSpeed }}
+              {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
+              CurrentUser.PreferredUnits.Speed }}
             </td>
             <td
               class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
             >
-              {{ .Data.AverageSpeedNoPause | HumanTempo }}
+              {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
+              CurrentUser.PreferredUnits.Tempo }}
             </td>
             <td
               class="hidden 2xl:table-cell whitespace-nowrap font-mono"
               sorttable_customkey="{{ .Data.MaxSpeed }}"
             >
-              {{ .Data.MaxSpeed | HumanSpeed }}
+              {{ .Data.MaxSpeed | HumanSpeed }} {{
+              CurrentUser.PreferredUnits.Speed }}
             </td>
             <td class="hidden lg:table-cell">
               <span class="actions"> {{ template "workout_actions" . }} </span>

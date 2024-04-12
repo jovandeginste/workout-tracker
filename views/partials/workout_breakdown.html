@@ -30,10 +30,17 @@
         <span class="text-green-500 {{ IconFor `best` }}"></span>{{ end }}
       </td>
       <td class="text-center">{{ .Counter }}</td>
-      <td>{{ .TotalDistance | HumanDistance }}</td>
+      <td>
+        {{ .TotalDistance | HumanDistance }} {{
+        CurrentUser.PreferredUnits.Distance }}
+      </td>
       <td>{{ .Duration | HumanDuration }}</td>
-      <td class="whitespace-nowrap font-mono">{{ .Speed | HumanSpeed }}</td>
-      <td class="whitespace-nowrap font-mono">{{ .Speed | HumanTempo }}</td>
+      <td class="whitespace-nowrap font-mono">
+        {{ .Speed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+      </td>
+      <td class="whitespace-nowrap font-mono">
+        {{ .Speed | HumanTempo }} {{ CurrentUser.PreferredUnits.Tempo }}
+      </td>
     </tr>
     {{ end }}
   </tbody>

@@ -23,10 +23,40 @@ type Profile struct {
 }
 
 type UserPreferredUnits struct {
-	Speed     string `form:"speed" `
-	Distance  string `form:"distance"`
-	Duration  string `form:"duration"`
-	Elevation string `form:"elevation"`
+	SpeedRaw     string `form:"speed" json:"speed"`
+	DistanceRaw  string `form:"distance" json:"distance"`
+	ElevationRaw string `form:"elevation" json:"elevation"`
+}
+
+func (u UserPreferredUnits) Tempo() string {
+	return "min/" + u.Distance()
+}
+
+func (u UserPreferredUnits) Elevation() string {
+	switch u.ElevationRaw {
+	case "feet":
+		return "feet"
+	default:
+		return "m"
+	}
+}
+
+func (u UserPreferredUnits) Distance() string {
+	switch u.DistanceRaw {
+	case "mi":
+		return "mi"
+	default:
+		return "km"
+	}
+}
+
+func (u UserPreferredUnits) Speed() string {
+	switch u.SpeedRaw {
+	case "mph":
+		return "mph"
+	default:
+		return "km/h"
+	}
 }
 
 func (p *Profile) Save(db *gorm.DB) error {

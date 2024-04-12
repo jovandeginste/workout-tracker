@@ -19,28 +19,28 @@ func TestCountryCodeToFlag(t *testing.T) {
 }
 
 func TestHumanDistanceKM(t *testing.T) {
-	assert.Equal(t, "0.00 km", HumanDistanceKM(1.23))
-	assert.Equal(t, "1.23 km", HumanDistanceKM(1234))
-	assert.Equal(t, "1234.57 km", HumanDistanceKM(1234567))
+	assert.Equal(t, "0.00", HumanDistanceKM(1.23))
+	assert.Equal(t, "1.23", HumanDistanceKM(1234))
+	assert.Equal(t, "1234.57", HumanDistanceKM(1234567))
 }
 
 func TestHumanDistance(t *testing.T) {
-	assert.Equal(t, "0.00 km", HumanDistanceKM(1.23))
-	assert.Equal(t, "1.23 km", HumanDistanceKM(1234))
-	assert.Equal(t, "1234.57 km", HumanDistanceKM(1234567))
+	assert.Equal(t, "0.00", HumanDistanceKM(1.23))
+	assert.Equal(t, "1.23", HumanDistanceKM(1234))
+	assert.Equal(t, "1234.57", HumanDistanceKM(1234567))
 }
 
 func TestHumanSpeedKPH(t *testing.T) {
-	assert.Equal(t, "4.43 km/h", HumanSpeedKPH(1.23))
-	assert.Equal(t, "10.01 km/h", HumanSpeedKPH(2.78))
-	assert.Equal(t, "17.96 km/h", HumanSpeedKPH(4.99))
+	assert.Equal(t, "4.43", HumanSpeedKPH(1.23))
+	assert.Equal(t, "10.01", HumanSpeedKPH(2.78))
+	assert.Equal(t, "17.96", HumanSpeedKPH(4.99))
 }
 
 func TestHumanTempoKM(t *testing.T) {
-	assert.Equal(t, "13:33 min/km", HumanTempoKM(1.23))
-	assert.Equal(t, "5:59 min/km", HumanTempoKM(2.78))
-	assert.Equal(t, "3:20 min/km", HumanTempoKM(4.99))
-	assert.Equal(t, "5:01 min/km", HumanTempoKM(3.32))
+	assert.Equal(t, "13:33", HumanTempoKM(1.23))
+	assert.Equal(t, "5:59", HumanTempoKM(2.78))
+	assert.Equal(t, "3:20", HumanTempoKM(4.99))
+	assert.Equal(t, "5:01", HumanTempoKM(3.32))
 }
 
 func TestBoolToHTML(t *testing.T) {
@@ -54,10 +54,11 @@ func TestBoolToCheckbox(t *testing.T) {
 }
 
 func TestBuildDecoratedAttribute(t *testing.T) {
-	r := BuildDecoratedAttribute("the-icon", "the-name", "the-value")
+	r := BuildDecoratedAttribute("the-icon", "the-name", "the-value", "the-unit")
 
 	assert.NotNil(t, r)
 	assert.Equal(t, "the-icon", r.Icon)
 	assert.Equal(t, "the-name", r.Name)
 	assert.Equal(t, "the-value", r.Value)
+	assert.Equal(t, "the-unit", r.Unit)
 }

@@ -33,7 +33,8 @@
         class="workout-tile-info {{ IconFor `distance` }} whitespace-nowrap font-mono"
         title="Total distance"
       >
-        {{ .Data.TotalDistance | HumanDistance }}
+        {{ .Data.TotalDistance | HumanDistance }} {{
+        CurrentUser.PreferredUnits.Distance }}
       </div>
       <div
         class="workout-tile-info {{ IconFor `duration` }} whitespace-nowrap font-mono"
@@ -45,19 +46,21 @@
         class="workout-tile-info {{ IconFor `speed` }} whitespace-nowrap font-mono"
         title="Average speed (no pause)"
       >
-        {{ .Data.AverageSpeedNoPause | HumanSpeed }}
+        {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
+        CurrentUser.PreferredUnits.Speed }}
       </div>
       <div
         class="workout-tile-info {{ IconFor `tempo` }} whitespace-nowrap font-mono"
         title="Average tempo (no pause)"
       >
-        {{ .Data.AverageSpeedNoPause | HumanTempo }}
+        {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
+        CurrentUser.PreferredUnits.Tempo }}
       </div>
       <div
         class="workout-tile-info {{ IconFor `max-speed` }} whitespace-nowrap font-mono"
         title="Max speed"
       >
-        {{ .Data.MaxSpeed | HumanSpeed }}
+        {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </div>
     </div>
   </div>
