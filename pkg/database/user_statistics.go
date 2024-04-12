@@ -45,19 +45,3 @@ type (
 		Duration            durationRecord
 	}
 )
-
-func (b Bucket) DistanceKM() float64 {
-	return b.Distance / 1000
-}
-
-func (b Bucket) AverageSpeedNoPauseKPH() float64 {
-	return 3.6 * b.AverageSpeedNoPause
-}
-
-func (b Bucket) AverageSpeedKPH() float64 {
-	return 3.6 * b.AverageSpeed
-}
-
-func (b Bucket) MaxSpeedKPH() float64 {
-	return 3.6 * b.MaxSpeed
-}
