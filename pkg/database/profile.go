@@ -34,8 +34,8 @@ func (u UserPreferredUnits) Tempo() string {
 
 func (u UserPreferredUnits) Elevation() string {
 	switch u.ElevationRaw {
-	case "feet":
-		return "feet"
+	case "ft":
+		return "ft"
 	default:
 		return "m"
 	}
