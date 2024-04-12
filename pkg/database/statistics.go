@@ -1,5 +1,10 @@
 package database
 
+import (
+	"fmt"
+	"time"
+)
+
 type StatConfig struct {
 	Since string `query:"since"`
 	Per   string `query:"per"`
@@ -9,6 +14,10 @@ func (sc *StatConfig) GetBucketString() string {
 	switch sc.Per {
 	case "year":
 		return "%Y"
+	case "week":
+		return "%Y-%W"
+	case "day":
+		return "%Y-%m-%d"
 	default:
 		return "%Y-%m"
 	}
@@ -31,8 +40,9 @@ func (u *User) GetDefaultStatistics() (*Statistics, error) {
 
 func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	r := &Statistics{
-		UserID:  u.ID,
-		Buckets: map[WorkoutType]map[string]Bucket{},
+		UserID:       u.ID,
+		BucketFormat: statConfig.GetBucketString(),
+		Buckets:      map[WorkoutType]map[string]Bucket{},
 	}
 
 	rows, err := u.db.
@@ -44,9 +54,9 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
 			"max(max_speed) as max_speed",
-			"max(total_distance / (total_duration / 1000000000)) as average_speed",
-			"max(total_distance / ((total_duration - pause_duration) / 1000000000)) as average_speed_no_pause",
-			"strftime('"+statConfig.GetBucketString()+"', workouts.date) as bucket",
+			fmt.Sprintf("max(total_distance / (total_duration / %d)) as average_speed", time.Second),
+			fmt.Sprintf("max(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
+			"strftime('"+r.BucketFormat+"', workouts.date) as bucket",
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
