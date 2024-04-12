@@ -75,7 +75,7 @@
                 return (
                   value.toLocaleString(undefined, {
                     maximumFractionDigits: 2,
-                  }) + " km/h"
+                  }) + " {{ CurrentUser.PreferredUnits.Speed }}"
                 );
               },
             },
@@ -94,7 +94,7 @@
                   label +=
                     context.parsed.y.toLocaleString(undefined, {
                       maximumFractionDigits: 2,
-                    }) + " km/h";
+                    }) + " {{ CurrentUser.PreferredUnits.Speed }}";
                 }
                 return label;
               },
@@ -112,7 +112,7 @@
                 return (
                   value.toLocaleString(undefined, {
                     maximumFractionDigits: 2,
-                  }) + " km"
+                  }) + " {{ CurrentUser.PreferredUnits.Distance }}"
                 );
               },
             },
@@ -131,7 +131,7 @@
                   label +=
                     context.parsed.y.toLocaleString(undefined, {
                       maximumFractionDigits: 2,
-                    }) + " km";
+                    }) + " {{ CurrentUser.PreferredUnits.Distance }}";
                 }
                 return label;
               },
@@ -225,7 +225,7 @@
                 label: "{{ i18n $type.String }}",
                 data: [
                   {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .DistanceKM }} },
+                  { x: "{{ .Bucket }}", y: {{ .Distance | HumanDistance }} },
                   {{ end -}}
                 ],
               },
@@ -246,7 +246,7 @@
                 label: "{{ i18n $type.String }}",
                 data: [
                   {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedKPH }} },
+                  { x: "{{ .Bucket }}", y: {{ .AverageSpeed | HumanSpeed }} },
                   {{ end -}}
                 ],
               },
@@ -267,7 +267,7 @@
                 label: "{{ i18n $type.String }}",
                 data: [
                   {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedNoPauseKPH }} },
+                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedNoPause | HumanSpeed }} },
                   {{ end -}}
                 ],
               },
@@ -288,7 +288,7 @@
                 label: "{{ i18n $type.String }}",
                 data: [
                   {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .MaxSpeedKPH }} },
+                  { x: "{{ .Bucket }}", y: {{ .MaxSpeed | HumanSpeed }} },
                   {{ end -}}
                 ],
               },
