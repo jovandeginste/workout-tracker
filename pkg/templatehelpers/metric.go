@@ -6,7 +6,7 @@ import (
 )
 
 func HumanDistanceKM(d float64) string {
-	return fmt.Sprintf("%.2f km", d/1000)
+	return fmt.Sprintf("%.2f", d/1000)
 }
 
 func HumanSpeedKPH(mps float64) string {
@@ -16,7 +16,7 @@ func HumanSpeedKPH(mps float64) string {
 
 	kmph := 3.6 * mps
 
-	return fmt.Sprintf("%.2f km/h", kmph)
+	return fmt.Sprintf("%.2f", kmph)
 }
 
 func HumanTempoKM(mps float64) string {
@@ -29,9 +29,9 @@ func HumanTempoKM(mps float64) string {
 	wholeMinutes := math.Floor(mpk)
 	seconds := (mpk - wholeMinutes) * 60
 
-	return fmt.Sprintf("%d:%02d min/km", int(wholeMinutes), int(seconds))
+	return fmt.Sprintf("%d:%02d", int(wholeMinutes), int(seconds))
 }
 
 func HumanElevationM(m float64) string {
-	return fmt.Sprintf("%.2f m", m)
+	return fmt.Sprintf("%.2f", m)
 }

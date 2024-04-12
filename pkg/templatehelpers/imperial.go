@@ -11,7 +11,7 @@ const (
 )
 
 func HumanDistanceMile(d float64) string {
-	return fmt.Sprintf("%.2f mi", milesPerKM*d/1000)
+	return fmt.Sprintf("%.2f", milesPerKM*d/1000)
 }
 
 func HumanSpeedMilePH(mps float64) string {
@@ -21,7 +21,7 @@ func HumanSpeedMilePH(mps float64) string {
 
 	kmph := 3.6 * mps
 
-	return fmt.Sprintf("%.2f mi/h", milesPerKM*kmph)
+	return fmt.Sprintf("%.2f", milesPerKM*kmph)
 }
 
 func HumanTempoMile(mps float64) string {
@@ -34,9 +34,9 @@ func HumanTempoMile(mps float64) string {
 	wholeMinutes := math.Floor(mpm)
 	seconds := (mpm - wholeMinutes) * 60
 
-	return fmt.Sprintf("%d:%02d min/mi", int(wholeMinutes), int(seconds))
+	return fmt.Sprintf("%d:%02d", int(wholeMinutes), int(seconds))
 }
 
 func HumanElevationFt(m float64) string {
-	return fmt.Sprintf("%.2f ft", feetPerMeter*m)
+	return fmt.Sprintf("%.2f", feetPerMeter*m)
 }

@@ -25,7 +25,9 @@
       <th>
         <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
+      <td class="font-mono whitespace-nowrap">
+        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+      </td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .AverageSpeedNoPause }}
@@ -35,7 +37,9 @@
           >{{ i18n "Average speed (no pause)" }}</span
         >
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
+      <td class="font-mono whitespace-nowrap">
+        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+      </td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .MaxSpeed }}
@@ -43,7 +47,9 @@
       <th>
         <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanSpeed }}</td>
+      <td class="font-mono whitespace-nowrap">
+        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+      </td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .Distance }}
@@ -53,7 +59,9 @@
           >{{ i18n "Total distance" }}</span
         >
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanDistance }}</td>
+      <td class="font-mono whitespace-nowrap">
+        {{ .Value | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}
+      </td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .TotalUp }}
@@ -61,7 +69,9 @@
       <th>
         <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
       </th>
-      <td class="font-mono whitespace-nowrap">{{ .Value | HumanElevation }}</td>
+      <td class="font-mono whitespace-nowrap">
+        {{ .Value | HumanElevation }} {{ CurrentUser.PreferredUnits.Elevation }}
+      </td>
       <td>{{ template "stats_record_distance_date" . }}</td>
     </tr>
     {{ end }} {{ with .Duration }}

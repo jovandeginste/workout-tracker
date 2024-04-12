@@ -2,10 +2,11 @@
 <div class="md:flex md:flex-wrap">
   {{ $di := i18n "distance" }} {{ $w := i18n "workouts"}} {{ $u := i18n "up" }}
   {{ $du := i18n "duration" }} {{ template "statistic_tile"
-  (BuildDecoratedAttribute "workout" $w .Workouts) }} {{ template
+  (BuildDecoratedAttribute "workout" $w .Workouts "") }} {{ template
   "statistic_tile" (BuildDecoratedAttribute "distance" $di (.Distance |
-  HumanDistance )) }} {{ template "statistic_tile" (BuildDecoratedAttribute "up"
-  $u (.Up | HumanElevation)) }} {{ template "statistic_tile"
-  (BuildDecoratedAttribute "duration" $du (.Duration | HumanDuration)) }}
+  HumanDistance ) CurrentUser.PreferredUnits.Distance) }} {{ template
+  "statistic_tile" (BuildDecoratedAttribute "up" $u (.Up | HumanElevation)
+  CurrentUser.PreferredUnits.Elevation) }} {{ template "statistic_tile"
+  (BuildDecoratedAttribute "duration" $du (.Duration | HumanDuration) "") }}
 </div>
 {{ end }} {{ end }}

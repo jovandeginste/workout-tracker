@@ -86,13 +86,15 @@ type DecoratedAttribute struct {
 	Icon  string
 	Name  string
 	Value interface{}
+	Unit  string
 }
 
-func BuildDecoratedAttribute(icon, name string, value interface{}) DecoratedAttribute {
+func BuildDecoratedAttribute(icon, name string, value interface{}, unit string) DecoratedAttribute {
 	return DecoratedAttribute{
 		Icon:  icon,
 		Name:  name,
 		Value: value,
+		Unit:  unit,
 	}
 }
 
