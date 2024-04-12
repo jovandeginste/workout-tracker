@@ -26,26 +26,25 @@
         },
       },
       y: {
+        min: 0,
         ticks: {
           callback: function (value) {
             return (
               value.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-              }) + " km/h"
+              }) + " {{ CurrentUser.PreferredUnits.Speed }}"
             );
           },
         },
       },
       y1: {
-        min: Math.floor(minElevation),
-        max: Math.ceil(maxElevation),
         position: "right",
         ticks: {
           callback: function (value) {
             return (
               value.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-              }) + " m"
+              }) + " {{ CurrentUser.PreferredUnits.Elevation }}"
             );
           },
         },
@@ -67,9 +66,9 @@
               });
 
               if (context.dataset.yAxisID === "y") {
-                label += " km/h";
+                label += " {{ CurrentUser.PreferredUnits.Speed }}";
               } else if (context.dataset.yAxisID === "y1") {
-                label += " m";
+                label += " {{ CurrentUser.PreferredUnits.Elevation }}";
               }
             }
             return label;
@@ -91,7 +90,7 @@
           yAxisID: 'y',
           data: [
             {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .SpeedKPH }}, },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, },
             {{- end  }}
           ],
         },
@@ -102,7 +101,7 @@
           fill: true,
           data: [
             {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation }}, },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation | HumanElevation }}, },
             {{- end  }}
           ],
         },
