@@ -6,8 +6,9 @@ import (
 
 type (
 	Statistics struct {
-		UserID  uint
-		Buckets map[WorkoutType]map[string]Bucket
+		UserID       uint
+		BucketFormat string
+		Buckets      map[WorkoutType]map[string]Bucket
 	}
 
 	Bucket struct {
