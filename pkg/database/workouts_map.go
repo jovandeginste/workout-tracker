@@ -17,10 +17,21 @@ func creatorNeedsCorrection(creator string) bool {
 	return creator != "Garmin Connect" && creator != "Apple Watch" && creator != "StravaGPX iPhone" && creator != "StravaGPX"
 }
 
+func normalizeDegrees(val float64) float64 {
+	if val < 0 {
+		return val + 360
+	}
+
+	return val
+}
+
 func correctAltitude(creator string, lat, long, alt float64) float64 {
 	if !creatorNeedsCorrection(creator) {
 		return alt
 	}
+
+	lat = normalizeDegrees(lat)
+	long = normalizeDegrees(long)
 
 	loc := egm96.NewLocationGeodetic(lat, long, alt)
 
