@@ -58,8 +58,8 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
 			"max(max_speed) as max_speed",
-			fmt.Sprintf("max(total_distance / (total_duration / %d)) as average_speed", time.Second),
-			fmt.Sprintf("max(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
+			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
+			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
 			"strftime('"+r.BucketFormat+"', workouts.date) as bucket",
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
@@ -147,8 +147,8 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",
-		&r.AverageSpeed:        "max(total_distance / (total_duration / 1000000000))",
-		&r.AverageSpeedNoPause: "max(total_distance / ((total_duration - pause_duration) / 1000000000))",
+		&r.AverageSpeed:        fmt.Sprintf("avg(total_distance / (total_duration / %d))", time.Second),
+		&r.AverageSpeedNoPause: fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d))", time.Second),
 	}
 
 	for k, v := range mapping {
