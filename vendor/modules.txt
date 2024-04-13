@@ -40,6 +40,9 @@ github.com/fsnotify/fsnotify
 # github.com/fsouza/slognil v0.4.0
 ## explicit; go 1.21
 github.com/fsouza/slognil
+# github.com/galeone/tcx v1.0.0
+## explicit; go 1.19
+github.com/galeone/tcx
 # github.com/glebarez/go-sqlite v1.21.2
 ## explicit; go 1.17
 github.com/glebarez/go-sqlite
@@ -193,6 +196,10 @@ github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
+# github.com/philhofer/vec v0.0.0-20140421144027-536fc796d369
+## explicit
+github.com/philhofer/vec
+github.com/philhofer/vec/pool
 # github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2
 ## explicit
 github.com/pmezard/go-difflib/difflib

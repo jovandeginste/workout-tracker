@@ -158,7 +158,7 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 		return false
 	}
 
-	for _, e := range []string{".gpx", ".fit"} {
+	for _, e := range []string{".gpx", ".fit", ".tcx"} {
 		if filepath.Ext(p) == e {
 			return true
 		}
