@@ -32,9 +32,13 @@ func (sc *StatConfig) GetSince() string {
 }
 
 func (u *User) GetDefaultStatistics() (*Statistics, error) {
+	return u.GetStatisticsFor("-1 year", "month")
+}
+
+func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
 	return u.GetStatistics(StatConfig{
-		Since: "-1 year",
-		Per:   "month",
+		Since: since,
+		Per:   per,
 	})
 }
 
