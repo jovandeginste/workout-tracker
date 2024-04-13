@@ -140,7 +140,7 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 		return WorkoutTypeCycling
 	}
 
-	if 3.6*data.AverageSpeedNoPause() > 5.0 {
+	if 3.6*data.AverageSpeedNoPause() > 7.0 {
 		return WorkoutTypeRunning
 	}
 
