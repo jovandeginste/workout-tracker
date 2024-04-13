@@ -227,7 +227,7 @@ func (u *User) Delete(db *gorm.DB) error {
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w *Workout
 
-	db = db.Preload("Data").Preload("Data.Details")
+	db = db.Preload("Data").Preload("Data.Details").Preload("GPX")
 
 	if err := db.Where(&Workout{UserID: u.ID}).First(&w, id).Error; err != nil {
 		return nil, err
