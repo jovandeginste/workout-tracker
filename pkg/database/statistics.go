@@ -10,29 +10,48 @@ type StatConfig struct {
 	Per   string `query:"per"`
 }
 
-func (sc *StatConfig) GetBucketString() string {
-	switch sc.Per {
-	case "year":
-		return "%Y"
-	case "week":
-		return "%Y-%W"
-	case "day":
-		return "%Y-%m-%d"
+func (sc *StatConfig) GetBucketString(sqlDialect string) string {
+	switch sqlDialect {
+	case "postgres":
+		switch sc.Per {
+		case "year":
+			return "YYYY"
+		case "week":
+			return "YYYY-WW"
+		case "day":
+			return "YYYY-MM-DD"
+		default:
+			return "YYYY-MM"
+		}
 	default:
-		return "%Y-%m"
+		switch sc.Per {
+		case "year":
+			return "%Y"
+		case "week":
+			return "%Y-%W"
+		case "day":
+			return "%Y-%m-%d"
+		default:
+			return "%Y-%m"
+		}
 	}
 }
 
-func (sc *StatConfig) GetPostgresBucketString() string {
-	switch sc.Per {
-	case "year":
-		return "YYYY"
-	case "week":
-		return "YYYY-WW"
-	case "day":
-		return "YYYY-MM-DD"
+func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
+	switch sqlDialect {
+	case "postgres":
+		return "to_char(workouts.date, '" + sc.GetBucketString(sqlDialect) + "') as bucket"
 	default:
-		return "YYYY-MM"
+		return "strftime('" + sc.GetBucketString(sqlDialect) + "', workouts.date) as bucket"
+	}
+}
+
+func (sc *StatConfig) GetDateLimitExpression(sqlDialect string) string {
+	switch sqlDialect {
+	case "postgres":
+		return "workouts.date > CURRENT_DATE + cast(? as interval)"
+	default:
+		return "workouts.date > DATE(CURRENT_DATE, ?)"
 	}
 }
 
@@ -56,22 +75,12 @@ func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
 }
 
 func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
+	sqlDialect := u.db.Dialector.Name()
+
 	r := &Statistics{
 		UserID:       u.ID,
-		BucketFormat: statConfig.GetBucketString(),
+		BucketFormat: statConfig.GetBucketString(sqlDialect),
 		Buckets:      map[WorkoutType]map[string]Bucket{},
-	}
-
-	databaseType := u.db.Dialector.Name()
-
-	bucketFormat := "strftime('" + statConfig.GetBucketString() + "', workouts.date) as bucket"
-	if databaseType == "postgres" {
-		bucketFormat = "to_char(workouts.date, '" + statConfig.GetPostgresBucketString() + "') as bucket"
-	}
-
-	dateLimit := "workouts.date > DATE(CURRENT_DATE, ?)"
-	if databaseType == "postgres" {
-		dateLimit = "workouts.date > CURRENT_DATE + cast(? as interval)"
 	}
 
 	rows, err := u.db.
@@ -85,11 +94,11 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"max(max_speed) as max_speed",
 			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
 			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
-			bucketFormat,
+			statConfig.GetBucketFormatExpression(sqlDialect),
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where(dateLimit, statConfig.GetSince()).
+		Where(statConfig.GetDateLimitExpression(sqlDialect), statConfig.GetSince()).
 		Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
