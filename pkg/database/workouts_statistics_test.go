@@ -8,7 +8,7 @@ import (
 )
 
 func TestStatisticsItem_CalcultateSpeed(t *testing.T) {
-	si := &StatisticsItem{
+	si := &BreakdownItem{
 		Distance: 1000,
 		Duration: 60 * time.Second,
 	}
@@ -20,7 +20,7 @@ func TestStatisticsItem_CalcultateSpeed(t *testing.T) {
 }
 
 func TestStatisticsItem_CanHave(t *testing.T) {
-	si := &StatisticsItem{
+	si := &BreakdownItem{
 		TotalDistance: 1800,
 		Counter:       2,
 	}

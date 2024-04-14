@@ -22,7 +22,7 @@ clean:
 dev:
 	air
 
-build: build-dist build-tw build-server build-docker
+build: build-swagger build-dist build-tw build-server build-docker
 
 build-server:
 	go build \
@@ -37,6 +37,12 @@ build-docker:
 		--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
 		--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
 		.
+
+build-swagger:
+	swag init \
+		--parseDependency \
+		--dir ./pkg/app/,./,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
+		--generalInfo api_handlers.go
 
 build-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css

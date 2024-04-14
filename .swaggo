@@ -1,0 +1,5 @@
+replace null.String string
+replace null.Int64 integer
+replace null.Bool boolean
+replace sql.NullTime time
+replace time.Duration integer
