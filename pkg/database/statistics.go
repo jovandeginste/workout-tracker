@@ -183,8 +183,8 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",
-		&r.AverageSpeed:        fmt.Sprintf("avg(total_distance / (total_duration / %d))", time.Second),
-		&r.AverageSpeedNoPause: fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d))", time.Second),
+		&r.AverageSpeed:        fmt.Sprintf("max(total_distance / (total_duration / %d))", time.Second),
+		&r.AverageSpeedNoPause: fmt.Sprintf("max(total_distance / ((total_duration - pause_duration) / %d))", time.Second),
 	}
 
 	for k, v := range mapping {
