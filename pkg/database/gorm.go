@@ -70,7 +70,16 @@ func preMigrationActions(db *gorm.DB) error {
 		return nil
 	}
 
-	q := db.Unscoped().Where("id < (select max(id) from map_data as m where m.workout_id = map_data.workout_id)").Delete(&MapData{})
+	q := db.Unscoped().
+		Where("id < (select max(id) from map_data as m where m.workout_id = map_data.workout_id)").
+		Delete(&MapData{})
+	if q.Error != nil {
+		return q.Error
+	}
+
+	q = db.Unscoped().
+		Where("id < (select max(id) from workouts as w where w.date = workouts.date and w.user_id = workouts.user_id)").
+		Delete(&Workout{})
 
 	return q.Error
 }

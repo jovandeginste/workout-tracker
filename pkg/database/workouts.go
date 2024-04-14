@@ -20,9 +20,9 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name   string      `gorm:"not null"`       // The name of the workout
-	Date   *time.Time  `gorm:"not null"`       // The timestamp the workout was recorded
-	UserID uint        `gorm:"not null;index"` // The ID of the user who owns the workout
+	Name   string      `gorm:"not null"`                                  // The name of the workout
+	Date   *time.Time  `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
+	UserID uint        `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
 	Dirty  bool        // Whether the workout has been modified and the details should be re-rendered
 	User   *User       // The user who owns the workout
 	Notes  string      // The notes associated with the workout, in markdown
