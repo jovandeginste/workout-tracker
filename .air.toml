@@ -2,8 +2,8 @@
   bin               = "./tmp/main"
   cmd               = "make build-server"
   delay             = 1000
-  exclude_dir       = ["testdata", "tmp", "vendor"]
-  exclude_file      = ["assets/output.css"]
+  exclude_dir       = ["docs", "testdata", "tmp", "vendor"]
+  exclude_file      = ["assets/output.css", "screenshots.js"]
   exclude_regex     = ["_test.go"]
   exclude_unchanged = false
   include_ext       = ["css", "go", "html", "js", "json", "tmpl", "tpl"]

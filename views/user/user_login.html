@@ -19,7 +19,11 @@
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `user-signin` }}">{{ i18n "Sign in" }}</h3>
-            <form method="post" action="{{ RouteFor `user-signin` }}">
+            <form
+              id="signin"
+              method="post"
+              action="{{ RouteFor `user-signin` }}"
+            >
               <table>
                 <tbody>
                   <tr>
@@ -43,7 +47,9 @@
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit">{{ i18n "Sign in" }}</button>
+                      <button id="signin" type="submit">
+                        {{ i18n "Sign in" }}
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -56,7 +62,11 @@
             <h3 class="{{ IconFor `user-register` }}">
               {{ i18n "Create a new account" }}
             </h3>
-            <form method="post" action="{{ RouteFor `user-register` }}">
+            <form
+              id="register"
+              method="post"
+              action="{{ RouteFor `user-register` }}"
+            >
               <table>
                 <tbody>
                   <tr>
@@ -88,7 +98,9 @@
                   <tr>
                     <td></td>
                     <td>
-                      <button type="submit">{{ i18n "Register" }}</button>
+                      <button id="register" type="submit">
+                        {{ i18n "Register" }}
+                      </button>
                     </td>
                   </tr>
                 </tbody>

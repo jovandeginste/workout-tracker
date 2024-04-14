@@ -121,7 +121,7 @@ func TestRoute_NoUserAccessLogin(t *testing.T) {
 
 		require.NoError(t, h(c))
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Contains(t, rec.Body.String(), `<button type="submit">Sign in</button>`)
+		assert.Contains(t, rec.Body.String(), `<button id="signin" type="submit">`)
 	})
 }
 
@@ -149,7 +149,7 @@ func TestRoute_NoUserAccessLoginLang(t *testing.T) {
 
 			require.NoError(t, h(c))
 			assert.Equal(t, http.StatusOK, rec.Code)
-			assert.Contains(t, rec.Body.String(), `<button type="submit">`+expected+`</button>`)
+			assert.Contains(t, rec.Body.String(), expected)
 		})
 	}
 }
