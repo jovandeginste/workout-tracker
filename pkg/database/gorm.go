@@ -9,6 +9,7 @@ import (
 	"github.com/glebarez/sqlite"
 	slogGorm "github.com/orandin/slog-gorm"
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -105,6 +106,8 @@ func dialectorFor(driver, dsn string) (gorm.Dialector, error) {
 		return sqlite.Open(":memory:"), nil
 	case "mysql":
 		return mysql.Open(dsn), nil
+	case "postgres":
+		return postgres.Open(dsn), nil
 	default:
 		return nil, fmt.Errorf("%w: %s", ErrUnsuportedDriver, driver)
 	}

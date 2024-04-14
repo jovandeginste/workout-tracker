@@ -5,21 +5,55 @@ import (
 	"time"
 )
 
+const postgresDialect = "postgres"
+
 type StatConfig struct {
 	Since string `query:"since"`
 	Per   string `query:"per"`
 }
 
-func (sc *StatConfig) GetBucketString() string {
-	switch sc.Per {
-	case "year":
-		return "%Y"
-	case "week":
-		return "%Y-%W"
-	case "day":
-		return "%Y-%m-%d"
+func (sc *StatConfig) GetBucketString(sqlDialect string) string {
+	switch sqlDialect {
+	case postgresDialect:
+		switch sc.Per {
+		case "year":
+			return "YYYY"
+		case "week":
+			return "YYYY-WW"
+		case "day":
+			return "YYYY-MM-DD"
+		default:
+			return "YYYY-MM"
+		}
 	default:
-		return "%Y-%m"
+		switch sc.Per {
+		case "year":
+			return "%Y"
+		case "week":
+			return "%Y-%W"
+		case "day":
+			return "%Y-%m-%d"
+		default:
+			return "%Y-%m"
+		}
+	}
+}
+
+func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
+	switch sqlDialect {
+	case postgresDialect:
+		return "to_char(workouts.date, '" + sc.GetBucketString(sqlDialect) + "') as bucket"
+	default:
+		return "strftime('" + sc.GetBucketString(sqlDialect) + "', workouts.date) as bucket"
+	}
+}
+
+func (sc *StatConfig) GetDateLimitExpression(sqlDialect string) string {
+	switch sqlDialect {
+	case postgresDialect:
+		return "workouts.date > CURRENT_DATE + cast(? as interval)"
+	default:
+		return "workouts.date > DATE(CURRENT_DATE, ?)"
 	}
 }
 
@@ -43,9 +77,11 @@ func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
 }
 
 func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
+	sqlDialect := u.db.Dialector.Name()
+
 	r := &Statistics{
 		UserID:       u.ID,
-		BucketFormat: statConfig.GetBucketString(),
+		BucketFormat: statConfig.GetBucketString(sqlDialect),
 		Buckets:      map[WorkoutType]map[string]Bucket{},
 	}
 
@@ -60,11 +96,11 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"max(max_speed) as max_speed",
 			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
 			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
-			"strftime('"+r.BucketFormat+"', workouts.date) as bucket",
+			statConfig.GetBucketFormatExpression(sqlDialect),
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where("workouts.date > DATE(CURRENT_DATE, ?)", statConfig.GetSince()).
+		Where(statConfig.GetDateLimitExpression(sqlDialect), statConfig.GetSince()).
 		Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
@@ -104,7 +140,7 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
-			"type as workout_type",
+			"max(type) as workout_type",
 			"sum(total_duration) as duration",
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
@@ -158,6 +194,9 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 			Where("user_id = ?", u.ID).
 			Where("type = ?", t).
 			Select("workouts.id as id", v+" as value", "workouts.date as date").
+			Order(v + " DESC").
+			Group("workouts.id").
+			Limit(1).
 			Scan(k).Error
 		if err != nil {
 			return nil, err
@@ -170,6 +209,9 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		Where("user_id = ?", u.ID).
 		Where("type = ?", t).
 		Select("workouts.id as id", "max(total_duration) as value", "workouts.date as date").
+		Order("max(total_duration) DESC").
+		Group("workouts.id").
+		Limit(1).
 		Scan(&r.Duration).Error
 	if err != nil {
 		return nil, err

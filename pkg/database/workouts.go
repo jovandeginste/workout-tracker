@@ -31,15 +31,15 @@ type Workout struct {
 	GPX     *GPXData `json:",omitempty"`
 	MapData *MapData `gorm:"serializer:json;column:data" json:"-"`
 
-	GPXData  []byte `gorm:"type:mediumtext" json:"-"` // To be removed
-	Filename string `json:"-"`                        // To be removed
-	Checksum []byte `gorm:"default:legacy" json:"-"`  // To be removed
+	GPXData  []byte `gorm:"type:text" json:"-"`        // To be removed
+	Filename string `json:"-"`                         // To be removed
+	Checksum []byte `gorm:"default:'legacy'" json:"-"` // To be removed
 }
 
 type GPXData struct {
 	gorm.Model
 	WorkoutID uint   `gorm:"not null;uniqueIndex"`
-	Content   []byte `gorm:"type:mediumtext"`
+	Content   []byte `gorm:"type:text"`
 	Checksum  []byte `gorm:"not null;uniqueIndex"`
 	Filename  string
 }
