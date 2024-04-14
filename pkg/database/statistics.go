@@ -192,6 +192,9 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 			Where("user_id = ?", u.ID).
 			Where("type = ?", t).
 			Select("workouts.id as id", v+" as value", "workouts.date as date").
+			Order(v + " DESC").
+			Group("workouts.id").
+			Limit(1).
 			Scan(k).Error
 		if err != nil {
 			return nil, err
@@ -204,6 +207,9 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		Where("user_id = ?", u.ID).
 		Where("type = ?", t).
 		Select("workouts.id as id", "max(total_duration) as value", "workouts.date as date").
+		Order("max(total_duration) DESC").
+		Group("workouts.id").
+		Limit(1).
 		Scan(&r.Duration).Error
 	if err != nil {
 		return nil, err
