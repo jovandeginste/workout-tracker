@@ -23,6 +23,8 @@ func Parse(filename string, content []byte) (*gpx.GPX, error) {
 		return ParseGPX(content)
 	case ".fit":
 		return ParseFit(content)
+	case ".tcx":
+		return ParseTCX(content)
 	default:
 		return nil, fmt.Errorf("%w: %s", ErrUnsupportedFile, filename)
 	}
