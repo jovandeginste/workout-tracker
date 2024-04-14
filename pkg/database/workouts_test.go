@@ -73,9 +73,9 @@ func TestWorkout_UpdateData(t *testing.T) {
 	require.NoError(t, w.Save(db))
 
 	ud := w.UpdatedAt
-	d := w.Data
 
-	w.Data = dummyMapData()
+	d := w.Data
+	w.setData(dummyMapData())
 	require.NoError(t, w.Save(db))
 
 	assert.NotEqual(t, d, w.Data)

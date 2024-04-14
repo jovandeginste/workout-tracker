@@ -20,20 +20,20 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name   string     `gorm:"not null"`
-	Date   *time.Time `gorm:"not null"`
-	UserID uint       `gorm:"not null;index"`
-	Dirty  bool
-	User   *User
-	Notes  string
-	Type   WorkoutType
-	Data   *MapData `json:",omitempty"`
-	GPX    *GPXData `json:",omitempty"`
+	Name    string     `gorm:"not null"`
+	Date    *time.Time `gorm:"not null"`
+	UserID  uint       `gorm:"not null;index"`
+	Dirty   bool
+	User    *User
+	Notes   string
+	Type    WorkoutType
+	Data    *MapData `json:",omitempty"`
+	GPX     *GPXData `json:",omitempty"`
+	MapData *MapData `gorm:"serializer:json;column:data" json:"-"`
 
-	MapData  *MapData `gorm:"serializer:json;column:data" json:"-"`
-	GPXData  []byte   `gorm:"type:mediumtext" json:"-"`
-	Filename string   `json:"-"`
-	Checksum []byte   `gorm:"default:legacy" json:"-"`
+	GPXData  []byte `gorm:"type:mediumtext" json:"-"` // To be removed
+	Filename string `json:"-"`                        // To be removed
+	Checksum []byte `gorm:"default:legacy" json:"-"`  // To be removed
 }
 
 type GPXData struct {
@@ -209,23 +209,27 @@ func (w *Workout) AsGPX() (*gpx.GPX, error) {
 	return converters.Parse(w.GPX.Filename, w.GPX.Content)
 }
 
+func (w *Workout) setData(data *MapData) {
+	if w.Data == nil {
+		w.Data = data
+		return
+	}
+
+	dataID := w.Data.ID
+	dataCreatedAt := w.Data.CreatedAt
+
+	w.Data = data
+	w.Data.ID = dataID
+	w.Data.CreatedAt = dataCreatedAt
+}
+
 func (w *Workout) UpdateData(db *gorm.DB) error {
 	gpxContent, err := w.AsGPX()
 	if err != nil {
 		return err
 	}
 
-	dataID := uint(0)
-	dataCreatedAt := time.Now()
-
-	if w.Data != nil {
-		dataID = w.Data.ID
-		dataCreatedAt = w.Data.CreatedAt
-	}
-
-	w.Data = gpxAsMapData(gpxContent)
-	w.Data.ID = dataID
-	w.Data.CreatedAt = dataCreatedAt
+	w.setData(gpxAsMapData(gpxContent))
 
 	if err := w.Data.Save(db); err != nil {
 		return err

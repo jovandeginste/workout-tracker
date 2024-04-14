@@ -45,7 +45,7 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 
 type MapData struct {
 	gorm.Model
-	WorkoutID     uint `gorm:"not null"`
+	WorkoutID     uint `gorm:"not null;uniqueIndex"`
 	Creator       string
 	Name          string
 	Center        MapCenter    `gorm:"serializer:json"`
