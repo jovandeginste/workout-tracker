@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+const postgresDialect = "postgres"
+
 type StatConfig struct {
 	Since string `query:"since"`
 	Per   string `query:"per"`
@@ -12,7 +14,7 @@ type StatConfig struct {
 
 func (sc *StatConfig) GetBucketString(sqlDialect string) string {
 	switch sqlDialect {
-	case "postgres":
+	case postgresDialect:
 		switch sc.Per {
 		case "year":
 			return "YYYY"
@@ -39,7 +41,7 @@ func (sc *StatConfig) GetBucketString(sqlDialect string) string {
 
 func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
 	switch sqlDialect {
-	case "postgres":
+	case postgresDialect:
 		return "to_char(workouts.date, '" + sc.GetBucketString(sqlDialect) + "') as bucket"
 	default:
 		return "strftime('" + sc.GetBucketString(sqlDialect) + "', workouts.date) as bucket"
@@ -48,7 +50,7 @@ func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
 
 func (sc *StatConfig) GetDateLimitExpression(sqlDialect string) string {
 	switch sqlDialect {
-	case "postgres":
+	case postgresDialect:
 		return "workouts.date > CURRENT_DATE + cast(? as interval)"
 	default:
 		return "workouts.date > DATE(CURRENT_DATE, ?)"
