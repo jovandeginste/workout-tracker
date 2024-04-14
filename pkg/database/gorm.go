@@ -43,11 +43,17 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 		return nil, err
 	}
 
-	if err := db.AutoMigrate(&User{}, &Profile{}, &Workout{}, &GPXData{}, &MapData{}, &MapDataDetails{}); err != nil {
+	if err := preMigrationActions(db); err != nil {
 		return nil, err
 	}
 
-	if err := convertWorkouts(db); err != nil {
+	if err := db.AutoMigrate(
+		&User{}, &Profile{}, &Workout{}, &GPXData{}, &MapData{}, &MapDataDetails{},
+	); err != nil {
+		return nil, err
+	}
+
+	if err := postMigrationActions(db); err != nil {
 		return nil, err
 	}
 
@@ -56,6 +62,20 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 	}
 
 	return db, nil
+}
+
+func preMigrationActions(db *gorm.DB) error {
+	if !db.Migrator().HasTable(&MapData{}) {
+		return nil
+	}
+
+	q := db.Unscoped().Where("id < (select max(id) from map_data as m where m.workout_id = map_data.workout_id)").Delete(&MapData{})
+
+	return q.Error
+}
+
+func postMigrationActions(db *gorm.DB) error {
+	return convertWorkouts(db)
 }
 
 func setUserAPIKeys(db *gorm.DB) error {
