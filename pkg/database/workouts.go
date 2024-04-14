@@ -20,28 +20,28 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name    string     `gorm:"not null"`
-	Date    *time.Time `gorm:"not null"`
-	UserID  uint       `gorm:"not null;index"`
-	Dirty   bool
-	User    *User
-	Notes   string
-	Type    WorkoutType
-	Data    *MapData `json:",omitempty"`
-	GPX     *GPXData `json:",omitempty"`
-	MapData *MapData `gorm:"serializer:json;column:data" json:"-"`
+	Name   string      `gorm:"not null"`       // The name of the workout
+	Date   *time.Time  `gorm:"not null"`       // The timestamp the workout was recorded
+	UserID uint        `gorm:"not null;index"` // The ID of the user who owns the workout
+	Dirty  bool        // Whether the workout has been modified and the details should be re-rendered
+	User   *User       // The user who owns the workout
+	Notes  string      // The notes associated with the workout, in markdown
+	Type   WorkoutType // The type of the workout
+	Data   *MapData    `json:",omitempty"` // The map data associated with the workout
+	GPX    *GPXData    `json:",omitempty"` // The file data associated with the workout
 
-	GPXData  []byte `gorm:"type:text" json:"-"`        // To be removed
-	Filename string `json:"-"`                         // To be removed
-	Checksum []byte `gorm:"default:'legacy'" json:"-"` // To be removed
+	MapData  *MapData `gorm:"serializer:json;column:data" json:"-"` // To be removed
+	GPXData  []byte   `gorm:"type:text" json:"-"`                   // To be removed
+	Filename string   `json:"-"`                                    // To be removed
+	Checksum []byte   `gorm:"default:'legacy'" json:"-"`            // To be removed
 }
 
 type GPXData struct {
 	gorm.Model
-	WorkoutID uint   `gorm:"not null;uniqueIndex"`
-	Content   []byte `gorm:"type:text"`
-	Checksum  []byte `gorm:"not null;uniqueIndex"`
-	Filename  string
+	WorkoutID uint   `gorm:"not null;uniqueIndex"` // The ID of the workout
+	Content   []byte `gorm:"type:text"`            // The file content
+	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
+	Filename  string // The filename of the file
 }
 
 func (w *Workout) Distance() float64 {

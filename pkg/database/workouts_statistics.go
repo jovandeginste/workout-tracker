@@ -5,60 +5,56 @@ import (
 	"time"
 )
 
-type StatisticsItem struct {
-	UnitCount     float64
-	UnitName      string
-	Counter       int
-	Distance      float64
-	TotalDistance float64
-	Duration      time.Duration
-	TotalDuration time.Duration
-	Speed         float64
-	FirstPoint    *MapPoint
-	LastPoint     *MapPoint
-	IsBest        bool
-	IsWorst       bool
+type BreakdownItem struct {
+	UnitCount     float64       // Count of the unit per item
+	UnitName      string        // Unit name
+	Counter       int           // Counter of this item in the list of items
+	Distance      float64       // Distance in this item
+	TotalDistance float64       // Total distance in all items up to and including this item
+	Duration      time.Duration // Duration in this item
+	TotalDuration time.Duration // Total duration in all items up to and including this item
+	Speed         float64       // Speed in this item
+	FirstPoint    *MapPoint     // First GPS point in this item
+	LastPoint     *MapPoint     // Last GPS point in this item
+	IsBest        bool          // Whether this item is the best of the list
+	IsWorst       bool          // Whether this item is the worst of the list
 }
 
-func (si *StatisticsItem) SpeedKPH() float64 {
-	return 3.6 * si.Speed
-}
-
-func (si *StatisticsItem) createNext(fp *MapPoint) StatisticsItem {
-	return StatisticsItem{
-		UnitCount:     si.UnitCount,
-		UnitName:      si.UnitName,
-		Counter:       si.Counter + 1,
-		TotalDistance: si.TotalDistance,
-		TotalDuration: si.TotalDuration,
+func (bi *BreakdownItem) createNext(fp *MapPoint) BreakdownItem {
+	return BreakdownItem{
+		UnitCount:     bi.UnitCount,
+		UnitName:      bi.UnitName,
+		Counter:       bi.Counter + 1,
+		TotalDistance: bi.TotalDistance,
+		TotalDuration: bi.TotalDuration,
 		FirstPoint:    fp,
 	}
 }
 
-func (si *StatisticsItem) canHave(count float64, unit string, fp *MapPoint) bool {
+func (bi *BreakdownItem) canHave(count float64, unit string, fp *MapPoint) bool {
 	switch unit {
 	case "distance":
-		return si.canHaveDistance(fp.Distance, float64(si.Counter)*count)
+		return bi.canHaveDistance(fp.Distance, float64(bi.Counter)*count)
 	case "duration":
-		return si.canHaveDuration(fp.Duration, time.Duration(float64(si.Counter)*count))
+		return bi.canHaveDuration(fp.Duration, time.Duration(float64(bi.Counter)*count))
 	}
 
 	return true
 }
 
-func (si *StatisticsItem) canHaveDistance(distance, next float64) bool {
-	return si.TotalDistance+distance < next
+func (bi *BreakdownItem) canHaveDistance(distance, next float64) bool {
+	return bi.TotalDistance+distance < next
 }
 
-func (si *StatisticsItem) canHaveDuration(duration, next time.Duration) bool {
-	return si.TotalDuration+duration < next
+func (bi *BreakdownItem) canHaveDuration(duration, next time.Duration) bool {
+	return bi.TotalDuration+duration < next
 }
 
-func (si *StatisticsItem) CalcultateSpeed() {
-	si.Speed = si.Distance / si.Duration.Seconds()
+func (bi *BreakdownItem) CalcultateSpeed() {
+	bi.Speed = bi.Distance / bi.Duration.Seconds()
 }
 
-func calculateBestAndWorst(items []StatisticsItem) {
+func calculateBestAndWorst(items []BreakdownItem) {
 	if len(items) == 0 {
 		return
 	}
@@ -80,14 +76,14 @@ func calculateBestAndWorst(items []StatisticsItem) {
 	items[best].IsBest = true
 }
 
-func (w *Workout) statisticsWithUnit(count float64, unit string) []StatisticsItem {
+func (w *Workout) statisticsWithUnit(count float64, unit string) []BreakdownItem {
 	if len(w.Data.Details.Points) == 0 {
 		return nil
 	}
 
-	var items []StatisticsItem
+	var items []BreakdownItem
 
-	nextItem := StatisticsItem{
+	nextItem := BreakdownItem{
 		UnitCount:  count,
 		UnitName:   unit,
 		Counter:    1,
@@ -126,7 +122,7 @@ func (w *Workout) statisticsWithUnit(count float64, unit string) []StatisticsIte
 
 type WorkoutBreakdown struct {
 	Unit  string
-	Items []StatisticsItem
+	Items []BreakdownItem
 }
 
 func (w *Workout) StatisticsPer(count float64, unit string) (WorkoutBreakdown, error) {

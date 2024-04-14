@@ -27,16 +27,16 @@ var (
 
 type User struct {
 	gorm.Model
-	Password string `form:"-"        gorm:"type:varchar(128);not null"`
-	Salt     string `form:"-"        gorm:"type:varchar(16);not null"`
-	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"`
-	Name     string `form:"name"     gorm:"type:varchar(64);not null"`
-	APIKey   string `gorm:"type:varchar(32)"`
-	Active   bool   `form:"active"`
-	Admin    bool   `form:"admin"`
+	Password string `form:"-"        gorm:"type:varchar(128);not null"`            // The user's password as bcrypt hash
+	Salt     string `form:"-"        gorm:"type:varchar(16);not null"`             // The salt used to hash the user's password
+	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"` // The user's username
+	Name     string `form:"name"     gorm:"type:varchar(64);not null"`             // The user's name
+	APIKey   string `gorm:"type:varchar(32)"`                                      // The user's API key
+	Active   bool   `form:"active"`                                                // Whether the user is active
+	Admin    bool   `form:"admin"`                                                 // Whether the user is an admin
 
-	Profile  Profile
-	Workouts []Workout `json:"-"`
+	Profile  Profile   // The user's profile settings
+	Workouts []Workout `json:"-"` // The user's workouts
 
 	db *gorm.DB
 }

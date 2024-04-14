@@ -1,0 +1,1124 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A workout tracking web application for personal use (or family, friends), geared towards running and other GPX-based activities",
+        "title": "Workout Tracker",
+        "contact": {
+            "url": "https://github.com/jovandeginste/workout-tracker/issues"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/jovandeginste/workout-tracker?tab=License-1-ov-file"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/records": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List all records of the current user for the specified workout type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Workout type",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.WorkoutRecord"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/statistics": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List all statistics of the current user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Start of time range",
+                        "name": "since",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bucket size",
+                        "name": "per",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.Statistics"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/totals": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List all totals of the current user for the specified workout type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Workout type",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.Bucket"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/whoami": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show the information of the owner of the API key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.User"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workouts": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List all workouts of the current user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/database.Workout"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workouts/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get all information about a workout",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Workout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Include details",
+                        "name": "details",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.Workout"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workouts/{id}/breakdown": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Break down a workdown per units",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Workout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unit",
+                        "name": "unit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Count",
+                        "name": "count",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/database.WorkoutBreakdown"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "app.APIResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "results": {}
+            }
+        },
+        "database.BreakdownItem": {
+            "type": "object",
+            "properties": {
+                "counter": {
+                    "description": "Counter of this item in the list of items",
+                    "type": "integer"
+                },
+                "distance": {
+                    "description": "Distance in this item",
+                    "type": "number"
+                },
+                "duration": {
+                    "description": "Duration in this item",
+                    "type": "integer"
+                },
+                "firstPoint": {
+                    "description": "First GPS point in this item",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.MapPoint"
+                        }
+                    ]
+                },
+                "isBest": {
+                    "description": "Whether this item is the best of the list",
+                    "type": "boolean"
+                },
+                "isWorst": {
+                    "description": "Whether this item is the worst of the list",
+                    "type": "boolean"
+                },
+                "lastPoint": {
+                    "description": "Last GPS point in this item",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.MapPoint"
+                        }
+                    ]
+                },
+                "speed": {
+                    "description": "Speed in this item",
+                    "type": "number"
+                },
+                "totalDistance": {
+                    "description": "Total distance in all items up to and including this item",
+                    "type": "number"
+                },
+                "totalDuration": {
+                    "description": "Total duration in all items up to and including this item",
+                    "type": "integer"
+                },
+                "unitCount": {
+                    "description": "Count of the unit per item",
+                    "type": "number"
+                },
+                "unitName": {
+                    "description": "Unit name",
+                    "type": "string"
+                }
+            }
+        },
+        "database.Bucket": {
+            "type": "object",
+            "properties": {
+                "averageSpeed": {
+                    "description": "The average speed in the bucket",
+                    "type": "number"
+                },
+                "averageSpeedNoPause": {
+                    "description": "The average speed without pause in the bucket",
+                    "type": "number"
+                },
+                "bucket": {
+                    "description": "The name of the bucket",
+                    "type": "string"
+                },
+                "distance": {
+                    "description": "The total distance in the bucket",
+                    "type": "number"
+                },
+                "duration": {
+                    "description": "The total duration in the bucket",
+                    "type": "integer"
+                },
+                "maxSpeed": {
+                    "description": "The max speed in the bucket",
+                    "type": "number"
+                },
+                "up": {
+                    "description": "The total up elevation in the bucket",
+                    "type": "number"
+                },
+                "workoutType": {
+                    "description": "The type of the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.WorkoutType"
+                        }
+                    ]
+                },
+                "workouts": {
+                    "description": "The number of workouts in the bucket",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.GPXData": {
+            "type": "object",
+            "properties": {
+                "checksum": {
+                    "description": "The checksum of the content",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "content": {
+                    "description": "The file content",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "filename": {
+                    "description": "The filename of the file",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "workoutID": {
+                    "description": "The ID of the workout",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.MapCenter": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "description": "The latitude of the center of the workout",
+                    "type": "number"
+                },
+                "lng": {
+                    "description": "The longitude of the center of the workout",
+                    "type": "number"
+                }
+            }
+        },
+        "database.MapData": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "The address of the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/geo.Address"
+                        }
+                    ]
+                },
+                "center": {
+                    "description": "The center of the workout (in coordinates)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.MapCenter"
+                        }
+                    ]
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "The tool that created this workout",
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "details": {
+                    "description": "The details of the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.MapDataDetails"
+                        }
+                    ]
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "maxElevation": {
+                    "description": "The maximum elevation of the workout",
+                    "type": "number"
+                },
+                "maxSpeed": {
+                    "description": "The maximum speed of the workout",
+                    "type": "number"
+                },
+                "minElevation": {
+                    "description": "The minimum elevation of the workout",
+                    "type": "number"
+                },
+                "name": {
+                    "description": "The name of the workout",
+                    "type": "string"
+                },
+                "pauseDuration": {
+                    "description": "The total pause duration of the workout",
+                    "type": "integer"
+                },
+                "totalDistance": {
+                    "description": "The total distance of the workout",
+                    "type": "number"
+                },
+                "totalDown": {
+                    "description": "The total distance down of the workout",
+                    "type": "number"
+                },
+                "totalDuration": {
+                    "description": "The total duration of the workout",
+                    "type": "integer"
+                },
+                "totalUp": {
+                    "description": "The total distance up of the workout",
+                    "type": "number"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "workoutID": {
+                    "description": "The workout this data belongs to",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.MapDataDetails": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mapDataID": {
+                    "description": "The ID of the map data these details belong to",
+                    "type": "integer"
+                },
+                "points": {
+                    "description": "The GPS points of the workout",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.MapPoint"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "database.MapPoint": {
+            "type": "object",
+            "properties": {
+                "distance": {
+                    "description": "The distance from the previous point",
+                    "type": "number"
+                },
+                "duration": {
+                    "description": "The duration from the previous point",
+                    "type": "integer"
+                },
+                "elevation": {
+                    "description": "The elevation of the point",
+                    "type": "number"
+                },
+                "lat": {
+                    "description": "The latitude of the point",
+                    "type": "number"
+                },
+                "lng": {
+                    "description": "The longitude of the point",
+                    "type": "number"
+                },
+                "time": {
+                    "description": "The time the point was recorded",
+                    "type": "string"
+                },
+                "totalDistance": {
+                    "description": "The total distance of the workout up to this point",
+                    "type": "number"
+                },
+                "totalDuration": {
+                    "description": "The total duration of the workout up to this point",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.Profile": {
+            "type": "object",
+            "properties": {
+                "api_active": {
+                    "description": "Whether the user's API key is active",
+                    "type": "boolean"
+                },
+                "auto_import_directory": {
+                    "description": "The user's preferred directory for auto-import",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "language": {
+                    "description": "The user's preferred language",
+                    "type": "string"
+                },
+                "preferredUnits": {
+                    "description": "The user's preferred units",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.UserPreferredUnits"
+                        }
+                    ]
+                },
+                "socials_disabled": {
+                    "description": "Whether social sharing buttons are disabled when viewing a workout",
+                    "type": "boolean"
+                },
+                "timezone": {
+                    "description": "The user's preferred timezone",
+                    "type": "string"
+                },
+                "totals_show": {
+                    "description": "What workout type of totals to show",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.WorkoutType"
+                        }
+                    ]
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userID": {
+                    "description": "The ID of the user who owns this profile",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.Statistics": {
+            "type": "object",
+            "properties": {
+                "bucketFormat": {
+                    "description": "The bucket format in strftime format",
+                    "type": "string"
+                },
+                "buckets": {
+                    "description": "The statistics buckets",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/definitions/database.Bucket"
+                        }
+                    }
+                },
+                "userID": {
+                    "description": "The user ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.User": {
+            "type": "object",
+            "properties": {
+                "-": {
+                    "description": "The salt used to hash the user's password",
+                    "type": "string"
+                },
+                "active": {
+                    "description": "Whether the user is active",
+                    "type": "boolean"
+                },
+                "admin": {
+                    "description": "Whether the user is an admin",
+                    "type": "boolean"
+                },
+                "apikey": {
+                    "description": "The user's API key",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The user's name",
+                    "type": "string"
+                },
+                "profile": {
+                    "description": "The user's profile settings",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.Profile"
+                        }
+                    ]
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "username": {
+                    "description": "The user's username",
+                    "type": "string"
+                }
+            }
+        },
+        "database.UserPreferredUnits": {
+            "type": "object",
+            "properties": {
+                "distance": {
+                    "description": "The user's preferred distance unit",
+                    "type": "string"
+                },
+                "elevation": {
+                    "description": "The user's preferred elevation unit",
+                    "type": "string"
+                },
+                "speed": {
+                    "description": "The user's preferred speed unit",
+                    "type": "string"
+                }
+            }
+        },
+        "database.Workout": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "data": {
+                    "description": "The map data associated with the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.MapData"
+                        }
+                    ]
+                },
+                "date": {
+                    "description": "The timestamp the workout was recorded",
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "dirty": {
+                    "description": "Whether the workout has been modified and the details should be re-rendered",
+                    "type": "boolean"
+                },
+                "gpx": {
+                    "description": "The file data associated with the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.GPXData"
+                        }
+                    ]
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the workout",
+                    "type": "string"
+                },
+                "notes": {
+                    "description": "The notes associated with the workout, in markdown",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The type of the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.WorkoutType"
+                        }
+                    ]
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "user": {
+                    "description": "The user who owns the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.User"
+                        }
+                    ]
+                },
+                "userID": {
+                    "description": "The ID of the user who owns the workout",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.WorkoutBreakdown": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.BreakdownItem"
+                    }
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "database.WorkoutRecord": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "description": "Whether there is any data in the record",
+                    "type": "boolean"
+                },
+                "averageSpeed": {
+                    "description": "The record with the maximum average speed",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.float64Record"
+                        }
+                    ]
+                },
+                "averageSpeedNoPause": {
+                    "description": "The record with the maximum average speed without pause",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.float64Record"
+                        }
+                    ]
+                },
+                "distance": {
+                    "description": "The record with the maximum distance",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.float64Record"
+                        }
+                    ]
+                },
+                "duration": {
+                    "description": "The record with the maximum duration",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.durationRecord"
+                        }
+                    ]
+                },
+                "maxSpeed": {
+                    "description": "The record with the maximum max speed",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.float64Record"
+                        }
+                    ]
+                },
+                "totalUp": {
+                    "description": "The record with the maximum up elevation",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.float64Record"
+                        }
+                    ]
+                },
+                "workoutType": {
+                    "description": "The type of the workout",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.WorkoutType"
+                        }
+                    ]
+                }
+            }
+        },
+        "database.WorkoutType": {
+            "type": "string",
+            "enum": [
+                "auto",
+                "running",
+                "cycling",
+                "walking",
+                "skiing",
+                "snowboarding",
+                "swimming",
+                "kayaking"
+            ],
+            "x-enum-varnames": [
+                "WorkoutTypeAutoDetect",
+                "WorkoutTypeRunning",
+                "WorkoutTypeCycling",
+                "WorkoutTypeWalking",
+                "WorkoutTypeSkiing",
+                "WorkoutTypeSnowboarding",
+                "WorkoutTypeSwimming",
+                "WorkoutTypeKayaking"
+            ]
+        },
+        "database.durationRecord": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "The timestamp of the record",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The workout ID of the record",
+                    "type": "integer"
+                },
+                "value": {
+                    "description": "The value of the record",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.float64Record": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "The timestamp of the record",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The workout ID of the record",
+                    "type": "integer"
+                },
+                "value": {
+                    "description": "The value of the record",
+                    "type": "number"
+                }
+            }
+        },
+        "geo.Address": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "county": {
+                    "type": "string"
+                },
+                "formattedAddress": {
+                    "type": "string"
+                },
+                "houseNumber": {
+                    "type": "string"
+                },
+                "postcode": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "stateCode": {
+                    "type": "string"
+                },
+                "stateDistrict": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "suburb": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
