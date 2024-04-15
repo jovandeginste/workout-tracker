@@ -80,7 +80,11 @@
 
                 if (context.dataset.yAxisID === "y") {
                   label += " {{ CurrentUser.PreferredUnits.Speed }}";
-                  set_marker(null, context.raw.lat, context.raw.lng);
+                  set_marker(
+                    context.raw.label,
+                    context.raw.lat,
+                    context.raw.lng,
+                  );
                 } else if (context.dataset.yAxisID === "y1") {
                   label += " {{ CurrentUser.PreferredUnits.Elevation }}";
                 } else if (context.dataset.yAxisID === "y2") {
@@ -107,7 +111,7 @@
           yAxisID: 'y',
           data: [
             {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .FirstPoint.Lat }}", "lng": "{{ .FirstPoint.Lng }}" },
+            { "x": {{ .LastPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .LastPoint.Lat }}", "lng": "{{ .LastPoint.Lng }}", label: "{{ template `workout_point_title` .LastPoint }}" },
             {{- end  }}
           ],
         },
