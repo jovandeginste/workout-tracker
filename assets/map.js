@@ -75,7 +75,10 @@ function on_loaded() {
 }
 
 function set_marker(title, lat, lon) {
-  hoverMarker.bindTooltip(title);
+  if (title != null) {
+    hoverMarker.bindTooltip(title);
+  }
+
   hoverMarker.setLatLng([lat, lon]);
 
   // Adding popup to the marker

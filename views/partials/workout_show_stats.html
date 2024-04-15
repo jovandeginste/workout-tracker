@@ -50,8 +50,17 @@
           },
         },
       },
+      y2: {
+        display: false,
+      },
+      y3: {
+        display: false,
+      },
     },
     plugins: {
+      legend: {
+        display: false,
+      },
       tooltip: {
         callbacks: {
           label: function (context) {
@@ -62,14 +71,21 @@
             }
 
             if (context.parsed.y !== null) {
-              label += context.parsed.y.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              });
+              if (context.dataset.yAxisID === "y3") {
+                label += formatDuration(context.parsed.y);
+              } else {
+                label += context.parsed.y.toLocaleString(undefined, {
+                  maximumFractionDigits: 2,
+                });
 
-              if (context.dataset.yAxisID === "y") {
-                label += " {{ CurrentUser.PreferredUnits.Speed }}";
-              } else if (context.dataset.yAxisID === "y1") {
-                label += " {{ CurrentUser.PreferredUnits.Elevation }}";
+                if (context.dataset.yAxisID === "y") {
+                  label += " {{ CurrentUser.PreferredUnits.Speed }}";
+                  set_marker("x", context.raw.lat, context.raw.lng);
+                } else if (context.dataset.yAxisID === "y1") {
+                  label += " {{ CurrentUser.PreferredUnits.Elevation }}";
+                } else if (context.dataset.yAxisID === "y2") {
+                  label += " {{ CurrentUser.PreferredUnits.Distance }}";
+                }
               }
             }
             return label;
@@ -91,7 +107,7 @@
           yAxisID: 'y',
           data: [
             {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .FirstPoint.Lat }}", "lng": "{{ .FirstPoint.Lng }}" },
             {{- end  }}
           ],
         },
@@ -103,6 +119,28 @@
           data: [
             {{ range .Items -}}
             { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation | HumanElevation }}, },
+            {{- end  }}
+          ],
+        },
+        {
+          label: "{{ i18n `Distance` }}",
+          pointStyle: false,
+          borderWidth: 0,
+          yAxisID: 'y2',
+          data: [
+            {{ range .Items -}}
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDistance | HumanDistance }}, },
+            {{- end  }}
+          ],
+        },
+        {
+          label: "{{ i18n `Duration` }}",
+          pointStyle: false,
+          borderWidth: 0,
+          yAxisID: 'y3',
+          data: [
+            {{ range .Items -}}
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDuration | NumericDuration }}, },
             {{- end  }}
           ],
         },
