@@ -3,6 +3,7 @@ package scs
 import (
 	"context"
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
 	"sort"
@@ -59,7 +60,7 @@ func (s *SessionManager) Load(ctx context.Context, token string) (context.Contex
 		return s.addSessionDataToContext(ctx, newSessionData(s.Lifetime)), nil
 	}
 
-	b, found, err := s.Store.Find(token)
+	b, found, err := s.doStoreFind(ctx, token)
 	if err != nil {
 		return nil, err
 	} else if !found {
@@ -115,7 +116,7 @@ func (s *SessionManager) Commit(ctx context.Context) (string, time.Time, error) 
 		}
 	}
 
-	if err := s.Store.Commit(sd.token, b, expiry); err != nil {
+	if err := s.doStoreCommit(ctx, sd.token, b, expiry); err != nil {
 		return "", time.Time{}, err
 	}
 
@@ -131,7 +132,7 @@ func (s *SessionManager) Destroy(ctx context.Context) error {
 	sd.mu.Lock()
 	defer sd.mu.Unlock()
 
-	err := s.Store.Delete(sd.token)
+	err := s.doStoreDelete(ctx, sd.token)
 	if err != nil {
 		return err
 	}
@@ -284,9 +285,11 @@ func (s *SessionManager) RenewToken(ctx context.Context) error {
 	sd.mu.Lock()
 	defer sd.mu.Unlock()
 
-	err := s.Store.Delete(sd.token)
-	if err != nil {
-		return err
+	if sd.token != "" {
+		err := s.doStoreDelete(ctx, sd.token)
+		if err != nil {
+			return err
+		}
 	}
 
 	newToken, err := generateToken()
@@ -299,6 +302,44 @@ func (s *SessionManager) RenewToken(ctx context.Context) error {
 	sd.status = Modified
 
 	return nil
+}
+
+// MergeSession is used to merge in data from a different session in case strict
+// session tokens are lost across an oauth or similar redirect flows. Use Clear()
+// if no values of the new session are to be used.
+func (s *SessionManager) MergeSession(ctx context.Context, token string) error {
+	sd := s.getSessionDataFromContext(ctx)
+
+	b, found, err := s.doStoreFind(ctx, token)
+	if err != nil {
+		return err
+	} else if !found {
+		return nil
+	}
+
+	deadline, values, err := s.Codec.Decode(b)
+	if err != nil {
+		return err
+	}
+
+	sd.mu.Lock()
+	defer sd.mu.Unlock()
+
+	// If it is the same session, nothing needs to be done.
+	if sd.token == token {
+		return nil
+	}
+
+	if deadline.After(sd.deadline) {
+		sd.deadline = deadline
+	}
+
+	for k, v := range values {
+		sd.values[k] = v
+	}
+
+	sd.status = Modified
+	return s.doStoreDelete(ctx, token)
 }
 
 // Status returns the current status of the session data.
@@ -341,6 +382,30 @@ func (s *SessionManager) GetBool(ctx context.Context, key string) bool {
 func (s *SessionManager) GetInt(ctx context.Context, key string) int {
 	val := s.Get(ctx, key)
 	i, ok := val.(int)
+	if !ok {
+		return 0
+	}
+	return i
+}
+
+// GetInt64 returns the int64 value for a given key from the session data. The
+// zero value for an int64 (0) is returned if the key does not exist or the
+// value could not be type asserted to an int64.
+func (s *SessionManager) GetInt64(ctx context.Context, key string) int64 {
+	val := s.Get(ctx, key)
+	i, ok := val.(int64)
+	if !ok {
+		return 0
+	}
+	return i
+}
+
+// GetInt32 returns the int value for a given key from the session data. The
+// zero value for an int32 (0) is returned if the key does not exist or the
+// value could not be type asserted to an int32.
+func (s *SessionManager) GetInt32(ctx context.Context, key string) int32 {
+	val := s.Get(ctx, key)
+	i, ok := val.(int32)
 	if !ok {
 		return 0
 	}
@@ -462,6 +527,82 @@ func (s *SessionManager) PopTime(ctx context.Context, key string) time.Time {
 	return t
 }
 
+// RememberMe controls whether the session cookie is persistent (i.e  whether it
+// is retained after a user closes their browser). RememberMe only has an effect
+// if you have set SessionManager.Cookie.Persist = false (the default is true) and
+// you are using the standard LoadAndSave() middleware.
+func (s *SessionManager) RememberMe(ctx context.Context, val bool) {
+	s.Put(ctx, "__rememberMe", val)
+}
+
+// Iterate retrieves all active (i.e. not expired) sessions from the store and
+// executes the provided function fn for each session. If the session store
+// being used does not support iteration then Iterate will panic.
+func (s *SessionManager) Iterate(ctx context.Context, fn func(context.Context) error) error {
+	allSessions, err := s.doStoreAll(ctx)
+	if err != nil {
+		return err
+	}
+
+	for token, b := range allSessions {
+		sd := &sessionData{
+			status: Unmodified,
+			token:  token,
+		}
+
+		sd.deadline, sd.values, err = s.Codec.Decode(b)
+		if err != nil {
+			return err
+		}
+
+		ctx = s.addSessionDataToContext(ctx, sd)
+
+		err = fn(ctx)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// Deadline returns the 'absolute' expiry time for the session. Please note
+// that if you are using an idle timeout, it is possible that a session will
+// expire due to non-use before the returned deadline.
+func (s *SessionManager) Deadline(ctx context.Context) time.Time {
+	sd := s.getSessionDataFromContext(ctx)
+
+	sd.mu.Lock()
+	defer sd.mu.Unlock()
+
+	return sd.deadline
+}
+
+// SetDeadline updates the 'absolute' expiry time for the session. Please note
+// that if you are using an idle timeout, it is possible that a session will
+// expire due to non-use before the set deadline.
+func (s *SessionManager) SetDeadline(ctx context.Context, expire time.Time) {
+	sd := s.getSessionDataFromContext(ctx)
+
+	sd.mu.Lock()
+	defer sd.mu.Unlock()
+
+	sd.deadline = expire
+	sd.status = Modified
+}
+
+// Token returns the session token. Please note that this will return the
+// empty string "" if it is called before the session has been committed to
+// the store.
+func (s *SessionManager) Token(ctx context.Context) string {
+	sd := s.getSessionDataFromContext(ctx)
+
+	sd.mu.Lock()
+	defer sd.mu.Unlock()
+
+	return sd.token
+}
+
 func (s *SessionManager) addSessionDataToContext(ctx context.Context, sd *sessionData) context.Context {
 	return context.WithValue(ctx, s.contextKey, sd)
 }
@@ -483,6 +624,11 @@ func generateToken() (string, error) {
 	return base64.RawURLEncoding.EncodeToString(b), nil
 }
 
+func hashToken(token string) string {
+	hash := sha256.Sum256([]byte(token))
+	return base64.RawURLEncoding.EncodeToString(hash[:])
+}
+
 type contextKey string
 
 var (
@@ -495,4 +641,57 @@ func generateContextKey() contextKey {
 	defer contextKeyIDMutex.Unlock()
 	atomic.AddUint64(&contextKeyID, 1)
 	return contextKey(fmt.Sprintf("session.%d", contextKeyID))
+}
+
+func (s *SessionManager) doStoreDelete(ctx context.Context, token string) (err error) {
+	if s.HashTokenInStore {
+		token = hashToken(token)
+	}
+	c, ok := s.Store.(interface {
+		DeleteCtx(context.Context, string) error
+	})
+	if ok {
+		return c.DeleteCtx(ctx, token)
+	}
+	return s.Store.Delete(token)
+}
+
+func (s *SessionManager) doStoreFind(ctx context.Context, token string) (b []byte, found bool, err error) {
+	if s.HashTokenInStore {
+		token = hashToken(token)
+	}
+	c, ok := s.Store.(interface {
+		FindCtx(context.Context, string) ([]byte, bool, error)
+	})
+	if ok {
+		return c.FindCtx(ctx, token)
+	}
+	return s.Store.Find(token)
+}
+
+func (s *SessionManager) doStoreCommit(ctx context.Context, token string, b []byte, expiry time.Time) (err error) {
+	if s.HashTokenInStore {
+		token = hashToken(token)
+	}
+	c, ok := s.Store.(interface {
+		CommitCtx(context.Context, string, []byte, time.Time) error
+	})
+	if ok {
+		return c.CommitCtx(ctx, token, b, expiry)
+	}
+	return s.Store.Commit(token, b, expiry)
+}
+
+func (s *SessionManager) doStoreAll(ctx context.Context) (map[string][]byte, error) {
+	cs, ok := s.Store.(IterableCtxStore)
+	if ok {
+		return cs.AllCtx(ctx)
+	}
+
+	is, ok := s.Store.(IterableStore)
+	if ok {
+		return is.All()
+	}
+
+	panic(fmt.Sprintf("type %T does not support iteration", s.Store))
 }

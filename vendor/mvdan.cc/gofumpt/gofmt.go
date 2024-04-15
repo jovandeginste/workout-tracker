@@ -12,12 +12,12 @@ import (
 	"fmt"
 	"go/ast"
 	"go/parser"
-	"go/printer"
 	"go/scanner"
 	"go/token"
 	"io"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -25,15 +25,16 @@ import (
 	"strings"
 	"sync"
 
-	// TODO: we can soon use os/exec thanks to
-	// https://go.dev/issue/43724
 	"golang.org/x/sync/semaphore"
-	exec "golang.org/x/sys/execabs"
 
 	gformat "mvdan.cc/gofumpt/format"
-	"mvdan.cc/gofumpt/internal/diff"
-	"mvdan.cc/gofumpt/internal/version"
+	"mvdan.cc/gofumpt/internal/govendor/diff"
+	"mvdan.cc/gofumpt/internal/govendor/go/printer"
+	gversion "mvdan.cc/gofumpt/internal/version"
 )
+
+//go:generate go run gen_govendor.go
+//go:generate go run . -w internal/govendor
 
 var (
 	// main operation modes
@@ -55,6 +56,8 @@ var (
 	rewriteRule = flag.String("r", "", "")
 	simplifyAST = flag.Bool("s", false, "")
 )
+
+var version = ""
 
 // Keep these in sync with go/format/format.go.
 const (
@@ -81,9 +84,6 @@ var fdSem = make(chan bool, 200)
 var (
 	fileSet    = token.NewFileSet() // per process FileSet
 	parserMode parser.Mode
-
-	// walkingVendorDir is true if we are explicitly walking a vendor directory.
-	walkingVendorDir bool
 )
 
 func usage() {
@@ -238,7 +238,7 @@ func (r *reporter) getState() *reporterState {
 
 // Warnf emits a warning message to the reporter's error stream,
 // without changing its exit code.
-func (r *reporter) Warnf(format string, args ...interface{}) {
+func (r *reporter) Warnf(format string, args ...any) {
 	fmt.Fprintf(r.getState().err, format, args...)
 }
 
@@ -463,7 +463,7 @@ func gofmtMain(s *sequencer) {
 
 	// Print the gofumpt version if the user asks for it.
 	if *showVersion {
-		fmt.Println(version.String())
+		fmt.Println(gversion.String(version))
 		return
 	}
 
@@ -509,11 +509,14 @@ func gofmtMain(s *sequencer) {
 			})
 		default:
 			// Directories are walked, ignoring non-Go files.
-			walkingVendorDir = filepath.Base(arg) == "vendor"
 			err := filepath.WalkDir(arg, func(path string, f fs.DirEntry, err error) error {
-				if !walkingVendorDir && filepath.Base(path) == "vendor" {
+				// vendor and testdata directories are skipped,
+				// unless they are explicitly passed as an argument.
+				base := filepath.Base(path)
+				if path != arg && (base == "vendor" || base == "testdata") {
 					return filepath.SkipDir
 				}
+
 				if err != nil || !isGoFile(f) {
 					return err
 				}
@@ -541,7 +544,7 @@ type module struct {
 	}
 }
 
-func loadModuleInfo(dir string) interface{} {
+func loadModuleInfo(dir string) any {
 	cmd := exec.Command("go", "mod", "edit", "-json")
 	cmd.Dir = dir
 

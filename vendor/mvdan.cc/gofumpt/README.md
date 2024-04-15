@@ -7,7 +7,7 @@
 Enforce a stricter format than `gofmt`, while being backwards compatible.
 That is, `gofumpt` is happy with a subset of the formats that `gofmt` is happy with.
 
-The tool is a fork of `gofmt` as of Go 1.19, and requires Go 1.18 or later.
+The tool is a fork of `gofmt` as of Go 1.21, and requires Go 1.20 or later.
 It can be used as a drop-in replacement to format your Go code,
 and running `gofmt` after `gofumpt` should produce no changes.
 For example:
@@ -15,9 +15,11 @@ For example:
 	gofumpt -l -w .
 
 Some of the Go source files in this repository belong to the Go project.
+The project includes copies of `go/printer` and `go/doc/comment` as of Go 1.21
+to ensure consistent formatting independent of what Go version is being used.
 The [added formatting rules](#Added-rules) are implemented in the `format` package.
 
-Note that vendor directories are skipped unless given as explicit arguments.
+`vendor` and `testdata` directories are skipped unless given as explicit arguments.
 Similarly, the added rules do not apply to generated Go files unless they are
 given as explicit arguments.
 
@@ -26,18 +28,18 @@ and the `-s` flag is hidden as it is always enabled.
 
 ### Added rules
 
-No empty lines following an assignment operator
+**No empty lines following an assignment operator**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 func foo() {
     foo :=
         "bar"
 }
 ```
 
-```
+```go
 func foo() {
 	foo := "bar"
 }
@@ -45,11 +47,11 @@ func foo() {
 
 </details>
 
-No empty lines around function bodies
+**No empty lines around function bodies**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 func foo() {
 
 	println("bar")
@@ -57,7 +59,7 @@ func foo() {
 }
 ```
 
-```
+```go
 func foo() {
 	println("bar")
 }
@@ -65,11 +67,11 @@ func foo() {
 
 </details>
 
-Functions should separate `) {` where the indentation helps readability
+**Functions should separate `) {` where the indentation helps readability**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 func foo(s string,
 	i int) {
 	println("bar")
@@ -83,7 +85,7 @@ func bar(s string,
 }
 ```
 
-```
+```go
 func foo(s string,
 	i int,
 ) {
@@ -100,39 +102,18 @@ func bar(s string,
 
 </details>
 
-No empty lines around a lone statement (or comment) in a block
+**No empty lines around a lone statement (or comment) in a block**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 if err != nil {
 
 	return err
 }
 ```
 
-```
-if err != nil {
-	return err
-}
-```
-
-</details>
-
-No empty lines before a simple error check
-
-<details><summary><i>example</i></summary>
-
-```
-foo, err := processFoo()
-
-if err != nil {
-	return err
-}
-```
-
-```
-foo, err := processFoo()
+```go
 if err != nil {
 	return err
 }
@@ -140,11 +121,32 @@ if err != nil {
 
 </details>
 
-Composite literals should use newlines consistently
+**No empty lines before a simple error check**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
+```go
+foo, err := processFoo()
+
+if err != nil {
+	return err
+}
 ```
+
+```go
+foo, err := processFoo()
+if err != nil {
+	return err
+}
+```
+
+</details>
+
+**Composite literals should use newlines consistently**
+
+<details><summary><i>Example</i></summary>
+
+```go
 // A newline before or after an element requires newlines for the opening and
 // closing braces.
 var ints = []int{1, 2,
@@ -160,7 +162,7 @@ var matrix = [][]int{
 }
 ```
 
-```
+```go
 var ints = []int{
 	1, 2,
 	3, 4,
@@ -177,11 +179,11 @@ var matrix = [][]int{
 
 </details>
 
-Empty field lists should use a single line
+**Empty field lists should use a single line**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 var V interface {
 } = 3
 
@@ -192,7 +194,7 @@ func F(
 )
 ```
 
-```
+```go
 var V interface{} = 3
 
 type T struct{}
@@ -202,11 +204,11 @@ func F()
 
 </details>
 
-`std` imports must be in a separate group at the top
+**`std` imports must be in a separate group at the top**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 import (
 	"foo.com/bar"
 
@@ -216,7 +218,7 @@ import (
 )
 ```
 
-```
+```go
 import (
 	"io"
 	"io/ioutil"
@@ -227,18 +229,18 @@ import (
 
 </details>
 
-Short case clauses should take a single line
+**Short case clauses should take a single line**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 switch c {
 case 'a', 'b',
 	'c', 'd':
 }
 ```
 
-```
+```go
 switch c {
 case 'a', 'b', 'c', 'd':
 }
@@ -246,11 +248,11 @@ case 'a', 'b', 'c', 'd':
 
 </details>
 
-Multiline top-level declarations must be separated by empty lines
+**Multiline top-level declarations must be separated by empty lines**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 func foo() {
 	println("multiline foo")
 }
@@ -259,7 +261,7 @@ func bar() {
 }
 ```
 
-```
+```go
 func foo() {
 	println("multiline foo")
 }
@@ -271,33 +273,33 @@ func bar() {
 
 </details>
 
-Single var declarations should not be grouped with parentheses
+**Single var declarations should not be grouped with parentheses**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 var (
 	foo = "bar"
 )
 ```
 
-```
+```go
 var foo = "bar"
 ```
 
 </details>
 
-Contiguous top-level declarations should be grouped together
+**Contiguous top-level declarations should be grouped together**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 var nicer = "x"
 var with = "y"
 var alignment = "z"
 ```
 
-```
+```go
 var (
 	nicer     = "x"
 	with      = "y"
@@ -307,63 +309,60 @@ var (
 
 </details>
 
+**Simple var-declaration statements should use short assignments**
 
-Simple var-declaration statements should use short assignments
+<details><summary><i>Example</i></summary>
 
-<details><summary><i>example</i></summary>
-
-```
+```go
 var s = "somestring"
 ```
 
-```
+```go
 s := "somestring"
 ```
 
 </details>
 
+**The `-s` code simplification flag is enabled by default**
 
-The `-s` code simplification flag is enabled by default
+<details><summary><i>Example</i></summary>
 
-<details><summary><i>example</i></summary>
-
-```
+```go
 var _ = [][]int{[]int{1}}
 ```
 
-```
+```go
 var _ = [][]int{{1}}
 ```
 
 </details>
 
+**Octal integer literals should use the `0o` prefix on modules using Go 1.13 and later**
 
-Octal integer literals should use the `0o` prefix on modules using Go 1.13 and later
+<details><summary><i>Example</i></summary>
 
-<details><summary><i>example</i></summary>
-
-```
+```go
 const perm = 0755
 ```
 
-```
+```go
 const perm = 0o755
 ```
 
 </details>
 
-Comments which aren't Go directives should start with a whitespace
+**Comments which aren't Go directives should start with a whitespace**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 //go:noinline
 
 //Foo is awesome.
 func Foo() {}
 ```
 
-```
+```go
 //go:noinline
 
 // Foo is awesome.
@@ -372,11 +371,11 @@ func Foo() {}
 
 </details>
 
-Composite literals should not have leading or trailing empty lines
+**Composite literals should not have leading or trailing empty lines**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 var _ = []string{
 
 	"foo",
@@ -390,7 +389,7 @@ var _ = map[string]string{
 }
 ```
 
-```
+```go
 var _ = []string{
 	"foo",
 }
@@ -402,11 +401,11 @@ var _ = map[string]string{
 
 </details>
 
-Field lists should not have leading or trailing empty lines
+**Field lists should not have leading or trailing empty lines**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 type Person interface {
 
 	Name() string
@@ -422,7 +421,7 @@ type ZeroFields struct {
 }
 ```
 
-```
+```go
 type Person interface {
 	Name() string
 
@@ -438,15 +437,15 @@ type ZeroFields struct {
 
 #### Extra rules behind `-extra`
 
-Adjacent parameters with the same type should be grouped together
+**Adjacent parameters with the same type should be grouped together**
 
-<details><summary><i>example</i></summary>
+<details><summary><i>Example</i></summary>
 
-```
+```go
 func Foo(bar string, baz string) {}
 ```
 
-```
+```go
 func Foo(bar, baz string) {}
 ```
 
@@ -499,7 +498,12 @@ When a window asks for settings, you can enter the following:
 
 To avoid unnecessary runs, you should disable all checkboxes in the *Advanced* section.
 
-#### Vim-go
+#### Vim
+
+The configuration depends on the plugin you are using: [vim-go](https://github.com/fatih/vim-go)
+or [govim](https://github.com/govim/govim).
+
+##### vim-go
 
 To configure `gopls` to use `gofumpt`:
 
@@ -508,7 +512,7 @@ let g:go_fmt_command="gopls"
 let g:go_gopls_gofumpt=1
 ```
 
-#### Govim
+##### govim
 
 To configure `gopls` to use `gofumpt`:
 
@@ -550,6 +554,15 @@ For [eglot](https://github.com/joaotavora/eglot) users:
 ```elisp
 (setq-default eglot-workspace-configuration
  '((:gopls . ((gofumpt . t)))))
+```
+
+#### Helix
+
+When using the `gopls` language server, modify the Go settings in `~/.config/helix/languages.toml`:
+
+```toml
+[language-server.gopls.config]
+"formatting.gofumpt" = true
 ```
 
 #### Sublime Text

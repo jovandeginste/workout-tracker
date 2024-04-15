@@ -201,7 +201,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 					kv = append(kv, slog.Any(k, v))
 				}
 
-				responseAttributes = append(responseAttributes, slog.Group("header", kv...))
+				requestAttributes = append(requestAttributes, slog.Group("header", kv...))
 			}
 
 			if config.WithUserAgent {

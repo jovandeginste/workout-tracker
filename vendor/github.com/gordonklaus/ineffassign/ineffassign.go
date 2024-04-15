@@ -9,6 +9,7 @@ import (
 	"go/token"
 	"log"
 	"os"
+	"runtime/debug"
 	"strings"
 	"sync"
 
@@ -21,6 +22,10 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix(ineffassign.Analyzer.Name + ": ")
 
+	var (
+		printVersion = flag.Bool("version", false, "print ineffassign version")
+		_            = flag.Bool("n", false, "no effect (deprecated)")
+	)
 	flag.Usage = func() {
 		paras := strings.Split(ineffassign.Analyzer.Doc, "\n\n")
 		fmt.Fprintf(os.Stderr, "%s: %s\n\n", ineffassign.Analyzer.Name, paras[0])
@@ -32,6 +37,12 @@ func main() {
 		flag.PrintDefaults()
 	}
 	flag.Parse()
+
+	if *printVersion {
+		bi, _ := debug.ReadBuildInfo()
+		log.Print("version ", bi.Main.Version)
+		return
+	}
 
 	patterns := flag.Args()
 	if len(patterns) == 0 {
@@ -113,8 +124,4 @@ func load(patterns ...string) ([]*packages.Package, error) {
 	}
 
 	return pkgs, nil
-}
-
-func init() {
-	flag.Bool("n", false, "no effect (deprecated)")
 }

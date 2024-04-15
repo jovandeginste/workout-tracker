@@ -8,9 +8,20 @@ import (
 type Option func(l *logger)
 
 // WithLogger defines a custom logger to use
+//
+// Deprecated: Use WithHandler instead
 func WithLogger(log *slog.Logger) Option {
 	return func(l *logger) {
-		l.slogger = log
+		if log != nil {
+			l.sloggerHandler = log.Handler()
+		}
+	}
+}
+
+// WithHandler defines a custom logger to use
+func WithHandler(handler slog.Handler) Option {
+	return func(l *logger) {
+		l.sloggerHandler = handler
 	}
 }
 

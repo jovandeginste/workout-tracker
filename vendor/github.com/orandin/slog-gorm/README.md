@@ -64,7 +64,8 @@ logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 // logger = logger.With(slog.String("log_type", "database"))
 
 gormLogger := slogGorm.New(
-    slogGorm.WithLogger(logger), // Optional, use slog.Default() by default
+    // slogGorm.WithLogger(logger), // Deprecated since v1.3.0, use `slogGorm.WithHandler(...)` instead.
+    slogGorm.WithHandler(logger.Handler()), // since v1.3.0
     slogGorm.WithTraceAll(), // trace all messages 
     slogGorm.SetLogLevel(DefaultLogType, slog.Level(32)), // Define the default logging level
 )
@@ -99,7 +100,7 @@ const (
 logger := slog.New(syslogHandler)
 
 gormLogger := slogGorm.New(
-    slogGorm.WithLogger(logger),
+    slogGorm.WithHandler(logger.Handler()),
 
     // Set logging level for SQL errors
     slogGorm.SetLogLevel(slogGorm.ErrorLogType, LOG_ERR)

@@ -1,10 +1,8 @@
 package scs
 
 import (
-	"bufio"
-	"bytes"
+	"context"
 	"log"
-	"net"
 	"net/http"
 	"time"
 
@@ -47,6 +45,9 @@ type SessionManager struct {
 	// a function which logs the error and returns a customized HTML error page.
 	ErrorFunc func(http.ResponseWriter, *http.Request, error)
 
+	// HashTokenInStore controls whether or not to store the session token or a hashed version in the store.
+	HashTokenInStore bool
+
 	// contextKey is the key used to set and retrieve the session data from a
 	// context.Context. It's automatically generated to ensure uniqueness.
 	contextKey contextKey
@@ -78,7 +79,10 @@ type SessionCookie struct {
 	// (i.e. whether it should be retained after a user closes their browser).
 	// The default value is true, which means that the session cookie will not
 	// be destroyed when the user closes their browser and the appropriate
-	// 'Expires' and 'MaxAge' values will be added to the session cookie.
+	// 'Expires' and 'MaxAge' values will be added to the session cookie. If you
+	// want to only persist some sessions (rather than all of them), then set this
+	// to false and call the RememberMe() method for the specific sessions that you
+	// want to persist.
 	Persist bool
 
 	// SameSite controls the value of the 'SameSite' attribute on the session
@@ -127,6 +131,8 @@ func NewSession() *SessionManager {
 // the client in a cookie.
 func (s *SessionManager) LoadAndSave(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Vary", "Cookie")
+
 		var token string
 		cookie, err := r.Cookie(s.Cookie.Name)
 		if err == nil {
@@ -140,33 +146,49 @@ func (s *SessionManager) LoadAndSave(next http.Handler) http.Handler {
 		}
 
 		sr := r.WithContext(ctx)
-		bw := &bufferedResponseWriter{ResponseWriter: w}
-		next.ServeHTTP(bw, sr)
 
-		if sr.MultipartForm != nil {
-			sr.MultipartForm.RemoveAll()
+		sw := &sessionResponseWriter{
+			ResponseWriter: w,
+			request:        sr,
+			sessionManager: s,
 		}
 
-		switch s.Status(ctx) {
-		case Modified:
-			token, expiry, err := s.Commit(ctx)
-			if err != nil {
-				s.ErrorFunc(w, r, err)
-				return
-			}
-			s.writeSessionCookie(w, token, expiry)
-		case Destroyed:
-			s.writeSessionCookie(w, "", time.Time{})
-		}
+		next.ServeHTTP(sw, sr)
 
-		if bw.code != 0 {
-			w.WriteHeader(bw.code)
+		if !sw.written {
+			s.commitAndWriteSessionCookie(w, sr)
 		}
-		w.Write(bw.buf.Bytes())
 	})
 }
 
-func (s *SessionManager) writeSessionCookie(w http.ResponseWriter, token string, expiry time.Time) {
+func (s *SessionManager) commitAndWriteSessionCookie(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	switch s.Status(ctx) {
+	case Modified:
+		token, expiry, err := s.Commit(ctx)
+		if err != nil {
+			s.ErrorFunc(w, r, err)
+			return
+		}
+
+		s.WriteSessionCookie(ctx, w, token, expiry)
+	case Destroyed:
+		s.WriteSessionCookie(ctx, w, "", time.Time{})
+	}
+}
+
+// WriteSessionCookie writes a cookie to the HTTP response with the provided
+// token as the cookie value and expiry as the cookie expiry time. The expiry
+// time will be included in the cookie only if the session is set to persist
+// or has had RememberMe(true) called on it. If expiry is an empty time.Time
+// struct (so that it's IsZero() method returns true) the cookie will be
+// marked with a historical expiry time and negative max-age (so the browser
+// deletes it).
+//
+// Most applications will use the LoadAndSave() middleware and will not need to
+// use this method.
+func (s *SessionManager) WriteSessionCookie(ctx context.Context, w http.ResponseWriter, token string, expiry time.Time) {
 	cookie := &http.Cookie{
 		Name:     s.Cookie.Name,
 		Value:    token,
@@ -180,24 +202,13 @@ func (s *SessionManager) writeSessionCookie(w http.ResponseWriter, token string,
 	if expiry.IsZero() {
 		cookie.Expires = time.Unix(1, 0)
 		cookie.MaxAge = -1
-	} else if s.Cookie.Persist {
+	} else if s.Cookie.Persist || s.GetBool(ctx, "__rememberMe") {
 		cookie.Expires = time.Unix(expiry.Unix()+1, 0)        // Round up to the nearest second.
 		cookie.MaxAge = int(time.Until(expiry).Seconds() + 1) // Round up to the nearest second.
 	}
 
 	w.Header().Add("Set-Cookie", cookie.String())
-	addHeaderIfMissing(w, "Cache-Control", `no-cache="Set-Cookie"`)
-	addHeaderIfMissing(w, "Vary", "Cookie")
-
-}
-
-func addHeaderIfMissing(w http.ResponseWriter, key, value string) {
-	for _, h := range w.Header()[key] {
-		if h == value {
-			return
-		}
-	}
-	w.Header().Add(key, value)
+	w.Header().Add("Cache-Control", `no-cache="Set-Cookie"`)
 }
 
 func defaultErrorFunc(w http.ResponseWriter, r *http.Request, err error) {
@@ -205,32 +216,31 @@ func defaultErrorFunc(w http.ResponseWriter, r *http.Request, err error) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
-type bufferedResponseWriter struct {
+type sessionResponseWriter struct {
 	http.ResponseWriter
-	buf         bytes.Buffer
-	code        int
-	wroteHeader bool
+	request        *http.Request
+	sessionManager *SessionManager
+	written        bool
 }
 
-func (bw *bufferedResponseWriter) Write(b []byte) (int, error) {
-	return bw.buf.Write(b)
-}
-
-func (bw *bufferedResponseWriter) WriteHeader(code int) {
-	if !bw.wroteHeader {
-		bw.code = code
-		bw.wroteHeader = true
+func (sw *sessionResponseWriter) Write(b []byte) (int, error) {
+	if !sw.written {
+		sw.sessionManager.commitAndWriteSessionCookie(sw.ResponseWriter, sw.request)
+		sw.written = true
 	}
+
+	return sw.ResponseWriter.Write(b)
 }
 
-func (bw *bufferedResponseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
-	hj := bw.ResponseWriter.(http.Hijacker)
-	return hj.Hijack()
-}
-
-func (bw *bufferedResponseWriter) Push(target string, opts *http.PushOptions) error {
-	if pusher, ok := bw.ResponseWriter.(http.Pusher); ok {
-		return pusher.Push(target, opts)
+func (sw *sessionResponseWriter) WriteHeader(code int) {
+	if !sw.written {
+		sw.sessionManager.commitAndWriteSessionCookie(sw.ResponseWriter, sw.request)
+		sw.written = true
 	}
-	return http.ErrNotSupported
+
+	sw.ResponseWriter.WriteHeader(code)
+}
+
+func (sw *sessionResponseWriter) Unwrap() http.ResponseWriter {
+	return sw.ResponseWriter
 }
