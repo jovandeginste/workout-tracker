@@ -79,6 +79,9 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	}
 
 	data := gpxAsMapData(gpxContent)
+	if filename == "" {
+		filename = data.Name + ".gpx"
+	}
 
 	h := sha256.New()
 	h.Write(content)

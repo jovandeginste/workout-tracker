@@ -484,6 +484,39 @@ info:
   title: Workout Tracker
   version: "1.0"
 paths:
+  /import/{program}:
+    post:
+      parameters:
+      - description: Program that generates the workout file
+        in: path
+        name: program
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/database.Workout'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: Import a workout
   /records:
     get:
       parameters:

@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/importers"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -37,11 +38,27 @@ func (a *App) apiRoutes(e *echo.Group) {
 			return c.JSON(http.StatusForbidden, "Not authorized")
 		},
 		Skipper: func(ctx echo.Context) bool {
-			return ctx.Request().Header.Get("Authorization") != ""
+			if ctx.Request().Header.Get("Authorization") != "" {
+				return true
+			}
+
+			return ctx.Request().URL.Query().Get("api-key") != ""
 		},
 		SuccessHandler: a.ValidateUserMiddleware,
 	}))
-	apiGroup.Use(a.ValidateAPIKeyMiddleware())
+	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+		Validator: a.ValidateAPIKeyMiddleware,
+		KeyLookup: "query:api-key",
+		Skipper: func(ctx echo.Context) bool {
+			return ctx.Request().URL.Query().Get("api-key") == ""
+		},
+	}))
+	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+		Validator: a.ValidateAPIKeyMiddleware,
+		Skipper: func(ctx echo.Context) bool {
+			return ctx.Request().Header.Get("Authorization") == ""
+		},
+	}))
 
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
@@ -50,30 +67,23 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
+	apiGroup.POST("/import/:program", a.apiImportHandler).Name = "api-import"
 }
 
-func (a *App) ValidateAPIKeyMiddleware() echo.MiddlewareFunc {
-	return middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
-		Validator: func(key string, c echo.Context) (bool, error) {
-			u, err := database.GetUserByAPIKey(a.db, key)
-			if err != nil {
-				return false, ErrInvalidAPIKey
-			}
+func (a *App) ValidateAPIKeyMiddleware(key string, c echo.Context) (bool, error) {
+	u, err := database.GetUserByAPIKey(a.db, key)
+	if err != nil {
+		return false, ErrInvalidAPIKey
+	}
 
-			if !u.IsActive() || !u.Profile.APIActive {
-				return false, ErrInvalidAPIKey
-			}
+	if !u.IsActive() || !u.Profile.APIActive {
+		return false, ErrInvalidAPIKey
+	}
 
-			c.Set("user_info", u)
-			c.Set("user_language", u.Profile.Language)
-			c.Set("user_totals_show", u.Profile.TotalsShow)
+	c.Set("user_info", u)
+	c.Set("user_language", u.Profile.Language)
 
-			return true, nil
-		},
-		Skipper: func(ctx echo.Context) bool {
-			return ctx.Request().Header.Get("Authorization") == ""
-		},
-	})
+	return true, nil
 }
 
 // apiWhoamiHandler shows current user's information
@@ -268,6 +278,36 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 	w, err := a.getCurrentUser(c).GetWorkout(db, id)
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	resp.Results = w
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// apiImportHandler imports a workout
+// @Summary      Import a workout
+// @Param        program path  string true "Program that generates the workout file"
+// @Produce      json
+// @Success      200  {object}  APIResponse{result=database.Workout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /import/{program} [post]
+func (a *App) apiImportHandler(c echo.Context) error {
+	resp := APIResponse{}
+
+	program := c.Param("program")
+	a.logger.Info("Importing with program: " + program)
+
+	file, err := importers.Import(program, c.Request().Header, c.Request().Body)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, addErr := a.getCurrentUser(c).AddWorkout(a.db, database.WorkoutType(file.Type), file.Notes, file.Filename, file.Content)
+	if addErr != nil {
+		return a.renderAPIError(c, resp, addErr)
 	}
 
 	resp.Results = w

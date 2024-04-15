@@ -31,7 +31,6 @@ func (a *App) setUser(c echo.Context) error {
 
 	c.Set("user_info", dbUser)
 	c.Set("user_language", dbUser.Profile.Language)
-	c.Set("user_totals_show", dbUser.Profile.TotalsShow)
 
 	return nil
 }
