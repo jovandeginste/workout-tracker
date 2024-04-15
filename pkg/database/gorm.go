@@ -20,7 +20,7 @@ var ErrUnsuportedDriver = errors.New("unsupported driver")
 
 func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, error) {
 	loggerOptions := []slogGorm.Option{
-		slogGorm.WithLogger(logger.With("module", "database")),
+		slogGorm.WithHandler(logger.With("module", "database").Handler()),
 		slogGorm.WithSlowThreshold(thresholdSlowQueries),
 	}
 

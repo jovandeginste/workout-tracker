@@ -21,7 +21,7 @@ type bodyWriter struct {
 }
 
 // implements http.ResponseWriter
-func (w bodyWriter) Write(b []byte) (int, error) {
+func (w *bodyWriter) Write(b []byte) (int, error) {
 	if w.body != nil {
 		if w.body.Len()+len(b) > w.maxSize {
 			w.body.Write(b[:w.maxSize-w.body.Len()])
@@ -35,14 +35,14 @@ func (w bodyWriter) Write(b []byte) (int, error) {
 }
 
 // implements http.Flusher
-func (w bodyWriter) Flush() {
+func (w *bodyWriter) Flush() {
 	if w.ResponseWriter.(http.Flusher) != nil {
 		w.ResponseWriter.(http.Flusher).Flush()
 	}
 }
 
 // implements http.Hijacker
-func (w bodyWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+func (w *bodyWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
 	if w.ResponseWriter.(http.Hijacker) != nil {
 		return w.ResponseWriter.(http.Hijacker).Hijack()
 	}

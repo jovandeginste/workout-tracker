@@ -372,7 +372,13 @@ func (m Migrator) ColumnTypes(value interface{}) ([]gorm.ColumnType, error) {
 				column.AutoIncrementValue = sql.NullBool{Bool: true, Valid: true}
 			}
 
-			column.DefaultValueValue.String = strings.Trim(column.DefaultValueValue.String, "'")
+			// only trim paired single-quotes
+			s := column.DefaultValueValue.String
+			for (len(s) >= 3 && s[0] == '\'' && s[len(s)-1] == '\'' && s[len(s)-2] != '\\') ||
+				(len(s) == 2 && s == "''") {
+				s = s[1 : len(s)-1]
+			}
+			column.DefaultValueValue.String = s
 			if m.Dialector.DontSupportNullAsDefaultValue {
 				// rewrite mariadb default value like other version
 				if column.DefaultValueValue.Valid && column.DefaultValueValue.String == "NULL" {
