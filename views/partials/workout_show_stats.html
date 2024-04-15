@@ -80,7 +80,7 @@
 
                 if (context.dataset.yAxisID === "y") {
                   label += " {{ CurrentUser.PreferredUnits.Speed }}";
-                  set_marker("x", context.raw.lat, context.raw.lng);
+                  set_marker(null, context.raw.lat, context.raw.lng);
                 } else if (context.dataset.yAxisID === "y1") {
                   label += " {{ CurrentUser.PreferredUnits.Elevation }}";
                 } else if (context.dataset.yAxisID === "y2") {
