@@ -4,7 +4,9 @@ var hoverMarker;
 // This script relies on HTML having a "points" and "center" variables.
 function on_loaded() {
   // Create map & tiles.
-  map = L.map("map").setView(center, 15);
+  map = L.map("map", {
+    fadeAnimation: false,
+  }).setView(center, 15);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -69,7 +71,7 @@ function on_loaded() {
   });
 
   hoverMarker.addTo(map); // Adding marker to the map
-  map.fitBounds(group.getBounds());
+  map.fitBounds(group.getBounds(), { animate: false });
 }
 
 function set_marker(title, lat, lon) {
