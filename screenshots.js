@@ -81,7 +81,7 @@ export default async function () {
 
     // Create screenshots for responsive view
     page.setViewportSize({
-      width: 400,
+      width: 600,
       height: 2000,
     });
     page.emulateMedia({
