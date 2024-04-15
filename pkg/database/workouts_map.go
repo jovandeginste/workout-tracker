@@ -2,6 +2,7 @@ package database
 
 import (
 	"math"
+	"slices"
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
@@ -13,8 +14,14 @@ import (
 
 var online = true
 
+var correctAltitudeCreators = []string{
+	"Garmin", "Garmin Connect",
+	"Apple Watch",
+	"StravaGPX iPhone", "StravaGPX",
+}
+
 func creatorNeedsCorrection(creator string) bool {
-	return creator != "Garmin Connect" && creator != "Apple Watch" && creator != "StravaGPX iPhone" && creator != "StravaGPX"
+	return !slices.Contains(correctAltitudeCreators, creator)
 }
 
 func normalizeDegrees(val float64) float64 {
