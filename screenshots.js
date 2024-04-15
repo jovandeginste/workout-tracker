@@ -56,21 +56,18 @@ export default async function () {
       page.waitForNavigation(),
       page.goto("http://localhost:8080/statistics"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/statistics.png", fullPage: true });
 
     await Promise.all([
       page.waitForNavigation(),
       page.goto("http://localhost:8080/workouts/10"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/single_workout-dark.png", fullPage: true });
 
     await Promise.all([
       page.waitForNavigation(),
       page.goto("http://localhost:8080/workouts/add"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/upload_workouts.png", fullPage: true });
 
     page.emulateMedia({
@@ -80,7 +77,6 @@ export default async function () {
       page.waitForNavigation(),
       page.goto("http://localhost:8080/workouts/10"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/single_workout-light.png", fullPage: true });
 
     // Create screenshots for responsive view
@@ -96,21 +92,18 @@ export default async function () {
       page.waitForNavigation(),
       page.goto("http://localhost:8080/"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/dashboard-responsive.png" });
 
     await Promise.all([
       page.waitForNavigation(),
       page.goto("http://localhost:8080/workouts/10"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/single_workout-responsive.png" });
 
     await Promise.all([
       page.waitForNavigation(),
       page.goto("http://localhost:8080/statistics"),
     ]);
-    sleep(1);
     page.screenshot({ path: "docs/statistics-responsive.png" });
   } finally {
     page.close();

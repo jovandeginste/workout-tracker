@@ -66,6 +66,7 @@
       };
 
       speedChartOptions = {
+        animation: false,
         scales: {
           x: xAxisScale,
           y: {
@@ -103,6 +104,7 @@
       };
 
       distanceChartOptions = {
+        animation: false,
         scales: {
           x: xAxisScale,
           y: {
@@ -139,6 +141,7 @@
         },
       };
       durationChartOptions = {
+        animation: false,
         scales: {
           x: xAxisScale,
           y: {
@@ -188,9 +191,10 @@
             {{ end }}
           ],
         },
-        options: { scales: {
-          x: xAxisScale,
-        } },
+        options: {
+          animation: false,
+          scales: { x: xAxisScale },
+        },
       });
 
       new Chart(document.getElementById("duration-per-month"), {
