@@ -200,6 +200,18 @@ If no users are in the database (eg. when starting with an empty database), a
 default `admin` user is created with password `admin`. You should change this
 password in a production environment.
 
+## API usage
+
+The API is documented using [swagger](https://swagger.io/). You must enable API access for your user, and copy the API key. You can use the API key as a query parameter (`api-key=${API_KEY}`) or as a header (`Authorization: Bearer ${API_KEY}`).
+
+You can configure some tools to automatically upload files to Workout Tracker, using the `POST /api/v1/import/$program` API endpoint.
+
+### FitoTrack
+
+Read [their documentation](https://codeberg.org/jannis/FitoTrack/wiki/Auto-Export) before you continue.
+
+The path to POST to is: `/api/v1/import/fitotrack?api-key=${API_KEY}`
+
 ## Development
 
 ### Build and run it yourself

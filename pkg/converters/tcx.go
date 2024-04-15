@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/galeone/tcx"
 	"github.com/tkrajina/gpxgo/gpx"
 )
@@ -52,10 +51,6 @@ func ParseTCX(tcxFile []byte) (*gpx.GPX, error) {
 			}
 		}
 	}
-
-	spew.Dump(g.Tracks[0].Duration())
-	// spew.Dump(g)
-	// panic("stop")
 
 	return g, nil
 }
