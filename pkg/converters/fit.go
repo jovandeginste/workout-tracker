@@ -3,6 +3,8 @@ package converters
 import (
 	"bytes"
 	"encoding/xml"
+	"fmt"
+	"math"
 	"strconv"
 
 	"github.com/tkrajina/gpxgo/gpx"
@@ -16,16 +18,19 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 		return nil, err
 	}
 
+	gpxFile := &gpx.GPX{
+		Name:    f.FileId.TimeCreated.String(),
+		Time:    &f.FileId.TimeCreated,
+		Creator: f.FileId.Manufacturer.String(),
+	}
+
 	m, err := f.Activity()
 	if err != nil {
 		return nil, err
 	}
 
-	gpxFile := &gpx.GPX{
-		Creator:  "Garmin Connect",
-		Link:     "connect.garmin.com",
-		LinkText: "Garmin Connect",
-		Time:     &m.Sessions[0].StartTime,
+	if len(m.Sessions) == 0 {
+		return nil, fmt.Errorf("no sessions found")
 	}
 
 	gpxFile.AppendTrack(&gpx.GPXTrack{
@@ -34,24 +39,33 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 	})
 
 	for _, r := range m.Records {
+		if r.PositionLat.Invalid() ||
+			r.PositionLong.Invalid() {
+			continue
+		}
+
 		p := &gpx.GPXPoint{
+			Timestamp: r.Timestamp,
 			Point: gpx.Point{
 				Latitude:  r.PositionLat.Degrees(),
 				Longitude: r.PositionLong.Degrees(),
-				Elevation: *gpx.NewNullableFloat64(r.GetEnhancedAltitudeScaled()),
 			},
-			Timestamp: r.Timestamp,
-			Extensions: gpx.Extension{
-				Nodes: []gpx.ExtensionNode{
-					{
-						XMLName: xml.Name{Local: "ns3:TrackPointExtension"},
-						Nodes: []gpx.ExtensionNode{
-							{XMLName: xml.Name{Local: "ns3:hr"}, Data: strconv.Itoa(int(r.HeartRate))},
-							{XMLName: xml.Name{Local: "ns3:cad"}, Data: strconv.Itoa(int(r.Cadence))},
-						},
-					},
-				},
-			},
+		}
+
+		if a := r.GetEnhancedAltitudeScaled(); !math.IsNaN(a) {
+			p.Elevation = *gpx.NewNullableFloat64(a)
+		}
+
+		if r.HeartRate != 0xFF {
+			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
+				XMLName: xml.Name{Local: "ns3:hr"}, Data: strconv.Itoa(int(r.HeartRate)),
+			})
+		}
+
+		if r.Cadence != 0xFF {
+			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
+				XMLName: xml.Name{Local: "ns3:cad"}, Data: strconv.Itoa(int(r.Cadence)),
+			})
 		}
 
 		gpxFile.AppendPoint(p)
