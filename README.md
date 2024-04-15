@@ -72,9 +72,17 @@ This will create a new database file in the current directory and start the web 
 
 ## Screenshots
 
+### Login page
+
+![](docs/login.png)
+Login / registration form
+
+- new users have to be activated by an admin
+- registration can be disabled
+
 ### Dashboard
 
-![](docs/dashboard.jpg)
+![](docs/dashboard.png)
 Dashboard view with:
 
 - personal totals
@@ -84,12 +92,12 @@ Dashboard view with:
 
 ### Overview of workouts
 
-![](docs/workout_overview.jpg)
+![](docs/workout_overview.png)
 Overview of all your activities, with summaries. The columns are sortable.
 
 ### Details of a single workout
 
-![](docs/single_workout.jpg)
+![](docs/single_workout-dark.png)
 Details of a workout, with:
 
 - a zoomable, dragable map of the GPX track with more details per point
@@ -107,7 +115,7 @@ Details of a workout, with:
 
 ### Upload your files
 
-![](docs/upload_workouts.jpg)
+![](docs/upload_workouts.png)
 
 - Upload one or multiple GPX files.
 - Pick the type (running, cycling, ...) or let the application guess based on average speed
@@ -115,7 +123,7 @@ Details of a workout, with:
 
 ### Statistics to follow your progress
 
-![](docs/statistics.jpg)
+![](docs/statistics.png)
 
 - Graphs showing monthly aggregated statistics.
 
@@ -266,6 +274,7 @@ these sources:
 - make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
   - added support for MySQL, but untested so far
+  - added support for Postgres by @icewind1991
 - add support for other types of import files (eg. Garmin fit files)
   - importing fit files works, kinda: there seems to be an issue with the elevation
   - see https://github.com/tormoder/fit/issues/87

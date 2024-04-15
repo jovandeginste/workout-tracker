@@ -7,8 +7,10 @@ OUTPUT_FILE ?= tmp/main
 
 I18N_LANGUAGES ?= nl de
 LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
+THEME_SCREENSHOT_WIDTH ?= 1200
+THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build
+.PHONY: all clean test build screenshots
 
 all: clean install-deps test build
 
@@ -22,7 +24,7 @@ clean:
 dev:
 	air
 
-build: build-swagger build-dist build-tw build-server build-docker
+build: build-swagger build-dist build-tw build-server build-docker screenshots
 
 build-server:
 	go build \
@@ -86,6 +88,29 @@ test-assets:
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
 	golangci-lint run --allow-parallel-runners
+
+screenshots: generate-screenshots screenshots-theme screenshots-responsive
+
+generate-screenshots:
+	K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js
+
+screenshots-theme:
+	mkdir -p tmp/
+	convert docs/single_workout-dark.png \
+		-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
+		tmp/dark_resized.jpg
+	convert docs/single_workout-light.png \
+		-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
+		tmp/light_resized.jpg
+	convert -size $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT) \
+		xc:white -draw "polygon 0,0 $(THEME_SCREENSHOT_WIDTH),0 $(THEME_SCREENSHOT_WIDTH),$(THEME_SCREENSHOT_HEIGHT)" \
+		tmp/mask.png
+	convert tmp/dark_resized.jpg tmp/light_resized.jpg tmp/mask.png \
+		-composite docs/single_workout-theme.jpg
+	rm -f tmp/dark_resized.jpg tmp/light_resized.jpg tmp/mask.png
+
+screenshots-responsive:
+	montage -density 300 -tile 3x0 -geometry +5+5 -background none docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
 
 go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
