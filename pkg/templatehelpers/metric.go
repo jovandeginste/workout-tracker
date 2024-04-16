@@ -20,7 +20,7 @@ func HumanSpeedKPH(mps float64) string {
 }
 
 func HumanTempoKM(mps float64) string {
-	if mps == 0 {
+	if mps == 0 || math.IsNaN(mps) {
 		return InvalidValue
 	}
 
