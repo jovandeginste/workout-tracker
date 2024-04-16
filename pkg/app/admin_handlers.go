@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
 )
 
@@ -11,6 +12,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	adminGroup.Use(a.ValidateAdminMiddleware)
 
 	adminGroup.GET("", a.adminRootHandler).Name = "admin"
+	adminGroup.POST("/config", a.adminConfigUpdateHandler).Name = "admin-config-update"
 
 	adminUsersGroup := adminGroup.Group("/users")
 	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"
@@ -77,6 +79,26 @@ func (a *App) adminUserDeleteHandler(c echo.Context) error {
 	}
 
 	a.setNotice(c, "The user '%s' has been deleted.", u.Name)
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
+}
+
+func (a *App) adminConfigUpdateHandler(c echo.Context) error {
+	var cnf database.Config
+
+	if err := c.Bind(&cnf); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
+	}
+
+	if err := cnf.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
+	}
+
+	if err := a.ResetConfiguration(); err != nil {
+		return err
+	}
+
+	a.setNotice(c, "Config updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }

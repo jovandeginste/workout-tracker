@@ -4,17 +4,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Config struct {
-	Bind                 string `mapstructure:"bind"`
-	JWTEncryptionKey     string `mapstructure:"jwt_encryption_key"`
-	Logging              bool   `mapstructure:"logging"`
-	Debug                bool   `mapstructure:"debug"`
-	DatabaseDriver       string `mapstructure:"database_driver"`
-	DSN                  string `mapstructure:"dsn"`
-	RegistrationDisabled bool   `mapstructure:"registration_disabled"`
-	SocialsDisabled      bool   `mapstructure:"socials_disabled"`
-}
-
 func (a *App) ReadConfiguration() error {
 	viper.SetConfigName("workout-tracker")
 	viper.AddConfigPath(".")
@@ -54,4 +43,12 @@ func (a *App) ReadConfiguration() error {
 	}
 
 	return nil
+}
+
+func (a *App) ResetConfiguration() error {
+	if err := a.ReadConfiguration(); err != nil {
+		return err
+	}
+
+	return a.Config.UpdateFromDatabase(a.db)
 }

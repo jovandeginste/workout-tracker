@@ -6,10 +6,10 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `admin` }}">
-        {{ i18n "Manage users" }} ({{ len .users }})
-      </h2>
       <div class="inner-form">
+        <h2 class="{{ IconFor `admin` }}">
+          {{ i18n "Manage users" }} ({{ len .users }})
+        </h2>
         <table>
           <thead>
             <tr>
@@ -37,6 +37,64 @@
             {{ end }}
           </tbody>
         </table>
+      </div>
+      <div class="inner-form">
+        <h2 class="{{ IconFor `admin` }}">{{ i18n "Application settings" }}</h2>
+        <ul class="note">
+          {{ i18n "These settings may be overwritten by:" }}
+          <li>{{ i18n "the configuration file" }}</li>
+          <li>{{ i18n "environment variables" }}</li>
+        </ul>
+        <form method="post" action="{{ RouteFor `admin-config-update` }}">
+          <table class="table-fixed">
+            <tbody>
+              <tr>
+                <th>
+                  <label for="registration_disabled"
+                    >{{ i18n "Disable account registration" }}</label
+                  >
+                </th>
+                <td>
+                  <input
+                    type="checkbox"
+                    id="registration_disabled"
+                    name="registration_disabled"
+                    value="true"
+                    {{
+                    BoolToCheckbox
+                    AppConfig.RegistrationDisabled
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label for="socials_disabled"
+                    >{{ i18n "Disable social sharing buttons" }}</label
+                  >
+                </th>
+                <td>
+                  <input
+                    type="checkbox"
+                    id="socials_disabled"
+                    name="socials_disabled"
+                    value="true"
+                    {{
+                    BoolToCheckbox
+                    AppConfig.SocialsDisabled
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <button type="submit">{{ i18n "Update settings" }}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
       </div>
     </div>
 
