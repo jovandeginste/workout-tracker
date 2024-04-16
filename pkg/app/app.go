@@ -30,7 +30,7 @@ type Version struct {
 
 type App struct {
 	Version      Version
-	Config       Config
+	Config       database.Config
 	Assets       fs.FS
 	Views        fs.FS
 	Translations fs.FS
@@ -74,6 +74,10 @@ func (a *App) Configure() error {
 	}
 
 	if err := a.ConfigureDatabase(); err != nil {
+		return err
+	}
+
+	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
 		return err
 	}
 

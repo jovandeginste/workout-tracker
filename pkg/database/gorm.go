@@ -49,7 +49,7 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 	}
 
 	if err := db.AutoMigrate(
-		&User{}, &Profile{}, &Workout{}, &GPXData{}, &MapData{}, &MapDataDetails{},
+		&User{}, &Profile{}, &Workout{}, &GPXData{}, &MapData{}, &MapDataDetails{}, &Config{},
 	); err != nil {
 		return nil, err
 	}

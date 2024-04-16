@@ -70,6 +70,11 @@
     }
   }
 
+  .note {
+    @apply text-xs border-l-2 border-amber-500 p-1 pl-3;
+    @apply text-zinc-600;
+    @apply dark:text-zinc-400;
+  }
   .footer {
     @apply flex justify-center gap-10;
   }

@@ -669,6 +669,25 @@ form {
   }
 }
 
+.note {
+  border-left-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(245 158 11 / var(--tw-border-opacity));
+  padding: 0.25rem;
+  padding-left: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  --tw-text-opacity: 1;
+  color: rgb(82 82 91 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .note {
+    --tw-text-opacity: 1;
+    color: rgb(161 161 170 / var(--tw-text-opacity));
+  }
+}
+
 .footer {
   display: flex;
   justify-content: center;
