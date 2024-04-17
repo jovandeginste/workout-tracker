@@ -111,7 +111,7 @@
           yAxisID: 'y',
           data: [
             {{ range .Items -}}
-            { "x": {{ .LastPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .LastPoint.Lat }}", "lng": "{{ .LastPoint.Lng }}", label: "{{ template `workout_point_title` .LastPoint }}" },
+            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .FirstPoint.Lat }}", "lng": "{{ .FirstPoint.Lng }}", label: "{{ template `workout_point_title` .FirstPoint }}" },
             {{- end  }}
           ],
         },
