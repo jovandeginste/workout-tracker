@@ -116,3 +116,7 @@ go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out
 	rm -vf coverage.out
+
+update-deps:
+	npm update
+	go get -d -t ./...
