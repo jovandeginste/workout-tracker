@@ -10,12 +10,12 @@
         {{ i18n "Dashboard for %s" .user.Name }}
       </h2>
 
-      {{ template "stats_records_total" }}
+      {{ template "stats_records_total" .user }}
 
       <div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
         <div>
-          {{ range CurrentUser.GetAllRecords }} {{ if and
-          .WorkoutType.IsDistance .Active }}
+          {{ range .user.GetAllRecords }} {{ if and .WorkoutType.IsDistance
+          .Active }}
           <div class="inner-form">
             {{ template "stats_records_distance" . }}
           </div>
