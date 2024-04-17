@@ -29,9 +29,9 @@
 
         <div class="sm:flex sm:flex-wrap gap-5">
           {{ range .users }} {{ if ne .ID $.user.ID }}
-          <span class="user-pill">
-            <a href="{{ RouteFor `user-show` .ID }}">{{ .Name }}</a>
-          </span>
+          <a href="{{ RouteFor `user-show` .ID }}"
+            ><span class="user-pill"> {{ .Name }} </span></a
+          >
           {{ end }} {{ end }}
         </div>
       </div>
