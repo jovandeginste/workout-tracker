@@ -84,6 +84,8 @@ func sportIcon(what string) string {
 		return iconDefaults + " icon-solid icon-person-skiing"
 	case "snowboarding":
 		return iconDefaults + " icon-solid icon-person-snowboarding"
+	case "golfing":
+		return iconDefaults + " icon-solid icon-golf-ball-tee"
 	case "kayaking":
 		return iconDefaults + " icon-solid icon-sailboat"
 	default:

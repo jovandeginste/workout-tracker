@@ -124,6 +124,8 @@ func workoutTypeFromGpxTrackType(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypeSwimming, true
 	case "kayaking":
 		return WorkoutTypeKayaking, true
+	case "golfing":
+		return WorkoutTypeGolfing, true
 	default:
 		return WorkoutTypeAutoDetect, false
 	}
