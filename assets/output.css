@@ -1768,10 +1768,6 @@ table {
   visibility: collapse;
 }
 
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }
@@ -1798,6 +1794,10 @@ table {
 
 .float-right {
   float: right;
+}
+
+.m-1 {
+  margin: 0.25rem;
 }
 
 .-mr-5 {
@@ -1846,10 +1846,6 @@ table {
 
 .h-\[300px\] {
   height: 300px;
-}
-
-.h-\[400px\] {
-  height: 400px;
 }
 
 .min-h-\[450px\] {
@@ -1956,6 +1952,12 @@ table {
 
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .whitespace-nowrap {
@@ -2860,10 +2862,6 @@ table {
 
   .xl\:hidden {
     display: none;
-  }
-
-  .xl\:h-\[600px\] {
-    height: 600px;
   }
 }
 

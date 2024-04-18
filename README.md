@@ -283,7 +283,7 @@ database storage is a single SQLite file.
   - [FullCalendar](https://fullcalendar.io/)
   - [Leaflet](https://leafletjs.com/)
   - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
-  - [Chart.js](https://cdn.jsdelivr.net/npm/chart.js)
+  - [apexcharts](https://apexcharts.com/)
 - Docker
 
 The application uses OpenStreetMap as its map provider and for geocoding a GPS

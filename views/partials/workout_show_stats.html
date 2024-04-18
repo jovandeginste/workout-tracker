@@ -1,157 +1,111 @@
 {{ define "workout_show_stats" }}
-<canvas id="speed-elevation-chart"></canvas>
-
+<div id="chart"></div>
 <script>
-  let defaultDatasetOptions = {
-    borderWidth: 2,
-    pointBorderWidth: 2,
-    pointRadius: 2,
-    pointHitRadius: 10,
-    tension: 0.5,
-  };
-  let chartOptions = {
-    animation: false,
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: "index",
-      intersect: false,
+  var theme = 'light';
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark';
+  }
+
+  var data = [
+    {{ range .Items -}}
+    { "lat": {{ .FirstPoint.Lat }}, "lng": {{ .FirstPoint.Lng }}, "label": "{{ template `workout_point_title` .FirstPoint }}", },
+    {{- end  }}
+  ];
+  var options = {
+    theme: { mode: theme },
+    chart: {
+      height: 400,
+      animations: { enabled: false },
+      toolbar: { show: false },
     },
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          unit: "minute",
-          tooltipFormat: "HH:mm",
-          displayFormats: { minute: "HH:mm" },
-        },
+    legend: {
+      position: 'top',
+      formatter: (seriesName, opts)=>{
+        if(opts.seriesIndex>1) return '';
+        return seriesName;
       },
-      y: {
-        min: 0,
-        ticks: {
-          callback: function (value) {
-            return (
-              value.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              }) + " {{ CurrentUser.PreferredUnits.Speed }}"
-            );
-          },
-        },
-      },
-      y1: {
-        position: "right",
-        ticks: {
-          callback: function (value) {
-            return (
-              value.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              }) + " {{ CurrentUser.PreferredUnits.Elevation }}"
-            );
-          },
-        },
-      },
-      y2: {
-        display: false,
-      },
-      y3: {
-        display: false,
-      },
+      markers: { width: [12,12,0] }
     },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            let label = context.dataset.label || "";
-
-            if (label) {
-              label += ": ";
-            }
-
-            if (context.parsed.y !== null) {
-              if (context.dataset.yAxisID === "y3") {
-                label += formatDuration(context.parsed.y);
-              } else {
-                label += context.parsed.y.toLocaleString(undefined, {
-                  maximumFractionDigits: 2,
-                });
-
-                if (context.dataset.yAxisID === "y") {
-                  label += " {{ CurrentUser.PreferredUnits.Speed }}";
-                  set_marker(
-                    context.raw.label,
-                    context.raw.lat,
-                    context.raw.lng,
-                  );
-                } else if (context.dataset.yAxisID === "y1") {
-                  label += " {{ CurrentUser.PreferredUnits.Elevation }}";
-                } else if (context.dataset.yAxisID === "y2") {
-                  label += " {{ CurrentUser.PreferredUnits.Distance }}";
-                }
-              }
-            }
-            return label;
-          },
+    tooltip: {
+      x: { format: 'HH:mm', },
+      y: [
+        { formatter: function (val, opts) {
+          set_marker( data[opts.dataPointIndex].label, data[opts.dataPointIndex].lat, data[opts.dataPointIndex].lng)
+          return val + " {{ CurrentUser.PreferredUnits.Speed }}"; }
         },
-      },
-    },
-  };
-</script>
-
-<script>
-  new Chart(document.getElementById("speed-elevation-chart"), {
-    type: "line",
-    data: {
-      datasets: [
-        {
-          label: "{{ i18n `Average speed` }}",
-          ...defaultDatasetOptions,
-          yAxisID: 'y',
-          data: [
-            {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, "lat": "{{ .FirstPoint.Lat }}", "lng": "{{ .FirstPoint.Lng }}", label: "{{ template `workout_point_title` .FirstPoint }}" },
-            {{- end  }}
-          ],
-        },
-        {
-          label: "{{ i18n `Elevation` }}",
-          ...defaultDatasetOptions,
-          yAxisID: 'y1',
-          fill: true,
-          data: [
-            {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation | HumanElevation }}, },
-            {{- end  }}
-          ],
-        },
-        {
-          label: "{{ i18n `Distance` }}",
-          pointStyle: false,
-          borderWidth: 0,
-          yAxisID: 'y2',
-          data: [
-            {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDistance | HumanDistance }}, },
-            {{- end  }}
-          ],
-        },
-        {
-          label: "{{ i18n `Duration` }}",
-          pointStyle: false,
-          borderWidth: 0,
-          yAxisID: 'y3',
-          data: [
-            {{ range .Items -}}
-            { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDuration | NumericDuration }}, },
-            {{- end  }}
-          ],
-        },
+        { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Elevation }}"; } },
+        { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Distance }}"; } },
+        { formatter: function (val, opts) { return formatDuration(val); } },
       ],
     },
-    options: chartOptions,
-  });
-</script>
+    stroke: {
+      width: 2,
+      curve: 'smooth',
+    },
+    markers: {
+      size: 1,
+    },
+    series: [
+      {
+        name: "{{ i18n `Average speed` }}",
+        type: "line",
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .Speed | HumanSpeed }}, },
+          {{- end  }}
+        ],
+      },
+      {
+        name: "{{ i18n `Elevation` }}",
+        type: "area",
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation | HumanElevation }}, },
+          {{- end  }}
+        ],
+      },
+      {
+        name: "{{ i18n `Distance` }}",
+        type: "none",
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDistance | HumanDistance }}, },
+          {{- end  }}
+        ],
+      },
+      {
+        name: "{{ i18n `Duration` }}",
+        type: "none",
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .TotalDuration | NumericDuration }}, },
+          {{- end  }}
+        ],
+      },
+    ],
+    xaxis: { type: "datetime", },
+    yaxis: [
+      {
+        min: 0,
+        labels: {
+          formatter: (val) => {
+            return val + " {{ CurrentUser.PreferredUnits.Speed }}";
+          },
+        },
+      },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " {{ CurrentUser.PreferredUnits.Elevation }}";
+          },
+        },
+        opposite: true,
+      },
+      { show: false },
+    ],
+  };
 
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+</script>
 {{ end }}
