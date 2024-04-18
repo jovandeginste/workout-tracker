@@ -2,8 +2,8 @@
 <html>
   <head>
     {{ template "head" }}
-    <script src="{{ RouteFor `assets` }}/dist/chart.js"></script>
-    <script src="{{ RouteFor `assets` }}/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/apexcharts.min.js"></script>
+    <link href="{{ RouteFor `assets` }}/dist/apexcharts.css" rel="stylesheet" />
   </head>
   <body>
     {{ template "header" . }}
@@ -17,25 +17,26 @@
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `workout` }}">{{ i18n "Workouts" }}</h3>
-            <canvas id="workouts-per-month"></canvas>
+            <div id="workouts-per-month"></div>
           </div>
         </div>
+
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `duration` }}">{{ i18n "Duration" }}</h3>
-            <canvas id="duration-per-month"></canvas>
+            <div id="duration-per-month"></div>
           </div>
         </div>
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `distance` }}">{{ i18n "Distance" }}</h3>
-            <canvas id="distance-per-month"></canvas>
+            <div id="distance-per-month"></div>
           </div>
         </div>
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</h3>
-            <canvas id="average-speed-per-month"></canvas>
+            <div id="average-speed-per-month"></div>
           </div>
         </div>
         <div>
@@ -43,13 +44,13 @@
             <h3 class="{{ IconFor `speed` }}">
               {{ i18n "Average speed (no pause)" }}
             </h3>
-            <canvas id="average-speed-no-pause-per-month"></canvas>
+            <div id="average-speed-no-pause-per-month"></div>
           </div>
         </div>
         <div>
           <div class="inner-form">
             <h3 class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</h3>
-            <canvas id="max-speed-per-month"></canvas>
+            <div id="max-speed-per-month"></div>
           </div>
         </div>
       </div>
@@ -57,250 +58,177 @@
     {{ template "footer" . }}
 
     <script>
-      xAxisScale = {
-        type: "time",
-        time: {
-          unit: "month",
-          tooltipFormat: "MMM yyyy",
-        },
-      };
+      var theme = 'light';
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
 
-      speedChartOptions = {
-        animation: false,
-        scales: {
-          x: xAxisScale,
-          y: {
-            ticks: {
-              callback: function (value) {
-                return (
-                  value.toLocaleString(undefined, {
-                    maximumFractionDigits: 2,
-                  }) + " {{ CurrentUser.PreferredUnits.Speed }}"
-                );
-              },
-            },
-          },
+      var options = {
+        theme: { mode: theme },
+        chart: {
+          width: "99%",
+          animations: { enabled: false },
+          toolbar: { show: false },
+          type: "bar",
         },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                let label = context.dataset.label || "";
+        dataLabels: { enabled: false },
+        legend: { position: 'top' },
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+        },
+        xaxis: { type: "datetime", },
+      }
 
-                if (label) {
-                  label += ": ";
-                }
-                if (context.parsed.y !== null) {
-                  label +=
-                    context.parsed.y.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    }) + " {{ CurrentUser.PreferredUnits.Speed }}";
-                }
-                return label;
-              },
-            },
+      new ApexCharts(document.querySelector("#workouts-per-month"), {
+        ...options,
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .Workouts }} },
+                {{ end -}}
+              ],
           },
-        },
-      };
+          {{ end }}
+        ],
+      }).render();
 
-      distanceChartOptions = {
-        animation: false,
-        scales: {
-          x: xAxisScale,
-          y: {
-            ticks: {
-              callback: function (value) {
-                return (
-                  value.toLocaleString(undefined, {
-                    maximumFractionDigits: 2,
-                  }) + " {{ CurrentUser.PreferredUnits.Distance }}"
-                );
-              },
-            },
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                let label = context.dataset.label || "";
-
-                if (label) {
-                  label += ": ";
-                }
-                if (context.parsed.y !== null) {
-                  label +=
-                    context.parsed.y.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    }) + " {{ CurrentUser.PreferredUnits.Distance }}";
-                }
-                return label;
-              },
-            },
-          },
-        },
-      };
-      durationChartOptions = {
-        animation: false,
-        scales: {
-          x: xAxisScale,
-          y: {
-            ticks: {
-              callback: function (value) {
-                return formatDuration(value);
-              },
-            },
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                let label = context.dataset.label || "";
-
-                if (label) {
-                  label += ": ";
-                }
-                if (context.parsed.y !== null) {
-                  label += formatDuration(context.parsed.y);
-                }
-                return label;
-              },
-            },
-          },
-        },
-      };
-    </script>
-
-    <script>
-      new Chart(document.getElementById("workouts-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .Workouts }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
+      new ApexCharts(document.querySelector("#duration-per-month"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return formatDuration(val); } },
           ],
         },
-        options: {
-          animation: false,
-          scales: { x: xAxisScale },
-        },
-      });
+        yaxis: [
+          { labels: { formatter: (val) => { return formatDuration(val); } } },
+        ],
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {{ if $type.IsDistance }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .Duration | NumericDuration }} },
+                {{ end -}}
+              ],
+          },
+          {{ end }}
+          {{ end }}
+        ],
+      }).render();
 
-      new Chart(document.getElementById("duration-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .Duration | NumericDuration }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
+      new ApexCharts(document.querySelector("#distance-per-month"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Distance }}"; } },
           ],
         },
-        options: durationChartOptions,
-      });
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " {{ CurrentUser.PreferredUnits.Distance }}"; } } },
+        ],
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {{ if $type.IsDistance }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .Distance | HumanDistance }} },
+                {{ end -}}
+              ],
+          },
+          {{ end }}
+          {{ end }}
+        ],
+      }).render();
 
-      new Chart(document.getElementById("distance-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .Distance | HumanDistance }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
+      new ApexCharts(document.querySelector("#average-speed-per-month"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } },
           ],
         },
-        options: distanceChartOptions,
-      });
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } } },
+        ],
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {{ if $type.IsDistance }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .AverageSpeed | HumanSpeed }} },
+                {{ end -}}
+              ],
+          },
+          {{ end }}
+          {{ end }}
+        ],
+      }).render();
 
-      new Chart(document.getElementById("average-speed-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .AverageSpeed | HumanSpeed }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
+      new ApexCharts(document.querySelector("#average-speed-no-pause-per-month"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } },
           ],
         },
-        options: speedChartOptions,
-      });
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } } },
+        ],
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {{ if $type.IsDistance }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .AverageSpeedNoPause | HumanSpeed }} },
+                {{ end -}}
+              ],
+          },
+          {{ end }}
+          {{ end }}
+        ],
+      }).render();
 
-      new Chart(document.getElementById("average-speed-no-pause-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .AverageSpeedNoPause | HumanSpeed }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
+      new ApexCharts(document.querySelector("#max-speed-per-month"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } },
           ],
         },
-        options: speedChartOptions,
-      });
-
-      new Chart(document.getElementById("max-speed-per-month"), {
-        type: "bar",
-        data: {
-          datasets: [
-            {{ range $type, $PerMonth := $stats.Buckets }}
-              {{ if $type.IsDistance }}
-              {
-                label: "{{ i18n $type.String }}",
-                data: [
-                  {{- range $PerMonth -}}
-                  { x: "{{ .Bucket }}", y: {{ .MaxSpeed | HumanSpeed }} },
-                  {{ end -}}
-                ],
-              },
-              {{ end }}
-            {{ end }}
-          ],
-        },
-        options: speedChartOptions,
-      });
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " {{ CurrentUser.PreferredUnits.Speed }}"; } } },
+        ],
+        series: [
+          {{ range $type, $PerMonth := $stats.Buckets }}
+          {{ if and $type.IsDistance }}
+          {
+            name: "{{ i18n $type.String }}",
+              data: [
+                {{- range $PerMonth -}}
+                { x: "{{ .Bucket }}", y: {{ .MaxSpeed | HumanSpeed }} },
+                {{ end -}}
+              ],
+          },
+          {{ end }}
+          {{ end }}
+        ],
+      }).render();
     </script>
   </body>
 </html>
