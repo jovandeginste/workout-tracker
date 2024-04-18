@@ -2531,6 +2531,14 @@ table {
   content: "\f09b";
 }
 
+.icon-golf-ball-tee::before {
+  content: "\f450";
+}
+
+.icon-golf-ball-tee::after {
+  content: "\f450";
+}
+
 .icon-hourglass::before {
   content: "\f254";
 }
