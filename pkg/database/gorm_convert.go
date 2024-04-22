@@ -8,7 +8,7 @@ import (
 )
 
 func convertWorkouts(db *gorm.DB) error {
-	workouts, err := GetWorkouts(db.Preload("Data").Preload("GPX").Where("gpx_data IS NOT NULL or data IS NOT NULL"))
+	workouts, err := GetWorkouts(db.Preload("Data").Preload("GPX").Where("LENGTH(gpx_data) > 0 or data IS NOT NULL"))
 	if err != nil {
 		return err
 	}
