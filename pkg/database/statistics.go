@@ -125,8 +125,38 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	return r, nil
 }
 
+func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
+	r := ""
+
+	err := u.db.
+		Table("workouts").
+		Select("type").
+		Where("user_id = ?", u.ID).
+		Group("type").
+		Order("count(*) DESC").
+		Limit(1).
+		Pluck("type", &r).Error
+	if err != nil {
+		return nil, err
+	}
+
+	wt := AsWorkoutType(r)
+
+	return &wt, nil
+}
+
 func (u *User) GetDefaultTotals() (*Bucket, error) {
-	return u.GetTotals(u.Profile.TotalsShow)
+	t := u.Profile.TotalsShow
+	if t == WorkoutTypeAutoDetect {
+		ht, err := u.GetHighestWorkoutType()
+		if err != nil {
+			return nil, err
+		}
+
+		t = *ht
+	}
+
+	return u.GetTotals(t)
 }
 
 func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
