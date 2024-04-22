@@ -4,11 +4,7 @@
     <tr>
       <td class="{{ IconFor `date` }}"></td>
       <th>{{ i18n "Date" }}</th>
-      <td>
-        <span title="{{ .Date | LocalDate }}">
-          {{ .Date | RelativeDate }}
-        </span>
-      </td>
+      <td>{{ template "snippet_date" .Date }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `location` }}"></td>

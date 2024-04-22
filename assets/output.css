@@ -2826,10 +2826,6 @@ table {
 }
 
 @media (min-width: 1024px) {
-  .lg\:inline {
-    display: inline;
-  }
-
   .lg\:flex {
     display: flex;
   }
