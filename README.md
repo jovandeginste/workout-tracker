@@ -249,6 +249,12 @@ make build # Builds all components
 make build-tw # Builds the Tailwind CSS output file
 make build-server # Builds the web server
 make build-docker # Performs all builds inside Docker containers, creates a Docker image
+make build-swagger # Generates swagger docs
+
+# Translating
+make generate-messages # Detects all translatable strings and write them to translations/messages.yaml
+make generate-translations # Populates the translation files per language
+
 
 # Running it
 make serve # Runs the compiled binary
