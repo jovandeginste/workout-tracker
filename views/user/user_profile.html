@@ -113,6 +113,25 @@
               </tr>
               <tr>
                 <th>
+                  <label for="prefer_full_date"
+                    >{{ i18n "Show full date by default" }}</label
+                  >
+                </th>
+                <td>
+                  <input
+                    type="checkbox"
+                    id="prefer_full_date"
+                    name="prefer_full_date"
+                    value="true"
+                    {{
+                    BoolToCheckbox
+                    .Profile.PreferFullDate
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
                   <label for="socials_disabled"
                     >{{ i18n "Disable social sharing buttons" }}</label
                   >

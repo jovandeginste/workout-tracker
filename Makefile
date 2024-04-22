@@ -76,6 +76,7 @@ generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
 $(patsubst %,generate-translation-%, $(I18N_LANGUAGES)):
 	xspreak merge -i translations/messages.json \
 		-o translations/${LANG_TO_GENERATE}.json -l ${LANG_TO_GENERATE}
+	prettier --write translations/${LANG_TO_GENERATE}.json
 
 serve:
 	$(OUTPUT_FILE)

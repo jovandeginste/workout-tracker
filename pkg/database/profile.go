@@ -16,6 +16,7 @@ type Profile struct {
 	Timezone            string      `form:"timezone"`              // The user's preferred timezone
 	AutoImportDirectory string      `form:"auto_import_directory"` // The user's preferred directory for auto-import
 	SocialsDisabled     bool        `form:"socials_disabled"`      // Whether social sharing buttons are disabled when viewing a workout
+	PreferFullDate      bool        `form:"prefer_full_date"`      // Whether to show full dates in the workout details
 
 	PreferredUnits UserPreferredUnits `gorm:"serializer:json"` // The user's preferred units
 

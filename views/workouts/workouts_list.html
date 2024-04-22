@@ -48,12 +48,7 @@
               <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>
             </td>
             <td class="hidden sm:table-cell" sorttable_customkey="{{ .Date }}">
-              <span class="hidden lg:inline" title="{{ .Date | LocalDate }}">
-                {{ .Date | RelativeDate }}
-              </span>
-              <span class="lg:hidden" title="{{ .Date | LocalDate }}">
-                {{ .Date.Format "2006-01-02" }}
-              </span>
+              {{ template "snippet_date" .Date }}
             </td>
             <td class="hidden xl:table-cell">
               {{ template "snippet_location" .Data.Address }}

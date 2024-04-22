@@ -41,6 +41,14 @@ type User struct {
 	db *gorm.DB
 }
 
+func (u *User) ShowFullDate() bool {
+	if u == nil {
+		return false
+	}
+
+	return u.Profile.PreferFullDate
+}
+
 func (u *User) PreferredUnits() *UserPreferredUnits {
 	if u == nil {
 		return &UserPreferredUnits{}

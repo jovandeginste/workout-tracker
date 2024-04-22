@@ -50,6 +50,7 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 	u.Profile.Timezone = p.Timezone
 	u.Profile.AutoImportDirectory = p.AutoImportDirectory
 	u.Profile.SocialsDisabled = p.SocialsDisabled
+	u.Profile.PreferFullDate = p.PreferFullDate
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
