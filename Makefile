@@ -5,7 +5,7 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
 OUTPUT_FILE ?= tmp/main
 
-I18N_LANGUAGES ?= nl de
+I18N_LANGUAGES ?= nl de fr
 LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
