@@ -9,20 +9,24 @@ Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 
 ### Docker
 
-Run the latest master image from GitHub Container Registry (master and release
-images are available for amd64 and arm64):
+Run the latest image from GitHub Container Registry (latest and release images
+are available for amd64 and arm64). The current directory is mounted as the data
+directory.
 
 ```bash
 # Latest master build
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:latest
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:latest
 
 # Tagged release
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0.11.3
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0.11
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:0
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0.11.3
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0.11
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0
 
 # Latest release
-docker run -p 8080:8080 ghcr.io/jovandeginste/workout-tracker:release
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:release
+
+# Run as non-root user; make sure . is owned by uid 1000
+docker run -p 8080:8080 -v .:/data -u 1000:1000 ghcr.io/jovandeginste/workout-tracker
 ```
 
 Open your browser at `http://localhost:8080`
