@@ -9,7 +9,7 @@
     <tr>
       <td class="{{ IconFor `location` }}"></td>
       <th>{{ i18n "Location" }}</th>
-      <td>{{ template "snippet_location" .Data.Address }}</td>
+      <td>{{ .Data.AddressString }}</td>
     </tr>
     <tr>
       <td class="{{ IconFor `source` }}"></td>

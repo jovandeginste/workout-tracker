@@ -7,6 +7,7 @@ import (
 
 	"github.com/codingsince1985/geo-golang"
 	"github.com/codingsince1985/geo-golang/openstreetmap"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -94,6 +95,36 @@ type MapPoint struct {
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {
 	return db.Save(d).Error
+}
+
+func (m *MapData) AddressString() string {
+	if m.Address == nil {
+		return `(unknown location)`
+	}
+
+	r := ""
+	if m.Address.CountryCode != "" {
+		r += templatehelpers.CountryCodeToFlag(m.Address.CountryCode) + " "
+	}
+
+	switch {
+	case m.Address.City != "":
+		r += m.Address.City
+	case m.Address.Street != "":
+		r += m.Address.Street
+	default:
+		return r + m.Address.FormattedAddress
+	}
+
+	if shouldAddState(m.Address) {
+		r += ", " + m.Address.State
+	}
+
+	return r
+}
+
+func shouldAddState(address *geo.Address) bool {
+	return address.CountryCode == "US"
 }
 
 func (m *MapData) Save(db *gorm.DB) error {
