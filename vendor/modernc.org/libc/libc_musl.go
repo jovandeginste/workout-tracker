@@ -122,7 +122,9 @@ import (
 	"syscall"
 	"unsafe"
 
+	guuid "github.com/google/uuid"
 	"golang.org/x/sys/unix"
+	"modernc.org/libc/uuid/uuid"
 	"modernc.org/memory"
 )
 
@@ -1012,22 +1014,43 @@ func Xsysctlbyname(t *TLS, name, oldp, oldlenp, newp uintptr, newlen Tsize_t) in
 
 // void uuid_copy(uuid_t dst, uuid_t src);
 func Xuuid_copy(t *TLS, dst, src uintptr) {
-	panic(todo(""))
+	if __ccgo_strace {
+		trc("t=%v src=%v, (%v:)", t, src, origin(2))
+	}
+	*(*uuid.Uuid_t)(unsafe.Pointer(dst)) = *(*uuid.Uuid_t)(unsafe.Pointer(src))
 }
 
 // int uuid_parse( char *in, uuid_t uu);
 func Xuuid_parse(t *TLS, in uintptr, uu uintptr) int32 {
-	panic(todo(""))
+	if __ccgo_strace {
+		trc("t=%v in=%v uu=%v, (%v:)", t, in, uu, origin(2))
+	}
+	r, err := guuid.Parse(GoString(in))
+	if err != nil {
+		return -1
+	}
+
+	copy((*RawMem)(unsafe.Pointer(uu))[:unsafe.Sizeof(uuid.Uuid_t{})], r[:])
+	return 0
 }
 
 // void uuid_generate_random(uuid_t out);
 func Xuuid_generate_random(t *TLS, out uintptr) {
-	panic(todo(""))
+	if __ccgo_strace {
+		trc("t=%v out=%v, (%v:)", t, out, origin(2))
+	}
+	x := guuid.New()
+	copy((*RawMem)(unsafe.Pointer(out))[:], x[:])
 }
 
 // void uuid_unparse(uuid_t uu, char *out);
 func Xuuid_unparse(t *TLS, uu, out uintptr) {
-	panic(todo(""))
+	if __ccgo_strace {
+		trc("t=%v out=%v, (%v:)", t, out, origin(2))
+	}
+	s := (*guuid.UUID)(unsafe.Pointer(uu)).String()
+	copy((*RawMem)(unsafe.Pointer(out))[:], s)
+	*(*byte)(unsafe.Pointer(out + uintptr(len(s)))) = 0
 }
 
 var Xzero_struct_address Taddress

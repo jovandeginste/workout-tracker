@@ -2,7 +2,7 @@ package gpx
 
 import (
 	"encoding/xml"
-	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -10,8 +10,12 @@ import (
 type formattedFloat float64
 
 func (f formattedFloat) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	s := strings.TrimRight(strconv.FormatFloat(float64(f), 'f', 10, 64), "0")
+	if strings.HasSuffix(s, ".") {
+		s += "0"
+	}
 	return xml.Attr{
 		Name:  xml.Name{Local: name.Local},
-		Value: strings.TrimRight(fmt.Sprintf("%.10f", f), "0."),
+		Value: s,
 	}, nil
 }

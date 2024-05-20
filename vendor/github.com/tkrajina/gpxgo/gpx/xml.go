@@ -161,25 +161,12 @@ func ParseBytes(buf []byte) (*GPX, error) {
 	return Parse(bytes.NewReader(buf))
 }
 
-// Parse parses GPX from io.Reader
-func Parse(inReader io.Reader) (*GPX, error) {
-	// at most 1000 bytes will make guessGPXVersion happy
-	buf := make([]byte, 1000)
-
-	n, err := inReader.Read(buf)
-	if err != nil {
-		return nil, err
-	}
-	buf = buf[:n]
-	version, err := guessGPXVersion(buf)
+func ParseDecoder(decoder *xml.Decoder, initialBytes []byte) (*GPX, error) {
+	version, err := guessGPXVersion(initialBytes)
 	if err != nil {
 		// Unknown version, try with 1.1
 		version = "1.1"
 	}
-
-	reader := io.MultiReader(bytes.NewReader(buf), inReader)
-	decoder := xml.NewDecoder(reader)
-	decoder.CharsetReader = charset.NewReaderLabel
 
 	switch version {
 	case "1.0":
@@ -199,6 +186,24 @@ func Parse(inReader io.Reader) (*GPX, error) {
 	default:
 		return nil, errors.New("Invalid version:" + version)
 	}
+}
+
+// Parse parses GPX from io.Reader
+func Parse(inReader io.Reader) (*GPX, error) {
+	// at most 1000 bytes will make guessGPXVersion happy
+	buf := make([]byte, 1000)
+
+	n, err := inReader.Read(buf)
+	if err != nil {
+		return nil, err
+	}
+	buf = buf[:n]
+
+	reader := io.MultiReader(bytes.NewReader(buf), inReader)
+	decoder := xml.NewDecoder(reader)
+	decoder.CharsetReader = charset.NewReaderLabel
+
+	return ParseDecoder(decoder, buf)
 }
 
 // ParseString parses GPX from string
