@@ -31,6 +31,13 @@
       </td>
     </tr>
     <tr>
+      <td class="{{ IconFor `pause` }}"></td>
+      <th>{{ i18n "Time paused" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .Data.PauseDuration | HumanDuration }}
+      </td>
+    </tr>
+    <tr>
       <td class="{{ IconFor `distance` }}"></td>
       <th>{{ i18n "Total distance" }}</th>
       <td class="whitespace-nowrap font-mono">
@@ -75,13 +82,6 @@
       <th>{{ i18n "Max speed" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
-      </td>
-    </tr>
-    <tr>
-      <td class="{{ IconFor `pause` }}"></td>
-      <th>{{ i18n "Time paused" }}</th>
-      <td class="whitespace-nowrap font-mono">
-        {{ .Data.PauseDuration | HumanDuration }}
       </td>
     </tr>
     <tr>
