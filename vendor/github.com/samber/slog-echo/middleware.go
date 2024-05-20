@@ -1,6 +1,7 @@
 package slogecho
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"strings"
@@ -18,6 +19,10 @@ const (
 )
 
 var (
+	TraceIDKey   = "trace-id"
+	SpanIDKey    = "span-id"
+	RequestIDKey = "id"
+
 	RequestBodyMaxSize  = 64 * 1024 // 64KB
 	ResponseBodyMaxSize = 64 * 1024 // 64KB
 
@@ -170,19 +175,12 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 					requestID = res.Header().Get(echo.HeaderXRequestID)
 				}
 				if requestID != "" {
-					baseAttributes = append(baseAttributes, slog.String("id", requestID))
+					baseAttributes = append(baseAttributes, slog.String(RequestIDKey, requestID))
 				}
 			}
 
 			// otel
-			if config.WithTraceID {
-				traceID := trace.SpanFromContext(c.Request().Context()).SpanContext().TraceID().String()
-				baseAttributes = append(baseAttributes, slog.String("trace-id", traceID))
-			}
-			if config.WithSpanID {
-				spanID := trace.SpanFromContext(c.Request().Context()).SpanContext().SpanID().String()
-				baseAttributes = append(baseAttributes, slog.String("span-id", spanID))
-			}
+			baseAttributes = append(baseAttributes, extractTraceSpanID(c.Request().Context(), config.WithTraceID, config.WithSpanID)...)
 
 			// request body
 			requestAttributes = append(requestAttributes, slog.Int("length", br.bytes))
@@ -216,7 +214,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 				requestAttributes = append(requestAttributes, slog.Any("x-forwarded-for", ips))
 			}
 
-			// response body body
+			// response body
 			responseAttributes = append(responseAttributes, slog.Int("length", bw.bytes))
 			if config.WithResponseBody {
 				responseAttributes = append(responseAttributes, slog.String("body", bw.body.String()))
@@ -266,6 +264,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 
 			level := config.DefaultLevel
 			msg := "Incoming request"
+
 			if status >= http.StatusInternalServerError {
 				level = config.ServerErrorLevel
 				if err != nil {
@@ -279,6 +278,21 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 					msg = err.Error()
 				} else {
 					msg = http.StatusText(status)
+				}
+			}
+
+			if httpErr != nil {
+				attributes = append(
+					attributes,
+					slog.Any("error", map[string]any{
+						"code":     httpErr.Code,
+						"message":  httpErr.Message,
+						"internal": httpErr.Internal,
+					}),
+				)
+
+				if httpErr.Internal != nil {
+					attributes = append(attributes, slog.String("internal", httpErr.Internal.Error()))
 				}
 			}
 
@@ -300,4 +314,30 @@ func AddCustomAttributes(c echo.Context, attr slog.Attr) {
 	case []slog.Attr:
 		c.Set(customAttributesCtxKey, append(attrs, attr))
 	}
+}
+
+func extractTraceSpanID(ctx context.Context, withTraceID bool, withSpanID bool) []slog.Attr {
+	if !(withTraceID || withSpanID) {
+		return []slog.Attr{}
+	}
+
+	span := trace.SpanFromContext(ctx)
+	if !span.IsRecording() {
+		return []slog.Attr{}
+	}
+
+	attrs := []slog.Attr{}
+	spanCtx := span.SpanContext()
+
+	if withTraceID && spanCtx.HasTraceID() {
+		traceID := trace.SpanFromContext(ctx).SpanContext().TraceID().String()
+		attrs = append(attrs, slog.String(TraceIDKey, traceID))
+	}
+
+	if withSpanID && spanCtx.HasSpanID() {
+		spanID := spanCtx.SpanID().String()
+		attrs = append(attrs, slog.String(SpanIDKey, spanID))
+	}
+
+	return attrs
 }
