@@ -21,8 +21,8 @@ Javascript string. I hope to find a better solution than this... #} {{- define
   {{- "" -}}
   <li>
     {{- "" -}}
-    <b>{{ i18n "Elevation" }}:</b> {{ .Elevation | HumanElevation }} {{
-    CurrentUser.PreferredUnits.Elevation }} {{- "" -}}
+    <b>{{ i18n "Elevation" }}:</b> {{ .ExtraMetrics.Get "Elevation" |
+    HumanElevation }} {{ CurrentUser.PreferredUnits.Elevation }} {{- "" -}}
   </li>
   {{- "" -}}
 </ol>

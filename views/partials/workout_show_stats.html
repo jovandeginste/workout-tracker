@@ -21,10 +21,10 @@
     legend: {
       position: 'top',
       formatter: (seriesName, opts)=>{
-        if(opts.seriesIndex>1) return '';
+        if(opts.seriesIndex>3) return '';
         return seriesName;
       },
-      markers: { width: [12,12,0] }
+      markers: { width: [12,12,12,12,0] }
     },
     tooltip: {
       x: { format: 'HH:mm', },
@@ -34,6 +34,8 @@
           return val + " {{ CurrentUser.PreferredUnits.Speed }}"; }
         },
         { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Elevation }}"; } },
+        { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.HeartRate }}"; } },
+        { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Cadence }}"; } },
         { formatter: function (val, opts) { return val + " {{ CurrentUser.PreferredUnits.Distance }}"; } },
         { formatter: function (val, opts) { return formatDuration(val); } },
       ],
@@ -60,7 +62,27 @@
         type: "area",
         data: [
           {{ range .Items -}}
-          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.Elevation | HumanElevation }}, },
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "Elevation" | HumanElevation }}, },
+          {{- end  }}
+        ],
+      },
+      {
+        name: "{{ i18n `Heart rate` }}",
+        type: "line",
+        display: false,
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "ns3:hr" }}, },
+          {{- end  }}
+        ],
+      },
+      {
+        name: "{{ i18n `Cadence` }}",
+        type: "line",
+        display: false,
+        data: [
+          {{ range .Items -}}
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "ns3:cad" }}, },
           {{- end  }}
         ],
       },
@@ -101,11 +123,27 @@
         },
         opposite: true,
       },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " {{ CurrentUser.PreferredUnits.HeartRate }}";
+          },
+        },
+      },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " {{ CurrentUser.PreferredUnits.Cadence }}";
+          },
+        },
+      },
       { show: false },
     ],
   };
 
   var chart = new ApexCharts(document.querySelector("#chart"), options);
   chart.render();
+  chart.hideSeries("{{ i18n `Heart rate` }}");
+  chart.hideSeries("{{ i18n `Cadence` }}");
 </script>
 {{ end }}

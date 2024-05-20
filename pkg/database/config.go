@@ -56,7 +56,7 @@ func (c *Config) copy(from *Config) {
 	vFrom := reflect.ValueOf(from).Elem()
 	n := v.Type().NumField()
 
-	for i := 0; i < n; i++ {
+	for i := range n {
 		if v.Field(i).IsZero() {
 			v.Field(i).Set(vFrom.Field(i))
 		}

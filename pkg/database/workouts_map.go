@@ -88,7 +88,8 @@ type MapPoint struct {
 	Duration      time.Duration // The duration from the previous point
 	TotalDuration time.Duration // The total duration of the workout up to this point
 	Time          time.Time     // The time the point was recorded
-	Elevation     float64       // The elevation of the point
+
+	ExtraMetrics ExtraMetrics // Extra metrics at this point
 }
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {
@@ -322,6 +323,10 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		totalDist += dist
 		totalTime += t
 
+		extraMetrics := ExtraMetrics{}
+		extraMetrics.Set("Elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
+		extraMetrics.ParseGPXExtensions(pt.Extensions)
+
 		data.Details.Points = append(data.Details.Points, MapPoint{
 			Lat:           pt.Point.Latitude,
 			Lng:           pt.Point.Longitude,
@@ -330,7 +335,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 			TotalDistance: totalDist,
 			Duration:      time.Duration(t) * time.Second,
 			TotalDuration: time.Duration(totalTime) * time.Second,
-			Elevation:     correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()),
+			ExtraMetrics:  extraMetrics,
 		})
 	}
 

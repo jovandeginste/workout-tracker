@@ -1,6 +1,6 @@
 module github.com/jovandeginste/workout-tracker
 
-go 1.21.0
+go 1.22.0
 
 require (
 	github.com/alexedwards/scs/gormstore v0.0.0-20240316134038-7e11d57e8885

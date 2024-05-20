@@ -33,6 +33,14 @@ func (u UserPreferredUnits) Tempo() string {
 	return "min/" + u.Distance()
 }
 
+func (u UserPreferredUnits) HeartRate() string {
+	return "bpm"
+}
+
+func (u UserPreferredUnits) Cadence() string {
+	return "spm"
+}
+
 func (u UserPreferredUnits) Elevation() string {
 	switch u.ElevationRaw {
 	case "ft":
