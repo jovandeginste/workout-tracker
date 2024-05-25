@@ -2,7 +2,7 @@ GIT_REF ?= $(shell git symbolic-ref HEAD)
 GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch
 GIT_COMMIT ?= $(shell git rev-parse HEAD)
-BUILD_TIME ?= $(shell date -u --rfc-3339=seconds)
+BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 OUTPUT_FILE ?= tmp/main
 
 I18N_LANGUAGES ?= nl de fr
