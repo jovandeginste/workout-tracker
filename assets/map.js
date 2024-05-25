@@ -42,7 +42,7 @@ function makeMap(params) {
       }, 0) / speeds.length;
     const stdevSpeed = Math.sqrt(
       speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
-        (speeds.length - 1)
+        (speeds.length - 1),
     );
 
     // Add features to the map
@@ -71,16 +71,16 @@ function makeMap(params) {
             radius: 4,
           })
             .addTo(map)
-            .bindTooltip(pt.title)
+            .bindTooltip(pt.title),
         );
 
         // Elevation
         polyLineProperties["color"] = getColor(
           (pt.elevation - params.minElevation) /
-            (params.maxElevation - params.minElevation)
+            (params.maxElevation - params.minElevation),
         );
         L.polyline([prevPoint, p], polyLineProperties).addTo(
-          elevationLayerGroup
+          elevationLayerGroup,
         );
 
         // Speed
@@ -117,7 +117,7 @@ function makeMap(params) {
         radius: 6,
       })
         .addTo(map)
-        .bindTooltip(last.title)
+        .bindTooltip(last.title),
     );
 
     var first = params.points[0];
@@ -130,7 +130,7 @@ function makeMap(params) {
         radius: 6,
       })
         .addTo(map)
-        .bindTooltip(first.title)
+        .bindTooltip(first.title),
     );
 
     if (!hoverMarker) {
@@ -177,7 +177,7 @@ function getColor(value) {
   const lowColor = [50, 50, 255];
   const highColor = [50, 255, 50];
   const color = [0, 1, 2].map((i) =>
-    Math.floor(value * (highColor[i] - lowColor[i]) + lowColor[i])
+    Math.floor(value * (highColor[i] - lowColor[i]) + lowColor[i]),
   );
   return `rgb(${color.join(",")})`;
 }
