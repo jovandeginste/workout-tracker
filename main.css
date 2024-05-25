@@ -9,7 +9,7 @@
   }
 
   .map-tiles {
-    @apply dark:brightness-[0.6] dark:invert dark:contrast-[3] dark:hue-rotate-[200deg] dark:saturate-[0.3];
+    @apply dark:saturate-[0.0] dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
   }
 
   table.sortable
