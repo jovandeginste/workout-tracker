@@ -53,9 +53,10 @@ clean-dist:
 	rm -rf ./assets/dist/
 
 build-dist: clean-dist
-	mkdir -p ./assets/dist/
+	mkdir -p ./assets/dist/images
 	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
 	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/
+	cp -v ./node_modules/leaflet/dist/images/* ./assets/dist/images/
 	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
 	cp -v ./node_modules/sorttable/sorttable.js ./assets/dist/
 	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
