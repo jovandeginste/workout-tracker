@@ -455,11 +455,10 @@ video {
 
 @media (prefers-color-scheme: dark) {
   .map-tiles {
-    --tw-brightness: brightness(0.6);
-    --tw-contrast: contrast(3);
-    --tw-hue-rotate: hue-rotate(200deg);
+    --tw-brightness: brightness(0.85);
+    --tw-contrast: contrast(0.80);
     --tw-invert: invert(100%);
-    --tw-saturate: saturate(0.3);
+    --tw-saturate: saturate(0.0);
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
   }
 }
