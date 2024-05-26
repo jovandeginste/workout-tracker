@@ -8,8 +8,10 @@
     }
   }
 
-  .map-tiles {
-    @apply dark:saturate-[0.0] dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
+  .map-tiles,
+  .leaflet-tooltip,
+  .leaflet-control {
+    @apply dark:saturate-0 dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
   }
 
   table.sortable
