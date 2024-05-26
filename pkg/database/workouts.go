@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"errors"
 	"html/template"
+	"slices"
 	"strings"
 	"time"
 
@@ -20,15 +21,16 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name   string      `gorm:"not null"`                                  // The name of the workout
-	Date   *time.Time  `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
-	UserID uint        `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
-	Dirty  bool        // Whether the workout has been modified and the details should be re-rendered
-	User   *User       // The user who owns the workout
-	Notes  string      // The notes associated with the workout, in markdown
-	Type   WorkoutType // The type of the workout
-	Data   *MapData    `json:",omitempty"` // The map data associated with the workout
-	GPX    *GPXData    `json:",omitempty"` // The file data associated with the workout
+	Name      string      `gorm:"not null"`                                  // The name of the workout
+	Date      *time.Time  `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
+	UserID    uint        `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
+	Dirty     bool        // Whether the workout has been modified and the details should be re-rendered
+	User      *User       // The user who owns the workout
+	Notes     string      // The notes associated with the workout, in markdown
+	Type      WorkoutType // The type of the workout
+	Data      *MapData    `json:",omitempty"`                                    // The map data associated with the workout
+	GPX       *GPXData    `json:",omitempty"`                                    // The file data associated with the workout
+	Equipment []Equipment `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
 
 	MapData  *MapData `gorm:"serializer:json;column:data" json:"-"` // To be removed
 	GPXData  []byte   `gorm:"type:text" json:"-"`                   // To be removed
@@ -42,6 +44,14 @@ type GPXData struct {
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename  string // The filename of the file
+}
+
+func (w *Workout) Duration() time.Duration {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDuration
 }
 
 func (w *Workout) Distance() float64 {
@@ -183,7 +193,7 @@ func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
-	if err := db.Preload("Data").Preload("User").First(&w, id).Error; err != nil {
+	if err := db.Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
 		return nil, err
 	}
 
@@ -243,4 +253,18 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.Dirty = false
 
 	return w.Save(db)
+}
+
+func (w *Workout) EquipmentIDs() []uint {
+	var ids []uint
+
+	for _, e := range w.Equipment {
+		ids = append(ids, e.ID)
+	}
+
+	return ids
+}
+
+func (w *Workout) Uses(e Equipment) bool {
+	return slices.Contains(w.EquipmentIDs(), e.ID)
 }

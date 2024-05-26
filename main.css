@@ -173,11 +173,11 @@
       @apply uppercase font-bold;
       @apply bg-zinc-100 text-zinc-700;
       @apply dark:bg-zinc-900 dark:text-zinc-300;
-    }
-    tr {
-      @apply border;
-      @apply border-neutral-500 hover:border-amber-500;
-      @apply dark:border-neutral-500 dark:hover:border-amber-500;
+      tr {
+        @apply border;
+        @apply border-neutral-500;
+        @apply dark:border-neutral-500;
+      }
     }
     td,
     th {
@@ -252,15 +252,25 @@
       }
     }
   }
+
+  .selectable-pill {
+    @apply user-pill;
+    @apply hover:brightness-125;
+    @apply bg-red-400 peer-checked:bg-green-400;
+    @apply dark:bg-red-800 dark:peer-checked:bg-green-800;
+  }
+
   .user-pill {
-    @apply inline-block rounded-full my-3 m-2 min-w-[150px] py-2 px-5 border text-center;
-    @apply bg-neutral-300 hover:bg-neutral-400 border-neutral-500;
-    @apply dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:border-neutral-500;
+    @apply inline-block rounded-full m-1 min-w-[150px] py-2 px-5 border text-center;
+    @apply hover:brightness-110;
+    @apply bg-neutral-300 border-neutral-500;
+    @apply dark:bg-neutral-700 dark:border-neutral-500;
   }
   .workout-item {
     @apply rounded-xl py-2 px-5 border;
-    @apply bg-neutral-300 hover:bg-neutral-200 border-neutral-500;
-    @apply dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:border-neutral-500;
+    @apply hover:brightness-110;
+    @apply bg-neutral-300 border-neutral-500;
+    @apply dark:bg-neutral-700 dark:border-neutral-500;
 
     .meta {
       @apply text-neutral-600;

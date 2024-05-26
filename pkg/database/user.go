@@ -35,8 +35,9 @@ type User struct {
 	Active   bool   `form:"active"`                                                // Whether the user is active
 	Admin    bool   `form:"admin"`                                                 // Whether the user is an admin
 
-	Profile  Profile   // The user's profile settings
-	Workouts []Workout `json:"-"` // The user's workouts
+	Profile   Profile     // The user's profile settings
+	Workouts  []Workout   `json:"-"` // The user's workouts
+	Equipment []Equipment `json:"-"` // The user's equipment
 
 	db *gorm.DB
 }
@@ -87,10 +88,14 @@ func GetUsers(db *gorm.DB) ([]User, error) {
 	return u, nil
 }
 
+func currentUserQuery(db *gorm.DB) *gorm.DB {
+	return db.Preload("Profile").Preload("Equipment")
+}
+
 func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
 	var u User
 
-	if err := db.Preload("Profile").Where(&User{APIKey: key}).First(&u).Error; err != nil {
+	if err := currentUserQuery(db).Where(&User{APIKey: key}).First(&u).Error; err != nil {
 		return nil, db.Error
 	}
 
@@ -102,7 +107,7 @@ func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
 func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 	var u User
 
-	if err := db.Preload("Profile").First(&u, userID).Error; err != nil {
+	if err := currentUserQuery(db).First(&u, userID).Error; err != nil {
 		return nil, db.Error
 	}
 
@@ -114,7 +119,7 @@ func GetUserByID(db *gorm.DB, userID int) (*User, error) {
 func GetUser(db *gorm.DB, username string) (*User, error) {
 	var u User
 
-	if err := db.Preload("Profile").Where(&User{Username: username}).First(&u).Error; err != nil {
+	if err := currentUserQuery(db).Where(&User{Username: username}).First(&u).Error; err != nil {
 		return nil, db.Error
 	}
 
@@ -235,7 +240,7 @@ func (u *User) Delete(db *gorm.DB) error {
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w *Workout
 
-	db = db.Preload("Data").Preload("Data.Details").Preload("GPX")
+	db = db.Preload("Data").Preload("Data.Details").Preload("GPX").Preload("Equipment")
 
 	if err := db.Where(&Workout{UserID: u.ID}).First(&w, id).Error; err != nil {
 		return nil, err
@@ -269,6 +274,38 @@ func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, fi
 	}
 
 	if err := w.Create(db); err != nil {
+		return nil, err
+	}
+
+	var equipment []*Equipment
+
+	for i, e := range u.Equipment {
+		if e.ValidFor(&w.Type) {
+			equipment = append(equipment, &u.Equipment[i])
+		}
+	}
+
+	if err := db.Model(&w).Association("Equipment").Replace(equipment); err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
+func (u *User) GetAllEquipment(db *gorm.DB) ([]*Equipment, error) {
+	var w []*Equipment
+
+	if err := db.Preload("Workouts").Where(&Equipment{UserID: u.ID}).Order("name DESC").Find(&w).Error; err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}
+
+func (u *User) GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
+	var w *Equipment
+
+	if err := db.Where(&Equipment{UserID: u.ID}).First(&w, id).Error; err != nil {
 		return nil, err
 	}
 
