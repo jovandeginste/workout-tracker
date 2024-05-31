@@ -108,3 +108,32 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 
 	return w, nil
 }
+
+func (a *App) addAllEquipment(u *database.User, data map[string]interface{}) error {
+	if u == nil {
+		return nil
+	}
+
+	w, err := u.GetAllEquipment(a.db)
+	if err != nil {
+		return err
+	}
+
+	data["equipment"] = w
+
+	return nil
+}
+
+func (a *App) getEquipment(c echo.Context) (*database.Equipment, error) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return nil, err
+	}
+
+	w, err := a.getCurrentUser(c).GetEquipment(a.db, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return w, nil
+}

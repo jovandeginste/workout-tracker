@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      {{ with .equipment }}
+      <div class="gap-4">
+        <h2>{{ i18n "Equipment" }}: {{ .Name }}</h2>
+      </div>
+      <div class="sm:flex sm:flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <form method="post" action="{{ RouteFor `equipment-update` .ID }}">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label for="name">{{ i18n "Name" }}</label>
+                    </td>
+
+                    <td>
+                      <input id="name" name="name" value="{{ .Name }}" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="description">{{ i18n "Description" }}</label>
+                    </th>
+                    <td>
+                      <textarea
+                        type="text"
+                        id="description"
+                        name="description"
+                        rows="10"
+                      >
+{{ .Description }}</textarea
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="active">{{ i18n "Active" }}</label>
+                    </td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        id="active"
+                        name="active"
+                        value="true"
+                        {{
+                        .Active
+                        |
+                        BoolToCheckbox
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>{{ i18n "Default workout types" }}</label>
+                    </td>
+                    <td>
+                      {{ $e := . }} {{ range workoutTypes }}
+                      <label class="inline">
+                        <input
+                          class="hidden peer"
+                          type="checkbox"
+                          id="default_for_{{ .String }}"
+                          name="default_for"
+                          value="{{ .String }}"
+                          {{
+                          .
+                          |
+                          $e.ValidFor
+                          |
+                          BoolToCheckbox
+                          }}
+                        />
+                        <span
+                          id="{{ .String }}"
+                          class="selectable-pill"
+                          for="default_for_{{ .String }}"
+                          >{{ .String }}
+                        </span>
+                      </label>
+                      {{ end }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit">{{ i18n "Update workout" }}</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

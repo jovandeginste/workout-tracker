@@ -23,6 +23,10 @@ func WorkoutTypes() []WorkoutType {
 	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
 }
 
+func DurationWorkoutTypes() []WorkoutType {
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
+}
+
 func DistanceWorkoutTypes() []WorkoutType {
 	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
 }
@@ -33,6 +37,10 @@ func (wt WorkoutType) String() string {
 
 func (wt WorkoutType) IsDistance() bool {
 	return slices.Contains(DistanceWorkoutTypes(), wt)
+}
+
+func (wt WorkoutType) IsDuration() bool {
+	return slices.Contains(DurationWorkoutTypes(), wt)
 }
 
 func AsWorkoutType(s string) WorkoutType {

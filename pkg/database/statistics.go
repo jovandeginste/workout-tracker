@@ -196,7 +196,9 @@ func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
 			return nil, err
 		}
 
-		rs = append(rs, r)
+		if r != nil {
+			rs = append(rs, r)
+		}
 	}
 
 	return rs, nil
@@ -204,7 +206,7 @@ func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
 
 func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 	if t == "" {
-		t = WorkoutTypeRunning
+		t = u.Profile.TotalsShow
 	}
 
 	r := &WorkoutRecord{WorkoutType: t}

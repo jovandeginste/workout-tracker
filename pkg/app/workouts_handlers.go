@@ -44,7 +44,7 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 	return c.Render(http.StatusOK, "workouts_add.html", data)
 }
 
-func (a *App) workoutsDeleteHandler(c echo.Context) error {
+func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
@@ -89,7 +89,24 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	workout.Notes = c.FormValue("notes")
 	workout.Type = database.WorkoutType(c.FormValue("type"))
 
+	var equipmentIDS struct {
+		EquipmentIDs []uint `form:"equipment"`
+	}
+
+	if err := c.Bind(&equipmentIDS); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	equipment, err := database.GetEquipmentByIDs(a.db, a.getCurrentUser(c).ID, equipmentIDS.EquipmentIDs)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
 	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 

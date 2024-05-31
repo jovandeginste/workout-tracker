@@ -12,9 +12,7 @@
           {{ i18n "Workouts" }} ({{ len .workouts }})
         </h2>
         <div class="justify-end mr-2">
-          <a
-            class="{{ IconFor `workout-add` }}"
-            href="{{ RouteFor `workout-add` }}"
+          <a class="{{ IconFor `add` }}" href="{{ RouteFor `workout-add` }}"
             ><span>{{ i18n "Add workout" }}</span></a
           >
         </div>

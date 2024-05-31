@@ -107,7 +107,9 @@ func pageIcon(what string) string {
 		return iconDefaults + " icon-solid icon-user-plus"
 	case "workout":
 		return iconDefaults + " icon-solid icon-dumbbell"
-	case "workout-add":
+	case "equipment":
+		return iconDefaults + " icon-solid icon-bicycle"
+	case "add", "workout-add", "equipment-add":
 		return iconDefaults + " icon-solid icon-circle-plus"
 	default:
 		return ""
@@ -146,6 +148,10 @@ func utilityIcon(what string) string {
 		return iconDefaults + " icon-solid icon-download"
 	case "attention":
 		return iconDefaults + " icon-solid icon-circle-exclamation"
+	case "check":
+		return iconDefaults + " icon-solid icon-square-check"
+	case "totals":
+		return iconDefaults + " icon-solid icon-calculator"
 	default:
 		return ""
 	}

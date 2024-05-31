@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/sorttable.js"></script>
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <div class="items-baseline flex flex-wrap">
+        <h2 class="grow justify-start {{ IconFor `equipment` }}">
+          {{ i18n "Equipment" }} ({{ len .equipment }})
+        </h2>
+        <div class="justify-end mr-2">
+          <a class="{{ IconFor `add` }}" href="{{ RouteFor `equipment-add` }}"
+            ><span>{{ i18n "Add equipment" }}</span></a
+          >
+        </div>
+      </div>
+
+      <table class="equipment-info sortable">
+        <thead>
+          <tr>
+            <th>{{ i18n "Name" }}</th>
+            <th>{{ i18n "Workouts" }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .equipment }}
+          <tr>
+            <td>
+              <a href="{{ RouteFor `equipment-show` .ID }}">{{ .Name }}</a>
+            </td>
+            <td>{{ .Workouts | len }}</td>
+            <td>
+              <span class="actions">
+                {{ template "equipment_actions" . }}
+              </span>
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>
