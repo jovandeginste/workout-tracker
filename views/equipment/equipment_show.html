@@ -19,6 +19,30 @@
       <div class="lg:flex lg:flex-wrap">
         <div class="basis-1/2">
           <div class="inner-form">
+            <h3 class="grow justify-start {{ IconFor `totals` }}">
+              {{ i18n "Totals" }}
+            </h3>
+            {{ with .GetTotals }}
+            <table>
+              <tbody>
+                <tr>
+                  <td class="{{ IconFor `distance` }}"></td>
+                  <th>{{ i18n "Total distance" }}</th>
+                  <td>
+                    {{ .Distance | HumanDistance }} {{
+                    CurrentUser.PreferredUnits.Distance }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="{{ IconFor `duration` }}"></td>
+                  <th>{{ i18n "Total duration" }}</th>
+                  <td>{{ .Duration | HumanDuration }}</td>
+                </tr>
+              </tbody>
+            </table>
+            {{ end }}
+          </div>
+          <div class="inner-form">
             <table>
               <tbody>
                 <tr>
@@ -83,32 +107,6 @@
                 {{ end }}
               </tbody>
             </table>
-          </div>
-        </div>
-        <div class="basis-1/2">
-          <div class="inner-form">
-            <h3 class="grow justify-start {{ IconFor `totals` }}">
-              {{ i18n "Totals" }}
-            </h3>
-            {{ with .GetTotals }}
-            <table>
-              <tbody>
-                <tr>
-                  <td class="{{ IconFor `distance` }}"></td>
-                  <th>{{ i18n "Total distance" }}</th>
-                  <td>
-                    {{ .Distance | HumanDistance }} {{
-                    CurrentUser.PreferredUnits.Distance }}
-                  </td>
-                </tr>
-                <tr>
-                  <td class="{{ IconFor `duration` }}"></td>
-                  <th>{{ i18n "Total duration" }}</th>
-                  <td>{{ .Duration | HumanDuration }}</td>
-                </tr>
-              </tbody>
-            </table>
-            {{ end }}
           </div>
         </div>
       </div>
