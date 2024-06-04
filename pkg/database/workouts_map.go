@@ -5,9 +5,10 @@ import (
 	"slices"
 	"time"
 
-	"github.com/codingsince1985/geo-golang"
+	geo "github.com/codingsince1985/geo-golang"
 	"github.com/codingsince1985/geo-golang/openstreetmap"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/labstack/gommon/log"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -173,12 +174,23 @@ func (m *MapCenter) Address() *geo.Address {
 
 	geocoder := openstreetmap.Geocoder()
 
-	address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)
-	if err != nil {
-		return nil
+	for i := range 5 {
+		address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)
+		switch err {
+		case nil:
+			return address
+		case geo.ErrTimeout:
+			log.Warnf("OpenStreetMap geocoding timeout, retrying in %d seconds", i)
+			time.Sleep(time.Duration(i) * time.Second)
+		default:
+			log.Errorf("OpenStreetMap geocoding error: %v", err)
+			return nil
+		}
 	}
 
-	return address
+	log.Warnf("Too many OpenStreetMap geocoding timeouts, returning nil")
+
+	return nil
 }
 
 // allGPXPoints returns the first track segment's points
