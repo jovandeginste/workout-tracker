@@ -174,10 +174,13 @@ func (m *MapCenter) Address() *geo.Address {
 
 	geocoder := openstreetmap.Geocoder()
 
+	log.Infof("OpenStreetMap reverse geocoding {%f, %f}", m.Lat, m.Lng)
+
 	for i := range 5 {
 		address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)
 		switch err {
 		case nil:
+			log.Infof("OpenStreetMap reverse geocoding {%f, %f} result: %s", m.Lat, m.Lng, address.FormattedAddress)
 			return address
 		case geo.ErrTimeout:
 			log.Warnf("OpenStreetMap geocoding timeout, retrying in %d seconds", i)
