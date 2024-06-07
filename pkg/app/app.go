@@ -2,6 +2,7 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"log/slog"
 	"os"
@@ -11,6 +12,7 @@ import (
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"
@@ -26,6 +28,10 @@ type Version struct {
 	RefName   string
 	RefType   string
 	Sha       string
+}
+
+func (v Version) UserAgent() string {
+	return fmt.Sprintf("workout-tracker/%s", v.Ref)
 }
 
 type App struct {
@@ -76,6 +82,9 @@ func (a *App) Configure() error {
 	if err := a.ConfigureDatabase(); err != nil {
 		return err
 	}
+	if err := a.ConfigureGeocoder(); err != nil {
+		return err
+	}
 
 	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
 		return err
@@ -85,6 +94,11 @@ func (a *App) Configure() error {
 		return err
 	}
 
+	return nil
+}
+
+func (a *App) ConfigureGeocoder() error {
+	geocoder.SetClient(a.logger, a.Version.UserAgent())
 	return nil
 }
 
