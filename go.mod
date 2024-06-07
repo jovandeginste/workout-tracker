@@ -12,6 +12,7 @@ require (
 	github.com/glebarez/sqlite v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/gomarkdown/markdown v0.0.0-20240419095408-642f0ee99ae2
+	github.com/google/go-querystring v1.1.0
 	github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.12.0

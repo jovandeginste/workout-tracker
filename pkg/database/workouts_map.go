@@ -5,8 +5,8 @@ import (
 	"slices"
 	"time"
 
-	geo "github.com/codingsince1985/geo-golang"
-	"github.com/codingsince1985/geo-golang/openstreetmap"
+	"github.com/codingsince1985/geo-golang"
+	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
 	"github.com/tkrajina/gpxgo/gpx"
@@ -172,28 +172,17 @@ func (m *MapCenter) Address() *geo.Address {
 		return nil
 	}
 
-	geocoder := openstreetmap.Geocoder()
-
-	log.Infof("OpenStreetMap reverse geocoding {%f, %f}", m.Lat, m.Lng)
-
-	for i := range 5 {
-		address, err := geocoder.ReverseGeocode(m.Lat, m.Lng)
-		switch err {
-		case nil:
-			log.Infof("OpenStreetMap reverse geocoding {%f, %f} result: %s", m.Lat, m.Lng, address.FormattedAddress)
-			return address
-		case geo.ErrTimeout:
-			log.Warnf("OpenStreetMap geocoding timeout, retrying in %d seconds", i)
-			time.Sleep(time.Duration(i) * time.Second)
-		default:
-			log.Errorf("OpenStreetMap geocoding error: %v", err)
-			return nil
-		}
+	r, err := geocoder.Lookup(geocoder.Query{
+		Lat:    m.Lat,
+		Lon:    m.Lng,
+		Format: "json",
+	})
+	if err != nil {
+		log.Warn("Error performing reverse geocode: ", err)
+		return nil
 	}
 
-	log.Warnf("Too many OpenStreetMap geocoding timeouts, returning nil")
-
-	return nil
+	return r
 }
 
 // allGPXPoints returns the first track segment's points
