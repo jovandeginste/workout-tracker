@@ -2664,6 +2664,14 @@ table {
   content: "\f84a";
 }
 
+.icon-person-hiking::before {
+  content: "\f6ec";
+}
+
+.icon-person-hiking::after {
+  content: "\f6ec";
+}
+
 .icon-person-running::before {
   content: "\f70c";
 }

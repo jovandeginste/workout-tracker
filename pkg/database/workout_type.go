@@ -17,18 +17,19 @@ const (
 	WorkoutTypeSwimming     WorkoutType = "swimming"
 	WorkoutTypeKayaking     WorkoutType = "kayaking"
 	WorkoutTypeGolfing      WorkoutType = "golfing"
+	WorkoutTypeHiking       WorkoutType = "hiking"
 )
 
 func WorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing, WorkoutTypeHiking}
 }
 
 func DurationWorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing, WorkoutTypeHiking}
 }
 
 func DistanceWorkoutTypes() []WorkoutType {
-	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing}
+	return []WorkoutType{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeWalking, WorkoutTypeSkiing, WorkoutTypeSnowboarding, WorkoutTypeSwimming, WorkoutTypeKayaking, WorkoutTypeGolfing, WorkoutTypeHiking}
 }
 
 func (wt WorkoutType) String() string {
