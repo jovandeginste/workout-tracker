@@ -117,6 +117,7 @@ Details of a workout, with:
 - a breakdown per kilometer or per mile
 - track color based on elevation of the segment
 - graph of average speed and elevation per minute
+- optional graph of heart rate, cadans
 
 ### Tooltips for even more information
 
