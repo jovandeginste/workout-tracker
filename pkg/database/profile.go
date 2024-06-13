@@ -68,6 +68,12 @@ func (u UserPreferredUnits) Speed() string {
 	}
 }
 
+func (p *Profile) ResetBools() {
+	p.PreferFullDate = false
+	p.APIActive = false
+	p.SocialsDisabled = false
+}
+
 func (p *Profile) Save(db *gorm.DB) error {
 	return db.Save(p).Error
 }

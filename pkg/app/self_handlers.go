@@ -39,6 +39,8 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 	u := a.getCurrentUser(c)
 	p := &u.Profile
 
+	p.ResetBools()
+
 	if err := c.Bind(p); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
