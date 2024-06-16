@@ -54,20 +54,22 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 
 type MapData struct {
 	gorm.Model
-	WorkoutID     uint            `gorm:"not null;uniqueIndex"` // The workout this data belongs to
-	Creator       string          // The tool that created this workout
-	Name          string          // The name of the workout
-	Center        MapCenter       `gorm:"serializer:json"` // The center of the workout (in coordinates)
-	Address       *geo.Address    `gorm:"serializer:json"` // The address of the workout
-	TotalDistance float64         // The total distance of the workout
-	TotalDuration time.Duration   // The total duration of the workout
-	MaxSpeed      float64         // The maximum speed of the workout
-	PauseDuration time.Duration   // The total pause duration of the workout
-	MinElevation  float64         // The minimum elevation of the workout
-	MaxElevation  float64         // The maximum elevation of the workout
-	TotalUp       float64         // The total distance up of the workout
-	TotalDown     float64         // The total distance down of the workout
-	Details       *MapDataDetails `json:",omitempty"` // The details of the workout
+	WorkoutID        uint            `gorm:"not null;uniqueIndex"` // The workout this data belongs to
+	Creator          string          // The tool that created this workout
+	Name             string          // The name of the workout
+	Center           MapCenter       `gorm:"serializer:json"` // The center of the workout (in coordinates)
+	Address          *geo.Address    `gorm:"serializer:json"` // The address of the workout
+	TotalDistance    float64         // The total distance of the workout
+	TotalDuration    time.Duration   // The total duration of the workout
+	MaxSpeed         float64         // The maximum speed of the workout
+	PauseDuration    time.Duration   // The total pause duration of the workout
+	MinElevation     float64         // The minimum elevation of the workout
+	MaxElevation     float64         // The maximum elevation of the workout
+	TotalUp          float64         // The total distance up of the workout
+	TotalDown        float64         // The total distance down of the workout
+	Details          *MapDataDetails `json:",omitempty"` // The details of the workout
+	TotalRepetitions int             // The number of repetitions of the workout
+	TotalWeight      float64         // The weight of the workout
 
 	Points []MapPoint `gorm:"serializer:json" json:"-"` // To be removed
 }

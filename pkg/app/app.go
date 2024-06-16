@@ -82,6 +82,7 @@ func (a *App) Configure() error {
 	if err := a.ConfigureDatabase(); err != nil {
 		return err
 	}
+
 	if err := a.ConfigureGeocoder(); err != nil {
 		return err
 	}

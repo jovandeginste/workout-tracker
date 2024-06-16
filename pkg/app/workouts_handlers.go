@@ -44,6 +44,11 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 	return c.Render(http.StatusOK, "workouts_add.html", data)
 }
 
+func (a *App) workoutsFormHandler(c echo.Context) error {
+	t := database.WorkoutType(c.FormValue("type"))
+	return c.Render(http.StatusOK, "workout_form.html", t)
+}
+
 func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 	workout, err := a.getWorkout(c)
 	if err != nil {

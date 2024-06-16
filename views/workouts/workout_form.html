@@ -1,0 +1,65 @@
+<tr>
+  <td><label for="name">{{ i18n "Name" }}</label></td>
+  <td><input type="text" name="name" id="name" /></td>
+</tr>
+<tr>
+  <td><label for="date">{{ i18n "Date" }}</label></td>
+  <td>
+    <input type="datetime-local" name="date" id="date" />
+  </td>
+</tr>
+<tr>
+  <td><label for="location">{{ i18n "Location" }}</label></td>
+  <td>
+    <input type="text" name="location" id="location" />
+  </td>
+</tr>
+<script>
+  function toLocalISOString(date) {
+    const localDate = new Date(date - date.getTimezoneOffset() * 60000); //offset in milliseconds. Credit https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset
+
+    // Optionally remove second/millisecond if needed
+    localDate.setSeconds(null);
+    localDate.setMilliseconds(null);
+    return localDate.toISOString().slice(0, -1);
+  }
+
+  document.getElementById("name").value =
+    "{{ .String }} - " + toLocalISOString(new Date());
+  document.getElementById("date").value = toLocalISOString(new Date());
+</script>
+{{ if .IsDuration }}
+<tr>
+  <td><label for="duration">{{ i18n "Duration" }}</label></td>
+  <td><input type="time" name="duration" id="duration" /></td>
+</tr>
+{{ end }} {{ if .IsDistance }}
+<tr>
+  <td><label for="distance">{{ i18n "Distance" }}</label></td>
+  <td>
+    <input type="text" name="distance" id="distance" />
+    <span>{{ CurrentUser.PreferredUnits.Distance }}</span>
+  </td>
+</tr>
+{{ end }} {{ if .IsRepetition }}
+<tr>
+  <td><label for="repetitions">{{ i18n "Repetitions" }}</label></td>
+  <td><input type="text" name="repetitions" id="repetitions" /></td>
+</tr>
+{{ end }} {{ if .IsWeight }}
+<tr>
+  <td><label for="weight">{{ i18n "Weight" }}</label></td>
+  <td>
+    <input type="text" name="weight" id="weight" />
+    <span>{{ CurrentUser.PreferredUnits.Weight }}</span>
+  </td>
+</tr>
+{{ end }}
+<tr>
+  <td>
+    <label for="notes">{{ i18n "Notes" }}</label>
+  </td>
+  <td>
+    <textarea type="text" id="notes" name="notes" rows="10"></textarea>
+  </td>
+</tr>
