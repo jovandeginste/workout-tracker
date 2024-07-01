@@ -87,12 +87,17 @@ func (e *Equipment) GetTotals() (WorkoutTotals, error) {
 		if w.Type.IsDuration() {
 			rs.Duration += w.Duration()
 		}
+
+		if w.Type.IsRepetition() {
+			rs.Repetitions += w.Repetitions()
+		}
 	}
 
 	return rs, nil
 }
 
 type WorkoutTotals struct {
-	Distance float64
-	Duration time.Duration
+	Distance    float64
+	Duration    time.Duration
+	Repetitions int
 }

@@ -27,6 +27,7 @@ type UserPreferredUnits struct {
 	SpeedRaw     string `form:"speed" json:"speed"`         // The user's preferred speed unit
 	DistanceRaw  string `form:"distance" json:"distance"`   // The user's preferred distance unit
 	ElevationRaw string `form:"elevation" json:"elevation"` // The user's preferred elevation unit
+	WeightRaw    string `form:"weight" json:"weight"`       // The user's preferred weight unit
 }
 
 func (u UserPreferredUnits) Tempo() string {
@@ -47,6 +48,15 @@ func (u UserPreferredUnits) Elevation() string {
 		return "ft"
 	default:
 		return "m"
+	}
+}
+
+func (u UserPreferredUnits) Weight() string {
+	switch u.WeightRaw {
+	case "lbs":
+		return "lbs"
+	default:
+		return "kg"
 	}
 }
 

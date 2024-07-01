@@ -23,6 +23,19 @@
         <span class="{{ IconFor .Type.String }}">{{ i18n .Type.String }}</span>
       </td>
     </tr>
+    {{ if .Type.IsRepetition }}
+    <tr>
+      <td class="{{ IconFor `repetitions` }}"></td>
+      <th>{{ i18n "Repetitions" }}</th>
+      <td class="whitespace-nowrap font-mono">{{ .Data.TotalRepetitions }}</td>
+    </tr>
+    {{ end }}{{ if .Type.IsWeight }}
+    <tr>
+      <td class="{{ IconFor `weight` }}"></td>
+      <th>{{ i18n "Weight" }}</th>
+      <td class="whitespace-nowrap font-mono">{{ .Data.TotalWeight }}</td>
+    </tr>
+    {{ end }} {{ if .Type.IsDuration }}
     <tr>
       <td class="{{ IconFor `duration` }}"></td>
       <th>{{ i18n "Total duration" }}</th>
@@ -37,6 +50,7 @@
         {{ .Data.PauseDuration | HumanDuration }}
       </td>
     </tr>
+    {{ end }} {{ if .Type.IsDistance }}
     <tr>
       <td class="{{ IconFor `distance` }}"></td>
       <th>{{ i18n "Total distance" }}</th>
@@ -45,6 +59,7 @@
         CurrentUser.PreferredUnits.Distance }}
       </td>
     </tr>
+    {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
     <tr>
       <td class="{{ IconFor `speed` }}"></td>
       <th>{{ i18n "Average speed" }}</th>
@@ -84,6 +99,7 @@
         {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
+    {{ end }} {{ if .Type.IsLocation }}
     <tr>
       <td class="{{ IconFor `elevation` }}"></td>
       <th>{{ i18n "Min elevation" }}</th>
@@ -116,6 +132,7 @@
         CurrentUser.PreferredUnits.Elevation }}
       </td>
     </tr>
+    {{ end }}
     <tr>
       <td class="{{ IconFor `equipment` }}"></td>
       <td>{{ i18n "Equipment" }}</td>

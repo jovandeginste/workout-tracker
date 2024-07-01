@@ -38,6 +38,11 @@
                   <th>{{ i18n "Total duration" }}</th>
                   <td>{{ .Duration | HumanDuration }}</td>
                 </tr>
+                <tr>
+                  <td class="{{ IconFor `repetitions` }}"></td>
+                  <th>{{ i18n "Total repetitions" }}</th>
+                  <td>{{ .Repetitions }}</td>
+                </tr>
               </tbody>
             </table>
             {{ end }}

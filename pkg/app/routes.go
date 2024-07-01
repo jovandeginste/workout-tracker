@@ -138,6 +138,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
+	workoutsGroup.GET("/form", a.workoutsFormHandler).Name = "workout-form"
 
 	equipmentGroup := secureGroup.Group("/equipment")
 	equipmentGroup.GET("", a.equipmentHandler).Name = "equipment"

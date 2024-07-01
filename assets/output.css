@@ -2824,6 +2824,10 @@ table {
   content: "\f00d";
 }
 
+.\[a-zA-Z\:\\-\\\.\] {
+  a-z-a--z: \-\.;
+}
+
 @media (min-width: 640px) {
   .sm\:mt-0 {
     margin-top: 0px;

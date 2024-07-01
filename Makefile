@@ -64,6 +64,7 @@ build-dist: clean-dist
 	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
 	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
 	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
+	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
 
 
 watch-tw:
