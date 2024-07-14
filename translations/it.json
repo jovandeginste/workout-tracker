@@ -57,7 +57,7 @@
     "Other users": "Altri utenti",
     "Password": "Password",
     "Preferred units": "Unità preferite",
-    "Profile updated": "Profilo aggiornato.",
+    "Profile updated": "Profilo aggiornato",
     "Recent activity": "Attività recente",
     "Records for %s": "Registri per %s",
     "Refresh all your workouts": "Aggiorna tutti i tuoi allenamenti",
@@ -134,5 +134,5 @@
     "user": "Utente",
     "walking": "Camminata",
     "workout": "Allenamento",
-    "workouts": "Allenamenti"
+    "workouts": "allenamenti"
 }
