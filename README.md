@@ -152,6 +152,7 @@ Details of a workout, with:
 ![](docs/i18n.gif)
 
 - Switch between (supported) languages
+  - Please help translate via [Weblate](https://hosted.weblate.org/projects/workout-tracker/)
 - Use the language configured in the browser (default)
 - Very limited amount of languages supported for now :smile:
 - Re-calculate all previously uploaded workouts (useful while developing)
