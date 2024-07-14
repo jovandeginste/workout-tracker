@@ -1,3 +1,7 @@
+[![Translation status](https://hosted.weblate.org/widget/workout-tracker/svg-badge.svg)](https://hosted.weblate.org/engage/workout-tracker/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jovandeginste/workout-tracker)](https://goreportcard.com/report/github.com/jovandeginste/workout-tracker)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A workout tracking web application for personal use (or family, friends), geared
 towards running and other GPX-based activities
 
@@ -148,6 +152,7 @@ Details of a workout, with:
 ![](docs/i18n.gif)
 
 - Switch between (supported) languages
+  - Please help translate via [Weblate](https://hosted.weblate.org/projects/workout-tracker/)
 - Use the language configured in the browser (default)
 - Very limited amount of languages supported for now :smile:
 - Re-calculate all previously uploaded workouts (useful while developing)
