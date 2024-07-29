@@ -17,9 +17,14 @@ type Content struct {
 }
 
 func Import(program string, headers http.Header, body io.ReadCloser) (*Content, error) {
-	if program == "fitotrack" {
-		return importFitotrack(headers, body)
-	}
+	defer body.Close()
 
-	return nil, fmt.Errorf("%w: %s", ErrUnsupportedProgram, program)
+	switch program {
+	case "generic":
+		return importGeneric(headers, body)
+	case "fitotrack":
+		return importFitotrack(headers, body)
+	default:
+		return nil, fmt.Errorf("%w: %s", ErrUnsupportedProgram, program)
+	}
 }
