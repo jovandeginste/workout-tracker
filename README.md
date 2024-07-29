@@ -108,7 +108,7 @@ Dashboard view with:
 
 ![](docs/workout_overview.png)
 
-Overview of all your activities, with summaries. The columns are sortable.
+Overview of all your activities, with summaries.
 
 ### Details of a single workout
 
@@ -298,7 +298,6 @@ database storage is a single SQLite file.
   - [Font Awesome](https://fontawesome.com/)
   - [FullCalendar](https://fullcalendar.io/)
   - [Leaflet](https://leafletjs.com/)
-  - [sorttable](https://www.kryogenix.org/code/browser/sorttable/)
   - [apexcharts](https://apexcharts.com/)
 - Docker
 

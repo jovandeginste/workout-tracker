@@ -2,7 +2,6 @@
 <html>
   <head>
     {{ template "head" }}
-    <script src="{{ RouteFor `assets` }}/dist/sorttable.js"></script>
   </head>
   <body>
     {{ template "header" . }}
@@ -18,7 +17,7 @@
         </div>
       </div>
 
-      <table class="workout-info sortable">
+      <table class="workout-info">
         <thead>
           <tr>
             <th></th>
@@ -45,41 +44,26 @@
             <td>
               <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>
             </td>
-            <td class="hidden sm:table-cell" sorttable_customkey="{{ .Date }}">
+            <td class="hidden sm:table-cell">
               {{ template "snippet_date" .Date }}
             </td>
             <td class="hidden xl:table-cell">{{ .Data.AddressString }}</td>
-            <td
-              sorttable_customkey="{{ .Data.TotalDistance }}"
-              class="whitespace-nowrap font-mono"
-            >
+            <td class="whitespace-nowrap font-mono">
               {{ .Data.TotalDistance | HumanDistance }} {{
               CurrentUser.PreferredUnits.Distance }}
             </td>
-            <td
-              class="hidden sm:table-cell whitespace-nowrap font-mono"
-              sorttable_customkey="{{ .Data.TotalDuration | NumericDuration }}"
-            >
+            <td class="hidden sm:table-cell whitespace-nowrap font-mono">
               {{ .Data.TotalDuration | HumanDuration }}
             </td>
-            <td
-              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
-              sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
-            >
+            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
               {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
               CurrentUser.PreferredUnits.Speed }}
             </td>
-            <td
-              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
-              sorttable_customkey="{{ .Data.AverageSpeedNoPause }}"
-            >
+            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
               {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
               CurrentUser.PreferredUnits.Tempo }}
             </td>
-            <td
-              class="hidden 2xl:table-cell whitespace-nowrap font-mono"
-              sorttable_customkey="{{ .Data.MaxSpeed }}"
-            >
+            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
               {{ .Data.MaxSpeed | HumanSpeed }} {{
               CurrentUser.PreferredUnits.Speed }}
             </td>

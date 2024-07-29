@@ -10,7 +10,6 @@
     "htmx.org": "^1.9.12",
     "leaflet": "^1.9.4",
     "shareon": "^2.5.0",
-    "sorttable": "^1.0.2",
     "tailwind-fontawesome": "^0.6.0"
   }
 }
