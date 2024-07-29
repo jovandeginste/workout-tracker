@@ -90,6 +90,10 @@ func sportIcon(what string) string {
 		return iconDefaults + " icon-solid icon-sailboat"
 	case "hiking":
 		return iconDefaults + " icon-solid icon-person-hiking"
+	case "push-ups":
+		return iconDefaults + " icon-solid icon-dumbbell"
+	case "weight lifting":
+		return iconDefaults + " icon-solid icon-dumbbell"
 	default:
 		return ""
 	}
