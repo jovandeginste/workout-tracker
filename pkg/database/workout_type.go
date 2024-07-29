@@ -2,7 +2,9 @@ package database
 
 import "slices"
 
-type WorkoutType string
+type (
+	WorkoutType string
+)
 
 const (
 	// We need to add each of these types to the "messages.html" partial view.
@@ -20,6 +22,12 @@ const (
 	WorkoutTypeHiking        WorkoutType = "hiking"
 	WorkoutTypePushups       WorkoutType = "push-ups"
 	WorkoutTypeWeightLifting WorkoutType = "weight lifting"
+
+	WorkoutTypeClassLocation   = "location"
+	WorkoutTypeClassDistance   = "distance"
+	WorkoutTypeClassRepetition = "repetition"
+	WorkoutTypeClassWeight     = "weight"
+	WorkoutTypeClassDuration   = "duration"
 )
 
 type WorkoutTypeConfiguration struct {
@@ -44,48 +52,78 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeWeightLifting: {Location: false, Distance: false, Repetition: true, Weight: true},
 }
 
+var (
+	workoutTypes        []WorkoutType
+	workoutTypesByClass map[string][]WorkoutType
+)
+
 func WorkoutTypes() []WorkoutType {
-	keys := []WorkoutType{}
+	if len(workoutTypes) > 0 {
+		return workoutTypes
+	}
 
 	for k := range workoutTypeConfigs {
+		workoutTypes = append(workoutTypes, k)
+	}
+
+	slices.Sort(workoutTypes)
+
+	return workoutTypes
+}
+
+func getOrSetByClass(class string, fn func(c WorkoutTypeConfiguration) bool) []WorkoutType {
+	if workoutTypesByClass == nil {
+		workoutTypesByClass = make(map[string][]WorkoutType)
+	}
+
+	if wt, ok := workoutTypesByClass[class]; ok {
+		return wt
+	}
+
+	keys := []WorkoutType{}
+
+	for k, c := range workoutTypeConfigs {
+		if !fn(c) {
+			continue
+		}
+
 		keys = append(keys, k)
 	}
 
 	slices.Sort(keys)
+	workoutTypesByClass[WorkoutTypeClassDistance] = keys
 
 	return keys
 }
 
 func DistanceWorkoutTypes() []WorkoutType {
-	keys := []WorkoutType{}
+	return getOrSetByClass(WorkoutTypeClassDistance, func(c WorkoutTypeConfiguration) bool {
+		return c.Distance
+	})
+}
 
-	for k, c := range workoutTypeConfigs {
-		if !c.Distance {
-			continue
-		}
+func WeightWorkoutTypes() []WorkoutType {
+	return getOrSetByClass(WorkoutTypeClassWeight, func(c WorkoutTypeConfiguration) bool {
+		return c.Weight
+	})
+}
 
-		keys = append(keys, k)
-	}
-
-	slices.Sort(keys)
-
-	return keys
+func RepetitionWorkoutTypes() []WorkoutType {
+	return getOrSetByClass(WorkoutTypeClassRepetition, func(c WorkoutTypeConfiguration) bool {
+		return c.Repetition
+	})
 }
 
 func LocationWorkoutTypes() []WorkoutType {
-	keys := []WorkoutType{}
+	return getOrSetByClass(WorkoutTypeClassLocation, func(c WorkoutTypeConfiguration) bool {
+		return c.Location
+	})
+}
 
-	for k, c := range workoutTypeConfigs {
-		if !c.Location {
-			continue
-		}
-
-		keys = append(keys, k)
-	}
-
-	slices.Sort(keys)
-
-	return keys
+func DurationWorkoutTypes() []WorkoutType {
+	return getOrSetByClass(WorkoutTypeClassDuration, func(c WorkoutTypeConfiguration) bool {
+		return true
+	})
 }
 
 func (wt WorkoutType) String() string {
