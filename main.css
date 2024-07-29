@@ -14,13 +14,6 @@
     @apply dark:saturate-0 dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
   }
 
-  table.sortable
-    th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(
-      .sorttable_nosort
-    ):after {
-    content: " \25B4\25BE";
-  }
-
   body {
     @apply md:px-20;
     @apply bg-neutral-100 text-zinc-900;

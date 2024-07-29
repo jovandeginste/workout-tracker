@@ -2,7 +2,6 @@
 <html>
   <head>
     {{ template "head" }}
-    <script src="{{ RouteFor `assets` }}/dist/sorttable.js"></script>
   </head>
   <body>
     {{ template "header" . }}
@@ -18,7 +17,7 @@
         </div>
       </div>
 
-      <table class="equipment-info sortable">
+      <table class="equipment-info">
         <thead>
           <tr>
             <th>{{ i18n "Name" }}</th>
