@@ -85,6 +85,7 @@ func (a *App) addWorkout(c echo.Context) error {
 			TotalDuration:    dDuration,
 			TotalRepetitions: d.Repetitions,
 			TotalWeight:      d.Weight,
+			Creator:          "web-interface",
 		},
 	}
 
