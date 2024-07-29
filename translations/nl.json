@@ -36,7 +36,7 @@
     "Enable API access": "API toegang inschakelen",
     "Encountered %d problems while adding workouts: %s": "Problemen bij het toevoegen van %d workouts: %s",
     "Equipment": "Materiaal",
-    "Extra metrics": "Extra metrics",
+    "Extra metrics": "Extra informatie",
     "File": "Bestand",
     "Heart rate": "Hartslag",
     "I completed a workout: %s.": "Ik heb een workout voltooid: %s.",
@@ -135,7 +135,7 @@
     "up": "omhoog",
     "user": "gebruiker",
     "walking": "wandelen",
-    "weight lifting": "weight lifting",
+    "weight lifting": "gewichtheffen",
     "workout": "workout",
     "workouts": "workouts"
 }
