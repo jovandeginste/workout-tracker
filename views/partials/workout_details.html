@@ -139,9 +139,9 @@
       <td class="{{ IconFor `equipment` }}"></td>
       <td>{{ i18n "Equipment" }}</td>
       <td>
-        {{ range .Equipment }}
+        {{ if .Equipment }} {{ range .Equipment }}
         <a href="{{ RouteFor `equipment-show` .ID }}">{{ .Name }}</a>
-        {{ end }}
+        {{ end }} {{ else }} <i>{{ i18n "no equipment" }}</i> {{ end }}
       </td>
     </tr>
   </tbody>
