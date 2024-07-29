@@ -44,6 +44,10 @@ func categoryIcon(what string) string {
 		return iconDefaults + " icon-solid icon-mountain"
 	case "location":
 		return iconDefaults + " icon-solid icon-map-location-dot"
+	case "repetitions":
+		return iconDefaults + " icon-solid icon-calculator"
+	case "weight":
+		return iconDefaults + " icon-solid icon-weight-hanging"
 	case "date":
 		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":

@@ -157,6 +157,12 @@
     @apply px-4 py-3 m-5 rounded-md relative;
   }
 
+  .workouts_list_details div {
+    @apply border px-2;
+    @apply border-neutral-500;
+    @apply dark:border-neutral-500;
+  }
+
   table {
     @apply text-sm w-full text-left table-auto border;
     @apply border-neutral-500;
