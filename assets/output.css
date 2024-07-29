@@ -1995,6 +1995,10 @@ table {
   justify-content: center;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -2636,6 +2640,14 @@ table {
   content: "\f450";
 }
 
+.icon-heart-pulse::before {
+  content: "\f21e";
+}
+
+.icon-heart-pulse::after {
+  content: "\f21e";
+}
+
 .icon-hourglass::before {
   content: "\f254";
 }
@@ -2738,6 +2750,14 @@ table {
 
 .icon-quote-left::after {
   content: "\f10d";
+}
+
+.icon-rectangle-list::before {
+  content: "\f022";
+}
+
+.icon-rectangle-list::after {
+  content: "\f022";
 }
 
 .icon-right-from-bracket::before {

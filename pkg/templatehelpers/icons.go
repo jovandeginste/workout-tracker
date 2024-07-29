@@ -48,6 +48,10 @@ func categoryIcon(what string) string {
 		return iconDefaults + " icon-solid icon-calculator"
 	case "weight":
 		return iconDefaults + " icon-solid icon-weight-hanging"
+	case "heartrate":
+		return iconDefaults + " icon-solid icon-heart-pulse"
+	case "cadence":
+		return iconDefaults + " icon-solid icon-stopwatch"
 	case "date":
 		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":
@@ -56,6 +60,8 @@ func categoryIcon(what string) string {
 		return iconDefaults + " icon-solid icon-chevron-up"
 	case "down":
 		return iconDefaults + " icon-solid icon-chevron-down"
+	case "metrics":
+		return iconDefaults + " icon-regular icon-rectangle-list"
 	default:
 		return ""
 	}

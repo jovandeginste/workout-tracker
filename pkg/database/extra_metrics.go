@@ -13,12 +13,7 @@ func (em ExtraMetrics) Set(key string, value float64) {
 }
 
 func (em ExtraMetrics) Get(key string) float64 {
-	v, ok := em[key]
-	if ok {
-		return v
-	}
-
-	return v
+	return em[key]
 }
 
 func (em ExtraMetrics) ParseGPXExtensions(extension gpx.Extension) {
