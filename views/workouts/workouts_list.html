@@ -23,12 +23,7 @@
             <th></th>
             <th>{{ i18n "Name" }}</th>
             <th class="hidden sm:table-cell">{{ i18n "Date" }}</th>
-            <th class="hidden xl:table-cell">{{ i18n "Location" }}</th>
-            <th>{{ i18n "Distance" }}</th>
-            <th class="hidden sm:table-cell">{{ i18n "Duration" }}</th>
-            <th class="hidden 2xl:table-cell">{{ i18n "Avg speed" }}</th>
-            <th class="hidden 2xl:table-cell">{{ i18n "Avg tempo" }}</th>
-            <th class="hidden 2xl:table-cell">{{ i18n "Max speed" }}</th>
+            <th class="hidden xl:table-cell">{{ i18n "Details"}}</th>
             <th class="hidden lg:table-cell"></th>
           </tr>
         </thead>
@@ -47,26 +42,9 @@
             <td class="hidden sm:table-cell">
               {{ template "snippet_date" .Date }}
             </td>
-            <td class="hidden xl:table-cell">{{ .Data.AddressString }}</td>
-            <td class="whitespace-nowrap font-mono">
-              {{ .Data.TotalDistance | HumanDistance }} {{
-              CurrentUser.PreferredUnits.Distance }}
-            </td>
-            <td class="hidden sm:table-cell whitespace-nowrap font-mono">
-              {{ .Data.TotalDuration | HumanDuration }}
-            </td>
-            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
-              {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
-              CurrentUser.PreferredUnits.Speed }}
-            </td>
-            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
-              {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
-              CurrentUser.PreferredUnits.Tempo }}
-            </td>
-            <td class="hidden 2xl:table-cell whitespace-nowrap font-mono">
-              {{ .Data.MaxSpeed | HumanSpeed }} {{
-              CurrentUser.PreferredUnits.Speed }}
-            </td>
+            <th class="hidden xl:table-cell">
+              {{ template "workouts_list_details" . }}
+            </th>
             <td class="hidden lg:table-cell">
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>

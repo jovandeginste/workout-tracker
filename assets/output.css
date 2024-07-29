@@ -1090,6 +1090,21 @@ form {
   padding-bottom: 0.75rem;
 }
 
+.workouts_list_details div {
+  border-width: 1px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .workouts_list_details div {
+    --tw-border-opacity: 1;
+    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  }
+}
+
 table {
   width: 100%;
   table-layout: auto;
@@ -1984,6 +1999,10 @@ table {
   gap: 0.5rem;
 }
 
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -2807,6 +2826,14 @@ table {
 
 .icon-users::after {
   content: "\f0c0";
+}
+
+.icon-weight-hanging::before {
+  content: "\f5cd";
+}
+
+.icon-weight-hanging::after {
+  content: "\f5cd";
 }
 
 .icon-xmark::before {
