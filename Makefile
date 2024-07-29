@@ -24,7 +24,7 @@ clean:
 dev:
 	air
 
-build: build-swagger build-dist build-tw build-server build-docker screenshots
+build: build-swagger build-dist build-tw build-server build-docker build-translations screenshots
 
 build-server:
 	go build \
@@ -69,8 +69,11 @@ build-dist: clean-dist
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
+build-translations: generate-messages generate-translations
+
 generate-messages:
 	xspreak -p ./translations/ -f json --template-keyword "i18n" -t "views/**/*.html"
+	prettier --write translations/messages.json
 
 generate-translations: $(patsubst %,generate-translation-%, $(I18N_LANGUAGES))
 
