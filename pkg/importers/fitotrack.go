@@ -14,18 +14,13 @@ func importFitotrack(headers http.Header, body io.ReadCloser) (*Content, error) 
 	wt := headers.Get("FitoTrack-Workout-Type")
 	wn := headers.Get("FitoTrack-Comment")
 
-	defer body.Close()
-
-	b, err := io.ReadAll(body)
+	b, err := importGeneric(headers, body)
 	if err != nil {
 		return nil, err
 	}
 
-	g := &Content{
-		Content: b,
-		Type:    wt,
-		Notes:   wn,
-	}
+	b.Type = wt
+	b.Notes = wn
 
-	return g, nil
+	return b, nil
 }
