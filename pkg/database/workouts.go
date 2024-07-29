@@ -12,6 +12,7 @@ import (
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
+	"github.com/labstack/gommon/log"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
@@ -263,6 +264,34 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.Dirty = false
 
 	return w.Save(db)
+}
+
+func (w *Workout) HasElevation() bool {
+	return w.HasExtraMetric("Elevation")
+}
+
+func (w *Workout) HasCadence() bool {
+	return w.HasExtraMetric("ns3:cad")
+}
+
+func (w *Workout) HasHeartRate() bool {
+	return w.HasExtraMetric("ns3:hr")
+}
+
+func (w *Workout) HasExtraMetric(name string) bool {
+	if w.Data == nil || w.Data.Details == nil {
+		return false
+	}
+
+	for _, d := range w.Data.Details.Points {
+		log.Info(d)
+
+		if _, ok := d.ExtraMetrics[name]; ok {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (w *Workout) EquipmentIDs() []uint {

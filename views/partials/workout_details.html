@@ -144,6 +144,20 @@
         {{ end }} {{ else }} <i>{{ i18n "no equipment" }}</i> {{ end }}
       </td>
     </tr>
+    <tr>
+      <td class="{{ IconFor `metrics` }}"></td>
+      <td>{{ i18n "Extra metrics" }}</td>
+      <td class="flex flex-wrap gap-1">
+        {{ if .HasHeartRate }}
+        <div
+          title="{{ i18n `Heart rate` }}"
+          class="{{ IconFor `heartrate` }}"
+        ></div>
+        {{ end }} {{ if .HasCadence }}
+        <div title="{{ i18n `Cadence` }}" class="{{ IconFor `cadence` }}"></div>
+        {{ end }}
+      </td>
+    </tr>
   </tbody>
 </table>
 {{end}}

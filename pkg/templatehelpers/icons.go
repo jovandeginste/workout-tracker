@@ -26,10 +26,6 @@ func categoryIcon(what string) string {
 	switch what {
 	case "source":
 		return iconDefaults + " icon-solid icon-bookmark"
-	case "units":
-		return iconDefaults + " icon-solid icon-ruler"
-	case "file":
-		return iconDefaults + " icon-solid icon-file"
 	case "distance":
 		return iconDefaults + " icon-solid icon-road"
 	case "speed":
@@ -48,14 +44,14 @@ func categoryIcon(what string) string {
 		return iconDefaults + " icon-solid icon-calculator"
 	case "weight":
 		return iconDefaults + " icon-solid icon-weight-hanging"
+	case "heartrate":
+		return iconDefaults + " icon-solid icon-heart-pulse"
+	case "cadence":
+		return iconDefaults + " icon-solid icon-stopwatch"
 	case "date":
 		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":
 		return iconDefaults + " icon-regular icon-hourglass"
-	case "up":
-		return iconDefaults + " icon-solid icon-chevron-up"
-	case "down":
-		return iconDefaults + " icon-solid icon-chevron-down"
 	default:
 		return ""
 	}
@@ -63,10 +59,20 @@ func categoryIcon(what string) string {
 
 func miscIcon(what string) string {
 	switch what {
+	case "units":
+		return iconDefaults + " icon-solid icon-ruler"
+	case "file":
+		return iconDefaults + " icon-solid icon-file"
 	case "best":
 		return iconDefaults + " icon-solid icon-arrow-up-long"
 	case "worst":
 		return iconDefaults + " icon-solid icon-arrow-down-long"
+	case "up":
+		return iconDefaults + " icon-solid icon-chevron-up"
+	case "down":
+		return iconDefaults + " icon-solid icon-chevron-down"
+	case "metrics":
+		return iconDefaults + " icon-regular icon-rectangle-list"
 	default:
 		return ""
 	}
