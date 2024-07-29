@@ -36,6 +36,7 @@
     "Enable API access": "Activer l'accès à l'API",
     "Encountered %d problems while adding workouts: %s": "%d problèmes rencontrés lors de l'ajout d'entraînements : %s",
     "Equipment": "Équipement",
+    "Extra metrics": "Extra metrics",
     "File": "Fichier",
     "Heart rate": "Rythme cardiaque",
     "I completed a workout: %s.": "J'ai terminé une séance d'entraînement : %s.",
