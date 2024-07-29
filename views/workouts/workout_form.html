@@ -8,12 +8,14 @@
     <input type="datetime-local" name="date" id="date" />
   </td>
 </tr>
+{{ if .IsLocation }}
 <tr>
   <td><label for="location">{{ i18n "Location" }}</label></td>
   <td>
     <input type="text" name="location" id="location" />
   </td>
 </tr>
+{{ end }}
 <script>
   function toLocalISOString(date) {
     const localDate = new Date(date - date.getTimezoneOffset() * 60000); //offset in milliseconds. Credit https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset
