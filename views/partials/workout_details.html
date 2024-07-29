@@ -6,11 +6,13 @@
       <th>{{ i18n "Date" }}</th>
       <td>{{ template "snippet_date" .Date }}</td>
     </tr>
+    {{ if .Type.IsLocation }}
     <tr>
       <td class="{{ IconFor `location` }}"></td>
       <th>{{ i18n "Location" }}</th>
       <td>{{ .Data.AddressString }}</td>
     </tr>
+    {{ end }}
     <tr>
       <td class="{{ IconFor `source` }}"></td>
       <th>{{ i18n "Source" }}</th>
