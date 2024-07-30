@@ -1,7 +1,10 @@
 {
     "1 year": "1 jaar",
+    "10 year": "10 jaar",
     "2 year": "2 jaar",
+    "5 year": "5 jaar",
     "6 months": "6 maand",
+    "7 days": "7 dagen",
     "API key updated": "API-sleutel bijgewerkt",
     "Actions": "Acties",
     "Active": "Actief",
@@ -141,7 +144,6 @@
     "up": "omhoog",
     "user": "gebruiker",
     "walking": "wandelen",
-    "week": "week",
     "weight lifting": "gewichtheffen",
     "workout": "workout",
     "workouts": "workouts"

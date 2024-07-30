@@ -1,7 +1,10 @@
 {
     "1 year": "1 year",
+    "10 year": "10 year",
     "2 year": "2 year",
+    "5 year": "5 year",
     "6 months": "6 months",
+    "7 days": "7 days",
     "API key updated": "API-Schlüssel aktualisiert",
     "Actions": "Aktionen",
     "Active": "Aktiv",
@@ -141,7 +144,6 @@
     "up": "Höhenmeter",
     "user": "Benutzer",
     "walking": "Gehen",
-    "week": "week",
     "weight lifting": "weight lifting",
     "workout": "Training",
     "workouts": "Trainings"
