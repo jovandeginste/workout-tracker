@@ -66,8 +66,10 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"LocalTime":   func(t time.Time) time.Time { return t.UTC() },
 		"LocalDate":   func(t time.Time) string { return t.UTC().Format("2006-01-02 15:04") },
 
-		"supportedLanguages": a.translator.SupportedLanguages,
-		"workoutTypes":       database.WorkoutTypes,
+		"supportedLanguages":    a.translator.SupportedLanguages,
+		"workoutTypes":          database.WorkoutTypes,
+		"statisticSinceOptions": statisticSinceOptions,
+		"statisticPerOptions":   statisticPerOptions,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
@@ -124,4 +126,22 @@ func (a *App) parseViewTemplates() *template.Template {
 	}
 
 	return templ
+}
+
+func statisticSinceOptions() []string {
+	return []string{
+		"3 months",
+		"6 months",
+		"1 year",
+		"2 year",
+	}
+}
+
+func statisticPerOptions() []string {
+	return []string{
+		"day",
+		"7 days",
+		"15 days",
+		"month",
+	}
 }
