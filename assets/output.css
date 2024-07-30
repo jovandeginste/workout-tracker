@@ -663,6 +663,10 @@ form {
       text-align: right;
     }
   }
+  label {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 .note {
