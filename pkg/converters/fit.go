@@ -58,13 +58,13 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 
 		if r.HeartRate != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "ns3:hr"}, Data: strconv.Itoa(int(r.HeartRate)),
+				XMLName: xml.Name{Local: "heart-rate"}, Data: strconv.Itoa(int(r.HeartRate)),
 			})
 		}
 
 		if r.Cadence != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "ns3:cad"}, Data: strconv.Itoa(int(r.Cadence)),
+				XMLName: xml.Name{Local: "cadence"}, Data: strconv.Itoa(int(r.Cadence)),
 			})
 		}
 

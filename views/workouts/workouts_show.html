@@ -53,7 +53,7 @@
                   points: [
                     {{ with .Data.Details }}
                     {{ range .Points -}}
-                    { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .ExtraMetrics.Get "Elevation" }}, "title": "{{ template `workout_point_title` . }}", },
+                    { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .ExtraMetrics.Get "elevation" }}, "title": "{{ template `workout_point_title` . }}", },
                     {{ end  }}
                     {{ end  }}
                   ]

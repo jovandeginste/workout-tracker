@@ -62,7 +62,7 @@
         type: "area",
         data: [
           {{ range .Items -}}
-          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "Elevation" | HumanElevation }}, },
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "elevation" | HumanElevation }}, },
           {{- end  }}
         ],
       },
@@ -72,7 +72,7 @@
         display: false,
         data: [
           {{ range .Items -}}
-          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "ns3:hr" }}, },
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "heart-rate" }}, },
           {{- end  }}
         ],
       },
@@ -82,7 +82,7 @@
         display: false,
         data: [
           {{ range .Items -}}
-          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "ns3:cad" }}, },
+          { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "cadence" }}, },
           {{- end  }}
         ],
       },

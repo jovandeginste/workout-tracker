@@ -267,15 +267,19 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 }
 
 func (w *Workout) HasElevation() bool {
-	return w.HasExtraMetric("Elevation")
+	return w.HasExtraMetric("elevation")
 }
 
 func (w *Workout) HasCadence() bool {
-	return w.HasExtraMetric("ns3:cad")
+	return w.HasExtraMetric("cadence")
 }
 
 func (w *Workout) HasHeartRate() bool {
-	return w.HasExtraMetric("ns3:hr")
+	return w.HasExtraMetric("heart-rate")
+}
+
+func (w *Workout) HasHeading() bool {
+	return w.HasExtraMetric("heading")
 }
 
 func (w *Workout) HasExtraMetric(name string) bool {
