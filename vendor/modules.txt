@@ -294,6 +294,8 @@ github.com/vorlif/spreak/catalog/poplural/ast
 github.com/vorlif/spreak/humanize
 github.com/vorlif/spreak/humanize/locale/de
 github.com/vorlif/spreak/humanize/locale/fr
+github.com/vorlif/spreak/humanize/locale/it
+github.com/vorlif/spreak/humanize/locale/nb
 github.com/vorlif/spreak/humanize/locale/nl
 github.com/vorlif/spreak/internal/calendar
 github.com/vorlif/spreak/internal/mo

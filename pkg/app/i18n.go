@@ -7,6 +7,8 @@ import (
 	"github.com/vorlif/spreak/humanize"
 	"github.com/vorlif/spreak/humanize/locale/de"
 	"github.com/vorlif/spreak/humanize/locale/fr"
+	"github.com/vorlif/spreak/humanize/locale/it"
+	"github.com/vorlif/spreak/humanize/locale/nb"
 	"github.com/vorlif/spreak/humanize/locale/nl"
 	"golang.org/x/text/language"
 )
@@ -48,10 +50,12 @@ func (a *App) ConfigureLocalizer() error {
 
 func translations() []interface{} {
 	return []interface{}{
-		language.English,
 		language.Dutch,
-		language.German,
+		language.English,
 		language.French,
+		language.German,
+		language.Italian,
+		language.Norwegian,
 	}
 }
 
@@ -60,6 +64,8 @@ func humanLocales() []*humanize.LocaleData {
 		nl.New(),
 		de.New(),
 		fr.New(),
+		nb.New(),
+		it.New(),
 	}
 }
 

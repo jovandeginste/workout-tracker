@@ -1,15 +1,13 @@
 {{ define "user_profile_language" }} {{ $userLanguage := . }}
 <select id="language" name="language">
-  {{ $selected := "" }} {{ if eq $userLanguage "browser" }} {{ $selected =
-  "selected" }}{{ end }}
-  <option value="browser" {{ $selected }}>🌐 Browser language</option>
+  <option value="browser" {{ SelectIf $userLanguage `browser` }}>
+    🌐 Browser language
+  </option>
   {{ range supportedLanguages }} {{ $linf := .String | ToLanguageInformation }}
-  {{ $selected := "" }} {{ if eq $linf.Code $userLanguage }} {{ $selected =
-  "selected" }} {{ end }}
-  <option value="{{ $linf.Code }}" {{ $selected }}>
+  <option value="{{ $linf.Code }}" {{ SelectIf $linf.Code $userLanguage }}>
     {{ $linf.Flag }} {{ $linf.LocalName }} {{ if ne $linf.EnglishName "" }} {{
-    if ne $linf.EnglishName $linf.LocalName }} ({{ $linf.EnglishName }}) {{ end
-    }}{{ end }}
+    if ne $linf.EnglishName $linf.LocalName }} ({{ $linf.EnglishName }}){{ end
+    }} {{ end }}
   </option>
   {{ end }}
 </select>
