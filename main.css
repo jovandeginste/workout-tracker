@@ -60,8 +60,11 @@
     tr {
       @apply mb-2 gap-4;
       label {
-        @apply text-right py-1 block;
+        @apply text-right block py-1;
       }
+    }
+    label {
+      @apply px-2;
     }
   }
 

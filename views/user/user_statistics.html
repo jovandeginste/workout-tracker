@@ -9,12 +9,14 @@
     {{ template "header" . }} {{ $since := .since }} {{ $per := .per }}
     <div class="content">
       <form class="inner-form">
+        <label for="since">{{ i18n "Since" }}</label>
         <select id="since" name="since">
           {{ range statisticSinceOptions }}
           <option value="{{ . }}" {{ SelectIf . $since }}>{{ i18n . }}</option>
           {{ end }}
         </select>
-        <select id="per" name="per">
+        <label for="per">{{ i18n "Per" }}</label
+        ><select id="per" name="per">
           {{ range statisticPerOptions }}
           <option value="{{ . }}" {{ SelectIf . $per }}>{{ i18n . }}</option>
           {{ end }}
