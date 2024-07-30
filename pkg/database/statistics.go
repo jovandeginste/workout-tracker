@@ -59,14 +59,14 @@ func (sc *StatConfig) GetDateLimitExpression(sqlDialect string) string {
 
 func (sc *StatConfig) GetSince() string {
 	if sc.Since == "" {
-		return "-1 year"
+		return "1 year"
 	}
 
 	return sc.Since
 }
 
 func (u *User) GetDefaultStatistics() (*Statistics, error) {
-	return u.GetStatisticsFor("-1 year", "month")
+	return u.GetStatisticsFor("1 year", "month")
 }
 
 func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
@@ -100,7 +100,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where(statConfig.GetDateLimitExpression(sqlDialect), statConfig.GetSince()).
+		Where(statConfig.GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince()).
 		Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
