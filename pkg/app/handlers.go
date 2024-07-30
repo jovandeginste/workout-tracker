@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"errors"
 	"net/http"
 
@@ -19,6 +20,8 @@ func (a *App) redirectWithError(c echo.Context, target string, err error) error 
 
 func (a *App) statisticsHandler(c echo.Context) error {
 	data := a.defaultData(c)
+	data["since"] = cmp.Or(c.QueryParam("since"), "1 year")
+	data["per"] = cmp.Or(c.QueryParam("per"), "month")
 
 	return c.Render(http.StatusOK, "user_statistics.html", data)
 }
