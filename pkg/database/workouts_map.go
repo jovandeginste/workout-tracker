@@ -361,7 +361,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		totalTime += t
 
 		extraMetrics := ExtraMetrics{}
-		extraMetrics.Set("Elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
+		extraMetrics.Set("elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
 		extraMetrics.ParseGPXExtensions(pt.Extensions)
 
 		data.Details.Points = append(data.Details.Points, MapPoint{

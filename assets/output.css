@@ -2560,6 +2560,14 @@ table {
   content: "\f017";
 }
 
+.icon-compass::before {
+  content: "\f14e";
+}
+
+.icon-compass::after {
+  content: "\f14e";
+}
+
 .icon-download::before {
   content: "\f019";
 }

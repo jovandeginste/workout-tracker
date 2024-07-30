@@ -151,10 +151,12 @@
         {{ if .HasHeartRate }}
         <div
           title="{{ i18n `Heart rate` }}"
-          class="{{ IconFor `heartrate` }}"
+          class="{{ IconFor `heart-rate` }}"
         ></div>
-        {{ end }} {{ if .HasCadence }}
+        {{ end }}{{ if .HasCadence }}
         <div title="{{ i18n `Cadence` }}" class="{{ IconFor `cadence` }}"></div>
+        {{ end }}{{ if .HasHeading }}
+        <div title="{{ i18n `Heading` }}" class="{{ IconFor `heading` }}"></div>
         {{ end }}
       </td>
     </tr>

@@ -306,6 +306,9 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 	require.NoError(t, err)
 	assert.Len(t, workouts, 1)
 
+	assert.True(t, w2.HasElevation())
+	assert.True(t, w2.HasHeartRate())
+
 	w2.Type = WorkoutTypeWalking
 	require.NoError(t, w2.Save(db))
 }
