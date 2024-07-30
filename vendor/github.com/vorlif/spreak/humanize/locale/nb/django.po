@@ -1,0 +1,849 @@
+# This file is distributed under the same license as the Django package.
+# 
+# Translators:
+# Alexander Hansen <alexander.l.hansen@gmail.com>, 2014
+# Eirik Krogstad <eirikkr@gmail.com>, 2014
+# Jannis Leidel <jannis@leidel.info>, 2011
+# jensadne <jensadne@pvv.ntnu.no>, 2014-2015
+# Jon, 2015-2016
+# Jon, 2014
+# Jon, 2017-2022
+# Jon, 2013
+# Jon, 2011
+# Sigurd Gartmann <sigurdga-transifex@sigurdga.no>, 2012
+# Tommy Strand <transifex@ireality.no>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-17 02:13-0600\n"
+"PO-Revision-Date: 2023-04-25 06:49+0000\n"
+"Last-Translator: Jon, 2017-2022\n"
+"Language-Team: Norwegian Bokmål (http://www.transifex.com/django/django/language/nb/)\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "%[1]d byte"
+msgid_plural "%[1]d bytes"
+msgstr[0] "%[1]d byte"
+msgstr[1] "%[1]d byte"
+
+msgid "%[1]s billion"
+msgid_plural "%[1]s billion"
+msgstr[0] "%[1]s milliard"
+msgstr[1] "%[1]s milliarder"
+
+msgid "%[1]s decillion"
+msgid_plural "%[1]s decillion"
+msgstr[0] "%[1]s desillion"
+msgstr[1] "%[1]s desillioner"
+
+msgid "%[1]s googol"
+msgid_plural "%[1]s googol"
+msgstr[0] "%[1]s googol"
+msgstr[1] "%[1]s googoler"
+
+msgid "%[1]s million"
+msgid_plural "%[1]s million"
+msgstr[0] "%[1]s million"
+msgstr[1] "%[1]s millioner"
+
+msgid "%[1]s nonillion"
+msgid_plural "%[1]s nonillion"
+msgstr[0] "%[1]s nonillion"
+msgstr[1] "%[1]s nonillioner"
+
+msgid "%[1]s octillion"
+msgid_plural "%[1]s octillion"
+msgstr[0] "%[1]s oktillion"
+msgstr[1] "%[1]s oktillioner"
+
+msgid "%[1]s quadrillion"
+msgid_plural "%[1]s quadrillion"
+msgstr[0] "%[1]s kvadrillion"
+msgstr[1] "%[1]s kvadrillioner"
+
+msgid "%[1]s quintillion"
+msgid_plural "%[1]s quintillion"
+msgstr[0] "%[1]s kvintillion"
+msgstr[1] "%[1]s kvintillioner"
+
+msgid "%[1]s septillion"
+msgid_plural "%[1]s septillion"
+msgstr[0] "%[1]s septillion"
+msgstr[1] "%[1]s septillioner"
+
+msgid "%[1]s sextillion"
+msgid_plural "%[1]s sextillion"
+msgstr[0] "%[1]s sekstillion"
+msgstr[1] "%[1]s sekstillioner"
+
+msgid "%[1]s trillion"
+msgid_plural "%[1]s trillion"
+msgstr[0] "%[1]s billion"
+msgstr[1] "%[1]s billioner"
+
+msgid "%[1]v ago"
+msgstr "%[1]v siden"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v dag"
+msgstr[1] "%[1]v dager"
+
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v dag"
+msgstr[1] "%[1]v dager"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v dag"
+msgstr[1] "%[1]v dager"
+
+msgid "%[1]v from now"
+msgstr "%[1]v fra nå"
+
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v time"
+msgstr[1] "%[1]v timer"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v time"
+msgstr[1] "%[1]v timer"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v time"
+msgstr[1] "%[1]v timer"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v minutt"
+msgstr[1] "%[1]v minutter"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v minutt"
+msgstr[1] "%[1]v minutter"
+
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v minutt"
+msgstr[1] "%[1]v minutter"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v måned"
+msgstr[1] "%[1]v måneder"
+
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v måned"
+msgstr[1] "%[1]v måneder"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v måned"
+msgstr[1] "%[1]v måneder"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v uke"
+msgstr[1] "%[1]v uker"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v uke"
+msgstr[1] "%[1]v uker"
+
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v uke"
+msgstr[1] "%[1]v uker"
+
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v år"
+msgstr[1] "%[1]v år"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v år"
+msgstr[1] "%[1]v år"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v år"
+msgstr[1] "%[1]v år"
+
+msgid "%s GB"
+msgstr "%s GB"
+
+msgid "%s KB"
+msgstr "%s KB"
+
+msgid "%s MB"
+msgstr "%s MB"
+
+msgid "%s PB"
+msgstr "%s PB"
+
+msgid "%s TB"
+msgstr "%s TB"
+
+msgctxt "ordinal 2"
+msgid "%vnd"
+msgstr "%v."
+
+msgctxt "ordinal 3"
+msgid "%vrd"
+msgstr "%v."
+
+msgctxt "ordinal 1"
+msgid "%vst"
+msgstr "%v."
+
+msgctxt "ordinal 6"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 5"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 4"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 9"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 7"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 8"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 11, 12, 13"
+msgid "%vth"
+msgstr "%v."
+
+msgctxt "ordinal 0"
+msgid "%vth"
+msgstr "%v."
+
+msgid ", "
+msgstr ", "
+
+msgid "AM"
+msgstr "AM"
+
+msgid "Afrikaans"
+msgstr "Afrikaans"
+
+msgid "Albanian"
+msgstr "Albansk"
+
+msgid "Algerian Arabic"
+msgstr "Algerisk arabisk"
+
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "apr."
+
+msgctxt "alt. month"
+msgid "April"
+msgstr "April"
+
+msgid "April"
+msgstr "april"
+
+msgid "Arabic"
+msgstr "Arabisk"
+
+msgid "Argentinian Spanish"
+msgstr "Argentinsk spansk"
+
+msgid "Armenian"
+msgstr "Armensk"
+
+msgid "Asturian"
+msgstr "Asturiansk"
+
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "aug."
+
+msgid "August"
+msgstr "august"
+
+msgctxt "alt. month"
+msgid "August"
+msgstr "August"
+
+msgid "Australian English"
+msgstr "Engelsk (australsk)"
+
+msgid "Azerbaijani"
+msgstr "Aserbajdsjansk"
+
+msgid "Basque"
+msgstr "Baskisk"
+
+msgid "Belarusian"
+msgstr "Hviterussisk"
+
+msgid "Bengali"
+msgstr "Bengalsk"
+
+msgid "Bosnian"
+msgstr "Bosnisk"
+
+msgid "Brazilian Portuguese"
+msgstr "Brasiliansk portugisisk"
+
+msgid "Breton"
+msgstr "Bretonsk"
+
+msgid "British English"
+msgstr "Engelsk (britisk)"
+
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+msgid "Burmese"
+msgstr "Burmesisk"
+
+msgid "Catalan"
+msgstr "Katalansk"
+
+msgid "Central Kurdish (Sorani)"
+msgstr ""
+
+msgid "Colombian Spanish"
+msgstr "Colombiansk spansk"
+
+msgid "Croatian"
+msgstr "Kroatisk"
+
+msgid "Czech"
+msgstr "Tsjekkisk"
+
+msgid "Danish"
+msgstr "Dansk"
+
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "des."
+
+msgctxt "alt. month"
+msgid "December"
+msgstr "Desember"
+
+msgid "December"
+msgstr "desember"
+
+msgid "Dutch"
+msgstr "Nederlandsk"
+
+msgid "English"
+msgstr "Engelsk"
+
+msgid "Esperanto"
+msgstr "Esperanto"
+
+msgid "Estonian"
+msgstr "Estisk"
+
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "feb."
+
+msgctxt "alt. month"
+msgid "February"
+msgstr "Februar"
+
+msgid "February"
+msgstr "februar"
+
+msgid "Finnish"
+msgstr "Finsk"
+
+msgid "French"
+msgstr "Fransk"
+
+msgid "Fri"
+msgstr "fre"
+
+msgid "Friday"
+msgstr "fredag"
+
+msgid "Frisian"
+msgstr "Frisisk"
+
+msgid "Galician"
+msgstr "Galisisk"
+
+msgid "Georgian"
+msgstr "Georgisk"
+
+msgid "German"
+msgstr "Tysk"
+
+msgid "Greek"
+msgstr "Gresk"
+
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+msgid "Hindi"
+msgstr "Hindi"
+
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+msgid "Icelandic"
+msgstr "Islandsk"
+
+msgid "Ido"
+msgstr "Ido"
+
+msgid "Igbo"
+msgstr "Ibo"
+
+msgid "Indonesian"
+msgstr "Indonesisk"
+
+msgid "Interlingua"
+msgstr "Interlingua"
+
+msgid "Irish"
+msgstr "Irsk"
+
+msgid "Italian"
+msgstr "Italiensk"
+
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "jan."
+
+msgctxt "alt. month"
+msgid "January"
+msgstr "Januar"
+
+msgid "January"
+msgstr "januar"
+
+msgid "Japanese"
+msgstr "Japansk"
+
+msgctxt "alt. month"
+msgid "July"
+msgstr "Juli"
+
+msgid "July"
+msgstr "juli"
+
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "jul."
+
+msgid "June"
+msgstr "juni"
+
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "jun."
+
+msgctxt "alt. month"
+msgid "June"
+msgstr "Juni"
+
+msgid "Kabyle"
+msgstr "Kabylsk"
+
+msgid "Kannada"
+msgstr "Kannada"
+
+msgid "Kazakh"
+msgstr "Kasakhisk"
+
+msgid "Khmer"
+msgstr "Khmer"
+
+msgid "Korean"
+msgstr "Koreansk"
+
+msgid "Kyrgyz"
+msgstr "Kirgisisk"
+
+msgid "Latvian"
+msgstr "Latvisk"
+
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+msgid "Lower Sorbian"
+msgstr "Lavsorbisk"
+
+msgid "Luxembourgish"
+msgstr "Luxembourgsk"
+
+msgid "Macedonian"
+msgstr "Makedonsk"
+
+msgid "Malay"
+msgstr "Malayisk"
+
+msgid "Malayalam"
+msgstr "Malayalam"
+
+msgid "Marathi"
+msgstr "Marathi"
+
+msgctxt "alt. month"
+msgid "March"
+msgstr "Mars"
+
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "mar."
+
+msgid "March"
+msgstr "mars"
+
+msgid "May"
+msgstr "mai"
+
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "mai"
+
+msgctxt "alt. month"
+msgid "May"
+msgstr "Mai"
+
+msgid "Mexican Spanish"
+msgstr "Meksikansk spansk"
+
+msgid "Mon"
+msgstr "man"
+
+msgid "Monday"
+msgstr "mandag"
+
+msgid "Mongolian"
+msgstr "Mongolsk"
+
+msgid "Nepali"
+msgstr "Nepali"
+
+msgid "Nicaraguan Spanish"
+msgstr "Nicaraguansk spansk"
+
+msgid "Norwegian Bokmål"
+msgstr "Norsk (bokmål)"
+
+msgid "Norwegian Nynorsk"
+msgstr "Norsk (nynorsk)"
+
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "nov."
+
+msgid "November"
+msgstr "november"
+
+msgctxt "alt. month"
+msgid "November"
+msgstr "November"
+
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "okt."
+
+msgid "October"
+msgstr "oktober"
+
+msgctxt "alt. month"
+msgid "October"
+msgstr "Oktober"
+
+msgid "Ossetic"
+msgstr "Ossetisk"
+
+msgid "PM"
+msgstr "PM"
+
+msgid "Persian"
+msgstr "Persisk"
+
+msgid "Polish"
+msgstr "Polsk"
+
+msgid "Portuguese"
+msgstr "Portugisisk"
+
+msgid "Punjabi"
+msgstr "Panjabi"
+
+msgid "Romanian"
+msgstr "Rumensk"
+
+msgid "Russian"
+msgstr "Russisk"
+
+msgid "Sat"
+msgstr "lør"
+
+msgid "Saturday"
+msgstr "lørdag"
+
+msgid "Scottish Gaelic"
+msgstr "Skotsk-gælisk"
+
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr "sept."
+
+msgctxt "alt. month"
+msgid "September"
+msgstr "September"
+
+msgid "September"
+msgstr "september"
+
+msgid "Serbian"
+msgstr "Serbisk"
+
+msgid "Serbian Latin"
+msgstr "Serbisk latin"
+
+msgid "Simplified Chinese"
+msgstr "Forenklet kinesisk"
+
+msgid "Slovak"
+msgstr "Slovakisk"
+
+msgid "Slovenian"
+msgstr "Slovensk"
+
+msgid "Spanish"
+msgstr "Spansk"
+
+msgid "Sun"
+msgstr "søn"
+
+msgid "Sunday"
+msgstr "søndag"
+
+msgid "Swahili"
+msgstr "Swahili"
+
+msgid "Swedish"
+msgstr "Svensk"
+
+msgid "Tajik"
+msgstr "Tadsjikisk"
+
+msgid "Tamil"
+msgstr "Tamil"
+
+msgid "Tatar"
+msgstr "Tatarisk"
+
+msgid "Telugu"
+msgstr "Telugu"
+
+msgid "Thai"
+msgstr "Thai"
+
+msgid "Thu"
+msgstr "tor"
+
+msgid "Thursday"
+msgstr "torsdag"
+
+msgid "Traditional Chinese"
+msgstr "Tradisjonell kinesisk"
+
+msgid "Tue"
+msgstr "tir"
+
+msgid "Tuesday"
+msgstr "tirsdag"
+
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+msgid "Turkmen"
+msgstr "Turkmensk"
+
+msgid "Udmurt"
+msgstr "Udmurtisk"
+
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+msgid "Upper Sorbian"
+msgstr "Høysorbisk"
+
+msgid "Urdu"
+msgstr "Urdu"
+
+msgid "Uzbek"
+msgstr "Usbekisk"
+
+msgid "Venezuelan Spanish"
+msgstr "Venezuelanske spansk"
+
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+msgid "Wed"
+msgstr "ons"
+
+msgid "Wednesday"
+msgstr "onsdag"
+
+msgid "Welsh"
+msgstr "Walisisk"
+
+msgid "a minute ago"
+msgid_plural "%[1]v minutes ago"
+msgstr[0] "et minutt siden"
+msgstr[1] "%[1]v minutter siden"
+
+msgid "a minute from now"
+msgid_plural "%[1]v minutes from now"
+msgstr[0] "et minutt fra nå"
+msgstr[1] "%[1]v minutter fra nå"
+
+msgid "a second ago"
+msgid_plural "%[1]v seconds ago"
+msgstr[0] "et sekund siden"
+msgstr[1] "%[1]v sekunder siden"
+
+msgid "a second from now"
+msgid_plural "%[1]v seconds from now"
+msgstr[0] "et sekund fra nå"
+msgstr[1] "%[1]v sekunder fra nå"
+
+msgid "a.m."
+msgstr "a.m."
+
+msgid "an hour ago"
+msgid_plural "%[1]v hours ago"
+msgstr[0] "en time siden"
+msgstr[1] "%[1]v timer siden"
+
+msgid "an hour from now"
+msgid_plural "%[1]v hours from now"
+msgstr[0] "en time fra nå"
+msgstr[1] "%[1]v timer fra nå"
+
+msgid "apr"
+msgstr "apr"
+
+msgid "aug"
+msgstr "aug"
+
+msgid "dec"
+msgstr "des"
+
+msgid "eight"
+msgstr "åtte"
+
+msgid "feb"
+msgstr "feb"
+
+msgid "five"
+msgstr "fem"
+
+msgid "four"
+msgstr "fire"
+
+msgid "jan"
+msgstr "jan"
+
+msgid "jul"
+msgstr "jul"
+
+msgid "jun"
+msgstr "jun"
+
+msgid "mar"
+msgstr "mar"
+
+msgid "may"
+msgstr "mai"
+
+msgid "midnight"
+msgstr "midnatt"
+
+msgid "nine"
+msgstr "ni"
+
+msgid "noon"
+msgstr "12:00"
+
+msgid "nov"
+msgstr "nov"
+
+msgid "now"
+msgstr "nå"
+
+msgid "oct"
+msgstr "okt"
+
+msgid "one"
+msgstr "én"
+
+msgid "p.m."
+msgstr "p.m."
+
+msgid "sep"
+msgstr "sep"
+
+msgid "seven"
+msgstr "sju"
+
+msgid "six"
+msgstr "seks"
+
+msgid "three"
+msgstr "tre"
+
+msgid "today"
+msgstr "i dag"
+
+msgid "tomorrow"
+msgstr "i morgen"
+
+msgid "two"
+msgstr "to"
+
+msgid "yesterday"
+msgstr "i går"
+
