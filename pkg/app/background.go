@@ -22,17 +22,27 @@ const (
 )
 
 func (a *App) BackgroundWorker() {
-	l := a.logger.With("module", "worker")
-
 	for {
-		l.Info("Worker started...")
-
-		a.updateWorkout(l)
-		a.autoImports(l)
-
-		l.Info("Worker finished...")
+		a.bgLoop()
 		time.Sleep(WorkerDelay)
 	}
+}
+
+func (a *App) bgLoop() {
+	l := a.logger.With("module", "worker")
+
+	defer func() {
+		if r := recover(); r != nil {
+			l.Error(fmt.Sprintf("Panic in bgLoop: %#v", r))
+		}
+	}()
+
+	l.Info("Worker started...")
+
+	a.updateWorkout(l)
+	a.autoImports(l)
+
+	l.Info("Worker finished...")
 }
 
 func (a *App) autoImports(l *slog.Logger) {
