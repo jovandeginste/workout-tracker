@@ -125,3 +125,7 @@ go-cover:
 update-deps:
 	npm update
 	go get -d -t ./...
+
+changelog:
+	git cliff -o CHANGELOG.md
+	prettier --write CHANGELOG.md
