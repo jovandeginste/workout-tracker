@@ -232,6 +232,10 @@ func (w *Workout) Save(db *gorm.DB) error {
 }
 
 func (w *Workout) AsGPX() (*gpx.GPX, error) {
+	if w.GPX == nil {
+		return nil, errors.New("workout has no GPX")
+	}
+
 	return converters.Parse(w.GPX.Filename, w.GPX.Content)
 }
 
@@ -250,6 +254,11 @@ func (w *Workout) setData(data *MapData) {
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
+	if w.GPX == nil {
+		// We only update data from (stored) GPX data
+		return nil
+	}
+
 	gpxContent, err := w.AsGPX()
 	if err != nil {
 		return err
