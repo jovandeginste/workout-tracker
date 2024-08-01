@@ -35,6 +35,7 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 type ManualWorkout struct {
 	Name        *string               `form:"name"`
 	Date        *string               `form:"date"`
+	Location    *string               `form:"location"`
 	Duration    *string               `form:"duration"`
 	Distance    *float64              `form:"distance"`
 	Repetitions *int                  `form:"repetitions"`
@@ -101,6 +102,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Date, &dDate)
 	setIfNotNil(&w.Type, m.Type)
 
+	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)

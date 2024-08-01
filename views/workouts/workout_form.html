@@ -16,8 +16,7 @@
     />
   </td>
 </tr>
-{{ if and false .Type.IsLocation }}
-<!-- TODO: implement custom locations -->
+{{ if .Type.IsLocation }}
 <tr>
   <td><label for="location">{{ i18n "Location" }}</label></td>
   <td>

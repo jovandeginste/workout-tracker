@@ -59,6 +59,7 @@ type MapData struct {
 	Name             string          // The name of the workout
 	Center           MapCenter       `gorm:"serializer:json"` // The center of the workout (in coordinates)
 	Address          *geo.Address    `gorm:"serializer:json"` // The address of the workout
+	AddressString    string          // The generic location of the workout
 	TotalDistance    float64         // The total distance of the workout
 	TotalDuration    time.Duration   // The total duration of the workout
 	MaxSpeed         float64         // The maximum speed of the workout
@@ -100,7 +101,15 @@ func (d *MapDataDetails) Save(db *gorm.DB) error {
 	return db.Save(d).Error
 }
 
-func (m *MapData) AddressString() string {
+func (m *MapData) UpdateAddress() {
+	if m.Address == nil && m.AddressString != "" {
+		return
+	}
+
+	m.AddressString = m.addressString()
+}
+
+func (m *MapData) addressString() string {
 	if m.Address == nil {
 		return `(unknown location)`
 	}
@@ -301,6 +310,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDown:     downhill,
 	}
 
+	data.UpdateAddress()
 	data.correctNaN()
 
 	return data
