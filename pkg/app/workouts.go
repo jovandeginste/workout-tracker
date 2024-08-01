@@ -33,31 +33,67 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 }
 
 type ManualWorkout struct {
-	Name        string               `form:"name"`
-	Date        string               `form:"date"`
-	Duration    string               `form:"duration"`
-	Repetitions int                  `form:"repetitions"`
-	Weight      float64              `form:"weight"`
-	Notes       string               `form:"notes"`
-	Type        database.WorkoutType `form:"type"`
+	Name        *string               `form:"name"`
+	Date        *string               `form:"date"`
+	Duration    *string               `form:"duration"`
+	Repetitions *int                  `form:"repetitions"`
+	Weight      *float64              `form:"weight"`
+	Notes       *string               `form:"notes"`
+	Type        *database.WorkoutType `form:"type"`
 }
 
-func (m *ManualWorkout) ToDate() time.Time {
-	d, err := time.Parse(htmlDateFormat, m.Date)
-	if err != nil {
-		return time.Time{}
+func (m *ManualWorkout) ToDate() *time.Time {
+	if m.Date == nil {
+		return nil
 	}
 
-	return d
+	d, err := time.Parse(htmlDateFormat, *m.Date)
+	if err != nil {
+		return nil
+	}
+
+	return &d
 }
 
-func (m *ManualWorkout) ToDuration() time.Duration {
-	d, err := time.Parse(htmlDurationFormat, m.Duration)
-	if err != nil {
-		return 0
+func (m *ManualWorkout) ToDuration() *time.Duration {
+	if m.Duration == nil {
+		return nil
 	}
 
-	return time.Duration(d.Hour())*time.Hour + time.Duration(d.Minute())*time.Minute
+	d, err := time.Parse(htmlDurationFormat, *m.Duration)
+	if err != nil {
+		return nil
+	}
+
+	dur := time.Duration(d.Hour())*time.Hour + time.Duration(d.Minute())*time.Minute
+
+	return &dur
+}
+
+func setIfNotNil[T any](dst *T, src *T) {
+	if src == nil {
+		return
+	}
+
+	*dst = *src
+}
+
+func (m *ManualWorkout) Update(w *database.Workout) {
+	if w.Data == nil {
+		w.Data = &database.MapData{}
+	}
+
+	dDate := m.ToDate()
+	dDuration := m.ToDuration()
+
+	setIfNotNil(&w.Name, m.Name)
+	setIfNotNil(&w.Notes, m.Notes)
+	setIfNotNil(&w.Date, &dDate)
+	setIfNotNil(&w.Type, m.Type)
+
+	setIfNotNil(&w.Data.TotalDuration, dDuration)
+	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
+	setIfNotNil(&w.Data.TotalWeight, m.Weight)
 }
 
 func (a *App) addWorkout(c echo.Context) error {
@@ -66,34 +102,61 @@ func (a *App) addWorkout(c echo.Context) error {
 	}
 
 	d := &ManualWorkout{}
-
 	if err := c.Bind(d); err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	dDate := d.ToDate()
-	dDuration := d.ToDuration()
+	w := &database.Workout{}
+	d.Update(w)
 
-	w := database.Workout{
-		Name:   d.Name,
-		Notes:  d.Notes,
-		Date:   &dDate,
-		Type:   d.Type,
-		User:   a.getCurrentUser(c),
-		UserID: a.getCurrentUser(c).ID,
-		Data: &database.MapData{
-			TotalDuration:    dDuration,
-			TotalRepetitions: d.Repetitions,
-			TotalWeight:      d.Weight,
-			Creator:          "web-interface",
-		},
-	}
+	w.User = a.getCurrentUser(c)
+	w.UserID = a.getCurrentUser(c).ID
+	w.Data.Creator = "web-interface"
 
 	if err := w.Save(a.db); err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
+}
+
+func (a *App) workoutsUpdateHandler(c echo.Context) error {
+	workout, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	d := &ManualWorkout{}
+	if err := c.Bind(d); err != nil {
+		return a.redirectWithError(c, "/workouts", err)
+	}
+
+	d.Update(workout)
+
+	var equipmentIDS struct {
+		EquipmentIDs []uint `form:"equipment"`
+	}
+
+	if err := c.Bind(&equipmentIDS); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	equipment, err := database.GetEquipmentByIDs(a.db, a.getCurrentUser(c).ID, equipmentIDS.EquipmentIDs)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	a.setNotice(c, "The workout '%s' has been updated.", workout.Name)
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
 
 func (a *App) addWorkoutFromFile(c echo.Context) error {
