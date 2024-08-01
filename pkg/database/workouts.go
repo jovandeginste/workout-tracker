@@ -47,6 +47,14 @@ type GPXData struct {
 	Filename  string // The filename of the file
 }
 
+func (w *Workout) Weight() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalWeight
+}
+
 func (w *Workout) Repetitions() int {
 	if w.Data == nil {
 		return 0
