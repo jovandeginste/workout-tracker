@@ -1,5 +1,15 @@
 ## What's Changed
 
+- Add support for custom locations
+- Add support to update manually added workouts
+- Add values of workout if they are not empty
+- Add sprig for extra template functions
+- Replace the code to set workout details with a function
+- Add Weight function to retrieve the weight of a workout
+- Correct button text to "Update equipment"
+- Update meta-information and add extra Weblate link by @jovandeginste in [#207](https://github.com/jovandeginste/workout-tracker/pull/207)
+- Add extra link to Weblate for translations by @jovandeginste
+- Update all meta-information (screenshots, changelog, swagger) by @jovandeginste
 - Add a changelog system and the changelog by @jovandeginste in [#204](https://github.com/jovandeginste/workout-tracker/pull/204)
 - Add a changelog system and the changelog by @jovandeginste
 

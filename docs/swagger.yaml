@@ -160,6 +160,9 @@ definitions:
         allOf:
         - $ref: '#/definitions/geo.Address'
         description: The address of the workout
+      addressString:
+        description: The generic location of the workout
+        type: string
       center:
         allOf:
         - $ref: '#/definitions/database.MapCenter'

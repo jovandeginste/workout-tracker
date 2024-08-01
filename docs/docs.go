@@ -706,6 +706,10 @@ const docTemplate = `{
                         }
                     ]
                 },
+                "addressString": {
+                    "description": "The generic location of the workout",
+                    "type": "string"
+                },
                 "center": {
                     "description": "The center of the workout (in coordinates)",
                     "allOf": [
