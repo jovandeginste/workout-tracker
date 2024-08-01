@@ -2668,6 +2668,14 @@ table {
   content: "\f254";
 }
 
+.icon-language::before {
+  content: "\f1ab";
+}
+
+.icon-language::after {
+  content: "\f1ab";
+}
+
 .icon-map-location-dot::before {
   content: "\f5a0";
 }

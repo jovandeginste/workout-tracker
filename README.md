@@ -137,15 +137,17 @@ Details of a workout, with:
 
 - Upload one or multiple GPX files.
 - Pick the type (running, cycling, ...) or let the application guess based on
-  average speed
+  average speed.
 - The files are parsed when uploaded: statistics and other information are
   calculated and stored in the database (serialized).
+- Or add a workout manually.
 
 ### Statistics to follow your progress
 
 ![](docs/statistics.png)
 
 - Graphs showing monthly aggregated statistics.
+- Pick different time range or bucket size.
 
 ### Basic multi-language support
 

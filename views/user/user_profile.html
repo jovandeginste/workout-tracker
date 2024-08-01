@@ -88,7 +88,16 @@
               </tr>
               <tr>
                 <th>
-                  <label for="language">{{ i18n "Language" }}</label>
+                  <label for="language"
+                    >{{ i18n "Language" }}
+                    <a
+                      href="https://hosted.weblate.org/projects/workout-tracker/"
+                      target="_blank"
+                      title="{{ i18n `Please help translate via Weblate` }}"
+                      class="{{ IconFor `translate` }}"
+                    >
+                    </a
+                  ></label>
                 </th>
                 <td>
                   {{ template "user_profile_language" .Profile.Language }}
