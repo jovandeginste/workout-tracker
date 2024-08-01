@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"strconv"
+	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
@@ -45,8 +46,34 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsFormHandler(c echo.Context) error {
-	t := database.WorkoutType(c.FormValue("type"))
-	return c.Render(http.StatusOK, "workout_form.html", t)
+	w := &database.Workout{}
+
+	if c.FormValue("id") != "" {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			return a.redirectWithError(c, "/workouts", err)
+		}
+
+		w, err = a.getCurrentUser(c).GetWorkout(a.db, id)
+		if err != nil {
+			return a.redirectWithError(c, "/workouts", err)
+		}
+	}
+
+	if w.Type == "" || c.FormValue("type") != "" {
+		w.Type = database.WorkoutType(c.FormValue("type"))
+	}
+
+	if w.Date == nil {
+		t := time.Now()
+		w.Date = &t
+	}
+
+	if w.Name == "" {
+		w.Name = w.Type.String() + " - " + w.Date.Format(time.RFC3339)
+	}
+
+	return c.Render(http.StatusOK, "workout_form.html", w)
 }
 
 func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl

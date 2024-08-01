@@ -1,58 +1,81 @@
 <tr>
   <td><label for="name">{{ i18n "Name" }}</label></td>
-  <td><input type="text" name="name" id="name" /></td>
+  <td>
+    <input type="text" name="name" id="name" value="{{ .Name }}" required />
+  </td>
 </tr>
 <tr>
   <td><label for="date">{{ i18n "Date" }}</label></td>
   <td>
-    <input type="datetime-local" name="date" id="date" />
+    <input
+      type="datetime-local"
+      name="date"
+      id="date"
+      value="{{ .Date | LocalDate }}"
+      required
+    />
   </td>
 </tr>
-{{ if .IsLocation }}
+{{ if and false .Type.IsLocation }}
+<!-- TODO: implement custom locations -->
 <tr>
   <td><label for="location">{{ i18n "Location" }}</label></td>
   <td>
-    <input type="text" name="location" id="location" />
+    <input type="text" name="location" id="location" required />
   </td>
 </tr>
-{{ end }}
-<script>
-  function toLocalISOString(date) {
-    const localDate = new Date(date - date.getTimezoneOffset() * 60000); //offset in milliseconds. Credit https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset
-
-    // Optionally remove second/millisecond if needed
-    localDate.setSeconds(null);
-    localDate.setMilliseconds(null);
-    return localDate.toISOString().slice(0, -1);
-  }
-
-  document.getElementById("name").value =
-    "{{ .String }} - " + toLocalISOString(new Date());
-  document.getElementById("date").value = toLocalISOString(new Date());
-</script>
-{{ if .IsDuration }}
+{{ end }} {{ if .Type.IsDuration }}
 <tr>
   <td><label for="duration">{{ i18n "Duration" }}</label></td>
-  <td><input type="time" name="duration" id="duration" /></td>
+  <td>
+    <input
+      type="time"
+      name="duration"
+      id="duration"
+      value="{{ .DurationString }}"
+      required
+    />
+    (hh:mm)
+  </td>
 </tr>
-{{ end }} {{ if .IsDistance }}
+{{ end }} {{ if .Type.IsDistance }}
 <tr>
   <td><label for="distance">{{ i18n "Distance" }}</label></td>
   <td>
-    <input type="text" name="distance" id="distance" />
+    <input
+      type="text"
+      name="distance"
+      id="distance"
+      value="{{ default `` .Distance }}"
+      required
+    />
     <span>{{ CurrentUser.PreferredUnits.Distance }}</span>
   </td>
 </tr>
-{{ end }} {{ if .IsRepetition }}
+{{ end }} {{ if .Type.IsRepetition }}
 <tr>
   <td><label for="repetitions">{{ i18n "Repetitions" }}</label></td>
-  <td><input type="text" name="repetitions" id="repetitions" /></td>
+  <td>
+    <input
+      type="text"
+      name="repetitions"
+      id="repetitions"
+      value="{{ default `` .Repetitions }}"
+      required
+    />
+  </td>
 </tr>
-{{ end }} {{ if .IsWeight }}
+{{ end }} {{ if .Type.IsWeight }}
 <tr>
   <td><label for="weight">{{ i18n "Weight" }}</label></td>
   <td>
-    <input type="text" name="weight" id="weight" />
+    <input
+      type="text"
+      name="weight"
+      id="weight"
+      value="{{ default `` .Weight }}"
+      required
+    />
     <span>{{ CurrentUser.PreferredUnits.Weight }}</span>
   </td>
 </tr>
@@ -62,6 +85,8 @@
     <label for="notes">{{ i18n "Notes" }}</label>
   </td>
   <td>
-    <textarea type="text" id="notes" name="notes" rows="10"></textarea>
+    <textarea type="text" id="notes" name="notes" rows="10">
+{{ .Notes }}</textarea
+    >
   </td>
 </tr>

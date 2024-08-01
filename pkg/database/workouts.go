@@ -3,6 +3,7 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"fmt"
 	"html/template"
 	"slices"
 	"strings"
@@ -61,6 +62,18 @@ func (w *Workout) Repetitions() int {
 	}
 
 	return w.Data.TotalRepetitions
+}
+
+func (w *Workout) DurationString() string {
+	d := w.Duration()
+	if d == 0 {
+		return ""
+	}
+
+	h := int(d.Hours())
+	m := int(d.Minutes()) % 60
+
+	return fmt.Sprintf("%02d:%02d", h, m)
 }
 
 func (w *Workout) Duration() time.Duration {
