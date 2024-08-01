@@ -2921,6 +2921,10 @@ table {
     flex-grow: 1;
   }
 
+  .sm\:table-auto {
+    table-layout: auto;
+  }
+
   .sm\:table-fixed {
     table-layout: fixed;
   }

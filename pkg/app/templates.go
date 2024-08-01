@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
@@ -101,7 +102,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 }
 
 func (a *App) parseViewTemplates() *template.Template {
-	templ := template.New("").Funcs(a.viewTemplateFunctions())
+	templ := template.New("").Funcs(sprig.FuncMap()).Funcs(a.viewTemplateFunctions())
 	if a.Views == nil {
 		return templ
 	}

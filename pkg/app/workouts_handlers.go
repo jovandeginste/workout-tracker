@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"strconv"
+	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
@@ -45,8 +46,34 @@ func (a *App) workoutsAddHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsFormHandler(c echo.Context) error {
-	t := database.WorkoutType(c.FormValue("type"))
-	return c.Render(http.StatusOK, "workout_form.html", t)
+	w := &database.Workout{}
+
+	if c.FormValue("id") != "" {
+		id, err := strconv.Atoi(c.FormValue("id"))
+		if err != nil {
+			return c.Render(http.StatusOK, "workout_form.html", w)
+		}
+
+		w, err = a.getCurrentUser(c).GetWorkout(a.db, id)
+		if err != nil {
+			return c.Render(http.StatusOK, "workout_form.html", w)
+		}
+	}
+
+	if w.Type == "" || c.FormValue("type") != "" {
+		w.Type = database.WorkoutType(c.FormValue("type"))
+	}
+
+	if w.Date == nil {
+		t := time.Now()
+		w.Date = &t
+	}
+
+	if w.Name == "" {
+		w.Name = w.Type.String() + " - " + w.Date.Format(time.RFC3339)
+	}
+
+	return c.Render(http.StatusOK, "workout_form.html", w)
 }
 
 func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
@@ -80,42 +107,6 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 	}
 
 	a.setNotice(c, "The workout '%s' has been refreshed.", workout.Name)
-
-	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
-}
-
-func (a *App) workoutsUpdateHandler(c echo.Context) error {
-	workout, err := a.getWorkout(c)
-	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	workout.Name = c.FormValue("name")
-	workout.Notes = c.FormValue("notes")
-	workout.Type = database.WorkoutType(c.FormValue("type"))
-
-	var equipmentIDS struct {
-		EquipmentIDs []uint `form:"equipment"`
-	}
-
-	if err := c.Bind(&equipmentIDS); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
-	}
-
-	equipment, err := database.GetEquipmentByIDs(a.db, a.getCurrentUser(c).ID, equipmentIDS.EquipmentIDs)
-	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
-	}
-
-	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	a.setNotice(c, "The workout '%s' has been updated.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }

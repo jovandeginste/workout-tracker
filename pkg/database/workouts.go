@@ -3,6 +3,7 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
+	"fmt"
 	"html/template"
 	"slices"
 	"strings"
@@ -47,12 +48,32 @@ type GPXData struct {
 	Filename  string // The filename of the file
 }
 
+func (w *Workout) Weight() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalWeight
+}
+
 func (w *Workout) Repetitions() int {
 	if w.Data == nil {
 		return 0
 	}
 
 	return w.Data.TotalRepetitions
+}
+
+func (w *Workout) DurationString() string {
+	d := w.Duration()
+	if d == 0 {
+		return ""
+	}
+
+	h := int(d.Hours())
+	m := int(d.Minutes()) % 60
+
+	return fmt.Sprintf("%02d:%02d", h, m)
 }
 
 func (w *Workout) Duration() time.Duration {
@@ -226,6 +247,10 @@ func (w *Workout) Create(db *gorm.DB) error {
 func (w *Workout) Save(db *gorm.DB) error {
 	if w.Data == nil {
 		return ErrInvalidData
+	}
+
+	if err := w.Data.Save(db); err != nil {
+		return err
 	}
 
 	return db.Save(w).Error

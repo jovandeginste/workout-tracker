@@ -2,6 +2,7 @@
 <html>
   <head>
     {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/htmx.min.js"></script>
   </head>
   <body>
     {{ template "header" . }}
@@ -17,82 +18,34 @@
           <div class="inner-form">
             <form method="post" action="{{ RouteFor `workout-update` .ID }}">
               <table>
-                <tbody>
+                <thead>
                   <tr>
                     <td>
-                      <label for="name">{{ i18n "Name" }}</label>
-                    </td>
-
-                    <td>
-                      <input id="name" name="name" value="{{ .Name }}" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="type">{{ i18n "Type" }}</label>
+                      <label for="type">{{ i18n "Workout type" }}</label>
                     </td>
                     <td>
-                      <select id="type" name="type">
-                        {{ $t := .Type }} {{ range workoutTypes }}
-                        <option
-                          value="{{ .String }}"
-                          {{
-                          if
-                          eq
-                          $t.String
-                          .String
-                          }}
-                          selected
-                          {{
-                          end
-                          }}
-                        >
+                      <input type="hidden" name="id" value="{{ .ID }}" />
+                      <select
+                        id="type"
+                        name="type"
+                        hx-get="{{ RouteFor `workout-form` }}"
+                        hx-target="#workout-form"
+                        hx-trigger="load, input changed delay:300ms"
+                        hx-include="[name='id']"
+                      >
+                        {{ $t := .Type.String }} {{ range workoutTypes }}
+                        <option value="{{ .String }}" {{ SelectIf .String $t }}>
                           {{ i18n .String }}
                         </option>
                         {{ end }}
                       </select>
                     </td>
                   </tr>
+                </thead>
+                <tbody id="workout-form">
                   <tr>
-                    <td>
-                      <label for="notes">{{ i18n "Notes" }}</label>
-                    </td>
-                    <td>
-                      <textarea type="text" id="notes" name="notes" rows="10">
-{{ .Notes }}</textarea
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="equipment">{{ i18n "Equipment" }}</label>
-                    </td>
-                    <td>
-                      {{ $w := . }} {{ range CurrentUser.Equipment }}
-                      <label class="inline">
-                        <input
-                          class="hidden peer"
-                          type="checkbox"
-                          id="equipment_{{ .ID }}"
-                          name="equipment"
-                          value="{{ .ID }}"
-                          {{
-                          .
-                          |
-                          $w.Uses
-                          |
-                          BoolToCheckbox
-                          }}
-                        />
-                        <span
-                          id="{{ .ID }}"
-                          class="selectable-pill"
-                          for="equipment_{{ .ID }}"
-                          >{{ .Name }}
-                        </span>
-                      </label>
-                      {{ end }}
-                    </td>
+                    <td></td>
+                    <td>Select a category</td>
                   </tr>
                 </tbody>
                 <tfoot>
