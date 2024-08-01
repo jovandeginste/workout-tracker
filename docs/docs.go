@@ -588,6 +588,61 @@ const docTemplate = `{
                 }
             }
         },
+        "database.Equipment": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "description": "Whether this equipment is active",
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "default_for": {
+                    "description": "Which workout types to add this equipment by default",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.WorkoutType"
+                    }
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "description": "More information about the equipment",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the gear",
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/database.User"
+                },
+                "userID": {
+                    "description": "The ID of the user who owns the workout",
+                    "type": "integer"
+                },
+                "workouts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.Workout"
+                    }
+                }
+            }
+        },
+        "database.ExtraMetrics": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "number"
+            }
+        },
         "database.GPXData": {
             "type": "object",
             "properties": {
@@ -712,8 +767,16 @@ const docTemplate = `{
                     "description": "The total duration of the workout",
                     "type": "integer"
                 },
+                "totalRepetitions": {
+                    "description": "The number of repetitions of the workout",
+                    "type": "integer"
+                },
                 "totalUp": {
                     "description": "The total distance up of the workout",
+                    "type": "number"
+                },
+                "totalWeight": {
+                    "description": "The weight of the workout",
                     "type": "number"
                 },
                 "updatedAt": {
@@ -764,9 +827,13 @@ const docTemplate = `{
                     "description": "The duration from the previous point",
                     "type": "integer"
                 },
-                "elevation": {
-                    "description": "The elevation of the point",
-                    "type": "number"
+                "extraMetrics": {
+                    "description": "Extra metrics at this point",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.ExtraMetrics"
+                        }
+                    ]
                 },
                 "lat": {
                     "description": "The latitude of the point",
@@ -813,6 +880,10 @@ const docTemplate = `{
                 "language": {
                     "description": "The user's preferred language",
                     "type": "string"
+                },
+                "prefer_full_date": {
+                    "description": "Whether to show full dates in the workout details",
+                    "type": "boolean"
                 },
                 "preferredUnits": {
                     "description": "The user's preferred units",
@@ -933,6 +1004,10 @@ const docTemplate = `{
                 "speed": {
                     "description": "The user's preferred speed unit",
                     "type": "string"
+                },
+                "weight": {
+                    "description": "The user's preferred weight unit",
+                    "type": "string"
                 }
             }
         },
@@ -960,6 +1035,13 @@ const docTemplate = `{
                 "dirty": {
                     "description": "Whether the workout has been modified and the details should be re-rendered",
                     "type": "boolean"
+                },
+                "equipment": {
+                    "description": "Which equipment is used for this workout",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.Equipment"
+                    }
                 },
                 "gpx": {
                     "description": "The file data associated with the workout",
@@ -1094,7 +1176,11 @@ const docTemplate = `{
                 "skiing",
                 "snowboarding",
                 "swimming",
-                "kayaking"
+                "kayaking",
+                "golfing",
+                "hiking",
+                "push-ups",
+                "weight lifting"
             ],
             "x-enum-varnames": [
                 "WorkoutTypeAutoDetect",
@@ -1104,7 +1190,11 @@ const docTemplate = `{
                 "WorkoutTypeSkiing",
                 "WorkoutTypeSnowboarding",
                 "WorkoutTypeSwimming",
-                "WorkoutTypeKayaking"
+                "WorkoutTypeKayaking",
+                "WorkoutTypeGolfing",
+                "WorkoutTypeHiking",
+                "WorkoutTypePushups",
+                "WorkoutTypeWeightLifting"
             ]
         },
         "database.durationRecord": {

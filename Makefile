@@ -10,7 +10,7 @@ LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build screenshots
+.PHONY: all clean test build screenshots meta
 
 all: clean install-deps test build
 
@@ -24,7 +24,8 @@ clean:
 dev:
 	air
 
-build: build-swagger build-dist build-tw build-server build-docker build-translations screenshots
+build: build-dist build-tw build-server build-docker build-translations screenshots
+meta: swagger screenshots changelog
 
 build-server:
 	go build \
@@ -40,7 +41,7 @@ build-docker:
 		--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
 		.
 
-build-swagger:
+swagger:
 	swag init \
 		--parseDependency \
 		--dir ./pkg/app/,./,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
@@ -115,7 +116,7 @@ screenshots-theme:
 	rm -f tmp/dark_resized.jpg tmp/light_resized.jpg tmp/mask.png
 
 screenshots-responsive:
-	montage -density 300 -tile 3x0 -geometry +5+5 -background none docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
+	montage -font Liberation-Sans -density 300 -tile 3x0 -geometry +5+5 -background none docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
 
 go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
