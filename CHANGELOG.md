@@ -1,6 +1,7 @@
 ## What's Changed
 
-- Add a changelog system and the changelog
+- Add a changelog system and the changelog by @jovandeginste in [#204](https://github.com/jovandeginste/workout-tracker/pull/204)
+- Add a changelog system and the changelog by @jovandeginste
 
 ## What's Changed in v1.16.5
 

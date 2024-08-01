@@ -80,6 +80,44 @@ definitions:
         description: The number of workouts in the bucket
         type: integer
     type: object
+  database.Equipment:
+    properties:
+      active:
+        description: Whether this equipment is active
+        type: boolean
+      createdAt:
+        type: string
+      default_for:
+        description: Which workout types to add this equipment by default
+        items:
+          $ref: '#/definitions/database.WorkoutType'
+        type: array
+      deletedAt:
+        type: string
+      description:
+        description: More information about the equipment
+        type: string
+      id:
+        type: integer
+      name:
+        description: The name of the gear
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/database.User'
+      userID:
+        description: The ID of the user who owns the workout
+        type: integer
+      workouts:
+        items:
+          $ref: '#/definitions/database.Workout'
+        type: array
+    type: object
+  database.ExtraMetrics:
+    additionalProperties:
+      type: number
+    type: object
   database.GPXData:
     properties:
       checksum:
@@ -163,8 +201,14 @@ definitions:
       totalDuration:
         description: The total duration of the workout
         type: integer
+      totalRepetitions:
+        description: The number of repetitions of the workout
+        type: integer
       totalUp:
         description: The total distance up of the workout
+        type: number
+      totalWeight:
+        description: The weight of the workout
         type: number
       updatedAt:
         type: string
@@ -199,9 +243,10 @@ definitions:
       duration:
         description: The duration from the previous point
         type: integer
-      elevation:
-        description: The elevation of the point
-        type: number
+      extraMetrics:
+        allOf:
+        - $ref: '#/definitions/database.ExtraMetrics'
+        description: Extra metrics at this point
       lat:
         description: The latitude of the point
         type: number
@@ -235,6 +280,9 @@ definitions:
       language:
         description: The user's preferred language
         type: string
+      prefer_full_date:
+        description: Whether to show full dates in the workout details
+        type: boolean
       preferredUnits:
         allOf:
         - $ref: '#/definitions/database.UserPreferredUnits'
@@ -315,6 +363,9 @@ definitions:
       speed:
         description: The user's preferred speed unit
         type: string
+      weight:
+        description: The user's preferred weight unit
+        type: string
     type: object
   database.Workout:
     properties:
@@ -333,6 +384,11 @@ definitions:
         description: Whether the workout has been modified and the details should
           be re-rendered
         type: boolean
+      equipment:
+        description: Which equipment is used for this workout
+        items:
+          $ref: '#/definitions/database.Equipment'
+        type: array
       gpx:
         allOf:
         - $ref: '#/definitions/database.GPXData'
@@ -412,6 +468,10 @@ definitions:
     - snowboarding
     - swimming
     - kayaking
+    - golfing
+    - hiking
+    - push-ups
+    - weight lifting
     type: string
     x-enum-varnames:
     - WorkoutTypeAutoDetect
@@ -422,6 +482,10 @@ definitions:
     - WorkoutTypeSnowboarding
     - WorkoutTypeSwimming
     - WorkoutTypeKayaking
+    - WorkoutTypeGolfing
+    - WorkoutTypeHiking
+    - WorkoutTypePushups
+    - WorkoutTypeWeightLifting
   database.durationRecord:
     properties:
       date:
