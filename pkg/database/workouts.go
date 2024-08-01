@@ -249,6 +249,10 @@ func (w *Workout) Save(db *gorm.DB) error {
 		return ErrInvalidData
 	}
 
+	if err := w.Data.Save(db); err != nil {
+		return err
+	}
+
 	return db.Save(w).Error
 }
 

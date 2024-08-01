@@ -87,6 +87,7 @@
                         name="type"
                         hx-get="{{ RouteFor `workout-form` }}"
                         hx-target="#workout-form"
+                        hx-trigger="input changed delay:300ms"
                       >
                         <option value="select" selected>Select...</option>
                         {{ range workoutTypes }}

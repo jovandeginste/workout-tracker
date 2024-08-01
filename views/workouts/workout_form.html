@@ -46,7 +46,7 @@
       type="text"
       name="distance"
       id="distance"
-      value="{{ default `` .Distance }}"
+      value="{{ default `` (.Distance | HumanDistance) }}"
       required
     />
     <span>{{ CurrentUser.PreferredUnits.Distance }}</span>
@@ -88,5 +88,33 @@
     <textarea type="text" id="notes" name="notes" rows="10">
 {{ .Notes }}</textarea
     >
+  </td>
+</tr>
+<tr>
+  <td>
+    <label for="equipment">{{ i18n "Equipment" }}</label>
+  </td>
+  <td>
+    {{ $w := . }} {{ range CurrentUser.Equipment }}
+    <label class="inline">
+      <input
+        class="hidden peer"
+        type="checkbox"
+        id="equipment_{{ .ID }}"
+        name="equipment"
+        value="{{ .ID }}"
+        {{
+        .
+        |
+        $w.Uses
+        |
+        BoolToCheckbox
+        }}
+      />
+      <span id="{{ .ID }}" class="selectable-pill" for="equipment_{{ .ID }}"
+        >{{ .Name }}
+      </span>
+    </label>
+    {{ end }}
   </td>
 </tr>

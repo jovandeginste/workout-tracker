@@ -49,14 +49,14 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 	w := &database.Workout{}
 
 	if c.FormValue("id") != "" {
-		id, err := strconv.Atoi(c.Param("id"))
+		id, err := strconv.Atoi(c.FormValue("id"))
 		if err != nil {
-			return a.redirectWithError(c, "/workouts", err)
+			return c.Render(http.StatusOK, "workout_form.html", w)
 		}
 
 		w, err = a.getCurrentUser(c).GetWorkout(a.db, id)
 		if err != nil {
-			return a.redirectWithError(c, "/workouts", err)
+			return c.Render(http.StatusOK, "workout_form.html", w)
 		}
 	}
 

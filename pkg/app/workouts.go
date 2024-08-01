@@ -36,6 +36,7 @@ type ManualWorkout struct {
 	Name        *string               `form:"name"`
 	Date        *string               `form:"date"`
 	Duration    *string               `form:"duration"`
+	Distance    *float64              `form:"distance"`
 	Repetitions *int                  `form:"repetitions"`
 	Weight      *float64              `form:"weight"`
 	Notes       *string               `form:"notes"`
@@ -51,6 +52,16 @@ func (m *ManualWorkout) ToDate() *time.Time {
 	if err != nil {
 		return nil
 	}
+
+	return &d
+}
+
+func (m *ManualWorkout) ToDistance() *float64 {
+	if m.Distance == nil {
+		return nil
+	}
+
+	d := (*m.Distance) * 1000
 
 	return &d
 }
@@ -84,14 +95,14 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	}
 
 	dDate := m.ToDate()
-	dDuration := m.ToDuration()
 
 	setIfNotNil(&w.Name, m.Name)
 	setIfNotNil(&w.Notes, m.Notes)
 	setIfNotNil(&w.Date, &dDate)
 	setIfNotNil(&w.Type, m.Type)
 
-	setIfNotNil(&w.Data.TotalDuration, dDuration)
+	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
+	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
 	setIfNotNil(&w.Data.TotalWeight, m.Weight)
 }
@@ -106,16 +117,35 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	w := &database.Workout{}
-	d.Update(w)
+	workout := &database.Workout{}
+	d.Update(workout)
 
-	w.User = a.getCurrentUser(c)
-	w.UserID = a.getCurrentUser(c).ID
-	w.Data.Creator = "web-interface"
+	workout.User = a.getCurrentUser(c)
+	workout.UserID = a.getCurrentUser(c).ID
+	workout.Data.Creator = "web-interface"
 
-	if err := w.Save(a.db); err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+	var equipmentIDS struct {
+		EquipmentIDs []uint `form:"equipment"`
 	}
+
+	if err := c.Bind(&equipmentIDS); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	equipment, err := database.GetEquipmentByIDs(a.db, a.getCurrentUser(c).ID, equipmentIDS.EquipmentIDs)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+	}
+
+	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	a.setNotice(c, "The workout '%s' has been created.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -147,7 +177,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	}
 
 	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
 	}
 
 	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
