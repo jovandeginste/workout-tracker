@@ -5,7 +5,7 @@
     class="hidden xl:table-cell {{ IconFor `location` }}"
     title="{{ i18n `Location` }}"
   >
-    {{ .Data.AddressString }}
+    {{ .Address }}
   </div>
   {{ end }} {{ if .Type.IsDistance }}
   <div
