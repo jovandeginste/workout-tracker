@@ -1,5 +1,11 @@
 ## What's Changed
 
+- Add direct link to changelog in the footer
+
+## What's Changed in v1.17.0
+
+- Merge pull request #213 from jovandeginste/ignore-changelog
+- Update all screenshots
 - Exclude some commits from the changelog
 - Automate changelog commit (and exclude changelog updates from changelog), by @jovandeginste, in [#212](https://github.com/jovandeginste/workout-tracker/pull/212)
 - Update changelog, by @jovandeginste, in [#211](https://github.com/jovandeginste/workout-tracker/pull/211)
@@ -22,6 +28,8 @@
   - Add extra link to Weblate for translations, by @jovandeginste
   - Update all meta-information (screenshots, changelog, swagger), by @jovandeginste
 - Add a changelog system and the changelog, by @jovandeginste, in [#204](https://github.com/jovandeginste/workout-tracker/pull/204)
+
+**Full Changelog**: https://github.com/jovandeginste/workout-tracker/compare/v1.16.5...v1.17.0
 
 ## What's Changed in v1.16.5
 
