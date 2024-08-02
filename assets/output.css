@@ -2558,6 +2558,14 @@ table {
   content: "\f328";
 }
 
+.icon-clipboard-check::before {
+  content: "\f46c";
+}
+
+.icon-clipboard-check::after {
+  content: "\f46c";
+}
+
 .icon-clock::before {
   content: "\f017";
 }

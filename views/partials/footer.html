@@ -5,7 +5,7 @@
     <a
       target="_blank"
       title="Build time: {{ .BuildTime }}"
-      href="https://github.com/jovandeginste/workout-tracker/tree/{{ .RefName }}"
+      href="https://github.com/jovandeginste/workout-tracker/tree/{{ .Sha }}"
     >
       {{ if eq .RefType "branch" }}{{ .RefType }} {{ end }}{{ .RefName }} ({{
       printf "%.8s" .Sha }})</a
@@ -18,6 +18,14 @@
       target="_blank"
       href="https://github.com/jovandeginste/workout-tracker"
       >GitHub</a
+    >
+  </div>
+  <div>
+    <a
+      class="icon-solid icon-baseline icon-space-sm icon-outside icon-clipboard-check"
+      target="_blank"
+      href="https://github.com/jovandeginste/workout-tracker/tree/{{ Version.Sha }}/CHANGELOG.md"
+      >Changelog</a
     >
   </div>
 </div>
