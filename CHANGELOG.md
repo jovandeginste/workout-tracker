@@ -1,12 +1,21 @@
 ## What's Changed
 
-- Add support for custom locations
-- Add support to update manually added workouts
-- Add values of workout if they are not empty
-- Add sprig for extra template functions
-- Replace the code to set workout details with a function
-- Add Weight function to retrieve the weight of a workout
-- Correct button text to "Update equipment"
+- Allow partial location by @jovandeginste in [#210](https://github.com/jovandeginste/workout-tracker/pull/210)
+- Allow partial location by @jovandeginste
+- Improve input of location for manual workouts by @jovandeginste in [#209](https://github.com/jovandeginste/workout-tracker/pull/209)
+- Allow any workout to have a location by @jovandeginste
+- Use the new Address function on Workout by @jovandeginste
+- Update Address when entering full (valid) location by @jovandeginste
+- Perform lookups through nominatim when manually setting location by @jovandeginste
+- Add support to update manually added workouts by @jovandeginste in [#208](https://github.com/jovandeginste/workout-tracker/pull/208)
+- Update all metadata by @jovandeginste
+- Add support for custom locations by @jovandeginste
+- Add support to update manually added workouts by @jovandeginste
+- Add values of workout if they are not empty by @jovandeginste
+- Add sprig for extra template functions by @jovandeginste
+- Replace the code to set workout details with a function by @jovandeginste
+- Add Weight function to retrieve the weight of a workout by @jovandeginste
+- Correct button text to "Update equipment" by @jovandeginste
 - Update meta-information and add extra Weblate link by @jovandeginste in [#207](https://github.com/jovandeginste/workout-tracker/pull/207)
 - Add extra link to Weblate for translations by @jovandeginste
 - Update all meta-information (screenshots, changelog, swagger) by @jovandeginste
