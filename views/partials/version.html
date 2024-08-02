@@ -1,0 +1,27 @@
+{{ define "version" }} {{ if CurrentUser }} {{ if ne Version.Sha
+CurrentUser.LastVersion }}
+<div id="version-notification" class="notice max-h-48" role="alert">
+  <span class="block sm:inline">
+    This application was updated to version: {{ with Version }}
+    <a
+      target="_blank"
+      title="Build time: {{ .BuildTime }}"
+      href="https://github.com/jovandeginste/workout-tracker/tree/{{ .Sha }}"
+    >
+      {{ .PrettyVersion }}
+    </a>
+    {{ end }}. You may find the changes in
+    <a
+      target="_blank"
+      href="https://github.com/jovandeginste/workout-tracker/tree/{{ Version.Sha }}/CHANGELOG.md"
+      >the Changelog</a
+    >. (<a
+      href="#"
+      hx-target="#version-notification"
+      hx-swap="beforeend"
+      hx-post="{{ RouteFor `user-update-version` }}"
+      >hide until next update</a
+    >)
+  </span>
+</div>
+{{ end }} {{ end }} {{ end }}

@@ -27,6 +27,9 @@ var (
 
 type User struct {
 	gorm.Model
+
+	LastVersion string `gorm:"last_version"` // Which version of the app the user has last seen and acknowledged
+
 	Password string `form:"-"        gorm:"type:varchar(128);not null"`            // The user's password as bcrypt hash
 	Salt     string `form:"-"        gorm:"type:varchar(16);not null"`             // The salt used to hash the user's password
 	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"` // The user's username

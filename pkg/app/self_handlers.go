@@ -85,3 +85,15 @@ func (a *App) userRefreshHandler(c echo.Context) error {
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
+
+func (a *App) userUpdateVersion(c echo.Context) error {
+	data := a.defaultData(c)
+	u := a.getCurrentUser(c)
+
+	u.LastVersion = a.Version.Sha
+	if err := u.Save(a.db); err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.Render(http.StatusOK, "version_updated.html", data)
+}

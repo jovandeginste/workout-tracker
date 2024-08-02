@@ -973,6 +973,10 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "lastVersion": {
+                    "description": "Which version of the app the user has last seen and acknowledged",
+                    "type": "string"
+                },
                 "name": {
                     "description": "The user's name",
                     "type": "string"
