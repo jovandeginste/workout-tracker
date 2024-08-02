@@ -111,6 +111,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 
 	a, err := geocoder.Find(*m.Location)
 	if err != nil {
+		w.Data.Address = nil
 		return
 	}
 
