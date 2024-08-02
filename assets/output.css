@@ -1188,9 +1188,7 @@ table {
   }
   td,
     th {
-    label {
-      vertical-align: top;
-    }
+    vertical-align: top;
   }
   th {
     --tw-text-opacity: 1;
@@ -1961,6 +1959,10 @@ table {
 
 .resize {
   resize: both;
+}
+
+.list-none {
+  list-style-type: none;
 }
 
 .grid-cols-1 {

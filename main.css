@@ -184,9 +184,7 @@
     td,
     th {
       @apply p-2 print:p-0;
-      label {
-        @apply align-top;
-      }
+      @apply align-top;
     }
     th {
       @apply text-zinc-700;

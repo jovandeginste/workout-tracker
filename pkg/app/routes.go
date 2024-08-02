@@ -117,6 +117,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
+	secureGroup.POST("/lookup-address", a.lookupAddressHandler).Name = "lookup-address"
 
 	selfGroup := secureGroup.Group("/user")
 	selfGroup.GET("/profile", a.userProfileHandler).Name = "user-profile"

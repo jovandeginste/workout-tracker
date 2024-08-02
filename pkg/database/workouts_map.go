@@ -183,7 +183,7 @@ func (m *MapCenter) Address() *geo.Address {
 		return nil
 	}
 
-	r, err := geocoder.Lookup(geocoder.Query{
+	r, err := geocoder.Reverse(geocoder.Query{
 		Lat:    m.Lat,
 		Lon:    m.Lng,
 		Format: "json",

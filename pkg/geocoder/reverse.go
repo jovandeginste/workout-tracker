@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
@@ -27,6 +28,7 @@ type client struct {
 	logger      *slog.Logger
 	lastRequest time.Time
 	userAgent   string
+	m           sync.Mutex
 }
 
 type Query struct {
@@ -61,7 +63,15 @@ type address struct {
 	Cycleway      string `json:"cycleway"`
 	Highway       string `json:"highway"`
 	Path          string `json:"path"`
+	Neighbourhood string `json:"neighbourhood"`
+	Allotments    string `json:"allotments"`
+	Quarter       string `json:"quarter"`
+	CityDistrict  string `json:"city_district"`
+	District      string `json:"district"`
+	Borough       string `json:"borough"`
 	Suburb        string `json:"suburb"`
+	Subdivision   string `json:"subdivision"`
+	Municipality  string `json:"municipality"`
 	City          string `json:"city"`
 	Town          string `json:"town"`
 	Village       string `json:"village"`
@@ -69,23 +79,51 @@ type address struct {
 	County        string `json:"county"`
 	Country       string `json:"country"`
 	CountryCode   string `json:"country_code"`
+	Region        string `json:"region"`
 	State         string `json:"state"`
 	StateDistrict string `json:"state_district"`
+	Continent     string `json:"continent"`
 	Postcode      string `json:"postcode"`
+}
+
+func (c *client) wait() {
+	c.m.Lock()
+	defer c.m.Unlock()
+
+	if c.lastRequest.IsZero() {
+		return
+	}
+
+	if time.Since(c.lastRequest) >= requestInterval {
+		return
+	}
+
+	c.logger.Warn("Rate limited - waiting " + requestInterval.String())
+	time.Sleep(requestInterval)
 }
 
 func SetClient(l *slog.Logger, ua string) {
 	c = &client{
-		url:       "https://nominatim.openstreetmap.org/reverse",
+		url:       "https://nominatim.openstreetmap.org/",
 		userAgent: ua,
 		client:    http.Client{},
 		logger:    l,
 	}
 }
 
-func Lookup(q Query) (*geo.Address, error) {
+func Search(a string) ([]string, error) {
 	if c == nil {
 		return nil, ErrClientNotSet
+	}
+
+	c.wait()
+
+	q := struct {
+		Q      string `url:"q"`
+		Format string `url:"format"`
+	}{
+		Q:      a,
+		Format: "jsonv2",
 	}
 
 	v, err := query.Values(q)
@@ -93,12 +131,7 @@ func Lookup(q Query) (*geo.Address, error) {
 		return nil, err
 	}
 
-	if !c.lastRequest.IsZero() && time.Since(c.lastRequest) < requestInterval {
-		c.logger.Warn("Rate limited - waiting " + requestInterval.String())
-		time.Sleep(requestInterval)
-	}
-
-	req, err := http.NewRequest(http.MethodGet, c.url+"?"+v.Encode(), nil)
+	req, err := http.NewRequest(http.MethodGet, c.url+"search?"+v.Encode(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -113,8 +146,49 @@ func Lookup(q Query) (*geo.Address, error) {
 	defer res.Body.Close()
 
 	c.lastRequest = time.Now()
-	r := result{}
 
+	r := []result{}
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		return nil, err
+	}
+
+	addresses := []string{}
+	for _, e := range r {
+		addresses = append(addresses, e.DisplayName)
+	}
+
+	return addresses, nil
+}
+
+func Reverse(q Query) (*geo.Address, error) {
+	if c == nil {
+		return nil, ErrClientNotSet
+	}
+
+	c.wait()
+
+	v, err := query.Values(q)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, c.url+"reverse?"+v.Encode(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("User-Agent", c.userAgent)
+
+	res, err := c.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	c.lastRequest = time.Now()
+
+	r := result{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		return nil, err
 	}
