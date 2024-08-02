@@ -130,3 +130,4 @@ update-deps:
 changelog:
 	git cliff -o CHANGELOG.md
 	prettier --write CHANGELOG.md
+	git commit CHANGELOG.md -m "Update changelog" -m "changelog: ignore"
