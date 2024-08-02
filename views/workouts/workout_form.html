@@ -1,7 +1,14 @@
 <tr>
   <td><label for="name">{{ i18n "Name" }}</label></td>
   <td>
-    <input type="text" name="name" id="name" value="{{ .Name }}" required />
+    <input
+      type="text"
+      name="name"
+      id="name"
+      size="60"
+      value="{{ .Name }}"
+      required
+    />
   </td>
 </tr>
 <tr>
@@ -16,14 +23,24 @@
     />
   </td>
 </tr>
-{{ if .Type.IsLocation }}
 <tr>
   <td><label for="location">{{ i18n "Location" }}</label></td>
   <td>
-    <input type="text" name="location" id="location" required />
+    <input
+      type="text"
+      name="location"
+      id="location"
+      size="60"
+      value="{{ .FullAddress }}"
+      autocomplete="off"
+      hx-trigger="load, input changed queue:last delay:300ms"
+      hx-target="#addresses"
+      hx-post="{{ RouteFor `lookup-address` }}"
+    />
+    <div id="addresses"></div>
   </td>
 </tr>
-{{ end }} {{ if .Type.IsDuration }}
+{{ if .Type.IsDuration }}
 <tr>
   <td><label for="duration">{{ i18n "Duration" }}</label></td>
   <td>
@@ -42,7 +59,7 @@
   <td><label for="distance">{{ i18n "Distance" }}</label></td>
   <td>
     <input
-      type="text"
+      type="number"
       name="distance"
       id="distance"
       value="{{ default `` (.Distance | HumanDistance) }}"
@@ -56,7 +73,7 @@
   <td><label for="repetitions">{{ i18n "Repetitions" }}</label></td>
   <td>
     <input
-      type="text"
+      type="number"
       name="repetitions"
       id="repetitions"
       value="{{ default `` .Repetitions }}"
@@ -69,7 +86,7 @@
   <td><label for="weight">{{ i18n "Weight" }}</label></td>
   <td>
     <input
-      type="text"
+      type="number"
       name="weight"
       id="weight"
       value="{{ default `` .Weight }}"

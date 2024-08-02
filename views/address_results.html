@@ -1,0 +1,27 @@
+{{ if .addresses }}
+<script>
+  function setLocation(address) {
+    var l = document.getElementById("location");
+    if (!l) {
+      return;
+    }
+
+    l.value = address;
+    l.focus();
+  }
+</script>
+
+<ul class="list-none">
+  {{ range .addresses }}
+  <li>
+    <a
+      class="{{ IconFor `location` }}"
+      href="#"
+      onclick="setLocation('{{ . }}')"
+    >
+      {{ . }}</a
+    >
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

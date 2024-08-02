@@ -84,6 +84,30 @@ func (w *Workout) Duration() time.Duration {
 	return w.Data.TotalDuration
 }
 
+func (w *Workout) FullAddress() string {
+	if w.Data == nil {
+		return ""
+	}
+
+	if w.Data.Address != nil {
+		return w.Data.Address.FormattedAddress
+	}
+
+	return w.Data.AddressString
+}
+
+func (w *Workout) Address() string {
+	if w.Data == nil {
+		return ""
+	}
+
+	if w.Data.AddressString != "" {
+		return w.Data.AddressString
+	}
+
+	return w.Data.addressString()
+}
+
 func (w *Workout) Distance() float64 {
 	if w.Data == nil {
 		return 0
