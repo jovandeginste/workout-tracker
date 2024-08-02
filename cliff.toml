@@ -12,16 +12,38 @@
   body = """
 ## What's Changed
 
-{%- if version %} in {{ version }}{%- endif -%}
+{%- if version %} in {{ version }}{%- endif %}
+{#  #}
+
+{%- set_global commit_message = "" -%}
+{%- set_global commit_author = "" -%}
+{%- set_global outside_pr = true -%}
 {% for commit in commits %}
-  {% if commit.github.pr_title -%}
-    {%- set commit_message = commit.github.pr_title -%}
-  {%- else -%}
-    {%- set commit_message = commit.message -%}
+  {%- if commit.github.pr_labels is containing("skip-release-notes") -%}
+      {%- continue -%}
   {%- endif -%}
-  * {{ commit_message | split(pat="\n") | first | trim }}\
-    {% if commit.github.username %} by @{{ commit.github.username }}{%- endif -%}
-    {% if commit.github.pr_number %} in \
+  {%- if commit.message | split(pat="\n") | first | trim == commit_message -%}
+    {%- if commit.github.username == commit_author -%}
+      {%- continue -%}
+    {%- elif commit.github.username == "" -%}
+      {%- continue -%}
+    {%- elif commit.github.username -%}
+    {% else %}
+      {%- continue -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if commit.message | trim | split(pat="\n") | last | trim == "changelog: ignore" -%}
+    {%- continue -%}
+  {%- endif -%}
+  {%- if commit.github.pr_title -%}
+    {%- set_global commit_message = commit.github.pr_title | split(pat="\n") | first | trim -%}
+    {%- set_global outside_pr = false -%}
+  {%- else -%}
+    {%- set_global commit_message = commit.message | split(pat="\n") | first | trim -%}
+  {%- endif %}
+  {% if outside_pr or commit.github.pr_title %}{% else %}  {% endif %}- {{ commit_message }}\
+    {% if commit.github.username %},{% set_global commit_author = commit.github.username %} by @{{ commit.github.username }}{%- endif -%}
+    {% if commit.github.pr_number %}, in \
       [#{{ commit.github.pr_number }}]({{ self::remote_url() }}/pull/{{ commit.github.pr_number }}) \
     {%- endif %}
 {%- endfor -%}
@@ -32,7 +54,7 @@
   ## New Contributors
 {%- endif %}\
 {% for contributor in github.contributors | filter(attribute="is_first_time", value=true) %}
-  * @{{ contributor.username }} made their first contribution
+  - @{{ contributor.username }} made their first contribution
     {%- if contributor.pr_number %} in \
       [#{{ contributor.pr_number }}]({{ self::remote_url() }}/pull/{{ contributor.pr_number }}) \
     {%- endif %}
@@ -86,8 +108,6 @@
   topo_order = false
   # sort the commits inside sections by oldest/newest order
   sort_commits = "newest"
-  # regex for parsing and grouping commits
-  commit_parsers = [{ footer = "^changelog: ?ignore", skip = true }]
 
 
 [remote.github]
