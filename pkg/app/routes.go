@@ -125,6 +125,7 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	selfGroup.POST("/profile/preferred-units", a.userProfilePreferredUnitsUpdateHandler).Name = "user-profile-preferred-units-update"
 	selfGroup.POST("/refresh", a.userRefreshHandler).Name = "user-refresh"
 	selfGroup.POST("/reset-api-key", a.userProfileResetAPIKeyHandler).Name = "user-profile-reset-api-key"
+	selfGroup.POST("/update-version", a.userUpdateVersion).Name = "user-update-version"
 
 	usersGroup := secureGroup.Group("/users")
 	usersGroup.GET("/:id", a.userShowHandler).Name = "user-show"

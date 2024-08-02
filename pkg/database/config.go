@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	gorm.Model
+
 	// These options can be changed at runtime, configured through the database
 	// If they are set through the environment to a non-default value, that will
 	// take precedence

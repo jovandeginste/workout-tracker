@@ -1,12 +1,13 @@
 ## What's Changed
 
-- Add direct link to changelog in the footer
+- Show a message per user when the application was updated
+- Add direct link to changelog in the footer, by @jovandeginste, in [#214](https://github.com/jovandeginste/workout-tracker/pull/214)
 
 ## What's Changed in v1.17.0
 
-- Merge pull request #213 from jovandeginste/ignore-changelog
-- Update all screenshots
-- Exclude some commits from the changelog
+- Exclude some commits from the changelog, by @jovandeginste, in [#213](https://github.com/jovandeginste/workout-tracker/pull/213)
+  - Update all screenshots, by @jovandeginste
+  - Exclude some commits from the changelog, by @jovandeginste
 - Automate changelog commit (and exclude changelog updates from changelog), by @jovandeginste, in [#212](https://github.com/jovandeginste/workout-tracker/pull/212)
 - Update changelog, by @jovandeginste, in [#211](https://github.com/jovandeginste/workout-tracker/pull/211)
 - Allow partial location, by @jovandeginste, in [#210](https://github.com/jovandeginste/workout-tracker/pull/210)

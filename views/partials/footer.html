@@ -7,9 +7,8 @@
       title="Build time: {{ .BuildTime }}"
       href="https://github.com/jovandeginste/workout-tracker/tree/{{ .Sha }}"
     >
-      {{ if eq .RefType "branch" }}{{ .RefType }} {{ end }}{{ .RefName }} ({{
-      printf "%.8s" .Sha }})</a
-    >
+      {{ .PrettyVersion }}
+    </a>
     {{ end }}
   </div>
   <div>

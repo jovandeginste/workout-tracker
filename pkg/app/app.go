@@ -30,6 +30,16 @@ type Version struct {
 	Sha       string
 }
 
+func (v Version) PrettyVersion() string {
+	rn := v.RefName
+
+	if v.RefType == "branch" {
+		rn = "branch " + rn
+	}
+
+	return fmt.Sprintf("%s (%.8s)", rn, v.Sha)
+}
+
 func (v Version) UserAgent() string {
 	return fmt.Sprintf("workout-tracker/%s", v.Ref)
 }

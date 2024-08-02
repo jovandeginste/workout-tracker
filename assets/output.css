@@ -631,15 +631,9 @@ h3 {
 }
 
 a:hover {
-  --tw-text-opacity: 1;
-  color: rgb(245 158 11 / var(--tw-text-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  a:hover {
-    --tw-text-opacity: 1;
-    color: rgb(252 211 77 / var(--tw-text-opacity));
-  }
+  --tw-brightness: brightness(1.25);
+  --tw-contrast: contrast(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 form {
@@ -700,23 +694,11 @@ form {
   color: rgb(180 83 9 / var(--tw-text-opacity));
 }
 
-.footer a:hover,
-  .content a:hover {
-  --tw-text-opacity: 1;
-  color: rgb(245 158 11 / var(--tw-text-opacity));
-}
-
 @media (prefers-color-scheme: dark) {
   .footer a,
   .content a {
     --tw-text-opacity: 1;
     color: rgb(254 243 199 / var(--tw-text-opacity));
-  }
-
-  .footer a:hover,
-  .content a:hover {
-    --tw-text-opacity: 1;
-    color: rgb(252 211 77 / var(--tw-text-opacity));
   }
 }
 
@@ -1042,7 +1024,6 @@ form {
 }
 
 .notice {
-  border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(22 163 74 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -1063,7 +1044,6 @@ form {
 }
 
 .alert {
-  border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -1085,6 +1065,7 @@ form {
 
 .notice,
   .alert {
+  border-width: 1px;
   position: relative;
   margin: 1.25rem;
   border-radius: 0.375rem;
@@ -1092,6 +1073,9 @@ form {
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  a {
+    text-decoration-line: underline;
+  }
 }
 
 .workouts_list_details div {
@@ -1665,6 +1649,19 @@ table {
   }
 }
 
+.vanish {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  max-height: 0px;
+  border-width: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  opacity: 0;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 1000ms;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -1909,6 +1906,10 @@ table {
 
 .h-\[300px\] {
   height: 300px;
+}
+
+.max-h-48 {
+  max-height: 12rem;
 }
 
 .min-h-\[450px\] {
