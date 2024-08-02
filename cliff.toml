@@ -86,6 +86,9 @@
   topo_order = false
   # sort the commits inside sections by oldest/newest order
   sort_commits = "newest"
+  # regex for parsing and grouping commits
+  commit_parsers = [{ footer = "^changelog: ?ignore", skip = true }]
+
 
 [remote.github]
   owner = "jovandeginste"
