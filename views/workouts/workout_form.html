@@ -23,7 +23,6 @@
     />
   </td>
 </tr>
-{{ if .Type.IsLocation }}
 <tr>
   <td><label for="location">{{ i18n "Location" }}</label></td>
   <td>
@@ -41,7 +40,7 @@
     <div id="addresses"></div>
   </td>
 </tr>
-{{ end }} {{ if .Type.IsDuration }}
+{{ if .Type.IsDuration }}
 <tr>
   <td><label for="duration">{{ i18n "Duration" }}</label></td>
   <td>
