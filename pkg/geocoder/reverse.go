@@ -166,11 +166,13 @@ func Find(a string) (*geo.Address, error) {
 		return nil, err
 	}
 
-	if len(r) == 0 {
-		return nil, ErrAddressNotFound
+	for _, f := range r {
+		if f.DisplayName == a {
+			return f.ToAddress(), nil
+		}
 	}
 
-	return r[0].ToAddress(), nil
+	return nil, ErrAddressNotFound
 }
 
 func Search(a string) ([]string, error) {
