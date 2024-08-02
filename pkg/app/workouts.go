@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/labstack/echo/v4"
 )
 
@@ -107,6 +108,15 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
 	setIfNotNil(&w.Data.TotalWeight, m.Weight)
+
+	a, err := geocoder.Find(*m.Location)
+	if err != nil {
+		return
+	}
+
+	setIfNotNil(&w.Data.Address, &a)
+
+	w.Data.UpdateAddress()
 }
 
 func (a *App) addWorkout(c echo.Context) error {

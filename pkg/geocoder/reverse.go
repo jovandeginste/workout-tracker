@@ -16,8 +16,9 @@ import (
 )
 
 var (
-	c               *client
-	ErrClientNotSet = errors.New("geocoder: client not set")
+	c                  *client
+	ErrClientNotSet    = errors.New("geocoder: client not set")
+	ErrAddressNotFound = errors.New("geocoder: address not found")
 )
 
 const requestInterval = time.Second
@@ -51,7 +52,7 @@ type result struct {
 	Addresstype string   `json:"addresstype"`
 	DisplayName string   `json:"display_name"`
 	Name        string   `json:"name"`
-	Address     *address `json:"address"`
+	Address     address  `json:"address"`
 	Boundingbox []string `json:"boundingbox"`
 }
 
@@ -88,18 +89,22 @@ type address struct {
 
 func (c *client) wait() {
 	c.m.Lock()
-	defer c.m.Unlock()
+	defer func() {
+		c.lastRequest = time.Now()
+		c.m.Unlock()
+	}()
 
 	if c.lastRequest.IsZero() {
 		return
 	}
 
-	if time.Since(c.lastRequest) >= requestInterval {
+	d := time.Since(c.lastRequest) - requestInterval
+	if d > 0 {
 		return
 	}
 
-	c.logger.Warn("Rate limited - waiting " + requestInterval.String())
-	time.Sleep(requestInterval)
+	c.logger.Warn("Rate limited - waiting " + d.String())
+	time.Sleep(d)
 }
 
 func SetClient(l *slog.Logger, ua string) {
@@ -111,7 +116,7 @@ func SetClient(l *slog.Logger, ua string) {
 	}
 }
 
-func Search(a string) ([]string, error) {
+func search(a string) ([]result, error) {
 	if c == nil {
 		return nil, ErrClientNotSet
 	}
@@ -119,11 +124,13 @@ func Search(a string) ([]string, error) {
 	c.wait()
 
 	q := struct {
-		Q      string `url:"q"`
-		Format string `url:"format"`
+		Q              string `url:"q"`
+		Format         string `url:"format"`
+		AddressDetails int    `url:"addressdetails"`
 	}{
-		Q:      a,
-		Format: "jsonv2",
+		Q:              a,
+		Format:         "json",
+		AddressDetails: 1,
 	}
 
 	v, err := query.Values(q)
@@ -145,10 +152,30 @@ func Search(a string) ([]string, error) {
 
 	defer res.Body.Close()
 
-	c.lastRequest = time.Now()
-
 	r := []result{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+func Find(a string) (*geo.Address, error) {
+	r, err := search(a)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(r) == 0 {
+		return nil, ErrAddressNotFound
+	}
+
+	return r[0].ToAddress(), nil
+}
+
+func Search(a string) ([]string, error) {
+	r, err := search(a)
+	if err != nil {
 		return nil, err
 	}
 
@@ -185,8 +212,6 @@ func Reverse(q Query) (*geo.Address, error) {
 	}
 
 	defer res.Body.Close()
-
-	c.lastRequest = time.Now()
 
 	r := result{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
