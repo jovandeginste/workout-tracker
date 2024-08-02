@@ -1023,6 +1023,26 @@ form {
   }
 }
 
+.version-notice {
+  --tw-border-opacity: 1;
+  border-color: rgb(2 132 199 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(12 74 110 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(125 211 252 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .version-notice {
+    --tw-border-opacity: 1;
+    border-color: rgb(56 189 248 / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(224 242 254 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(3 105 161 / var(--tw-text-opacity));
+  }
+}
+
 .notice {
   --tw-border-opacity: 1;
   border-color: rgb(22 163 74 / var(--tw-border-opacity));
@@ -1063,7 +1083,8 @@ form {
   }
 }
 
-.notice,
+.version-notice,
+  .notice,
   .alert {
   border-width: 1px;
   position: relative;

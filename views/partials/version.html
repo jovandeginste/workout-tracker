@@ -1,6 +1,6 @@
 {{ define "version" }} {{ if CurrentUser }} {{ if ne Version.Sha
 CurrentUser.LastVersion }}
-<div id="version-notification" class="notice max-h-48" role="alert">
+<div id="version-notification" class="version-notice max-h-48" role="alert">
   <span class="block sm:inline">
     This application was updated to version: {{ with Version }}
     <a
