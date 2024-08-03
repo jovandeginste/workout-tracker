@@ -98,8 +98,8 @@ func (c *client) wait() {
 		return
 	}
 
-	d := time.Since(c.lastRequest) - requestInterval
-	if d > 0 {
+	d := requestInterval - time.Since(c.lastRequest)
+	if d < 0 {
 		return
 	}
 
