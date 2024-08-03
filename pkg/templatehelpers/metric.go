@@ -5,8 +5,10 @@ import (
 	"math"
 )
 
+const MeterPerKM = 1000
+
 func HumanDistanceKM(d float64) string {
-	return fmt.Sprintf("%.2f", d/1000)
+	return fmt.Sprintf("%.2f", d/MeterPerKM)
 }
 
 func HumanSpeedKPH(mps float64) string {
@@ -24,7 +26,7 @@ func HumanTempoKM(mps float64) string {
 		return InvalidValue
 	}
 
-	mpk := 1000 / (60 * mps)
+	mpk := MeterPerKM / (60 * mps)
 
 	wholeMinutes := math.Floor(mpk)
 	seconds := (mpk - wholeMinutes) * 60

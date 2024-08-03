@@ -3,6 +3,8 @@ package database
 import (
 	"fmt"
 	"time"
+
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 )
 
 type BreakdownItem struct {
@@ -133,9 +135,9 @@ func (w *Workout) StatisticsPer(count float64, unit string) (WorkoutBreakdown, e
 	case "m":
 		wb.Items = w.statisticsWithUnit(count, "distance")
 	case "km":
-		wb.Items = w.statisticsWithUnit(count*1000, "distance")
+		wb.Items = w.statisticsWithUnit(count*templatehelpers.MeterPerKM, "distance")
 	case "mi":
-		wb.Items = w.statisticsWithUnit(count*1609.344, "distance")
+		wb.Items = w.statisticsWithUnit(count*templatehelpers.MeterPerMile, "distance")
 	case "sec":
 		wb.Items = w.statisticsWithUnit(count*float64(time.Second), "duration")
 	case "min":

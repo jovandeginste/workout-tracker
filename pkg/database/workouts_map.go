@@ -85,6 +85,7 @@ type MapCenter struct {
 	Lat float64 // The latitude of the center of the workout
 	Lng float64 // The longitude of the center of the workout
 }
+
 type MapPoint struct {
 	Lat           float64       // The latitude of the point
 	Lng           float64       // The longitude of the point
@@ -178,8 +179,12 @@ func center(gpxContent *gpx.GPX) MapCenter {
 	}
 }
 
+func (m *MapCenter) IsZero() bool {
+	return m.Lat == 0 && m.Lng == 0
+}
+
 func (m *MapCenter) Address() *geo.Address {
-	if !online {
+	if !online || m.IsZero() {
 		return nil
 	}
 

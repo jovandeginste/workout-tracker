@@ -502,8 +502,7 @@ ul {
   list-style-type: disc;
 }
 
-button[type="submit"],
-  textarea,
+textarea,
   select,
   input {
   border-radius: 0.75rem;
@@ -518,29 +517,19 @@ button[type="submit"],
   background-color: rgb(244 244 245 / var(--tw-bg-opacity));
 }
 
-button[type="submit"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
+textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
-button[type="submit"]::placeholder,
-  textarea::placeholder,
+textarea::placeholder,
   select::placeholder,
   input::placeholder {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
-button[type="submit"]:hover,
-  textarea:hover,
-  select:hover,
-  input:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(245 158 11 / var(--tw-border-opacity));
-}
-
 @media (prefers-color-scheme: dark) {
-  button[type="submit"],
   textarea,
   select,
   input {
@@ -550,30 +539,103 @@ button[type="submit"]:hover,
     background-color: rgb(24 24 27 / var(--tw-bg-opacity));
   }
 
-  button[type="submit"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
+  textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
     --tw-text-opacity: 1;
     color: rgb(100 116 139 / var(--tw-text-opacity));
   }
 
-  button[type="submit"]::placeholder,
   textarea::placeholder,
   select::placeholder,
   input::placeholder {
     --tw-text-opacity: 1;
     color: rgb(100 116 139 / var(--tw-text-opacity));
   }
+}
 
-  button[type="submit"]:hover,
-  textarea:hover,
+textarea:hover,
   select:hover,
   input:hover {
-    --tw-border-opacity: 1;
-    border-color: rgb(245 158 11 / var(--tw-border-opacity));
+  --tw-brightness: brightness(1.25);
+  --tw-contrast: contrast(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+textarea:focus,
+  select:focus,
+  input:focus {
+  --tw-brightness: brightness(1.25);
+  --tw-contrast: contrast(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+button.edit {
+  --tw-border-opacity: 1;
+  border-color: rgb(251 191 36 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 211 77 / var(--tw-bg-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  button.edit {
+    --tw-bg-opacity: 1;
+    background-color: rgb(245 158 11 / var(--tw-bg-opacity));
   }
 }
 
-button[type="submit"] {
+button.dangerous {
+  --tw-border-opacity: 1;
+  border-color: rgb(225 29 72 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 63 94 / var(--tw-bg-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  button.dangerous {
+    --tw-bg-opacity: 1;
+    background-color: rgb(190 18 60 / var(--tw-bg-opacity));
+  }
+}
+
+button {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  button {
+    --tw-bg-opacity: 1;
+    background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+}
+
+button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 0.75rem;
+  border-width: 1px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   font-weight: 700;
+}
+
+button:hover {
+  --tw-brightness: brightness(1.25);
+  --tw-contrast: contrast(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+button:focus {
+  --tw-brightness: brightness(1.25);
+  --tw-contrast: contrast(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 h2 {
@@ -835,45 +897,9 @@ form {
   }
   > button,
     > form {
-    > button.edit {
-      --tw-bg-opacity: 1;
-      background-color: rgb(252 211 77 / var(--tw-bg-opacity));
-    }
-    > button.edit:hover {
-      --tw-bg-opacity: 1;
-      background-color: rgb(253 230 138 / var(--tw-bg-opacity));
-    }
-    @media (prefers-color-scheme: dark) {
-      > button.edit {
-        --tw-bg-opacity: 1;
-        background-color: rgb(245 158 11 / var(--tw-bg-opacity));
-      }
-    }
-    @media (prefers-color-scheme: dark) {
-      > button.edit:hover {
-        --tw-bg-opacity: 1;
-        background-color: rgb(252 211 77 / var(--tw-bg-opacity));
-      }
-    }
-    > button.dangerous {
-      --tw-bg-opacity: 1;
-      background-color: rgb(244 63 94 / var(--tw-bg-opacity));
-    }
-    > button.dangerous:hover {
-      --tw-bg-opacity: 1;
-      background-color: rgb(253 164 175 / var(--tw-bg-opacity));
-    }
-    @media (prefers-color-scheme: dark) {
-      > button.dangerous {
-        --tw-bg-opacity: 1;
-        background-color: rgb(190 18 60 / var(--tw-bg-opacity));
-      }
-    }
-    @media (prefers-color-scheme: dark) {
-      > button.dangerous:hover {
-        --tw-bg-opacity: 1;
-        background-color: rgb(244 63 94 / var(--tw-bg-opacity));
-      }
+    > button {
+      margin-left: 0px;
+      margin-right: 0px;
     }
     > button {
       border-radius: 0.375rem;
@@ -885,43 +911,6 @@ form {
     > button {
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
-    }
-    > button {
-      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
-    }
-    > button {
-      --tw-bg-opacity: 1;
-      background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-    }
-    > button {
-      --tw-text-opacity: 1;
-      color: rgb(255 255 255 / var(--tw-text-opacity));
-    }
-    > button:hover {
-      --tw-bg-opacity: 1;
-      background-color: rgb(134 239 172 / var(--tw-bg-opacity));
-    }
-    @media (prefers-color-scheme: dark) {
-      > button {
-        --tw-bg-opacity: 1;
-        background-color: rgb(21 128 61 / var(--tw-bg-opacity));
-      }
-    }
-    @media (prefers-color-scheme: dark) {
-      > button {
-        --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
-      }
-    }
-    @media (prefers-color-scheme: dark) {
-      > button:hover {
-        --tw-bg-opacity: 1;
-        background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-      }
     }
     > button {
       a {
@@ -1566,28 +1555,40 @@ table {
   }
 }
 
+.selectable-pill {
+  cursor: pointer;
+}
+
 .selectable-pill:hover {
   --tw-brightness: brightness(1.25);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .selectable-pill {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
 }
 
 .peer:checked ~ .selectable-pill {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
   .selectable-pill {
+    --tw-border-opacity: 1;
+    border-color: rgb(185 28 28 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
     background-color: rgb(153 27 27 / var(--tw-bg-opacity));
   }
 
   .peer:checked ~ .selectable-pill {
+    --tw-border-opacity: 1;
+    border-color: rgb(21 128 61 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
     background-color: rgb(22 101 52 / var(--tw-bg-opacity));
   }

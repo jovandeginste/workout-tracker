@@ -52,6 +52,16 @@
                     <td></td>
                     <td>
                       <button type="submit">{{ i18n "Update workout" }}</button>
+                      <button type="reset" class="edit">
+                        {{ i18n "Reset changes" }}
+                      </button>
+                      <button
+                        type="button"
+                        class="dangerous"
+                        onclick="document.location='{{ RouteFor `workout-show` .ID }}'"
+                      >
+                        {{ i18n "Cancel" }}
+                      </button>
                     </td>
                   </tr>
                 </tfoot>
@@ -63,12 +73,7 @@
           <div class="inner-form">{{ template "workout_details" . }}</div>
         </div>
       </div>
-      {{ if .Notes }}
-      <div class="inner-form">
-        <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
-        <div>{{ .Notes }}</div>
-      </div>
-      {{ end }} {{ end }}
+      {{ end }}
     </div>
 
     {{ template "footer" . }}

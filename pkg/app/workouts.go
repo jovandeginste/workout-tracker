@@ -13,8 +13,7 @@ import (
 )
 
 const (
-	htmlDateFormat     = "2006-01-02T15:04"
-	htmlDurationFormat = "15:04"
+	htmlDateFormat = "2006-01-02T15:04"
 )
 
 func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
@@ -34,15 +33,19 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 }
 
 type ManualWorkout struct {
-	Name        *string               `form:"name"`
-	Date        *string               `form:"date"`
-	Location    *string               `form:"location"`
-	Duration    *string               `form:"duration"`
-	Distance    *float64              `form:"distance"`
-	Repetitions *int                  `form:"repetitions"`
-	Weight      *float64              `form:"weight"`
-	Notes       *string               `form:"notes"`
-	Type        *database.WorkoutType `form:"type"`
+	Name            *string               `form:"name"`
+	Date            *string               `form:"date"`
+	Location        *string               `form:"location"`
+	DurationHours   *int                  `form:"duration_hours"`
+	DurationMinutes *int                  `form:"duration_minutes"`
+	DurationSeconds *int                  `form:"duration_seconds"`
+	Distance        *float64              `form:"distance"`
+	Repetitions     *int                  `form:"repetitions"`
+	Weight          *float64              `form:"weight"`
+	Notes           *string               `form:"notes"`
+	Type            *database.WorkoutType `form:"type"`
+
+	units *database.UserPreferredUnits
 }
 
 func (m *ManualWorkout) ToDate() *time.Time {
@@ -59,28 +62,35 @@ func (m *ManualWorkout) ToDate() *time.Time {
 }
 
 func (m *ManualWorkout) ToDistance() *float64 {
-	if m.Distance == nil {
+	if m.Distance == nil || *m.Distance == 0 {
 		return nil
 	}
 
-	d := (*m.Distance) * 1000
+	d := m.units.DistanceToDatabase(*m.Distance)
 
 	return &d
 }
 
 func (m *ManualWorkout) ToDuration() *time.Duration {
-	if m.Duration == nil {
+	var totalDuration time.Duration
+
+	if m.DurationHours != nil {
+		totalDuration += time.Duration(*m.DurationHours) * time.Hour
+	}
+
+	if m.DurationMinutes != nil {
+		totalDuration += time.Duration(*m.DurationMinutes) * time.Minute
+	}
+
+	if m.DurationSeconds != nil {
+		totalDuration += time.Duration(*m.DurationSeconds) * time.Second
+	}
+
+	if totalDuration == 0 {
 		return nil
 	}
 
-	d, err := time.Parse(htmlDurationFormat, *m.Duration)
-	if err != nil {
-		return nil
-	}
-
-	dur := time.Duration(d.Hour())*time.Hour + time.Duration(d.Minute())*time.Minute
-
-	return &dur
+	return &totalDuration
 }
 
 func setIfNotNil[T any](dst *T, src *T) {
@@ -125,7 +135,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.addWorkoutFromFile(c)
 	}
 
-	d := &ManualWorkout{}
+	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}
@@ -169,7 +179,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	d := &ManualWorkout{}
+	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
 		return a.redirectWithError(c, "/workouts", err)
 	}

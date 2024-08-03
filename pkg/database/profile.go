@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"gorm.io/gorm"
 )
 
@@ -66,6 +67,15 @@ func (u UserPreferredUnits) Distance() string {
 		return "mi"
 	default:
 		return "km"
+	}
+}
+
+func (u UserPreferredUnits) DistanceToDatabase(d float64) float64 {
+	switch u.Distance() {
+	case "mi":
+		return d * templatehelpers.MeterPerMile
+	default:
+		return d * templatehelpers.MeterPerKM
 	}
 }
 
