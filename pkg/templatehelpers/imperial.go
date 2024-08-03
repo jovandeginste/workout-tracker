@@ -6,12 +6,13 @@ import (
 )
 
 const (
-	milesPerKM   = 0.621371192
-	feetPerMeter = 3.2808399
+	MilesPerKM   = 0.621371192
+	FeetPerMeter = 3.2808399
+	MeterPerMile = 1609.344
 )
 
 func HumanDistanceMile(d float64) string {
-	return fmt.Sprintf("%.2f", milesPerKM*d/1000)
+	return fmt.Sprintf("%.2f", MilesPerKM*d/MeterPerKM)
 }
 
 func HumanSpeedMilePH(mps float64) string {
@@ -21,7 +22,7 @@ func HumanSpeedMilePH(mps float64) string {
 
 	kmph := 3.6 * mps
 
-	return fmt.Sprintf("%.2f", milesPerKM*kmph)
+	return fmt.Sprintf("%.2f", MilesPerKM*kmph)
 }
 
 func HumanTempoMile(mps float64) string {
@@ -29,7 +30,7 @@ func HumanTempoMile(mps float64) string {
 		return InvalidValue
 	}
 
-	mpm := 1000 / (60 * mps) / milesPerKM
+	mpm := MeterPerMile / (60 * mps)
 
 	wholeMinutes := math.Floor(mpm)
 	seconds := (mpm - wholeMinutes) * 60
@@ -38,5 +39,5 @@ func HumanTempoMile(mps float64) string {
 }
 
 func HumanElevationFt(m float64) string {
-	return fmt.Sprintf("%.2f", feetPerMeter*m)
+	return fmt.Sprintf("%.2f", FeetPerMeter*m)
 }

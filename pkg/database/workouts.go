@@ -3,7 +3,6 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
-	"fmt"
 	"html/template"
 	"slices"
 	"strings"
@@ -48,6 +47,14 @@ type GPXData struct {
 	Filename  string // The filename of the file
 }
 
+func (w *Workout) HasTracks() bool {
+	if w.Data.Center.IsZero() {
+		return false
+	}
+
+	return w.Type.IsLocation()
+}
+
 func (w *Workout) Weight() float64 {
 	if w.Data == nil {
 		return 0
@@ -62,18 +69,6 @@ func (w *Workout) Repetitions() int {
 	}
 
 	return w.Data.TotalRepetitions
-}
-
-func (w *Workout) DurationString() string {
-	d := w.Duration()
-	if d == 0 {
-		return ""
-	}
-
-	h := int(d.Hours())
-	m := int(d.Minutes()) % 60
-
-	return fmt.Sprintf("%02d:%02d", h, m)
 }
 
 func (w *Workout) Duration() time.Duration {

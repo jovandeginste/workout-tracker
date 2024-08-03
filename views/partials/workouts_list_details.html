@@ -30,19 +30,6 @@
     {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
     CurrentUser.PreferredUnits.Speed }}
   </div>
-  <div
-    class="hidden 2xl:table-cell whitespace-nowrap font-mono {{ IconFor `speed` }}"
-    title="{{ i18n `Average speed (no pause)` }}"
-  >
-    {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
-    CurrentUser.PreferredUnits.Tempo }}
-  </div>
-  <div
-    class="hidden 2xl:table-cell whitespace-nowrap font-mono {{ IconFor `max-speed` }}"
-    title="{{ i18n `Max speed` }}"
-  >
-    {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
-  </div>
   {{ end }} {{ if .Type.IsWeight }}
   <div
     class="hidden sm:table-cell whitespace-nowrap font-mono {{ IconFor `weight` }}"

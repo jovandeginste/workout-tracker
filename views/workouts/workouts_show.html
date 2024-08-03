@@ -32,38 +32,9 @@
         </h2>
       </div>
       <div class="lg:flex lg:flex-wrap print:block">
+        {{ if .HasTracks }}
         <div class="basis-1/2 2xl:basis-1/3 pagebreak">
-          {{ if .Type.IsLocation }}
-          <div class="inner-form">
-            <div
-              id="map"
-              class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
-            >
-              <script src="{{ RouteFor `assets` }}/map.js"></script>
-              <script>
-                makeMap({
-                  elementID: "map",
-                  center: [{{ .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}],
-                  minElevation: {{ .Data.MinElevation }},
-                  maxElevation: {{ .Data.MaxElevation }},
-                  maxSpeed: {{ .Data.MaxSpeed }},
-                  speedName: "{{ i18n "Average speed" }}",
-                  elevationName: "{{ i18n "Elevation" }}",
-
-                  points: [
-                    {{ with .Data.Details }}
-                    {{ range .Points -}}
-                    { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .ExtraMetrics.Get "elevation" }}, "title": "{{ template `workout_point_title` . }}", },
-                    {{ end  }}
-                    {{ end  }}
-                  ]
-                });
-              </script>
-            </div>
-            {{ if and (not AppConfig.SocialsDisabled) (not
-            CurrentUser.Profile.SocialsDisabled) }} {{ template "workout_social"
-            .}} {{ end }}
-          </div>
+          <div class="inner-form">{{ template "workout_map" . }}</div>
         </div>
         {{ end }}
         <div class="basis-1/2 2xl:basis-1/3">
