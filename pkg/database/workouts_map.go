@@ -86,16 +86,9 @@ type MapCenter struct {
 	Lng float64 // The longitude of the center of the workout
 }
 
-type MapPoint struct {
-	Lat           float64       // The latitude of the point
-	Lng           float64       // The longitude of the point
-	Distance      float64       // The distance from the previous point
-	TotalDistance float64       // The total distance of the workout up to this point
-	Duration      time.Duration // The duration from the previous point
-	TotalDuration time.Duration // The total duration of the workout up to this point
-	Time          time.Time     // The time the point was recorded
-
-	ExtraMetrics ExtraMetrics // Extra metrics at this point
+func (d *MapDataDetails) SimilarityTo(other *MapDataDetails) float64 {
+	distance, _, _ := needlemanWunsch(d.Points, other.Points)
+	return distance
 }
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {
@@ -150,10 +143,6 @@ func (m *MapData) AverageSpeed() float64 {
 
 func (m *MapData) AverageSpeedNoPause() float64 {
 	return m.TotalDistance / (m.TotalDuration - m.PauseDuration).Seconds()
-}
-
-func (m *MapPoint) AverageSpeed() float64 {
-	return m.Distance / m.Duration.Seconds()
 }
 
 // center returns the center point (lat, lng) of gpx points

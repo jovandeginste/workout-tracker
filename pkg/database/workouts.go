@@ -342,8 +342,12 @@ func (w *Workout) HasHeading() bool {
 	return w.HasExtraMetric("heading")
 }
 
+func (w *Workout) HasDetails() bool {
+	return w.Data != nil && w.Data.Details != nil
+}
+
 func (w *Workout) HasExtraMetric(name string) bool {
-	if w.Data == nil || w.Data.Details == nil {
+	if !w.HasDetails() {
 		return false
 	}
 

@@ -8,6 +8,16 @@ definitions:
         type: array
       results: {}
     type: object
+  app.WorkoutSimilarity:
+    properties:
+      similarity:
+        description: The similarity score, as a fraction between 0 and 1, where 1
+          is identical
+        type: number
+      workout_id:
+        description: The ID of the other workout
+        type: integer
+    type: object
   database.BreakdownItem:
     properties:
       counter:
@@ -808,6 +818,41 @@ paths:
             - properties:
                 result:
                   $ref: '#/definitions/database.WorkoutBreakdown'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: Break down a workdown per units
+  /workouts/{id}/similar:
+    get:
+      parameters:
+      - description: Workout ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                result:
+                  items:
+                    $ref: '#/definitions/app.WorkoutSimilarity'
+                  type: array
               type: object
         "400":
           description: Bad Request

@@ -460,6 +460,64 @@
                     }
                 }
             }
+        },
+        "/workouts/{id}/similar": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Break down a workdown per units",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Workout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/app.WorkoutSimilarity"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -473,6 +531,19 @@
                     }
                 },
                 "results": {}
+            }
+        },
+        "app.WorkoutSimilarity": {
+            "type": "object",
+            "properties": {
+                "similarity": {
+                    "description": "The similarity score, as a fraction between 0 and 1, where 1 is identical",
+                    "type": "number"
+                },
+                "workout_id": {
+                    "description": "The ID of the other workout",
+                    "type": "integer"
+                }
             }
         },
         "database.BreakdownItem": {

@@ -68,6 +68,7 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
 	apiGroup.POST("/import/:program", a.apiImportHandler).Name = "api-import"
+	apiGroup.GET("/workouts/:id/similar", a.apiWorkoutSimilarHandler).Name = "api-workout-similar"
 }
 
 func (a *App) ValidateAPIKeyMiddleware(key string, c echo.Context) (bool, error) {
