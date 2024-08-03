@@ -1,7 +1,20 @@
 ## What's Changed
 
-- Show a message per user when the application was updated
+- Translations update from Hosted Weblate, by @jovandeginste, in [#220](https://github.com/jovandeginste/workout-tracker/pull/220)
+  - Translated using Weblate (Dutch)
+- Fix the input files and configuration for better Weblate integration, by @jovandeginste, in [#219](https://github.com/jovandeginste/workout-tracker/pull/219)
+  - fix: remove auto-added strings, by @jovandeginste
+  - fix: add new translation strings, by @jovandeginste
+- fix: support editing workouts using Imperial units, by @jovandeginste, in [#218](https://github.com/jovandeginste/workout-tracker/pull/218)
+- fix: add version notice styles and template, by @jovandeginste, in [#216](https://github.com/jovandeginste/workout-tracker/pull/216)
+  - fix: add version notice styles and template, by @invalid-email-address
+  - feat: ignore Aider project files and outputs, by @invalid-email-address
+- Show a message per user when the application was updated, by @jovandeginste, in [#215](https://github.com/jovandeginste/workout-tracker/pull/215)
 - Add direct link to changelog in the footer, by @jovandeginste, in [#214](https://github.com/jovandeginste/workout-tracker/pull/214)
+
+## New Contributors
+
+- @invalid-email-address made their first contribution
 
 ## What's Changed in v1.17.0
 
