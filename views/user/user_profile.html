@@ -53,17 +53,19 @@
                     action="{{ RouteFor `user-profile-reset-api-key` }}"
                   >
                     <button
-                      class="{{ IconFor `show` }}"
+                      type="button"
+                      class="{{ IconFor `show` }} edit"
                       title="{{ i18n `show/hide` }}"
-                      onclick="toggleTextPassword(this, 'api_key'); return false;"
+                      onclick="toggleTextPassword(this, 'api_key');"
                     />
                     <button
+                      type="button"
                       class="{{ IconFor `copy` }}"
                       title="{{ i18n `copy to clipboard` }}"
-                      onclick="copyToClipboard('api_key'); return false;"
+                      onclick="copyToClipboard('api_key');"
                     />
                     <button
-                      class="{{ IconFor `refresh` }}"
+                      class="{{ IconFor `refresh` }} dangerous"
                       title="{{ i18n `generate a new API key` }}"
                     />
                   </form>
