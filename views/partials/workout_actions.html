@@ -1,19 +1,22 @@
-{{ define "workout_actions" }}
+{{ define "workout_actions" }} {{ if .HasFile }}
 <form action="{{ RouteFor `workout-download` .ID }}" method="get">
   <button class="download" title="{{ i18n `download` }}">
     <a class="{{ IconFor `download` }}"></a>
   </button>
 </form>
+{{ end }}
 <form action="{{ RouteFor `workout-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
     <a class="{{ IconFor `edit` }}"></a>
   </button>
 </form>
+{{ if .HasFile }}
 <form action="{{ RouteFor `workout-refresh` .ID }}" method="post">
   <button title="{{ i18n `refresh` }}">
     <a class="{{ IconFor `refresh` }}"></a>
   </button>
 </form>
+{{ end }}
 <form onsubmit="return false">
   <button
     onclick="openModal('modalConfirmDelete_{{ .ID }}')"

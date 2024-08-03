@@ -117,9 +117,7 @@ func (a *App) workoutsDownloadHandler(c echo.Context) error {
 		return a.redirectWithError(c, "/workouts", err)
 	}
 
-	if workout.GPX == nil ||
-		workout.GPX.Filename == "" ||
-		workout.GPX.Content == nil {
+	if !workout.HasFile() {
 		return a.redirectWithError(c, "/workouts", errors.New("workout has no content"))
 	}
 
