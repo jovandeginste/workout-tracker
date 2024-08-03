@@ -87,7 +87,7 @@ type MapCenter struct {
 }
 
 func (d *MapDataDetails) SimilarityTo(other *MapDataDetails) float64 {
-	distance, _, _ := needlemanWunsch(d.Points, other.Points)
+	distance := calcDistance(d.Points, other.Points)
 	return distance
 }
 
