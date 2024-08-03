@@ -12,7 +12,6 @@ import (
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
-	"github.com/labstack/gommon/log"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
@@ -45,6 +44,14 @@ type GPXData struct {
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename  string // The filename of the file
+}
+
+func (w *Workout) HasFile() bool {
+	if w.GPX == nil {
+		return false
+	}
+
+	return w.GPX.Filename != "" && w.GPX.Content != nil
 }
 
 func (w *Workout) HasTracks() bool {
@@ -238,7 +245,7 @@ func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
-	return GetWorkout(db.Preload("Data.Details"), id)
+	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
 }
 
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
@@ -276,7 +283,7 @@ func (w *Workout) Save(db *gorm.DB) error {
 }
 
 func (w *Workout) AsGPX() (*gpx.GPX, error) {
-	if w.GPX == nil {
+	if !w.HasFile() {
 		return nil, errors.New("workout has no GPX")
 	}
 
@@ -298,7 +305,7 @@ func (w *Workout) setData(data *MapData) {
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
-	if w.GPX == nil {
+	if !w.HasFile() {
 		// We only update data from (stored) GPX data
 		return nil
 	}
@@ -341,8 +348,6 @@ func (w *Workout) HasExtraMetric(name string) bool {
 	}
 
 	for _, d := range w.Data.Details.Points {
-		log.Info(d)
-
 		if _, ok := d.ExtraMetrics[name]; ok {
 			return true
 		}
