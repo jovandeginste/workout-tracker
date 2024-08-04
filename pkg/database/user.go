@@ -314,3 +314,16 @@ func (u *User) GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
 
 	return w, nil
 }
+
+func AddRouteSegment(db *gorm.DB, notes string, filename string, content []byte) (*RouteSegment, error) {
+	rs, err := NewRouteSegment(notes, filename, content)
+	if err != nil {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidData, err)
+	}
+
+	if err := rs.Create(db); err != nil {
+		return nil, err
+	}
+
+	return rs, nil
+}

@@ -129,7 +129,9 @@ func pageIcon(what string) string {
 		return iconDefaults + " icon-solid icon-dumbbell"
 	case "equipment":
 		return iconDefaults + " icon-solid icon-bicycle"
-	case "add", "workout-add", "equipment-add":
+	case "route-segment":
+		return iconDefaults + " icon-solid icon-route"
+	case "add", "workout-add", "equipment-add", "route-segment-add":
 		return iconDefaults + " icon-solid icon-circle-plus"
 	default:
 		return ""

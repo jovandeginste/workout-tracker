@@ -58,6 +58,17 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	return data
 }
 
+func (a *App) addRouteSegments(data map[string]interface{}) error {
+	w, err := database.GetRouteSegments(a.db)
+	if err != nil {
+		return err
+	}
+
+	data["routeSegments"] = w
+
+	return nil
+}
+
 func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
 	if u == nil {
 		return nil
@@ -93,6 +104,20 @@ func (a *App) addUsers(data map[string]interface{}) error {
 	data["users"] = users
 
 	return nil
+}
+
+func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return nil, err
+	}
+
+	rs, err := database.GetRouteSegment(a.db, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return rs, nil
 }
 
 func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {

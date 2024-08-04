@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
+    <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      {{ with .routeSegment }}
+      <div class="gap-4">
+        <span class="float-right actions">
+          {{ template "route_segment_actions" . }}
+        </span>
+
+        <h2 class="{{ IconFor `route-segment` }}">
+          {{ .Name }} {{ if ne .Name .Filename }} (<span
+            class="{{ IconFor `file` }}"
+            >{{ .Filename }}</span
+          >) {{ end }}
+        </h2>
+      </div>
+      <div class="lg:flex lg:flex-wrap print:block">
+        <div class="basis-1/2 2xl:basis-1/3 pagebreak">
+          <div class="inner-form">{{ template "route_segment_map" . }}</div>
+        </div>
+        <div class="basis-1/2 2xl:basis-1/3">
+          <div class="inner-form">{{ template "route_segment_details" . }}</div>
+        </div>
+      </div>
+      <div class="pagebreak">
+        {{ if .Notes }}
+        <div class="inner-form">
+          <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
+          <div>{{ .MarkdownNotes }}</div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

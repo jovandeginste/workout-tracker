@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      {{ with .routeSegment }}
+      <div class="gap-4">
+        <h2 class="{{ IconFor `route-segment` }}">
+          {{ .Name }} {{ if ne .Name .Filename }} (<span
+            class="{{ IconFor `file` }}"
+            >{{ .Filename }}</span
+          >) {{ end }}
+        </h2>
+      </div>
+      <div class="sm:flex sm:flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <form
+              method="post"
+              action="{{ RouteFor `route-segment-update` .ID }}"
+            >
+              <table>
+                <tbody id="route-segment-form">
+                  <tr>
+                    <td><label for="name">{{ i18n "Name" }}</label></td>
+                    <td>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        size="60"
+                        value="{{ .Name }}"
+                        required
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="notes">{{ i18n "Notes" }}</label>
+                    </td>
+                    <td>
+                      <textarea
+                        type="text"
+                        id="notes"
+                        name="notes"
+                        rows="10"
+                        cols="60"
+                      >
+{{ .Notes }}</textarea
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit">
+                        {{ i18n "Update route segment" }}
+                      </button>
+                      <button type="reset" class="edit">
+                        {{ i18n "Reset changes" }}
+                      </button>
+                      <button
+                        type="button"
+                        class="dangerous"
+                        onclick="document.location='{{ RouteFor `route-segment-show` .ID }}'"
+                      >
+                        {{ i18n "Cancel" }}
+                      </button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+          </div>
+        </div>
+        <div class="basis-1/4">
+          <div class="inner-form">{{ template "route_segment_details" . }}</div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

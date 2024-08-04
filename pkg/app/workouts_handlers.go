@@ -27,12 +27,12 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
 	w, err := database.GetWorkoutDetails(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
 	data["workout"] = w
@@ -114,11 +114,11 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 func (a *App) workoutsDownloadHandler(c echo.Context) error {
 	workout, err := a.getWorkout(c)
 	if err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
 	if !workout.HasFile() {
-		return a.redirectWithError(c, "/workouts", errors.New("workout has no content"))
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), errors.New("workout has no content"))
 	}
 
 	basename := path.Base(workout.GPX.Filename)
@@ -133,7 +133,7 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 
 	workout, err := a.getWorkout(c)
 	if err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
 	data["workout"] = workout

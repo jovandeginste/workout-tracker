@@ -2837,6 +2837,14 @@ table {
   content: "\f018";
 }
 
+.icon-route::before {
+  content: "\f4d7";
+}
+
+.icon-route::after {
+  content: "\f4d7";
+}
+
 .icon-ruler::before {
   content: "\f545";
 }
