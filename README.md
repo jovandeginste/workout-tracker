@@ -1,6 +1,14 @@
-[![Translation status](https://hosted.weblate.org/widget/workout-tracker/svg-badge.svg)](https://hosted.weblate.org/engage/workout-tracker/)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jovandeginste/workout-tracker)
+![GitHub Release](https://img.shields.io/github/v/release/jovandeginste/workout-tracker)
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/jovandeginste/workout-tracker/latest/total)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/jovandeginste/workout-tracker)](https://goreportcard.com/report/github.com/jovandeginste/workout-tracker)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/jovandeginste/workout-tracker)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Swagger Validator](https://img.shields.io/swagger/valid/3.0?specUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjovandeginste%2Fworkout-tracker%2Fmaster%2Fdocs%2Fswagger.json)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.json)
+
+[![Translation status](https://hosted.weblate.org/widget/workout-tracker/svg-badge.svg)](https://hosted.weblate.org/engage/workout-tracker/)
+![GitHub language count](https://img.shields.io/github/languages/count/jovandeginste/workout-tracker)
 
 A workout tracking web application for personal use (or family, friends), geared
 towards running and other GPX-based activities
@@ -214,7 +222,7 @@ password in a production environment.
 
 ## API usage
 
-The API is documented using [swagger](https://swagger.io/). You must enable API access for your user, and copy the API key. You can use the API key as a query parameter (`api-key=${API_KEY}`) or as a header (`Authorization: Bearer ${API_KEY}`).
+The API is documented using [swagger](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.yaml). You must enable API access for your user, and copy the API key. You can use the API key as a query parameter (`api-key=${API_KEY}`) or as a header (`Authorization: Bearer ${API_KEY}`).
 
 You can configure some tools to automatically upload files to Workout Tracker, using the `POST /api/v1/import/$program` API endpoint.
 
