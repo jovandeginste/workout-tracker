@@ -1,5 +1,19 @@
 ## What's Changed
 
+- fix: updated README.md with correct badge links
+- chore: update all dependencies, by @jovandeginste, in [#230](https://github.com/jovandeginste/workout-tracker/pull/230)
+  - ci: improve go dependency updates, by @jovandeginste
+- docs: add more badges and direct link to swagger spec editor, by @jovandeginste, in [#229](https://github.com/jovandeginste/workout-tracker/pull/229)
+- Create FUNDING.yml, by @jovandeginste, in [#228](https://github.com/jovandeginste/workout-tracker/pull/228)
+- docs: add generic upload API endpoint usage documentation, by @jovandeginste, in [#227](https://github.com/jovandeginste/workout-tracker/pull/227)
+- feat: refactor workouts handlers to use HasFile method instead of nil…, by @jovandeginste, in [#224](https://github.com/jovandeginste/workout-tracker/pull/224)
+  - feat: refactor workouts handlers to use HasFile method instead of nil checks, by @jovandeginste
+- refactor: improve API button style and behavior, by @jovandeginste, in [#223](https://github.com/jovandeginste/workout-tracker/pull/223)
+- fix: calculate rate limit time remaining, by @jovandeginste, in [#222](https://github.com/jovandeginste/workout-tracker/pull/222)
+
+## What's Changed in v1.17.1
+
+- Update changelog, by @jovandeginste, in [#221](https://github.com/jovandeginste/workout-tracker/pull/221)
 - Translations update from Hosted Weblate, by @jovandeginste, in [#220](https://github.com/jovandeginste/workout-tracker/pull/220)
   - Translated using Weblate (Dutch)
 - Fix the input files and configuration for better Weblate integration, by @jovandeginste, in [#219](https://github.com/jovandeginste/workout-tracker/pull/219)
@@ -15,6 +29,8 @@
 ## New Contributors
 
 - @invalid-email-address made their first contribution
+
+**Full Changelog**: https://github.com/jovandeginste/workout-tracker/compare/v1.17.0...v1.17.1
 
 ## What's Changed in v1.17.0
 
