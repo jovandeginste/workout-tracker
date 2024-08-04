@@ -218,6 +218,23 @@ The API is documented using [swagger](https://swagger.io/). You must enable API 
 
 You can configure some tools to automatically upload files to Workout Tracker, using the `POST /api/v1/import/$program` API endpoint.
 
+### Generic upload
+
+The generic upload endpoint takes the recording as body. Prepend the path with `@` to tell `curl` to read the data from a file:
+
+```bash
+curl -sSL -H "Authorization: bearer your-api-key" \
+  http://localhost:8080/api/v1/import/generic \
+  --data @path/to/recorded.gpx
+```
+
+or
+
+```bash
+curl -sSL http://localhost:8080/api/v1/import/generic?api-key=your-api-key \
+  --data @path/to/recorded.gpx
+```
+
 ### FitoTrack
 
 Read [their documentation](https://codeberg.org/jannis/FitoTrack/wiki/Auto-Export) before you continue.
