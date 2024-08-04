@@ -28,7 +28,9 @@
         {{ end }}
 
         <h2 class="{{ IconFor .Type.String }}">
-          {{ .Name }} {{ with .Filename }}({{ . }}){{ end }}
+          {{ .Name }} {{ if .HasFile }}(<span class="{{ IconFor `file` }}"
+            >{{ .Filename }}</span
+          >) {{ end }}
         </h2>
       </div>
       <div class="lg:flex lg:flex-wrap print:block">

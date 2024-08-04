@@ -41,6 +41,14 @@ type GPXData struct {
 	Filename  string // The filename of the file
 }
 
+func (w *Workout) Filename() string {
+	if !w.HasFile() {
+		return w.Name + ".txt"
+	}
+
+	return w.GPX.Filename
+}
+
 func (w *Workout) HasFile() bool {
 	if w.GPX == nil {
 		return false

@@ -9,7 +9,9 @@
       {{ with .workout }}
       <div class="gap-4">
         <h2 class="{{ IconFor .Type.String }}">
-          {{ .Name }} {{ with .Filename }}({{ . }}){{ end }}
+          {{ .Name }} {{ if .HasFile }}(<span class="{{ IconFor `file` }}"
+            >{{ .Filename }}</span
+          >) {{ end }}
         </h2>
       </div>
       <div class="sm:flex sm:flex-wrap">
