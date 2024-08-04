@@ -86,7 +86,8 @@ func preMigrationActions(db *gorm.DB) error {
 }
 
 func postMigrationActions(db *gorm.DB) error {
-	return convertWorkouts(db)
+	// Nothing to do for now
+	return nil
 }
 
 func setUserAPIKeys(db *gorm.DB) error {
