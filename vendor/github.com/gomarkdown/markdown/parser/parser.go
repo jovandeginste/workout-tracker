@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/gomarkdown/markdown/ast"
 )
@@ -727,7 +729,21 @@ func IsPunctuation(c byte) bool {
 	return false
 }
 
-// IsSpace returns true if c is a white-space charactr
+func IsPunctuation2(d []byte) bool {
+	if len(d) == 0 {
+		return false
+	}
+	if IsPunctuation(d[0]) {
+		return true
+	}
+	r, _ := utf8.DecodeRune(d)
+	if r == utf8.RuneError {
+		return false
+	}
+	return unicode.IsPunct(r)
+}
+
+// IsSpace returns true if c is a white-space character
 func IsSpace(c byte) bool {
 	return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v'
 }

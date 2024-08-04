@@ -39,12 +39,8 @@ type HTTPGeocoder struct {
 	ResponseParserFactory
 }
 
-// Geocode returns location for address
-func (g HTTPGeocoder) Geocode(address string) (*Location, error) {
+func (g HTTPGeocoder) GeocodeWithContext(ctx context.Context, address string) (*Location, error) {
 	responseParser := g.ResponseParserFactory()
-
-	ctx, cancel := context.WithTimeout(context.TODO(), DefaultTimeout)
-	defer cancel()
 
 	type geoResp struct {
 		l *Location
@@ -73,6 +69,14 @@ func (g HTTPGeocoder) Geocode(address string) (*Location, error) {
 	case res := <-ch:
 		return res.l, res.e
 	}
+}
+
+// Geocode returns location for address
+func (g HTTPGeocoder) Geocode(address string) (*Location, error) {
+	ctx, cancel := context.WithTimeout(context.TODO(), DefaultTimeout)
+	defer cancel()
+
+	return g.GeocodeWithContext(ctx, address)
 }
 
 // ReverseGeocode returns address for location
@@ -118,6 +122,8 @@ func response(ctx context.Context, url string, obj ResponseParser) error {
 		return err
 	}
 	req = req.WithContext(ctx)
+
+	req.Header.Add("User-Agent", "geo-golang/1.0")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

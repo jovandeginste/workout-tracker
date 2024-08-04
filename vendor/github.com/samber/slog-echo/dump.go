@@ -36,15 +36,15 @@ func (w *bodyWriter) Write(b []byte) (int, error) {
 
 // implements http.Flusher
 func (w *bodyWriter) Flush() {
-	if w.ResponseWriter.(http.Flusher) != nil {
-		w.ResponseWriter.(http.Flusher).Flush()
+	if f, ok := w.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
 	}
 }
 
 // implements http.Hijacker
 func (w *bodyWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
-	if w.ResponseWriter.(http.Hijacker) != nil {
-		return w.ResponseWriter.(http.Hijacker).Hijack()
+	if hi, ok := w.ResponseWriter.(http.Hijacker); ok {
+		return hi.Hijack()
 	}
 
 	return nil, nil, errors.New("Hijack not supported")

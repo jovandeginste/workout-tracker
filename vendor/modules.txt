@@ -2,8 +2,8 @@
 ## explicit; go 1.20
 filippo.io/edwards25519
 filippo.io/edwards25519/field
-# github.com/BurntSushi/toml v1.3.2
-## explicit; go 1.16
+# github.com/BurntSushi/toml v1.4.0
+## explicit; go 1.18
 github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
 # github.com/KyleBanks/depth v1.2.1
@@ -12,7 +12,7 @@ github.com/KyleBanks/depth
 # github.com/Masterminds/goutils v1.1.1
 ## explicit
 github.com/Masterminds/goutils
-# github.com/Masterminds/semver/v3 v3.2.0
+# github.com/Masterminds/semver/v3 v3.2.1
 ## explicit; go 1.18
 github.com/Masterminds/semver/v3
 # github.com/Masterminds/sprig/v3 v3.2.3
@@ -36,8 +36,8 @@ github.com/cat-dealer/go-rand/v2
 ## explicit
 github.com/client9/misspell
 github.com/client9/misspell/cmd/misspell
-# github.com/codingsince1985/geo-golang v1.8.3
-## explicit; go 1.19
+# github.com/codingsince1985/geo-golang v1.8.4
+## explicit; go 1.22.4
 github.com/codingsince1985/geo-golang
 # github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 ## explicit
@@ -82,7 +82,7 @@ github.com/golang-jwt/jwt
 # github.com/golang-jwt/jwt/v5 v5.2.1
 ## explicit; go 1.18
 github.com/golang-jwt/jwt/v5
-# github.com/gomarkdown/markdown v0.0.0-20240419095408-642f0ee99ae2
+# github.com/gomarkdown/markdown v0.0.0-20240730141124-034f12af3bf6
 ## explicit; go 1.12
 github.com/gomarkdown/markdown
 github.com/gomarkdown/markdown/ast
@@ -120,29 +120,28 @@ github.com/hashicorp/hcl/hcl/token
 github.com/hashicorp/hcl/json/parser
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
-# github.com/huandu/xstrings v1.3.3
+# github.com/huandu/xstrings v1.5.0
 ## explicit; go 1.12
 github.com/huandu/xstrings
-# github.com/imdario/mergo v0.3.11
+# github.com/imdario/mergo v0.3.16
 ## explicit; go 1.13
 github.com/imdario/mergo
 # github.com/jackc/pgpassfile v1.0.0
 ## explicit; go 1.12
 github.com/jackc/pgpassfile
-# github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb9
+# github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761
 ## explicit; go 1.14
 github.com/jackc/pgservicefile
-# github.com/jackc/pgx/v5 v5.5.5
-## explicit; go 1.19
+# github.com/jackc/pgx/v5 v5.6.0
+## explicit; go 1.20
 github.com/jackc/pgx/v5
-github.com/jackc/pgx/v5/internal/anynil
 github.com/jackc/pgx/v5/internal/iobufpool
 github.com/jackc/pgx/v5/internal/pgio
 github.com/jackc/pgx/v5/internal/sanitize
 github.com/jackc/pgx/v5/internal/stmtcache
 github.com/jackc/pgx/v5/pgconn
+github.com/jackc/pgx/v5/pgconn/ctxwatch
 github.com/jackc/pgx/v5/pgconn/internal/bgreader
-github.com/jackc/pgx/v5/pgconn/internal/ctxwatch
 github.com/jackc/pgx/v5/pgproto3
 github.com/jackc/pgx/v5/pgtype
 github.com/jackc/pgx/v5/pgxpool
@@ -179,7 +178,7 @@ github.com/labstack/echo/v4/middleware
 github.com/labstack/gommon/bytes
 github.com/labstack/gommon/color
 github.com/labstack/gommon/log
-# github.com/lmittmann/tint v1.0.4
+# github.com/lmittmann/tint v1.0.5
 ## explicit; go 1.21
 github.com/lmittmann/tint
 # github.com/magiconair/properties v1.8.7
@@ -199,17 +198,17 @@ github.com/mattn/go-isatty
 # github.com/mdempsky/unconvert v0.0.0-20230907125504-415706980c06
 ## explicit; go 1.20
 github.com/mdempsky/unconvert
-# github.com/microcosm-cc/bluemonday v1.0.26
-## explicit; go 1.21
+# github.com/microcosm-cc/bluemonday v1.0.27
+## explicit; go 1.19
 github.com/microcosm-cc/bluemonday
 github.com/microcosm-cc/bluemonday/css
-# github.com/mitchellh/copystructure v1.0.0
-## explicit
+# github.com/mitchellh/copystructure v1.2.0
+## explicit; go 1.15
 github.com/mitchellh/copystructure
 # github.com/mitchellh/mapstructure v1.5.0
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
-# github.com/mitchellh/reflectwalk v1.0.0
+# github.com/mitchellh/reflectwalk v1.0.2
 ## explicit
 github.com/mitchellh/reflectwalk
 # github.com/ncruces/go-strftime v0.1.9
@@ -235,20 +234,22 @@ github.com/pmezard/go-difflib/difflib
 # github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
 ## explicit; go 1.12
 github.com/remyoudompheng/bigfft
-# github.com/sagikazarmark/locafero v0.4.0
+# github.com/sagikazarmark/locafero v0.6.0
 ## explicit; go 1.20
 github.com/sagikazarmark/locafero
 # github.com/sagikazarmark/slog-shim v0.1.0
 ## explicit; go 1.20
 github.com/sagikazarmark/slog-shim
-# github.com/samber/lo v1.39.0
+# github.com/samber/lo v1.46.0
 ## explicit; go 1.18
 github.com/samber/lo
-# github.com/samber/slog-echo v1.14.1
+github.com/samber/lo/internal/constraints
+github.com/samber/lo/internal/rand
+# github.com/samber/slog-echo v1.14.4
 ## explicit; go 1.21
 github.com/samber/slog-echo
-# github.com/shopspring/decimal v1.2.0
-## explicit; go 1.13
+# github.com/shopspring/decimal v1.4.0
+## explicit; go 1.10
 github.com/shopspring/decimal
 # github.com/sourcegraph/conc v0.3.0
 ## explicit; go 1.19
@@ -270,8 +271,8 @@ github.com/spf13/cast
 # github.com/spf13/pflag v1.0.5
 ## explicit; go 1.12
 github.com/spf13/pflag
-# github.com/spf13/viper v1.18.2
-## explicit; go 1.18
+# github.com/spf13/viper v1.19.0
+## explicit; go 1.20
 github.com/spf13/viper
 github.com/spf13/viper/internal/encoding
 github.com/spf13/viper/internal/encoding/dotenv
@@ -328,43 +329,43 @@ github.com/vorlif/spreak/localize
 # github.com/westphae/geomag v1.0.2
 ## explicit; go 1.13
 github.com/westphae/geomag/pkg/egm96
-# go.opentelemetry.io/otel v1.26.0
+# go.opentelemetry.io/otel v1.28.0
 ## explicit; go 1.21
 go.opentelemetry.io/otel/attribute
 go.opentelemetry.io/otel/codes
 go.opentelemetry.io/otel/internal
 go.opentelemetry.io/otel/internal/attribute
-# go.opentelemetry.io/otel/trace v1.26.0
+# go.opentelemetry.io/otel/trace v1.28.0
 ## explicit; go 1.21
 go.opentelemetry.io/otel/trace
 go.opentelemetry.io/otel/trace/embedded
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.23.0
-## explicit; go 1.18
+# golang.org/x/crypto v0.25.0
+## explicit; go 1.20
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/scrypt
-# golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
+# golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal
 golang.org/x/exp/slog/internal/buffer
-# golang.org/x/exp/typeparams v0.0.0-20240506185415-9bf2ced13842
+# golang.org/x/exp/typeparams v0.0.0-20240719175910-8a7402abbf56
 ## explicit; go 1.18
 golang.org/x/exp/typeparams
-# golang.org/x/mod v0.17.0
+# golang.org/x/mod v0.19.0
 ## explicit; go 1.18
 golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/module
 golang.org/x/mod/semver
-# golang.org/x/net v0.25.0
+# golang.org/x/net v0.27.0
 ## explicit; go 1.18
 golang.org/x/net/html
 golang.org/x/net/html/atom
@@ -378,11 +379,11 @@ golang.org/x/net/idna
 ## explicit; go 1.18
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.20.0
+# golang.org/x/sys v0.22.0
 ## explicit; go 1.18
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/text v0.15.0
+# golang.org/x/text v0.16.0
 ## explicit; go 1.18
 golang.org/x/text/cases
 golang.org/x/text/encoding
@@ -420,7 +421,7 @@ golang.org/x/text/width
 # golang.org/x/time v0.5.0
 ## explicit; go 1.18
 golang.org/x/time/rate
-# golang.org/x/tools v0.21.0
+# golang.org/x/tools v0.23.0
 ## explicit; go 1.19
 golang.org/x/tools/cmd/goimports
 golang.org/x/tools/go/analysis
@@ -430,7 +431,6 @@ golang.org/x/tools/go/ast/inspector
 golang.org/x/tools/go/buildutil
 golang.org/x/tools/go/gcexportdata
 golang.org/x/tools/go/internal/cgo
-golang.org/x/tools/go/internal/packagesdriver
 golang.org/x/tools/go/loader
 golang.org/x/tools/go/packages
 golang.org/x/tools/go/types/objectpath
@@ -457,13 +457,13 @@ gopkg.in/ini.v1
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# gorm.io/driver/mysql v1.5.6
+# gorm.io/driver/mysql v1.5.7
 ## explicit; go 1.14
 gorm.io/driver/mysql
-# gorm.io/driver/postgres v1.5.7
-## explicit; go 1.18
+# gorm.io/driver/postgres v1.5.9
+## explicit; go 1.19
 gorm.io/driver/postgres
-# gorm.io/gorm v1.25.10
+# gorm.io/gorm v1.25.11
 ## explicit; go 1.18
 gorm.io/gorm
 gorm.io/gorm/callbacks
@@ -514,7 +514,7 @@ honnef.co/go/tools/staticcheck/fakereflect
 honnef.co/go/tools/staticcheck/fakexml
 honnef.co/go/tools/stylecheck
 honnef.co/go/tools/unused
-# modernc.org/libc v1.50.7
+# modernc.org/libc v1.56.0
 ## explicit; go 1.20
 modernc.org/libc
 modernc.org/libc/errno
@@ -548,7 +548,7 @@ modernc.org/mathutil
 # modernc.org/memory v1.8.0
 ## explicit; go 1.18
 modernc.org/memory
-# modernc.org/sqlite v1.29.10
+# modernc.org/sqlite v1.31.1
 ## explicit; go 1.20
 modernc.org/sqlite/lib
 # mvdan.cc/gofumpt v0.6.0
