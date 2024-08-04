@@ -31,11 +31,6 @@ type Workout struct {
 	Data      *MapData    `json:",omitempty"`                                    // The map data associated with the workout
 	GPX       *GPXData    `json:",omitempty"`                                    // The file data associated with the workout
 	Equipment []Equipment `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
-
-	MapData  *MapData `gorm:"serializer:json;column:data" json:"-"` // To be removed
-	GPXData  []byte   `gorm:"type:text" json:"-"`                   // To be removed
-	Filename string   `json:"-"`                                    // To be removed
-	Checksum []byte   `gorm:"default:'legacy'" json:"-"`            // To be removed
 }
 
 type GPXData struct {

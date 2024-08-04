@@ -71,8 +71,6 @@ type MapData struct {
 	Details          *MapDataDetails `json:",omitempty"` // The details of the workout
 	TotalRepetitions int             // The number of repetitions of the workout
 	TotalWeight      float64         // The weight of the workout
-
-	Points []MapPoint `gorm:"serializer:json" json:"-"` // To be removed
 }
 
 type MapDataDetails struct {
