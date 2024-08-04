@@ -118,7 +118,9 @@ go-cover:
 
 update-deps:
 	npm update
-	go get -d -t ./...
+	go get -u -d -t ./...
+	go mod tidy
+	go mod vendor
 
 changelog:
 	git cliff -o CHANGELOG.md
