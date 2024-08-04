@@ -8,7 +8,7 @@ OUTPUT_FILE ?= tmp/main
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build screenshots meta
+.PHONY: all clean test build screenshots meta translations
 
 all: clean install-deps test build
 
@@ -69,9 +69,9 @@ build-dist: clean-dist
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
-build-translations: generate-messages
+build-translations: translations
 
-generate-messages:
+translations:
 	xspreak -o translations/en.json -f json --template-keyword "i18n" -t "views/**/*.html"
 	prettier --write translations/*.json
 
