@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"errors"
 	"html/template"
+	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -141,6 +142,8 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	if u == nil {
 		return nil, ErrNoUser
 	}
+
+	filename = filepath.Base(filename)
 
 	gpxContent, err := converters.Parse(filename, content)
 	if err != nil {
