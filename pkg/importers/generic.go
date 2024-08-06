@@ -1,19 +1,25 @@
 package importers
 
 import (
+	"cmp"
 	"io"
-	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
-func importGeneric(_ http.Header, body io.ReadCloser) (*Content, error) {
+func importGeneric(c echo.Context, body io.ReadCloser) (*Content, error) {
+	name := cmp.Or(c.QueryParam("name"), "no-name")
+	t := cmp.Or(c.QueryParam("type"), "auto")
+
 	b, err := io.ReadAll(body)
 	if err != nil {
 		return nil, err
 	}
 
 	g := &Content{
-		Content: b,
-		Type:    "auto",
+		Filename: name,
+		Content:  b,
+		Type:     t,
 	}
 
 	return g, nil
