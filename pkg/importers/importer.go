@@ -4,7 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 var ErrUnsupportedProgram = errors.New("unsupported program")
@@ -16,14 +17,14 @@ type Content struct {
 	Type     string
 }
 
-func Import(program string, headers http.Header, body io.ReadCloser) (*Content, error) {
+func Import(program string, c echo.Context, body io.ReadCloser) (*Content, error) {
 	defer body.Close()
 
 	switch program {
 	case "generic":
-		return importGeneric(headers, body)
+		return importGeneric(c, body)
 	case "fitotrack":
-		return importFitotrack(headers, body)
+		return importFitotrack(c, body)
 	default:
 		return nil, fmt.Errorf("%w: %s", ErrUnsupportedProgram, program)
 	}
