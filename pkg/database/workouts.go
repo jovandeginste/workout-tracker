@@ -59,7 +59,19 @@ func (w *Workout) HasFile() bool {
 }
 
 func (w *Workout) HasTracks() bool {
+	if w.Data == nil {
+		return false
+	}
+
 	if w.Data.Center.IsZero() {
+		return false
+	}
+
+	if w.Data.Details == nil {
+		return false
+	}
+
+	if len(w.Data.Details.Points) == 0 {
 		return false
 	}
 

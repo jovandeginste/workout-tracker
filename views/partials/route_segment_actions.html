@@ -14,6 +14,11 @@
     <a class="{{ IconFor `refresh` }}"></a>
   </button>
 </form>
+<form action="{{ RouteFor `route-segment-matches` .ID }}" method="post">
+  <button title="{{ i18n `find matches` }}">
+    <a class="{{ IconFor `route-segment` }}"></a>
+  </button>
+</form>
 <form onsubmit="return false">
   <button
     onclick="openModal('modalConfirmDelete_{{ .ID }}')"

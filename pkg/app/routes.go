@@ -178,5 +178,6 @@ func (a *App) addRoutesSegments(e *echo.Group) {
 	routeSegmentsGroup.GET("/:id/edit", a.routeSegmentsEditHandler).Name = "route-segment-edit"
 	routeSegmentsGroup.POST("/:id/delete", a.routeSegmentsDeleteHandler).Name = "route-segment-delete"
 	routeSegmentsGroup.POST("/:id/refresh", a.routeSegmentsRefreshHandler).Name = "route-segment-refresh"
+	routeSegmentsGroup.POST("/:id/matches", a.routeSegmentFindMatches).Name = "route-segment-matches"
 	routeSegmentsGroup.GET("/add", a.routeSegmentsAddHandler).Name = "route-segment-add"
 }

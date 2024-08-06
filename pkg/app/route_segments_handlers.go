@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"net/http"
 	"path"
+	"strconv"
 	"strings"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
@@ -147,6 +148,34 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 	rs.Name = c.FormValue("name")
 	rs.Notes = c.FormValue("notes")
 
+	if err := rs.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
+	}
+
+	a.setNotice(c, "The route segment '%s' has been updated.", rs.Name)
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
+}
+
+func (a *App) routeSegmentFindMatches(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
+	}
+
+	rs, err := database.GetRouteSegment(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
+	}
+
+	db := a.db.Preload("Data.Details").Preload("User")
+
+	w, err := database.GetWorkouts(db)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
+	}
+
+	rs.Matches = rs.FindMatches(w)
 	if err := rs.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
 	}

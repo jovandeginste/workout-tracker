@@ -32,6 +32,9 @@ type RouteSegment struct {
 	Content  []byte `gorm:"type:text"`            // The file content
 	Checksum []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename string // The filename of the file
+
+	Dirty   bool                 // Whether the route segment should be recalculated
+	Matches []*RouteSegmentMatch `gorm:"serializer:json"` // The matches of the route segment
 }
 
 func NewRouteSegment(notes string, filename string, content []byte) (*RouteSegment, error) {
