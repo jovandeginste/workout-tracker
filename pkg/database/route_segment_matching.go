@@ -19,8 +19,7 @@ type RouteSegmentMatch struct {
 	Duration        time.Duration // The total duration of the route segment for this workout
 	Points          int           // The total number of points of the route segment for this workout
 
-	first, last MapPoint   // The first and last point of the route
-	points      []MapPoint // The points of the route
+	first, last, end MapPoint // The first and last point of the route
 }
 
 // NewRouteSegmentMatch will create a new route segment match from a workout and
@@ -34,9 +33,9 @@ func NewRouteSegmentMatch(workout *Workout, p, last int) *RouteSegmentMatch {
 		FirstID:     p,
 		LastID:      last,
 
-		first:  workout.Data.Details.Points[p],
-		last:   workout.Data.Details.Points[last],
-		points: workout.Data.Details.Points[p:last],
+		first: workout.Data.Details.Points[p],
+		last:  workout.Data.Details.Points[last],
+		end:   workout.Data.Details.Points[len(workout.Data.Details.Points)-1],
 	}
 
 	rs.calculate()
@@ -50,13 +49,24 @@ func (rsm *RouteSegmentMatch) IsBetterThan(current *RouteSegmentMatch) bool {
 	return current == nil || rsm.Distance < current.Distance
 }
 
+// MatchesDistance returns true if the distance of the route segment match is
+// within 2x the max delta of the distance of the current route segment
+func (rsm *RouteSegmentMatch) MatchesDistance(distance float64) bool {
+	return rsm.Distance > distance-MaxDeltaMeter &&
+		rsm.Distance < distance+2*MaxDeltaMeter
+}
+
 // calculate will calculate the total distance and duration of the route
 // segment, and the total number of points of this workout along the route
 // segment
 func (rsm *RouteSegmentMatch) calculate() {
-	rsm.Distance = rsm.last.TotalDistance - rsm.first.TotalDistance
-	rsm.Duration = rsm.last.TotalDuration - rsm.first.TotalDuration
-	rsm.Points = len(rsm.points)
+	if rsm.FirstID <= rsm.LastID {
+		rsm.Distance = rsm.last.TotalDistance - rsm.first.TotalDistance
+		rsm.Duration = rsm.last.TotalDuration - rsm.first.TotalDuration
+	} else {
+		rsm.Distance = rsm.last.TotalDistance + rsm.end.TotalDistance - rsm.first.TotalDistance
+		rsm.Duration = rsm.last.TotalDuration + rsm.end.TotalDuration - rsm.first.TotalDuration
+	}
 }
 
 // FindMatches will find all workouts that match the current route segment
@@ -100,10 +110,14 @@ func (rs *RouteSegment) Match(workout *Workout) *RouteSegmentMatch {
 
 	for _, p := range sp {
 		if last, ok := rs.MatchSegment(workout, p); ok {
-			rs := NewRouteSegmentMatch(workout, p, last)
+			rsm := NewRouteSegmentMatch(workout, p, last)
 
-			if rs.IsBetterThan(bestMatch) {
-				bestMatch = rs
+			if !rsm.MatchesDistance(rs.TotalDistance) {
+				continue
+			}
+
+			if rsm.IsBetterThan(bestMatch) {
+				bestMatch = rsm
 			}
 		}
 	}
@@ -121,6 +135,18 @@ func (rs *RouteSegment) MatchSegment(workout *Workout, start int) (int, bool) {
 	cur := 0
 
 	for i := start; i < len(workout.Data.Details.Points); i++ {
+		d := rs.Points[cur].DistanceTo(&workout.Data.Details.Points[i])
+		if d > MaxDeltaMeter {
+			continue
+		}
+
+		cur++
+		if cur == len(rs.Points) {
+			return i, true
+		}
+	}
+
+	for i := range start {
 		d := rs.Points[cur].DistanceTo(&workout.Data.Details.Points[i])
 		if d > MaxDeltaMeter {
 			continue
