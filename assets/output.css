@@ -2461,6 +2461,14 @@ table {
   content: "\f175";
 }
 
+.icon-arrow-right-arrow-left::before {
+  content: "\f0ec";
+}
+
+.icon-arrow-right-arrow-left::after {
+  content: "\f0ec";
+}
+
 .icon-arrow-up-long::before {
   content: "\f176";
 }
@@ -2555,6 +2563,14 @@ table {
 
 .icon-circle-exclamation::after {
   content: "\f06a";
+}
+
+.icon-circle-notch::before {
+  content: "\f1ce";
+}
+
+.icon-circle-notch::after {
+  content: "\f1ce";
 }
 
 .icon-circle-plus::before {

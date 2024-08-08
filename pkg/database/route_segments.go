@@ -18,6 +18,8 @@ type RouteSegment struct {
 	gorm.Model
 	Name          string       `gorm:"not null"` // The name of the workout
 	Notes         string       // The notes associated with the workout, in markdown
+	Bidirectional bool         // Whether the route segment is bidirectional
+	Circular      bool         // Whether the route segment is circular
 	GeoAddress    *geo.Address `gorm:"serializer:json"` // The address of the workout
 	AddressString string       // The generic location of the workout
 	Center        MapCenter    `gorm:"serializer:json"` // The center of the workout (in coordinates)
@@ -64,6 +66,8 @@ func (rs *RouteSegment) UpdateFromContent() error {
 	if err != nil {
 		return err
 	}
+
+	gpxContent.SimplifyTracks(MaxDeltaMeter / 2)
 
 	data := gpxAsMapData(gpxContent)
 

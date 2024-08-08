@@ -17,6 +17,16 @@
       <td>{{ .Address }}</td>
     </tr>
     <tr>
+      <td class="{{ IconFor `bidirectional` }}"></td>
+      <th>{{ i18n "Bidirectional" }}</th>
+      <td>{{ .Bidirectional | BoolToHTML }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `circular` }}"></td>
+      <th>{{ i18n "Circular" }}</th>
+      <td>{{ .Circular | BoolToHTML }}</td>
+    </tr>
+    <tr>
       <td class="{{ IconFor `distance` }}"></td>
       <th>{{ i18n "Total distance" }}</th>
       <td class="whitespace-nowrap font-mono">

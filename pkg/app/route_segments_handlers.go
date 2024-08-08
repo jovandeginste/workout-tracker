@@ -147,6 +147,8 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 
 	rs.Name = c.FormValue("name")
 	rs.Notes = c.FormValue("notes")
+	rs.Bidirectional = isChecked(c.FormValue("bidirectional"))
+	rs.Circular = isChecked(c.FormValue("circular"))
 
 	if err := rs.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)

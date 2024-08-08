@@ -39,6 +39,38 @@
                   </tr>
                   <tr>
                     <td>
+                      <label for="name">{{ i18n "Bidirectional" }}</label>
+                    </td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="bidirectional"
+                        id="bidirectional"
+                        {{
+                        .Bidirectional
+                        |
+                        BoolToCheckbox
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="name">{{ i18n "Circular" }}</label></td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="circular"
+                        id="circular"
+                        {{
+                        .Circular
+                        |
+                        BoolToCheckbox
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
                       <label for="notes">{{ i18n "Notes" }}</label>
                     </td>
                     <td>

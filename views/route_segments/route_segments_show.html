@@ -37,6 +37,7 @@
                   <th>{{ i18n "Workout" }}</th>
                   <th>{{ i18n "Distance" }}</th>
                   <th>{{ i18n "Duration" }}</th>
+                  <th>{{ i18n "Tempo" }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,6 +59,10 @@
                   </td>
                   <td class="whitespace-nowrap font-mono">
                     {{ .Duration | HumanDuration }}
+                  </td>
+                  <td class="whitespace-nowrap font-mono">
+                    {{ .AverageSpeed | HumanTempo }} {{
+                    CurrentUser.PreferredUnits.Tempo }}
                   </td>
                 </tr>
                 {{ end }}
