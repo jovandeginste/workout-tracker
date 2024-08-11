@@ -130,7 +130,7 @@ func (rs *RouteSegment) Save(db *gorm.DB) error {
 func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	var rs []*RouteSegment
 
-	if err := db.Preload("RouteSegmentMatches").Order("created_at DESC").Find(&rs).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches.Workout").Order("created_at DESC").Find(&rs).Error; err != nil {
 		return nil, err
 	}
 

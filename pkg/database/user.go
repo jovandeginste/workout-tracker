@@ -276,6 +276,10 @@ func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, fi
 		return nil, fmt.Errorf("%w: %s", ErrInvalidData, err)
 	}
 
+	if err := w.UpdateRouteSegmentMatches(db); err != nil {
+		return nil, err
+	}
+
 	if err := w.Create(db); err != nil {
 		return nil, err
 	}

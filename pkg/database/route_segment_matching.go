@@ -35,20 +35,21 @@ func (rsm *RouteSegmentMatch) AverageSpeed() float64 {
 
 // NewRouteSegmentMatch will create a new route segment match from a workout and
 // the first and last point of the route along the route segment
-func NewRouteSegmentMatch(workout *Workout, p, last int) *RouteSegmentMatch {
-	rs := &RouteSegmentMatch{
-		WorkoutID: workout.ID,
-		FirstID:   p,
-		LastID:    last,
+func (rs *RouteSegment) NewRouteSegmentMatch(workout *Workout, p, last int) *RouteSegmentMatch {
+	rsm := &RouteSegmentMatch{
+		RouteSegmentID: rs.ID,
+		WorkoutID:      workout.ID,
+		FirstID:        p,
+		LastID:         last,
 
 		first: workout.Data.Details.Points[p],
 		last:  workout.Data.Details.Points[last],
 		end:   workout.Data.Details.Points[len(workout.Data.Details.Points)-1],
 	}
 
-	rs.calculate()
+	rsm.calculate()
 
-	return rs
+	return rsm
 }
 
 // IsBetterThan returns true if the new route segment match is better than the
@@ -118,7 +119,7 @@ func (rs *RouteSegment) Match(workout *Workout) *RouteSegmentMatch {
 
 	for _, p := range sp {
 		if last, ok := rs.MatchSegment(workout, p, true); ok {
-			rsm := NewRouteSegmentMatch(workout, p, last)
+			rsm := rs.NewRouteSegmentMatch(workout, p, last)
 			if rsm.MatchesDistance(rs.TotalDistance) && rsm.IsBetterThan(bestMatch) {
 				bestMatch = rsm
 			}
@@ -129,7 +130,7 @@ func (rs *RouteSegment) Match(workout *Workout) *RouteSegmentMatch {
 		}
 
 		if last, ok := rs.MatchSegment(workout, p, false); ok {
-			rsm := NewRouteSegmentMatch(workout, p, last)
+			rsm := rs.NewRouteSegmentMatch(workout, p, last)
 			if rsm.MatchesDistance(rs.TotalDistance) && rsm.IsBetterThan(bestMatch) {
 				bestMatch = rsm
 			}
@@ -195,4 +196,24 @@ func (rs *RouteSegment) StartingPoints(points []MapPoint) []int {
 	}
 
 	return r
+}
+
+// FindMatches will find all workouts that match the current route segment
+// The result will contain a list of RouteSegmentMatches, which will contain
+// the workout, the point of the workout along the segment, and the total
+// distance and duration of the segment for this workout.
+func (w *Workout) FindMatches(routeSegments []*RouteSegment) []*RouteSegmentMatch {
+	if !w.HasTracks() {
+		return nil
+	}
+
+	var result []*RouteSegmentMatch
+
+	for _, rs := range routeSegments {
+		if m := rs.Match(w); m != nil {
+			result = append(result, m)
+		}
+	}
+
+	return result
 }
