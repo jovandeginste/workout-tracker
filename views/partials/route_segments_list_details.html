@@ -1,10 +1,13 @@
 {{ define "route_segment_list_details" }}
-<div class="route_Segment_list_details flex flex-wrap gap-3">
+<div class="route_segment_list_details flex flex-wrap gap-3">
   <div
-    class="hidden xl:table-cell {{ IconFor `location` }}"
+    class="table-cell {{ IconFor `location` }}"
     title="{{ i18n `Location` }}"
   >
     {{ .Address }}
   </div>
-  {{ end }}
+  <div class="table-cell {{ IconFor `totals` }}" title="{{ i18n `Matches` }}">
+    {{ .RouteSegmentMatches | len }}
+  </div>
 </div>
+{{ end }}

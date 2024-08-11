@@ -16,14 +16,15 @@ const MaxTotalDistancePercentage = 0.02
 
 // RouteSegmentMatch is a match between a route segment and a workout
 type RouteSegmentMatch struct {
-	Username        string        // The name of the user
-	UserID          uint          // The ID of the user
-	WorkoutName     string        // The name of the workout
-	WorkoutID       uint          // The ID of the workout
+	RouteSegmentID  uint          `gorm:"primaryKey"` // The ID of the route segment
+	WorkoutID       uint          `gorm:"primaryKey"` // The ID of the workout
 	FirstID, LastID int           // The index of the first and last point of the route
 	Distance        float64       // The total distance of the route segment for this workout
 	Duration        time.Duration // The total duration of the route segment for this workout
 	Points          int           // The total number of points of the route segment for this workout
+
+	Workout      *Workout
+	RouteSegment *RouteSegment
 
 	first, last, end MapPoint // The first and last point of the route
 }
@@ -36,12 +37,9 @@ func (rsm *RouteSegmentMatch) AverageSpeed() float64 {
 // the first and last point of the route along the route segment
 func NewRouteSegmentMatch(workout *Workout, p, last int) *RouteSegmentMatch {
 	rs := &RouteSegmentMatch{
-		Username:    workout.User.Name,
-		UserID:      workout.User.ID,
-		WorkoutName: workout.Name,
-		WorkoutID:   workout.ID,
-		FirstID:     p,
-		LastID:      last,
+		WorkoutID: workout.ID,
+		FirstID:   p,
+		LastID:    last,
 
 		first: workout.Data.Details.Points[p],
 		last:  workout.Data.Details.Points[last],

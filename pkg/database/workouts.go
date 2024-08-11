@@ -22,16 +22,17 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name      string      `gorm:"not null"`                                  // The name of the workout
-	Date      *time.Time  `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
-	UserID    uint        `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
-	Dirty     bool        // Whether the workout has been modified and the details should be re-rendered
-	User      *User       // The user who owns the workout
-	Notes     string      // The notes associated with the workout, in markdown
-	Type      WorkoutType // The type of the workout
-	Data      *MapData    `json:",omitempty"`                                    // The map data associated with the workout
-	GPX       *GPXData    `json:",omitempty"`                                    // The file data associated with the workout
-	Equipment []Equipment `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
+	Name                string              `gorm:"not null"`                                  // The name of the workout
+	Date                *time.Time          `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
+	UserID              uint                `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
+	Dirty               bool                // Whether the workout has been modified and the details should be re-rendered
+	User                *User               // The user who owns the workout
+	Notes               string              // The notes associated with the workout, in markdown
+	Type                WorkoutType         // The type of the workout
+	Data                *MapData            `json:",omitempty"`                                    // The map data associated with the workout
+	GPX                 *GPXData            `json:",omitempty"`                                    // The file data associated with the workout
+	Equipment           []Equipment         `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
+	RouteSegmentMatches []RouteSegmentMatch `json:",omitempty"`                                    // Which route segments match
 }
 
 type GPXData struct {
@@ -263,7 +264,7 @@ func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
-	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
+	return GetWorkoutWithGPX(db.Preload("RouteSegmentMatches.RouteSegment").Preload("Data.Details"), id)
 }
 
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {

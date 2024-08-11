@@ -177,9 +177,9 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	rs.Matches = rs.FindMatches(w)
+	rs.RouteSegmentMatches = rs.FindMatches(w)
 	if err := rs.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
 	a.setNotice(c, "The route segment '%s' has been updated.", rs.Name)

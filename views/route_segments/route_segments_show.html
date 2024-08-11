@@ -41,16 +41,16 @@
                 </tr>
               </thead>
               <tbody>
-                {{ range .Matches }}
+                {{ range .RouteSegmentMatches }}
                 <tr>
                   <td>
-                    <a href="{{ RouteFor `user-show` .UserID }}"
-                      >{{ .Username }}</a
+                    <a href="{{ RouteFor `user-show` .Workout.UserID }}"
+                      >{{ .Workout.User.Name }}</a
                     >
                   </td>
                   <td>
                     <a href="{{ RouteFor `workout-show` .WorkoutID }}"
-                      >{{ .WorkoutName }}</a
+                      >{{ .Workout.Name }}</a
                     >
                   </td>
                   <td class="whitespace-nowrap font-mono">

@@ -12,6 +12,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
 	"github.com/microcosm-cc/bluemonday"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type RouteSegment struct {
@@ -35,8 +36,8 @@ type RouteSegment struct {
 	Checksum []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename string // The filename of the file
 
-	Dirty   bool                 // Whether the route segment should be recalculated
-	Matches []*RouteSegmentMatch `gorm:"serializer:json"` // The matches of the route segment
+	Dirty               bool                 // Whether the route segment should be recalculated
+	RouteSegmentMatches []*RouteSegmentMatch // The matches of the route segment
 }
 
 func NewRouteSegment(notes string, filename string, content []byte) (*RouteSegment, error) {
@@ -88,7 +89,7 @@ func (rs *RouteSegment) UpdateFromContent() error {
 func GetRouteSegment(db *gorm.DB, id int) (*RouteSegment, error) {
 	var rs RouteSegment
 
-	if err := db.First(&rs, id).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches.Workout.User").First(&rs, id).Error; err != nil {
 		return nil, err
 	}
 
@@ -96,7 +97,7 @@ func GetRouteSegment(db *gorm.DB, id int) (*RouteSegment, error) {
 }
 
 func (rs *RouteSegment) Delete(db *gorm.DB) error {
-	return db.Unscoped().Delete(rs).Error
+	return db.Unscoped().Select(clause.Associations).Delete(rs).Error
 }
 
 func (rs *RouteSegment) Create(db *gorm.DB) error {
@@ -112,13 +113,19 @@ func (rs *RouteSegment) Save(db *gorm.DB) error {
 		return ErrInvalidData
 	}
 
+	if rs.RouteSegmentMatches != nil {
+		if err := db.Model(rs).Association("RouteSegmentMatches").Replace(rs.RouteSegmentMatches); err != nil {
+			return err
+		}
+	}
+
 	return db.Save(rs).Error
 }
 
 func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	var rs []*RouteSegment
 
-	if err := db.Order("created_at DESC").Find(&rs).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches").Order("created_at DESC").Find(&rs).Error; err != nil {
 		return nil, err
 	}
 
