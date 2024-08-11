@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"path/filepath"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -41,6 +42,14 @@ type GPXData struct {
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename  string // The filename of the file
+}
+
+func (w *Workout) GetDate() time.Time {
+	if w.Date == nil {
+		return time.Now()
+	}
+
+	return *w.Date
 }
 
 func (w *Workout) Filename() string {
@@ -264,15 +273,19 @@ func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
-	return GetWorkoutWithGPX(db.Preload("RouteSegmentMatches.RouteSegment").Preload("Data.Details"), id)
+	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
 }
 
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
-	if err := db.Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches.RouteSegment").Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
 		return nil, err
 	}
+
+	sort.Slice(w.RouteSegmentMatches, func(i, j int) bool {
+		return w.RouteSegmentMatches[i].Distance > w.RouteSegmentMatches[j].Distance
+	})
 
 	return &w, nil
 }

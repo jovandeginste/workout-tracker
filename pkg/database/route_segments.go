@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"html/template"
 	"path/filepath"
+	"sort"
 
 	"github.com/codingsince1985/geo-golang"
 	"github.com/gomarkdown/markdown"
@@ -92,6 +93,10 @@ func GetRouteSegment(db *gorm.DB, id int) (*RouteSegment, error) {
 	if err := db.Preload("RouteSegmentMatches.Workout.User").First(&rs, id).Error; err != nil {
 		return nil, err
 	}
+
+	sort.Slice(rs.RouteSegmentMatches, func(i, j int) bool {
+		return rs.RouteSegmentMatches[i].Workout.GetDate().Before(rs.RouteSegmentMatches[j].Workout.GetDate())
+	})
 
 	return &rs, nil
 }
