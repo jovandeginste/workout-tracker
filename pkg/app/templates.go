@@ -134,9 +134,9 @@ func statisticSinceOptions() []string {
 		"3 months",
 		"6 months",
 		"1 year",
-		"2 year",
-		"5 year",
-		"10 year",
+		"2 years",
+		"5 years",
+		"10 years",
 	}
 }
 
