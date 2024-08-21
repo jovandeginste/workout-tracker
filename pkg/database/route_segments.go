@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/codingsince1985/geo-golang"
 	"github.com/gomarkdown/markdown"
@@ -12,9 +13,28 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
+
+type RoutSegmentCreationParams struct {
+	Name  string `form:"name"`
+	Start int    `form:"start"`
+	End   int    `form:"end"`
+}
+
+func (rscp *RoutSegmentCreationParams) Filename() string {
+	if rscp.Name == "" {
+		return "noname.gpx"
+	}
+
+	if strings.HasSuffix(rscp.Name, ".gpx") {
+		return rscp.Name
+	}
+
+	return rscp.Name + ".gpx"
+}
 
 type RouteSegment struct {
 	gorm.Model
@@ -61,6 +81,33 @@ func NewRouteSegment(notes string, filename string, content []byte) (*RouteSegme
 	}
 
 	return rs, nil
+}
+
+func RouteSegmentFromPoints(workout *Workout, params *RoutSegmentCreationParams) ([]byte, error) {
+	points := workout.Data.Details.Points[params.Start-1 : params.End-1]
+
+	s := gpx.GPXTrackSegment{}
+
+	for _, p := range points {
+		pt := gpx.GPXPoint{
+			Point: gpx.Point{
+				Latitude:  p.Lat,
+				Longitude: p.Lng,
+			},
+		}
+		s.AppendPoint(&pt)
+	}
+
+	newFile := &gpx.GPX{
+		Tracks: []gpx.GPXTrack{{Segments: []gpx.GPXTrackSegment{s}}},
+	}
+
+	content, err := newFile.ToXml(gpx.ToXmlParams{Version: "1.1", Indent: true})
+	if err != nil {
+		return nil, err
+	}
+
+	return content, nil
 }
 
 func (rs *RouteSegment) UpdateFromContent() error {

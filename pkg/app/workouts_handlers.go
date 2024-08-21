@@ -27,12 +27,12 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
 	w, err := database.GetWorkoutDetails(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
 	data["workout"] = w
@@ -114,11 +114,11 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 func (a *App) workoutsDownloadHandler(c echo.Context) error {
 	workout, err := a.getWorkout(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
 	if !workout.HasFile() {
-		return a.redirectWithError(c, a.echo.Reverse("route-segments"), errors.New("workout has no content"))
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), errors.New("workout has no content"))
 	}
 
 	basename := path.Base(workout.GPX.Filename)
@@ -133,10 +133,58 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 
 	workout, err := a.getWorkout(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
 	data["workout"] = workout
 
 	return c.Render(http.StatusOK, "workouts_edit.html", data)
+}
+
+func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	workout, err := database.GetWorkoutDetails(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	var params database.RoutSegmentCreationParams
+
+	if err := c.Bind(&params); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	content, err := database.RouteSegmentFromPoints(workout, &params)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	rs, err := database.AddRouteSegment(a.db, "", params.Filename(), content)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
+}
+
+func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
+	data := a.defaultData(c)
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	workout, err := database.GetWorkoutDetails(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	data["workout"] = workout
+
+	return c.Render(http.StatusOK, "workouts_route_segment.html", data)
 }

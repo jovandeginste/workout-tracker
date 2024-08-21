@@ -16,6 +16,11 @@
     <a class="{{ IconFor `refresh` }}"></a>
   </button>
 </form>
+<form action="{{ RouteFor `workout-route-segment` .ID }}" method="get">
+  <button title="{{ i18n `create route segment` }}">
+    <a class="{{ IconFor `route-segment` }}"></a>
+  </button>
+</form>
 {{ end }}
 <form onsubmit="return false">
   <button

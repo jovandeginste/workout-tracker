@@ -143,6 +143,8 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
+	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
+	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
 	workoutsGroup.GET("/form", a.workoutsFormHandler).Name = "workout-form"
 }

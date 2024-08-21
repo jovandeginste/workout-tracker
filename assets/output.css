@@ -1946,6 +1946,10 @@ table {
   width: 0.25rem;
 }
 
+.w-96 {
+  width: 24rem;
+}
+
 .shrink {
   flex-shrink: 1;
 }
