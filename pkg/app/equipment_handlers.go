@@ -79,11 +79,12 @@ func (a *App) equipmentUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
+	equipment.DefaultFor = nil
+	equipment.Active = (c.FormValue("active") == "true")
+
 	if err := c.Bind(equipment); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
-
-	equipment.Active = (c.FormValue("active") == "true")
 
 	if err := equipment.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
