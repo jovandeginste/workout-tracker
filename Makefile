@@ -5,8 +5,6 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 OUTPUT_FILE ?= tmp/main
 
-I18N_LANGUAGES ?= nl de fr it no
-LANG_TO_GENERATE = $(patsubst generate-translation-%,%,$@)
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
