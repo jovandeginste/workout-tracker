@@ -5,7 +5,11 @@
     <tr>
       <td class="{{ IconFor `file` }}"></td>
       <th>{{ i18n "File" }}</th>
-      <td>{{ .Filename }}</td>
+      <td>
+        {{ if gt (.Filename | len) 15 }}
+        <abbr title="{{ .Filename }}"> {{ printf "%.15s" .Filename }}...</abbr>
+        {{ else }} {{ .Filename }} {{ end }}
+      </td>
     </tr>
     {{ end }}
     <tr>

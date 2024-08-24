@@ -180,7 +180,7 @@
   }
 
   .workouts_list_details div {
-    @apply border px-2;
+    @apply border rounded-lg px-2;
     @apply border-neutral-500;
     @apply dark:border-neutral-500;
   }
@@ -225,10 +225,6 @@
     tr {
       @apply mb-2;
     }
-  }
-
-  .workout-tile-info {
-    @apply border rounded-lg py-1 px-2 text-xs font-mono;
   }
 
   .modal {
@@ -291,7 +287,7 @@
     @apply dark:bg-neutral-700 dark:border-neutral-500;
   }
   .workout-item {
-    @apply rounded-xl py-2 px-5 border;
+    @apply rounded-xl py-2 px-5 border min-h-[150px];
     @apply hover:brightness-110;
     @apply bg-neutral-300 border-neutral-500;
     @apply dark:bg-neutral-700 dark:border-neutral-500;

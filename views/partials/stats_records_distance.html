@@ -1,12 +1,7 @@
 {{ define "stats_record_distance_date" }}
-<span class="hidden 2xl:inline" title="{{ .Date | LocalDate }}">
+<span class="hidden xl:inline">
   <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-  ({{ .Date | RelativeDate }})
-</span>
-<span class="hidden xl:inline 2xl:hidden" title="{{ .Date | LocalDate }}">
-  <a href="{{ RouteFor `workout-show` .ID }}"
-    >{{ .Date.Format "2006-01-02 15:04" }}</a
-  >
+  <span class="hidden 2xl:inline"> ({{ .Date | RelativeDate }}) </span>
 </span>
 <span class="xl:hidden" title="{{ .Date | LocalDate }}">
   <a href="{{ RouteFor `workout-show` .ID }}"
