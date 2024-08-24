@@ -23,7 +23,11 @@
       <div class="gap-4">
         {{ if eq .User.ID CurrentUser.ID }}
         <span class="float-right actions">
-          {{ template "workout_actions" . }}
+          {{ if .Dirty }}
+          <span class="dirty {{ IconFor `refresh` }}">
+            {{ i18n "refresh in progress" }}
+          </span>
+          {{ end }} {{ template "workout_actions" . }}
         </span>
         {{ end }}
 

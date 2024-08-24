@@ -345,7 +345,9 @@ func (w *Workout) setData(data *MapData) {
 func (w *Workout) UpdateData(db *gorm.DB) error {
 	if !w.HasFile() {
 		// We only update data from (stored) GPX data
-		return nil
+		w.Dirty = false
+
+		return w.Save(db)
 	}
 
 	gpxContent, err := w.AsGPX()

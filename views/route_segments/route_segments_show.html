@@ -11,7 +11,11 @@
       {{ with .routeSegment }}
       <div class="gap-4">
         <span class="float-right actions">
-          {{ template "route_segment_actions" . }}
+          {{ if .Dirty }}
+          <span class="dirty {{ IconFor `refresh` }}">
+            {{ i18n "refresh in progress" }}
+          </span>
+          {{ end }} {{ template "route_segment_actions" . }}
         </span>
 
         <h2 class="{{ IconFor `route-segment` }}">

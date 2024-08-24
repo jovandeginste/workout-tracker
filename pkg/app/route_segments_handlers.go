@@ -60,7 +60,7 @@ func (a *App) addRouteSegment(c echo.Context) error {
 	}
 
 	if len(msg) > 0 {
-		a.setNotice(c, "Added %d new route segment(s): %s", len(msg), strings.Join(msg, "; "))
+		a.setNotice(c, "Added %d new route segment(s): %s - we search for matches in the background.", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
@@ -149,6 +149,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 	rs.Notes = c.FormValue("notes")
 	rs.Bidirectional = isChecked(c.FormValue("bidirectional"))
 	rs.Circular = isChecked(c.FormValue("circular"))
+	rs.Dirty = true
 
 	if err := rs.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
@@ -170,19 +171,12 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	db := a.db.Preload("Data.Details").Preload("User")
-
-	w, err := database.GetWorkouts(db)
-	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
-	}
-
-	rs.RouteSegmentMatches = rs.FindMatches(w)
+	rs.Dirty = true
 	if err := rs.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The route segment '%s' has been updated.", rs.Name)
+	a.setNotice(c, "Start searching in the background for matching workouts for route segment '%s'.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }

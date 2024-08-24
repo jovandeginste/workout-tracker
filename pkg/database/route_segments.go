@@ -63,13 +63,15 @@ type RouteSegment struct {
 
 func NewRouteSegment(notes string, filename string, content []byte) (*RouteSegment, error) {
 	filename = filepath.Base(filename)
+	name := strings.TrimSuffix(filename, ".gpx")
 
 	h := sha256.New()
 	h.Write(content)
 
 	rs := &RouteSegment{
-		Name:  filename,
+		Name:  name,
 		Notes: notes,
+		Dirty: true,
 
 		Content:  content,
 		Checksum: h.Sum(nil),
@@ -89,17 +91,19 @@ func RouteSegmentFromPoints(workout *Workout, params *RoutSegmentCreationParams)
 	s := gpx.GPXTrackSegment{}
 
 	for _, p := range points {
-		pt := gpx.GPXPoint{
-			Point: gpx.Point{
-				Latitude:  p.Lat,
-				Longitude: p.Lng,
-			},
+		gpxPoint := gpx.Point{
+			Latitude:  p.Lat,
+			Longitude: p.Lng,
+			Elevation: *gpx.NewNullableFloat64(p.ExtraMetrics.Get("elevation")),
 		}
+
+		pt := gpx.GPXPoint{Point: gpxPoint}
 		s.AppendPoint(&pt)
 	}
 
 	newFile := &gpx.GPX{
-		Tracks: []gpx.GPXTrack{{Segments: []gpx.GPXTrackSegment{s}}},
+		Creator: "Workout Tracker",
+		Tracks:  []gpx.GPXTrack{{Segments: []gpx.GPXTrackSegment{s}}},
 	}
 
 	content, err := newFile.ToXml(gpx.ToXmlParams{Version: "1.1", Indent: true})

@@ -168,6 +168,8 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
+	a.setNotice(c, "The route segment '%s' has been created - we search for matches in the background.", rs.Name)
+
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }
 

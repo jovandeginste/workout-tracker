@@ -20,6 +20,7 @@ var correctAltitudeCreators = []string{
 	"Garmin", "Garmin Connect",
 	"Apple Watch",
 	"StravaGPX iPhone", "StravaGPX",
+	"Workout Tracker",
 }
 
 func creatorNeedsCorrection(creator string) bool {

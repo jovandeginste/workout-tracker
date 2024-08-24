@@ -28,6 +28,12 @@
     @apply list-disc list-inside my-5;
   }
 
+  .dirty {
+    @apply text-sm pill;
+    @apply text-amber-600 border-amber-600;
+    @apply dark:text-amber-300 dark:border-amber-300;
+  }
+
   textarea,
   select,
   input {
@@ -266,15 +272,19 @@
     }
   }
 
+  .user-pill {
+    @apply pill;
+  }
+
   .selectable-pill {
-    @apply user-pill;
+    @apply pill;
     @apply hover:brightness-125 cursor-pointer;
 
     @apply bg-red-400  peer-checked:bg-green-400 border-red-500 peer-checked:border-red-500;
     @apply dark:bg-red-800 dark:peer-checked:bg-green-800 dark:border-red-700 dark:peer-checked:border-green-700;
   }
 
-  .user-pill {
+  .pill {
     @apply inline-block rounded-full m-1 min-w-[150px] py-2 px-5 border text-center;
     @apply hover:brightness-110;
     @apply bg-neutral-300 border-neutral-500;
