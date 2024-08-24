@@ -40,6 +40,9 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 		"CurrentUser":  func() *database.User { return u },
 		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
 		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
+		"array": func(els ...any) []any {
+			return els
+		},
 
 		"HumanElevation": templatehelpers.HumanElevationFor(u.PreferredUnits().Elevation()),
 		"HumanDistance":  templatehelpers.HumanDistanceFor(u.PreferredUnits().Distance()),
@@ -58,7 +61,10 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 	h := a.humanizer.CreateHumanizer(language.English)
 
 	return template.FuncMap{
-		"i18n":        echoFunc,
+		"i18n": echoFunc,
+		"array": func(els ...any) []any {
+			return els
+		},
 		"Version":     func() *Version { return &a.Version },
 		"AppConfig":   func() *database.Config { return &a.Config },
 		"language":    func() string { return BrowserLanguage },

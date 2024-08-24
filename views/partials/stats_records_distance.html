@@ -1,4 +1,12 @@
-{{ define "stats_record_distance_date" }}
+{{ define "stats_record_speed" }} {{ if eq (index . 0) "running"}}<abbr
+  title="{{ (index . 1) | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}"
+  >{{ (index . 1) | HumanTempo }} {{ CurrentUser.PreferredUnits.Tempo }}</abbr
+>
+{{ else }}<abbr
+  title="{{ (index . 1) | HumanTempo }} {{ CurrentUser.PreferredUnits.Tempo }}"
+  >{{ (index . 1) | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}</abbr
+>
+{{ end}} {{ end }} {{ define "stats_record_distance_date" }}
 <span class="hidden 2xl:inline" title="{{ .Date | LocalDate }}">
   <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
   ({{ .Date | RelativeDate }})
@@ -20,17 +28,16 @@
 </h3>
 <table class="workout-info table-auto">
   <tbody>
-    {{ with .AverageSpeed }}
     <tr>
       <th>
         <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ template "stats_record_speed" (array .WorkoutType.String
+        .AverageSpeed.Value) }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .AverageSpeed }}</td>
     </tr>
-    {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
       <th>
         <span class="{{ IconFor `speed` }}"
@@ -38,21 +45,22 @@
         >
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ template "stats_record_speed" (array .WorkoutType.String
+        .AverageSpeedNoPause.Value) }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .AverageSpeedNoPause }}</td>
     </tr>
-    {{ end }} {{ with .MaxSpeed }}
     <tr>
       <th>
         <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ template "stats_record_speed" (array .WorkoutType.String
+        .MaxSpeed.Value) }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .MaxSpeed }}</td>
     </tr>
-    {{ end }} {{ with .Distance }}
+    {{ with .Distance }}
     <tr>
       <th>
         <span class="{{ IconFor `distance` }}"
