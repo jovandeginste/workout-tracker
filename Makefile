@@ -13,6 +13,7 @@ THEME_SCREENSHOT_HEIGHT ?= 900
 all: clean install-deps test build
 
 install-deps:
+	go install github.com/air-verse/air@latest
 	npm install
 
 clean:
