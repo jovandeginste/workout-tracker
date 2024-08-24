@@ -20,6 +20,7 @@ var correctAltitudeCreators = []string{
 	"Garmin", "Garmin Connect",
 	"Apple Watch",
 	"StravaGPX iPhone", "StravaGPX",
+	"Workout Tracker",
 }
 
 func creatorNeedsCorrection(creator string) bool {
@@ -152,6 +153,14 @@ func (m *MapData) AverageSpeedNoPause() float64 {
 
 func (m *MapPoint) AverageSpeed() float64 {
 	return m.Distance / m.Duration.Seconds()
+}
+
+func (m *MapPoint) DistanceTo(m2 *MapPoint) float64 {
+	if m == nil || m2 == nil {
+		return math.Inf(1)
+	}
+
+	return gpx.HaversineDistance(m.Lat, m.Lng, m2.Lat, m2.Lng)
 }
 
 // center returns the center point (lat, lng) of gpx points

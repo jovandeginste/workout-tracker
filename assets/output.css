@@ -502,6 +502,58 @@ ul {
   list-style-type: disc;
 }
 
+.dirty {
+  margin: 0.25rem;
+  display: inline-block;
+  min-width: 150px;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  text-align: center;
+}
+
+.dirty:hover {
+  --tw-brightness: brightness(1.1);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.dirty {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .dirty {
+    --tw-border-opacity: 1;
+    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  }
+}
+
+.dirty {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(217 119 6 / var(--tw-border-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(217 119 6 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .dirty {
+    --tw-border-opacity: 1;
+    border-color: rgb(252 211 77 / var(--tw-border-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(252 211 77 / var(--tw-text-opacity));
+  }
+}
+
 textarea,
   select,
   input {
@@ -1521,6 +1573,40 @@ table {
   }
 }
 
+.user-pill {
+  margin: 0.25rem;
+  display: inline-block;
+  min-width: 150px;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  text-align: center;
+}
+
+.user-pill:hover {
+  --tw-brightness: brightness(1.1);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.user-pill {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .user-pill {
+    --tw-border-opacity: 1;
+    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  }
+}
+
 .selectable-pill {
   margin: 0.25rem;
   display: inline-block;
@@ -1591,40 +1677,6 @@ table {
     border-color: rgb(21 128 61 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
     background-color: rgb(22 101 52 / var(--tw-bg-opacity));
-  }
-}
-
-.user-pill {
-  margin: 0.25rem;
-  display: inline-block;
-  min-width: 150px;
-  border-radius: 9999px;
-  border-width: 1px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  text-align: center;
-}
-
-.user-pill:hover {
-  --tw-brightness: brightness(1.1);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.user-pill {
-  --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  .user-pill {
-    --tw-border-opacity: 1;
-    border-color: rgb(115 115 115 / var(--tw-border-opacity));
-    --tw-bg-opacity: 1;
-    background-color: rgb(64 64 64 / var(--tw-bg-opacity));
   }
 }
 
@@ -1910,6 +1962,10 @@ table {
   display: table;
 }
 
+.table-cell {
+  display: table-cell;
+}
+
 .grid {
   display: grid;
 }
@@ -1940,6 +1996,10 @@ table {
 
 .w-1 {
   width: 0.25rem;
+}
+
+.w-96 {
+  width: 24rem;
 }
 
 .shrink {
@@ -2461,6 +2521,14 @@ table {
   content: "\f175";
 }
 
+.icon-arrow-right-arrow-left::before {
+  content: "\f0ec";
+}
+
+.icon-arrow-right-arrow-left::after {
+  content: "\f0ec";
+}
+
 .icon-arrow-up-long::before {
   content: "\f176";
 }
@@ -2555,6 +2623,14 @@ table {
 
 .icon-circle-exclamation::after {
   content: "\f06a";
+}
+
+.icon-circle-notch::before {
+  content: "\f1ce";
+}
+
+.icon-circle-notch::after {
+  content: "\f1ce";
 }
 
 .icon-circle-plus::before {
@@ -2835,6 +2911,14 @@ table {
 
 .icon-road::after {
   content: "\f018";
+}
+
+.icon-route::before {
+  content: "\f4d7";
+}
+
+.icon-route::after {
+  content: "\f4d7";
 }
 
 .icon-ruler::before {

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <div class="items-baseline flex flex-wrap">
+        <h2 class="grow justify-start {{ IconFor `route-segment` }}">
+          {{ i18n "Route segments" }} ({{ len .routeSegments }})
+        </h2>
+        <div class="justify-end mr-2">
+          <a
+            class="{{ IconFor `add` }}"
+            href="{{ RouteFor `route-segment-add` }}"
+            ><span>{{ i18n "Add route segment" }}</span></a
+          >
+        </div>
+      </div>
+
+      <table class="route-segment-info">
+        <thead>
+          <tr>
+            <th>{{ i18n "Name" }}</th>
+            <th class="hidden xl:table-cell">{{ i18n "Details"}}</th>
+            <th class="hidden lg:table-cell"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .routeSegments }}
+          <tr>
+            <td>
+              <a href="{{ RouteFor `route-segment-show` .ID }}">{{ .Name }}</a>
+            </td>
+            <th class="hidden xl:table-cell">
+              {{ template "route_segment_list_details" . }}
+            </th>
+            <td class="hidden lg:table-cell">
+              <span class="actions">
+                {{ template "route_segment_actions" . }}
+              </span>
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

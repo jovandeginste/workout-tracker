@@ -71,7 +71,7 @@ func (a *App) ConfigureWebserver() error {
 	userGroup.POST("/register", a.userRegisterHandler).Name = "user-register"
 	userGroup.GET("/signout", a.userSignoutHandler).Name = "user-signout"
 
-	sec := a.secureRoutes(publicGroup)
+	sec := a.addRoutesSecure(publicGroup)
 	a.adminRoutes(sec)
 
 	a.echo = e
@@ -102,7 +102,7 @@ func (a *App) ValidateUserMiddleware(ctx echo.Context) {
 	}
 }
 
-func (a *App) secureRoutes(e *echo.Group) *echo.Group {
+func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 	secureGroup := e.Group("")
 
 	secureGroup.Use(echojwt.WithConfig(echojwt.Config{
@@ -119,18 +119,22 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
 	secureGroup.POST("/lookup-address", a.lookupAddressHandler).Name = "lookup-address"
 
-	selfGroup := secureGroup.Group("/user")
-	selfGroup.GET("/profile", a.userProfileHandler).Name = "user-profile"
-	selfGroup.POST("/profile", a.userProfileUpdateHandler).Name = "user-profile-update"
-	selfGroup.POST("/profile/preferred-units", a.userProfilePreferredUnitsUpdateHandler).Name = "user-profile-preferred-units-update"
-	selfGroup.POST("/refresh", a.userRefreshHandler).Name = "user-refresh"
-	selfGroup.POST("/reset-api-key", a.userProfileResetAPIKeyHandler).Name = "user-profile-reset-api-key"
-	selfGroup.POST("/update-version", a.userUpdateVersion).Name = "user-update-version"
+	a.addRoutesSelf(secureGroup)
+	a.addRoutesUsers(secureGroup)
+	a.addRoutesEquipment(secureGroup)
+	a.addRoutesWorkouts(secureGroup)
+	a.addRoutesSegments(secureGroup)
 
-	usersGroup := secureGroup.Group("/users")
+	return secureGroup
+}
+
+func (a *App) addRoutesUsers(e *echo.Group) {
+	usersGroup := e.Group("/users")
 	usersGroup.GET("/:id", a.userShowHandler).Name = "user-show"
+}
 
-	workoutsGroup := secureGroup.Group("/workouts")
+func (a *App) addRoutesWorkouts(e *echo.Group) {
+	workoutsGroup := e.Group("/workouts")
 	workoutsGroup.GET("", a.workoutsHandler).Name = "workouts"
 	workoutsGroup.POST("", a.addWorkout).Name = "workouts-create"
 	workoutsGroup.GET("/:id", a.workoutsShowHandler).Name = "workout-show"
@@ -139,10 +143,14 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
+	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
+	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
 	workoutsGroup.GET("/form", a.workoutsFormHandler).Name = "workout-form"
+}
 
-	equipmentGroup := secureGroup.Group("/equipment")
+func (a *App) addRoutesEquipment(e *echo.Group) {
+	equipmentGroup := e.Group("/equipment")
 	equipmentGroup.GET("", a.equipmentHandler).Name = "equipment"
 	equipmentGroup.POST("", a.addEquipment).Name = "equipment-create"
 	equipmentGroup.GET("/:id", a.equipmentShowHandler).Name = "equipment-show"
@@ -150,6 +158,28 @@ func (a *App) secureRoutes(e *echo.Group) *echo.Group {
 	equipmentGroup.GET("/:id/edit", a.equipmentEditHandler).Name = "equipment-edit"
 	equipmentGroup.POST("/:id/delete", a.equipmentDeleteHandler).Name = "equipment-delete"
 	equipmentGroup.GET("/add", a.equipmentAddHandler).Name = "equipment-add"
+}
 
-	return secureGroup
+func (a *App) addRoutesSelf(e *echo.Group) {
+	selfGroup := e.Group("/user")
+	selfGroup.GET("/profile", a.userProfileHandler).Name = "user-profile"
+	selfGroup.POST("/profile", a.userProfileUpdateHandler).Name = "user-profile-update"
+	selfGroup.POST("/profile/preferred-units", a.userProfilePreferredUnitsUpdateHandler).Name = "user-profile-preferred-units-update"
+	selfGroup.POST("/refresh", a.userRefreshHandler).Name = "user-refresh"
+	selfGroup.POST("/reset-api-key", a.userProfileResetAPIKeyHandler).Name = "user-profile-reset-api-key"
+	selfGroup.POST("/update-version", a.userUpdateVersion).Name = "user-update-version"
+}
+
+func (a *App) addRoutesSegments(e *echo.Group) {
+	routeSegmentsGroup := e.Group("/route_segments")
+	routeSegmentsGroup.GET("", a.routeSegmentsHandler).Name = "route-segments"
+	routeSegmentsGroup.POST("", a.addRouteSegment).Name = "route-segments-create"
+	routeSegmentsGroup.GET("/:id", a.routeSegmentsShowHandler).Name = "route-segment-show"
+	routeSegmentsGroup.POST("/:id", a.routeSegmentsUpdateHandler).Name = "route-segment-update"
+	routeSegmentsGroup.GET("/:id/download", a.routeSegmentsDownloadHandler).Name = "route-segment-download"
+	routeSegmentsGroup.GET("/:id/edit", a.routeSegmentsEditHandler).Name = "route-segment-edit"
+	routeSegmentsGroup.POST("/:id/delete", a.routeSegmentsDeleteHandler).Name = "route-segment-delete"
+	routeSegmentsGroup.POST("/:id/refresh", a.routeSegmentsRefreshHandler).Name = "route-segment-refresh"
+	routeSegmentsGroup.POST("/:id/matches", a.routeSegmentFindMatches).Name = "route-segment-matches"
+	routeSegmentsGroup.GET("/add", a.routeSegmentsAddHandler).Name = "route-segment-add"
 }

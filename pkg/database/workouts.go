@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"path/filepath"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -22,16 +23,17 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	gorm.Model
-	Name      string      `gorm:"not null"`                                  // The name of the workout
-	Date      *time.Time  `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
-	UserID    uint        `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
-	Dirty     bool        // Whether the workout has been modified and the details should be re-rendered
-	User      *User       // The user who owns the workout
-	Notes     string      // The notes associated with the workout, in markdown
-	Type      WorkoutType // The type of the workout
-	Data      *MapData    `json:",omitempty"`                                    // The map data associated with the workout
-	GPX       *GPXData    `json:",omitempty"`                                    // The file data associated with the workout
-	Equipment []Equipment `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
+	Name                string               `gorm:"not null"`                                  // The name of the workout
+	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
+	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
+	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
+	User                *User                // The user who owns the workout
+	Notes               string               // The notes associated with the workout, in markdown
+	Type                WorkoutType          // The type of the workout
+	Data                *MapData             `json:",omitempty"`                                    // The map data associated with the workout
+	GPX                 *GPXData             `json:",omitempty"`                                    // The file data associated with the workout
+	Equipment           []Equipment          `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
+	RouteSegmentMatches []*RouteSegmentMatch `json:",omitempty"`                                    // Which route segments match
 }
 
 type GPXData struct {
@@ -40,6 +42,14 @@ type GPXData struct {
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	Filename  string // The filename of the file
+}
+
+func (w *Workout) GetDate() time.Time {
+	if w.Date == nil {
+		return time.Now()
+	}
+
+	return *w.Date
 }
 
 func (w *Workout) Filename() string {
@@ -59,7 +69,19 @@ func (w *Workout) HasFile() bool {
 }
 
 func (w *Workout) HasTracks() bool {
+	if w.Data == nil {
+		return false
+	}
+
 	if w.Data.Center.IsZero() {
+		return false
+	}
+
+	if w.Data.Details == nil {
+		return false
+	}
+
+	if len(w.Data.Details.Points) == 0 {
 		return false
 	}
 
@@ -257,9 +279,13 @@ func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
-	if err := db.Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches.RouteSegment").Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
 		return nil, err
 	}
+
+	sort.Slice(w.RouteSegmentMatches, func(i, j int) bool {
+		return w.RouteSegmentMatches[i].Distance > w.RouteSegmentMatches[j].Distance
+	})
 
 	return &w, nil
 }
@@ -283,6 +309,12 @@ func (w *Workout) Save(db *gorm.DB) error {
 
 	if err := w.Data.Save(db); err != nil {
 		return err
+	}
+
+	if w.RouteSegmentMatches != nil {
+		if err := db.Model(w).Association("RouteSegmentMatches").Replace(w.RouteSegmentMatches); err != nil {
+			return err
+		}
 	}
 
 	return db.Save(w).Error
@@ -313,7 +345,9 @@ func (w *Workout) setData(data *MapData) {
 func (w *Workout) UpdateData(db *gorm.DB) error {
 	if !w.HasFile() {
 		// We only update data from (stored) GPX data
-		return nil
+		w.Dirty = false
+
+		return w.Save(db)
 	}
 
 	gpxContent, err := w.AsGPX()
@@ -327,9 +361,24 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
+	if err := w.UpdateRouteSegmentMatches(db); err != nil {
+		return err
+	}
+
 	w.Dirty = false
 
 	return w.Save(db)
+}
+
+func (w *Workout) UpdateRouteSegmentMatches(db *gorm.DB) error {
+	routeSegments, err := GetRouteSegments(db)
+	if err != nil {
+		return err
+	}
+
+	w.RouteSegmentMatches = w.FindMatches(routeSegments)
+
+	return nil
 }
 
 func (w *Workout) HasElevation() bool {

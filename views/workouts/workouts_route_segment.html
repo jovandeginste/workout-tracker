@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    {{ template "head" }}
+    <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
+    <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
+    <script src="{{ RouteFor `assets` }}/dist/apexcharts.min.js"></script>
+    <script src="{{ RouteFor `assets` }}/route_segments.js"></script>
+    <link href="{{ RouteFor `assets` }}/dist/apexcharts.css" rel="stylesheet" />
+    <link
+      href="{{ RouteFor `assets` }}/dist/shareon.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="{{ RouteFor `assets` }}/dist/shareon.iife.js"
+      defer
+      init
+    ></script>
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      {{ with .workout }}
+      <div class="gap-4">
+        <h2 class="{{ IconFor .Type.String }}">{{ .Name }}</h2>
+      </div>
+      <div class="lg:flex lg:flex-wrap">
+        <div class="basis-1/2">
+          <div class="inner-form">
+            <div
+              id="map"
+              class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+            >
+              <script src="{{ RouteFor `assets` }}/map.js"></script>
+              <script>
+                points = [
+                    {{ with .Data.Details }}
+                    {{ range .Points -}}
+                    { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "distance": {{ .TotalDistance }} },
+                    {{ end  }}
+                    {{ end  }}
+                ]
+                editMap({
+                  elementID: "map",
+                  center: [{{ .Data.Center.Lat }}, {{ .Data.Center.Lng }}],
+                  points: points
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="basis-1/2">
+          <form
+            class="inner-form"
+            method="post"
+            action="{{ RouteFor `workout-route-segment-create` .ID }}"
+          >
+            <table>
+              <tbody>
+                <tr>
+                  <td><label for="name">{{ i18n "Name" }}</label></td>
+                  <td>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value="{{ .Name }}"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="start">{{ i18n "Start" }}</label></td>
+                  <td>
+                    <input
+                      class="w-96"
+                      type="range"
+                      id="start"
+                      name="start"
+                      min="1"
+                      max="{{ .Data.Details.Points | len }}"
+                      value="1"
+                      oninput="updateStart()"
+                    />
+                    <span id="start-show"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="end">{{ i18n "End" }}</label></td>
+                  <td>
+                    <input
+                      class="w-96"
+                      type="range"
+                      id="end"
+                      name="end"
+                      min="1"
+                      max="{{ .Data.Details.Points | len }}"
+                      value="{{ .Data.Details.Points | len }}"
+                      oninput="updateEnd()"
+                    />
+                    <span id="end-show"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="distance">{{ i18n "Distance" }}</label></td>
+                  <td>
+                    <span id="distance-show"></span>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button type="submit">
+                      {{ i18n "Create route segment" }}
+                    </button>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </form>
+          <script>
+            // When document is loaded, run functions
+            document.addEventListener("DOMContentLoaded", function () {
+              updateInfo();
+            });
+          </script>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+  <head>
+    {{ template "head" }}
+  </head>
+  <body>
+    {{ template "header" . }}
+    <div class="content">
+      <h2 class="{{ IconFor `route-segment-add` }}">
+        {{ i18n "Add a route segment" }}
+      </h2>
+      <div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+        <div>
+          <div class="inner-form">
+            <h3>{{ i18n "Use a file" }}</h3>
+            <form
+              method="post"
+              action="{{ RouteFor `route-segments-create` }}"
+              enctype="multipart/form-data"
+            >
+              <table class="sm:table-fixed">
+                <tbody>
+                  <tr>
+                    <td><label for="file">{{ i18n "File" }}</label></td>
+                    <td>
+                      <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept=".gpx, .fit, .tcx"
+                        multiple
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="notes">{{ i18n "Notes" }}</label>
+                    </td>
+                    <td>
+                      <textarea
+                        type="text"
+                        id="notes"
+                        name="notes"
+                        rows="10"
+                      ></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button type="submit">
+                        {{ i18n "Add route segment" }}
+                      </button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ template "footer" . }}
+  </body>
+</html>

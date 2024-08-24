@@ -61,6 +61,10 @@ func categoryIcon(what string) string {
 
 func miscIcon(what string) string {
 	switch what {
+	case "circular":
+		return iconDefaults + " icon-solid icon-circle-notch"
+	case "bidirectional":
+		return iconDefaults + " icon-solid icon-arrow-right-arrow-left"
 	case "units":
 		return iconDefaults + " icon-solid icon-ruler"
 	case "file":
@@ -129,7 +133,9 @@ func pageIcon(what string) string {
 		return iconDefaults + " icon-solid icon-dumbbell"
 	case "equipment":
 		return iconDefaults + " icon-solid icon-bicycle"
-	case "add", "workout-add", "equipment-add":
+	case "route-segment":
+		return iconDefaults + " icon-solid icon-route"
+	case "add", "workout-add", "equipment-add", "route-segment-add":
 		return iconDefaults + " icon-solid icon-circle-plus"
 	default:
 		return ""

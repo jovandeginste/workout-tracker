@@ -1,27 +1,24 @@
-{{ define "workout_actions" }} {{ if .HasFile }}
-<form action="{{ RouteFor `workout-download` .ID }}" method="get">
+{{ define "route_segment_actions" }}
+<form action="{{ RouteFor `route-segment-download` .ID }}" method="get">
   <button class="download" title="{{ i18n `download` }}">
     <a class="{{ IconFor `download` }}"></a>
   </button>
 </form>
-{{ end }}
-<form action="{{ RouteFor `workout-edit` .ID }}" method="get">
+<form action="{{ RouteFor `route-segment-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
     <a class="{{ IconFor `edit` }}"></a>
   </button>
 </form>
-{{ if .HasFile }}
-<form action="{{ RouteFor `workout-refresh` .ID }}" method="post">
+<form action="{{ RouteFor `route-segment-refresh` .ID }}" method="post">
   <button title="{{ i18n `refresh` }}">
     <a class="{{ IconFor `refresh` }}"></a>
   </button>
 </form>
-<form action="{{ RouteFor `workout-route-segment` .ID }}" method="get">
-  <button title="{{ i18n `create route segment` }}">
+<form action="{{ RouteFor `route-segment-matches` .ID }}" method="post">
+  <button title="{{ i18n `find matches` }}">
     <a class="{{ IconFor `route-segment` }}"></a>
   </button>
 </form>
-{{ end }}
 <form onsubmit="return false">
   <button
     onclick="openModal('modalConfirmDelete_{{ .ID }}')"
@@ -45,10 +42,10 @@
     </div>
 
     <div class="modal-content">
-      {{ $w := i18n "workout" }}
+      {{ $w := i18n "route segment" }}
       <h3>{{ i18n "Are you sure you want to delete this %s?" $w }}</h3>
       <div class="flex">
-        <form method="post" action="{{ RouteFor `workout-delete` .ID }}">
+        <form method="post" action="{{ RouteFor `route-segment-delete` .ID }}">
           <button class="confirm">{{ i18n "Continue" }}</button>
         </form>
         <form onsubmit="return false">

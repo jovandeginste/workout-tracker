@@ -40,6 +40,7 @@ func (a *App) bgLoop() {
 	l.Info("Worker started...")
 
 	a.updateWorkout(l)
+	a.updateRouteSegments(l)
 	a.autoImports(l)
 
 	l.Info("Worker finished...")
@@ -177,10 +178,38 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 	return false
 }
 
+func (a *App) updateRouteSegments(l *slog.Logger) {
+	var rsID []int
+
+	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(1000).Pluck("ID", &rsID)
+	if err := q.Error; err != nil {
+		l.Error("Worker error: " + err.Error())
+	}
+
+	if len(rsID) == 0 {
+		return
+	}
+
+	w, err := database.GetWorkouts(a.db.Preload("Data.Details").Preload("User"))
+	if err != nil {
+		return
+	}
+
+	for _, i := range rsID {
+		l.Info(fmt.Sprintf("Updating route segment %d", i))
+
+		if err := a.UpdateRouteSegment(i, w); err != nil {
+			l.Error("Worker error: " + err.Error())
+		}
+	}
+}
+
 func (a *App) updateWorkout(l *slog.Logger) {
 	var wID []int
 
-	q := a.db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(1000).Pluck("ID", &wID)
+	db := a.db.Preload("Data.Details").Preload("User")
+
+	q := db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(1000).Pluck("ID", &wID)
 	if err := q.Error; err != nil {
 		l.Error("Worker error: " + err.Error())
 	}
@@ -201,4 +230,16 @@ func (a *App) UpdateWorkout(i int) error {
 	}
 
 	return w.UpdateData(a.db)
+}
+
+func (a *App) UpdateRouteSegment(i int, w []*database.Workout) error {
+	rs, err := database.GetRouteSegment(a.db, i)
+	if err != nil {
+		return err
+	}
+
+	rs.RouteSegmentMatches = rs.FindMatches(w)
+	rs.Dirty = false
+
+	return rs.Save(a.db)
 }

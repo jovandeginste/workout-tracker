@@ -1,0 +1,78 @@
+{{ define "route_segment_details" }}
+<table>
+  <tbody>
+    {{ if .HasFile }}
+    <tr>
+      <td class="{{ IconFor `file` }}"></td>
+      <th>{{ i18n "File" }}</th>
+      <td>{{ .Filename }}</td>
+    </tr>
+    {{ end }}
+    <tr>
+      <td class="{{ IconFor `date` }}"></td>
+      <th>{{ i18n "Created" }}</th>
+      <td>{{ template "snippet_date" .CreatedAt }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `date` }}"></td>
+      <th>{{ i18n "Updated" }}</th>
+      <td>{{ template "snippet_date" .UpdatedAt }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `location` }}"></td>
+      <th>{{ i18n "Location" }}</th>
+      <td>{{ .Address }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `bidirectional` }}"></td>
+      <th>{{ i18n "Bidirectional" }}</th>
+      <td>{{ .Bidirectional | BoolToHTML }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `circular` }}"></td>
+      <th>{{ i18n "Circular" }}</th>
+      <td>{{ .Circular | BoolToHTML }}</td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `distance` }}"></td>
+      <th>{{ i18n "Total distance" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .TotalDistance | HumanDistance }} {{
+        CurrentUser.PreferredUnits.Distance }}
+      </td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `elevation` }}"></td>
+      <th>{{ i18n "Min elevation" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .MinElevation | HumanElevation }} {{
+        CurrentUser.PreferredUnits.Elevation }}
+      </td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `elevation` }}"></td>
+      <th>{{ i18n "Max elevation" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .MaxElevation | HumanElevation }} {{
+        CurrentUser.PreferredUnits.Elevation }}
+      </td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `up` }}"></td>
+      <th>{{ i18n "Total up" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .TotalUp | HumanElevation }} {{ CurrentUser.PreferredUnits.Elevation
+        }}
+      </td>
+    </tr>
+    <tr>
+      <td class="{{ IconFor `down` }}"></td>
+      <th>{{ i18n "Total down" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .TotalDown | HumanElevation }} {{
+        CurrentUser.PreferredUnits.Elevation }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+{{end}}
