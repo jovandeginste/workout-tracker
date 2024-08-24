@@ -1,6 +1,13 @@
 {{ define "workout_details" }}
 <table>
   <tbody>
+    {{ if .HasFile }}
+    <tr>
+      <td class="{{ IconFor `file` }}"></td>
+      <th>{{ i18n "File" }}</th>
+      <td>{{ .Filename }}</td>
+    </tr>
+    {{ end }}
     <tr>
       <td class="{{ IconFor `date` }}"></td>
       <th>{{ i18n "Date" }}</th>

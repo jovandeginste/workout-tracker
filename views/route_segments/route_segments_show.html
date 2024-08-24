@@ -18,12 +18,7 @@
           {{ end }} {{ template "route_segment_actions" . }}
         </span>
 
-        <h2 class="{{ IconFor `route-segment` }}">
-          {{ .Name }} {{ if ne .Name .Filename }} (<span
-            class="{{ IconFor `file` }}"
-            >{{ .Filename }}</span
-          >) {{ end }}
-        </h2>
+        <h2 class="{{ IconFor `route-segment` }}">{{ .Name }}</h2>
       </div>
       <div class="lg:flex lg:flex-wrap print:block">
         <div class="basis-1/2 2xl:basis-1/3 pagebreak">

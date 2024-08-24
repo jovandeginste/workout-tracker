@@ -61,6 +61,10 @@ type RouteSegment struct {
 	RouteSegmentMatches []*RouteSegmentMatch // The matches of the route segment
 }
 
+func (rs *RouteSegment) HasFile() bool {
+	return rs.Filename != "" && rs.Content != nil
+}
+
 func NewRouteSegment(notes string, filename string, content []byte) (*RouteSegment, error) {
 	filename = filepath.Base(filename)
 	name := strings.TrimSuffix(filename, ".gpx")
