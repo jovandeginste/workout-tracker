@@ -1,6 +1,10 @@
 package database
 
-import "slices"
+import (
+	"slices"
+
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+)
 
 type (
 	WorkoutType string
@@ -153,4 +157,16 @@ func (wt WorkoutType) IsLocation() bool {
 
 func AsWorkoutType(s string) WorkoutType {
 	return WorkoutType(s)
+}
+
+func (wt *WorkoutType) PreferredSpeedMetric(v float64, preferredUnits *UserPreferredUnits) string {
+	u := preferredUnits.Speed()
+	f := templatehelpers.HumanSpeedFor(u)
+
+	if *wt == WorkoutTypeRunning {
+		u = preferredUnits.Tempo()
+		f = templatehelpers.HumanTempoFor(u)
+	}
+
+	return f(v) + " " + u
 }

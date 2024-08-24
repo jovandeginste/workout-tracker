@@ -27,8 +27,7 @@
     class="hidden 2xl:table-cell whitespace-nowrap font-mono {{ IconFor `speed` }}"
     title="{{ i18n `Average speed` }}"
   >
-    {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
-    CurrentUser.PreferredUnits.Speed }}
+    {{ .PreferredAverageSpeedMetric CurrentUser.PreferredUnits }}
   </div>
   {{ end }} {{ if .Type.IsWeight }}
   <div
