@@ -181,6 +181,7 @@
 
   .workouts_list_details div {
     @apply border rounded-lg px-2;
+    @apply min-w-[100px] max-w-[150px] overflow-hidden whitespace-nowrap text-center text-ellipsis;
     @apply border-neutral-500;
     @apply dark:border-neutral-500;
   }

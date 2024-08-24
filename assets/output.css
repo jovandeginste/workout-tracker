@@ -1145,6 +1145,12 @@ form {
   border-width: 1px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  min-width: 100px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
   --tw-border-opacity: 1;
   border-color: rgb(115 115 115 / var(--tw-border-opacity));
 }
@@ -2044,10 +2050,6 @@ table {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grid-cols-3 {

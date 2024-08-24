@@ -21,14 +21,10 @@
         >
       </div>
     </div>
-    <div class="meta h-6 grid grid-cols-2 gap-4 text-sm mb-2">
-      <abbr
-        class="overflow-hidden"
-        title="{{ .Date | LocalDate }} ({{ .Date | RelativeDate }})"
-      >
+    <div class="meta h-6 text-sm mb-2">
+      <abbr class="overflow-hidden" title="{{ .Date | LocalDate }}">
         {{ .Date | RelativeDate }}
       </abbr>
-      <div class="overflow-hidden text-right">{{ .Address }}</div>
     </div>
     <span class="text-xs"> {{ template "workouts_list_details" . }} </span>
   </div>
