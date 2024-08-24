@@ -8,12 +8,15 @@ OUTPUT_FILE ?= tmp/main
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build screenshots meta translations
+.PHONY: all clean test build screenshots meta translations install-dev-deps install-deps
 
 all: clean install-deps test build
 
-install-deps:
+install-dev-deps:
+	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
+
+install-deps:
 	npm install
 
 clean:
