@@ -5,7 +5,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"math"
-	"strconv"
 
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/tormoder/fit"
@@ -58,13 +57,13 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 
 		if r.HeartRate != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "heart-rate"}, Data: strconv.Itoa(int(r.HeartRate)),
+				XMLName: xml.Name{Local: "heart-rate"}, Data: fmt.Sprintf("%d", r.HeartRate),
 			})
 		}
 
 		if r.Cadence != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "cadence"}, Data: strconv.Itoa(int(r.Cadence)),
+				XMLName: xml.Name{Local: "cadence"}, Data: fmt.Sprintf("%d", r.Cadence),
 			})
 		}
 

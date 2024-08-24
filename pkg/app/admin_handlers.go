@@ -68,7 +68,7 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-show", c.Param("id")))
 }
 
-func (a *App) adminUserDeleteHandler(c echo.Context) error {
+func (a *App) adminUserDeleteHandler(c echo.Context) error { //nolint:dupl
 	u, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("admin"), err)

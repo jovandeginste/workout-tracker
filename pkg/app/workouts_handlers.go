@@ -22,7 +22,7 @@ func (a *App) workoutsHandler(c echo.Context) error {
 	return c.Render(http.StatusOK, "workouts_list.html", data)
 }
 
-func (a *App) workoutsShowHandler(c echo.Context) error {
+func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
 	data := a.defaultData(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
@@ -173,7 +173,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }
 
-func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
+func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error { //nolint:dupl
 	data := a.defaultData(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
