@@ -1141,6 +1141,7 @@ form {
 }
 
 .workouts_list_details div {
+  border-radius: 0.5rem;
   border-width: 1px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1289,18 +1290,6 @@ table {
   tr {
     margin-bottom: 0.5rem;
   }
-}
-
-.workout-tile-info {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.75rem;
-  line-height: 1rem;
 }
 
 .modal {
@@ -1681,6 +1670,7 @@ table {
 }
 
 .workout-item {
+  min-height: 150px;
   border-radius: 0.75rem;
   border-width: 1px;
   padding-top: 0.5rem;
@@ -1982,6 +1972,10 @@ table {
   height: 0.25rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-\[300px\] {
   height: 300px;
 }
@@ -2202,6 +2196,11 @@ table {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .uppercase {
@@ -3142,10 +3141,6 @@ table {
 
   .\32xl\:table-cell {
     display: table-cell;
-  }
-
-  .\32xl\:hidden {
-    display: none;
   }
 
   .\32xl\:basis-1\/3 {

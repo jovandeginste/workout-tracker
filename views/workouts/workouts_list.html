@@ -22,9 +22,9 @@
           <tr>
             <th></th>
             <th>{{ i18n "Name" }}</th>
-            <th class="hidden sm:table-cell">{{ i18n "Date" }}</th>
-            <th class="hidden xl:table-cell">{{ i18n "Details"}}</th>
-            <th class="hidden lg:table-cell"></th>
+            <th>{{ i18n "Date" }}</th>
+            <th class="hidden lg:table-cell">{{ i18n "Details"}}</th>
+            <th class="hidden sm:table-cell"></th>
           </tr>
         </thead>
         <tbody>
@@ -37,15 +37,17 @@
               ></div>
             </td>
             <td>
-              <a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>
+              <a href="{{ RouteFor `workout-show` .ID }}">
+                {{ if gt (.Name | len) 20 }}
+                <abbr title="{{ .Name }}"> {{ printf "%.20s" .Name }}...</abbr>
+                {{ else }} {{ .Name }} {{ end }}
+              </a>
             </td>
-            <td class="hidden sm:table-cell">
-              {{ template "snippet_date" .Date }}
-            </td>
-            <th class="hidden xl:table-cell">
+            <td>{{ template "snippet_date" .Date }}</td>
+            <th class="hidden lg:table-cell">
               {{ template "workouts_list_details" . }}
             </th>
-            <td class="hidden lg:table-cell">
+            <td class="hidden sm:table-cell">
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>
           </tr>

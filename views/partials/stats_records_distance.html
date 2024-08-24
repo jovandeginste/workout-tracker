@@ -1,12 +1,7 @@
 {{ define "stats_record_distance_date" }}
-<span class="hidden 2xl:inline" title="{{ .Date | LocalDate }}">
+<span class="hidden xl:inline">
   <a href="{{ RouteFor `workout-show` .ID }}">{{ .Date | LocalDate }}</a>
-  ({{ .Date | RelativeDate }})
-</span>
-<span class="hidden xl:inline 2xl:hidden" title="{{ .Date | LocalDate }}">
-  <a href="{{ RouteFor `workout-show` .ID }}"
-    >{{ .Date.Format "2006-01-02 15:04" }}</a
-  >
+  <span class="hidden 2xl:inline"> ({{ .Date | RelativeDate }}) </span>
 </span>
 <span class="xl:hidden" title="{{ .Date | LocalDate }}">
   <a href="{{ RouteFor `workout-show` .ID }}"
@@ -20,17 +15,16 @@
 </h3>
 <table class="workout-info table-auto">
   <tbody>
-    {{ with .AverageSpeed }}
     <tr>
       <th>
         <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ .WorkoutType.PreferredSpeedMetric .AverageSpeed.Value
+        CurrentUser.PreferredUnits }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .AverageSpeed }}</td>
     </tr>
-    {{ end }} {{ with .AverageSpeedNoPause }}
     <tr>
       <th>
         <span class="{{ IconFor `speed` }}"
@@ -38,21 +32,22 @@
         >
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ .WorkoutType.PreferredSpeedMetric .AverageSpeedNoPause.Value
+        CurrentUser.PreferredUnits }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .AverageSpeedNoPause }}</td>
     </tr>
-    {{ end }} {{ with .MaxSpeed }}
     <tr>
       <th>
         <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
-        {{ .Value | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ .WorkoutType.PreferredSpeedMetric .MaxSpeed.Value
+        CurrentUser.PreferredUnits }}
       </td>
-      <td>{{ template "stats_record_distance_date" . }}</td>
+      <td>{{ template "stats_record_distance_date" .MaxSpeed }}</td>
     </tr>
-    {{ end }} {{ with .Distance }}
+    {{ with .Distance }}
     <tr>
       <th>
         <span class="{{ IconFor `distance` }}"

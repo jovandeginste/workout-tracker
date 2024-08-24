@@ -1,5 +1,5 @@
 {{ define "snippet_date" }} {{ if CurrentUser.ShowFullDate }}
-<span title="{{ . | RelativeDate }}"> {{ . | LocalDate }} </span>
+<abbr title="{{ . | RelativeDate }}"> {{ . | LocalDate }} </abbr>
 {{ else }}
-<span title="{{ . | LocalDate }}"> {{ . | RelativeDate }} </span>
+<abbr title="{{ . | LocalDate }}"> {{ . | RelativeDate }} </abbr>
 {{ end }} {{ end }}

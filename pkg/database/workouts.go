@@ -424,3 +424,7 @@ func (w *Workout) EquipmentIDs() []uint {
 func (w *Workout) Uses(e Equipment) bool {
 	return slices.Contains(w.EquipmentIDs(), e.ID)
 }
+
+func (w *Workout) PreferredAverageSpeedMetric(preferredUnits *UserPreferredUnits) template.HTML {
+	return w.Type.PreferredSpeedMetric(w.Data.AverageSpeedNoPause(), preferredUnits)
+}

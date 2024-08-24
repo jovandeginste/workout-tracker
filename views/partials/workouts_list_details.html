@@ -1,8 +1,8 @@
 {{ define "workouts_list_details" }}
-<div class="workouts_list_details flex flex-wrap gap-3">
+<div class="workouts_list_details flex flex-wrap gap-1">
   {{ if .Type.IsLocation }}
   <div
-    class="hidden xl:table-cell {{ IconFor `location` }}"
+    class="hidden 2xl:table-cell {{ IconFor `location` }}"
     title="{{ i18n `Location` }}"
   >
     {{ .Address }}
@@ -24,22 +24,21 @@
   </div>
   {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
   <div
-    class="hidden 2xl:table-cell whitespace-nowrap font-mono {{ IconFor `speed` }}"
+    class="hidden xl:table-cell whitespace-nowrap font-mono {{ IconFor `speed` }}"
     title="{{ i18n `Average speed` }}"
   >
-    {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
-    CurrentUser.PreferredUnits.Speed }}
+    {{ .PreferredAverageSpeedMetric CurrentUser.PreferredUnits }}
   </div>
   {{ end }} {{ if .Type.IsWeight }}
   <div
-    class="hidden sm:table-cell whitespace-nowrap font-mono {{ IconFor `weight` }}"
+    class="whitespace-nowrap font-mono {{ IconFor `weight` }}"
     title="{{ i18n `Weight` }}"
   >
     {{ .Weight }}
   </div>
   {{ end }}{{ if .Type.IsRepetition }}
   <div
-    class="hidden sm:table-cell whitespace-nowrap font-mono {{ IconFor `repetitions` }}"
+    class="whitespace-nowrap font-mono {{ IconFor `repetitions` }}"
     title="{{ i18n `Repetitions` }}"
   >
     {{ .Repetitions }}
