@@ -1,6 +1,8 @@
 package database
 
 import (
+	"html"
+	"html/template"
 	"slices"
 
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
@@ -159,14 +161,19 @@ func AsWorkoutType(s string) WorkoutType {
 	return WorkoutType(s)
 }
 
-func (wt *WorkoutType) PreferredSpeedMetric(v float64, preferredUnits *UserPreferredUnits) string {
-	u := preferredUnits.Speed()
-	f := templatehelpers.HumanSpeedFor(u)
+func (wt *WorkoutType) PreferredSpeedMetric(v float64, preferredUnits *UserPreferredUnits) template.HTML {
+	speedUnit := preferredUnits.Speed()
+	speedFormatter := templatehelpers.HumanSpeedFor(speedUnit)
+	primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit)
+	tempoUnit := preferredUnits.Tempo()
+	tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit)
+	secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit)
 
 	if *wt == WorkoutTypeRunning {
-		u = preferredUnits.Tempo()
-		f = templatehelpers.HumanTempoFor(u)
+		// Swap tempo and speed, so that tempo is primarily shown for running
+		primaryText, secondaryText = secondaryText, primaryText
 	}
 
-	return f(v) + " " + u
+	//nolint:gosec // We escaped all unsafe HTML
+	return template.HTML("<abbr title='" + secondaryText + "'>" + primaryText + "</abbr>")
 }
