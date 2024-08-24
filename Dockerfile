@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apk --no-cache add make
 
 COPY Makefile package.json package-lock.json ./
-RUN make install-deps
+RUN make install-deps-frontend
 COPY tailwind.config.js ./tailwind.config.js
 COPY main.css ./main.css
 COPY pkg ./pkg

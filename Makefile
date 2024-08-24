@@ -8,14 +8,16 @@ OUTPUT_FILE ?= tmp/main
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build screenshots meta translations
+.PHONY: all clean test build screenshots meta translations install-deps install-deps-frontend
 
 all: clean install-deps test build
 
-install-deps:
-	go install github.com/air-verse/air@latest
+install-deps-frontend:
 	npm install
 
+install-deps: install-deps-frontend
+	go install github.com/air-verse/air@latest
+	
 clean:
 	rm -fv ./assets/output.css ./workout-tracker
 	rm -rf ./tmp/ ./node_modules/ ./assets/dist/
