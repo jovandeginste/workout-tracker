@@ -74,7 +74,10 @@
           {{ range .Items -}}
           { "x": {{ .FirstPoint.Time }}, "y": {{ .FirstPoint.ExtraMetrics.Get "heart-rate" }}, },
           {{- end  }}
-        ],
+        ].map((p) => {
+          if(p.y <= 0) p.y = null;
+          return p;
+        }),
       },
       {
         name: "{{ i18n `Cadence` }}",
