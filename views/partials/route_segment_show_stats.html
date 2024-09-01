@@ -14,11 +14,11 @@
 
      const rootElement = document.getElementById("routeSegmentChart");
      const data = [
-     	{{ range .RouteSegmentMatches }}
-     		{{ if eq CurrentUser.ID .Workout.UserID  }}
-     			{ "x": new Date({{  .Workout.Date }}) ,  "y": {{ .AverageSpeed | HumanSpeed }} },
-     		{{ end }}
-     	{{ end }}
+       {{ range .RouteSegmentMatches }}
+         {{ if eq CurrentUser.ID .Workout.UserID  }}
+           { "x": new Date({{  .Workout.Date }}) ,  "y": {{ .AverageSpeed | HumanSpeed }} },
+         {{ end }}
+       {{ end }}
      ];
 
   const numberFormatter = new Intl.NumberFormat({ maximumFractionDigits: 2, minimumFractionDigits: 2 });
@@ -47,14 +47,14 @@
       markers: {
         size: 2,
       },
-    	xaxis: { type: "datetime" },
+      xaxis: { type: "datetime" },
       yaxis: [
      {
-   	labels: {
-   	formatter: (val) => {
-   		return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}";
-   	},
-   	},
+    labels: {
+     formatter: (val) => {
+       return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}";
+     },
+     },
    }
     ],
        series: [
@@ -67,7 +67,7 @@
      };
 
   const chart = new ApexCharts(rootElement, options);
-   	chart.render();
+     chart.render();
 
       })();
 </script>
