@@ -1981,6 +1981,10 @@ table {
   max-height: 12rem;
 }
 
+.max-h-\[640px\] {
+  max-height: 640px;
+}
+
 .min-h-\[450px\] {
   min-height: 450px;
 }
