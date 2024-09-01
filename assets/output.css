@@ -1141,25 +1141,16 @@ form {
 }
 
 .workouts_list_details div {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  min-width: 100px;
-  max-width: 150px;
+  width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: center;
-  --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
 }
 
-@media (prefers-color-scheme: dark) {
-  .workouts_list_details div {
-    --tw-border-opacity: 1;
-    border-color: rgb(115 115 115 / var(--tw-border-opacity));
-  }
+.recent-activity .workouts_list_details div {
+  width: auto;
+  min-width: 100px;
+  max-width: 150px;
 }
 
 table {
