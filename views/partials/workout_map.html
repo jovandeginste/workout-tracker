@@ -13,6 +13,8 @@
       maxSpeed: {{ .Data.MaxSpeed }},
       speedName: "{{ i18n "Average speed" }}",
       elevationName: "{{ i18n "Elevation" }}",
+      streetsName: "{{ i18n "Streets" }}",
+      aerialName: "{{ i18n "Aerial" }}",
 
       points: [
         {{ with .Data.Details }}
@@ -24,6 +26,17 @@
     });
   </script>
 </div>
-{{ if and (not AppConfig.SocialsDisabled) (not
-CurrentUser.Profile.SocialsDisabled) }} {{ template "workout_social" .}} {{ end
-}} {{ end }}
+<div class="flex flex-wrap">
+  {{ if and (not AppConfig.SocialsDisabled) (not
+  CurrentUser.Profile.SocialsDisabled) }} {{ template "workout_social" .}} {{
+  end }}
+  <div class="grow flex flex-wrap flex-row-reverse">
+    <a
+      href="#"
+      class="{{ IconFor `expand` }}"
+      title="{{ i18n `Show map in full width` }}"
+      onclick="fullMap()"
+    ></a>
+  </div>
+  {{ end }}
+</div>

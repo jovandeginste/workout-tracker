@@ -453,6 +453,21 @@ video {
   }
 }
 
+.full-size {
+  height: 100dvh;
+  flex-basis: 100%;
+}
+
+.small-size {
+  flex-basis: 50%;
+}
+
+@media (min-width: 1536px) {
+  .small-size {
+    flex-basis: 33.333333%;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .map-tiles,
   .leaflet-tooltip,
@@ -2047,6 +2062,10 @@ table {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -2527,6 +2546,14 @@ table {
 
 .icon-arrow-up-long::after {
   content: "\f176";
+}
+
+.icon-arrows-left-right::before {
+  content: "\f07e";
+}
+
+.icon-arrows-left-right::after {
+  content: "\f07e";
 }
 
 .icon-arrows-rotate::before {
