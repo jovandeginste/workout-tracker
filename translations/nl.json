@@ -169,5 +169,8 @@
     "Updated": "Geüpdate",
     "create route segment": "maak route segment",
     "Workout": "Workout",
-    "refresh in progress": "bezig met verversen"
+    "refresh in progress": "bezig met verversen",
+    "Average per minute": "Gemiddelde per minuut",
+    "Estimated based on the activity, assuming 70 kg": "Geschat op basis van de activiteit, uitgaande van een gewicht van 70 kg",
+    "Est. calories burned": "Geschat verbruik calorieën"
 }
