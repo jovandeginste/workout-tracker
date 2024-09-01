@@ -17,6 +17,30 @@ Self-hosted, everything included.
 
 Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 
+## :heart: Donate your workout files :heart:
+
+We are collecting real workout files for testing purposes. If you want to
+support the project, donate your files. You can open an issue and attach the
+file, or send a pull request.
+
+We are looking for general files from all sources, but also "raw" files from
+devices. The first file type can be edited to remove personal information, but
+the second type should be as pure (raw) as possible.
+
+Make sure the file does not contain personally identifiable information,
+specifically your home address! Preferably, share files from workouts that you
+recorded while travelling.
+
+Be sure to add some metadata in the issue or pull request, such as:
+
+- the activity type (running, swimming, ...)
+- the general location's name (city, national park, ...)
+- anything relevant, such as whether there is heart rate or cadence data, or any
+  other data
+
+By donating the files, you grant the project full permission to use them as they
+see fit.
+
 ## Getting started
 
 ### Docker
