@@ -381,6 +381,30 @@ func (w *Workout) UpdateRouteSegmentMatches(db *gorm.DB) error {
 	return nil
 }
 
+func (w *Workout) RepetitionFrequencyPerMinute() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return float64(w.Data.TotalRepetitions) / w.Duration().Minutes()
+}
+
+func (w *Workout) HasCalories() bool {
+	return w.Type.IsDuration()
+}
+
+func (w *Workout) CaloriesBurned() float64 {
+	if !w.Type.IsDuration() {
+		return 0
+	}
+
+	weight := 70.0 // assume weight is 70 kg for now
+	// Calories burned = weight * time * intensity (MET)
+	cb := weight * w.Duration().Hours() * w.MET()
+
+	return cb
+}
+
 func (w *Workout) HasElevation() bool {
 	return w.HasExtraMetric("elevation")
 }

@@ -54,6 +54,8 @@ func categoryIcon(what string) string {
 		return iconDefaults + " icon-regular icon-calendar"
 	case "pause":
 		return iconDefaults + " icon-regular icon-hourglass"
+	case "calories":
+		return iconDefaults + " icon-solid icon-fire"
 	default:
 		return ""
 	}
@@ -142,7 +144,7 @@ func pageIcon(what string) string {
 	}
 }
 
-func utilityIcon(what string) string { //nolint:gocyclo
+func utilityIcon(what string) string {
 	switch what {
 	case "close":
 		return iconDefaults + " icon-solid icon-xmark"

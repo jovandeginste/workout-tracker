@@ -128,7 +128,7 @@ func LocationWorkoutTypes() []WorkoutType {
 
 func DurationWorkoutTypes() []WorkoutType {
 	return getOrSetByClass(WorkoutTypeClassDuration, func(c WorkoutTypeConfiguration) bool {
-		return true
+		return true // All workout types store duration
 	})
 }
 

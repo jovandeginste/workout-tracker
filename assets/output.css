@@ -2713,6 +2713,14 @@ table {
   content: "\f15b";
 }
 
+.icon-fire::before {
+  content: "\f06d";
+}
+
+.icon-fire::after {
+  content: "\f06d";
+}
+
 .icon-gauge::before {
   content: "\f624";
 }
