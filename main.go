@@ -1,8 +1,8 @@
 package main
 
 import (
-	appassets "github.com/jovandeginste/workout-tracker/assets"
 	appviews "github.com/jovandeginste/workout-tracker/internal/views"
+	appassets "github.com/jovandeginste/workout-tracker/internal/views/assets"
 	"github.com/jovandeginste/workout-tracker/pkg/app"
 	apptranslations "github.com/jovandeginste/workout-tracker/translations"
 )

@@ -9,8 +9,8 @@ RUN make install-deps
 COPY tailwind.config.js ./tailwind.config.js
 COPY main.css ./main.css
 COPY pkg ./pkg
-COPY views ./views
-COPY assets ./assets
+COPY internal/views ./internal/views
+COPY internal/views/assets ./internal/views/assets
 
 RUN make build-dist build-tw
 
@@ -29,11 +29,11 @@ RUN go mod download
 COPY main.go ./main.go
 COPY pkg ./pkg
 COPY vendor ./vendor
-COPY views ./views
-COPY assets ./assets
+COPY internal/views ./internal/views
+COPY internal/views/assets ./internal/views/assets
 COPY translations ./translations
-COPY --from=frontend /app/assets/output.css ./assets/output.css
-COPY --from=frontend /app/assets/dist ./assets/dist
+COPY --from=frontend /app/internal/views/assets/output.css ./internal/views/assets/output.css
+COPY --from=frontend /app/internal/views/assets/dist ./internal/views/assets/dist
 
 ENV CGO_ENABLED=0
 RUN go build \

@@ -20,8 +20,8 @@ install-deps:
 	npm install
 
 clean:
-	rm -fv ./assets/output.css ./workout-tracker
-	rm -rf ./tmp/ ./node_modules/ ./assets/dist/
+	rm -fv ./internal/views/assets/output.css ./workout-tracker
+	rm -rf ./tmp/ ./node_modules/ ./internal/views/assets/dist/
 
 dev:
 	air
@@ -50,32 +50,32 @@ swagger:
 		--generalInfo api_handlers.go
 
 build-tw:
-	npx tailwindcss -i ./main.css -o ./assets/output.css
+	npx tailwindcss -i ./main.css -o ./internal/views/assets/output.css
 
 clean-dist:
-	rm -rf ./assets/dist/
+	rm -rf ./internal/views/assets/dist/
 
 build-dist: clean-dist
-	mkdir -p ./assets/dist/images
-	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
-	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/
-	cp -v ./node_modules/leaflet/dist/images/* ./assets/dist/images/
-	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
-	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
+	mkdir -p ./internal/views/assets/dist/images
+	cp -v ./node_modules/fullcalendar/index.global.min.js ./internal/views/assets/dist/fullcalendar.min.js
+	cp -v ./node_modules/leaflet/dist/leaflet.css ./internal/views/assets/dist/
+	cp -v ./node_modules/leaflet/dist/images/* ./internal/views/assets/dist/images/
+	cp -v ./node_modules/leaflet/dist/leaflet.js ./internal/views/assets/dist/
+	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./internal/views/assets/dist/
+	cp -v ./node_modules/shareon/dist/shareon.min.css ./internal/views/assets/dist/
+	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./internal/views/assets/dist/fontawesome/
+	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./internal/views/assets/dist/
+	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./internal/views/assets/dist/
+	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./internal/views/assets/dist/
 
 
 watch-tw:
-	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
+	npx tailwindcss -i ./main.css -o ./internal/views/assets/output.css --watch
 
 build-translations: translations
 
 translations:
-	xspreak -o translations/en.json -f json --template-keyword "i18n" -t "views/**/*.html"
+	xspreak -o translations/en.json -f json --template-keyword "i18n" -t "internal/views/**/*.html"
 	prettier --write translations/*.json
 
 serve:
