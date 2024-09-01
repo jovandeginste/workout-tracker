@@ -181,7 +181,7 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 	return false
 }
 
-/** For the given set of route segments, re-match against all workouts, marking the segments as dirty=faslse after matching. */
+// For the given set of route segments, re-match against all workouts, marking the segments as clean after matching.
 func (a *App) rematchRouteSegmentsToWorkouts(tx *gorm.DB, routeSegments []*database.RouteSegment, l *slog.Logger) error {
 	if len(routeSegments) == 0 {
 		l.Debug("rematchRouteSegmentsToWorkouts: no segments provided")
