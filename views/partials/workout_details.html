@@ -40,6 +40,13 @@
       <th>{{ i18n "Repetitions" }}</th>
       <td class="whitespace-nowrap font-mono">{{ .Data.TotalRepetitions }}</td>
     </tr>
+    <tr>
+      <td class="{{ IconFor `tempo` }}"></td>
+      <th>{{ i18n "Average per minute" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .RepetitionFrequencyPerMinute }}
+      </td>
+    </tr>
     {{ end }}{{ if .Type.IsWeight }}
     <tr>
       <td class="{{ IconFor `weight` }}"></td>
@@ -141,6 +148,23 @@
       <td class="whitespace-nowrap font-mono">
         {{ .Data.TotalDown | HumanElevation }} {{
         CurrentUser.PreferredUnits.Elevation }}
+      </td>
+    </tr>
+    {{ end }} {{ if .HasCalories }}
+    <tr>
+      <td class="{{ IconFor `calories` }}"></td>
+      <th>
+        {{ i18n "Est. calories burned" }}
+        <a
+          class="{{ IconFor `info` }}"
+          href="#"
+          title="{{ i18n `Estimated based on the activity, assuming 70 kg` }}"
+        >
+          &nbsp;
+        </a>
+      </th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .CaloriesBurned | HumanCalories }}
       </td>
     </tr>
     {{ end }}

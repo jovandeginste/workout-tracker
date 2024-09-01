@@ -1,6 +1,7 @@
 package templatehelpers
 
 import (
+	"fmt"
 	"html/template"
 	"strings"
 	"time"
@@ -13,6 +14,10 @@ import (
 var englishTag = display.English.Languages()
 
 const InvalidValue = "N/A"
+
+func HumanCaloriesKcal(cal float64) string {
+	return fmt.Sprintf("%.2f kcal", cal)
+}
 
 func NumericDuration(d time.Duration) float64 {
 	return d.Seconds()

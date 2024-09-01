@@ -87,6 +87,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"HumanDistance":  templatehelpers.HumanDistanceKM,
 		"HumanSpeed":     templatehelpers.HumanSpeedKPH,
 		"HumanTempo":     templatehelpers.HumanTempoKM,
+		"HumanCalories":  templatehelpers.HumanCaloriesKcal,
 
 		"RelativeDate": h.NaturalTime,
 
