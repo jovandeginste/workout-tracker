@@ -3,8 +3,9 @@ package converters
 import (
 	"bytes"
 	"encoding/xml"
-	"fmt"
+	"errors"
 	"math"
+	"strconv"
 
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/tormoder/fit"
@@ -29,7 +30,7 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 	}
 
 	if len(m.Sessions) == 0 {
-		return nil, fmt.Errorf("no sessions found")
+		return nil, errors.New("no sessions found")
 	}
 
 	gpxFile.AppendTrack(&gpx.GPXTrack{
@@ -57,13 +58,13 @@ func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 
 		if r.HeartRate != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "heart-rate"}, Data: fmt.Sprintf("%d", r.HeartRate),
+				XMLName: xml.Name{Local: "heart-rate"}, Data: strconv.FormatUint(uint64(r.HeartRate), 10),
 			})
 		}
 
 		if r.Cadence != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "cadence"}, Data: fmt.Sprintf("%d", r.Cadence),
+				XMLName: xml.Name{Local: "cadence"}, Data: strconv.FormatUint(uint64(r.Cadence), 10),
 			})
 		}
 

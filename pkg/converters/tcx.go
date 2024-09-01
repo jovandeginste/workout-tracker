@@ -2,7 +2,7 @@ package converters
 
 import (
 	"encoding/xml"
-	"fmt"
+	"errors"
 
 	"github.com/galeone/tcx"
 	"github.com/tkrajina/gpxgo/gpx"
@@ -18,7 +18,7 @@ func ParseTCX(tcxFile []byte) (*gpx.GPX, error) {
 	g := &gpx.GPX{}
 
 	if t.Acts == nil || len(t.Acts.Act) == 0 {
-		return nil, fmt.Errorf("no activities found")
+		return nil, errors.New("no activities found")
 	}
 
 	g.Name = t.Acts.Act[0].Id.String()

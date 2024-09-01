@@ -1,5 +1,6 @@
 package database
 
+//nolint:lll
 const GpxSample1 = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="Garmin Connect"
   xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd"

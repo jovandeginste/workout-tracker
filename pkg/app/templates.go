@@ -22,7 +22,7 @@ type Template struct {
 	templates *template.Template
 }
 
-func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.Context) error {
+func (t *Template) Render(w io.Writer, name string, data any, ctx echo.Context) error {
 	r, err := t.templates.Clone()
 	if err != nil {
 		return err
@@ -50,7 +50,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, ctx echo.C
 	return r.ExecuteTemplate(w, name, data)
 }
 
-func echoFunc(key string, _ ...interface{}) string {
+func echoFunc(key string, _ ...any) string {
 	return key
 }
 
@@ -90,7 +90,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 		"RelativeDate": h.NaturalTime,
 
-		"RouteFor": func(name string, params ...interface{}) string {
+		"RouteFor": func(name string, params ...any) string {
 			rev := a.echo.Reverse(name, params...)
 			if rev == "" {
 				return "/invalid/route/#" + name

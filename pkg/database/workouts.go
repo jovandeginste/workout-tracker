@@ -412,7 +412,7 @@ func (w *Workout) HasExtraMetric(name string) bool {
 }
 
 func (w *Workout) EquipmentIDs() []uint {
-	var ids []uint
+	ids := make([]uint, 0, len(w.Equipment))
 
 	for _, e := range w.Equipment {
 		ids = append(ids, e.ID)

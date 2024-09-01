@@ -16,8 +16,8 @@ import (
 var ErrInvalidAPIKey = errors.New("invalid API key")
 
 type APIResponse struct {
-	Errors  []string    `json:"errors"`
-	Results interface{} `json:"results"`
+	Errors  []string `json:"errors"`
+	Results any      `json:"results"`
 }
 
 // @title Workout Tracker

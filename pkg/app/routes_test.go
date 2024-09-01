@@ -13,6 +13,7 @@ import (
 )
 
 func configuredApp(t *testing.T) *App {
+	t.Helper()
 	t.Setenv("WT_DATABASE_DRIVER", "memory")
 
 	a := defaultApp(t)

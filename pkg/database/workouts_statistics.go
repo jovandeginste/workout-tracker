@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -149,7 +150,7 @@ func (w *Workout) StatisticsPer(count float64, unit string) (WorkoutBreakdown, e
 	}
 
 	if len(wb.Items) == 0 {
-		return wb, fmt.Errorf("no data")
+		return wb, errors.New("no data")
 	}
 
 	return wb, nil

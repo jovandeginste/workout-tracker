@@ -142,7 +142,7 @@ func pageIcon(what string) string {
 	}
 }
 
-func utilityIcon(what string) string {
+func utilityIcon(what string) string { //nolint:gocyclo
 	switch what {
 	case "close":
 		return iconDefaults + " icon-solid icon-xmark"

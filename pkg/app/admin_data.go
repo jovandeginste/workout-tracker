@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) adminAddUser(data map[string]interface{}, c echo.Context) {
+func (a *App) adminAddUser(data map[string]any, c echo.Context) {
 	user, err := a.getUser(c)
 	if err != nil {
 		a.addError(data, c)

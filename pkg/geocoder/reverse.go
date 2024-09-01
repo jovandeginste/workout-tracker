@@ -1,5 +1,6 @@
-// Inspired by https://github.com/codingsince1985/geo-golang
 package geocoder
+
+// Inspired by https://github.com/codingsince1985/geo-golang
 
 import (
 	"cmp"
