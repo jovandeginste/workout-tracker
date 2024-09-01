@@ -17,6 +17,9 @@ towards running and other GPX-based activities
 
 Self-hosted, everything included.
 
+Chat with the community
+[on Matrix](https://matrix.to/#/#workout-tracker:matrix.org)
+
 Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 
 ## :heart: Donate your workout files :heart:
