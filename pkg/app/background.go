@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"gorm.io/gorm"
 )
 
 var (
@@ -17,8 +18,10 @@ var (
 )
 
 const (
-	FileAddDelay = -1 * time.Minute
-	WorkerDelay  = 1 * time.Minute
+	FileAddDelay                 = -1 * time.Minute
+	WorkerDelay                  = 1 * time.Minute
+	workerRouteSegmentsBatchSize = 10
+	workerWorkoutsBatchSize      = 10
 )
 
 func (a *App) BackgroundWorker() {
@@ -178,29 +181,62 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 	return false
 }
 
-func (a *App) updateRouteSegments(l *slog.Logger) {
-	var rsID []int
+// For the given set of route segments, re-match against all workouts, marking the segments as clean after matching.
+func (a *App) rematchRouteSegmentsToWorkouts(tx *gorm.DB, routeSegments []*database.RouteSegment, l *slog.Logger) error {
+	if len(routeSegments) == 0 {
+		l.Debug("rematchRouteSegmentsToWorkouts: no segments provided")
+		return nil
+	}
 
-	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(1000).Pluck("ID", &rsID)
+	// Reset matches for each segment
+	for _, rs := range routeSegments {
+		rs.RouteSegmentMatches = []*database.RouteSegmentMatch{}
+	}
+
+	var workoutsBatch []*database.Workout
+	qw := a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).FindInBatches(&workoutsBatch, workerRouteSegmentsBatchSize, func(wtx *gorm.DB, batchNo int) error {
+		l.Debug(fmt.Sprintf("rematchRouteSegmentsToWorkouts %d matching %d route segments against %d workouts", batchNo, len(routeSegments), len(workoutsBatch)))
+
+		// Match this batch of workouts against the current batch of route segments
+		for _, rs := range routeSegments {
+			newMatches := rs.FindMatches(workoutsBatch)
+			rs.RouteSegmentMatches = append(rs.RouteSegmentMatches, newMatches...)
+			l.Debug(fmt.Sprintf("Updating route segment %d with %d matches, now total %d", rs.ID, len(newMatches), len(rs.RouteSegmentMatches)))
+		}
+
+		l.Debug(fmt.Sprintf("rematchRouteSegmentsToWorkouts %d matching %d route segments against %d workouts OK", batchNo, len(routeSegments), len(workoutsBatch)))
+		return nil
+	})
+
+	if qw.Error != nil {
+		l.Error("Worker error fetching workouts: " + qw.Error.Error())
+	}
+
+	// Mark all route segments as non-dirty and save matches
+	var errs error
+	for _, rs := range routeSegments {
+		rs.Dirty = false
+		if err := rs.Save(tx); err != nil {
+			errs = errors.Join(errs, err)
+			l.Error("Worker error saving route segment: " + err.Error())
+		}
+	}
+	return errs
+}
+
+func (a *App) updateRouteSegments(l *slog.Logger) {
+	var routeSegmentsBatch []*database.RouteSegment
+
+	// Fetch next batch of dirty segments
+	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(workerRouteSegmentsBatchSize).Find(&routeSegmentsBatch)
+	l.Info(fmt.Sprintf("updateRouteSegments batch %d", len(routeSegmentsBatch)))
 	if err := q.Error; err != nil {
 		l.Error("Worker error: " + err.Error())
 	}
 
-	if len(rsID) == 0 {
-		return
-	}
-
-	w, err := database.GetWorkouts(a.db.Preload("Data.Details").Preload("User"))
+	err := a.rematchRouteSegmentsToWorkouts(q, routeSegmentsBatch, l)
 	if err != nil {
-		return
-	}
-
-	for _, i := range rsID {
-		l.Info(fmt.Sprintf("Updating route segment %d", i))
-
-		if err := a.UpdateRouteSegment(i, w); err != nil {
-			l.Error("Worker error: " + err.Error())
-		}
+		l.Error("Worker errors during matching: " + err.Error())
 	}
 }
 
@@ -230,16 +266,4 @@ func (a *App) UpdateWorkout(i int) error {
 	}
 
 	return w.UpdateData(a.db)
-}
-
-func (a *App) UpdateRouteSegment(i int, w []*database.Workout) error {
-	rs, err := database.GetRouteSegment(a.db, i)
-	if err != nil {
-		return err
-	}
-
-	rs.RouteSegmentMatches = rs.FindMatches(w)
-	rs.Dirty = false
-
-	return rs.Save(a.db)
 }
