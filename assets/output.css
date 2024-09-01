@@ -1141,19 +1141,16 @@ form {
 }
 
 .workouts_list_details div {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-@media (prefers-color-scheme: dark) {
-  .workouts_list_details div {
-    --tw-border-opacity: 1;
-    border-color: rgb(115 115 115 / var(--tw-border-opacity));
-  }
+.recent-activity .workouts_list_details div {
+  width: auto;
+  min-width: 100px;
+  max-width: 150px;
 }
 
 table {
@@ -2044,10 +2041,6 @@ table {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grid-cols-3 {

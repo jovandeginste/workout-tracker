@@ -180,9 +180,10 @@
   }
 
   .workouts_list_details div {
-    @apply border rounded-lg px-2;
-    @apply border-neutral-500;
-    @apply dark:border-neutral-500;
+    @apply w-[150px] overflow-hidden whitespace-nowrap text-ellipsis;
+  }
+  .recent-activity .workouts_list_details div {
+    @apply min-w-[100px] max-w-[150px] w-auto;
   }
 
   table {
