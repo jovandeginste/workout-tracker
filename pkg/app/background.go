@@ -182,7 +182,7 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 }
 
 // For the given set of route segments, re-match against all workouts, marking the segments as clean after matching.
-func (a *App) rematchRouteSegmentsToWorkouts(tx *gorm.DB, routeSegments []*database.RouteSegment, l *slog.Logger) error {
+func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegment, l *slog.Logger) error {
 	if len(routeSegments) == 0 {
 		l.Debug("rematchRouteSegmentsToWorkouts: no segments provided")
 		return nil
@@ -216,7 +216,7 @@ func (a *App) rematchRouteSegmentsToWorkouts(tx *gorm.DB, routeSegments []*datab
 	var errs error
 	for _, rs := range routeSegments {
 		rs.Dirty = false
-		if err := rs.Save(tx); err != nil {
+		if err := rs.Save(a.db); err != nil {
 			errs = errors.Join(errs, err)
 			l.Error("Worker error saving route segment: " + err.Error())
 		}
@@ -234,7 +234,7 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 		l.Error("Worker error: " + err.Error())
 	}
 
-	err := a.rematchRouteSegmentsToWorkouts(q, routeSegmentsBatch, l)
+	err := a.rematchRouteSegmentsToWorkouts(routeSegmentsBatch, l)
 	if err != nil {
 		l.Error("Worker errors during matching: " + err.Error())
 	}
