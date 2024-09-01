@@ -6,6 +6,7 @@ import (
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
 	"github.com/vorlif/spreak/humanize/locale/de"
+	"github.com/vorlif/spreak/humanize/locale/fa"
 	"github.com/vorlif/spreak/humanize/locale/fr"
 	"github.com/vorlif/spreak/humanize/locale/id"
 	"github.com/vorlif/spreak/humanize/locale/it"
@@ -58,6 +59,7 @@ func translations() []any {
 		language.Italian,
 		language.Norwegian,
 		language.Indonesian,
+		language.Persian,
 	}
 }
 
@@ -69,6 +71,7 @@ func humanLocales() []*humanize.LocaleData {
 		id.New(),
 		nb.New(),
 		it.New(),
+		fa.New(),
 	}
 }
 
