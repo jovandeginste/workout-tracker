@@ -361,8 +361,8 @@ database storage is a single SQLite file.
   - [apexcharts](https://apexcharts.com/)
 - Docker
 
-The application uses OpenStreetMap as its map provider and for geocoding a GPS
-coordinate to a location.
+The application uses OpenStreetMap and Esri as its map providers and for
+geocoding a GPS coordinate to a location.
 
 ## Compatiblity
 

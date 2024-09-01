@@ -15,6 +15,8 @@ interface Parameters {
   maxSpeed: number;
   speedName: string;        // Name for speed layer
   elevationName: string;    // Name of elevation layer
+  streetsName: string;
+  aerialName: string;
 }
 */
 let hoverMarker;
@@ -36,11 +38,22 @@ function makeMap(params) {
     map = L.map(params.elementID, {
       fadeAnimation: false,
     }).setView(params.center, 15);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      className: "map-tiles",
-    }).addTo(map);
+    const layerStreet = L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        className: "map-tiles",
+      },
+    );
+
+    const layerAerial = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution: "Powered by Esri",
+      },
+    );
+
     L.control.scale().addTo(map);
 
     const speeds = params.points
@@ -115,7 +128,7 @@ function makeMap(params) {
       prevPoint = p;
     });
 
-    elevationLayerGroup.addTo(map);
+    // elevationLayerGroup.addTo(map);
     speedLayerGroup.addTo(map);
 
     var last = params.points[params.points.length - 1];
@@ -152,12 +165,22 @@ function makeMap(params) {
     }
 
     hoverMarker.addTo(map); // Adding marker to the map
-    const layerControl = L.control
-      .layers({
-        [params.elevationName]: elevationLayerGroup,
-        [params.speedName]: speedLayerGroup,
-      })
+
+    L.control
+      .layers(
+        {
+          [params.streetsName]: layerStreet,
+          [params.aerialName]: layerAerial,
+        },
+        {
+          [params.elevationName]: elevationLayerGroup,
+          [params.speedName]: speedLayerGroup,
+        },
+      )
       .addTo(map);
+
+    layerStreet.addTo(map);
+
     map.fitBounds(group.getBounds(), { animate: false });
   });
 }
