@@ -83,6 +83,8 @@ func miscIcon(what string) string {
 		return iconDefaults + " icon-regular icon-rectangle-list"
 	case "translate":
 		return iconDefaults + " icon-solid icon-language"
+	case "expand":
+		return iconDefaults + " icon-solid icon-arrows-left-right"
 	default:
 		return ""
 	}

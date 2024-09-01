@@ -18,11 +18,22 @@ interface Parameters {
 }
 */
 let hoverMarker;
+let map;
+
+function fullMap() {
+  d = document.getElementById("map-container");
+
+  d.classList.toggle("small-size");
+  d.classList.toggle("full-size");
+
+  map.invalidateSize(true);
+  return false;
+}
 
 function makeMap(params) {
   document.addEventListener("DOMContentLoaded", () => {
     // Create map
-    const map = L.map(params.elementID, {
+    map = L.map(params.elementID, {
       fadeAnimation: false,
     }).setView(params.center, 15);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
