@@ -3,3 +3,4 @@
 /vendor/
 /pkg/
 /docs/swagger.*
+*.yml

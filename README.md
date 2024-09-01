@@ -92,9 +92,9 @@ docker compose up -d
 
 ### Natively
 
-Download a [pre-built
-binary](https://github.com/jovandeginste/workout-tracker/releases) or build it
-yourself (see [Development](#development) below).
+Download a
+[pre-built binary](https://github.com/jovandeginste/workout-tracker/releases) or
+build it yourself (see [Development](#development) below).
 
 Eg. for v0.11.3 on Linux x86_64:
 
@@ -186,7 +186,8 @@ Details of a workout, with:
 ![](docs/i18n.gif)
 
 - Switch between (supported) languages
-  - Please help translate via [Weblate](https://hosted.weblate.org/projects/workout-tracker/)
+  - Please help translate via
+    [Weblate](https://hosted.weblate.org/projects/workout-tracker/)
 - Use the language configured in the browser (default)
 - Very limited amount of languages supported for now :smile:
 - Re-calculate all previously uploaded workouts (useful while developing)
@@ -246,13 +247,19 @@ password in a production environment.
 
 ## API usage
 
-The API is documented using [swagger](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.yaml). You must enable API access for your user, and copy the API key. You can use the API key as a query parameter (`api-key=${API_KEY}`) or as a header (`Authorization: Bearer ${API_KEY}`).
+The API is documented using
+[swagger](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.yaml).
+You must enable API access for your user, and copy the API key. You can use the
+API key as a query parameter (`api-key=${API_KEY}`) or as a header
+(`Authorization: Bearer ${API_KEY}`).
 
-You can configure some tools to automatically upload files to Workout Tracker, using the `POST /api/v1/import/$program` API endpoint.
+You can configure some tools to automatically upload files to Workout Tracker,
+using the `POST /api/v1/import/$program` API endpoint.
 
 ### Generic upload
 
-The generic upload endpoint takes the recording as body. Prepend the path with `@` to tell `curl` to read the data from a file:
+The generic upload endpoint takes the recording as body. Prepend the path with
+`@` to tell `curl` to read the data from a file:
 
 ```bash
 curl -sSL -H "Authorization: bearer your-api-key" \
@@ -269,7 +276,9 @@ curl -sSL http://localhost:8080/api/v1/import/generic?api-key=your-api-key \
 
 ### FitoTrack
 
-Read [their documentation](https://codeberg.org/jannis/FitoTrack/wiki/Auto-Export) before you continue.
+Read
+[their documentation](https://codeberg.org/jannis/FitoTrack/wiki/Auto-Export)
+before you continue.
 
 The path to POST to is: `/api/v1/import/fitotrack?api-key=${API_KEY}`
 
