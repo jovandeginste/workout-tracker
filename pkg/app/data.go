@@ -49,8 +49,8 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 	return u
 }
 
-func (a *App) defaultData(c echo.Context) map[string]interface{} {
-	data := map[string]interface{}{}
+func (a *App) defaultData(c echo.Context) map[string]any {
+	data := map[string]any{}
 
 	a.addError(data, c)
 	a.addNotice(data, c)
@@ -58,7 +58,7 @@ func (a *App) defaultData(c echo.Context) map[string]interface{} {
 	return data
 }
 
-func (a *App) addRouteSegments(data map[string]interface{}) error {
+func (a *App) addRouteSegments(data map[string]any) error {
 	w, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return err
@@ -69,7 +69,7 @@ func (a *App) addRouteSegments(data map[string]interface{}) error {
 	return nil
 }
 
-func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
+func (a *App) addWorkouts(u *database.User, data map[string]any) error {
 	if u == nil {
 		return nil
 	}
@@ -84,7 +84,7 @@ func (a *App) addWorkouts(u *database.User, data map[string]interface{}) error {
 	return nil
 }
 
-func (a *App) addRecentWorkouts(data map[string]interface{}) error {
+func (a *App) addRecentWorkouts(data map[string]any) error {
 	w, err := database.GetRecentWorkouts(a.db, 20)
 	if err != nil {
 		return err
@@ -95,7 +95,7 @@ func (a *App) addRecentWorkouts(data map[string]interface{}) error {
 	return nil
 }
 
-func (a *App) addUsers(data map[string]interface{}) error {
+func (a *App) addUsers(data map[string]any) error {
 	users, err := database.GetUsers(a.db)
 	if err != nil {
 		return err
@@ -134,7 +134,7 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 	return w, nil
 }
 
-func (a *App) addAllEquipment(u *database.User, data map[string]interface{}) error {
+func (a *App) addAllEquipment(u *database.User, data map[string]any) error {
 	if u == nil {
 		return nil
 	}

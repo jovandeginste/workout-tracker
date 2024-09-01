@@ -32,6 +32,8 @@ func dummyMapDataWithName(name string) *MapData {
 }
 
 func createMemoryDB(t *testing.T) *gorm.DB {
+	t.Helper()
+
 	db, err := Connect("memory", "", false, slognil.NewLogger())
 	require.NoError(t, err)
 
@@ -39,6 +41,8 @@ func createMemoryDB(t *testing.T) *gorm.DB {
 }
 
 func createDefaultUser(t *testing.T, db *gorm.DB) {
+	t.Helper()
+
 	require.NoError(t, defaultUser().Create(db))
 }
 

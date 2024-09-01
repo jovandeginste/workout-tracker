@@ -12,6 +12,8 @@ func init() { //nolint:gochecknoinits
 }
 
 func defaultWorkout(t *testing.T) *Workout {
+	t.Helper()
+
 	u := defaultUser()
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)

@@ -13,6 +13,7 @@ import (
 )
 
 func defaultApp(t *testing.T) *App {
+	t.Helper()
 	t.Setenv("WT_LOGGING", "false")
 
 	a := NewApp(Version{RefName: "test"})

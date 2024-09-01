@@ -41,7 +41,7 @@ func (v Version) PrettyVersion() string {
 }
 
 func (v Version) UserAgent() string {
-	return fmt.Sprintf("workout-tracker/%s", v.Ref)
+	return "workout-tracker/" + v.Ref
 }
 
 type App struct {

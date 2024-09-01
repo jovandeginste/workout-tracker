@@ -49,8 +49,8 @@ func (a *App) ConfigureLocalizer() error {
 	return nil
 }
 
-func translations() []interface{} {
-	return []interface{}{
+func translations() []any {
+	return []any{
 		language.Dutch,
 		language.English,
 		language.French,
@@ -72,15 +72,15 @@ func humanLocales() []*humanize.LocaleData {
 	}
 }
 
-func langFromContext(ctx echo.Context) []interface{} {
-	return []interface{}{
+func langFromContext(ctx echo.Context) []any {
+	return []any{
 		ctx.QueryParam("lang"),
 		ctx.Get("user_language"),
 		ctx.Request().Header.Get("Accept-Language"),
 	}
 }
 
-func (a *App) i18n(ctx echo.Context, message string, vars ...interface{}) string {
+func (a *App) i18n(ctx echo.Context, message string, vars ...any) string {
 	return a.translatorFromContext(ctx).Getf(message, vars...)
 }
 
