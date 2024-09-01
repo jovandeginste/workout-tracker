@@ -2,9 +2,9 @@ package main
 
 import (
 	appassets "github.com/jovandeginste/workout-tracker/assets"
+	appviews "github.com/jovandeginste/workout-tracker/internal/views"
 	"github.com/jovandeginste/workout-tracker/pkg/app"
 	apptranslations "github.com/jovandeginste/workout-tracker/translations"
-	appviews "github.com/jovandeginste/workout-tracker/views"
 )
 
 var (
