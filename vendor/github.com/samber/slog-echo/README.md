@@ -111,8 +111,8 @@ Attributes will be injected in log payload.
 Other global parameters:
 
 ```go
-slogecho.TraceIDKey = "trace-id"
-slogecho.SpanIDKey = "span-id"
+slogecho.TraceIDKey = "trace_id"
+slogecho.SpanIDKey = "span_id"
 slogecho.RequestBodyMaxSize  = 64 * 1024 // 64KB
 slogecho.ResponseBodyMaxSize = 64 * 1024 // 64KB
 slogecho.HiddenRequestHeaders = map[string]struct{}{ ... }

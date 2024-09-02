@@ -5,12 +5,12 @@ go 1.22.4
 toolchain go1.22.5
 
 require (
-	github.com/Masterminds/sprig/v3 v3.2.3
+	github.com/Masterminds/sprig/v3 v3.3.0
 	github.com/alexedwards/scs/gormstore v0.0.0-20240316134038-7e11d57e8885
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.4
-	github.com/fsouza/slognil v0.4.0
+	github.com/fsouza/slognil v0.4.1
 	github.com/galeone/tcx v1.0.0
 	github.com/glebarez/sqlite v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
@@ -23,8 +23,8 @@ require (
 	github.com/lmittmann/tint v1.0.5
 	github.com/mattn/go-isatty v0.0.20
 	github.com/microcosm-cc/bluemonday v1.0.27
-	github.com/orandin/slog-gorm v1.3.2
-	github.com/samber/slog-echo v1.14.4
+	github.com/orandin/slog-gorm v1.4.0
+	github.com/samber/slog-echo v1.14.6
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.9.0
@@ -33,19 +33,20 @@ require (
 	github.com/tormoder/fit v0.15.0
 	github.com/vorlif/spreak v0.6.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.25.0
-	golang.org/x/text v0.16.0
+	golang.org/x/crypto v0.26.0
+	golang.org/x/text v0.17.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.11
 )
 
 require (
+	dario.cat/mergo v1.0.1 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
-	github.com/Masterminds/semver/v3 v3.2.1 // indirect
+	github.com/Masterminds/semver/v3 v3.3.0 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/client9/misspell v0.3.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -64,7 +65,6 @@ require (
 	github.com/gorilla/css v1.0.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
-	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
@@ -91,7 +91,7 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
-	github.com/spf13/cast v1.6.0 // indirect
+	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
@@ -103,8 +103,8 @@ require (
 	golang.org/x/exp/typeparams v0.0.0-20240719175910-8a7402abbf56 // indirect
 	golang.org/x/mod v0.19.0 // indirect
 	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
+	golang.org/x/sys v0.23.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
