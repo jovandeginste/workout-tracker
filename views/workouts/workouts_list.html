@@ -48,6 +48,12 @@
               {{ template "workouts_list_details" . }}
             </th>
             <td class="hidden sm:table-cell">
+              {{ if .Dirty }}
+              <span
+                class="{{ IconFor `refresh` }}"
+                title="{{ i18n `refresh in progress` }}"
+              ></span>
+              {{ end }}
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>
           </tr>
