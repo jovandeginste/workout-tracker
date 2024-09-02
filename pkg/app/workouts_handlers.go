@@ -97,16 +97,17 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	workout, err := a.getCurrentUser(c).GetWorkout(a.db.Preload("GPX"), id)
+	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	if err := workout.UpdateData(a.db); err != nil {
+	workout.Dirty = true
+	if err := workout.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been refreshed.", workout.Name)
+	a.setNotice(c, "The workout '%s' will be refreshed soon...", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }

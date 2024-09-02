@@ -341,6 +341,12 @@ func (w *Workout) setData(data *MapData) {
 	w.Data = data
 	w.Data.ID = dataID
 	w.Data.CreatedAt = dataCreatedAt
+
+	if !w.Data.Center.IsZero() {
+		w.Data.Address = w.Data.Center.Address()
+	}
+
+	w.Data.UpdateAddress()
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {

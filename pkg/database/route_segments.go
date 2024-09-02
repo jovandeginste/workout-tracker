@@ -209,5 +209,5 @@ func (rs *RouteSegment) Address() string {
 		return rs.GeoAddress.FormattedAddress
 	}
 
-	return "(unknown location)"
+	return UnknownLocation
 }
