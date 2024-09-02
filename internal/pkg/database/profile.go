@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/templatehelpers"
 	"gorm.io/gorm"
 )
 

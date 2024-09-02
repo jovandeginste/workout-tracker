@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"slices"
 
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/templatehelpers"
 )
 
 type (

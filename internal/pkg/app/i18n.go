@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
 	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"

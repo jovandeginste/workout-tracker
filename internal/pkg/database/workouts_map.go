@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
-	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"

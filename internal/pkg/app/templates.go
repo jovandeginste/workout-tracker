@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/Masterminds/sprig/v3"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"github.com/vorlif/spreak/humanize"
