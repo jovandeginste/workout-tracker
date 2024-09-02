@@ -11,6 +11,20 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) addRoutesSegments(e *echo.Group) {
+	routeSegmentsGroup := e.Group("/route_segments")
+	routeSegmentsGroup.GET("", a.routeSegmentsHandler).Name = "route-segments"
+	routeSegmentsGroup.POST("", a.addRouteSegment).Name = "route-segments-create"
+	routeSegmentsGroup.GET("/:id", a.routeSegmentsShowHandler).Name = "route-segment-show"
+	routeSegmentsGroup.POST("/:id", a.routeSegmentsUpdateHandler).Name = "route-segment-update"
+	routeSegmentsGroup.GET("/:id/download", a.routeSegmentsDownloadHandler).Name = "route-segment-download"
+	routeSegmentsGroup.GET("/:id/edit", a.routeSegmentsEditHandler).Name = "route-segment-edit"
+	routeSegmentsGroup.POST("/:id/delete", a.routeSegmentsDeleteHandler).Name = "route-segment-delete"
+	routeSegmentsGroup.POST("/:id/refresh", a.routeSegmentsRefreshHandler).Name = "route-segment-refresh"
+	routeSegmentsGroup.POST("/:id/matches", a.routeSegmentFindMatches).Name = "route-segment-matches"
+	routeSegmentsGroup.GET("/add", a.routeSegmentsAddHandler).Name = "route-segment-add"
+}
+
 func (a *App) routeSegmentsHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
