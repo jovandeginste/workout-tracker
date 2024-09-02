@@ -4,7 +4,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/internal/pkg/app"
 	appviews "github.com/jovandeginste/workout-tracker/internal/views"
 	appassets "github.com/jovandeginste/workout-tracker/internal/views/assets"
-	apptranslations "github.com/jovandeginste/workout-tracker/translations"
+	apptranslations "github.com/jovandeginste/workout-tracker/internal/views/translations"
 )
 
 var (
