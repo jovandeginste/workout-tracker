@@ -15,6 +15,7 @@ all: clean install-deps test build
 install-dev-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
+	go install github.com/vorlif/xspreak@latest
 
 install-deps:
 	npm install
