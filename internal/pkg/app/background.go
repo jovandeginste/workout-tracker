@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/database"
 	"gorm.io/gorm"
 )
 

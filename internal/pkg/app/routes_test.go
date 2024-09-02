@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/database"
 	session "github.com/spazzymoto/echo-scs-session"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/database"
 
 	"github.com/labstack/echo/v4"
 )

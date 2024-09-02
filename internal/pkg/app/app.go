@@ -11,7 +11,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
-	"github.com/jovandeginste/workout-tracker/internal/pkg/database"
+	"github.com/jovandeginste/workout-tracker/internal/database"
 	"github.com/jovandeginste/workout-tracker/internal/pkg/geocoder"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
