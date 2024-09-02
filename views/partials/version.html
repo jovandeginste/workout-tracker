@@ -1,4 +1,4 @@
-{{ define "version" }} {{ if CurrentUser }} {{ if ne Version.Sha
+{{ define "version" }} {{ if CurrentUser.Active }} {{ if ne Version.Sha
 CurrentUser.LastVersion }}
 <div id="version-notification" class="version-notice max-h-48" role="alert">
   <span class="block sm:inline">

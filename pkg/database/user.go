@@ -42,7 +42,21 @@ type User struct {
 	Workouts  []Workout   `json:"-"` // The user's workouts
 	Equipment []Equipment `json:"-"` // The user's equipment
 
+	anonymous bool // Whether we have an actual user or not
+
 	db *gorm.DB
+}
+
+func AnonymousUser() *User {
+	return &User{anonymous: true}
+}
+
+func (u *User) IsAnonymous() bool {
+	if u == nil {
+		return true
+	}
+
+	return u.anonymous
 }
 
 func (u *User) ShowFullDate() bool {
