@@ -83,6 +83,7 @@ serve:
 
 test: test-go test-assets
 
+# TODO: add a mode to style code maybe: 	prettier --check . --write
 test-assets:
 	prettier --check .
 
