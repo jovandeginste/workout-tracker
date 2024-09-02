@@ -306,6 +306,106 @@ definitions:
         description: The ID of the user who owns this profile
         type: integer
     type: object
+  database.RouteSegment:
+    properties:
+      addressString:
+        description: The generic location of the workout
+        type: string
+      bidirectional:
+        description: Whether the route segment is bidirectional
+        type: boolean
+      center:
+        allOf:
+        - $ref: '#/definitions/database.MapCenter'
+        description: The center of the workout (in coordinates)
+      checksum:
+        description: The checksum of the content
+        items:
+          type: integer
+        type: array
+      circular:
+        description: Whether the route segment is circular
+        type: boolean
+      content:
+        description: The file content
+        items:
+          type: integer
+        type: array
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      dirty:
+        description: Whether the route segment should be recalculated
+        type: boolean
+      filename:
+        description: The filename of the file
+        type: string
+      geoAddress:
+        allOf:
+        - $ref: '#/definitions/geo.Address'
+        description: The address of the workout
+      id:
+        type: integer
+      maxElevation:
+        description: The maximum elevation of the workout
+        type: number
+      minElevation:
+        description: The minimum elevation of the workout
+        type: number
+      name:
+        description: The name of the workout
+        type: string
+      notes:
+        description: The notes associated with the workout, in markdown
+        type: string
+      points:
+        description: The GPS points of the workout
+        items:
+          $ref: '#/definitions/database.MapPoint'
+        type: array
+      routeSegmentMatches:
+        description: The matches of the route segment
+        items:
+          $ref: '#/definitions/database.RouteSegmentMatch'
+        type: array
+      totalDistance:
+        description: The total distance of the workout
+        type: number
+      totalDown:
+        description: The total distance down of the workout
+        type: number
+      totalUp:
+        description: The total distance up of the workout
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  database.RouteSegmentMatch:
+    properties:
+      distance:
+        description: The total distance of the route segment for this workout
+        type: number
+      duration:
+        description: The total duration of the route segment for this workout
+        type: integer
+      firstID:
+        description: The index of the first and last point of the route
+        type: integer
+      points:
+        description: The total number of points of the route segment for this workout
+        type: integer
+      routeSegment:
+        $ref: '#/definitions/database.RouteSegment'
+      routeSegmentID:
+        description: The ID of the route segment
+        type: integer
+      workout:
+        $ref: '#/definitions/database.Workout'
+      workoutID:
+        description: The ID of the workout
+        type: integer
+    type: object
   database.Statistics:
     properties:
       bucketFormat:
@@ -407,6 +507,11 @@ definitions:
       notes:
         description: The notes associated with the workout, in markdown
         type: string
+      routeSegmentMatches:
+        description: Which route segments match
+        items:
+          $ref: '#/definitions/database.RouteSegmentMatch'
+        type: array
       type:
         allOf:
         - $ref: '#/definitions/database.WorkoutType'
@@ -561,6 +666,14 @@ paths:
         in: path
         name: program
         required: true
+        type: string
+      - description: Name of the imported workout
+        in: query
+        name: name
+        type: string
+      - description: Type of the imported workout
+        in: query
+        name: type
         type: string
       produces:
       - application/json
