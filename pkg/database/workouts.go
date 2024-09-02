@@ -187,6 +187,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	w := Workout{
 		User:   u,
 		UserID: u.ID,
+		Dirty:  true,
 		Name:   gpxName(gpxContent),
 		Data:   data,
 		Notes:  notes,
