@@ -46,7 +46,7 @@ build-docker:
 swagger:
 	swag init \
 		--parseDependency \
-		--dir ./pkg/app/,./,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
+		--dir ./internal/pkg/app/,./,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 		--generalInfo api_handlers.go
 
 build-tw:
