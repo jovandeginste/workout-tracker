@@ -8,6 +8,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) addRoutesEquipment(e *echo.Group) {
+	equipmentGroup := e.Group("/equipment")
+	equipmentGroup.GET("", a.equipmentHandler).Name = "equipment"
+	equipmentGroup.POST("", a.addEquipment).Name = "equipment-create"
+	equipmentGroup.GET("/:id", a.equipmentShowHandler).Name = "equipment-show"
+	equipmentGroup.POST("/:id", a.equipmentUpdateHandler).Name = "equipment-update"
+	equipmentGroup.GET("/:id/edit", a.equipmentEditHandler).Name = "equipment-edit"
+	equipmentGroup.POST("/:id/delete", a.equipmentDeleteHandler).Name = "equipment-delete"
+	equipmentGroup.GET("/add", a.equipmentAddHandler).Name = "equipment-add"
+}
+
 func (a *App) addEquipment(c echo.Context) error {
 	u := a.getCurrentUser(c)
 	p := database.Equipment{}

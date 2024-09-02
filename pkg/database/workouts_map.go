@@ -16,6 +16,8 @@ import (
 
 var online = true
 
+const UnknownLocation = "(unknown location)"
+
 var correctAltitudeCreators = []string{
 	"Garmin", "Garmin Connect",
 	"Apple Watch",
@@ -102,16 +104,25 @@ func (d *MapDataDetails) Save(db *gorm.DB) error {
 }
 
 func (m *MapData) UpdateAddress() {
-	if m.Address == nil && m.AddressString != "" {
+	if m.Address == nil && m.hasAddressString() {
 		return
 	}
 
 	m.AddressString = m.addressString()
 }
 
+func (m *MapData) hasAddressString() bool {
+	switch m.AddressString {
+	case "", UnknownLocation:
+		return false
+	default:
+		return true
+	}
+}
+
 func (m *MapData) addressString() string {
 	if m.Address == nil {
-		return `(unknown location)`
+		return UnknownLocation
 	}
 
 	r := ""
@@ -311,7 +322,6 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		Creator:       gpxContent.Creator,
 		Name:          gpxName(gpxContent),
 		Center:        mapCenter,
-		Address:       mapCenter.Address(),
 		TotalDistance: totalDistance,
 		TotalDuration: totalDuration,
 		MaxSpeed:      maxSpeed,

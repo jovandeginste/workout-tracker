@@ -10,10 +10,15 @@
 [![Translation status](https://hosted.weblate.org/widget/workout-tracker/svg-badge.svg)](https://hosted.weblate.org/engage/workout-tracker/)
 [![GitHub language count](https://img.shields.io/github/languages/count/jovandeginste/workout-tracker)](https://hosted.weblate.org/projects/workout-tracker/#languages)
 
+[![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#workout-tracker:matrix.org)
+
 A workout tracking web application for personal use (or family, friends), geared
 towards running and other GPX-based activities
 
 Self-hosted, everything included.
+
+Chat with the community
+[on Matrix](https://matrix.to/#/#workout-tracker:matrix.org)
 
 Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
 

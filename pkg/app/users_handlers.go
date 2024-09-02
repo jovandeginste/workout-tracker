@@ -11,6 +11,11 @@ import (
 
 var ErrLoginFailed = errors.New("username or password incorrect")
 
+func (a *App) addRoutesUsers(e *echo.Group) {
+	usersGroup := e.Group("/users")
+	usersGroup.GET("/:id", a.userShowHandler).Name = "user-show"
+}
+
 // userSigninHandler will be executed after SignInForm submission.
 func (a *App) userSigninHandler(c echo.Context) error {
 	// Initiate a new User struct.

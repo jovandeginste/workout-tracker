@@ -12,6 +12,22 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) addRoutesWorkouts(e *echo.Group) {
+	workoutsGroup := e.Group("/workouts")
+	workoutsGroup.GET("", a.workoutsHandler).Name = "workouts"
+	workoutsGroup.POST("", a.addWorkout).Name = "workouts-create"
+	workoutsGroup.GET("/:id", a.workoutsShowHandler).Name = "workout-show"
+	workoutsGroup.POST("/:id", a.workoutsUpdateHandler).Name = "workout-update"
+	workoutsGroup.GET("/:id/download", a.workoutsDownloadHandler).Name = "workout-download"
+	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
+	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
+	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
+	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
+	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
+	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
+	workoutsGroup.GET("/form", a.workoutsFormHandler).Name = "workout-form"
+}
+
 func (a *App) workoutsHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
@@ -97,16 +113,17 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	workout, err := a.getCurrentUser(c).GetWorkout(a.db.Preload("GPX"), id)
+	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	if err := workout.UpdateData(a.db); err != nil {
+	workout.Dirty = true
+	if err := workout.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been refreshed.", workout.Name)
+	a.setNotice(c, "The workout '%s' will be refreshed soon...", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
