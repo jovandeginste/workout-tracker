@@ -4,7 +4,7 @@ package database
 // - https://media.hypersites.com/clients/1235/filemanager/MHC/METs.pdf
 // - https://cdn-links.lww.com/permalink/mss/a/mss_43_8_2011_06_13_ainsworth_202093_sdc1.pdf
 
-// metabolic equivalent of task
+// MET returns the metabolic equivalent of task
 func (w *Workout) MET() float64 {
 	switch {
 	case w.Type.IsDistance():
