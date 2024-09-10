@@ -68,6 +68,7 @@ func miscIcon(what string) string {
 	}
 	return ""
 }
+
 func sportIcon(what string) string {
 	iconMap := map[string]string{
 		"cycling":        "icon-solid icon-person-biking",
