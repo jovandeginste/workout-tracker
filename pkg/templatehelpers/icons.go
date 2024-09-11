@@ -4,6 +4,7 @@ import "html/template"
 
 const iconDefaults = "icon-baseline icon-space-sm icon-before"
 
+// We need every icon fully qualified here. Otherwise Tailwind will not pick
 var iconMap = map[string]string{
 	// Category Icons
 	"source":      "icon-solid icon-bookmark",
