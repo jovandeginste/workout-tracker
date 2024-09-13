@@ -2,74 +2,71 @@
 <div id="routeSegmentChart"></div>
 
 <script>
-      (function () {
-     // Determine theme
-        let theme = "light";
-        if (
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-          theme = "dark";
-        }
+  // Determine theme
+  let theme = "light";
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    theme = "dark";
+  }
 
-     const rootElement = document.getElementById("routeSegmentChart");
-     const data = [
-       {{ range .RouteSegmentMatches }}
-         {{ if eq CurrentUser.ID .Workout.UserID  }}
-           { "x": new Date({{  .Workout.Date }}) ,  "y": {{ .AverageSpeed | HumanSpeed }} },
-         {{ end }}
-       {{ end }}
-     ];
+  const rootElement = document.getElementById("routeSegmentChart");
+  const data = [
+    {{ range .RouteSegmentMatches }}
+      {{ if eq CurrentUser.ID .Workout.UserID }}
+        { "x": new Date({{  .Workout.Date }}) ,  "y": {{ .AverageSpeed | HumanSpeed }} },
+      {{ end }}
+    {{ end }}
+  ];
 
   const numberFormatter = new Intl.NumberFormat({ maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
-     // Build chart
-     const options = {
-      theme: { mode: theme },
-      chart: {
-        height: 400,
-        animations: { enabled: false }
+  // Build chart
+  const options = {
+    theme: { mode: theme },
+    chart: {
+      height: 400,
+      animations: { enabled: false }
+    },
+    legend: {
+      position: 'top',
+      formatter: (seriesName, opts)=>{
+        if(opts.seriesIndex>3) return '';
+        return seriesName;
       },
-      legend: {
-        position: 'top',
-        formatter: (seriesName, opts)=>{
-          if(opts.seriesIndex>3) return '';
-          return seriesName;
+      markers: { width: [12] }
+    },
+    tooltip: {
+      x: { format: 'dd-MM-yyyy', },
+      y: [
+        { formatter: function (val, opts) { return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}"; } },
+      ],
+    },
+    markers: {
+      size: 2,
+    },
+    xaxis: { type: "datetime" },
+    yaxis: [
+      {
+        labels: {
+          formatter: (val) => {
+            return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}";
+          },
         },
-        markers: { width: [12] }
-      },
-      tooltip: {
-        x: { format: 'dd-MM-yyyy', },
-        y: [
-          { formatter: function (val, opts) { return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}"; } },
-        ],
-      },
-      markers: {
-        size: 2,
-      },
-      xaxis: { type: "datetime" },
-      yaxis: [
-     {
-    labels: {
-     formatter: (val) => {
-       return numberFormatter.format(val) + " {{ CurrentUser.PreferredUnits.Speed }}";
-     },
-     },
-   }
+      }
     ],
-       series: [
-         {
-           name: "{{ i18n `Average speed` }}",
-           type: "scatter",
-           data
-         }
+    series: [
+      {
+        name: "{{ i18n `Average speed` }}",
+        type: "scatter",
+        data
+      }
     ]
-     };
+  };
 
   const chart = new ApexCharts(rootElement, options);
-     chart.render();
-
-      })();
+  chart.render();
 </script>
 
 {{ end }}
