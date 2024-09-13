@@ -3,6 +3,7 @@
   <head>
     {{ template "head" }}
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/apexcharts.min.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
   </head>
   <body>
@@ -28,13 +29,17 @@
           <div class="inner-form">{{ template "route_segment_details" . }}</div>
         </div>
         <div class="basis-1/2 2xl:basis-1/3">
-          <div class="inner-form">
+          <div
+            class="inner-form overflow-y-auto max-h-[340px] sm:max-h-[440px] md:max-h-[640px] print:max-h-[640px]"
+          >
             <table>
               <thead>
                 <tr>
-                  <th>{{ i18n "User" }}</th>
+                  <th class="{{ IconFor `user` }}">&nbsp;</th>
                   <th>{{ i18n "Workout" }}</th>
-                  <th>{{ i18n "Distance" }}</th>
+                  <th class="lg:hidden 3xl:table-cell">
+                    {{ i18n "Distance" }}
+                  </th>
                   <th>{{ i18n "Duration" }}</th>
                   <th>{{ i18n "Tempo" }}</th>
                 </tr>
@@ -52,7 +57,9 @@
                       >{{ .Workout.Name }}</a
                     >
                   </td>
-                  <td class="whitespace-nowrap font-mono">
+                  <td
+                    class="whitespace-nowrap font-mono lg:hidden 3xl:table-cell"
+                  >
                     {{ .Distance | HumanDistance }} {{
                     CurrentUser.PreferredUnits.Distance }}
                   </td>
@@ -70,6 +77,14 @@
           </div>
         </div>
       </div>
+
+      <div class="inner-form h-[300px] md:h-[500px] print:hidden">
+        <h3>
+          <span>{{ i18n "Personal trend" }}</span>
+        </h3>
+        {{ template "route_segment_show_stats" . }}
+      </div>
+
       <div class="pagebreak">
         {{ if .Notes }}
         <div class="inner-form">

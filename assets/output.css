@@ -1998,6 +1998,14 @@ table {
   max-height: 12rem;
 }
 
+.max-h-\[300px\] {
+  max-height: 300px;
+}
+
+.max-h-\[340px\] {
+  max-height: 340px;
+}
+
 .min-h-\[450px\] {
   min-height: 450px;
 }
@@ -3071,6 +3079,14 @@ table {
     height: 400px;
   }
 
+  .sm\:max-h-\[400px\] {
+    max-height: 400px;
+  }
+
+  .sm\:max-h-\[440px\] {
+    max-height: 440px;
+  }
+
   .sm\:w-\[300px\] {
     width: 300px;
   }
@@ -3123,6 +3139,14 @@ table {
 
   .md\:h-\[600px\] {
     height: 600px;
+  }
+
+  .md\:max-h-\[600px\] {
+    max-height: 600px;
+  }
+
+  .md\:max-h-\[640px\] {
+    max-height: 640px;
   }
 
   .md\:basis-1\/2 {
@@ -3212,6 +3236,14 @@ table {
 
   .print\:h-\[600px\] {
     height: 600px;
+  }
+
+  .print\:max-h-\[600px\] {
+    max-height: 600px;
+  }
+
+  .print\:max-h-\[640px\] {
+    max-height: 640px;
   }
 
   .print\:w-full {

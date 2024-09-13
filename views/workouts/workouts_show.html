@@ -45,7 +45,9 @@
         <div class="basis-1/2 2xl:basis-1/3">
           {{ if and .Type.IsDistance .Type.IsDuration .Data.Details }}
           <div class="inner-form">
-            <div class="print:w-full overflow-y-auto">
+            <div
+              class="print:w-full overflow-y-auto max-h-[300px] sm:max-h-[400px] md:max-h-[600px] print:max-h-[600px]"
+            >
               {{ template "workout_breakdown" (.StatisticsPer 1
               CurrentUser.PreferredUnits.Distance) }}
             </div>
