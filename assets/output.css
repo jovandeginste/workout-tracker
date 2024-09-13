@@ -635,7 +635,8 @@ textarea:focus,
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-button.edit {
+button.edit,
+  button.share {
   --tw-border-opacity: 1;
   border-color: rgb(251 191 36 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -643,7 +644,8 @@ button.edit {
 }
 
 @media (prefers-color-scheme: dark) {
-  button.edit {
+  button.edit,
+  button.share {
     --tw-bg-opacity: 1;
     background-color: rgb(245 158 11 / var(--tw-bg-opacity));
   }
@@ -2916,6 +2918,14 @@ table {
   content: "\f022";
 }
 
+.icon-retweet::before {
+  content: "\f079";
+}
+
+.icon-retweet::after {
+  content: "\f079";
+}
+
 .icon-right-from-bracket::before {
   content: "\f2f5";
 }
@@ -2962,6 +2972,14 @@ table {
 
 .icon-sailboat::after {
   content: "\e445";
+}
+
+.icon-share-from-square::before {
+  content: "\f14d";
+}
+
+.icon-share-from-square::after {
+  content: "\f14d";
 }
 
 .icon-square-check::before {

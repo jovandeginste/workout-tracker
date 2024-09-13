@@ -65,3 +65,13 @@ function copyToClipboard(id) {
   // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
 }
+
+function showMessage(cls, message) {
+  var al = document.getElementById("alerts");
+
+  var msg = document.createElement("div");
+  msg.classList.add(cls);
+  msg.innerText = message;
+
+  al.appendChild(msg);
+}

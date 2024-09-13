@@ -64,6 +64,7 @@ func (a *App) ConfigureWebserver() error {
 	publicGroup.GET("/assets", func(c echo.Context) error {
 		return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
 	}).Name = "assets"
+	publicGroup.GET("/share/:uuid", a.workoutShowShared).Name = "share"
 
 	userGroup := publicGroup.Group("/user")
 	userGroup.GET("/signin", a.userLoginHandler).Name = "user-login"
@@ -82,7 +83,7 @@ func (a *App) ConfigureWebserver() error {
 func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		u := a.getCurrentUser(ctx)
-		if u == nil || !u.IsActive() {
+		if u.IsAnonymous() || !u.IsActive() {
 			log.Warn("User is not found")
 			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		}
@@ -99,6 +100,11 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 func (a *App) ValidateUserMiddleware(ctx echo.Context) {
 	if err := a.setUser(ctx); err != nil {
 		log.Warn(err.Error())
+	}
+
+	u := a.getCurrentUser(ctx)
+	if u.IsAnonymous() {
+		panic("User is not found")
 	}
 }
 

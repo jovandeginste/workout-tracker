@@ -50,7 +50,8 @@
     @apply hover:brightness-125 hover:contrast-125;
     @apply focus:brightness-125 focus:contrast-125;
   }
-  button.edit {
+  button.edit,
+  button.share {
     @apply border-amber-400;
     @apply bg-amber-300;
     @apply dark:bg-amber-500;
@@ -168,6 +169,7 @@
     @apply bg-sky-900 border-sky-600 text-sky-300;
     @apply dark:bg-sky-100 dark:border-sky-400 dark:text-sky-700;
   }
+
   .notice {
     @apply bg-green-900 border-green-600 text-green-300;
     @apply dark:bg-green-100 dark:border-green-400 dark:text-green-700;

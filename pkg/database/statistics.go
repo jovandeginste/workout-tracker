@@ -1,11 +1,14 @@
 package database
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
 
 const postgresDialect = "postgres"
+
+var ErrAnonymousUser = errors.New("no statistics available for anonymous user")
 
 type StatConfig struct {
 	Since string `query:"since"`
@@ -146,6 +149,10 @@ func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
 }
 
 func (u *User) GetDefaultTotals() (*Bucket, error) {
+	if u.IsAnonymous() {
+		return nil, ErrAnonymousUser
+	}
+
 	t := u.Profile.TotalsShow
 	if t == WorkoutTypeAutoDetect {
 		ht, err := u.GetHighestWorkoutType()
@@ -188,6 +195,10 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 }
 
 func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
+	if u.IsAnonymous() {
+		return nil, ErrAnonymousUser
+	}
+
 	rs := []*WorkoutRecord{}
 
 	for _, w := range DistanceWorkoutTypes() {

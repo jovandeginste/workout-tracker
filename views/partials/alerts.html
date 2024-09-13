@@ -1,5 +1,6 @@
-<div class="messages">
-  {{ define "alerts" }} {{ if .notice }}
+{{ define "alerts" }}
+<div id="alerts" class="messages">
+  {{ if .notice }}
   <div class="notice" role="alert">
     <span class="block sm:inline"> {{ .notice }} </span>
   </div>
@@ -7,5 +8,6 @@
   <div class="alert" role="alert">
     <span class="block sm:inline"> {{ .error }} </span>
   </div>
-  {{ end }} {{ end }}
+  {{ end }}
 </div>
+{{ end }}

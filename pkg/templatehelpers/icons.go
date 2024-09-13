@@ -26,17 +26,19 @@ var iconMap = map[string]string{
 	"calories":    "icon-solid icon-fire",
 
 	// Misc Icons
-	"circular":      "icon-solid icon-circle-notch",
-	"bidirectional": "icon-solid icon-arrow-right-arrow-left",
-	"units":         "icon-solid icon-ruler",
-	"file":          "icon-solid icon-file",
-	"best":          "icon-solid icon-arrow-up-long",
-	"worst":         "icon-solid icon-arrow-down-long",
-	"up":            "icon-solid icon-chevron-up",
-	"down":          "icon-solid icon-chevron-down",
-	"metrics":       "icon-regular icon-rectangle-list",
-	"translate":     "icon-solid icon-language",
-	"expand":        "icon-solid icon-arrows-left-right",
+	"circular":       "icon-solid icon-circle-notch",
+	"bidirectional":  "icon-solid icon-arrow-right-arrow-left",
+	"units":          "icon-solid icon-ruler",
+	"file":           "icon-solid icon-file",
+	"best":           "icon-solid icon-arrow-up-long",
+	"worst":          "icon-solid icon-arrow-down-long",
+	"up":             "icon-solid icon-chevron-up",
+	"down":           "icon-solid icon-chevron-down",
+	"metrics":        "icon-regular icon-rectangle-list",
+	"translate":      "icon-solid icon-language",
+	"expand":         "icon-solid icon-arrows-left-right",
+	"share":          "icon-solid icon-share-from-square",
+	"generate-share": "icon-solid icon-retweet",
 
 	// Sport Icons
 	"cycling":        "icon-solid icon-person-biking",
@@ -91,5 +93,6 @@ func IconFor(what string) template.HTML {
 	if icon, exists := iconMap[what]; exists {
 		return template.HTML(iconDefaults + " " + icon) //nolint:gosec
 	}
+
 	return template.HTML(iconDefaults + " icon-solid icon-question") //nolint:gosec
 }
