@@ -15,7 +15,7 @@
 
         eventSpan.innerHTML = arg.event.title
         eventSpan.classList.add(
-          "px-2", "overflow-hidden", ...arg.event.extendedProps.iconClass.split(" "),
+          "px-2", "overflow-hidden",
         )
 
         return { domNodes: [ eventSpan ] }
@@ -23,13 +23,10 @@
       events: [
         {{ range .workouts }}
         {
-          title: "{{ .Distance | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}",
+          title: "{{ IconFor .Type.String }}{{ .Distance | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}",
           start: "{{ .Date | LocalDate }}",
           url: "/workouts/{{ .ID }}",
           display: "block",
-          extendedProps: {
-            iconClass: "{{ IconFor .Type.String }}",
-          },
         },
         {{ end }}
       ],

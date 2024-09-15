@@ -18,7 +18,7 @@
         </div>
         <div>
           <div class="inner-form">
-            <h3 class="{{ IconFor `user-signin` }}">{{ i18n "Sign in" }}</h3>
+            <h3>{{ IconFor `user-signin` }}{{ i18n "Sign in" }}</h3>
             <form
               id="signin"
               method="post"
@@ -59,8 +59,8 @@
 
           {{ if not AppConfig.RegistrationDisabled }}
           <div class="inner-form">
-            <h3 class="{{ IconFor `user-register` }}">
-              {{ i18n "Create a new account" }}
+            <h3>
+              {{ IconFor `user-register` }} {{ i18n "Create a new account" }}
             </h3>
             <form
               id="register"

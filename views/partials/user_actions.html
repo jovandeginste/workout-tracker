@@ -1,7 +1,7 @@
 {{ define "user_actions" }}
 <form action="{{ RouteFor `admin-user-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
-    <a class="{{ IconFor `edit` }}"></a>
+    <a>{{ IconFor `edit` }}</a>
   </button>
 </form>
 <form onsubmit="return false">
@@ -10,7 +10,7 @@
     class="dangerous"
     title="{{ i18n `delete` }}"
   >
-    <a class="{{ IconFor `delete` }}"></a>
+    <a>{{ IconFor `delete` }}</a>
   </button>
 </form>
 
@@ -22,7 +22,7 @@
         type="button"
         class="close-modal"
       >
-        <a class="{{ IconFor `close` }}"></a>
+        <a>{{ IconFor `close` }}</a>
       </button>
     </div>
 

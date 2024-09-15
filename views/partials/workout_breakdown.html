@@ -24,9 +24,9 @@
     >
       <td class="text-right">
         {{- if .IsWorst -}}
-        <span class="text-orange-600 {{ IconFor `worst` }}"></span>
+        <span class="text-orange-600">{{ IconFor `worst` }}</span>
         {{- end -}} {{- if .IsBest -}}
-        <span class="text-green-500 {{ IconFor `best` }}"></span>
+        <span class="text-green-500">{{ IconFor `best` }}</span>
         {{- end -}} {{ .Counter }}
       </td>
       <td>

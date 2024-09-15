@@ -360,7 +360,7 @@ database storage is a single SQLite file.
   - [Spreak](https://github.com/vorlif/spreak)
 - HTML, CSS and JS
   - [Tailwind CSS](https://tailwindcss.com/)
-  - [Font Awesome](https://fontawesome.com/)
+  - [Iconify Design](https://iconify.design/)
   - [FullCalendar](https://fullcalendar.io/)
   - [Leaflet](https://leafletjs.com/)
   - [apexcharts](https://apexcharts.com/)

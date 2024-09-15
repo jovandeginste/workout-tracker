@@ -8,6 +8,9 @@
     }
   }
 
+  .icon-decoration {
+    @apply align-baseline mr-2;
+  }
   .full-size {
     @apply basis-full h-dvh;
   }
@@ -128,12 +131,12 @@
     @apply rounded-b-xl mb-2;
     a {
       @apply mt-5 mr-5;
-      span {
+      span.autohide {
         @apply hidden md:contents;
       }
     }
     h1 {
-      @apply text-xl sm:text-3xl border-b-2 sm:border-b-0 mb-3 sm:mb-0 pb-3 sm:pb-0;
+      @apply text-xl md:text-3xl border-b-2 md:border-b-0 mb-3 md:mb-0 pb-3 md:pb-0;
       @apply text-black border-neutral-500;
       @apply dark:text-white border-neutral-500;
     }

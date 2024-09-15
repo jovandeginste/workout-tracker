@@ -2,40 +2,35 @@
 <div class="workouts_list_details flex flex-wrap gap-1">
   {{ if .Type.IsLocation }}
   <div
-    class="hidden 2xl:table-cell {{ IconFor `location` }}"
+    class="hidden 2xl:table-cell"
     title="{{ i18n `Location` }}: {{ .Address }}"
   >
-    {{ .Address }}
+    {{ IconFor `location` }} {{ .Address }}
   </div>
   {{ end }} {{ if .Type.IsDistance }}
-  <div class="font-mono {{ IconFor `distance` }}" title="{{ i18n `Distance` }}">
-    {{ .Data.TotalDistance | HumanDistance }} {{
+  <div class="font-mono" title="{{ i18n `Distance` }}">
+    {{ IconFor `distance` }} {{ .Data.TotalDistance | HumanDistance }} {{
     CurrentUser.PreferredUnits.Distance }}
   </div>
   {{ end }} {{ if .Type.IsDuration }}
-  <div
-    class="hidden sm:table-cell font-mono {{ IconFor `duration` }}"
-    title="{{ i18n `Duration` }}"
-  >
-    {{ .Data.TotalDuration | HumanDuration }}
+  <div class="hidden sm:table-cell font-mono" title="{{ i18n `Duration` }}">
+    {{ IconFor `duration` }} {{ .Data.TotalDuration | HumanDuration }}
   </div>
   {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
   <div
-    class="hidden xl:table-cell font-mono {{ IconFor `speed` }}"
+    class="hidden xl:table-cell font-mono"
     title="{{ i18n `Average speed` }}"
   >
-    {{ .PreferredAverageSpeedMetric CurrentUser.PreferredUnits }}
+    {{ IconFor `speed` }} {{ .PreferredAverageSpeedMetric
+    CurrentUser.PreferredUnits }}
   </div>
   {{ end }} {{ if .Type.IsWeight }}
-  <div class="font-mono {{ IconFor `weight` }}" title="{{ i18n `Weight` }}">
-    {{ .Weight }}
+  <div class="font-mono" title="{{ i18n `Weight` }}">
+    {{ IconFor `weight` }} {{ .Weight }}
   </div>
   {{ end }}{{ if .Type.IsRepetition }}
-  <div
-    class="font-mono {{ IconFor `repetitions` }}"
-    title="{{ i18n `Repetitions` }}"
-  >
-    {{ .Repetitions }}
+  <div class="font-mono" title="{{ i18n `Repetitions` }}">
+    {{ IconFor `repetitions` }} {{ .Repetitions }}
   </div>
   {{ end }}
 </div>
