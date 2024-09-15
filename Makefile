@@ -63,11 +63,9 @@ build-dist: clean-dist
 	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
 	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
 	cp -v ./node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -R ./node_modules/@fortawesome/fontawesome-free/ ./assets/dist/fontawesome/
 	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
 	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
 	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
-
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch

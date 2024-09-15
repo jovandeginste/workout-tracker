@@ -7,12 +7,12 @@
     {{ template "header" . }}
     <div class="content">
       <div class="items-baseline flex flex-wrap">
-        <h2 class="grow justify-start {{ IconFor `workout` }}">
-          {{ i18n "Workouts" }} ({{ len .workouts }})
+        <h2 class="grow justify-start">
+          {{ IconFor `workout` }} {{ i18n "Workouts" }} ({{ len .workouts }})
         </h2>
         <div class="justify-end mr-2">
-          <a class="{{ IconFor `add` }}" href="{{ RouteFor `workout-add` }}"
-            ><span>{{ i18n "Add workout" }}</span></a
+          <a href="{{ RouteFor `workout-add` }}"
+            >{{ IconFor `add` }}{{ i18n "Add workout" }}</a
           >
         </div>
       </div>
@@ -31,10 +31,9 @@
           {{ range .workouts }}
           <tr>
             <td class="text-center">
-              <div
-                class="{{ IconFor .Type.String }}"
-                title="{{ i18n .Type.String }}"
-              ></div>
+              <div title="{{ i18n .Type.String }}">
+                {{ IconFor .Type.String }}
+              </div>
             </td>
             <td>
               <a href="{{ RouteFor `workout-show` .ID }}">
@@ -49,10 +48,9 @@
             </th>
             <td class="hidden sm:table-cell">
               {{ if .Dirty }}
-              <span
-                class="{{ IconFor `refresh` }}"
-                title="{{ i18n `refresh in progress` }}"
-              ></span>
+              <span title="{{ i18n `refresh in progress` }}">
+                {{ IconFor `refresh` }}
+              </span>
               {{ end }}
               <span class="actions"> {{ template "workout_actions" . }} </span>
             </td>

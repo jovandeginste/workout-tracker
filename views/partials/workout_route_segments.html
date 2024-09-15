@@ -13,7 +13,7 @@
   <tbody class="whitespace-nowrap font-mono">
     {{ range . }}
     <tr>
-      <td class="{{ IconFor `route-segment` }}"></td>
+      <td>{{ IconFor `route-segment` }}</td>
       <td class="flex flex-wrap gap-1">
         <a href="{{ RouteFor `route-segment-show` .RouteSegment.ID }}"
           >{{ .RouteSegment.Name }}</a

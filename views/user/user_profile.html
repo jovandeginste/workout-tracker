@@ -7,7 +7,7 @@
     {{ template "header" . }}
     <div class="content">
       <div class="inner-form">
-        <h2 class="{{ IconFor `user-profile` }}">{{ i18n "Your profile" }}</h2>
+        <h2>{{ IconFor `user-profile` }}{{ i18n "Your profile" }}</h2>
         {{ with CurrentUser }}
         <form method="post" action="{{ RouteFor `user-profile-update` }}">
           <table class="table-fixed">
@@ -18,12 +18,10 @@
                     >{{ i18n "Enable API access" }}
 
                     <a
-                      class="{{ IconFor `info` }}"
                       title="{{ i18n `how to use` }}"
                       target="_blank"
                       href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
-                    >
-                      &nbsp;
+                      >{{ IconFor `info` }}
                     </a>
                   </label>
                 </th>
@@ -55,20 +53,25 @@
                   >
                     <button
                       type="button"
-                      class="{{ IconFor `show` }} edit"
+                      class="edit"
                       title="{{ i18n `show/hide` }}"
                       onclick="toggleTextPassword(this, 'api_key');"
-                    />
+                    >
+                      {{ IconFor `show` }}
+                    </button>
                     <button
                       type="button"
-                      class="{{ IconFor `copy` }}"
                       title="{{ i18n `copy to clipboard` }}"
                       onclick="copyToClipboard('api_key');"
-                    />
+                    >
+                      {{ IconFor `copy` }}
+                    </button>
                     <button
-                      class="{{ IconFor `refresh` }} dangerous"
+                      class="dangerous"
                       title="{{ i18n `generate a new API key` }}"
-                    />
+                    >
+                      {{ IconFor `refresh` }}
+                    </button>
                   </form>
                   {{ end }}
                 </td>
@@ -97,10 +100,9 @@
                       href="https://hosted.weblate.org/projects/workout-tracker/"
                       target="_blank"
                       title="{{ i18n `Please help translate via Weblate` }}"
-                      class="{{ IconFor `translate` }}"
-                    >
-                    </a
-                  ></label>
+                      >{{ IconFor `translate` }}
+                    </a></label
+                  >
                 </th>
                 <td>
                   {{ template "user_profile_language" .Profile.Language }}
@@ -173,15 +175,15 @@
         {{ end }}
       </div>
       <div class="inner-form">
-        <h2 class="{{ IconFor `units` }}">{{ i18n "Preferred units" }}</h2>
+        <h2>{{ IconFor `units` }}{{ i18n "Preferred units" }}</h2>
         {{ template "user_profile_preferred_units" }}
       </div>
       <div class="inner-form">
-        <h2 class="{{ IconFor `actions` }}">{{ i18n "Actions" }}</h2>
+        <h2>{{ IconFor `actions` }}{{ i18n "Actions" }}</h2>
         <form method="post" action="{{ RouteFor `user-refresh` }}">
           <label for="refresh">{{ i18n "Refresh all your workouts" }}</label>
           <button type="submit">
-            <a class="{{ IconFor `refresh` }}"></a>
+            <a>{{ IconFor `refresh` }}</a>
           </button>
         </form>
       </div>

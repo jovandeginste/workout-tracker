@@ -10,14 +10,14 @@
 </span>
 {{ end }} {{ define "stats_records_distance" }}
 <h3>
-  <span class="{{ IconFor .WorkoutType.String }}"></span>
-  {{ i18n "Records for %s" (i18n .WorkoutType.String) }}
+  {{ IconFor .WorkoutType.String }} {{ i18n "Records for %s" (i18n
+  .WorkoutType.String) }}
 </h3>
 <table class="workout-info table-auto">
   <tbody>
     <tr>
       <th>
-        <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
+        <span>{{ IconFor `speed` }}{{ i18n "Average speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
         {{ .WorkoutType.PreferredSpeedMetric .AverageSpeed.Value
@@ -27,9 +27,7 @@
     </tr>
     <tr>
       <th>
-        <span class="{{ IconFor `speed` }}"
-          >{{ i18n "Average speed (no pause)" }}</span
-        >
+        <span>{{ IconFor `speed` }}{{ i18n "Average speed (no pause)" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
         {{ .WorkoutType.PreferredSpeedMetric .AverageSpeedNoPause.Value
@@ -39,7 +37,7 @@
     </tr>
     <tr>
       <th>
-        <span class="{{ IconFor `max-speed` }}">{{ i18n "Max speed" }}</span>
+        <span>{{ IconFor `max-speed` }}{{ i18n "Max speed" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
         {{ .WorkoutType.PreferredSpeedMetric .MaxSpeed.Value
@@ -50,9 +48,7 @@
     {{ with .Distance }}
     <tr>
       <th>
-        <span class="{{ IconFor `distance` }}"
-          >{{ i18n "Total distance" }}</span
-        >
+        <span>{{ IconFor `distance` }}{{ i18n "Total distance" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
         {{ .Value | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}
@@ -62,7 +58,7 @@
     {{ end }} {{ with .TotalUp }}
     <tr>
       <th>
-        <span class="{{ IconFor `up` }}">{{ i18n "Total up" }}</span>
+        <span>{{ IconFor `up` }}{{ i18n "Total up" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">
         {{ .Value | HumanElevation }} {{ CurrentUser.PreferredUnits.Elevation }}
@@ -72,9 +68,7 @@
     {{ end }} {{ with .Duration }}
     <tr>
       <th>
-        <span class="{{ IconFor `duration` }}"
-          >{{ i18n "Total duration" }}</span
-        >
+        <span>{{ IconFor `duration` }}{{ i18n "Total duration" }}</span>
       </th>
       <td class="font-mono whitespace-nowrap">{{ .Value | HumanDuration }}</td>
       <td>{{ template "stats_record_distance_date" . }}</td>

@@ -14,13 +14,9 @@
 <ul class="list-none">
   {{ range .addresses }}
   <li>
-    <a
-      class="{{ IconFor `location` }}"
-      href="#"
-      onclick="setLocation('{{ . }}')"
-    >
-      {{ . }}</a
-    >
+    <a href="#" onclick="setLocation('{{ . }}')">
+      {{ IconFor `location` }} {{ . }}
+    </a>
   </li>
   {{ end }}
 </ul>

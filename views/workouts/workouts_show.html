@@ -24,14 +24,14 @@
         {{ if eq .User.ID CurrentUser.ID }}
         <span class="float-right actions">
           {{ if .Dirty }}
-          <span class="dirty {{ IconFor `refresh` }}">
-            {{ i18n "refresh in progress" }}
+          <span class="dirty">
+            {{ IconFor `refresh` }} {{ i18n "refresh in progress" }}
           </span>
           {{ end }} {{ template "workout_actions" . }}
         </span>
         {{ end }}
 
-        <h2 class="{{ IconFor .Type.String }}">{{ .Name }}</h2>
+        <h2>{{ IconFor .Type.String }}{{ .Name }}</h2>
       </div>
       <div class="lg:flex lg:flex-wrap print:block">
         {{ if .HasTracks }}
@@ -56,9 +56,7 @@
       {{ if .RouteSegmentMatches }}
       <div class="pagebreak">
         <div class="basis-1/2 2xl:basis-1/3 inner-form">
-          <h3 class="{{ IconFor `note` }}">
-            {{ i18n "Matching route segments" }}
-          </h3>
+          <h3>{{ IconFor `note` }} {{ i18n "Matching route segments" }}</h3>
           <div class="print:w-full overflow-y-auto">
             {{ template "workout_route_segments" .RouteSegmentMatches }}
           </div>
@@ -68,7 +66,7 @@
       <div class="pagebreak">
         {{ if .Notes }}
         <div class="inner-form">
-          <h3 class="{{ IconFor `note` }}">{{ i18n "Notes" }}</h3>
+          <h3>{{ IconFor `note` }}{{ i18n "Notes" }}</h3>
           <div>{{ .MarkdownNotes }}</div>
         </div>
         {{ end }}
@@ -76,9 +74,9 @@
       {{ if .Data.Details }}
       <div class="inner-form h-[300px] md:h-[500px] print:hidden">
         <h3>
-          <span class="{{ IconFor `speed` }}">{{ i18n "Average speed" }}</span>
+          <span>{{ IconFor `speed` }}{{ i18n "Average speed" }}</span>
           /
-          <span class="{{ IconFor `elevation` }}">{{ i18n "Elevation" }}</span>
+          <span>{{ IconFor `elevation` }}{{ i18n "Elevation" }}</span>
         </h3>
         {{ template "workout_show_stats" .StatisticsPer 1 "min" }}
       </div>

@@ -7,14 +7,13 @@
     {{ template "header" . }}
     <div class="content">
       <div class="items-baseline flex flex-wrap">
-        <h2 class="grow justify-start {{ IconFor `route-segment` }}">
-          {{ i18n "Route segments" }} ({{ len .routeSegments }})
+        <h2 class="grow justify-start">
+          {{ IconFor `route-segment` }} {{ i18n "Route segments" }} ({{ len
+          .routeSegments }})
         </h2>
         <div class="justify-end mr-2">
-          <a
-            class="{{ IconFor `add` }}"
-            href="{{ RouteFor `route-segment-add` }}"
-            ><span>{{ i18n "Add route segment" }}</span></a
+          <a href="{{ RouteFor `route-segment-add` }}"
+            >{{ IconFor `add` }}<span>{{ i18n "Add route segment" }}</span></a
           >
         </div>
       </div>
