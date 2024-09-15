@@ -39,7 +39,8 @@ var iconMap = map[string]string{
 	"generate-share": "icon-[fa6-solid--retweet]",
 
 	// Sport Icons
-	"cycling":        "icon-[fa6-solid--person-biking]",
+	"cycling":        "icon-[material-symbols--pedal-bike-outline]",
+	"e-cycling":      "icon-[material-symbols--electric-bike-outline]",
 	"running":        "icon-[fa6-solid--person-running]",
 	"walking":        "icon-[fa6-solid--person-walking]",
 	"swimming":       "icon-[fa6-solid--person-swimming]",
