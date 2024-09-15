@@ -2405,20 +2405,6 @@ table {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='black' d='M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0l-30.1 30l97.9 97.9l30.1-30.1c21.9-21.9 21.9-57.3 0-79.2zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5l167.3-167.4l-98-98zM96 64c-53 0-96 43-96 96v256c0 53 43 96 96 96h256c53 0 96-43 96-96v-96c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32z'/%3E%3C/svg%3E");
 }
 
-.icon-\[fa6-solid--person-biking\] {
-  display: inline-block;
-  width: 1.25em;
-  height: 1em;
-  background-color: currentColor;
-  -webkit-mask-image: var(--svg);
-  mask-image: var(--svg);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512' width='640' height='512'%3E%3Cpath fill='black' d='M400 96a48 48 0 1 0 0-96a48 48 0 1 0 0 96m27.2 64l-61.8-48.8c-17.3-13.6-41.7-13.8-59.1-.3l-83.1 64.2c-30.7 23.8-28.5 70.8 4.3 91.6l60.5 38.4V416c0 17.7 14.3 32 32 32s32-14.3 32-32V288c0-10.7-5.3-20.7-14.2-26.6L295 232.9l60.3-48.5L396 217c5.7 4.5 12.7 7 20 7h64c17.7 0 32-14.3 32-32s-14.3-32-32-32zM56 384a72 72 0 1 1 144 0a72 72 0 1 1-144 0m200 0a128 128 0 1 0-256 0a128 128 0 1 0 256 0m184 0a72 72 0 1 1 144 0a72 72 0 1 1-144 0m200 0a128 128 0 1 0-256 0a128 128 0 1 0 256 0'/%3E%3C/svg%3E");
-}
-
 .icon-\[fa6-solid--person-hiking\] {
   display: inline-block;
   width: 0.75em;
@@ -2753,6 +2739,34 @@ table {
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' width='384' height='512'%3E%3Cpath fill='black' d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7L86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256L41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256z'/%3E%3C/svg%3E");
+}
+
+.icon-\[material-symbols--electric-bike-outline\] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M5 17q-2.125 0-3.562-1.437T0 12t1.463-3.562T5 7q1.925 0 3.238 1.15T9.9 11h.65l-1.8-5H7V4h5v2h-1.1l.35 1h4.8L14.6 3H12V1h2.6q.65 0 1.163.35t.737.95l1.7 4.65h.8q2.075 0 3.538 1.463T24 11.95q0 2.1-1.45 3.575T19 17q-1.8 0-3.162-1.125T14.1 13H9.9q-.35 1.725-1.7 2.863T5 17m0-2q1.025 0 1.763-.562T7.8 13H5v-2h2.8q-.3-.9-1.037-1.45T5 9q-1.275 0-2.137.863T2 12q0 1.25.863 2.125T5 15m7.7-4h1.4q.125-.575.338-1.075T15 9h-3.05zm6.3 4q1.275 0 2.138-.875T22 12q0-1.275-.862-2.137T19 9h-.1l1 2.65l-1.9.7l-.95-2.65q-.5.425-.775 1T16 12q0 1.25.863 2.125T19 15m-6 8l-6-3h4v-2l6 3h-4zm6-11'/%3E%3C/svg%3E");
+}
+
+.icon-\[material-symbols--pedal-bike-outline\] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M5 20q-2.125 0-3.562-1.437T0 15t1.463-3.562T5 10q1.925 0 3.238 1.15T9.9 14h.65l-1.8-5H7V7h5v2h-1.1l.35 1h4.8L14.6 6H12V4h2.6q.65 0 1.163.35t.737.95l1.7 4.65h.8q2.075 0 3.538 1.463T24 14.95q0 2.1-1.45 3.575T19 20q-1.8 0-3.162-1.125T14.1 16H9.9q-.35 1.725-1.7 2.863T5 20m0-2q1.025 0 1.763-.562T7.8 16H5v-2h2.8q-.3-.9-1.037-1.45T5 12q-1.275 0-2.137.863T2 15q0 1.25.863 2.125T5 18m7.7-4h1.4q.125-.575.338-1.075T15 12h-3.05zm6.3 4q1.275 0 2.138-.875T22 15q0-1.275-.862-2.137T19 12h-.1l1 2.65l-1.9.7l-.95-2.65q-.5.425-.775 1T16 15q0 1.25.863 2.125T19 18m0-3'/%3E%3C/svg%3E");
 }
 
 .visible {

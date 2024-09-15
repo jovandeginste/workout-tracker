@@ -24,8 +24,9 @@
         <button type="submit" value="Submit">{{ i18n "refresh"}}</button>
       </form>
       <h2>
-        {{ IconFor `statistics` }} {{ i18n `Your progress per %s for the past
-        %s` (i18n $per) (i18n $since) }}
+        {{ IconFor `statistics` }}
+        <!-- prettier-ignore -->
+        {{ i18n "Your progress per %s for the past %s" (i18n $per) (i18n $since) }}
       </h2>
       {{ $stats := CurrentUser.GetStatisticsFor $since $per }}
 
