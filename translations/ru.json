@@ -1,7 +1,7 @@
 {
-    "Admin": "Admin",
     "tempo": "темп",
     "segment": "участок",
+    "Admin": "Админ",
     "Use a file": "Использовать файл",
     "User": "Пользователь",
     "Weight": "Вес",
@@ -55,7 +55,7 @@
     "Heading": "Направление",
     "Max elevation": "Максимальная высота",
     "Other users": "Другие пользователи",
-    "Start": "Старт",
+    "Start": "Начало",
     "Sign in": "Вход",
     "Tempo": "Темп",
     "Update profile": "Обновить профиль",
@@ -107,5 +107,16 @@
     "no equipment": "нет снаряжения",
     "Time paused": "Время остановок",
     "Heart rate": "ЧСС",
-    "Recent activity": "Недавняя активность"
+    "Recent activity": "Недавняя активность",
+    "Disable social sharing buttons": "Отключить кнопки социальных сетей",
+    "refresh": "обновить",
+    "Manage": "Управление",
+    "Show full date by default": "Показывать полную дату по умолчанию",
+    "Manage users": "Управление пользователями",
+    "These settings may be overwritten by:": "Эти параметры могут быть переопределены через:",
+    "Disable account registration": "Отключить регистрацию",
+    "refresh in progress": "обновление в процессе",
+    "Dashboard": "Панель управления",
+    "Manage user '%s'": "Управление пользователем '%s'",
+    "Added %d new workout(s): %s": "Добавлена %d новая тренировка: %s"
 }
