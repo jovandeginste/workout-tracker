@@ -3,7 +3,7 @@
   <tbody>
     {{ if .HasFile }}
     <tr>
-      <td class="{{ IconFor `file` }}"></td>
+      <td>{{ IconFor `file` }}</td>
       <th>{{ i18n "File" }}</th>
       <td>
         {{ if gt (.Filename | len) 15 }}
@@ -13,35 +13,35 @@
     </tr>
     {{ end }}
     <tr>
-      <td class="{{ IconFor `date` }}"></td>
+      <td>{{ IconFor `date` }}</td>
       <th>{{ i18n "Date" }}</th>
       <td>{{ template "snippet_date" .Date }}</td>
     </tr>
     <tr>
-      <td class="{{ IconFor `location` }}"></td>
+      <td>{{ IconFor `location` }}</td>
       <th>{{ i18n "Location" }}</th>
       <td>{{ .Address }}</td>
     </tr>
     <tr>
-      <td class="{{ IconFor `source` }}"></td>
+      <td>{{ IconFor `source` }}</td>
       <th>{{ i18n "Source" }}</th>
       <td>{{ .Data.Creator }}</td>
     </tr>
     <tr>
-      <td class="{{ IconFor `workout` }}"></td>
+      <td>{{ IconFor `workout` }}</td>
       <th>{{ i18n "Type" }}</th>
       <td>
-        <span class="{{ IconFor .Type.String }}">{{ i18n .Type.String }}</span>
+        <span>{{ IconFor .Type.String }}{{ i18n .Type.String }}</span>
       </td>
     </tr>
     {{ if .Type.IsRepetition }}
     <tr>
-      <td class="{{ IconFor `repetitions` }}"></td>
+      <td>{{ IconFor `repetitions` }}</td>
       <th>{{ i18n "Repetitions" }}</th>
       <td class="whitespace-nowrap font-mono">{{ .Data.TotalRepetitions }}</td>
     </tr>
     <tr>
-      <td class="{{ IconFor `tempo` }}"></td>
+      <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average per minute" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .RepetitionFrequencyPerMinute }}
@@ -49,20 +49,20 @@
     </tr>
     {{ end }}{{ if .Type.IsWeight }}
     <tr>
-      <td class="{{ IconFor `weight` }}"></td>
+      <td>{{ IconFor `weight` }}</td>
       <th>{{ i18n "Weight" }}</th>
       <td class="whitespace-nowrap font-mono">{{ .Data.TotalWeight }}</td>
     </tr>
     {{ end }} {{ if .Type.IsDuration }}
     <tr>
-      <td class="{{ IconFor `duration` }}"></td>
+      <td>{{ IconFor `duration` }}</td>
       <th>{{ i18n "Total duration" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.TotalDuration | HumanDuration }}
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `pause` }}"></td>
+      <td>{{ IconFor `pause` }}</td>
       <th>{{ i18n "Time paused" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.PauseDuration | HumanDuration }}
@@ -70,7 +70,7 @@
     </tr>
     {{ end }} {{ if .Type.IsDistance }}
     <tr>
-      <td class="{{ IconFor `distance` }}"></td>
+      <td>{{ IconFor `distance` }}</td>
       <th>{{ i18n "Total distance" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.TotalDistance | HumanDistance }} {{
@@ -79,7 +79,7 @@
     </tr>
     {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
     <tr>
-      <td class="{{ IconFor `speed` }}"></td>
+      <td>{{ IconFor `speed` }}</td>
       <th>{{ i18n "Average speed" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.AverageSpeed | HumanSpeed }} {{
@@ -87,7 +87,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `speed` }}"></td>
+      <td>{{ IconFor `speed` }}</td>
       <th>{{ i18n "Average speed (no pause)" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
@@ -95,7 +95,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `tempo` }}"></td>
+      <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.AverageSpeed | HumanTempo }} {{
@@ -103,7 +103,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `tempo` }}"></td>
+      <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo (no pause)" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
@@ -111,7 +111,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `max-speed` }}"></td>
+      <td>{{ IconFor `max-speed` }}</td>
       <th>{{ i18n "Max speed" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
@@ -119,7 +119,7 @@
     </tr>
     {{ end }} {{ if .Type.IsLocation }}
     <tr>
-      <td class="{{ IconFor `elevation` }}"></td>
+      <td>{{ IconFor `elevation` }}</td>
       <th>{{ i18n "Min elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.MinElevation | HumanElevation }} {{
@@ -127,7 +127,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `elevation` }}"></td>
+      <td>{{ IconFor `elevation` }}</td>
       <th>{{ i18n "Max elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.MaxElevation | HumanElevation }} {{
@@ -135,7 +135,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `up` }}"></td>
+      <td>{{ IconFor `up` }}</td>
       <th>{{ i18n "Total up" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.TotalUp | HumanElevation }} {{
@@ -143,7 +143,7 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `down` }}"></td>
+      <td>{{ IconFor `down` }}</td>
       <th>{{ i18n "Total down" }}</th>
       <td class="whitespace-nowrap font-mono">
         {{ .Data.TotalDown | HumanElevation }} {{
@@ -152,15 +152,14 @@
     </tr>
     {{ end }} {{ if .HasCalories }}
     <tr>
-      <td class="{{ IconFor `calories` }}"></td>
+      <td>{{ IconFor `calories` }}</td>
       <th>
         {{ i18n "Est. calories burned" }}
         <a
-          class="{{ IconFor `info` }}"
           href="#"
           title="{{ i18n `Estimated based on the activity, assuming 70 kg` }}"
         >
-          &nbsp;
+          {{ IconFor `info` }}
         </a>
       </th>
       <td class="whitespace-nowrap font-mono">
@@ -169,7 +168,7 @@
     </tr>
     {{ end }}
     <tr>
-      <td class="{{ IconFor `equipment` }}"></td>
+      <td>{{ IconFor `equipment` }}</td>
       <td>{{ i18n "Equipment" }}</td>
       <td>
         {{ if .Equipment }} {{ range .Equipment }}
@@ -178,18 +177,15 @@
       </td>
     </tr>
     <tr>
-      <td class="{{ IconFor `metrics` }}"></td>
+      <td>{{ IconFor `metrics` }}</td>
       <td>{{ i18n "Extra metrics" }}</td>
       <td class="flex flex-wrap gap-1">
         {{ if .HasHeartRate }}
-        <div
-          title="{{ i18n `Heart rate` }}"
-          class="{{ IconFor `heart-rate` }}"
-        ></div>
+        <div title="{{ i18n `Heart rate` }}">{{ IconFor `heart-rate` }}</div>
         {{ end }}{{ if .HasCadence }}
-        <div title="{{ i18n `Cadence` }}" class="{{ IconFor `cadence` }}"></div>
+        <div title="{{ i18n `Cadence` }}">{{ IconFor `cadence` }}</div>
         {{ end }}{{ if .HasHeading }}
-        <div title="{{ i18n `Heading` }}" class="{{ IconFor `heading` }}"></div>
+        <div title="{{ i18n `Heading` }}">{{ IconFor `heading` }}</div>
         {{ end }}
       </td>
     </tr>

@@ -19,6 +19,7 @@ const (
 	WorkoutTypeAutoDetect    WorkoutType = "auto"
 	WorkoutTypeRunning       WorkoutType = "running"
 	WorkoutTypeCycling       WorkoutType = "cycling"
+	WorkoutTypeECycling      WorkoutType = "e-cycling"
 	WorkoutTypeWalking       WorkoutType = "walking"
 	WorkoutTypeSkiing        WorkoutType = "skiing"
 	WorkoutTypeSnowboarding  WorkoutType = "snowboarding"
@@ -46,6 +47,7 @@ type WorkoutTypeConfiguration struct {
 var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeRunning:      {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeCycling:      {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeECycling:     {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeWalking:      {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeSkiing:       {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeSnowboarding: {Location: true, Distance: true, Repetition: false, Weight: false},

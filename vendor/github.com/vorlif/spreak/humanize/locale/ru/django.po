@@ -1,0 +1,933 @@
+# This file is distributed under the same license as the Django package.
+# 
+# Translators:
+# Mingun <Alexander_Sergey@mail.ru>, 2014
+# Anton Bazhanov <bazanton@yandex.ru>, 2017
+# Denis Darii <denis.darii@gmail.com>, 2011
+# Dimmus <dmitri.chudinov@gmail.com>, 2011
+# eigrad <andrew@ei-grad.ru>, 2012
+# Eugene <eugene.mechanism@gmail.com>, 2013
+# Eugene Morozov <transifex@emorozov.net>, 2021
+# eXtractor <evg.kirov@gmail.com>, 2015
+# crazyzubr <hjcnbckfd@gmail.com>, 2020
+# Igor Melnyk, 2014
+# Ivan Khomutov <iskhomutov@gmail.com>, 2017
+# Jannis Leidel <jannis@leidel.info>, 2011
+# lilo.panic, 2016
+# Mikhail Zholobov <legal90@gmail.com>, 2013
+# Nikolay Korotkiy <sikmir@disroot.org>, 2018
+# Panasoft, 2021
+# Вася Аникин <anikin.vasya@gmail.com>, 2017
+# SeryiMysh <vital@dorokhin.kz>, 2020
+# Алексей Борискин <sun.void@gmail.com>, 2013-2017,2019-2020,2022-2023
+# Bobsans <mr.bobsans@gmail.com>, 2016,2018
+msgid ""
+msgstr ""
+"Project-Id-Version: django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-18 11:41-0300\n"
+"PO-Revision-Date: 2023-12-04 06:49+0000\n"
+"Last-Translator: Алексей Борискин <sun.void@gmail.com>, 2013-2017,2019-2020,2022-2023\n"
+"Language-Team: Russian (http://app.transifex.com/django/django/language/ru/)\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "%[1]d byte"
+msgid_plural "%[1]d bytes"
+msgstr[0] "%[1]d байт"
+msgstr[1] "%[1]d байта"
+msgstr[2] "%[1]d байт"
+msgstr[3] "%[1]d байт"
+
+msgid "%[1]s billion"
+msgid_plural "%[1]s billion"
+msgstr[0] "%[1]s миллиард"
+msgstr[1] "%[1]s миллиарда"
+msgstr[2] "%[1]s миллиардов"
+msgstr[3] "%[1]s миллиардов"
+
+msgid "%[1]s decillion"
+msgid_plural "%[1]s decillion"
+msgstr[0] "%[1]s дециллион"
+msgstr[1] "%[1]s дециллиона"
+msgstr[2] "%[1]s дециллионов"
+msgstr[3] "%[1]s дециллионов"
+
+msgid "%[1]s googol"
+msgid_plural "%[1]s googol"
+msgstr[0] "%[1]s гугол"
+msgstr[1] "%[1]s гугола"
+msgstr[2] "%[1]s гуголов"
+msgstr[3] "%[1]s гуголов"
+
+msgid "%[1]s million"
+msgid_plural "%[1]s million"
+msgstr[0] "%[1]s миллион"
+msgstr[1] "%[1]s миллиона"
+msgstr[2] "%[1]s миллионов"
+msgstr[3] "%[1]s миллионов"
+
+msgid "%[1]s nonillion"
+msgid_plural "%[1]s nonillion"
+msgstr[0] "%[1]s нониллион"
+msgstr[1] "%[1]s нониллиона"
+msgstr[2] "%[1]s нониллионов"
+msgstr[3] "%[1]s нониллионов"
+
+msgid "%[1]s octillion"
+msgid_plural "%[1]s octillion"
+msgstr[0] "%[1]s октиллион"
+msgstr[1] "%[1]s октиллиона"
+msgstr[2] "%[1]s октиллионов"
+msgstr[3] "%[1]s октиллионов"
+
+msgid "%[1]s quadrillion"
+msgid_plural "%[1]s quadrillion"
+msgstr[0] "%[1]s квадриллион"
+msgstr[1] "%[1]s квадриллиона"
+msgstr[2] "%[1]s квадриллионов"
+msgstr[3] "%[1]s квадриллионов"
+
+msgid "%[1]s quintillion"
+msgid_plural "%[1]s quintillion"
+msgstr[0] "%[1]s квинтиллион"
+msgstr[1] "%[1]s квинтиллиона"
+msgstr[2] "%[1]s квинтиллионов"
+msgstr[3] "%[1]s квинтиллионов"
+
+msgid "%[1]s septillion"
+msgid_plural "%[1]s septillion"
+msgstr[0] "%[1]s септиллион"
+msgstr[1] "%[1]s септиллиона"
+msgstr[2] "%[1]s септиллионов"
+msgstr[3] "%[1]s септиллионов"
+
+msgid "%[1]s sextillion"
+msgid_plural "%[1]s sextillion"
+msgstr[0] "%[1]s секстиллион"
+msgstr[1] "%[1]s секстиллиона"
+msgstr[2] "%[1]s секстиллионов"
+msgstr[3] "%[1]s секстиллионов"
+
+msgid "%[1]s trillion"
+msgid_plural "%[1]s trillion"
+msgstr[0] "%[1]s триллион"
+msgstr[1] "%[1]s триллиона"
+msgstr[2] "%[1]s триллионов"
+msgstr[3] "%[1]s триллионов"
+
+msgid "%[1]v ago"
+msgstr "%[1]v назад"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v день"
+msgstr[1] "%[1]v дня"
+msgstr[2] "%[1]v дней"
+msgstr[3] "%[1]v дней"
+
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v день"
+msgstr[1] "%[1]v дня"
+msgstr[2] "%[1]v дней"
+msgstr[3] "%[1]v дней"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v day"
+msgid_plural "%[1]v days"
+msgstr[0] "%[1]v день"
+msgstr[1] "%[1]v дня"
+msgstr[2] "%[1]v дней"
+msgstr[3] "%[1]v дней"
+
+msgid "%[1]v from now"
+msgstr "через %[1]v"
+
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v час"
+msgstr[1] "%[1]v часа"
+msgstr[2] "%[1]v часов"
+msgstr[3] "%[1]v часов"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v час"
+msgstr[1] "%[1]v часа"
+msgstr[2] "%[1]v часов"
+msgstr[3] "%[1]v часов"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v hour"
+msgid_plural "%[1]v hours"
+msgstr[0] "%[1]v час"
+msgstr[1] "%[1]v часа"
+msgstr[2] "%[1]v часов"
+msgstr[3] "%[1]v часов"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v минуту"
+msgstr[1] "%[1]v минуты"
+msgstr[2] "%[1]v минут"
+msgstr[3] "%[1]v минут"
+
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v минута"
+msgstr[1] "%[1]v минуты"
+msgstr[2] "%[1]v минут"
+msgstr[3] "%[1]v минут"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v minute"
+msgid_plural "%[1]v minutes"
+msgstr[0] "%[1]v минуту"
+msgstr[1] "%[1]v минуты"
+msgstr[2] "%[1]v минут"
+msgstr[3] "%[1]v минут"
+
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v месяц"
+msgstr[1] "%[1]v месяца"
+msgstr[2] "%[1]v месяцев"
+msgstr[3] "%[1]v месяцев"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v месяц"
+msgstr[1] "%[1]v месяца"
+msgstr[2] "%[1]v месяцев"
+msgstr[3] "%[1]v месяцев"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v month"
+msgid_plural "%[1]v months"
+msgstr[0] "%[1]v месяц"
+msgstr[1] "%[1]v месяца"
+msgstr[2] "%[1]v месяцев"
+msgstr[3] "%[1]v месяцев"
+
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v неделя"
+msgstr[1] "%[1]v недели"
+msgstr[2] "%[1]v недель"
+msgstr[3] "%[1]v недель"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v неделю"
+msgstr[1] "%[1]v недели"
+msgstr[2] "%[1]v недель"
+msgstr[3] "%[1]v недель"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v week"
+msgid_plural "%[1]v weeks"
+msgstr[0] "%[1]v неделю"
+msgstr[1] "%[1]v недели"
+msgstr[2] "%[1]v недель"
+msgstr[3] "%[1]v недель"
+
+msgctxt "naturaltime-past"
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v год"
+msgstr[1] "%[1]v года"
+msgstr[2] "%[1]v лет"
+msgstr[3] "%[1]v лет"
+
+msgctxt "naturaltime-future"
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v год"
+msgstr[1] "%[1]v года"
+msgstr[2] "%[1]v лет"
+msgstr[3] "%[1]v лет"
+
+msgid "%[1]v year"
+msgid_plural "%[1]v years"
+msgstr[0] "%[1]v год"
+msgstr[1] "%[1]v года"
+msgstr[2] "%[1]v лет"
+msgstr[3] "%[1]v лет"
+
+msgid "%s GB"
+msgstr "%s ГБ"
+
+msgid "%s KB"
+msgstr "%s КБ"
+
+msgid "%s MB"
+msgstr "%s МБ"
+
+msgid "%s PB"
+msgstr "%s ПБ"
+
+msgid "%s TB"
+msgstr "%s ТБ"
+
+msgctxt "ordinal 2"
+msgid "%vnd"
+msgstr "%v-й"
+
+msgctxt "ordinal 3"
+msgid "%vrd"
+msgstr "%v-й"
+
+msgctxt "ordinal 1"
+msgid "%vst"
+msgstr "%v-й"
+
+msgctxt "ordinal 11, 12, 13"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 6"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 4"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 7"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 8"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 5"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 0"
+msgid "%vth"
+msgstr "%v-й"
+
+msgctxt "ordinal 9"
+msgid "%vth"
+msgstr "%v-й"
+
+msgid ", "
+msgstr ", "
+
+msgid "AM"
+msgstr "ДП"
+
+msgid "Afrikaans"
+msgstr "Бурский"
+
+msgid "Albanian"
+msgstr "Албанский"
+
+msgid "Algerian Arabic"
+msgstr "Алжирский арабский"
+
+msgid "April"
+msgstr "Апрель"
+
+msgctxt "alt. month"
+msgid "April"
+msgstr "апреля"
+
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "Апрель"
+
+msgid "Arabic"
+msgstr "Арабский"
+
+msgid "Argentinian Spanish"
+msgstr "Аргентинский испанский"
+
+msgid "Armenian"
+msgstr "Армянский"
+
+msgid "Asturian"
+msgstr "Астурийский"
+
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "Авг."
+
+msgctxt "alt. month"
+msgid "August"
+msgstr "августа"
+
+msgid "August"
+msgstr "Август"
+
+msgid "Australian English"
+msgstr "Австралийский английский"
+
+msgid "Azerbaijani"
+msgstr "Азербайджанский"
+
+msgid "Basque"
+msgstr "Баскский"
+
+msgid "Belarusian"
+msgstr "Белоруский"
+
+msgid "Bengali"
+msgstr "Бенгальский"
+
+msgid "Bosnian"
+msgstr "Боснийский"
+
+msgid "Brazilian Portuguese"
+msgstr "Бразильский португальский"
+
+msgid "Breton"
+msgstr "Бретонский"
+
+msgid "British English"
+msgstr "Британский английский"
+
+msgid "Bulgarian"
+msgstr "Болгарский"
+
+msgid "Burmese"
+msgstr "Бирманский"
+
+msgid "Catalan"
+msgstr "Каталанский"
+
+msgid "Central Kurdish (Sorani)"
+msgstr "Центральнокурдский (Сорани)"
+
+msgid "Colombian Spanish"
+msgstr "Колумбийский испанский"
+
+msgid "Croatian"
+msgstr "Хорватский"
+
+msgid "Czech"
+msgstr "Чешский"
+
+msgid "Danish"
+msgstr "Датский"
+
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "Дек."
+
+msgctxt "alt. month"
+msgid "December"
+msgstr "декабря"
+
+msgid "December"
+msgstr "Декабрь"
+
+msgid "Dutch"
+msgstr "Голландский"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Esperanto"
+msgstr "Эсперанто"
+
+msgid "Estonian"
+msgstr "Эстонский"
+
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "Фев."
+
+msgctxt "alt. month"
+msgid "February"
+msgstr "февраля"
+
+msgid "February"
+msgstr "Февраль"
+
+msgid "Finnish"
+msgstr "Финский"
+
+msgid "French"
+msgstr "Французский"
+
+msgid "Fri"
+msgstr "Пт"
+
+msgid "Friday"
+msgstr "Пятница"
+
+msgid "Frisian"
+msgstr "Фризский"
+
+msgid "Galician"
+msgstr "Галисийский"
+
+msgid "Georgian"
+msgstr "Грузинский"
+
+msgid "German"
+msgstr "Немецкий"
+
+msgid "Greek"
+msgstr "Греческий"
+
+msgid "Hebrew"
+msgstr "Иврит"
+
+msgid "Hindi"
+msgstr "Хинди"
+
+msgid "Hungarian"
+msgstr "Венгерский"
+
+msgid "Icelandic"
+msgstr "Исландский"
+
+msgid "Ido"
+msgstr "Идо"
+
+msgid "Igbo"
+msgstr "Игбо"
+
+msgid "Indonesian"
+msgstr "Индонезийский"
+
+msgid "Interlingua"
+msgstr "Интерлингва"
+
+msgid "Irish"
+msgstr "Ирландский"
+
+msgid "Italian"
+msgstr "Итальянский"
+
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "Янв."
+
+msgctxt "alt. month"
+msgid "January"
+msgstr "января"
+
+msgid "January"
+msgstr "Январь"
+
+msgid "Japanese"
+msgstr "Японский"
+
+msgctxt "alt. month"
+msgid "July"
+msgstr "июля"
+
+msgid "July"
+msgstr "Июль"
+
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "Июль"
+
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "Июнь"
+
+msgid "June"
+msgstr "Июнь"
+
+msgctxt "alt. month"
+msgid "June"
+msgstr "июня"
+
+msgid "Kabyle"
+msgstr "Кабильский"
+
+msgid "Kannada"
+msgstr "Каннада"
+
+msgid "Kazakh"
+msgstr "Казахский"
+
+msgid "Khmer"
+msgstr "Кхмерский"
+
+msgid "Korean"
+msgstr "Корейский"
+
+msgid "Kyrgyz"
+msgstr "Киргизский"
+
+msgid "Latvian"
+msgstr "Латвийский"
+
+msgid "Lithuanian"
+msgstr "Литовский"
+
+msgid "Lower Sorbian"
+msgstr "Нижнелужицкий"
+
+msgid "Luxembourgish"
+msgstr "Люксембургский"
+
+msgid "Macedonian"
+msgstr "Македонский"
+
+msgid "Malay"
+msgstr "Малайский"
+
+msgid "Malayalam"
+msgstr "Малаялам"
+
+msgid "Marathi"
+msgstr "Маратхи"
+
+msgid "March"
+msgstr "Март"
+
+msgctxt "alt. month"
+msgid "March"
+msgstr "марта"
+
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "Март"
+
+msgctxt "alt. month"
+msgid "May"
+msgstr "мая"
+
+msgid "May"
+msgstr "Май"
+
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "Май"
+
+msgid "Mexican Spanish"
+msgstr "Мексиканский испанский"
+
+msgid "Mon"
+msgstr "Пн"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "Mongolian"
+msgstr "Монгольский"
+
+msgid "Nepali"
+msgstr "Непальский"
+
+msgid "Nicaraguan Spanish"
+msgstr "Никарагуанский испанский"
+
+msgid "Norwegian Bokmål"
+msgstr "Норвежский (Букмол)"
+
+msgid "Norwegian Nynorsk"
+msgstr "Норвежский (Нюнорск)"
+
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "Ноя."
+
+msgctxt "alt. month"
+msgid "November"
+msgstr "ноября"
+
+msgid "November"
+msgstr "Ноябрь"
+
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "Окт."
+
+msgid "October"
+msgstr "Октябрь"
+
+msgctxt "alt. month"
+msgid "October"
+msgstr "октября"
+
+msgid "Ossetic"
+msgstr "Осетинский"
+
+msgid "PM"
+msgstr "ПП"
+
+msgid "Persian"
+msgstr "Персидский"
+
+msgid "Polish"
+msgstr "Польский"
+
+msgid "Portuguese"
+msgstr "Португальский"
+
+msgid "Punjabi"
+msgstr "Панджаби"
+
+msgid "Romanian"
+msgstr "Румынский"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "Sat"
+msgstr "Сб"
+
+msgid "Saturday"
+msgstr "Суббота"
+
+msgid "Scottish Gaelic"
+msgstr "Шотландский гэльский"
+
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr "Сен."
+
+msgid "September"
+msgstr "Сентябрь"
+
+msgctxt "alt. month"
+msgid "September"
+msgstr "сентября"
+
+msgid "Serbian"
+msgstr "Сербский"
+
+msgid "Serbian Latin"
+msgstr "Сербский (латиница)"
+
+msgid "Simplified Chinese"
+msgstr "Упрощенный китайский"
+
+msgid "Slovak"
+msgstr "Словацкий"
+
+msgid "Slovenian"
+msgstr "Словенский"
+
+msgid "Spanish"
+msgstr "Испанский"
+
+msgid "Sun"
+msgstr "Вс"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "Swahili"
+msgstr "Суахили"
+
+msgid "Swedish"
+msgstr "Шведский"
+
+msgid "Tajik"
+msgstr "Таджикский"
+
+msgid "Tamil"
+msgstr "Тамильский"
+
+msgid "Tatar"
+msgstr "Татарский"
+
+msgid "Telugu"
+msgstr "Телугу"
+
+msgid "Thai"
+msgstr "Тайский"
+
+msgid "Thu"
+msgstr "Чт"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Traditional Chinese"
+msgstr "Традиционный китайский"
+
+msgid "Tue"
+msgstr "Вт"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "Turkish"
+msgstr "Турецкий"
+
+msgid "Turkmen"
+msgstr "Туркменский"
+
+msgid "Udmurt"
+msgstr "Удмуртский"
+
+msgid "Ukrainian"
+msgstr "Украинский"
+
+msgid "Upper Sorbian"
+msgstr "Верхнелужицкий"
+
+msgid "Urdu"
+msgstr "Урду"
+
+msgid "Uyghur"
+msgstr "Уйгурский"
+
+msgid "Uzbek"
+msgstr "Узбекский"
+
+msgid "Venezuelan Spanish"
+msgstr "Венесуэльский Испанский"
+
+msgid "Vietnamese"
+msgstr "Вьетнамский"
+
+msgid "Wed"
+msgstr "Ср"
+
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "Welsh"
+msgstr "Уэльский"
+
+msgid "a minute ago"
+msgid_plural "%[1]v minutes ago"
+msgstr[0] "%[1]v минуту назад"
+msgstr[1] "%[1]v минуты назад"
+msgstr[2] "%[1]v минут назад"
+msgstr[3] "%[1]v минут назад"
+
+msgid "a minute from now"
+msgid_plural "%[1]v minutes from now"
+msgstr[0] "через %[1]v минуту"
+msgstr[1] "через %[1]v минуты"
+msgstr[2] "через %[1]v минут"
+msgstr[3] "через %[1]v минут"
+
+msgid "a second ago"
+msgid_plural "%[1]v seconds ago"
+msgstr[0] "%[1]v секунду назад"
+msgstr[1] "%[1]v секунды назад"
+msgstr[2] "%[1]v секунд назад"
+msgstr[3] "%[1]v секунд назад"
+
+msgid "a second from now"
+msgid_plural "%[1]v seconds from now"
+msgstr[0] "через %[1]v секунду"
+msgstr[1] "через %[1]v секунды"
+msgstr[2] "через %[1]v секунд"
+msgstr[3] "через %[1]v секунд"
+
+msgid "a.m."
+msgstr "д.п."
+
+msgid "an hour ago"
+msgid_plural "%[1]v hours ago"
+msgstr[0] "%[1]v час назад"
+msgstr[1] "%[1]v часа назад"
+msgstr[2] "%[1]v часов назад"
+msgstr[3] "%[1]v часов назад"
+
+msgid "an hour from now"
+msgid_plural "%[1]v hours from now"
+msgstr[0] "через %[1]v час"
+msgstr[1] "через %[1]v часа"
+msgstr[2] "через %[1]v часов"
+msgstr[3] "через %[1]v часов"
+
+msgid "apr"
+msgstr "апр"
+
+msgid "aug"
+msgstr "авг"
+
+msgid "dec"
+msgstr "дек"
+
+msgid "eight"
+msgstr "восемь"
+
+msgid "feb"
+msgstr "фев"
+
+msgid "five"
+msgstr "пять"
+
+msgid "four"
+msgstr "четыре"
+
+msgid "jan"
+msgstr "янв"
+
+msgid "jul"
+msgstr "июл"
+
+msgid "jun"
+msgstr "июн"
+
+msgid "mar"
+msgstr "мар"
+
+msgid "may"
+msgstr "май"
+
+msgid "midnight"
+msgstr "полночь"
+
+msgid "nine"
+msgstr "девять"
+
+msgid "noon"
+msgstr "полдень"
+
+msgid "nov"
+msgstr "ноя"
+
+msgid "now"
+msgstr "сейчас"
+
+msgid "oct"
+msgstr "окт"
+
+msgid "one"
+msgstr "один"
+
+msgid "p.m."
+msgstr "п.п."
+
+msgid "sep"
+msgstr "сен"
+
+msgid "seven"
+msgstr "семь"
+
+msgid "six"
+msgstr "шесть"
+
+msgid "three"
+msgstr "три"
+
+msgid "today"
+msgstr "сегодня"
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "two"
+msgstr "два"
+
+msgid "yesterday"
+msgstr "вчера"
+

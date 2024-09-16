@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/internal/database"
 	"github.com/labstack/echo/v4"
 )
@@ -22,6 +23,7 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
+	workoutsGroup.POST("/:id/share", a.workoutsShareHandler).Name = "workout-share"
 	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
 	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
@@ -105,6 +107,47 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 	a.setNotice(c, "The workout '%s' has been deleted.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
+}
+
+func (a *App) workoutShowShared(c echo.Context) error { //nolint:dupl
+	data := a.defaultData(c)
+
+	u, err := uuid.Parse(c.Param("uuid"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	w, err := database.GetWorkoutDetailsByUUID(a.db, u)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	data["workout"] = w
+
+	return c.Render(http.StatusOK, "workouts_show.html", data)
+}
+
+func (a *App) workoutsShareHandler(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	u := uuid.New()
+	workout.PublicUUID = &u
+
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	a.setNotice(c, "The workout '%s' now has a shareable link", workout.Name)
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {

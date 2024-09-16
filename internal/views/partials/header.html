@@ -1,71 +1,71 @@
 {{ define "header" }}
-<div class="menu sm:flex sm:flex-wrap gap-4">
+<div class="menu md:flex md:flex-wrap gap-4">
   <h1>
     <a href="{{ RouteFor `dashboard` }}">Workout Tracker</a>
   </h1>
-  {{ if CurrentUser }} {{ with CurrentUser }}
+  {{ if CurrentUser.Active }} {{ with CurrentUser }}
   <div class="grow flex flex-wrap">
     <div class="grow flex flex-wrap justify-start">
       <div>
-        <a class="{{ IconFor `dashboard` }}" href="{{ RouteFor `dashboard` }}"
-          ><span>{{ i18n "Dashboard" }}</span></a
-        >
+        <a href="{{ RouteFor `dashboard` }}">
+          {{ IconFor `dashboard` }}
+          <span class="autohide">{{ i18n "Dashboard" }}</span>
+        </a>
       </div>
       <div>
-        <a class="{{ IconFor `statistics` }}" href="{{ RouteFor `statistics` }}"
-          ><span>{{ i18n "Statistics" }}</span></a
-        >
+        <a href="{{ RouteFor `statistics` }}">
+          {{ IconFor `statistics` }}
+          <span class="autohide">{{ i18n "Statistics" }}</span>
+        </a>
       </div>
       <div>
-        <a class="{{ IconFor `workout` }}" href="{{ RouteFor `workouts` }}"
-          ><span>{{ i18n "Workouts" }}</span></a
-        >
+        <a href="{{ RouteFor `workouts` }}">
+          {{ IconFor `workout` }}
+          <span class="autohide">{{ i18n "Workouts" }}</span>
+        </a>
       </div>
       <div>
-        <a
-          class="{{ IconFor `route-segment` }}"
-          href="{{ RouteFor `route-segments` }}"
-          ><span>{{ i18n "Route segments" }}</span></a
-        >
+        <a href="{{ RouteFor `route-segments` }}">
+          {{ IconFor `route-segment` }}
+          <span class="autohide">{{ i18n "Route segments" }}</span>
+        </a>
       </div>
       <div>
-        <a class="{{ IconFor `equipment` }}" href="{{ RouteFor `equipment` }}"
-          ><span>{{ i18n "Equipment" }}</span></a
-        >
+        <a href="{{ RouteFor `equipment` }}">
+          {{ IconFor `equipment` }}
+          <span class="autohide">{{ i18n "Equipment" }}</span>
+        </a>
       </div>
     </div>
-    <div class="flex flex-wrap sm:min-w-[400px] justify-end">
+    <div class="flex flex-wrap md:min-w-[400px] justify-end">
       {{ if .Admin }}
       <div>
-        <a class="{{ IconFor `admin` }}" href="{{ RouteFor `admin` }}"
-          ><span>{{ i18n "Manage" }}</span></a
-        >
+        <a href="{{ RouteFor `admin` }}">
+          {{ IconFor `admin` }}<span class="autohide">{{ i18n "Manage" }}</span>
+        </a>
       </div>
       {{ end }}
 
       <div>
-        <a
-          class="{{ IconFor `user-profile` }}"
-          href="{{ RouteFor `user-profile`}}"
-          >{{ .Name }}</a
-        >
+        <a href="{{ RouteFor `user-profile`}}">
+          {{ IconFor `user-profile` }} {{ .Name }}
+        </a>
       </div>
       <div class="-mr-5">
-        <a
-          class="{{ IconFor `user-signout` }}"
-          href="{{ RouteFor `user-signout` }}"
-          ><span>{{ i18n "Logout" }}</span></a
-        >
+        <a href="{{ RouteFor `user-signout` }}">
+          {{ IconFor `user-signout` }}
+          <span class="autohide">{{ i18n "Logout" }}</span>
+        </a>
       </div>
     </div>
   </div>
   {{ end }} {{ else }}
-  <div class="sm:grow flex flex-wrap justify-end sm:justify-start"></div>
+  <div class="md:grow flex flex-wrap justify-end md:justify-start"></div>
   {{ end }} {{ if or (eq CurrentUser nil) (eq CurrentUser.Profile.Language nil)
   (eq CurrentUser.Profile.Language "") (eq CurrentUser.Profile.Language
   "browser") }}
   <div
-    class="flex flex-wrap sm:min-w-[400px] justify-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-neutral-500 border-t-2 sm:border-t-0"
+    class="flex flex-wrap md:min-w-[400px] justify-end mt-3 md:mt-0 pt-3 md:pt-0 border-neutral-500 border-t-2 md:border-t-0"
   >
     {{ template "language" . }}
   </div>

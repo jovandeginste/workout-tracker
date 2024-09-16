@@ -288,8 +288,8 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 // apiImportHandler imports a workout
 // @Summary      Import a workout
 // @Param        program path  string true "Program that generates the workout file"
-// @Param        name query    string "no-name" "Name of the imported workout"
-// @Param        type query    string "auto" "Type of the imported workout"
+// @Param        name query    string false "Name of the imported workout"
+// @Param        type query    string false "Type of the imported workout"
 // @Produce      json
 // @Success      200  {object}  APIResponse{result=database.Workout}
 // @Failure      400  {object}  APIResponse

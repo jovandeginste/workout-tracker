@@ -1,6 +1,165 @@
 ## What's Changed
 
-- fix: updated README.md with correct badge links
+- fix: show min/mi value instead of min/km when using imperial units, by
+  @jovandeginste, in
+  [#295](https://github.com/jovandeginste/workout-tracker/pull/295)
+- use map for icons, by @jovandeginste, in
+  [#291](https://github.com/jovandeginste/workout-tracker/pull/291)
+  - Add full comment, by @jovandeginste
+  - add comment, by @Monirzadeh
+  - combine maps, by @Monirzadeh
+  - use gofumpt formater, by @Monirzadeh
+  - use map for icons, by @Monirzadeh
+- add golangci-lint, by @jovandeginste, in
+  [#284](https://github.com/jovandeginste/workout-tracker/pull/284)
+  - fix golangci-lint stylecheck, by @Monirzadeh
+  - exportloopref deprecated replace with copyloopvar, by @Monirzadeh
+  - done on new PR, by @Monirzadeh
+  - add golangci-lint, by @Monirzadeh
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#290](https://github.com/jovandeginste/workout-tracker/pull/290)
+  - Translated using Weblate (French), by @Leiasticot
+- fix: wrong usage of Param for swagger, by @jovandeginste, in
+  [#289](https://github.com/jovandeginste/workout-tracker/pull/289)
+  - fix wrong usage of Param, by @Monirzadeh
+- chore(deps): bump the all group with 6 updates, by @jovandeginste, in
+  [#288](https://github.com/jovandeginste/workout-tracker/pull/288)
+  - chore(deps): bump the all group with 6 updates, by @dependabot[bot]
+- chore(deps): bump docker/build-push-action from 5 to 6 in the all group, by
+  @jovandeginste, in
+  [#287](https://github.com/jovandeginste/workout-tracker/pull/287)
+  - chore(deps): bump docker/build-push-action from 5 to 6 in the all group, by
+    @dependabot[bot]
+- add dependabot to take care of dependency update, by @jovandeginste, in
+  [#285](https://github.com/jovandeginste/workout-tracker/pull/285)
+  - add dependabot to take care of dependency update, by @Monirzadeh
+- chore: Move the route handlers to their own files, by @jovandeginste, in
+  [#283](https://github.com/jovandeginste/workout-tracker/pull/283)
+- feat: Delay expensive workout actions to background routine, by
+  @jovandeginste, in
+  [#282](https://github.com/jovandeginste/workout-tracker/pull/282)
+  - feat: Delay address reverse lookup for new workouts, by @jovandeginste
+  - feat: Delay route segment matching, by @jovandeginste
+- docs: Add a link to the Matrix chatroom, by @jovandeginste, in
+  [#281](https://github.com/jovandeginste/workout-tracker/pull/281)
+- feat: Add Matrix chat badge, by @jovandeginste, in
+  [#279](https://github.com/jovandeginste/workout-tracker/pull/279)
+- fix: place closing div of map in the right spot, by @jovandeginste, in
+  [#276](https://github.com/jovandeginste/workout-tracker/pull/276)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#275](https://github.com/jovandeginste/workout-tracker/pull/275)
+  - Translated using Weblate (Dutch)
+  - Translated using Weblate (Persian)
+- feat: Add map full screen toggle and aerial map option, by @jovandeginste, in
+  [#274](https://github.com/jovandeginste/workout-tracker/pull/274)
+  - feat: Add aerial map option, by @jovandeginste
+  - feat: Add map full screen toggle, by @jovandeginste
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#271](https://github.com/jovandeginste/workout-tracker/pull/271)
+  - Translated using Weblate (Dutch)
+- fix: error saving route segment after matching, by @jovandeginste, in
+  [#272](https://github.com/jovandeginste/workout-tracker/pull/272)
+  - fix: error saving route segment after matching, by @pixelspark
+- feat: Add translation strings for calorie burn estimation, by @jovandeginste,
+  in [#270](https://github.com/jovandeginste/workout-tracker/pull/270)
+- feat: add Persian language support, by @jovandeginste, in
+  [#269](https://github.com/jovandeginste/workout-tracker/pull/269)
+- feat: Add calorie calculation and display, by @jovandeginste, in
+  [#268](https://github.com/jovandeginste/workout-tracker/pull/268)
+- feat: add prettier configuration, by @jovandeginste, in
+  [#266](https://github.com/jovandeginste/workout-tracker/pull/266)
+- feat: Add donation section to README, by @jovandeginste, in
+  [#265](https://github.com/jovandeginste/workout-tracker/pull/265)
+- Remove location from dashboard tiles, cosmetic improvements, by
+  @jovandeginste, in
+  [#258](https://github.com/jovandeginste/workout-tracker/pull/258)
+  - ui: make the details fixed width in the workout list, by @jovandeginste
+  - Remove location from dashboard tiles, cosmetic improvements, by
+    @jovandeginste
+- feat: add golangci-lint configuration, by @jovandeginste, in
+  [#264](https://github.com/jovandeginste/workout-tracker/pull/264)
+- fix: do not show zero heart rate in chart, by @jovandeginste, in
+  [#263](https://github.com/jovandeginste/workout-tracker/pull/263)
+  - fix: do not show zero heart rate in chart, by @pixelspark
+- Feature/batch matching, by @jovandeginste, in
+  [#262](https://github.com/jovandeginste/workout-tracker/pull/262)
+  - fix: typo and lint, by @pixelspark
+  - fix: take a batch of 10 each time the worker runs in updateRouteSegments, by
+    @pixelspark
+  - perf: do route segment matching in batches, by @pixelspark
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#244](https://github.com/jovandeginste/workout-tracker/pull/244)
+  - Translated using Weblate (Dutch)
+- Show tempo for running (speed for others), by @jovandeginste, in
+  [#254](https://github.com/jovandeginste/workout-tracker/pull/254)
+  - Fix some (new) linting errors, by @jovandeginste
+  - Switch more spans to abbrs when using titles, by @jovandeginste
+  - Add speed vs tempo via hover information, by @jovandeginste
+  - Show tempo for running (speed for others), by @jovandeginste
+- Remove a single translation that is almost identical, by @jovandeginste, in
+  [#255](https://github.com/jovandeginste/workout-tracker/pull/255)
+- Split dependency installation in dev vs build, by @jovandeginste, in
+  [#253](https://github.com/jovandeginste/workout-tracker/pull/253)
+- chore(deps): bump micromatch from 4.0.7 to 4.0.8 in the npm_and_yarn group
+  across 1 directory, by @jovandeginste, in
+  [#249](https://github.com/jovandeginste/workout-tracker/pull/249)
+  - chore(deps): bump micromatch, by @dependabot[bot]
+- Add route segments, by @jovandeginste, in
+  [#234](https://github.com/jovandeginste/workout-tracker/pull/234)
+  - Show filename with other details, by @jovandeginste
+  - Update route segments in the background, by @jovandeginste
+  - Add web interface to create route segment from workout, by @jovandeginste
+  - Add translatable strings, by @jovandeginste
+  - Find matching route segments when adding or refreshing a workout, by
+    @jovandeginste
+  - Sort matching route segments, by @jovandeginste
+  - Add database model for matches, by @jovandeginste
+  - Add direction, circular and simplify to route segments, by @jovandeginste
+  - Add support for circular segments, by @jovandeginste
+  - Add translation strings, by @jovandeginste
+  - Add code to calculate all matches for a route segment, by @jovandeginste
+  - Add basic route segment REST routes and operations, by @jovandeginste
+  - Cleanup translation Make targets, by @jovandeginste
+- fix: add prettier and air dependencies, by @jovandeginste, in
+  [#248](https://github.com/jovandeginste/workout-tracker/pull/248)
+  - fix: add prettier and air dependencies, by @pixelspark
+- fix: actually fix the English translation now, by @jovandeginste, in
+  [#247](https://github.com/jovandeginste/workout-tracker/pull/247)
+- fix: use English plural form, by @jovandeginste, in
+  [#246](https://github.com/jovandeginste/workout-tracker/pull/246)
+- feat: add Indonesian language, by @jovandeginste, in
+  [#245](https://github.com/jovandeginste/workout-tracker/pull/245)
+- fix: update default workout types when editing equipment, by @jovandeginste,
+  in [#243](https://github.com/jovandeginste/workout-tracker/pull/243)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#241](https://github.com/jovandeginste/workout-tracker/pull/241)
+  - Translated using Weblate (German), by @Atalanttore
+- feat: Accept API query parameters for workout import, by @jovandeginste, in
+  [#237](https://github.com/jovandeginste/workout-tracker/pull/237)
+- Only keep the basename when storing the filename, by @jovandeginste, in
+  [#235](https://github.com/jovandeginste/workout-tracker/pull/235)
+
+## New Contributors
+
+- @Monirzadeh made their first contribution
+- @Leiasticot made their first contribution
+- @dependabot[bot] made their first contribution
+- @Atalanttore made their first contribution
+
+## What's Changed in v1.18.1
+
+- fix: add function to get filename of workout, by @jovandeginste, in
+  [#233](https://github.com/jovandeginste/workout-tracker/pull/233)
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v1.18.0...v1.18.1
+
+## What's Changed in v1.18.0
+
+- chore: remove legacy attributes, by @jovandeginste, in
+  [#232](https://github.com/jovandeginste/workout-tracker/pull/232)
+- fix: updated README.md with correct badge links, by @jovandeginste, in
+  [#231](https://github.com/jovandeginste/workout-tracker/pull/231)
 - chore: update all dependencies, by @jovandeginste, in
   [#230](https://github.com/jovandeginste/workout-tracker/pull/230)
   - ci: improve go dependency updates, by @jovandeginste
@@ -20,6 +179,9 @@
   [#223](https://github.com/jovandeginste/workout-tracker/pull/223)
 - fix: calculate rate limit time remaining, by @jovandeginste, in
   [#222](https://github.com/jovandeginste/workout-tracker/pull/222)
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v1.17.1...v1.18.0
 
 ## What's Changed in v1.17.1
 

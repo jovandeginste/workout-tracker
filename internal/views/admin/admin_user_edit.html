@@ -6,9 +6,7 @@
   <body>
     {{ template "header" . }}
     <div class="content">
-      <h2 class="{{ IconFor `admin` }}">
-        {{ i18n "Manage user '%s'" .user.Name }}
-      </h2>
+      <h2>{{ IconFor `admin` }} {{ i18n "Manage user '%s'" .user.Name }}</h2>
       {{ with .user }}
       <form
         action="{{ RouteFor `admin-user-update` .ID }}"

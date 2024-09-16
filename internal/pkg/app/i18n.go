@@ -12,6 +12,7 @@ import (
 	"github.com/vorlif/spreak/humanize/locale/it"
 	"github.com/vorlif/spreak/humanize/locale/nb"
 	"github.com/vorlif/spreak/humanize/locale/nl"
+	"github.com/vorlif/spreak/humanize/locale/ru"
 	"golang.org/x/text/language"
 )
 
@@ -56,22 +57,24 @@ func translations() []any {
 		language.English,
 		language.French,
 		language.German,
+		language.Indonesian,
 		language.Italian,
 		language.Norwegian,
-		language.Indonesian,
 		language.Persian,
+		language.Russian,
 	}
 }
 
 func humanLocales() []*humanize.LocaleData {
 	return []*humanize.LocaleData{
-		nl.New(),
 		de.New(),
+		fa.New(),
 		fr.New(),
 		id.New(),
-		nb.New(),
 		it.New(),
-		fa.New(),
+		nb.New(),
+		nl.New(),
+		ru.New(),
 	}
 }
 

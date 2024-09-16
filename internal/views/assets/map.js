@@ -83,6 +83,7 @@ function makeMap(params) {
     const speedLayerGroup = new L.featureGroup();
     const elevationLayerGroup = new L.featureGroup();
 
+    var hasSpeed = false;
     params.points.forEach((pt) => {
       p = [pt.lat, pt.lng];
 
@@ -111,6 +112,7 @@ function makeMap(params) {
         if (pt.speed === null || pt.speed < 0.1) {
           polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
         } else {
+          hasSpeed = true;
           if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
             movingSpeeds.shift();
           }
@@ -128,8 +130,11 @@ function makeMap(params) {
       prevPoint = p;
     });
 
-    // elevationLayerGroup.addTo(map);
-    speedLayerGroup.addTo(map);
+    if (!hasSpeed || params.showElevation) {
+      elevationLayerGroup.addTo(map);
+    } else {
+      speedLayerGroup.addTo(map);
+    }
 
     var last = params.points[params.points.length - 1];
     group.addLayer(

@@ -127,10 +127,13 @@ func (rs *RouteSegment) UpdateFromContent() error {
 	gpxContent.SimplifyTracks(MaxDeltaMeter / 2)
 
 	data := gpxAsMapData(gpxContent)
+	if !data.Center.IsZero() {
+		data.Address = data.Center.Address()
 
-	rs.GeoAddress = data.Address
-	rs.AddressString = data.AddressString
-	rs.Center = data.Center
+		rs.GeoAddress = data.Address
+		rs.AddressString = data.addressString()
+		rs.Center = data.Center
+	}
 
 	rs.TotalDistance = data.TotalDistance
 	rs.MinElevation = data.MinElevation

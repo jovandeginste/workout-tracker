@@ -1,22 +1,22 @@
 {{ define "route_segment_actions" }}
 <form action="{{ RouteFor `route-segment-download` .ID }}" method="get">
   <button class="download" title="{{ i18n `download` }}">
-    <a class="{{ IconFor `download` }}"></a>
+    <a>{{ IconFor `download` }}</a>
   </button>
 </form>
 <form action="{{ RouteFor `route-segment-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
-    <a class="{{ IconFor `edit` }}"></a>
+    <a>{{ IconFor `edit` }}</a>
   </button>
 </form>
 <form action="{{ RouteFor `route-segment-refresh` .ID }}" method="post">
   <button title="{{ i18n `refresh` }}">
-    <a class="{{ IconFor `refresh` }}"></a>
+    <a>{{ IconFor `refresh` }}</a>
   </button>
 </form>
 <form action="{{ RouteFor `route-segment-matches` .ID }}" method="post">
   <button title="{{ i18n `find matches` }}">
-    <a class="{{ IconFor `route-segment` }}"></a>
+    <a>{{ IconFor `route-segment` }}</a>
   </button>
 </form>
 <form onsubmit="return false">
@@ -25,7 +25,7 @@
     class="dangerous"
     title="{{ i18n `delete` }}"
   >
-    <a class="{{ IconFor `delete` }}"></a>
+    <a>{{ IconFor `delete` }}</a>
   </button>
 </form>
 
@@ -37,7 +37,7 @@
         type="button"
         class="close-modal"
       >
-        <a class="{{ IconFor `close` }}"></a>
+        <a>{{ IconFor `close` }}</a>
       </button>
     </div>
 

@@ -1,24 +1,56 @@
 {{ define "workout_actions" }} {{ if .HasFile }}
 <form action="{{ RouteFor `workout-download` .ID }}" method="get">
   <button class="download" title="{{ i18n `download` }}">
-    <a class="{{ IconFor `download` }}"></a>
+    <a>{{ IconFor `download` }}</a>
   </button>
 </form>
 {{ end }}
 <form action="{{ RouteFor `workout-edit` .ID }}" method="get">
   <button class="edit" title="{{ i18n `edit` }}">
-    <a class="{{ IconFor `edit` }}"></a>
+    <a>{{ IconFor `edit` }}</a>
+  </button>
+</form>
+{{ if .PublicUUID }}
+<form
+  onsubmit="copyToClipboard('public_uuid'); showMessage('notice', '{{ i18n `Publicly shareable link was copied to clipboard` }}'); return false;"
+>
+  <input
+    type="text"
+    name="public_uuid"
+    id="public_uuid"
+    class="hidden"
+    value="..."
+  />
+  <script>
+    var uuidText = document.getElementById("public_uuid");
+    uuidText.value = new URL(
+      "{{ RouteFor `share` .PublicUUID }}",
+      document.location,
+    ).href;
+  </script>
+
+  <button class="share" title="{{ i18n `Copy publicly shareable link` }}">
+    <a>{{ IconFor `share` }}</a>
+  </button>
+</form>
+{{ end }}
+<form action="{{ RouteFor `workout-share` .ID }}" method="post">
+  <button
+    class="share dangerous"
+    title="{{ i18n `(Re)generate publicly shareable link` }}"
+  >
+    <a>{{ IconFor `generate-share` }}</a>
   </button>
 </form>
 {{ if .HasFile }}
 <form action="{{ RouteFor `workout-refresh` .ID }}" method="post">
   <button title="{{ i18n `refresh` }}">
-    <a class="{{ IconFor `refresh` }}"></a>
+    <a>{{ IconFor `refresh` }}</a>
   </button>
 </form>
 <form action="{{ RouteFor `workout-route-segment` .ID }}" method="get">
   <button title="{{ i18n `create route segment` }}">
-    <a class="{{ IconFor `route-segment` }}"></a>
+    <a>{{ IconFor `route-segment` }}</a>
   </button>
 </form>
 {{ end }}
@@ -28,7 +60,7 @@
     class="dangerous"
     title="{{ i18n `delete` }}"
   >
-    <a class="{{ IconFor `delete` }}"></a>
+    <a>{{ IconFor `delete` }}</a>
   </button>
 </form>
 
@@ -40,7 +72,7 @@
         type="button"
         class="close-modal"
       >
-        <a class="{{ IconFor `close` }}"></a>
+        <a>{{ IconFor `close` }}</a>
       </button>
     </div>
 

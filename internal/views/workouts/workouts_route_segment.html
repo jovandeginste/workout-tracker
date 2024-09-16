@@ -22,7 +22,7 @@
     <div class="content">
       {{ with .workout }}
       <div class="gap-4">
-        <h2 class="{{ IconFor .Type.String }}">{{ .Name }}</h2>
+        <h2>{{ IconFor .Type.String }}{{ .Name }}</h2>
       </div>
       <div class="lg:flex lg:flex-wrap">
         <div class="basis-1/2">

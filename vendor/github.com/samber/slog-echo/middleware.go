@@ -18,8 +18,8 @@ const (
 )
 
 var (
-	TraceIDKey   = "trace-id"
-	SpanIDKey    = "span-id"
+	TraceIDKey   = "trace_id"
+	SpanIDKey    = "span_id"
 	RequestIDKey = "id"
 
 	RequestBodyMaxSize  = 64 * 1024 // 64KB
@@ -131,6 +131,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 					err = echo.
 						NewHTTPError(http.StatusInternalServerError).
 						WithInternal(err)
+					c.Error(err)
 				}
 			}
 
@@ -308,6 +309,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 	}
 }
 
+// AddCustomAttributes adds custom attributes to the request context.
 func AddCustomAttributes(c echo.Context, attr slog.Attr) {
 	v := c.Get(customAttributesCtxKey)
 	if v == nil {

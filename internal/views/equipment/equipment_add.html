@@ -6,9 +6,7 @@
     {{ template "header" . }}
     <div class="content">
       <div class="inner-form">
-        <h2 class="{{ IconFor `equipment-add` }}">
-          {{ i18n "Add equipment" }}
-        </h2>
+        <h2>{{ IconFor `equipment-add` }} {{ i18n "Add equipment" }}</h2>
         <form method="post" action="{{ RouteFor `equipment-create` }}">
           <table class="sm:table-fixed">
             <tbody>

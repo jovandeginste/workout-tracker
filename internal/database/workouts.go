@@ -13,6 +13,7 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/internal/pkg/converters"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
@@ -27,6 +28,7 @@ type Workout struct {
 	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
 	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
 	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
+	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"` // UUID to publicly share a workout - this UUID can be rotated
 	User                *User                // The user who owns the workout
 	Notes               string               // The notes associated with the workout, in markdown
 	Type                WorkoutType          // The type of the workout
@@ -269,18 +271,55 @@ func GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	return w, nil
 }
 
+func GetWorkoutWithGPXByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
+	return GetWorkoutByUUID(db.Preload("GPX"), u)
+}
+
 func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
 	return GetWorkout(db.Preload("GPX"), id)
+}
+
+func GetWorkoutDetailsByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
+	return GetWorkoutWithGPXByUUID(db.Preload("Data.Details"), u)
 }
 
 func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
 	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
 }
 
+func GetWorkoutByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
+	w := Workout{
+		PublicUUID: &u,
+	}
+
+	if err := db.
+		Preload("RouteSegmentMatches.RouteSegment").
+		Preload("Data").
+		Preload("User").
+		Preload("Equipment").
+		Where(&w).
+		First(&w).
+		Error; err != nil {
+		return nil, err
+	}
+
+	sort.Slice(w.RouteSegmentMatches, func(i, j int) bool {
+		return w.RouteSegmentMatches[i].Distance > w.RouteSegmentMatches[j].Distance
+	})
+
+	return &w, nil
+}
+
 func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w Workout
 
-	if err := db.Preload("RouteSegmentMatches.RouteSegment").Preload("Data").Preload("User").Preload("Equipment").First(&w, id).Error; err != nil {
+	if err := db.
+		Preload("RouteSegmentMatches.RouteSegment").
+		Preload("Data").
+		Preload("User").
+		Preload("Equipment").
+		First(&w, id).
+		Error; err != nil {
 		return nil, err
 	}
 

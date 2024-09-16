@@ -56,7 +56,7 @@ func HumanSpeedFor(unit string) func(float64) string {
 
 func HumanTempoFor(unit string) func(float64) string {
 	switch unit {
-	case "mi":
+	case "min/mi", "mi":
 		return HumanTempoMile
 	default:
 		return HumanTempoKM

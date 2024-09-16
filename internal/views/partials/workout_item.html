@@ -3,21 +3,15 @@
   <div class="workout-item">
     <div class="flex flex-wrap gap-2">
       <div class="grow">
-        <a
-          class="{{ IconFor .Type.String }}"
-          href="{{ RouteFor `workout-show` .ID }}"
-        >
-          {{ if gt (.Name | len) 20 }}
+        <a href="{{ RouteFor `workout-show` .ID }}">
+          {{ IconFor .Type.String }} {{ if gt (.Name | len) 20 }}
           <abbr title="{{ .Name }}"> {{ printf "%.20s" .Name }}...</abbr>
           {{ else }} {{ .Name }} {{ end }}
         </a>
       </div>
       <div class="text-right text-sm">
-        <a
-          class="{{ IconFor `user` }}"
-          href="{{ RouteFor `user-show` .User.ID }}"
-        >
-          {{ .User.Name }}</a
+        <a href="{{ RouteFor `user-show` .User.ID }}">
+          {{ IconFor `user` }} {{ .User.Name }}</a
         >
       </div>
     </div>

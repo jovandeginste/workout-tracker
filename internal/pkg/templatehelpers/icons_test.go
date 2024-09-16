@@ -13,17 +13,13 @@ func TestIconFor_Default(t *testing.T) {
 		";invalid-value-to-get-icon",
 	} {
 		d := IconFor(dummy)
-		assert.Contains(t, d, "icon-solid")
-		assert.Contains(t, d, "icon-baseline")
-		assert.Contains(t, d, "icon-space-sm")
-		assert.Contains(t, d, "icon-before")
-		assert.Contains(t, d, "icon-question")
+		assert.Contains(t, d, "icon-decoration")
 	}
 }
 
 func TestIconFor_Types(t *testing.T) {
-	assert.Contains(t, IconFor("distance"), "icon-road")
-	assert.Contains(t, IconFor("close"), "icon-xmark")
-	assert.Contains(t, IconFor("dashboard"), "icon-chart-line")
-	assert.Contains(t, IconFor("running"), "icon-person-running")
+	assert.Contains(t, IconFor("distance"), "fa6-solid--road")
+	assert.Contains(t, IconFor("close"), "fa6-solid--xmark")
+	assert.Contains(t, IconFor("dashboard"), "fa6-solid--chart-line")
+	assert.Contains(t, IconFor("running"), "fa6-solid--person-running")
 }

@@ -7,8 +7,8 @@
     {{ template "header" . }}
     <div class="content">
       <div class="inner-form">
-        <h2 class="{{ IconFor `admin` }}">
-          {{ i18n "Manage users" }} ({{ len .users }})
+        <h2>
+          {{ IconFor `admin` }} {{ i18n "Manage users" }} ({{ len .users }})
         </h2>
         <table>
           <thead>
@@ -39,7 +39,7 @@
         </table>
       </div>
       <div class="inner-form">
-        <h2 class="{{ IconFor `admin` }}">{{ i18n "Application settings" }}</h2>
+        <h2>{{ IconFor `admin` }}{{ i18n "Application settings" }}</h2>
         <ul class="note">
           {{ i18n "These settings may be overwritten by:" }}
           <li>{{ i18n "the configuration file" }}</li>
