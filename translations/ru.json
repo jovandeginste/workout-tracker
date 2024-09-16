@@ -144,5 +144,18 @@
     "The workout '%s' has been deleted.": "Тренировка '%s' удалена.",
     "API key updated": "API-ключ обновлен",
     "Est. calories burned": "Сожжено калорий",
-    "Profile updated": "Профиль обновлен"
+    "Profile updated": "Профиль обновлен",
+    "The user '%s' has been deleted.": "Пользователь '%s' удален.",
+    "(Re)generate publicly shareable link": "Сгенерировать общедоступную ссылку",
+    "Estimated based on the activity, assuming 70 kg": "Оценка основана на виде активности, предполагаемый вес 70 кг",
+    "Username (email)": "Имя пользователя (email)",
+    "Streets": "OSM Carto",
+    "Aerial": "Esri World Imagery",
+    "All workouts will be refreshed in the coming minutes.": "Все тренировки будут обновлены в ближайшие минуты.",
+    "Dashboard for %s": "Панель управления для %s",
+    "Auto import directory": "Каталог автоматического импорта",
+    "Publicly shareable link was copied to clipboard": "Общедоступная ссылка скопирована в буфер обмена",
+    "Username": "Имя пользователя",
+    "Your account has been created, but needs to be activated.": "Ваш аккаунт создан, но его необходимо активировать.",
+    "Auto-detect": "Автоопределение"
 }
