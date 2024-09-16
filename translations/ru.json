@@ -40,7 +40,7 @@
     "Notes": "Заметки",
     "Language": "Язык",
     "Logout": "Выход",
-    "Name": "Имя",
+    "Name": "Название",
     "Max speed": "Максимальная скорость",
     "Password": "Пароль",
     "Source": "Источник",
@@ -67,9 +67,9 @@
     "Workout type": "Тип тренировки",
     "the configuration file": "файл конфигурации",
     "month": "месяц",
-    "Create route segment": "Создать сегмент маршрута",
+    "Create route segment": "Создать участок маршрута",
     "Created": "Создано",
-    "Add route segment": "Добавить сегмент маршрута",
+    "Add route segment": "Добавить участок маршрута",
     "Average tempo (no pause)": "Средний темп (без остановок)",
     "Average speed (no pause)": "Средняя скорость (без остановок)",
     "Create a new account": "Создать новый аккаунт",
@@ -96,6 +96,7 @@
     "kilograms": "килограммы",
     "Actions": "Действия",
     "Preferred units": "Единицы измерения",
+    "Update preferred units": "Обновить единицы измерения",
     "Active": "Активное",
     "Route segments": "Участки маршрута",
     "create route segment": "создать участок маршрута",
@@ -156,6 +157,5 @@
     "Publicly shareable link was copied to clipboard": "Общедоступная ссылка скопирована в буфер обмена",
     "Username": "Имя пользователя",
     "Your account has been created, but needs to be activated.": "Ваш аккаунт создан, но его необходимо активировать.",
-    "Auto-detect": "Автоопределение",
-    "Update preferred units": "Обновить единицы измерения"
+    "Auto-detect": "Автоопределение"
 }
