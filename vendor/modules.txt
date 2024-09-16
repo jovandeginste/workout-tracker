@@ -324,6 +324,7 @@ github.com/vorlif/spreak/humanize/locale/id
 github.com/vorlif/spreak/humanize/locale/it
 github.com/vorlif/spreak/humanize/locale/nb
 github.com/vorlif/spreak/humanize/locale/nl
+github.com/vorlif/spreak/humanize/locale/ru
 github.com/vorlif/spreak/internal/calendar
 github.com/vorlif/spreak/internal/mo
 github.com/vorlif/spreak/internal/util
