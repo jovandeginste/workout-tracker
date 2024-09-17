@@ -161,5 +161,6 @@
     "Are you sure you want to delete this %s?": "Вы уверены, что хотите удалить %s?",
     "Please help translate via Weblate": "Пожалуйста, помогите c переводом на Weblate",
     "The workout '%s' has been refreshed.": "Тренировка '%s' обновлена.",
-    "sailboat": "парусник"
+    "sailboat": "парусник",
+    "Average per minute": "Среднее в минуту"
 }
