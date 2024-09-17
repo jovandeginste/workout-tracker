@@ -1,3 +1,7 @@
 {
-    "Admin": "Admin"
+    "Admin": "Admin",
+    "workout": "тренировка",
+    "tempo": "темп",
+    "equipment": "снаряжение",
+    "segment": "участок"
 }
