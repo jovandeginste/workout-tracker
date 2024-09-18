@@ -157,5 +157,9 @@
     "Publicly shareable link was copied to clipboard": "Общедоступная ссылка скопирована в буфер обмена",
     "Username": "Имя пользователя",
     "Your account has been created, but needs to be activated.": "Ваш аккаунт создан, но его необходимо активировать.",
-    "Auto-detect": "Автоопределение"
+    "Auto-detect": "Автоопределение",
+    "Are you sure you want to delete this %s?": "Вы уверены, что хотите удалить %s?",
+    "Please help translate via Weblate": "Пожалуйста, помогите c переводом на Weblate",
+    "The workout '%s' has been refreshed.": "Тренировка '%s' обновлена.",
+    "sailboat": "парусник"
 }
