@@ -162,5 +162,6 @@
     "Please help translate via Weblate": "Пожалуйста, помогите c переводом на Weblate",
     "The workout '%s' has been refreshed.": "Тренировка '%s' обновлена.",
     "sailboat": "парусник",
-    "Average per minute": "Среднее в минуту"
+    "Average per minute": "Среднее в минуту",
+    "Leave blank to keep current password": "Оставьте пустым, чтобы сохранить текущий пароль"
 }
