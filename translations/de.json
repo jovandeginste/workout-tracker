@@ -141,5 +141,18 @@
     "Details": "Details",
     "Reset changes": "Änderungen zurücksetzen",
     "month": "Monat",
-    "Since": "Seit"
+    "Since": "Seit",
+    "Please help translate via Weblate": "Hilf bei der Übersetzung mit Weblate",
+    "Extra metrics": "Zusätzliche Metriken",
+    "10 years": "10 Jahre",
+    "2 years": "2 Jahre",
+    "5 years": "5 Jahre",
+    "Average per minute": "Durchschnitt pro Minute",
+    "Create route segment": "Streckensegment erstellen",
+    "Est. calories burned": "Ca. Kalorien verbrannt",
+    "Estimated based on the activity, assuming 70 kg": "Geschätzt basierend auf Aktivität, 70kg angenommen",
+    "Matches": "Treffer",
+    "Matching route segments": "Übereinstimmende Streckenabschnitte",
+    "Route segments": "Streckenabschnitte",
+    "Add route segment": "Streckensegment hinzufügen"
 }
