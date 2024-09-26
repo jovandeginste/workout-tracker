@@ -8,7 +8,7 @@ import (
 )
 
 func importGeneric(c echo.Context, body io.ReadCloser) (*Content, error) {
-	name := cmp.Or(c.QueryParam("name"), "no-name")
+	name := cmp.Or(c.QueryParam("name"), "workout.gpx")
 	t := cmp.Or(c.QueryParam("type"), "auto")
 
 	b, err := io.ReadAll(body)
