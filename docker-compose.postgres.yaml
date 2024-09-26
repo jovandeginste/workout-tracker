@@ -1,0 +1,52 @@
+services:
+  workout-tracker:
+    image: ghcr.io/jovandeginste/workout-tracker:master
+    container_name: wt-app
+    restart: unless-stopped
+    ports:
+      # Host Port:Container Port
+      - 8080:8080
+    networks:
+      - workout-tracker
+    environment:
+      ## Neccessary parameters for postgres
+      - WT_DATABASE_DRIVER=postgres
+      - WT_DSN=host=db user=$DB_USER password=$DB_PASSWORD dbname=$DB_NAME port=5432 sslmode=disable TimeZone=Europe/Vienna
+      ## Additional (optional) parameters
+      # - WT_BIND=[::]:8080
+      # - WT_LOGGING=true
+      # - WT_DEBUG=true
+      # - WT_REGISTRATION_DISABLED=true
+      # - WT_SOCIALS_DISABLED=true
+      # - WT_REGISTRATION_DISABLED=true
+      # - WT_SOCIALS_DISABLED=true
+      # - WT_JWT_ENCRYPTION_KEY=my-secret-key
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: wt-db
+    restart: unless-stopped
+    shm_size: 128mb
+    volumes:
+      # Store database files in a local directory.
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - workout-tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      # Env parameters DB_USER, DB_PASSWORD and DB_NAME have to be set before running docker-compose!
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+      - PGUSER=$DB_USER
+
+networks:
+  workout-tracker:
+    external: false

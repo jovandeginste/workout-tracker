@@ -88,12 +88,14 @@ or use docker compose
 mkdir -p /opt/workout-tracker
 cd /opt/workout-tracker
 
-# Download the compose.yaml
-curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/compose.yaml --output compose.yaml
+# Download the docker compose file (sqlite or postgres)
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docker-compose.sqlite.yaml --output docker-compose.yaml # or
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docker-compose.postgres.yaml --output docker-compose.yaml
 
 # Start the server
 docker compose up -d
 ```
+> **_NOTE:_** If using postgres, additional environment variables have to be set before running. See [postgres configuration](#postgres) for details.
 
 ### Natively
 
@@ -249,6 +251,20 @@ default port). A login form is shown.
 If no users are in the database (eg. when starting with an empty database), a
 default `admin` user is created with password `admin`. You should change this
 password in a production environment.
+
+### <a name="postgres"></a>Postgres
+
+If postgres is used as database, following environment variables have to be set **before** running `docker compose`:
+```bash
+export DB_USER=wt
+export DB_PASSWORD=change-me
+export DB_NAME=wt
+docker compose -f docker-compose.postgres.yaml up
+
+# or:
+
+DB_USER=wt DB_PASSWORD=change-me DB_NAME=wt docker compose -f docker-compose.postgres.yaml up
+```
 
 ## API usage
 
