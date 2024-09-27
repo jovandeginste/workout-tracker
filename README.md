@@ -99,6 +99,7 @@ curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/post
 # Start the server
 docker compose up -d
 ```
+
 > **_NOTE:_** If using postgres, configure the parameters in `postgres.env`.
 
 ### Natively
@@ -255,7 +256,6 @@ default port). A login form is shown.
 If no users are in the database (eg. when starting with an empty database), a
 default `admin` user is created with password `admin`. You should change this
 password in a production environment.
-
 
 ## API usage
 
