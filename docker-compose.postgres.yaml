@@ -1,0 +1,37 @@
+services:
+  workout-tracker:
+    image: ghcr.io/jovandeginste/workout-tracker:master
+    container_name: wt-app
+    restart: unless-stopped
+    ports:
+      # Host Port:Container Port
+      - 8080:8080
+    networks:
+      - workout-tracker
+    env_file:
+      - postgres.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: wt-db
+    restart: unless-stopped
+    shm_size: 128mb
+    volumes:
+      # Store database files in a local directory.
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - workout-tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - postgres.env
+
+networks:
+  workout-tracker:
+    external: false

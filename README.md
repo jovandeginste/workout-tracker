@@ -88,12 +88,19 @@ or use docker compose
 mkdir -p /opt/workout-tracker
 cd /opt/workout-tracker
 
-# Download the compose.yaml
-curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/compose.yaml --output compose.yaml
+# Download the docker compose file
+## For sqlite as database:
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docker-compose.sqlite.yaml --output docker-compose.yaml
+
+## For postgres as database:
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docker-compose.postgres.yaml --output docker-compose.yaml
+curl https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/postgres.env --output postgres.env
 
 # Start the server
 docker compose up -d
 ```
+
+> **_NOTE:_** If using postgres, configure the parameters in `postgres.env`.
 
 ### Natively
 
