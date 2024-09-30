@@ -24,7 +24,6 @@ func importFitotrack(c echo.Context, body io.ReadCloser) (*Content, error) {
 
 	b.Type = wt
 	b.Notes = wn
-	b.Filename = ""
 
 	return b, nil
 }
