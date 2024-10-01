@@ -245,7 +245,7 @@ github.com/sagikazarmark/slog-shim
 github.com/samber/lo
 github.com/samber/lo/internal/constraints
 github.com/samber/lo/internal/rand
-# github.com/samber/slog-echo v1.14.6
+# github.com/samber/slog-echo v1.14.7
 ## explicit; go 1.21
 github.com/samber/slog-echo
 # github.com/shopspring/decimal v1.4.0
@@ -345,7 +345,7 @@ go.opentelemetry.io/otel/trace/embedded
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.26.0
+# golang.org/x/crypto v0.27.0
 ## explicit; go 1.20
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
@@ -382,11 +382,11 @@ golang.org/x/net/idna
 ## explicit; go 1.18
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.23.0
+# golang.org/x/sys v0.25.0
 ## explicit; go 1.18
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/text v0.17.0
+# golang.org/x/text v0.18.0
 ## explicit; go 1.18
 golang.org/x/text/cases
 golang.org/x/text/encoding
@@ -466,7 +466,7 @@ gorm.io/driver/mysql
 # gorm.io/driver/postgres v1.5.9
 ## explicit; go 1.19
 gorm.io/driver/postgres
-# gorm.io/gorm v1.25.11
+# gorm.io/gorm v1.25.12
 ## explicit; go 1.18
 gorm.io/gorm
 gorm.io/gorm/callbacks
