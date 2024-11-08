@@ -97,14 +97,20 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func (a *App) ValidateUserMiddleware(ctx echo.Context) {
-	if err := a.setUser(ctx); err != nil {
-		log.Warn(err.Error())
-	}
+func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		if err := a.setUser(ctx); err != nil {
+			a.logger.Warn("error validating user", "error", err.Error())
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
+		}
 
-	u := a.getCurrentUser(ctx)
-	if u.IsAnonymous() {
-		panic("User is not found")
+		u := a.getCurrentUser(ctx)
+		if u.IsAnonymous() || !u.IsActive() {
+			a.logger.Warn("user is not found")
+			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
+		}
+
+		return next(ctx)
 	}
 }
 
@@ -118,8 +124,8 @@ func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 			log.Warn(err.Error())
 			return c.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		},
-		SuccessHandler: a.ValidateUserMiddleware,
 	}))
+	secureGroup.Use(a.ValidateUserMiddleware)
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
