@@ -34,7 +34,7 @@
               <script src="{{ RouteFor `assets` }}/map.js"></script>
               <script>
                 points = [
-                    {{ with .Data.Details }}
+                    {{ with .Details }}
                     {{ range .Points -}}
                     { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "distance": {{ .TotalDistance }} },
                     {{ end  }}
@@ -77,7 +77,7 @@
                       id="start"
                       name="start"
                       min="1"
-                      max="{{ .Data.Details.Points | len }}"
+                      max="{{ .Details.Points | len }}"
                       value="1"
                       oninput="updateStart()"
                     />
@@ -93,8 +93,8 @@
                       id="end"
                       name="end"
                       min="1"
-                      max="{{ .Data.Details.Points | len }}"
-                      value="{{ .Data.Details.Points | len }}"
+                      max="{{ .Details.Points | len }}"
+                      value="{{ .Details.Points | len }}"
                       oninput="updateEnd()"
                     />
                     <span id="end-show"></span>

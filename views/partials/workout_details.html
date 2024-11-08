@@ -25,7 +25,7 @@
     <tr>
       <td>{{ IconFor `source` }}</td>
       <th>{{ i18n "Source" }}</th>
-      <td>{{ .Data.Creator }}</td>
+      <td>{{ .Creator }}</td>
     </tr>
     <tr>
       <td>{{ IconFor `workout` }}</td>
@@ -38,7 +38,7 @@
     <tr>
       <td>{{ IconFor `repetitions` }}</td>
       <th>{{ i18n "Repetitions" }}</th>
-      <td class="whitespace-nowrap font-mono">{{ .Data.TotalRepetitions }}</td>
+      <td class="whitespace-nowrap font-mono">{{ .TotalRepetitions }}</td>
     </tr>
     <tr>
       <td>{{ IconFor `tempo` }}</td>
@@ -51,21 +51,21 @@
     <tr>
       <td>{{ IconFor `weight` }}</td>
       <th>{{ i18n "Weight" }}</th>
-      <td class="whitespace-nowrap font-mono">{{ .Data.TotalWeight }}</td>
+      <td class="whitespace-nowrap font-mono">{{ .Weight }}</td>
     </tr>
     {{ end }} {{ if .Type.IsDuration }}
     <tr>
       <td>{{ IconFor `duration` }}</td>
       <th>{{ i18n "Total duration" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalDuration | HumanDuration }}
+        {{ .TotalDuration | HumanDuration }}
       </td>
     </tr>
     <tr>
       <td>{{ IconFor `pause` }}</td>
       <th>{{ i18n "Time paused" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.PauseDuration | HumanDuration }}
+        {{ .PauseDuration | HumanDuration }}
       </td>
     </tr>
     {{ end }} {{ if .Type.IsDistance }}
@@ -73,7 +73,7 @@
       <td>{{ IconFor `distance` }}</td>
       <th>{{ i18n "Total distance" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalDistance | HumanDistance }} {{
+        {{ .TotalDistance | HumanDistance }} {{
         CurrentUser.PreferredUnits.Distance }}
       </td>
     </tr>
@@ -82,15 +82,14 @@
       <td>{{ IconFor `speed` }}</td>
       <th>{{ i18n "Average speed" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.AverageSpeed | HumanSpeed }} {{
-        CurrentUser.PreferredUnits.Speed }}
+        {{ .AverageSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
     <tr>
       <td>{{ IconFor `speed` }}</td>
       <th>{{ i18n "Average speed (no pause)" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.AverageSpeedNoPause | HumanSpeed }} {{
+        {{ .AverageSpeedNoPause | HumanSpeed }} {{
         CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
@@ -98,15 +97,14 @@
       <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.AverageSpeed | HumanTempo }} {{
-        CurrentUser.PreferredUnits.Tempo }}
+        {{ .AverageSpeed | HumanTempo }} {{ CurrentUser.PreferredUnits.Tempo }}
       </td>
     </tr>
     <tr>
       <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo (no pause)" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.AverageSpeedNoPause | HumanTempo }} {{
+        {{ .AverageSpeedNoPause | HumanTempo }} {{
         CurrentUser.PreferredUnits.Tempo }}
       </td>
     </tr>
@@ -114,7 +112,7 @@
       <td>{{ IconFor `max-speed` }}</td>
       <th>{{ i18n "Max speed" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+        {{ .MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
     {{ end }} {{ if .Type.IsLocation }}
@@ -122,7 +120,7 @@
       <td>{{ IconFor `elevation` }}</td>
       <th>{{ i18n "Min elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.MinElevation | HumanElevation }} {{
+        {{ .MinElevation | HumanElevation }} {{
         CurrentUser.PreferredUnits.Elevation }}
       </td>
     </tr>
@@ -130,7 +128,7 @@
       <td>{{ IconFor `elevation` }}</td>
       <th>{{ i18n "Max elevation" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.MaxElevation | HumanElevation }} {{
+        {{ .MaxElevation | HumanElevation }} {{
         CurrentUser.PreferredUnits.Elevation }}
       </td>
     </tr>
@@ -138,15 +136,15 @@
       <td>{{ IconFor `up` }}</td>
       <th>{{ i18n "Total up" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalUp | HumanElevation }} {{
-        CurrentUser.PreferredUnits.Elevation }}
+        {{ .TotalUp | HumanElevation }} {{ CurrentUser.PreferredUnits.Elevation
+        }}
       </td>
     </tr>
     <tr>
       <td>{{ IconFor `down` }}</td>
       <th>{{ i18n "Total down" }}</th>
       <td class="whitespace-nowrap font-mono">
-        {{ .Data.TotalDown | HumanElevation }} {{
+        {{ .TotalDown | HumanElevation }} {{
         CurrentUser.PreferredUnits.Elevation }}
       </td>
     </tr>

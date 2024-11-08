@@ -7,17 +7,17 @@
   <script>
     makeMap({
       elementID: "map",
-      center: [{{ .Data.Center.Lat  }}, {{  .Data.Center.Lng  }}],
-      minElevation: {{ .Data.MinElevation }},
-      maxElevation: {{ .Data.MaxElevation }},
-      maxSpeed: {{ .Data.MaxSpeed }},
+      center: [{{ .Center.Lat  }}, {{  .Center.Lng  }}],
+      minElevation: {{ .MinElevation }},
+      maxElevation: {{ .MaxElevation }},
+      maxSpeed: {{ .MaxSpeed }},
       speedName: "{{ i18n "Average speed" }}",
       elevationName: "{{ i18n "Elevation" }}",
       streetsName: "{{ i18n "Streets" }}",
       aerialName: "{{ i18n "Aerial" }}",
 
       points: [
-        {{ with .Data.Details }}
+        {{ with .Details }}
         {{ range .Points -}}
         { "lat": {{ .Lat }}, "lng": {{ .Lng }}, "speed": {{ .AverageSpeed }}, "elevation": {{ .ExtraMetrics.Get "elevation" }}, "title": "{{ template `workout_point_title` . }}", },
         {{ end  }}
