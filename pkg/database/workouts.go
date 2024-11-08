@@ -98,6 +98,30 @@ func (w *Workout) Weight() float64 {
 	return w.Data.TotalWeight
 }
 
+func (w *Workout) AverageSpeed() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.AverageSpeed()
+}
+
+func (w *Workout) TotalDuration() time.Duration {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDuration
+}
+
+func (w *Workout) TotalDistance() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDistance
+}
+
 func (w *Workout) Repetitions() int {
 	if w.Data == nil {
 		return 0
@@ -124,6 +148,94 @@ func (w *Workout) FullAddress() string {
 	}
 
 	return w.Data.AddressString
+}
+
+func (w *Workout) Center() *MapCenter {
+	if w.Data == nil {
+		return nil
+	}
+
+	return &w.Data.Center
+}
+
+func (w *Workout) Details() *MapDataDetails {
+	if w.Data == nil {
+		return nil
+	}
+
+	return w.Data.Details
+}
+
+func (w *Workout) TotalDown() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDown
+}
+
+func (w *Workout) TotalUp() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalUp
+}
+
+func (w *Workout) MaxElevation() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MaxElevation
+}
+
+func (w *Workout) MinElevation() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MinElevation
+}
+
+func (w *Workout) MaxSpeed() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MaxSpeed
+}
+
+func (w *Workout) AverageSpeedNoPause() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.AverageSpeedNoPause()
+}
+
+func (w *Workout) PauseDuration() time.Duration {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.PauseDuration
+}
+
+func (w *Workout) Creator() string {
+	if w.Data == nil {
+		return ""
+	}
+
+	return w.Data.Creator
+}
+
+func (w *Workout) City() string {
+	if w.Data == nil || w.Data.Address == nil {
+		return ""
+	}
+
+	return w.Data.Address.City
 }
 
 func (w *Workout) Address() string {

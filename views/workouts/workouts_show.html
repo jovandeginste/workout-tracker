@@ -43,7 +43,7 @@
           <div class="inner-form">{{ template "workout_details" . }}</div>
         </div>
         <div class="basis-1/2 2xl:basis-1/3">
-          {{ if and .Type.IsDistance .Type.IsDuration .Data.Details }}
+          {{ if and .Type.IsDistance .Type.IsDuration .Details }}
           <div class="inner-form">
             <div class="print:w-full overflow-y-auto">
               {{ template "workout_breakdown" (.StatisticsPer 1
@@ -71,7 +71,7 @@
         </div>
         {{ end }}
       </div>
-      {{ if .Data.Details }}
+      {{ if .Details }}
       <div class="inner-form h-[300px] md:h-[500px] print:hidden">
         <h3>
           <span>{{ IconFor `speed` }}{{ i18n "Average speed" }}</span>

@@ -9,12 +9,12 @@
   </div>
   {{ end }} {{ if .Type.IsDistance }}
   <div class="font-mono" title="{{ i18n `Distance` }}">
-    {{ IconFor `distance` }} {{ .Data.TotalDistance | HumanDistance }} {{
+    {{ IconFor `distance` }} {{ .TotalDistance | HumanDistance }} {{
     CurrentUser.PreferredUnits.Distance }}
   </div>
   {{ end }} {{ if .Type.IsDuration }}
   <div class="hidden sm:table-cell font-mono" title="{{ i18n `Duration` }}">
-    {{ IconFor `duration` }} {{ .Data.TotalDuration | HumanDuration }}
+    {{ IconFor `duration` }} {{ .TotalDuration | HumanDuration }}
   </div>
   {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
   <div
