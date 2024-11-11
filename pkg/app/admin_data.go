@@ -7,14 +7,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) adminAddUser(data map[string]any, c echo.Context) {
+func (a *App) adminAddUser(data map[string]any, c echo.Context) error {
 	user, err := a.getUser(c)
 	if err != nil {
-		a.addError(data, c)
-		return
+		return err
+	}
+
+	if user == nil {
+		return ErrUserNotFound
 	}
 
 	data["user"] = user
+
+	return nil
 }
 
 func (a *App) getUser(c echo.Context) (*database.User, error) {
