@@ -92,8 +92,6 @@ definitions:
         items:
           $ref: '#/definitions/database.WorkoutType'
         type: array
-      deletedAt:
-        type: string
       description:
         description: More information about the equipment
         type: string
@@ -132,8 +130,6 @@ definitions:
         type: array
       createdAt:
         type: string
-      deletedAt:
-        type: string
       filename:
         description: The filename of the file
         type: string
@@ -171,8 +167,6 @@ definitions:
         type: string
       creator:
         description: The tool that created this workout
-        type: string
-      deletedAt:
         type: string
       details:
         allOf:
@@ -222,8 +216,6 @@ definitions:
   database.MapDataDetails:
     properties:
       createdAt:
-        type: string
-      deletedAt:
         type: string
       id:
         type: integer
@@ -275,8 +267,6 @@ definitions:
         description: The user's preferred directory for auto-import
         type: string
       createdAt:
-        type: string
-      deletedAt:
         type: string
       id:
         type: integer
@@ -332,8 +322,6 @@ definitions:
           type: integer
         type: array
       createdAt:
-        type: string
-      deletedAt:
         type: string
       dirty:
         description: Whether the route segment should be recalculated
@@ -392,6 +380,9 @@ definitions:
       firstID:
         description: The index of the first and last point of the route
         type: integer
+      lastID:
+        description: The index of the first and last point of the route
+        type: integer
       points:
         description: The total number of points of the route segment for this workout
         type: integer
@@ -438,8 +429,6 @@ definitions:
         type: string
       createdAt:
         type: string
-      deletedAt:
-        type: string
       id:
         type: integer
       lastVersion:
@@ -484,8 +473,6 @@ definitions:
       date:
         description: The timestamp the workout was recorded
         type: string
-      deletedAt:
-        type: string
       dirty:
         description: Whether the workout has been modified and the details should
           be re-rendered
@@ -506,6 +493,9 @@ definitions:
         type: string
       notes:
         description: The notes associated with the workout, in markdown
+        type: string
+      publicUUID:
+        description: UUID to publicly share a workout - this UUID can be rotated
         type: string
       routeSegmentMatches:
         description: Which route segments match
@@ -574,6 +564,7 @@ definitions:
     - auto
     - running
     - cycling
+    - e-cycling
     - walking
     - skiing
     - snowboarding
@@ -588,6 +579,7 @@ definitions:
     - WorkoutTypeAutoDetect
     - WorkoutTypeRunning
     - WorkoutTypeCycling
+    - WorkoutTypeECycling
     - WorkoutTypeWalking
     - WorkoutTypeSkiing
     - WorkoutTypeSnowboarding

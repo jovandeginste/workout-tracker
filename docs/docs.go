@@ -617,9 +617,6 @@ const docTemplate = `{
                         "$ref": "#/definitions/database.WorkoutType"
                     }
                 },
-                "deletedAt": {
-                    "type": "string"
-                },
                 "description": {
                     "description": "More information about the equipment",
                     "type": "string"
@@ -673,9 +670,6 @@ const docTemplate = `{
                     }
                 },
                 "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "filename": {
@@ -735,9 +729,6 @@ const docTemplate = `{
                 },
                 "creator": {
                     "description": "The tool that created this workout",
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "details": {
@@ -808,9 +799,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "id": {
@@ -885,9 +873,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "id": {
@@ -974,9 +959,6 @@ const docTemplate = `{
                 "createdAt": {
                     "type": "string"
                 },
-                "deletedAt": {
-                    "type": "string"
-                },
                 "dirty": {
                     "description": "Whether the route segment should be recalculated",
                     "type": "boolean"
@@ -1058,6 +1040,10 @@ const docTemplate = `{
                     "description": "The index of the first and last point of the route",
                     "type": "integer"
                 },
+                "lastID": {
+                    "description": "The index of the first and last point of the route",
+                    "type": "integer"
+                },
                 "points": {
                     "description": "The total number of points of the route segment for this workout",
                     "type": "integer"
@@ -1121,9 +1107,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "id": {
@@ -1193,9 +1176,6 @@ const docTemplate = `{
                     "description": "The timestamp the workout was recorded",
                     "type": "string"
                 },
-                "deletedAt": {
-                    "type": "string"
-                },
                 "dirty": {
                     "description": "Whether the workout has been modified and the details should be re-rendered",
                     "type": "boolean"
@@ -1224,6 +1204,10 @@ const docTemplate = `{
                 },
                 "notes": {
                     "description": "The notes associated with the workout, in markdown",
+                    "type": "string"
+                },
+                "publicUUID": {
+                    "description": "UUID to publicly share a workout - this UUID can be rotated",
                     "type": "string"
                 },
                 "routeSegmentMatches": {
@@ -1343,6 +1327,7 @@ const docTemplate = `{
                 "auto",
                 "running",
                 "cycling",
+                "e-cycling",
                 "walking",
                 "skiing",
                 "snowboarding",
@@ -1357,6 +1342,7 @@ const docTemplate = `{
                 "WorkoutTypeAutoDetect",
                 "WorkoutTypeRunning",
                 "WorkoutTypeCycling",
+                "WorkoutTypeECycling",
                 "WorkoutTypeWalking",
                 "WorkoutTypeSkiing",
                 "WorkoutTypeSnowboarding",
