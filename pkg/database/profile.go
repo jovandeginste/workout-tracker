@@ -9,7 +9,7 @@ import (
 )
 
 type Profile struct {
-	gorm.Model
+	Model
 	UserID              uint        // The ID of the user who owns this profile
 	APIActive           bool        `form:"api_active"`            // Whether the user's API key is active
 	Language            string      `form:"language"`              // The user's preferred language

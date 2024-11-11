@@ -37,7 +37,7 @@ func (rscp *RoutSegmentCreationParams) Filename() string {
 }
 
 type RouteSegment struct {
-	gorm.Model
+	Model
 	Name          string       `gorm:"not null"` // The name of the workout
 	Notes         string       // The notes associated with the workout, in markdown
 	Bidirectional bool         // Whether the route segment is bidirectional
@@ -160,7 +160,7 @@ func GetRouteSegment(db *gorm.DB, id int) (*RouteSegment, error) {
 }
 
 func (rs *RouteSegment) Delete(db *gorm.DB) error {
-	return db.Unscoped().Select(clause.Associations).Delete(rs).Error
+	return db.Select(clause.Associations).Delete(rs).Error
 }
 
 func (rs *RouteSegment) Create(db *gorm.DB) error {

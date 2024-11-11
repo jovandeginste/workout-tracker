@@ -9,7 +9,7 @@ import (
 )
 
 type Equipment struct {
-	gorm.Model
+	Model
 	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`          // The name of the gear
 	UserID      uint          `gorm:"not null;index"`                                        // The ID of the user who owns the workout
 	Description string        `gorm:"" json:"description" form:"description"`                // More information about the equipment
@@ -23,7 +23,7 @@ type Equipment struct {
 }
 
 type WorkoutEquipment struct {
-	gorm.Model
+	Model
 	WorkoutID   uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
 	Workout     Workout
 	EquipmentID uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
@@ -51,7 +51,7 @@ func (e *Equipment) Delete(db *gorm.DB) error {
 		return err
 	}
 
-	return db.Unscoped().Select("workout_equipment").Delete(e).Error
+	return db.Select("workout_equipment").Delete(e).Error
 }
 
 func (e *Equipment) Save(db *gorm.DB) error {

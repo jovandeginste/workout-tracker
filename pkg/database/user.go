@@ -9,6 +9,7 @@ import (
 	"github.com/cat-dealer/go-rand/v2"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 const (
@@ -26,7 +27,7 @@ var (
 )
 
 type User struct {
-	gorm.Model
+	Model
 
 	LastVersion string `gorm:"last_version"` // Which version of the app the user has last seen and acknowledged
 
@@ -38,9 +39,9 @@ type User struct {
 	Active   bool   `form:"active"`                                                // Whether the user is active
 	Admin    bool   `form:"admin"`                                                 // Whether the user is an admin
 
-	Profile   Profile     // The user's profile settings
-	Workouts  []Workout   `json:"-"` // The user's workouts
-	Equipment []Equipment `json:"-"` // The user's equipment
+	Profile   Profile     `gorm:"constraint:OnDelete:CASCADE"`          // The user's profile settings
+	Workouts  []Workout   `gorm:"constraint:OnDelete:CASCADE" json:"-"` // The user's workouts
+	Equipment []Equipment `gorm:"constraint:OnDelete:CASCADE" json:"-"` // The user's equipment
 
 	anonymous bool // Whether we have an actual user or not
 
@@ -251,7 +252,7 @@ func (u *User) Save(db *gorm.DB) error {
 }
 
 func (u *User) Delete(db *gorm.DB) error {
-	return db.Unscoped().Delete(u).Error
+	return db.Select(clause.Associations).Delete(u).Error
 }
 
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {

@@ -56,7 +56,7 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 }
 
 type MapData struct {
-	gorm.Model
+	Model
 	WorkoutID        uint            `gorm:"not null;uniqueIndex"` // The workout this data belongs to
 	Creator          string          // The tool that created this workout
 	Name             string          // The name of the workout
@@ -71,15 +71,19 @@ type MapData struct {
 	MaxElevation     float64         // The maximum elevation of the workout
 	TotalUp          float64         // The total distance up of the workout
 	TotalDown        float64         // The total distance down of the workout
-	Details          *MapDataDetails `json:",omitempty"` // The details of the workout
+	Details          *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"` // The details of the workout
 	TotalRepetitions int             // The number of repetitions of the workout
 	TotalWeight      float64         // The weight of the workout
+
+	Workout *Workout `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
 }
 
 type MapDataDetails struct {
-	gorm.Model
-	MapDataID uint       // The ID of the map data these details belong to
-	Points    []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
+	Model
+	MapDataID uint       `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
+	Points    []MapPoint `gorm:"serializer:json"`      // The GPS points of the workout
+
+	MapData *MapData `gorm:"foreignKey:MapDataID" json:"-"`
 }
 
 type MapCenter struct {
