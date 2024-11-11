@@ -90,6 +90,14 @@ func (w *Workout) HasTracks() bool {
 	return w.Type.IsLocation()
 }
 
+func (w *Workout) TotalRepetitions() int {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalRepetitions
+}
+
 func (w *Workout) Weight() float64 {
 	if w.Data == nil {
 		return 0
