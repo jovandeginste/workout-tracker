@@ -18,6 +18,12 @@ const thresholdSlowQueries = 100 * time.Millisecond
 
 var ErrUnsuportedDriver = errors.New("unsupported driver")
 
+type Model struct {
+	ID        uint `gorm:"primaryKey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
 func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, error) {
 	loggerOptions := []slogGorm.Option{
 		slogGorm.WithHandler(logger.With("module", "database").Handler()),
@@ -71,14 +77,14 @@ func preMigrationActions(db *gorm.DB) error {
 		return nil
 	}
 
-	q := db.Unscoped().
+	q := db.
 		Where("id < (select max(id) from map_data as m where m.workout_id = map_data.workout_id)").
 		Delete(&MapData{})
 	if q.Error != nil {
 		return q.Error
 	}
 
-	q = db.Unscoped().
+	q = db.
 		Where("id < (select max(id) from workouts as w where w.date = workouts.date and w.user_id = workouts.user_id)").
 		Delete(&Workout{})
 

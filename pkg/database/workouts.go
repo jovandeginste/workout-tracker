@@ -18,28 +18,29 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
-	gorm.Model
+	Model
 	Name                string               `gorm:"not null"`                                  // The name of the workout
 	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
 	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
 	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
 	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"` // UUID to publicly share a workout - this UUID can be rotated
-	User                *User                // The user who owns the workout
+	User                *User                `gorm:"foreignKey:UserID"`     // The user who owns the workout
 	Notes               string               // The notes associated with the workout, in markdown
 	Type                WorkoutType          // The type of the workout
-	Data                *MapData             `json:",omitempty"`                                    // The map data associated with the workout
-	GPX                 *GPXData             `json:",omitempty"`                                    // The file data associated with the workout
-	Equipment           []Equipment          `json:",omitempty" gorm:"many2many:workout_equipment"` // Which equipment is used for this workout
-	RouteSegmentMatches []*RouteSegmentMatch `json:",omitempty"`                                    // Which route segments match
+	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"`        // The map data associated with the workout
+	GPX                 *GPXData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"`        // The file data associated with the workout
+	Equipment           []Equipment          `json:",omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
+	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"`                             // Which route segments match
 }
 
 type GPXData struct {
-	gorm.Model
+	Model
 	WorkoutID uint   `gorm:"not null;uniqueIndex"` // The ID of the workout
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
@@ -88,6 +89,14 @@ func (w *Workout) HasTracks() bool {
 	}
 
 	return w.Type.IsLocation()
+}
+
+func (w *Workout) TotalRepetitions() int {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalRepetitions
 }
 
 func (w *Workout) Weight() float64 {
@@ -388,7 +397,7 @@ func GetWorkoutWithGPXByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
 }
 
 func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
-	return GetWorkout(db.Preload("GPX"), id)
+	return GetWorkout(db.Preload("GPX").Preload("Data.Details"), id)
 }
 
 func GetWorkoutDetailsByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
@@ -443,7 +452,7 @@ func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 }
 
 func (w *Workout) Delete(db *gorm.DB) error {
-	return db.Unscoped().Select("GPX", "Data").Delete(w).Error
+	return db.Select(clause.Associations).Delete(w).Error
 }
 
 func (w *Workout) Create(db *gorm.DB) error {
@@ -483,15 +492,25 @@ func (w *Workout) AsGPX() (*gpx.GPX, error) {
 func (w *Workout) setData(data *MapData) {
 	if w.Data == nil {
 		w.Data = data
+		w.Data.WorkoutID = w.ID
+
 		return
 	}
 
-	dataID := w.Data.ID
-	dataCreatedAt := w.Data.CreatedAt
+	data.ID = w.Data.ID
+	data.CreatedAt = w.Data.CreatedAt
+	data.WorkoutID = w.ID
+
+	if data.Details == nil {
+		data.Details = &MapDataDetails{}
+	}
+
+	if w.Data.Details != nil {
+		data.Details.ID = w.Data.Details.ID
+		data.Details.MapDataID = w.Data.Details.MapDataID
+	}
 
 	w.Data = data
-	w.Data.ID = dataID
-	w.Data.CreatedAt = dataCreatedAt
 
 	if !w.Data.Center.IsZero() {
 		w.Data.Address = w.Data.Center.Address()

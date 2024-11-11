@@ -37,7 +37,10 @@ func (a *App) adminRootHandler(c echo.Context) error {
 
 func (a *App) adminUserEditHandler(c echo.Context) error {
 	data := a.defaultData(c)
-	a.adminAddUser(data, c)
+	if err := a.adminAddUser(data, c); err != nil {
+		a.addError(data, c)
+		return a.redirectWithError(c, "/admin", err)
+	}
 
 	return c.Render(http.StatusOK, "admin_user_edit.html", data)
 }

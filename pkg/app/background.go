@@ -230,6 +230,7 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 	// Fetch next batch of dirty segments
 	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(workerRouteSegmentsBatchSize).Find(&routeSegmentsBatch)
 	l.Info(fmt.Sprintf("updateRouteSegments batch %d", len(routeSegmentsBatch)))
+
 	if err := q.Error; err != nil {
 		l.Error("Worker error: " + err.Error())
 	}
