@@ -87,6 +87,13 @@ func preMigrationActions(db *gorm.DB) error {
 	q = db.
 		Where("id < (select max(id) from workouts as w where w.date = workouts.date and w.user_id = workouts.user_id)").
 		Delete(&Workout{})
+	if q.Error != nil {
+		return q.Error
+	}
+
+	q = db.
+		Where("map_data_id IN (SELECT map_data_id FROM map_data_details as mdd where map_data_details.created_at < mdd.created_at)").
+		Delete(&MapDataDetails{})
 
 	return q.Error
 }
