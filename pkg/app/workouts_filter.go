@@ -15,12 +15,14 @@ type WorkoutFilters struct {
 	db *gorm.DB
 }
 
-func getWorkoutsFilters(c echo.Context) *WorkoutFilters {
+func getWorkoutsFilters(c echo.Context) (*WorkoutFilters, error) {
 	filters := WorkoutFilters{}
 
-	c.Bind(&filters)
+	if err := c.Bind(&filters); err != nil {
+		return nil, err
+	}
 
-	return &filters
+	return &filters, nil
 }
 
 func (wf *WorkoutFilters) ToQuery(db *gorm.DB) *gorm.DB {

@@ -32,7 +32,12 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 
 func (a *App) workoutsHandler(c echo.Context) error {
 	data := a.defaultData(c)
-	filters := getWorkoutsFilters(c)
+
+	filters, err := getWorkoutsFilters(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
 	data["Filters"] = filters
 
 	if err := a.addWorkoutsWithFilter(a.getCurrentUser(c), data, filters.ToQuery(a.db)); err != nil {
