@@ -34,7 +34,7 @@ func (w *Workout) MET() float64 {
 // | Running, 6 min/mile             | 16.1         | 4.47        | 16.0 |
 
 func (w *Workout) distanceOnFootMET() float64 {
-	s := w.Data.AverageSpeedNoPause() // meters per second
+	s := w.Data.AverageSpeedNoPause // meters per second
 
 	switch {
 	case s < 0.89:
@@ -77,7 +77,7 @@ func (w *Workout) distanceOnFootMET() float64 {
 // | Bicycling, 20+ mph               | 32.2+        | 8.94+       | 16.0 |
 
 func (w *Workout) distanceCyclingMET() float64 {
-	s := w.Data.AverageSpeedNoPause() // meters per second
+	s := w.Data.AverageSpeedNoPause // meters per second
 
 	switch {
 	case s < 3.0:

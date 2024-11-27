@@ -71,6 +71,9 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"workoutTypes":          database.WorkoutTypes,
 		"statisticSinceOptions": statisticSinceOptions,
 		"statisticPerOptions":   statisticPerOptions,
+		"orderByOptions":        orderByOptions,
+		"orderDirOptions":       orderDirOptions,
+		"filterOptions":         filterOptions,
 
 		"NumericDuration":         templatehelpers.NumericDuration,
 		"CountryCodeToFlag":       templatehelpers.CountryCodeToFlag,
@@ -130,14 +133,39 @@ func (a *App) parseViewTemplates() *template.Template {
 	return templ
 }
 
+func filterOptions() []string {
+	return statisticSinceOptions()
+}
+
+func orderDirOptions() map[string]string {
+	return map[string]string{
+		"asc":  "ascending",
+		"desc": "descending",
+	}
+}
+
+func orderByOptions() map[string]string {
+	return map[string]string{
+		"date": "Date",
+
+		"total_distance":    "Total distance",
+		"total_duration":    "Total duration",
+		"total_weight":      "Total weight",
+		"total_repetitions": "Total repetitions",
+		"total_up":          "Total up",
+		"total_down":        "Total down",
+
+		"average_speed_no_pause": "Average speed",
+		"max_speed":              "Max speed",
+	}
+}
+
 func statisticSinceOptions() []string {
 	return []string{
-		"3 months",
-		"6 months",
-		"1 year",
-		"2 years",
-		"5 years",
-		"10 years",
+		"1 day",
+		"7 days",
+		"1 month", "3 months", "6 months",
+		"1 year", "2 years", "5 years", "10 years",
 	}
 }
 

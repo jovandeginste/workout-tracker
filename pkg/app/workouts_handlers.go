@@ -33,7 +33,14 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 func (a *App) workoutsHandler(c echo.Context) error {
 	data := a.defaultData(c)
 
-	if err := a.addWorkouts(a.getCurrentUser(c), data); err != nil {
+	filters, err := getWorkoutsFilters(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	data["Filters"] = filters
+
+	if err := a.addWorkoutsWithFilter(a.getCurrentUser(c), data, filters.ToQuery(a.db)); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 

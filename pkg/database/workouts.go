@@ -112,7 +112,7 @@ func (w *Workout) AverageSpeed() float64 {
 		return 0
 	}
 
-	return w.Data.AverageSpeed()
+	return w.Data.AverageSpeed
 }
 
 func (w *Workout) TotalDuration() time.Duration {
@@ -220,7 +220,7 @@ func (w *Workout) AverageSpeedNoPause() float64 {
 		return 0
 	}
 
-	return w.Data.AverageSpeedNoPause()
+	return w.Data.AverageSpeedNoPause
 }
 
 func (w *Workout) PauseDuration() time.Duration {
@@ -361,11 +361,11 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 		}
 	}
 
-	if 3.6*data.AverageSpeedNoPause() > 15.0 {
+	if 3.6*data.AverageSpeedNoPause > 15.0 {
 		return WorkoutTypeCycling
 	}
 
-	if 3.6*data.AverageSpeedNoPause() > 7.0 {
+	if 3.6*data.AverageSpeedNoPause > 7.0 {
 		return WorkoutTypeRunning
 	}
 
@@ -627,5 +627,5 @@ func (w *Workout) Uses(e Equipment) bool {
 }
 
 func (w *Workout) PreferredAverageSpeedMetric(preferredUnits *UserPreferredUnits) template.HTML {
-	return w.Type.PreferredSpeedMetric(w.Data.AverageSpeedNoPause(), preferredUnits)
+	return w.Type.PreferredSpeedMetric(w.Data.AverageSpeedNoPause, preferredUnits)
 }
