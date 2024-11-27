@@ -51,7 +51,7 @@ func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
 	}
 }
 
-func (sc *StatConfig) GetDateLimitExpression(sqlDialect string) string {
+func GetDateLimitExpression(sqlDialect string) string {
 	switch sqlDialect {
 	case postgresDialect:
 		return "workouts.date > CURRENT_DATE + cast(? as interval)"
@@ -103,7 +103,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where(statConfig.GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince()).
+		Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince()).
 		Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err

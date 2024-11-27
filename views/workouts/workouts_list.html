@@ -16,6 +16,51 @@
           >
         </div>
       </div>
+      <div class="inner-form">
+        {{ $filters := .Filters }}
+        <form id="filters" method="get" action="{{ RouteFor `workouts` }}">
+          <label for="type">{{ i18n "Type" }}</label>
+          <select id="type" name="type">
+            <option value="">{{ i18n "All" }}</option>
+            {{ range workoutTypes }}
+            <option
+              value="{{ .String }}"
+              {{
+              SelectIf
+              .String
+              $filters.Type.String
+              }}
+            >
+              {{ i18n .String }}
+            </option>
+            {{ end }}
+          </select>
+          <label for="since">{{ i18n "Last" }}</label>
+          <select id="since" name="since">
+            {{ range filterOptions }}
+            <option value="{{ . }}" {{ SelectIf . $filters.Since }}>
+              {{ i18n . }}
+            </option>
+            {{ end }}
+          </select>
+          <label for="order_by">{{ i18n "Sort by" }}</label>
+          <select id="order_by" name="order_by">
+            {{ range $k, $v := orderByOptions }}
+            <option value="{{ $k }}" {{ SelectIf $k $filters.OrderBy }}>
+              {{ i18n $v }}
+            </option>
+            {{ end }}
+          </select>
+          <select id="order_dir" name="order_dir">
+            {{ range $k, $v := orderDirOptions }}
+            <option value="{{ $k }}" {{ SelectIf $k $filters.OrderDir }}>
+              {{ i18n $v }}
+            </option>
+            {{ end }}
+          </select>
+          <button type="submit">{{ i18n "Filter" }}</button>
+        </form>
+      </div>
 
       <table class="workout-info">
         <thead>

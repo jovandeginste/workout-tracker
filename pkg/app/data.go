@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"gorm.io/gorm"
 
 	"github.com/labstack/echo/v4"
 )
@@ -70,11 +71,15 @@ func (a *App) addRouteSegments(data map[string]any) error {
 }
 
 func (a *App) addWorkouts(u *database.User, data map[string]any) error {
+	return a.addWorkoutsWithFilter(u, data, a.db)
+}
+
+func (a *App) addWorkoutsWithFilter(u *database.User, data map[string]any, db *gorm.DB) error {
 	if u == nil {
 		return nil
 	}
 
-	w, err := u.GetWorkouts(a.db)
+	w, err := u.GetWorkouts(db)
 	if err != nil {
 		return err
 	}
