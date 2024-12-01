@@ -281,7 +281,7 @@ func (operation *Operation) ParseParamComment(commentLine string, astFile *ast.F
 
 	requiredText := strings.ToLower(matches[4])
 	required := requiredText == "true" || requiredText == requiredLabel
-	description := matches[5]
+	description := strings.Join(strings.Split(matches[5], "\\n"), "\n")
 
 	param := createParameter(paramType, description, name, objectType, refType, required, enums, operation.parser.collectionFormatInQuery)
 
@@ -333,6 +333,9 @@ func (operation *Operation) ParseParamComment(commentLine string, astFile *ast.F
 					itemSchema := prop.Items.Schema
 					if len(itemSchema.Type) == 0 {
 						itemSchema = operation.parser.getUnderlyingSchema(prop.Items.Schema)
+					}
+					if itemSchema == nil {
+						continue
 					}
 					if len(itemSchema.Type) == 0 {
 						continue
@@ -408,6 +411,7 @@ const (
 	exampleTag          = "example"
 	schemaExampleTag    = "schemaExample"
 	formatTag           = "format"
+	titleTag            = "title"
 	validateTag         = "validate"
 	minimumTag          = "minimum"
 	maximumTag          = "maximum"
@@ -703,7 +707,7 @@ func parseMimeTypeList(mimeTypeList string, typeList *[]string, format string) e
 	return nil
 }
 
-var routerPattern = regexp.MustCompile(`^(/[\w./\-{}+:$]*)[[:blank:]]+\[(\w+)]`)
+var routerPattern = regexp.MustCompile(`^(/[\w./\-{}\(\)+:$]*)[[:blank:]]+\[(\w+)]`)
 
 // ParseRouterComment parses comment for given `router` comment string.
 func (operation *Operation) ParseRouterComment(commentLine string, deprecated bool) error {
@@ -837,9 +841,9 @@ func parseObjectSchema(parser *Parser, refType string, astFile *ast.File) (*spec
 	case refType == NIL:
 		return nil, nil
 	case refType == INTERFACE:
-		return PrimitiveSchema(OBJECT), nil
+		return &spec.Schema{}, nil
 	case refType == ANY:
-		return PrimitiveSchema(OBJECT), nil
+		return &spec.Schema{}, nil
 	case IsGolangPrimitiveType(refType):
 		refType = TransToValidSchemeType(refType)
 

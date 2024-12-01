@@ -142,11 +142,23 @@ func (m Migrator) CreateIndex(value interface{}, name string) error {
 					createIndexSQL += " ?"
 				}
 
+				if idx.Option != "" {
+					createIndexSQL += " " + idx.Option
+				}
+
 				if idx.Where != "" {
 					createIndexSQL += " WHERE " + idx.Where
 				}
 
-				return m.DB.Exec(createIndexSQL, values...).Error
+				err := m.DB.Exec(createIndexSQL, values...).Error
+				if err != nil {
+					return err
+				}
+
+				if !m.HasIndex(value, name) {
+					return fmt.Errorf("failed to create index with name %v", name)
+				}
+				return nil
 			}
 		}
 
@@ -385,9 +397,15 @@ func (m Migrator) AlterColumn(value interface{}, field string) error {
 								return err
 							}
 						} else {
-							if err := m.DB.Exec("ALTER TABLE ? ALTER COLUMN ? DROP DEFAULT", m.CurrentTable(stmt), clause.Column{Name: field.DBName}, clause.Expr{SQL: field.DefaultValue}).Error; err != nil {
+							if err := m.DB.Exec("ALTER TABLE ? ALTER COLUMN ? DROP DEFAULT", m.CurrentTable(stmt), clause.Column{Name: field.DBName}).Error; err != nil {
 								return err
 							}
+						}
+					} else if !field.HasDefaultValue {
+						// case - as-is column has default value and to-be column has no default value
+						// need to drop default
+						if err := m.DB.Exec("ALTER TABLE ? ALTER COLUMN ? DROP DEFAULT", m.CurrentTable(stmt), clause.Column{Name: field.DBName}).Error; err != nil {
+							return err
 						}
 					}
 				}

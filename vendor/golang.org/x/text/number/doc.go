@@ -11,16 +11,15 @@
 //
 //	p := message.NewPrinter(language.English)
 //
-//	p.Printf("%v bottles of beer on the wall.", number.Decimal(1234))
+//	p.Printf("%v bottles of beer on the wall.\n", number.Decimal(1234))
 //	// Prints: 1,234 bottles of beer on the wall.
 //
-//	p.Printf("%v of gophers lose too much fur", number.Percent(0.12))
+//	p.Printf("%v of gophers lose too much fur.\n", number.Percent(0.12))
 //	// Prints: 12% of gophers lose too much fur.
 //
-//	p := message.NewPrinter(language.Dutch)
-//
-//	p.Printf("There are %v bikes per household.", number.Decimal(1.2))
-//	// Prints: Er zijn 1,2 fietsen per huishouden.
+//	p = message.NewPrinter(language.Dutch)
+//	p.Printf("There are %v bikes per household.\n", number.Decimal(1.2))
+//	// Prints: There are 1,2 bikes per household.
 //
 // The width and scale specified in the formatting directives override the
 // configuration of the formatter.
