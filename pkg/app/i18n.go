@@ -18,6 +18,7 @@ import (
 
 const (
 	BrowserLanguage   = "browser"
+	BrowserTheme      = "browser"
 	DefaultTotalsShow = database.WorkoutTypeRunning
 )
 

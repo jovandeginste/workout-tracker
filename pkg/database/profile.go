@@ -13,6 +13,7 @@ type Profile struct {
 	UserID              uint        // The ID of the user who owns this profile
 	APIActive           bool        `form:"api_active"`            // Whether the user's API key is active
 	Language            string      `form:"language"`              // The user's preferred language
+	Theme               string      `form:"theme"`                 // The user's preferred color scheme
 	TotalsShow          WorkoutType `form:"totals_show"`           // What workout type of totals to show
 	Timezone            string      `form:"timezone"`              // The user's preferred timezone
 	AutoImportDirectory string      `form:"auto_import_directory"` // The user's preferred directory for auto-import
