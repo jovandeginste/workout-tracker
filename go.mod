@@ -34,8 +34,8 @@ require (
 	github.com/tormoder/fit v0.15.0
 	github.com/vorlif/spreak v0.6.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.29.0
-	golang.org/x/text v0.20.0
+	golang.org/x/crypto v0.31.0
+	golang.org/x/text v0.21.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.10
 	gorm.io/gorm v1.25.12
@@ -103,8 +103,8 @@ require (
 	golang.org/x/exp/typeparams v0.0.0-20240719175910-8a7402abbf56 // indirect
 	golang.org/x/mod v0.19.0 // indirect
 	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sync v0.9.0 // indirect
-	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
