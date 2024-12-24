@@ -24,8 +24,8 @@ type Lap struct {
 	Dist          float64 `xml:"DistanceMeters,omitempty"`
 	Calories      float64 `xml:",omitempty"`
 	MaxSpeed      float64 `xml:"MaximumSpeed,omitempty"`
-	AvgHr         float64 `xml:"AverageHeartRateBpm,omitempty"`
-	MaxHr         float64 `xml:"MaximumHeartRateBpm,omitempty"`
+	AvgHr         float64 `xml:"AverageHeartRateBpm>Value,omitempty"`
+	MaxHr         float64 `xml:"MaximumHeartRateBpm>Value,omitempty"`
 	Intensity     string  `xml:",omitempty"`
 	TriggerMethod string  `xml:",omitempty"`
 	Trk           *Track  `xml:"Track"`

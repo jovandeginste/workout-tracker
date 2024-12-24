@@ -53,8 +53,8 @@ github.com/fsnotify/fsnotify v1.7.0 h1:8JEhPFa5W2WU7YfeZzPNqzMP6Lwt7L2715Ggo0nos
 github.com/fsnotify/fsnotify v1.7.0/go.mod h1:40Bi/Hjc2AVfZrqy+aj+yEI+/bRxZnMJyTJwOpGvigM=
 github.com/fsouza/slognil v0.4.1 h1:fMSnRtFZgAkM7r2IuviVMj50fKgT7agXSu0JiQsM2xU=
 github.com/fsouza/slognil v0.4.1/go.mod h1:uaLfvwv/vp6xUVeUEQiJ4n3L6qsGc8b/U+PANzm5Sts=
-github.com/galeone/tcx v1.0.0 h1:rmSSL/+qDFWH+9YjoyU5mmm2R2tJUxvwr5nS+1Oq6sY=
-github.com/galeone/tcx v1.0.0/go.mod h1:cHrVurc4epPGjwvJt8kDkQgp4hEUhk0UiWPSN6/dykI=
+github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884 h1:aiujMvmLqdGvZftIoDSYmTPtSVPDXC9csDpZJQ8EEkQ=
+github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884/go.mod h1:cHrVurc4epPGjwvJt8kDkQgp4hEUhk0UiWPSN6/dykI=
 github.com/glebarez/go-sqlite v1.22.0 h1:uAcMJhaA6r3LHMTFgP0SifzgXg46yJkgxqyuyec+ruQ=
 github.com/glebarez/go-sqlite v1.22.0/go.mod h1:PlBIdHe0+aUEFn+r2/uthrWq4FxbzugL0L8Li6yQJbc=
 github.com/glebarez/sqlite v1.11.0 h1:wSG0irqzP6VurnMEpFGer5Li19RpIRi2qvQz++w0GMw=
