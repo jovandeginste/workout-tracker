@@ -45,7 +45,6 @@ func (a *App) apiRoutes(e *echo.Group) {
 			return ctx.Request().URL.Query().Get("api-key") != ""
 		},
 	}))
-	apiGroup.Use(a.ValidateUserMiddleware)
 
 	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Validator: a.ValidateAPIKeyMiddleware,
