@@ -178,5 +178,13 @@
     "Heading": "Kurs",
     "Your progress per %s for the past %s": "Dein Fortschritt pro %s für die vergangenen %s",
     "Update route segment": "Streckenabschnitt aktualisieren",
-    "End": "Ende"
+    "End": "Ende",
+    "Last": "Letzte",
+    "Filter": "Filter",
+    "All": "Alle",
+    "1 day": "1 Tag",
+    "15 days": "15 Tage",
+    "3 months": "3 Monate",
+    "1 month": "1 Monat",
+    "Sort by": "Sortieren nach"
 }

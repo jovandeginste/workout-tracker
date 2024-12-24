@@ -56,7 +56,7 @@
     "Max elevation": "Максимальная высота",
     "Other users": "Другие пользователи",
     "Start": "Начало",
-    "Sign in": "Вход",
+    "Sign in": "Войти",
     "Tempo": "Темп",
     "Update profile": "Обновить профиль",
     "Update settings": "Обновить настройки",
@@ -163,5 +163,8 @@
     "The workout '%s' has been refreshed.": "Тренировка '%s' обновлена.",
     "sailboat": "парусник",
     "Average per minute": "Среднее в минуту",
-    "Leave blank to keep current password": "Оставьте пустым, чтобы сохранить текущий пароль"
+    "Leave blank to keep current password": "Оставьте пустым, чтобы сохранить текущий пароль",
+    "Per": "в",
+    "Since": "За прошедшие",
+    "Your progress per %s for the past %s": "Ваш прогресс в %s за прошедшие %s"
 }
