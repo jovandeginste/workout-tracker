@@ -110,6 +110,31 @@
               </tr>
               <tr>
                 <th>
+                  <label for="theme">{{ i18n "Theme" }}</label>
+                </th>
+                <td>
+                  <select id="theme" name="theme">
+                    <option value="light" {{ SelectIf .Profile.Theme `light` }}>
+                      {{ i18n "Light" }}
+                    </option>
+                    <option value="dark" {{ SelectIf .Profile.Theme `dark` }}>
+                      {{ i18n "Dark" }}
+                    </option>
+                    <option
+                      value="browser"
+                      {{
+                      SelectIf
+                      .Profile.Theme
+                      `browser`
+                      }}
+                    >
+                      {{ i18n "Browser / System" }}
+                    </option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th>
                   <label for="auto_import_directory"
                     >{{ i18n "Auto import directory" }}</label
                   >
