@@ -11,7 +11,7 @@ require (
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.4
 	github.com/fsouza/slognil v0.4.1
-	github.com/galeone/tcx v1.0.0
+	github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 	github.com/glebarez/sqlite v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/gomarkdown/markdown v0.0.0-20240730141124-034f12af3bf6

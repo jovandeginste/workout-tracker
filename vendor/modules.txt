@@ -54,7 +54,7 @@ github.com/fsnotify/fsnotify
 # github.com/fsouza/slognil v0.4.1
 ## explicit; go 1.22
 github.com/fsouza/slognil
-# github.com/galeone/tcx v1.0.0
+# github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 ## explicit; go 1.19
 github.com/galeone/tcx
 # github.com/glebarez/go-sqlite v1.22.0
