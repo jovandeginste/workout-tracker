@@ -36,6 +36,12 @@
           <span class="autohide">{{ i18n "Equipment" }}</span>
         </a>
       </div>
+      <div>
+        <a href="{{ RouteFor `heatmap` }}">
+          {{ IconFor `heatmap` }}
+          <span class="autohide">{{ i18n "Heatmap" }}</span>
+        </a>
+      </div>
     </div>
     <div class="flex flex-wrap md:min-w-[400px] justify-end">
       {{ if .Admin }}

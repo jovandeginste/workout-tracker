@@ -129,6 +129,7 @@ func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
+	secureGroup.GET("/heatmap", a.heatmapHandler).Name = "heatmap"
 	secureGroup.POST("/lookup-address", a.lookupAddressHandler).Name = "lookup-address"
 
 	a.addRoutesSelf(secureGroup)
