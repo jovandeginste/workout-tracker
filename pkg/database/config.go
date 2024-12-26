@@ -9,20 +9,26 @@ import (
 
 type Config struct {
 	Model
+	EnvConfig  `mapstructure:",squash"`
+	UserConfig `mapstructure:",squash"`
+}
 
-	// These options can be changed at runtime, configured through the database
-	// If they are set through the environment to a non-default value, that will
-	// take precedence
+// UserConfig are options that can be changed at runtime or configured through the web interface
+// If they are set through the environment to a non-default value, that will
+// take precedence
+type UserConfig struct {
 	RegistrationDisabled bool `mapstructure:"registration_disabled" form:"registration_disabled"`
 	SocialsDisabled      bool `mapstructure:"socials_disabled" form:"socials_disabled"`
+}
 
-	// These options are read from the config file or environment only
-	Logging          bool   `mapstructure:"logging" gorm:"-"`
-	Debug            bool   `mapstructure:"debug" gorm:"-"`
+// EnvConfig are options that are read from the config file or environment only
+type EnvConfig struct {
 	Bind             string `mapstructure:"bind" gorm:"-"`
 	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"`
 	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`
 	DSN              string `mapstructure:"dsn" gorm:"-"`
+	Logging          bool   `mapstructure:"logging" gorm:"-"`
+	Debug            bool   `mapstructure:"debug" gorm:"-"`
 }
 
 func getConfig(db *gorm.DB) (*Config, error) {

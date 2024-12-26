@@ -716,6 +716,14 @@ const docTemplate = `{
                     "description": "The generic location of the workout",
                     "type": "string"
                 },
+                "averageSpeed": {
+                    "description": "The average speed of the workout",
+                    "type": "number"
+                },
+                "averageSpeedNoPause": {
+                    "description": "The average speed of the workout without pausing",
+                    "type": "number"
+                },
                 "center": {
                     "description": "The center of the workout (in coordinates)",
                     "allOf": [
@@ -897,6 +905,10 @@ const docTemplate = `{
                 "socials_disabled": {
                     "description": "Whether social sharing buttons are disabled when viewing a workout",
                     "type": "boolean"
+                },
+                "theme": {
+                    "description": "The user's preferred color scheme",
+                    "type": "string"
                 },
                 "timezone": {
                     "description": "The user's preferred timezone",

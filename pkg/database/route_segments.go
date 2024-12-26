@@ -38,27 +38,28 @@ func (rscp *RoutSegmentCreationParams) Filename() string {
 
 type RouteSegment struct {
 	Model
-	Name          string       `gorm:"not null"` // The name of the workout
-	Notes         string       // The notes associated with the workout, in markdown
-	Bidirectional bool         // Whether the route segment is bidirectional
-	Circular      bool         // Whether the route segment is circular
 	GeoAddress    *geo.Address `gorm:"serializer:json"` // The address of the workout
+	Name          string       `gorm:"not null"`        // The name of the workout
+	Notes         string       // The notes associated with the workout, in markdown
 	AddressString string       // The generic location of the workout
-	Center        MapCenter    `gorm:"serializer:json"` // The center of the workout (in coordinates)
+	Filename      string       // The filename of the file
 
-	TotalDistance float64    // The total distance of the workout
-	MinElevation  float64    // The minimum elevation of the workout
-	MaxElevation  float64    // The maximum elevation of the workout
-	TotalUp       float64    // The total distance up of the workout
-	TotalDown     float64    // The total distance down of the workout
-	Points        []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
+	Points []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
 
-	Content  []byte `gorm:"type:text"`            // The file content
-	Checksum []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
-	Filename string // The filename of the file
-
-	Dirty               bool                 // Whether the route segment should be recalculated
+	Content             []byte               `gorm:"type:text"`            // The file content
+	Checksum            []byte               `gorm:"not null;uniqueIndex"` // The checksum of the content
 	RouteSegmentMatches []*RouteSegmentMatch // The matches of the route segment
+	Center              MapCenter            `gorm:"serializer:json"` // The center of the workout (in coordinates)
+
+	TotalDistance float64 // The total distance of the workout
+	MinElevation  float64 // The minimum elevation of the workout
+	MaxElevation  float64 // The maximum elevation of the workout
+	TotalUp       float64 // The total distance up of the workout
+	TotalDown     float64 // The total distance down of the workout
+	Bidirectional bool    // Whether the route segment is bidirectional
+	Circular      bool    // Whether the route segment is circular
+
+	Dirty bool // Whether the route segment should be recalculated
 }
 
 func (rs *RouteSegment) HasFile() bool {

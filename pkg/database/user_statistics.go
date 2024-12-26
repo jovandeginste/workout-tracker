@@ -7,9 +7,9 @@ import (
 type (
 	// Statistics represents the statistics for a user for a given time range and bucket size, per workout type
 	Statistics struct {
-		UserID       uint                              // The user ID
-		BucketFormat string                            // The bucket format in strftime format
 		Buckets      map[WorkoutType]map[string]Bucket // The statistics buckets
+		BucketFormat string                            // The bucket format in strftime format
+		UserID       uint                              // The user ID
 	}
 
 	// Bucket is the consolidation of workout information for a given time bucket
@@ -27,27 +27,27 @@ type (
 
 	// float64Record is a single record if the value is a float64
 	float64Record struct {
-		Value float64   // The value of the record
 		Date  time.Time // The timestamp of the record
+		Value float64   // The value of the record
 		ID    uint      // The workout ID of the record
 	}
 
 	// durationRecord is a single record if the value is a time.Duration
 	durationRecord struct {
-		Value time.Duration // The value of the record
 		Date  time.Time     // The timestamp of the record
+		Value time.Duration // The value of the record
 		ID    uint          // The workout ID of the record
 	}
 
 	// WorkoutRecord is the collection of records for a single workout type
 	WorkoutRecord struct {
 		WorkoutType         WorkoutType    // The type of the workout
-		Active              bool           // Whether there is any data in the record
 		AverageSpeed        float64Record  // The record with the maximum average speed
 		AverageSpeedNoPause float64Record  // The record with the maximum average speed without pause
 		MaxSpeed            float64Record  // The record with the maximum max speed
 		Distance            float64Record  // The record with the maximum distance
 		TotalUp             float64Record  // The record with the maximum up elevation
 		Duration            durationRecord // The record with the maximum duration
+		Active              bool           // Whether there is any data in the record
 	}
 )

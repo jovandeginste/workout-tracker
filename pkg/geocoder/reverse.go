@@ -34,27 +34,27 @@ type client struct {
 }
 
 type Query struct {
+	Format string  `url:"format"`
 	Lat    float64 `url:"lat"`
 	Lon    float64 `url:"lon"`
-	Format string  `url:"format"`
 }
 
 type result struct {
-	PlaceID     int      `json:"place_id"`
+	Address     address  `json:"address"`
 	Licence     string   `json:"licence"`
 	OsmType     string   `json:"osm_type"`
-	OsmID       int      `json:"osm_id"`
 	Lat         string   `json:"lat"`
 	Lon         string   `json:"lon"`
-	PlaceRank   int      `json:"place_rank"`
 	Category    string   `json:"category"`
 	Type        string   `json:"type"`
-	Importance  float64  `json:"importance"`
 	Addresstype string   `json:"addresstype"`
 	DisplayName string   `json:"display_name"`
 	Name        string   `json:"name"`
-	Address     address  `json:"address"`
 	Boundingbox []string `json:"boundingbox"`
+	PlaceID     int      `json:"place_id"`
+	OsmID       int      `json:"osm_id"`
+	PlaceRank   int      `json:"place_rank"`
+	Importance  float64  `json:"importance"`
 }
 
 type address struct {
