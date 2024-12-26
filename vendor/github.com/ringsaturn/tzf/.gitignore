@@ -1,0 +1,4 @@
+data/*.json
+data/*.pb
+cmd/reducePolygon/reducePolygon
+cmd/tzjson2pb/tzjson2pb

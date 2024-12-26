@@ -2657,6 +2657,20 @@ table {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M5 17q-2.125 0-3.562-1.437T0 12t1.463-3.562T5 7q1.925 0 3.238 1.15T9.9 11h.65l-1.8-5H7V4h5v2h-1.1l.35 1h4.8L14.6 3H12V1h2.6q.65 0 1.163.35t.737.95l1.7 4.65h.8q2.075 0 3.538 1.463T24 11.95q0 2.1-1.45 3.575T19 17q-1.8 0-3.162-1.125T14.1 13H9.9q-.35 1.725-1.7 2.863T5 17m0-2q1.025 0 1.763-.562T7.8 13H5v-2h2.8q-.3-.9-1.037-1.45T5 9q-1.275 0-2.137.863T2 12q0 1.25.863 2.125T5 15m7.7-4h1.4q.125-.575.338-1.075T15 9h-3.05zm6.3 4q1.275 0 2.138-.875T22 12q0-1.275-.862-2.137T19 9h-.1l1 2.65l-1.9.7l-.95-2.65q-.5.425-.775 1T16 12q0 1.25.863 2.125T19 15m-6 8l-6-3h4v-2l6 3h-4zm6-11'/%3E%3C/svg%3E");
 }
 
+.icon-\[material-symbols--map\] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='m15 21l-6-2.1l-4.65 1.8q-.5.2-.925-.112T3 19.75v-14q0-.325.188-.575T3.7 4.8L9 3l6 2.1l4.65-1.8q.5-.2.925.113T21 4.25v14q0 .325-.187.575t-.513.375zm-1-2.45V6.85l-4-1.4v11.7z'/%3E%3C/svg%3E");
+}
+
 .icon-\[material-symbols--pedal-bike-outline\] {
   display: inline-block;
   width: 1em;
