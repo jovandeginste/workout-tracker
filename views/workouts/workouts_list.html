@@ -16,9 +16,11 @@
           >
         </div>
       </div>
-      <div class="inner-form">
+      <details class="inner-form" {{ if .Filters.Active }}open{{ end }}>
+        <summary>Filter workouts</summary>
         {{ $filters := .Filters }}
         <form id="filters" method="get" action="{{ RouteFor `workouts` }}">
+          <input type="hidden" id="active" name="active" value="true" />
           <label for="type">{{ i18n "Type" }}</label>
           <select id="type" name="type">
             <option value="">{{ i18n "All" }}</option>
@@ -60,7 +62,7 @@
           </select>
           <button type="submit">{{ i18n "Filter" }}</button>
         </form>
-      </div>
+      </details>
 
       <table class="workout-info">
         <thead>
