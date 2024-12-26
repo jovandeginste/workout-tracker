@@ -9,6 +9,7 @@ import (
 type WorkoutFilters struct {
 	db       *gorm.DB
 	Type     database.WorkoutType `query:"type"`
+	Active   bool                 `query:"active"`
 	Since    string               `query:"since"`
 	OrderBy  string               `query:"order_by"`
 	OrderDir string               `query:"order_dir"`
@@ -21,7 +22,23 @@ func getWorkoutsFilters(c echo.Context) (*WorkoutFilters, error) {
 		return nil, err
 	}
 
+	filters.setDefaults()
+
 	return &filters, nil
+}
+
+func (wf *WorkoutFilters) setDefaults() {
+	if wf.Since == "" {
+		wf.Since = "10 years"
+	}
+
+	if wf.OrderBy == "" {
+		wf.OrderBy = "date"
+	}
+
+	if wf.OrderDir == "" {
+		wf.OrderDir = "desc"
+	}
 }
 
 func (wf *WorkoutFilters) ToQuery(db *gorm.DB) *gorm.DB {
