@@ -6,6 +6,9 @@
     theme = 'dark';
   }
 
+  var tz = {{ timezone }};
+  var lang = {{ language }}
+
   var data = [
     {{ range .Items -}}
     { "lat": {{ .FirstPoint.Lat }}, "lng": {{ .FirstPoint.Lng }}, "label": "{{ template `workout_point_title` .FirstPoint }}", },
@@ -108,7 +111,14 @@
         ],
       },
     ],
-    xaxis: { type: "datetime", },
+    xaxis: {
+      labels: {
+        formatter: (val, ts, opts) => {
+          return new Date(ts).toLocaleTimeString(lang, { timeZone: tz })
+        },
+      },
+      type: "datetime",
+    },
     yaxis: [
       {
         min: 0,

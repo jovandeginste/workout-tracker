@@ -22,6 +22,8 @@ type Template struct {
 	templates *template.Template
 }
 
+const timeFormat = "2006-01-02 15:04 -0700"
+
 func (t *Template) Render(w io.Writer, name string, data any, ctx echo.Context) error {
 	r, err := t.templates.Clone()
 	if err != nil {
@@ -36,10 +38,11 @@ func (t *Template) Render(w io.Writer, name string, data any, ctx echo.Context) 
 		"i18n":         tr.Getf,
 		"language":     tr.Language().String,
 		"humanizer":    func() *humanize.Humanizer { return h },
+		"timezone":     func() string { return u.Timezone().String() },
 		"RelativeDate": h.NaturalTime,
 		"CurrentUser":  func() *database.User { return u },
 		"LocalTime":    func(t time.Time) time.Time { return t.In(u.Timezone()) },
-		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format("2006-01-02 15:04") },
+		"LocalDate":    func(t time.Time) string { return t.In(u.Timezone()).Format(timeFormat) },
 
 		"HumanElevation": templatehelpers.HumanElevationFor(u.PreferredUnits().Elevation()),
 		"HumanDistance":  templatehelpers.HumanDistanceFor(u.PreferredUnits().Distance()),
@@ -62,10 +65,11 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"Version":     func() *Version { return &a.Version },
 		"AppConfig":   func() *database.Config { return &a.Config },
 		"language":    func() string { return BrowserLanguage },
+		"timezone":    func() string { return time.UTC.String() },
 		"humanizer":   func() *humanize.Humanizer { return h },
 		"CurrentUser": func() *database.User { return nil },
 		"LocalTime":   func(t time.Time) time.Time { return t.UTC() },
-		"LocalDate":   func(t time.Time) string { return t.UTC().Format("2006-01-02 15:04") },
+		"LocalDate":   func(t time.Time) string { return t.UTC().Format(timeFormat) },
 
 		"supportedLanguages":    a.translator.SupportedLanguages,
 		"workoutTypes":          database.WorkoutTypes,
