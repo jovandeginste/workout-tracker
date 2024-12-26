@@ -72,3 +72,18 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "address_results.html", data)
 }
+
+func (a *App) heatmapHandler(c echo.Context) error {
+	data := a.defaultData(c)
+
+	u := a.getCurrentUser(c)
+	if u == nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
+	}
+
+	if err := a.addWorkouts(u, data); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	}
+
+	return c.Render(http.StatusOK, "heatmap.html", data)
+}

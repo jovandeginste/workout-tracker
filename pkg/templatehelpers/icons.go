@@ -67,6 +67,7 @@ var iconMap = map[string]string{
 	"workout-add":       "icon-[fa6-solid--circle-plus]",
 	"equipment-add":     "icon-[fa6-solid--circle-plus]",
 	"route-segment-add": "icon-[fa6-solid--circle-plus]",
+	"heatmap":           "icon-[fa6-solid--fire]",
 
 	// Utility Icons
 	"close":         "icon-[fa6-solid--xmark]",

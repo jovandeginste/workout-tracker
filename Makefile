@@ -66,6 +66,8 @@ build-dist: clean-dist
 	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
 	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
 	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
+	cp -v ./node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
+	cp -v ./node_modules/simpleheat/simpleheat.js ./assets/dist/
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
