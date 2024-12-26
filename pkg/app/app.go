@@ -45,8 +45,6 @@ func (v Version) UserAgent() string {
 }
 
 type App struct {
-	Version      Version
-	Config       database.Config
 	Assets       fs.FS
 	Views        fs.FS
 	Translations fs.FS
@@ -58,6 +56,8 @@ type App struct {
 	sessionManager *scs.SessionManager
 	translator     *spreak.Bundle
 	humanizer      *humanize.Collection
+	Version        Version
+	Config         database.Config
 }
 
 func (a *App) jwtSecret() []byte {

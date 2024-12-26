@@ -10,6 +10,11 @@ import (
 type Config struct {
 	Model
 
+	Bind             string `mapstructure:"bind" gorm:"-"`
+	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"`
+	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`
+	DSN              string `mapstructure:"dsn" gorm:"-"`
+
 	// These options can be changed at runtime, configured through the database
 	// If they are set through the environment to a non-default value, that will
 	// take precedence
@@ -17,12 +22,8 @@ type Config struct {
 	SocialsDisabled      bool `mapstructure:"socials_disabled" form:"socials_disabled"`
 
 	// These options are read from the config file or environment only
-	Logging          bool   `mapstructure:"logging" gorm:"-"`
-	Debug            bool   `mapstructure:"debug" gorm:"-"`
-	Bind             string `mapstructure:"bind" gorm:"-"`
-	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"`
-	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`
-	DSN              string `mapstructure:"dsn" gorm:"-"`
+	Logging bool `mapstructure:"logging" gorm:"-"`
+	Debug   bool `mapstructure:"debug" gorm:"-"`
 }
 
 func getConfig(db *gorm.DB) (*Config, error) {

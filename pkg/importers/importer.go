@@ -11,10 +11,10 @@ import (
 var ErrUnsupportedProgram = errors.New("unsupported program")
 
 type Content struct {
-	Content  []byte
 	Filename string
 	Notes    string
 	Type     string
+	Content  []byte
 }
 
 func Import(program string, c echo.Context, body io.ReadCloser) (*Content, error) {

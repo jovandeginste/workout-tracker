@@ -7,12 +7,11 @@ import (
 )
 
 type WorkoutFilters struct {
+	db       *gorm.DB
 	Type     database.WorkoutType `query:"type"`
 	Since    string               `query:"since"`
 	OrderBy  string               `query:"order_by"`
 	OrderDir string               `query:"order_dir"`
-
-	db *gorm.DB
 }
 
 func getWorkoutsFilters(c echo.Context) (*WorkoutFilters, error) {

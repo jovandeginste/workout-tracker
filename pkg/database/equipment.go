@@ -9,25 +9,27 @@ import (
 )
 
 type Equipment struct {
+	db *gorm.DB
 	Model
+
 	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`          // The name of the gear
-	UserID      uint          `gorm:"not null;index"`                                        // The ID of the user who owns the workout
 	Description string        `gorm:"" json:"description" form:"description"`                // More information about the equipment
-	Active      bool          `gorm:"default:true" json:"active" form:"active"`              // Whether this equipment is active
 	DefaultFor  []WorkoutType `gorm:"serializer:json;column:default_for" form:"default_for"` // Which workout types to add this equipment by default
 
-	User     User
 	Workouts []Workout `gorm:"many2many:workout_equipment"`
 
-	db *gorm.DB
+	User User
+
+	UserID uint `gorm:"not null;index"`                           // The ID of the user who owns the workout
+	Active bool `gorm:"default:true" json:"active" form:"active"` // Whether this equipment is active
 }
 
 type WorkoutEquipment struct {
 	Model
-	WorkoutID   uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
 	Workout     Workout
-	EquipmentID uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
 	Equipment   Equipment
+	WorkoutID   uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
+	EquipmentID uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
 }
 
 func GetEquipment(db *gorm.DB, id int) (*Equipment, error) {

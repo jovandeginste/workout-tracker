@@ -25,26 +25,26 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	Model
-	Name                string               `gorm:"not null"`                                  // The name of the workout
-	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`       // The timestamp the workout was recorded
-	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"` // The ID of the user who owns the workout
-	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
-	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"` // UUID to publicly share a workout - this UUID can be rotated
-	User                *User                `gorm:"foreignKey:UserID"`     // The user who owns the workout
+	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`                                // The timestamp the workout was recorded
+	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"`                                              // UUID to publicly share a workout - this UUID can be rotated
+	User                *User                `gorm:"foreignKey:UserID"`                                                  // The user who owns the workout
+	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"` // The map data associated with the workout
+	GPX                 *GPXData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"` // The file data associated with the workout
+	Name                string               `gorm:"not null"`                                                           // The name of the workout
 	Notes               string               // The notes associated with the workout, in markdown
 	Type                WorkoutType          // The type of the workout
-	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"`        // The map data associated with the workout
-	GPX                 *GPXData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"`        // The file data associated with the workout
 	Equipment           []Equipment          `json:",omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
 	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"`                             // Which route segments match
+	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"`                                 // The ID of the user who owns the workout
+	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
 }
 
 type GPXData struct {
 	Model
-	WorkoutID uint   `gorm:"not null;uniqueIndex"` // The ID of the workout
+	Filename  string // The filename of the file
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
-	Filename  string // The filename of the file
+	WorkoutID uint   `gorm:"not null;uniqueIndex"` // The ID of the workout
 }
 
 func (w *Workout) GetDate() time.Time {

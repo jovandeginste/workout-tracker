@@ -57,35 +57,36 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 
 type MapData struct {
 	Model
-	WorkoutID           uint            `gorm:"not null;uniqueIndex"` // The workout this data belongs to
-	Creator             string          // The tool that created this workout
-	Name                string          // The name of the workout
-	Center              MapCenter       `gorm:"serializer:json"` // The center of the workout (in coordinates)
-	Address             *geo.Address    `gorm:"serializer:json"` // The address of the workout
-	AddressString       string          // The generic location of the workout
-	TotalDistance       float64         // The total distance of the workout
-	TotalDuration       time.Duration   // The total duration of the workout
-	MaxSpeed            float64         // The maximum speed of the workout
-	AverageSpeed        float64         // The average speed of the workout
-	AverageSpeedNoPause float64         // The average speed of the workout without pausing
-	PauseDuration       time.Duration   // The total pause duration of the workout
-	MinElevation        float64         // The minimum elevation of the workout
-	MaxElevation        float64         // The maximum elevation of the workout
-	TotalUp             float64         // The total distance up of the workout
-	TotalDown           float64         // The total distance down of the workout
-	Details             *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"` // The details of the workout
-	TotalRepetitions    int             // The number of repetitions of the workout
-	TotalWeight         float64         // The weight of the workout
+	Address *geo.Address    `gorm:"serializer:json"`                               // The address of the workout
+	Details *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"` // The details of the workout
 
-	Workout *Workout `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
+	Workout             *Workout      `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
+	Creator             string        // The tool that created this workout
+	Name                string        // The name of the workout
+	AddressString       string        // The generic location of the workout
+	Center              MapCenter     `gorm:"serializer:json"`      // The center of the workout (in coordinates)
+	WorkoutID           uint          `gorm:"not null;uniqueIndex"` // The workout this data belongs to
+	TotalDistance       float64       // The total distance of the workout
+	TotalDuration       time.Duration // The total duration of the workout
+	MaxSpeed            float64       // The maximum speed of the workout
+	AverageSpeed        float64       // The average speed of the workout
+	AverageSpeedNoPause float64       // The average speed of the workout without pausing
+	PauseDuration       time.Duration // The total pause duration of the workout
+	MinElevation        float64       // The minimum elevation of the workout
+	MaxElevation        float64       // The maximum elevation of the workout
+	TotalUp             float64       // The total distance up of the workout
+	TotalDown           float64       // The total distance down of the workout
+	TotalRepetitions    int           // The number of repetitions of the workout
+	TotalWeight         float64       // The weight of the workout
 }
 
 type MapDataDetails struct {
 	Model
-	MapDataID uint       `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
-	Points    []MapPoint `gorm:"serializer:json"`      // The GPS points of the workout
 
-	MapData *MapData `gorm:"foreignKey:MapDataID" json:"-"`
+	MapData *MapData   `gorm:"foreignKey:MapDataID" json:"-"`
+	Points  []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
+
+	MapDataID uint `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
 }
 
 type MapCenter struct {
@@ -94,15 +95,15 @@ type MapCenter struct {
 }
 
 type MapPoint struct {
+	Time time.Time // The time the point was recorded
+
+	ExtraMetrics  ExtraMetrics  // Extra metrics at this point
 	Lat           float64       // The latitude of the point
 	Lng           float64       // The longitude of the point
 	Distance      float64       // The distance from the previous point
 	TotalDistance float64       // The total distance of the workout up to this point
 	Duration      time.Duration // The duration from the previous point
 	TotalDuration time.Duration // The total duration of the workout up to this point
-	Time          time.Time     // The time the point was recorded
-
-	ExtraMetrics ExtraMetrics // Extra metrics at this point
 }
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {

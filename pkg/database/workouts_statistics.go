@@ -9,16 +9,16 @@ import (
 )
 
 type BreakdownItem struct {
-	UnitCount     float64       // Count of the unit per item
+	FirstPoint    *MapPoint     // First GPS point in this item
+	LastPoint     *MapPoint     // Last GPS point in this item
 	UnitName      string        // Unit name
+	UnitCount     float64       // Count of the unit per item
 	Counter       int           // Counter of this item in the list of items
 	Distance      float64       // Distance in this item
 	TotalDistance float64       // Total distance in all items up to and including this item
 	Duration      time.Duration // Duration in this item
 	TotalDuration time.Duration // Total duration in all items up to and including this item
 	Speed         float64       // Speed in this item
-	FirstPoint    *MapPoint     // First GPS point in this item
-	LastPoint     *MapPoint     // Last GPS point in this item
 	IsBest        bool          // Whether this item is the best of the list
 	IsWorst       bool          // Whether this item is the worst of the list
 }
