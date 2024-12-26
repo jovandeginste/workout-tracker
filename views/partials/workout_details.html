@@ -15,7 +15,21 @@
     <tr>
       <td>{{ IconFor `date` }}</td>
       <th>{{ i18n "Date" }}</th>
-      <td>{{ template "snippet_date" .Date }}</td>
+      <td>
+        <a
+          href="#"
+          onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
+          >{{ IconFor `timezone` }}</a
+        >
+        {{ template "snippet_date" .Date }}
+        <div id="timeinfo" class="hidden">
+          <ul>
+            <li>{{ CurrentUser.Timezone }}: {{ .Date | LocalTime }}</li>
+            <li>UTC: {{ .Date | InTimezone "UTC" }}</li>
+            <li>{{ .Timezone }}: {{ .Date | InTimezone .Timezone }}</li>
+          </ul>
+        </div>
+      </td>
     </tr>
     <tr>
       <td>{{ IconFor `location` }}</td>

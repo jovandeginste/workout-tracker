@@ -20,6 +20,7 @@ var iconMap = map[string]string{
 	"cadence":     "icon-[fa6-solid--stopwatch]",
 	"heading":     "icon-[fa6-solid--compass]",
 	"date":        "icon-[fa6-regular--calendar]",
+	"timezone":    "icon-[material-symbols--map]",
 	"pause":       "icon-[fa6-regular--hourglass]",
 	"calories":    "icon-[fa6-solid--fire]",
 

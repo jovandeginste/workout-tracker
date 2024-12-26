@@ -1,8 +1,8 @@
 module github.com/jovandeginste/workout-tracker
 
-go 1.22.4
+go 1.23
 
-toolchain go1.22.5
+toolchain go1.23.4
 
 require (
 	github.com/Masterminds/sprig/v3 v3.3.0
@@ -25,6 +25,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/orandin/slog-gorm v1.4.0
+	github.com/ringsaturn/tzf v0.16.0
 	github.com/samber/slog-echo v1.14.7
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/viper v1.19.0
@@ -81,10 +82,12 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
+	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/philhofer/vec v0.0.0-20140421144027-536fc796d369 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	github.com/ringsaturn/tzf-rel-lite v0.0.2024-b // indirect
 	github.com/sagikazarmark/locafero v0.6.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/samber/lo v1.46.0 // indirect
@@ -94,8 +97,13 @@ require (
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/tidwall/geoindex v1.7.0 // indirect
+	github.com/tidwall/geojson v1.4.5 // indirect
+	github.com/tidwall/rtree v1.10.0 // indirect
+	github.com/twpayne/go-polyline v1.1.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	go.mongodb.org/mongo-driver v1.14.0 // indirect
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
@@ -107,6 +115,7 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/tools v0.4.7 // indirect

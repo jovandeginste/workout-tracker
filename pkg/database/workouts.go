@@ -247,6 +247,14 @@ func (w *Workout) City() string {
 	return w.Data.Address.City
 }
 
+func (w *Workout) Timezone() string {
+	if w.Data == nil {
+		return ""
+	}
+
+	return w.Data.Center.TZ
+}
+
 func (w *Workout) Address() string {
 	if w.Data == nil {
 		return ""

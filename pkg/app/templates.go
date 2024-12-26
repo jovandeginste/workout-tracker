@@ -22,7 +22,7 @@ type Template struct {
 	templates *template.Template
 }
 
-const timeFormat = "2006-01-02 15:04 -0700"
+const timeFormat = "2006-01-02 15:04"
 
 func (t *Template) Render(w io.Writer, name string, data any, ctx echo.Context) error {
 	r, err := t.templates.Clone()
@@ -68,8 +68,17 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 		"timezone":    func() string { return time.UTC.String() },
 		"humanizer":   func() *humanize.Humanizer { return h },
 		"CurrentUser": func() *database.User { return nil },
+		"FormatDate":  func(t time.Time) string { return t.Format(timeFormat) },
 		"LocalTime":   func(t time.Time) time.Time { return t.UTC() },
 		"LocalDate":   func(t time.Time) string { return t.UTC().Format(timeFormat) },
+		"InTimezone": func(tz string, t time.Time) time.Time {
+			tzLoc, err := time.LoadLocation(tz)
+			if err != nil {
+				tzLoc = time.UTC
+			}
+
+			return t.In(tzLoc)
+		},
 
 		"supportedLanguages":    a.translator.SupportedLanguages,
 		"workoutTypes":          database.WorkoutTypes,

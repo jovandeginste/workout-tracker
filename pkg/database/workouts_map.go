@@ -9,6 +9,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
+	"github.com/ringsaturn/tzf"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -89,9 +90,11 @@ type MapDataDetails struct {
 	MapDataID uint `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
 }
 
+// MapCenter is the center of the workout
 type MapCenter struct {
-	Lat float64 // The latitude of the center of the workout
-	Lng float64 // The longitude of the center of the workout
+	TZ  string  // Timezone
+	Lat float64 // Latitude
+	Lng float64 // Longitude
 }
 
 type MapPoint struct {
@@ -190,10 +193,30 @@ func center(gpxContent *gpx.GPX) MapCenter {
 
 	size := float64(len(points))
 
-	return MapCenter{
+	mc := MapCenter{
 		Lat: lat / size,
 		Lng: lng / size,
 	}
+
+	mc.updateTimezone()
+
+	return mc
+}
+
+func (m *MapCenter) updateTimezone() {
+	finder, err := tzf.NewDefaultFinder()
+	if err != nil {
+		m.TZ = time.UTC.String()
+		return
+	}
+
+	tz := finder.GetTimezoneName(m.Lng, m.Lat)
+	if tz == "" {
+		m.TZ = time.UTC.String()
+		return
+	}
+
+	m.TZ = tz
 }
 
 func (m *MapCenter) IsZero() bool {

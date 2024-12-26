@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/ringsaturn/tzf/pb;pb";
+
+// Basic Point data define.
+message Point {
+  float lng = 1;
+  float lat = 2;
+}
+
+// Define a polygon, mostly based on GeoJSON's Polygon define.
+//
+// Excerpt from RFC-9476 section 'Polygon'
+//
+//   -  A linear ring is a closed LineString with four or more positions.
+//   -  The first and last positions are equivalent, and they MUST contain
+//     identical values; their representation SHOULD also be identical.
+//   -  A linear ring is the boundary of a surface or the boundary of a
+//     hole in a surface.
+//   -  A linear ring MUST follow the right-hand rule with respect to the
+//     area it bounds, i.e., exterior rings are counterclockwise, and
+//     holes are clockwise.
+//
+//   Note: the [GJ2008] specification did not discuss linear ring winding
+//   order.  For backwards compatibility, parsers SHOULD NOT reject
+//   Polygons that do not follow the right-hand rule.
+//
+//   Though a linear ring is not explicitly represented as a GeoJSON
+//   geometry type, it leads to a canonical formulation of the Polygon
+//   geometry type definition as follows:
+//
+//   -  For type "Polygon", the "coordinates" member MUST be an array of
+//     linear ring coordinate arrays.
+//   -  For Polygons with more than one of these rings, the first MUST be
+//     the exterior ring, and any others MUST be interior rings.  The
+//     exterior ring bounds the surface, and the interior rings (if
+//     present) bound holes within the surface.
+//
+// [GJ2008]: https://geojson.org/geojson-spec
+//
+message Polygon {
+  repeated Point points = 1;   // define the "exterior ring"
+  repeated Polygon holes = 2;  // define the "interior rings" as holes
+}
+
+// Timezone is a timezone's all data.
+message Timezone {
+  repeated Polygon polygons = 1;
+  string name = 2;
+}
+
+message Timezones {
+  repeated Timezone timezones = 1;
+  bool reduced = 2;  // Reduced data will toggle neighbor search as plan b
+  string version = 3;
+}
+
+enum CompressMethod {
+  Unknown = 0;
+  Polyline =
+      1;  // https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+}
+
+message CompressedPolygon {
+  bytes points = 1;
+  repeated CompressedPolygon holes = 2;
+}
+
+// CompressedTimezonesItem designed for binary file as small as possible.
+message CompressedTimezone {
+  repeated CompressedPolygon data = 1;
+  string name = 2;
+}
+
+message CompressedTimezones {
+  CompressMethod method = 1;
+  repeated CompressedTimezone timezones = 2;
+  string version = 3;
+}
+
+// PreindexTimezone tile item.
+//
+// The X/Y/Z are OSM style like map tile index values.
+message PreindexTimezone {
+  string name = 1;
+  int32 x = 2;
+  int32 y = 3;
+  int32 z = 4;
+}
+
+// PreindexTimezones is all preindex timezone's dumps.
+message PreindexTimezones {
+  int32 idxZoom = 1;  // which zoom value the tiles generated
+  int32 aggZoom = 2;  // which zoom value the tiles merge up with.
+  repeated PreindexTimezone keys = 3;
+  string version = 4;
+}
