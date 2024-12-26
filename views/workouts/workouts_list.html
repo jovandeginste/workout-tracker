@@ -17,7 +17,7 @@
         </div>
       </div>
       <details class="inner-form" {{ if .Filters.Active }}open{{ end }}>
-        <summary>Filter workouts</summary>
+        <summary class="cursor-pointer">Filter workouts</summary>
         {{ $filters := .Filters }}
         <form id="filters" method="get" action="{{ RouteFor `workouts` }}">
           <input type="hidden" id="active" name="active" value="true" />
