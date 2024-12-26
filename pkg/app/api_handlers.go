@@ -67,6 +67,7 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
+	apiGroup.GET("/coordinates", a.apiCoordinates).Name = "user-coordinates"
 	apiGroup.POST("/import/:program", a.apiImportHandler).Name = "api-import"
 }
 
@@ -115,6 +116,40 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 	}
 
 	resp.Results = w
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// apiCoordinates returns all coordinates of all workouts of the current user
+// @Summary      List all coordinates of all workouts of the current user
+// @Produce      json
+// @Success      200  {object}  APIResponse{result=[][]float64}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /coordinates [get]
+func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
+	resp := APIResponse{}
+	coords := [][]float64{}
+
+	db := a.db.Preload("Data").Preload("Data.Details").Preload("GPX").Preload("Equipment")
+
+	workouts, err := a.getCurrentUser(c).GetWorkouts(db)
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	for _, w := range workouts {
+		if !w.HasTracks() {
+			continue
+		}
+
+		for _, p := range w.Data.Details.Points {
+			coords = append(coords, []float64{p.Lat, p.Lng})
+		}
+	}
+
+	resp.Results = coords
 
 	return c.JSON(http.StatusOK, resp)
 }

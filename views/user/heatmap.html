@@ -5,6 +5,7 @@
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/simpleheat.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/leaflet-heat.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/leaflet-layerjson.min.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
   </head>
   <body>
@@ -14,13 +15,9 @@
 
       <script>
         var data = [
-          {{- range .workouts }}
-          {{- if .HasTracks }}
-          {{ range .Data.Details.Points -}}
-          [{{ .Lat }}, {{ .Lng }}],
+          {{ range .workouts -}}
+          [{{ .Center.Lat }}, {{ .Center.Lng }}],
           {{- end }}
-          {{- end -}}
-          {{ end }}
         ];
       </script>
 
@@ -34,16 +31,29 @@
               fadeAnimation: false,
             });
 
-            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              attribution:
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(map);
+            var layer = L.tileLayer(
+              "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+              {
+                attribution:
+                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              },
+            ).addTo(map);
+
             var bounds = new L.LatLngBounds(data);
+            map.fitBounds(bounds);
 
             var heatConfig = { radius: 10 };
-            var heat = L.heatLayer(data, heatConfig).addTo(map);
 
-            map.fitBounds(bounds);
+            fetch("{{ RouteFor `user-coordinates` }}", {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var heat = L.heatLayer(response.results, heatConfig).addTo(map);
+              });
           </script>
         </div>
       </div>
