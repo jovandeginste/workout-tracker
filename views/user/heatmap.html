@@ -5,6 +5,7 @@
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/simpleheat.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/leaflet-heat.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/leaflet-layerjson.min.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
   </head>
   <body>
@@ -14,32 +15,45 @@
 
       <script>
         var data = [
-          {{ range .workouts }}
+          {{ range .workouts -}}
           [{{ .Center.Lat }}, {{ .Center.Lng }}],
-          {{ end }}
+          {{- end }}
         ];
       </script>
 
       <div id="map-container" class="small-size pagebreak">
         <div
           id="map"
-          class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+          class="border-2 border-black rounded-xl h-[300px] sm:h-[600px] md:h-[800px] print:w-full print:h-[800px]"
         >
           <script>
             var map = L.map("map", {
               fadeAnimation: false,
             });
 
-            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              attribution:
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(map);
+            var layer = L.tileLayer(
+              "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+              {
+                attribution:
+                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              },
+            ).addTo(map);
+
             var bounds = new L.LatLngBounds(data);
-
-            var heatConfig = { radius: 30, minOpacity: 0.3, blur: 0 };
-            var heat = L.heatLayer(data, heatConfig).addTo(map);
-
             map.fitBounds(bounds);
+
+            var heatConfig = { radius: 10 };
+
+            fetch("{{ RouteFor `user-coordinates` }}", {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var heat = L.heatLayer(response.results, heatConfig).addTo(map);
+              });
           </script>
         </div>
       </div>
