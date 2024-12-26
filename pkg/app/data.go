@@ -79,6 +79,8 @@ func (a *App) addWorkoutsWithFilter(u *database.User, data map[string]any, db *g
 		return nil
 	}
 
+	db = db.Preload("Data").Preload("Data.Details").Preload("GPX").Preload("Equipment")
+
 	w, err := u.GetWorkouts(db)
 	if err != nil {
 		return err

@@ -3257,6 +3257,10 @@ table {
     height: 400px;
   }
 
+  .sm\:h-\[600px\] {
+    height: 600px;
+  }
+
   .sm\:w-\[300px\] {
     width: 300px;
   }
@@ -3293,6 +3297,10 @@ table {
 
   .md\:h-\[600px\] {
     height: 600px;
+  }
+
+  .md\:h-\[800px\] {
+    height: 800px;
   }
 
   .md\:min-w-\[400px\] {
@@ -3400,6 +3408,10 @@ table {
 
   .print\:h-\[600px\] {
     height: 600px;
+  }
+
+  .print\:h-\[800px\] {
+    height: 800px;
   }
 
   .print\:w-full {
