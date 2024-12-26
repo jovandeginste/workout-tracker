@@ -20,7 +20,7 @@ var online = true
 const UnknownLocation = "(unknown location)"
 
 var correctAltitudeCreators = []string{
-	"Garmin", "Garmin Connect",
+	"garmin", "Garmin", "Garmin Connect",
 	"Apple Watch",
 	"StravaGPX iPhone", "StravaGPX",
 	"Workout Tracker",

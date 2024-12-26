@@ -7,52 +7,47 @@ import (
 	"math"
 	"strconv"
 
+	"github.com/muktihari/fit/decoder"
+	"github.com/muktihari/fit/kit/semicircles"
+	"github.com/muktihari/fit/profile/filedef"
 	"github.com/tkrajina/gpxgo/gpx"
-	"github.com/tormoder/fit"
 )
 
 func ParseFit(fitFile []byte) (*gpx.GPX, error) {
 	// Decode the FIT file data
-	f, err := fit.Decode(bytes.NewReader(fitFile))
+	dec := decoder.New(bytes.NewReader(fitFile))
+
+	f, err := dec.Decode()
 	if err != nil {
 		return nil, err
 	}
 
-	gpxFile := &gpx.GPX{
-		Name:    f.FileId.TimeCreated.String(),
-		Time:    &f.FileId.TimeCreated,
-		Creator: f.FileId.Manufacturer.String(),
-	}
-
-	m, err := f.Activity()
-	if err != nil {
-		return nil, err
-	}
-
-	if len(m.Sessions) == 0 {
+	act := filedef.NewActivity(f.Messages...)
+	if len(act.Sessions) == 0 {
 		return nil, errors.New("no sessions found")
 	}
 
+	gpxFile := &gpx.GPX{
+		Name:    act.FileId.TimeCreated.String(),
+		Time:    &act.FileId.TimeCreated,
+		Creator: act.FileId.Manufacturer.String(),
+	}
+
 	gpxFile.AppendTrack(&gpx.GPXTrack{
-		Name: m.Sessions[0].SportProfileName,
-		Type: m.Sessions[0].Sport.String(),
+		Name: act.Sessions[0].SportProfileName,
+		Type: act.Sessions[0].Sport.String(),
 	})
 
-	for _, r := range m.Records {
-		if r.PositionLat.Invalid() ||
-			r.PositionLong.Invalid() {
-			continue
-		}
-
+	for _, r := range act.Records {
 		p := &gpx.GPXPoint{
 			Timestamp: r.Timestamp,
 			Point: gpx.Point{
-				Latitude:  r.PositionLat.Degrees(),
-				Longitude: r.PositionLong.Degrees(),
+				Latitude:  semicircles.ToDegrees(r.PositionLat),
+				Longitude: semicircles.ToDegrees(r.PositionLong),
 			},
 		}
 
-		if a := r.GetEnhancedAltitudeScaled(); !math.IsNaN(a) {
+		if a := r.EnhancedAltitudeScaled(); !math.IsNaN(a) {
 			p.Elevation = *gpx.NewNullableFloat64(a)
 		}
 
