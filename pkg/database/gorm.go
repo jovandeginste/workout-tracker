@@ -106,15 +106,12 @@ func postMigrationActions(db *gorm.DB) error {
 	}
 
 	for _, w := range workouts {
-		if !w.HasTracks() {
-			continue
-		}
-
-		if w.Data.ExtraMetrics != nil {
+		if !w.HasTracks() || w.Data.ExtraMetrics != nil {
 			continue
 		}
 
 		w.Data.UpdateExtraMetrics()
+
 		if err := w.Save(db); err != nil {
 			log.Error("Failed to update extra metrics", "err", err)
 		}

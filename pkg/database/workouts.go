@@ -340,6 +340,9 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		},
 	}
 
+	w.UpdateAverages()
+	w.UpdateExtraMetrics()
+
 	return &w, nil
 }
 
@@ -627,6 +630,14 @@ func (w *Workout) HasHeading() bool {
 
 func (w *Workout) HasAccuracy() bool {
 	return w.HasExtraMetric("accuracy")
+}
+
+func (w *Workout) UpdateExtraMetrics() {
+	if w.Data == nil {
+		return
+	}
+
+	w.Data.UpdateExtraMetrics()
 }
 
 func (w *Workout) HasExtraMetrics() bool {
