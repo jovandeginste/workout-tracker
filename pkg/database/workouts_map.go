@@ -9,6 +9,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
+	"github.com/paulmach/orb"
 	"github.com/ringsaturn/tzf"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
@@ -108,6 +109,14 @@ type MapPoint struct {
 	TotalDistance float64       // The total distance of the workout up to this point
 	Duration      time.Duration // The duration from the previous point
 	TotalDuration time.Duration // The total duration of the workout up to this point
+}
+
+func (mc *MapCenter) ToOrbPoint() *orb.Point {
+	return &orb.Point{mc.Lng, mc.Lat}
+}
+
+func (mp *MapPoint) ToOrbPoint() *orb.Point {
+	return &orb.Point{mp.Lng, mp.Lat}
 }
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {

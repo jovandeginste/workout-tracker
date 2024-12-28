@@ -75,3 +75,13 @@ function showMessage(cls, message) {
 
   al.appendChild(msg);
 }
+
+function geoJson2heat(geojson, intensity) {
+  return geojson.features.map(function (feature) {
+    return [
+      parseFloat(feature.geometry.coordinates[1]),
+      parseFloat(feature.geometry.coordinates[0]),
+      intensity,
+    ];
+  });
+}

@@ -11,8 +11,8 @@
     "fullcalendar": "^6.1.11",
     "htmx.org": "^1.9.12",
     "leaflet": "^1.9.4",
-    "leaflet-layerjson": "github:stefanocudini/leaflet-layerJSON",
     "leaflet.heat": "github:Leaflet/Leaflet.heat",
+    "leaflet.markercluster": "^1.5.3",
     "material-icons": "^1.13.12",
     "shareon": "^2.5.0",
     "simpleheat": "^0.4.0"

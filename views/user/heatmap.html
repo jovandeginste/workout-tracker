@@ -1,25 +1,25 @@
 <!doctype html>
 <html>
   <head>
-    {{ template "head" }}
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/simpleheat.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/leaflet-heat.js"></script>
-    <script src="{{ RouteFor `assets` }}/dist/leaflet-layerjson.min.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/leaflet.markercluster.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
+    <link
+      href="{{ RouteFor `assets` }}/dist/MarkerCluster.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ RouteFor `assets` }}/dist/MarkerCluster.Default.css"
+      rel="stylesheet"
+    />
+    {{ template "head" }}
   </head>
   <body>
     {{ template "header" . }}
     <div class="content">
       <h2>{{ IconFor `heatmap` }} {{ i18n "Heatmap" }}</h2>
-
-      <script>
-        var data = [
-          {{ range .workouts -}}
-          [{{ .Center.Lat }}, {{ .Center.Lng }}],
-          {{- end }}
-        ];
-      </script>
 
       <div id="map-container" class="small-size pagebreak">
         <div
@@ -30,19 +30,35 @@
             var map = L.map("map", {
               fadeAnimation: false,
             });
-
-            var layer = L.tileLayer(
+            const layerStreet = L.tileLayer(
               "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
               {
                 attribution:
-                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                className: "map-tiles",
               },
-            ).addTo(map);
+            );
 
-            var bounds = new L.LatLngBounds(data);
-            map.fitBounds(bounds);
+            const layerAerial = L.tileLayer(
+              "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+              {
+                attribution: "Powered by Esri",
+              },
+            );
+
+            L.control
+              .layers(
+                {
+                  ["{{ i18n "Streets" }}"]: layerStreet,
+                  ["{{ i18n "Aerial" }}"]: layerAerial,
+                }
+              )
+              .addTo(map);
+
+            layerStreet.addTo(map);
 
             var heatConfig = { radius: 10 };
+            var clusterConfig = { showCoverageOnHover: false };
 
             fetch("{{ RouteFor `user-coordinates` }}", {
               method: "GET",
@@ -52,7 +68,30 @@
             })
               .then((response) => response.json())
               .then((response) => {
-                var heat = L.heatLayer(response.results, heatConfig).addTo(map);
+                var data = geoJson2heat(response.results);
+                L.heatLayer(data, heatConfig).addTo(map);
+              });
+
+            fetch("{{ RouteFor `user-centers` }}", {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var markers = L.markerClusterGroup(clusterConfig);
+                var geoJsonLayer = L.geoJson(response.results, {
+                  onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.details);
+                  },
+                });
+                geoJsonLayer.onEachFeature;
+
+                markers.addLayer(geoJsonLayer);
+                markers.addTo(map);
+
+                map.fitBounds(markers.getBounds());
               });
           </script>
         </div>

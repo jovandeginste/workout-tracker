@@ -23,6 +23,11 @@
   .leaflet-control {
     @apply dark:saturate-0 dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
   }
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    @apply bg-neutral-100 text-zinc-900;
+    @apply dark:bg-neutral-900 dark:text-zinc-100;
+  }
 
   body {
     @apply md:px-20;
