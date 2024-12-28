@@ -15,9 +15,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/pkg/converters"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/microcosm-cc/bluemonday"
-	"github.com/paulmach/orb/geojson"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -674,12 +672,4 @@ func (w *Workout) Uses(e Equipment) bool {
 
 func (w *Workout) PreferredAverageSpeedMetric(preferredUnits *UserPreferredUnits) template.HTML {
 	return w.Type.PreferredSpeedMetric(w.Data.AverageSpeedNoPause, preferredUnits)
-}
-
-func (w *Workout) FillGeoJSONProperties(f *geojson.Feature, preferredUnits *UserPreferredUnits) {
-	df := templatehelpers.HumanDistanceFor(preferredUnits.Distance())
-
-	f.Properties["workout_id"] = w.ID
-	f.Properties["total_distance"] = df(w.TotalDistance()) + " " + preferredUnits.Distance()
-	f.Properties["name"] = w.Name
 }

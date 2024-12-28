@@ -1,0 +1,62 @@
+<a href="{{ RouteFor `workout-show` .ID }}">{{ .Name }}</a>
+<table>
+  <tbody>
+    <tr>
+      <td>{{ IconFor `date` }}</td>
+      <th>{{ i18n "Date" }}</th>
+      <td>{{ template "snippet_date" .Date }}</td>
+    </tr>
+    <tr>
+      <td>{{ IconFor `workout` }}</td>
+      <th>{{ i18n "Type" }}</th>
+      <td>
+        <span>{{ IconFor .Type.String }}{{ i18n .Type.String }}</span>
+      </td>
+    </tr>
+    {{ if .Type.IsRepetition }}
+    <tr>
+      <td>{{ IconFor `repetitions` }}</td>
+      <th>{{ i18n "Repetitions" }}</th>
+      <td class="whitespace-nowrap font-mono">{{ .TotalRepetitions }}</td>
+    </tr>
+    <tr>
+      <td>{{ IconFor `tempo` }}</td>
+      <th>{{ i18n "Average per minute" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .RepetitionFrequencyPerMinute }}
+      </td>
+    </tr>
+    {{ end }}{{ if .Type.IsWeight }}
+    <tr>
+      <td>{{ IconFor `weight` }}</td>
+      <th>{{ i18n "Weight" }}</th>
+      <td class="whitespace-nowrap font-mono">{{ .Weight }}</td>
+    </tr>
+    {{ end }} {{ if .Type.IsDuration }}
+    <tr>
+      <td>{{ IconFor `duration` }}</td>
+      <th>{{ i18n "Total duration" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .TotalDuration | HumanDuration }}
+      </td>
+    </tr>
+    {{ end }} {{ if .Type.IsDistance }}
+    <tr>
+      <td>{{ IconFor `distance` }}</td>
+      <th>{{ i18n "Total distance" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .TotalDistance | HumanDistance }} {{
+        CurrentUser.PreferredUnits.Distance }}
+      </td>
+    </tr>
+    {{ end }} {{ if and .Type.IsDistance .Type.IsDuration }}
+    <tr>
+      <td>{{ IconFor `speed` }}</td>
+      <th>{{ i18n "Average speed" }}</th>
+      <td class="whitespace-nowrap font-mono">
+        {{ .AverageSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
+      </td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

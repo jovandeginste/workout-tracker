@@ -1,8 +1,10 @@
 package app
 
 import (
+	"bytes"
 	"errors"
 	"net/http"
+	"regexp"
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
@@ -14,7 +16,10 @@ import (
 	geojson "github.com/paulmach/orb/geojson"
 )
 
-var ErrInvalidAPIKey = errors.New("invalid API key")
+var (
+	ErrInvalidAPIKey = errors.New("invalid API key")
+	htmlConcatenizer = regexp.MustCompile(`\s*\n\s*`)
+)
 
 type APIResponse struct {
 	Results any      `json:"results"`
@@ -153,8 +158,7 @@ func (a *App) apiCenters(c echo.Context) error {
 		}
 
 		f := geojson.NewFeature(p.ToOrbPoint())
-		w.FillGeoJSONProperties(f, u.PreferredUnits())
-		f.Properties["url"] = a.echo.Reverse("workout-show", w.ID)
+		a.fillGeoJSONProperties(c, w, f)
 
 		coords.Append(f)
 	}
@@ -191,7 +195,6 @@ func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
 
 		for _, p := range w.Data.Details.Points {
 			f := geojson.NewFeature(p.ToOrbPoint())
-			w.FillGeoJSONProperties(f, u.PreferredUnits())
 
 			coords.Append(f)
 		}
@@ -404,4 +407,17 @@ func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error 
 	resp.Errors = append(resp.Errors, err.Error())
 
 	return c.JSON(http.StatusBadRequest, resp)
+}
+
+func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geojson.Feature) {
+	o := bytes.NewBuffer(nil)
+	if err := a.echo.Renderer.Render(o, "workout_details.html", w, c); err != nil {
+		a.logger.Error("could not render workout details", "err", err)
+	}
+
+	d := o.String()
+	// Remove all newlines and surrounding whitespace
+	d = htmlConcatenizer.ReplaceAllString(d, "")
+
+	f.Properties["details"] = d
 }
