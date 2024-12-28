@@ -130,7 +130,7 @@ func (a *App) parseViewTemplates() *template.Template {
 		}
 
 		if strings.HasSuffix(path, ".html") {
-			if _, myErr := templ.ParseFS(a.Views, path); err != nil {
+			if _, myErr := templ.ParseFS(a.Views, path); myErr != nil {
 				a.logger.Warn(fmt.Sprintf("Error loading template: %v", myErr))
 				return myErr
 			}
