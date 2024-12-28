@@ -99,6 +99,7 @@
         {{ .AverageSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
+    {{ if ne .PauseDuration 0 }}
     <tr>
       <td>{{ IconFor `speed` }}</td>
       <th>{{ i18n "Average speed (no pause)" }}</th>
@@ -107,6 +108,7 @@
         CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
+    {{ end }}
     <tr>
       <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo" }}</th>
@@ -114,6 +116,7 @@
         {{ .AverageSpeed | HumanTempo }} {{ CurrentUser.PreferredUnits.Tempo }}
       </td>
     </tr>
+    {{ if ne .PauseDuration 0 }}
     <tr>
       <td>{{ IconFor `tempo` }}</td>
       <th>{{ i18n "Average tempo (no pause)" }}</th>
@@ -122,6 +125,7 @@
         CurrentUser.PreferredUnits.Tempo }}
       </td>
     </tr>
+    {{ end }}
     <tr>
       <td>{{ IconFor `max-speed` }}</td>
       <th>{{ i18n "Max speed" }}</th>
@@ -129,7 +133,7 @@
         {{ .MaxSpeed | HumanSpeed }} {{ CurrentUser.PreferredUnits.Speed }}
       </td>
     </tr>
-    {{ end }} {{ if .Type.IsLocation }}
+    {{ end }} {{ if .Type.IsLocation }} {{ if .HasElevation }}
     <tr>
       <td>{{ IconFor `elevation` }}</td>
       <th>{{ i18n "Min elevation" }}</th>
@@ -162,7 +166,7 @@
         CurrentUser.PreferredUnits.Elevation }}
       </td>
     </tr>
-    {{ end }} {{ if .HasCalories }}
+    {{ end }} {{ end }} {{ if .HasCalories }}
     <tr>
       <td>{{ IconFor `calories` }}</td>
       <th>
@@ -188,6 +192,7 @@
         {{ end }} {{ else }} <i>{{ i18n "no equipment" }}</i> {{ end }}
       </td>
     </tr>
+    {{ if .HasExtraMetrics }}
     <tr>
       <td>{{ IconFor `metrics` }}</td>
       <td>{{ i18n "Extra metrics" }}</td>
@@ -198,9 +203,12 @@
         <div title="{{ i18n `Cadence` }}">{{ IconFor `cadence` }}</div>
         {{ end }}{{ if .HasHeading }}
         <div title="{{ i18n `Heading` }}">{{ IconFor `heading` }}</div>
+        {{ end }}{{ if .HasAccuracy }}
+        <div title="{{ i18n `Accuracy` }}">{{ IconFor `accuracy` }}</div>
         {{ end }}
       </td>
     </tr>
+    {{ end }}
   </tbody>
 </table>
 {{end}}

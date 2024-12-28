@@ -79,6 +79,7 @@ type MapData struct {
 	TotalDown           float64       // The total distance down of the workout
 	TotalRepetitions    int           // The number of repetitions of the workout
 	TotalWeight         float64       // The weight of the workout
+	ExtraMetrics        []string      `gorm:"serializer:json"` // Extra metrcis available
 }
 
 type MapDataDetails struct {
@@ -111,6 +112,31 @@ type MapPoint struct {
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {
 	return db.Save(d).Error
+}
+
+func (m *MapData) UpdateExtraMetrics() {
+	if m.Details == nil ||
+		len(m.Details.Points) == 0 {
+		return
+	}
+
+	metrics := []string{}
+	found := map[string]bool{}
+
+	for _, d := range m.Details.Points {
+		for k := range d.ExtraMetrics {
+			if found[k] {
+				continue
+			}
+
+			metrics = append(metrics, k)
+			found[k] = true
+		}
+	}
+
+	slices.Sort(metrics)
+
+	m.ExtraMetrics = metrics
 }
 
 func (m *MapData) UpdateAddress() {
@@ -356,6 +382,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDown:           downhill,
 	}
 
+	data.UpdateExtraMetrics()
 	data.UpdateAddress()
 	data.correctNaN()
 
