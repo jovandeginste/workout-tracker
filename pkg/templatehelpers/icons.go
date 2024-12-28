@@ -19,6 +19,7 @@ var iconMap = map[string]string{
 	"heart-rate":  "icon-[fa6-solid--heart-pulse]",
 	"cadence":     "icon-[fa6-solid--stopwatch]",
 	"heading":     "icon-[fa6-solid--compass]",
+	"accuracy":    "icon-[fa6-solid--crosshairs]",
 	"date":        "icon-[fa6-regular--calendar]",
 	"timezone":    "icon-[material-symbols--map]",
 	"pause":       "icon-[fa6-regular--hourglass]",

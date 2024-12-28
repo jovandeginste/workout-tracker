@@ -63,6 +63,15 @@ func (w *Workout) Filename() string {
 	return w.GPX.Filename
 }
 
+func (w *Workout) HasElevationData() bool {
+	// If both min & max elevation are 0, we don't have elevation information
+	return w.MinElevation() != 0 || w.MaxElevation() != 0
+}
+
+func (w *Workout) HasPause() bool {
+	return w.PauseDuration() == 0
+}
+
 func (w *Workout) HasFile() bool {
 	if w.GPX == nil {
 		return false
@@ -331,6 +340,9 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		},
 	}
 
+	w.UpdateAverages()
+	w.UpdateExtraMetrics()
+
 	return &w, nil
 }
 
@@ -393,7 +405,7 @@ func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {
 func GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	var w []*Workout
 
-	if err := db.Preload("Data").Order("date DESC").Find(&w).Error; err != nil {
+	if err := db.Preload("Data").Preload("Data.Details").Order("date DESC").Find(&w).Error; err != nil {
 		return nil, err
 	}
 
@@ -476,6 +488,10 @@ func (w *Workout) Save(db *gorm.DB) error {
 		return ErrInvalidData
 	}
 
+	if !w.HasFile() {
+		w.UpdateAverages()
+	}
+
 	if err := w.Data.Save(db); err != nil {
 		return err
 	}
@@ -524,7 +540,13 @@ func (w *Workout) setData(data *MapData) {
 		w.Data.Address = w.Data.Center.Address()
 	}
 
+	w.Data.UpdateExtraMetrics()
 	w.Data.UpdateAddress()
+}
+
+func (w *Workout) UpdateAverages() {
+	w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
@@ -606,18 +628,32 @@ func (w *Workout) HasHeading() bool {
 	return w.HasExtraMetric("heading")
 }
 
-func (w *Workout) HasExtraMetric(name string) bool {
-	if w.Data == nil || w.Data.Details == nil {
+func (w *Workout) HasAccuracy() bool {
+	return w.HasExtraMetric("accuracy")
+}
+
+func (w *Workout) UpdateExtraMetrics() {
+	if w.Data == nil {
+		return
+	}
+
+	w.Data.UpdateExtraMetrics()
+}
+
+func (w *Workout) HasExtraMetrics() bool {
+	if w.Data == nil {
 		return false
 	}
 
-	for _, d := range w.Data.Details.Points {
-		if _, ok := d.ExtraMetrics[name]; ok {
-			return true
-		}
+	return len(w.Data.ExtraMetrics) > 0
+}
+
+func (w *Workout) HasExtraMetric(name string) bool {
+	if w.Data == nil {
+		return false
 	}
 
-	return false
+	return slices.Contains(w.Data.ExtraMetrics, name)
 }
 
 func (w *Workout) EquipmentIDs() []uint {

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/glebarez/sqlite"
+	"github.com/labstack/gommon/log"
 	slogGorm "github.com/orandin/slog-gorm"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -99,7 +100,23 @@ func preMigrationActions(db *gorm.DB) error {
 }
 
 func postMigrationActions(db *gorm.DB) error {
-	// Nothing to do for now
+	workouts, err := GetWorkouts(db)
+	if err != nil {
+		return err
+	}
+
+	for _, w := range workouts {
+		if !w.HasTracks() || w.Data.ExtraMetrics != nil {
+			continue
+		}
+
+		w.Data.UpdateExtraMetrics()
+
+		if err := w.Save(db); err != nil {
+			log.Error("Failed to update extra metrics", "err", err)
+		}
+	}
+
 	return nil
 }
 

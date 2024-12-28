@@ -35,6 +35,7 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 type ManualWorkout struct {
 	Name            *string               `form:"name"`
 	Date            *string               `form:"date"`
+	Timezone        *string               `form:"timezone"`
 	Location        *string               `form:"location"`
 	DurationHours   *int                  `form:"duration_hours"`
 	DurationMinutes *int                  `form:"duration_minutes"`
@@ -56,6 +57,24 @@ func (m *ManualWorkout) ToDate() *time.Time {
 	d, err := time.Parse(htmlDateFormat, *m.Date)
 	if err != nil {
 		return nil
+	}
+
+	if m.Timezone == nil {
+		return &d
+	}
+
+	// Handle timezone offset
+	tzLoc, err := time.LoadLocation(*m.Timezone)
+	if err == nil {
+		d = d.In(tzLoc)
+	}
+
+	_, zoneOffset := d.Zone()
+	d = d.Add(-time.Duration(zoneOffset) * time.Second)
+
+	// handle DST transitions
+	if d.IsDST() {
+		d = d.Add(1 * time.Hour)
 	}
 
 	return &d
