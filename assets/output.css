@@ -1068,11 +1068,11 @@ form {
 
 .version-notice {
   --tw-border-opacity: 1;
-  border-color: rgb(2 132 199 / var(--tw-border-opacity));
+  border-color: rgb(7 89 133 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(12 74 110 / var(--tw-bg-opacity));
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(125 211 252 / var(--tw-text-opacity));
+  color: rgb(7 89 133 / var(--tw-text-opacity));
 }
 
 .version-notice:where(.dark, .dark *) {
@@ -1086,11 +1086,11 @@ form {
 
 .notice {
   --tw-border-opacity: 1;
-  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+  border-color: rgb(22 101 52 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(20 83 45 / var(--tw-bg-opacity));
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(134 239 172 / var(--tw-text-opacity));
+  color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 
 .notice:where(.dark, .dark *) {
@@ -1104,11 +1104,11 @@ form {
 
 .alert {
   --tw-border-opacity: 1;
-  border-color: rgb(220 38 38 / var(--tw-border-opacity));
+  border-color: rgb(153 27 27 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(127 29 29 / var(--tw-bg-opacity));
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(252 165 165 / var(--tw-text-opacity));
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 .alert:where(.dark, .dark *) {
