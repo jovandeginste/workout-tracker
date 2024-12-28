@@ -26,6 +26,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/muktihari/fit v0.24.4
 	github.com/orandin/slog-gorm v1.4.0
+	github.com/paulmach/orb v0.11.1
 	github.com/ringsaturn/tzf v0.16.0
 	github.com/samber/slog-echo v1.14.7
 	github.com/spazzymoto/echo-scs-session v1.0.0
@@ -76,7 +77,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
-	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/philhofer/vec v0.0.0-20140421144027-536fc796d369 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect

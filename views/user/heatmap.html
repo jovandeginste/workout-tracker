@@ -5,21 +5,21 @@
     <script src="{{ RouteFor `assets` }}/dist/leaflet.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/simpleheat.js"></script>
     <script src="{{ RouteFor `assets` }}/dist/leaflet-heat.js"></script>
-    <script src="{{ RouteFor `assets` }}/dist/leaflet-layerjson.min.js"></script>
+    <script src="{{ RouteFor `assets` }}/dist/leaflet.markercluster.js"></script>
     <link href="{{ RouteFor `assets` }}/dist/leaflet.css" rel="stylesheet" />
+    <link
+      href="{{ RouteFor `assets` }}/dist/MarkerCluster.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ RouteFor `assets` }}/dist/MarkerCluster.Default.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     {{ template "header" . }}
     <div class="content">
       <h2>{{ IconFor `heatmap` }} {{ i18n "Heatmap" }}</h2>
-
-      <script>
-        var data = [
-          {{ range .workouts -}}
-          [{{ .Center.Lat }}, {{ .Center.Lng }}],
-          {{- end }}
-        ];
-      </script>
 
       <div id="map-container" class="small-size pagebreak">
         <div
@@ -39,10 +39,8 @@
               },
             ).addTo(map);
 
-            var bounds = new L.LatLngBounds(data);
-            map.fitBounds(bounds);
-
             var heatConfig = { radius: 10 };
+            var clusterConfig = { showCoverageOnHover: false };
 
             fetch("{{ RouteFor `user-coordinates` }}", {
               method: "GET",
@@ -52,7 +50,38 @@
             })
               .then((response) => response.json())
               .then((response) => {
-                var heat = L.heatLayer(response.results, heatConfig).addTo(map);
+                var data = geoJson2heat(response.results);
+                L.heatLayer(data, heatConfig).addTo(map);
+              });
+
+            fetch("{{ RouteFor `user-centers` }}", {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var markers = L.markerClusterGroup(clusterConfig);
+                var geoJsonLayer = L.geoJson(response.results, {
+                  onEachFeature: function (feature, layer) {
+                    layer.bindPopup(
+                      '<a href="' +
+                        feature.properties.url +
+                        '">' +
+                        feature.properties.name +
+                        "</a><ul><li>Total distance: " +
+                        feature.properties.total_distance +
+                        "</li></ul>",
+                    );
+                  },
+                });
+                geoJsonLayer.onEachFeature;
+
+                markers.addLayer(geoJsonLayer);
+                markers.addTo(map);
+
+                map.fitBounds(markers.getBounds());
               });
           </script>
         </div>

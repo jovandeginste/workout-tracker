@@ -68,7 +68,10 @@ build-dist: clean-dist
 	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
 	cp -v ./node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
 	cp -v ./node_modules/simpleheat/simpleheat.js ./assets/dist/
-	cp -v ./node_modules/leaflet-layerjson/dist/leaflet-layerjson.min.js ./assets/dist/
+	cp -v ./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
+	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
+	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
+	
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch

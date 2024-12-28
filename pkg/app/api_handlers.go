@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
+	geojson "github.com/paulmach/orb/geojson"
 )
 
 var ErrInvalidAPIKey = errors.New("invalid API key")
@@ -64,10 +65,11 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
 	apiGroup.GET("/workouts/:id", a.apiWorkoutHandler).Name = "api-workout"
 	apiGroup.GET("/workouts/:id/breakdown", a.apiWorkoutBreakdownHandler).Name = "api-workout-breakdown"
+	apiGroup.GET("/workouts/coordinates", a.apiCoordinates).Name = "user-coordinates"
+	apiGroup.GET("/workouts/centers", a.apiCenters).Name = "user-centers"
 	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
-	apiGroup.GET("/coordinates", a.apiCoordinates).Name = "user-coordinates"
 	apiGroup.POST("/import/:program", a.apiImportHandler).Name = "api-import"
 }
 
@@ -120,21 +122,64 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-// apiCoordinates returns all coordinates of all workouts of the current user
-// @Summary      List all coordinates of all workouts of the current user
+// apiCenters returns the center of all workouts of the current user
+// @Summary      List the centers of all workouts of the current user
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=[][]float64}
+// @Success      200  {object}  APIResponse{result=geojson.FeatureCollection}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
-// @Router       /coordinates [get]
+// @Router       /workouts/coordinates [get]
+func (a *App) apiCenters(c echo.Context) error {
+	resp := APIResponse{}
+	coords := geojson.NewFeatureCollection()
+
+	db := a.db.Preload("Data").Preload("Data.Details")
+	u := a.getCurrentUser(c)
+
+	workouts, err := u.GetWorkouts(db)
+	if err != nil {
+		resp.Errors = append(resp.Errors, err.Error())
+	}
+
+	for _, w := range workouts {
+		if w.Data == nil {
+			continue
+		}
+
+		p := w.Data.Center
+		if p.IsZero() {
+			continue
+		}
+
+		f := geojson.NewFeature(p.ToOrbPoint())
+		w.FillGeoJSONProperties(f, u.PreferredUnits())
+		f.Properties["url"] = a.echo.Reverse("workout-show", w.ID)
+
+		coords.Append(f)
+	}
+
+	resp.Results = coords
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// apiCoordinates returns all coordinates of all workouts of the current user
+// @Summary      List all coordinates of all workouts of the current user
+// @Produce      json
+// @Success      200  {object}  APIResponse{result=geojson.FeatureCollection}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/coordinates [get]
 func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
 	resp := APIResponse{}
-	coords := [][]float64{}
+	coords := geojson.NewFeatureCollection()
 
-	db := a.db.Preload("Data").Preload("Data.Details").Preload("GPX").Preload("Equipment")
+	db := a.db.Preload("Data").Preload("Data.Details")
+	u := a.getCurrentUser(c)
 
-	workouts, err := a.getCurrentUser(c).GetWorkouts(db)
+	workouts, err := u.GetWorkouts(db)
 	if err != nil {
 		resp.Errors = append(resp.Errors, err.Error())
 	}
@@ -145,7 +190,10 @@ func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
 		}
 
 		for _, p := range w.Data.Details.Points {
-			coords = append(coords, []float64{p.Lat, p.Lng})
+			f := geojson.NewFeature(p.ToOrbPoint())
+			w.FillGeoJSONProperties(f, u.PreferredUnits())
+
+			coords.Append(f)
 		}
 	}
 
