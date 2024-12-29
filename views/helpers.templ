@@ -1,0 +1,69 @@
+package appviews
+
+import (
+	"context"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/labstack/echo/v4"
+	"github.com/vorlif/spreak/humanize"
+	"time"
+)
+
+const timeFormat = "2006-01-02 15:04"
+
+func iconFor(name string) string {
+	return string(templatehelpers.IconFor(name))
+}
+
+func appEcho(ctx context.Context) *echo.Echo {
+	if e := ctx.Value("echo"); e != nil {
+		return e.(*echo.Echo)
+	}
+
+	return nil
+}
+
+func humanizer(ctx context.Context) *humanize.Humanizer {
+	if h := ctx.Value("humanizer"); h != nil {
+		return h.(*humanize.Humanizer)
+	}
+
+	return nil
+}
+
+func routeFor(ctx context.Context, name string, params ...any) string {
+	e := appEcho(ctx)
+	if e == nil {
+		return "/invalid/route/#" + name
+	}
+
+	if rev := e.Reverse(name, params...); rev != "" {
+		return rev
+	}
+
+	return "/invalid/route/#" + name
+}
+
+func CurrentUser(ctx context.Context) *database.User {
+	if dbUser := ctx.Value("user_info"); dbUser != nil {
+		return dbUser.(*database.User)
+	}
+
+	return database.AnonymousUser()
+}
+
+templ RouteFor(name string, params ...any) {
+	@templ.Raw(routeFor(ctx, name, params))
+}
+
+func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
+	return CurrentUser(ctx).PreferredUnits()
+}
+
+func RelativeDate(ctx context.Context, t time.Time) string {
+	return humanizer(ctx).NaturalTime(t)
+}
+
+func LocalDate(ctx context.Context, t time.Time) string {
+	return t.In(CurrentUser(ctx).Timezone()).Format(timeFormat)
+}

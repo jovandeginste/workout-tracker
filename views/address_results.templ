@@ -1,12 +1,6 @@
 package appviews
 
-import "github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
-
 var addressSetHandle = templ.NewOnceHandle()
-
-func iconFor(name string) string {
-	return string(templatehelpers.IconFor(name))
-}
 
 templ AddressResults(addresses []string) {
 	@addressSetHandle.Once() {

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"log/slog"
 	"net/http"
 	"time"
@@ -49,6 +50,7 @@ func (a *App) ConfigureWebserver() error {
 	}
 
 	e.Use(session.LoadAndSave(a.sessionManager))
+	e.Use(a.ContextValueMiddleware)
 
 	e.Renderer = &Template{
 		app:       a,
@@ -133,4 +135,36 @@ func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 	a.addRoutesSegments(secureGroup)
 
 	return secureGroup
+}
+
+// extend echo.Context
+type contextValue struct {
+	echo.Context
+}
+
+func (c contextValue) Get(key string) interface{} {
+	if val := c.Context.Get(key); val != nil {
+		return val
+	}
+
+	return c.Request().Context().Value(key)
+}
+
+func (c contextValue) Set(key string, val interface{}) {
+	// we're replacing the whole Request in echo.Context
+	// with a copied request that has the updated context value
+	c.SetRequest(
+		c.Request().WithContext(
+			context.WithValue(c.Request().Context(), key, val),
+		),
+	)
+	c.Context.Set(key, val)
+}
+
+func (a *App) ContextValueMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// instead of passing next(c) as you usually would,
+		// you return it with the extended version
+		return next(contextValue{c})
+	}
 }

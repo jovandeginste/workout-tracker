@@ -11,6 +11,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func (a *App) setContext(ctx echo.Context) {
+	ctx.Set("echo", a.echo)
+	ctx.Set("humanizer", a.humanizerFromContext(ctx))
+	ctx.Set("translator", a.translatorFromContext(ctx))
+}
+
 func (a *App) setUserFromContext(ctx echo.Context) error {
 	if err := a.setUser(ctx); err != nil {
 		return fmt.Errorf("error validating user: %w", err)

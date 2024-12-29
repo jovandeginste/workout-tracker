@@ -9,8 +9,10 @@ import (
 	"time"
 
 	"github.com/Masterminds/sprig/v3"
+	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"github.com/vorlif/spreak/humanize"
@@ -116,6 +118,17 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 			return rev
 		},
 	}
+}
+
+func templComponent(name string) func() templ.Component {
+	switch name {
+	case "Head":
+		return appviews.Head
+	case "Theme":
+		return appviews.Theme
+	}
+
+	return nil
 }
 
 func (a *App) parseViewTemplates() *template.Template {

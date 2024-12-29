@@ -30,7 +30,7 @@ dev:
 build: build-dist build-server build-docker build-translations screenshots
 meta: swagger screenshots changelog
 
-build-server: build-tw build-templ
+build-server: build-tw build-templates
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(OUTPUT_FILE) ./
@@ -79,12 +79,11 @@ watch-tw:
 
 build-translations: translations
 
-build-templ:
-	find . -type f -name '*.templ' -exec templ fmt {} +
+build-templates:
 	templ generate
 	go test ./views/
 
-watch-templ:
+watch-templates:
 	templ generate --watch
 
 translations:
@@ -103,6 +102,12 @@ test: test-go test-assets
 
 test-assets:
 	prettier --check .
+
+format-templates:
+	find . -type f -name '*.templ' -exec templ fmt -v {} \;
+
+test-templates:
+	find . -type f -name '*.templ' -exec templ fmt -fail -stdout {} \; >/dev/null
 
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...

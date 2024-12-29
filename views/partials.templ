@@ -1,0 +1,42 @@
+package appviews
+
+import "time"
+
+templ Head() {
+	<title>Workout Tracker</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="icon" type="image/png" href={ routeFor(ctx, "assets") + "/dumbbell.png" }/>
+	<link href={ routeFor(ctx, "assets") + "/output.css" } rel="stylesheet"/>
+	<script src={ routeFor(ctx, "assets") + "/common.js" }></script>
+	<script src={ routeFor(ctx, "assets") + "/dist/htmx.min.js" }></script>
+	@Theme()
+}
+
+templ Theme() {
+	switch CurrentUser(ctx).Profile.Theme {
+		case "light":
+			<script>
+        document.documentElement.classList.toggle("dark", false);
+      </script>
+		case "dark":
+			<script>
+        document.documentElement.classList.toggle("dark", true);
+      </script>
+		default:
+			<script>
+        var browserThemeDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.classList.toggle("dark", browserThemeDark);
+      </script>
+	}
+}
+
+templ SnippetDate(date time.Time) {
+	if CurrentUser(ctx).ShowFullDate() {
+		<abbr title={ RelativeDate(ctx, date) }>{ LocalDate(ctx, date) }</abbr>
+	} else {
+		<abbr title={ LocalDate(ctx, date) }>{ RelativeDate(ctx, date) }</abbr>
+	}
+}

@@ -60,7 +60,7 @@ func (a *App) userLoginHandler(c echo.Context) error {
 }
 
 func (a *App) lookupAddressHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	q := c.FormValue("location")
 
@@ -68,8 +68,6 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 	if err != nil {
 		a.setError(c, "Something went wrong: "+err.Error())
 	}
-
-	data["addresses"] = results
 
 	component := appviews.AddressResults(results)
 	return component.Render(c.Request().Context(), c.Response())
