@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
@@ -69,8 +70,7 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 		a.setError(c, "Something went wrong: "+err.Error())
 	}
 
-	component := appviews.AddressResults(results)
-	return component.Render(c.Request().Context(), c.Response())
+	return Render(c, http.StatusOK, appviews.AddressResults(results))
 }
 
 func (a *App) heatmapHandler(c echo.Context) error {
@@ -86,4 +86,23 @@ func (a *App) heatmapHandler(c echo.Context) error {
 	}
 
 	return c.Render(http.StatusOK, "heatmap.html", data)
+}
+
+func (a *App) testHandler(c echo.Context) error {
+	a.setContext(c)
+
+	a.setError(c, "Something went wrong!")
+
+	return Render(c, http.StatusOK, appviews.Test())
+}
+
+func Render(ctx echo.Context, statusCode int, t templ.Component) error {
+	buf := templ.GetBuffer()
+	defer templ.ReleaseBuffer(buf)
+
+	if err := t.Render(ctx.Request().Context(), buf); err != nil {
+		return err
+	}
+
+	return ctx.HTML(statusCode, buf.String())
 }

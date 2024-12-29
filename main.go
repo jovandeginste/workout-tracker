@@ -3,6 +3,7 @@ package main
 import (
 	appassets "github.com/jovandeginste/workout-tracker/assets"
 	"github.com/jovandeginste/workout-tracker/pkg/app"
+	"github.com/jovandeginste/workout-tracker/pkg/version"
 	apptranslations "github.com/jovandeginste/workout-tracker/translations"
 	appviews "github.com/jovandeginste/workout-tracker/views"
 )
@@ -16,7 +17,7 @@ var (
 )
 
 func main() {
-	a := app.NewApp(app.Version{
+	a := app.NewApp(version.Version{
 		BuildTime: buildTime,
 		Ref:       gitRef,
 		RefName:   gitRefName,

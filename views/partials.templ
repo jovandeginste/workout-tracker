@@ -40,3 +40,61 @@ templ SnippetDate(date time.Time) {
 		<abbr title={ LocalDate(ctx, date) }>{ RelativeDate(ctx, date) }</abbr>
 	}
 }
+
+templ Alerts() {
+	<div id="alerts" class="messages">
+		{{ ns := notices(ctx) }}
+		if ns != nil {
+			<div class="notice" role="alert">
+				for _, n := range ns {
+					<span class="block sm:inline">{ n } </span>
+				}
+			</div>
+		}
+		{{ es := errors(ctx) }}
+		if es != nil {
+			<div class="alert" role="alert">
+				for _, e := range es {
+					<span class="block sm:inline">{ e } </span>
+				}
+			</div>
+		}
+	</div>
+}
+
+templ Footer() {
+	{{ v := version(ctx) }}
+	<div class="footer">
+		<div>
+			Workout Tracker,
+			<a
+				target="_blank"
+				title={ "Build time: " + v.BuildTime }
+				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha) }
+			>
+				{ v.PrettyVersion() }
+			</a>
+		</div>
+		<div>
+			<a
+				class="icon-brands icon-baseline icon-space-sm icon-outside icon-github"
+				target="_blank"
+				href="https://github.com/jovandeginste/workout-tracker"
+			>GitHub</a>
+		</div>
+		<div>
+			<a
+				class="icon-solid icon-baseline icon-space-sm icon-outside icon-clipboard-check"
+				target="_blank"
+				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
+			>Changelog</a>
+		</div>
+	</div>
+}
+
+templ Test() {
+	{ i18n(ctx, "Welcome!") }
+	@Alerts()
+	@SnippetDate(time.Now())
+	@Footer()
+}

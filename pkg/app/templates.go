@@ -12,6 +12,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/pkg/version"
 	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -64,7 +65,7 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 
 	return template.FuncMap{
 		"i18n":        echoFunc,
-		"Version":     func() *Version { return &a.Version },
+		"Version":     func() *version.Version { return &a.Version },
 		"AppConfig":   func() *database.Config { return &a.Config },
 		"language":    func() string { return BrowserLanguage },
 		"timezone":    func() string { return time.UTC.String() },
