@@ -2815,6 +2815,10 @@ table {
   height: 300px;
 }
 
+.h-\[600px\] {
+  height: 600px;
+}
+
 .max-h-48 {
   max-height: 12rem;
 }
@@ -3285,10 +3289,6 @@ table {
 
   .sm\:h-\[400px\] {
     height: 400px;
-  }
-
-  .sm\:h-\[600px\] {
-    height: 600px;
   }
 
   .sm\:w-\[300px\] {
