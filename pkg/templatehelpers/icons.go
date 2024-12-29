@@ -21,6 +21,7 @@ var iconMap = map[string]string{
 	"heading":     "icon-[fa6-solid--compass]",
 	"accuracy":    "icon-[fa6-solid--crosshairs]",
 	"date":        "icon-[fa6-regular--calendar]",
+	"name":        "icon-[fa6-solid--tag]",
 	"timezone":    "icon-[material-symbols--map]",
 	"pause":       "icon-[fa6-regular--hourglass]",
 	"calories":    "icon-[fa6-solid--fire]",
