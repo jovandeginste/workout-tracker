@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
+	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
 )
 
@@ -70,7 +71,8 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 
 	data["addresses"] = results
 
-	return c.Render(http.StatusOK, "address_results.html", data)
+	component := appviews.AddressResults(results)
+	return component.Render(c.Request().Context(), c.Response())
 }
 
 func (a *App) heatmapHandler(c echo.Context) error {

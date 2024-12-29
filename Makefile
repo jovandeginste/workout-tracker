@@ -15,6 +15,7 @@ all: clean install-deps test build
 install-dev-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
+	go install github.com/a-h/templ/cmd/templ@latest
 
 install-deps:
 	npm install
@@ -26,10 +27,10 @@ clean:
 dev:
 	air
 
-build: build-dist build-tw build-server build-docker build-translations screenshots
+build: build-dist build-server build-docker build-translations screenshots
 meta: swagger screenshots changelog
 
-build-server:
+build-server: build-tw build-templ
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(OUTPUT_FILE) ./
@@ -78,8 +79,21 @@ watch-tw:
 
 build-translations: translations
 
+build-templ:
+	find . -type f -name '*.templ' -exec templ fmt {} +
+	templ generate
+	go test ./views/
+
+watch-templ:
+	templ generate --watch
+
 translations:
-	xspreak -o translations/en.json -f json --template-keyword "i18n" -t "views/**/*.html"
+	xspreak \
+			--output translations/en.json \
+			--format json \
+			--template-keyword "i18n" \
+			--template-directory "views/**/*.html" \
+			--template-directory "views/**/*.templ"
 	prettier --write translations/*.json
 
 serve:

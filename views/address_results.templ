@@ -1,0 +1,42 @@
+package appviews
+
+import "github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+
+var addressSetHandle = templ.NewOnceHandle()
+
+func iconFor(name string) string {
+	return string(templatehelpers.IconFor(name))
+}
+
+templ AddressResults(addresses []string) {
+	@addressSetHandle.Once() {
+		<script>
+      function setLocation(address) {
+        var l = document.getElementById("location");
+        if (!l) {
+          return;
+        }
+
+        l.value = address.innerText;
+        l.focus();
+        l.setSelectionRange(0, 0);
+      }
+    </script>
+	}
+	if len(addresses) > 0 {
+		<ul class="list-none">
+			for _, a := range addresses {
+				<li>
+					@IconFor("location")
+					<a href="#" onclick="setLocation(this)">
+						{ a }
+					</a>
+				</li>
+			}
+		</ul>
+	}
+}
+
+templ IconFor(name string) {
+	@templ.Raw(iconFor(name))
+}
