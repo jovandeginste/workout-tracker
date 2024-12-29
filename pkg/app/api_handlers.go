@@ -48,7 +48,17 @@ func (a *App) apiRoutes(e *echo.Group) {
 				return true
 			}
 
-			return ctx.Request().URL.Query().Get("api-key") != ""
+			if ctx.Request().URL.Query().Get("api-key") != "" {
+				return true
+			}
+
+			return false
+		},
+		SuccessHandler: func(ctx echo.Context) {
+			if err := a.setUserFromContext(ctx); err != nil {
+				a.logger.Warn("error validating user", "error", err.Error())
+				return
+			}
 		},
 	}))
 
@@ -138,9 +148,8 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 func (a *App) apiCenters(c echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
-
-	db := a.db.Preload("Data").Preload("Data.Details")
 	u := a.getCurrentUser(c)
+	db := a.db.Preload("Data").Preload("Data.Details")
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {

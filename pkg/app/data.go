@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -9,6 +10,19 @@ import (
 
 	"github.com/labstack/echo/v4"
 )
+
+func (a *App) setUserFromContext(ctx echo.Context) error {
+	if err := a.setUser(ctx); err != nil {
+		return fmt.Errorf("error validating user: %w", err)
+	}
+
+	u := a.getCurrentUser(ctx)
+	if u.IsAnonymous() || !u.IsActive() {
+		return fmt.Errorf("user not found or active")
+	}
+
+	return nil
+}
 
 func (a *App) setUser(c echo.Context) error {
 	token, ok := c.Get("user").(*jwt.Token)

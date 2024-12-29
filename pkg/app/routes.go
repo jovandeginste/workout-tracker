@@ -99,14 +99,8 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
 func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
-		if err := a.setUser(ctx); err != nil {
+		if err := a.setUserFromContext(ctx); err != nil {
 			a.logger.Warn("error validating user", "error", err.Error())
-			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
-		}
-
-		u := a.getCurrentUser(ctx)
-		if u.IsAnonymous() || !u.IsActive() {
-			a.logger.Warn("user is not found")
 			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
 		}
 
