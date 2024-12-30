@@ -92,9 +92,164 @@ templ Footer() {
 	</div>
 }
 
-templ Test() {
-	{ i18n(ctx, "Welcome!") }
+templ Version() {
+	{{ v := version(ctx) }}
+	{{ currentUser := CurrentUser(ctx) }}
+	if currentUser.IsActive() {
+		if v.Sha != currentUser.LastVersion {
+			<div id="version-notification" class="version-notice max-h-48" role="alert">
+				<span class="block sm:inline">
+					This application was updated to version: 
+					<a
+						target="_blank"
+						title={ "Build time:" + v.BuildTime }
+						href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha) }
+					>
+						{ v.PrettyVersion() }
+					</a>
+					. You may find the changes in
+					<a
+						target="_blank"
+						href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
+					>the Changelog</a>. (
+					<a
+						href="#"
+						hx-target="#version-notification"
+						hx-swap="beforeend"
+						hx-post={ routeFor(ctx, "user-update-version") }
+					>hide until next update</a>)
+				</span>
+			</div>
+		}
+	}
+}
+
+templ Language() {
+	<select class="border-0" onchange="changeLanguage(this.value)">
+		for _, sl := range supportedLanguages(ctx) {
+			{{ linf := ToLanguageInformation(sl.String()) }}
+			<option value={ linf.Code } selected?={ linf.Code == language(ctx) }>
+				{ linf.Flag } { linf.LocalName }
+				if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
+					({ linf.EnglishName }) 
+				}
+			</option>
+		}
+	</select>
+	<script>
+    function changeLanguage(value) {
+      location.assign("?lang=" + value);
+    }
+  </script>
+}
+
+templ Header() {
+	{{ currentUser := CurrentUser(ctx) }}
+	<div class="menu md:flex md:flex-wrap gap-4">
+		<h1><a href={ templ.SafeURL(routeFor(ctx, "dashboard")) }>Workout Tracker</a> </h1>
+		if currentUser.IsActive() {
+			<div class="grow flex flex-wrap">
+				<div class="grow flex flex-wrap justify-start">
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "dashboard")) }>
+							@IconFor("dashboard")
+							<span class="autohide">{ i18n(ctx, "Dashboard") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "statistics")) }>
+							@IconFor("statistics")
+							<span class="autohide">{ i18n(ctx, "Statistics") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "workouts")) }>
+							@IconFor("workout")
+							<span class="autohide">{ i18n(ctx, "Workouts") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "route-segments")) }>
+							@IconFor("route-segment")
+							<span class="autohide">{ i18n(ctx, "Route segments") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "equipment")) }>
+							@IconFor("equipment")
+							<span class="autohide">{ i18n(ctx, "Equipment") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "heatmap")) }>
+							@IconFor("heatmap")
+							<span class="autohide">{ i18n(ctx, "Heatmap") }</span>
+						</a>
+					</div>
+				</div>
+				<div class="flex flex-wrap md:min-w-[400px] justify-end">
+					if currentUser.Admin {
+						<div>
+							<a href={ templ.SafeURL(routeFor(ctx, "admin")) }>
+								@IconFor("admin")
+								<span class="autohide">{ i18n(ctx, "Manage") }</span>
+							</a>
+						</div>
+					}
+					<div>
+						<a href={ templ.SafeURL(routeFor(ctx, "user-profile")) }>
+							@IconFor("user-profile")
+							{ currentUser.Name }
+						</a>
+					</div>
+					<div class="-mr-5">
+						<a href={ templ.SafeURL(routeFor(ctx, "user-signout")) }>
+							@IconFor("user-signout")
+							<span class="autohide">{ i18n(ctx, "Logout") }</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		} else {
+			<div class="md:grow flex flex-wrap justify-end md:justify-start"></div>
+		}
+		if currentUser == nil || currentUser.Profile.Language == "" ||  currentUser.Profile.Language == "browser" {
+			<div
+				class="flex flex-wrap md:min-w-[400px] justify-end mt-3 md:mt-0 pt-3 md:pt-0 border-neutral-500 border-t-2 md:border-t-0"
+			>
+				@Language()
+			</div>
+		}
+	</div>
 	@Alerts()
-	@SnippetDate(time.Now())
-	@Footer()
+	@Version()
+}
+
+templ Test() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
+			<link href={ routeFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.css" }
+				rel="stylesheet"
+			/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
+				rel="stylesheet"
+			/>
+			@Head()
+		</head>
+		<body>
+			@Header()
+			<div class="content">
+				@SnippetDate(time.Now())
+			</div>
+			@Footer()
+		</body>
+	</html>
 }

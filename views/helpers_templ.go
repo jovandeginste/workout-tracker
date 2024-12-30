@@ -16,10 +16,22 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
+	lng "golang.org/x/text/language"
 	"time"
 )
 
 const timeFormat = "2006-01-02 15:04"
+
+func language(ctx context.Context) string {
+	return translator(ctx).Language().String()
+}
+
+func supportedLanguages(ctx context.Context) []lng.Tag {
+	return genericTranslator(ctx).SupportedLanguages()
+}
+func ToLanguageInformation(code string) templatehelpers.LanguageInformation {
+	return templatehelpers.ToLanguageInformation(code)
+}
 
 func i18n(ctx context.Context, msg string, params ...any) string {
 	return translator(ctx).Getf(msg, params...)
@@ -62,6 +74,13 @@ func appEcho(ctx context.Context) *echo.Echo {
 func translator(ctx context.Context) *spreak.Localizer {
 	if t := ctx.Value("translator"); t != nil {
 		return t.(*spreak.Localizer)
+	}
+
+	return nil
+}
+func genericTranslator(ctx context.Context) *spreak.Bundle {
+	if t := ctx.Value("generic_translator"); t != nil {
+		return t.(*spreak.Bundle)
 	}
 
 	return nil

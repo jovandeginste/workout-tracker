@@ -16,6 +16,7 @@ func (a *App) setContext(ctx echo.Context) {
 	ctx.Set("echo", a.echo)
 	ctx.Set("humanizer", a.humanizerFromContext(ctx))
 	ctx.Set("translator", a.translatorFromContext(ctx))
+	ctx.Set("generic_translator", a.translator)
 }
 
 func (a *App) setUserFromContext(ctx echo.Context) error {
