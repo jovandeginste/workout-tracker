@@ -24,7 +24,6 @@ import (
 
 type App struct {
 	Assets       fs.FS
-	Views        fs.FS
 	Translations fs.FS
 
 	echo           *echo.Echo

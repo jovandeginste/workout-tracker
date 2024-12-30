@@ -114,10 +114,40 @@ func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
 	return CurrentUser(ctx).PreferredUnits()
 }
 
-func RelativeDate(ctx context.Context, t time.Time) string {
+func RelativeDate(ctx context.Context, t *time.Time) string {
 	return humanizer(ctx).NaturalTime(t)
 }
 
-func LocalDate(ctx context.Context, t time.Time) string {
+func LocalDate(ctx context.Context, t *time.Time) string {
 	return t.In(CurrentUser(ctx).Timezone()).Format(timeFormat)
+}
+func LocalTime(ctx context.Context, t *time.Time) time.Time {
+	return t.In(CurrentUser(ctx).Timezone())
+}
+func HumanDuration(d time.Duration) string {
+	return templatehelpers.HumanDuration(d)
+}
+func HumanElevation(ctx context.Context, d float64) string {
+	return templatehelpers.HumanElevationFor(CurrentUser(ctx).PreferredUnits().Elevation())(d)
+}
+func HumanDistance(ctx context.Context, d float64) string {
+	return templatehelpers.HumanDistanceFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+}
+func HumanTempo(ctx context.Context, d float64) string {
+	return templatehelpers.HumanTempoFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+}
+func HumanSpeed(ctx context.Context, d float64) string {
+	return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed())(d)
+}
+func HumanCalories(d float64) string {
+	return templatehelpers.HumanCaloriesKcal(d)
+}
+
+func InTimezone(t *time.Time, tz string) time.Time {
+	tzLoc, err := time.LoadLocation(tz)
+	if err != nil {
+		tzLoc = time.UTC
+	}
+
+	return t.In(tzLoc)
 }

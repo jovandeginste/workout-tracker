@@ -53,8 +53,7 @@ func (a *App) ConfigureWebserver() error {
 	e.Use(a.ContextValueMiddleware)
 
 	e.Renderer = &Template{
-		app:       a,
-		templates: a.parseViewTemplates(),
+		app: a,
 	}
 
 	publicGroup := e.Group("")

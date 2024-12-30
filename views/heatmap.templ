@@ -1,0 +1,113 @@
+package appviews
+
+import "github.com/jovandeginste/workout-tracker/pkg/database"
+
+templ Heatmap(workouts []*database.Workout) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
+			<link href={ routeFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.css" }
+				rel="stylesheet"
+			/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
+				rel="stylesheet"
+			/>
+			@Head()
+		</head>
+		<body>
+			@Header()
+			<div class="content">
+				<h2>
+					@IconFor(`heatmap`)
+					{ i18n(ctx, "Heatmap") }
+				</h2>
+				<div id="map-container" class="small-size pagebreak">
+					<div
+						id="map"
+						class="border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]"
+					>
+						@templ.JSONScript("user-coordinates-route", routeFor(ctx, "user-coordinates"))
+						@templ.JSONScript("user-centers-route", routeFor(ctx, "user-centers"))
+						@templ.JSONScript("i18n-streets", i18n(ctx, "Streets"))
+						@templ.JSONScript("i18n-aerial", i18n(ctx, "Aerial"))
+						<script>
+            var map = L.map("map", {
+              fadeAnimation: false,
+            });
+            const layerStreet = L.tileLayer(
+              "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+              {
+                attribution:
+                  '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                className: "map-tiles",
+              },
+            );
+
+            const layerAerial = L.tileLayer(
+              "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+              {
+                attribution: "Powered by Esri",
+              },
+            );
+            L.control
+              .layers(
+                {
+                  [JSON.parse(document.getElementById('i18n-streets').textContent)]: layerStreet,
+                  [JSON.parse(document.getElementById('i18n-aerial').textContent)]: layerAerial,
+                }
+              )
+              .addTo(map);
+
+            layerStreet.addTo(map);
+
+            var heatConfig = { radius: 10 };
+            var clusterConfig = { showCoverageOnHover: false };
+
+            fetch(JSON.parse(document.getElementById('user-coordinates-route').textContent), {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var data = geoJson2heat(response.results);
+                L.heatLayer(data, heatConfig).addTo(map);
+              });
+
+            fetch(JSON.parse(document.getElementById('user-centers-route').textContent), {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                var markers = L.markerClusterGroup(clusterConfig);
+                var geoJsonLayer = L.geoJson(response.results, {
+                  onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.details);
+                  },
+                });
+                geoJsonLayer.onEachFeature;
+
+                markers.addLayer(geoJsonLayer);
+                markers.addTo(map);
+
+                map.fitBounds(markers.getBounds());
+              });
+          </script>
+					</div>
+				</div>
+			</div>
+			@Footer()
+		</body>
+	</html>
+}

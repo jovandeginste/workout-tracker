@@ -33,7 +33,7 @@ templ Theme() {
 	}
 }
 
-templ SnippetDate(date time.Time) {
+templ SnippetDate(date *time.Time) {
 	if CurrentUser(ctx).ShowFullDate() {
 		<abbr title={ RelativeDate(ctx, date) }>{ LocalDate(ctx, date) }</abbr>
 	} else {
@@ -247,7 +247,8 @@ templ Test() {
 		<body>
 			@Header()
 			<div class="content">
-				@SnippetDate(time.Now())
+				{{ t := time.Now() }}
+				@SnippetDate(&t)
 			</div>
 			@Footer()
 		</body>

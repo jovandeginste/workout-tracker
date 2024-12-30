@@ -1,14 +1,15 @@
 package app
 
 import (
-	"bytes"
 	"errors"
 	"net/http"
 	"regexp"
 	"strconv"
 
+	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/importers"
+	appviews "github.com/jovandeginste/workout-tracker/views"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -148,6 +149,7 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 func (a *App) apiCenters(c echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
+	a.setContext(c)
 	u := a.getCurrentUser(c)
 	db := a.db.Preload("Data").Preload("Data.Details")
 
@@ -419,12 +421,15 @@ func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error 
 }
 
 func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geojson.Feature) {
-	o := bytes.NewBuffer(nil)
-	if err := a.echo.Renderer.Render(o, "workout_details.html", w, c); err != nil {
-		a.logger.Error("could not render workout details", "err", err)
+	buf := templ.GetBuffer()
+	defer templ.ReleaseBuffer(buf)
+
+	t := appviews.WorkoutDetails(w)
+	if err := t.Render(c.Request().Context(), buf); err != nil {
+		return
 	}
 
-	d := o.String()
+	d := buf.String()
 	// Remove all newlines and surrounding whitespace
 	d = htmlConcatenizer.ReplaceAllString(d, "")
 

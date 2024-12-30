@@ -74,18 +74,19 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 }
 
 func (a *App) heatmapHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	u := a.getCurrentUser(c)
 	if u == nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	if err := a.addWorkouts(u, data); err != nil {
+	w, err := u.GetWorkouts(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	return c.Render(http.StatusOK, "heatmap.html", data)
+	return Render(c, http.StatusOK, appviews.Heatmap(w))
 }
 
 func (a *App) testHandler(c echo.Context) error {

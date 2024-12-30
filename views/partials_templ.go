@@ -137,7 +137,7 @@ func Theme() templ.Component {
 	})
 }
 
-func SnippetDate(date time.Time) templ.Component {
+func SnippetDate(date *time.Time) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -1080,7 +1080,8 @@ func Test() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = SnippetDate(time.Now()).Render(ctx, templ_7745c5c3_Buffer)
+		t := time.Now()
+		templ_7745c5c3_Err = SnippetDate(&t).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

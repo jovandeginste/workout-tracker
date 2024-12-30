@@ -1,21 +1,16 @@
 package app
 
 import (
-	"fmt"
 	"html/template"
 	"io"
-	"io/fs"
-	"strings"
 	"time"
 
-	"github.com/Masterminds/sprig/v3"
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/pkg/version"
 	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 	"github.com/vorlif/spreak/humanize"
 	"golang.org/x/text/language"
 )
@@ -130,34 +125,6 @@ func templComponent(name string) func() templ.Component {
 	}
 
 	return nil
-}
-
-func (a *App) parseViewTemplates() *template.Template {
-	templ := template.New("").Funcs(sprig.FuncMap()).Funcs(a.viewTemplateFunctions())
-	if a.Views == nil {
-		return templ
-	}
-
-	err := fs.WalkDir(a.Views, ".", func(path string, d fs.DirEntry, err error) error {
-		if d != nil && d.IsDir() {
-			return err
-		}
-
-		if strings.HasSuffix(path, ".html") {
-			if _, myErr := templ.ParseFS(a.Views, path); myErr != nil {
-				a.logger.Warn(fmt.Sprintf("Error loading template: %v", myErr))
-				return myErr
-			}
-		}
-
-		return err
-	})
-	if err != nil {
-		a.logger.Warn(fmt.Sprintf("Error loading template: %v", err))
-		log.Warn(fmt.Sprintf("Error loading template: %v", err))
-	}
-
-	return templ
 }
 
 func filterOptions() []string {

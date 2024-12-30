@@ -1,0 +1,383 @@
+package appviews
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+)
+
+templ WorkoutDetails(w *database.Workout) {
+	{{ currentUser := CurrentUser(ctx) }}
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					@IconFor("name")
+				</td>
+				<td class="max-w-[0px] overflow-hidden whitespace-nowrap text-ellipsis">
+					<a href={ templ.SafeURL(routeFor(ctx, "workout-show", w.ID)) }>{ w.Name }</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@IconFor("date")
+				</td>
+				<td>
+					@SnippetDate(w.Date)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@IconFor("workout")
+				</td>
+				<td>
+					<span>
+						@IconFor(w.Type.String())
+						{ i18n(ctx,w.Type.String()) }
+					</span>
+				</td>
+			</tr>
+			if w.Type.IsRepetition() {
+				<tr>
+					<td>
+						@IconFor("repetitions")
+					</td>
+					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%d", w.TotalRepetitions()) }</td>
+				</tr>
+				<tr>
+					<td>
+						@IconFor("tempo")
+					</td>
+					<td class="whitespace-nowrap font-mono">
+						{ fmt.Sprintf("%.2f", w.RepetitionFrequencyPerMinute()) }
+					</td>
+				</tr>
+			}
+			if w.Type.IsWeight() {
+				<tr>
+					<td>
+						@IconFor("weight")
+					</td>
+					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%.2f", w.Weight()) }</td>
+				</tr>
+			}
+			if w.Type.IsDuration() {
+				<tr>
+					<td>
+						@IconFor("duration")
+					</td>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanDuration (w.TotalDuration()) }
+					</td>
+				</tr>
+			}
+			if w.Type.IsDistance() {
+				<tr>
+					<td>
+						@IconFor("distance")
+					</td>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanDistance (ctx, w.TotalDistance()) }
+						{ currentUser.PreferredUnits().Distance() }
+					</td>
+				</tr>
+			}
+			if w.Type.IsDistance() && w.Type.IsDuration() {
+				<tr>
+					<td>
+						@IconFor("speed")
+					</td>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanSpeed (ctx, w.AverageSpeed() ) } { currentUser.PreferredUnits().Speed() }
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+templ FullWorkoutDetails(w *database.Workout) {
+	{{ currentUser := CurrentUser(ctx) }}
+	<table>
+		<tbody>
+			if w.HasFile() {
+				<tr>
+					<td>
+						@IconFor("file")
+					</td>
+					<th>{ i18n(ctx, "File") }</th>
+					<td>
+						if len(w.Filename()) > 15 {
+							<abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
+						} else {
+							{ w.Filename() }
+						}
+					</td>
+				</tr>
+			}
+			<tr>
+				<td>
+					@IconFor("date")
+				</td>
+				<th>{ i18n(ctx, "Date") }</th>
+				<td>
+					<a
+						href="#"
+						onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
+					>
+						@IconFor("timezone")
+					</a>
+					@SnippetDate(w.Date)
+					<div id="timeinfo" class="hidden">
+						<ul>
+							<li>{ currentUser.Timezone().String() }: { LocalTime(ctx, w.Date).String() }</li>
+							<li>UTC: { InTimezone( w.Date, "UTC").String() }</li>
+							<li>{ w.Timezone() }: {  InTimezone(w.Date, w.Timezone()).String() }</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@IconFor("location")
+				</td>
+				<th>{ i18n(ctx, "Location") }</th>
+				<td>{ w.Address() }</td>
+			</tr>
+			<tr>
+				<td>
+					@IconFor("source")
+				</td>
+				<th>{ i18n(ctx, "Source") }</th>
+				<td>{ w.Creator() }</td>
+			</tr>
+			<tr>
+				<td>
+					@IconFor("workout")
+				</td>
+				<th>{ i18n(ctx, "Type") }</th>
+				<td>
+					<span>
+						@IconFor(w.Type.String())
+						{ i18n(ctx, w.Type.String()) }
+					</span>
+				</td>
+			</tr>
+			if w.Type.IsRepetition() {
+				<tr>
+					<td>
+						@IconFor("repetitions")
+					</td>
+					<th>{ i18n(ctx, "Repetitions") }</th>
+					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%d", w.TotalRepetitions()) }</td>
+				</tr>
+				<tr>
+					<td>
+						@IconFor("tempo")
+					</td>
+					<th>{ i18n(ctx, "Average per minute") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ fmt.Sprintf("%.2f", w.RepetitionFrequencyPerMinute()) }
+					</td>
+				</tr>
+			}
+			if w.Type.IsWeight() {
+				<tr>
+					<td>
+						@IconFor("weight")
+					</td>
+					<th>{ i18n(ctx, "Weight") }</th>
+					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%.2f", w.Weight()) }</td>
+				</tr>
+			}
+			if w.Type.IsDuration() {
+				<tr>
+					<td>
+						@IconFor("duration")
+					</td>
+					<th>{ i18n(ctx, "Total duration") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanDuration(w.TotalDuration() ) }
+					</td>
+				</tr>
+				<tr>
+					<td>
+						@IconFor("pause")
+					</td>
+					<th>{ i18n(ctx, "Time paused") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanDuration (w.PauseDuration() ) }
+					</td>
+				</tr>
+			}
+			if w.Type.IsDistance() {
+				<tr>
+					<td>
+						@IconFor("distance")
+					</td>
+					<th>{ i18n(ctx, "Total distance") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanDistance(ctx,w.TotalDistance() ) }
+						{ currentUser.PreferredUnits().Distance() }
+					</td>
+				</tr>
+			}
+			if w.Type.IsDistance() &&  w.Type.IsDuration() {
+				<tr>
+					<td>
+						@IconFor("speed")
+					</td>
+					<th>{ i18n(ctx, "Average speed") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanSpeed (ctx,w.AverageSpeed()) } { currentUser.PreferredUnits().Speed() }
+					</td>
+				</tr>
+				if w.PauseDuration() != 0 {
+					<tr>
+						<td>
+							@IconFor("speed")
+						</td>
+						<th>{ i18n(ctx, "Average speed (no pause)") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanSpeed (ctx,w.AverageSpeedNoPause() ) }
+							{ currentUser.PreferredUnits().Speed() }
+						</td>
+					</tr>
+				}
+				<tr>
+					<td>
+						@IconFor("tempo")
+					</td>
+					<th>{ i18n(ctx, "Average tempo") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanTempo (ctx,w.AverageSpeed() ) } { currentUser.PreferredUnits().Tempo() }
+					</td>
+				</tr>
+				if  w.PauseDuration()!= 0 {
+					<tr>
+						<td>
+							@IconFor("tempo")
+						</td>
+						<th>{ i18n(ctx, "Average tempo (no pause)") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanTempo (ctx,w.AverageSpeedNoPause()) }
+							{ currentUser.PreferredUnits().Tempo() }
+						</td>
+					</tr>
+				}
+				<tr>
+					<td>
+						@IconFor("max-speed")
+					</td>
+					<th>{ i18n(ctx, "Max speed") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanSpeed (ctx,w.MaxSpeed()) } { currentUser.PreferredUnits().Speed() }
+					</td>
+				</tr>
+			}
+			if w.Type.IsLocation() {
+				if w.HasElevation() {
+					<tr>
+						<td>
+							@IconFor("elevation")
+						</td>
+						<th>{ i18n(ctx, "Min elevation") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
+						</td>
+					</tr>
+					<tr>
+						<td>
+							@IconFor("elevation")
+						</td>
+						<th>{ i18n(ctx, "Max elevation") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
+						</td>
+					</tr>
+					<tr>
+						<td>
+							@IconFor("up")
+						</td>
+						<th>{ i18n(ctx, "Total up") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
+						</td>
+					</tr>
+					<tr>
+						<td>
+							@IconFor("down")
+						</td>
+						<th>{ i18n(ctx, "Total down") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
+						</td>
+					</tr>
+				}
+			}
+			if w.HasCalories() {
+				<tr>
+					<td>
+						@IconFor("calories")
+					</td>
+					<th>
+						{ i18n(ctx, "Est. calories burned") }
+						<a
+							href="#"
+							title={ i18n(ctx, "Estimated based on the activity, assuming 70 kg") }
+						>
+							@IconFor("info")
+						</a>
+					</th>
+					<td class="whitespace-nowrap font-mono">
+						{ HumanCalories (w.CaloriesBurned() ) }
+					</td>
+				</tr>
+			}
+			<tr>
+				<td>
+					@IconFor("equipment")
+				</td>
+				<td>{ i18n(ctx, "Equipment") }</td>
+				<td>
+					if len(w.Equipment) > 0 {
+						for _, e := range w.Equipment {
+							<a href={ templ.SafeURL(routeFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
+						}
+					} else {
+						<i>{ i18n(ctx, "no equipment") }</i>
+					}
+				</td>
+			</tr>
+			if w.HasExtraMetrics() {
+				<tr>
+					<td>
+						@IconFor("metrics")
+					</td>
+					<td>{ i18n(ctx, "Extra metrics") }</td>
+					<td class="flex flex-wrap gap-1">
+						if w.HasHeartRate() {
+							<div title="{{ i18n `Heart rate` }}">
+								@IconFor("heart-rate")
+							</div>
+						}
+						if w.HasCadence() {
+							<div title="{{ i18n `Cadence` }}">
+								@IconFor("cadence")
+							</div>
+						}
+						if w.HasHeading() {
+							<div title="{{ i18n `Heading` }}">
+								@IconFor("heading")
+							</div>
+						}
+						if w.HasAccuracy() {
+							<div title="{{ i18n `Accuracy` }}">
+								@IconFor("accuracy")
+							</div>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
