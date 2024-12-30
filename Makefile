@@ -103,11 +103,6 @@ test: test-go test-assets
 test-assets:
 	prettier --check .
 
-format-templates:
-	find . -type f -name '*.templ' -exec templ fmt -v {} \;
-
-test-templates:
-	find . -type f -name '*.templ' -exec templ fmt -fail -stdout {} \; >/dev/null
 
 test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
