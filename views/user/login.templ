@@ -1,19 +1,11 @@
-package appviews
+package user
 
 import (
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
 )
 
-templ VersionUpdated() {
-	<script lang="javascript">
-    var vn = document.getElementById("version-notification");
-    vn.classList.remove("max-h-48");
-    vn.classList.add("vanish");
-  </script>
-}
-
-templ UserLogin() {
+templ Login() {
 	<!DOCTYPE html>
 	<html>
 		<head>

@@ -6,8 +6,10 @@ import (
 	"net/http"
 
 	"github.com/a-h/templ"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
-	appviews "github.com/jovandeginste/workout-tracker/views"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/user"
 	"github.com/labstack/echo/v4"
 )
 
@@ -30,6 +32,7 @@ func (a *App) statisticsHandler(c echo.Context) error {
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
+	a.setContext(c)
 	data := a.defaultData(c)
 
 	u := a.getCurrentUser(c)
@@ -37,27 +40,30 @@ func (a *App) dashboardHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	if err := a.addWorkouts(u, data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	w, err := u.GetWorkouts(a.db)
+	if err != nil {
+		return err
 	}
 
-	if err := a.addUsers(data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	users, err := database.GetUsers(a.db)
+	if err != nil {
+		return err
 	}
 
-	if err := a.addRecentWorkouts(data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	recent, err := database.GetRecentWorkouts(a.db, 20)
+	if err != nil {
+		return err
 	}
 
 	data["user"] = u
 
-	return c.Render(http.StatusOK, "user_show.html", data)
+	return Render(c, http.StatusOK, user.Show(u, users, w, recent))
 }
 
 func (a *App) userLoginHandler(c echo.Context) error {
 	a.setContext(c)
 
-	return Render(c, http.StatusOK, appviews.UserLogin())
+	return Render(c, http.StatusOK, user.Login())
 }
 
 func (a *App) lookupAddressHandler(c echo.Context) error {
@@ -70,7 +76,7 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 		a.setError(c, "Something went wrong: "+err.Error())
 	}
 
-	return Render(c, http.StatusOK, appviews.AddressResults(results))
+	return Render(c, http.StatusOK, partials.AddressResults(results))
 }
 
 func (a *App) heatmapHandler(c echo.Context) error {
@@ -86,15 +92,7 @@ func (a *App) heatmapHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	return Render(c, http.StatusOK, appviews.Heatmap(w))
-}
-
-func (a *App) testHandler(c echo.Context) error {
-	a.setContext(c)
-
-	a.setError(c, "Something went wrong!")
-
-	return Render(c, http.StatusOK, appviews.Test())
+	return Render(c, http.StatusOK, user.Heatmap(w))
 }
 
 func Render(ctx echo.Context, statusCode int, t templ.Component) error {

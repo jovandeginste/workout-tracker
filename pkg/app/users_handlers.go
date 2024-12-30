@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/user"
 	"github.com/labstack/echo/v4"
 )
 
@@ -88,7 +89,7 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 }
 
 func (a *App) userShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	u, err := a.getUser(c)
 	if err != nil {
@@ -103,11 +104,10 @@ func (a *App) userShowHandler(c echo.Context) error {
 		)
 	}
 
-	data["user"] = u
-
-	if err := a.addWorkouts(u, data); err != nil {
+	w, err := u.GetWorkouts(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	return c.Render(http.StatusOK, "user_show.html", data)
+	return Render(c, http.StatusOK, user.Show(u, nil, w, nil))
 }

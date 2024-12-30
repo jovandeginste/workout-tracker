@@ -1,0 +1,30 @@
+package helpers
+
+import (
+	"context"
+	"time"
+)
+
+templ timeDummy() {
+}
+
+func RelativeDate(ctx context.Context, t *time.Time) string {
+	return humanizer(ctx).NaturalTime(t)
+}
+
+func LocalDate(ctx context.Context, t *time.Time) string {
+	return t.In(CurrentUser(ctx).Timezone()).Format(timeFormat)
+}
+
+func LocalTime(ctx context.Context, t *time.Time) time.Time {
+	return t.In(CurrentUser(ctx).Timezone())
+}
+
+func InTimezone(t *time.Time, tz string) time.Time {
+	tzLoc, err := time.LoadLocation(tz)
+	if err != nil {
+		tzLoc = time.UTC
+	}
+
+	return t.In(tzLoc)
+}

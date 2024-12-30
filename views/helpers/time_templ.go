@@ -10,13 +10,10 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"context"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"time"
 )
 
-const timeFormat = "2006-01-02 15:04"
-
-func IconFor(name string) templ.Component {
+func timeDummy() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -37,33 +34,29 @@ func IconFor(name string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.Raw(iconFor(name)).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		return templ_7745c5c3_Err
 	})
 }
 
-func iconFor(name string) string {
-	return string(templatehelpers.IconFor(name))
+func RelativeDate(ctx context.Context, t *time.Time) string {
+	return humanizer(ctx).NaturalTime(t)
 }
 
-func RouteFor(ctx context.Context, name string, params ...any) string {
-	e := appEcho(ctx)
-	if e == nil {
-		return "/invalid/route/#" + name
-	}
-
-	if rev := e.Reverse(name, params...); rev != "" {
-		return rev
-	}
-
-	return "/invalid/route/#" + name
+func LocalDate(ctx context.Context, t *time.Time) string {
+	return t.In(CurrentUser(ctx).Timezone()).Format(timeFormat)
 }
 
-func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
-	return CurrentUser(ctx).PreferredUnits()
+func LocalTime(ctx context.Context, t *time.Time) time.Time {
+	return t.In(CurrentUser(ctx).Timezone())
+}
+
+func InTimezone(t *time.Time, tz string) time.Time {
+	tzLoc, err := time.LoadLocation(tz)
+	if err != nil {
+		tzLoc = time.UTC
+	}
+
+	return t.In(tzLoc)
 }
 
 var _ = templruntime.GeneratedTemplate

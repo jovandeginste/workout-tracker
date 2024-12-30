@@ -97,8 +97,8 @@ func (u *User) BeforeSave(_ *gorm.DB) error {
 	return u.IsValid()
 }
 
-func GetUsers(db *gorm.DB) ([]User, error) {
-	var u []User
+func GetUsers(db *gorm.DB) ([]*User, error) {
+	var u []*User
 
 	if err := db.Find(&u).Error; err != nil {
 		return nil, db.Error

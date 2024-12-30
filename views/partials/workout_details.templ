@@ -1,10 +1,9 @@
-package appviews
+package partials
 
 import (
 	"fmt"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
-	"github.com/jovandeginste/workout-tracker/views/partials"
 )
 
 templ WorkoutDetails(w *database.Workout) {
@@ -24,7 +23,7 @@ templ WorkoutDetails(w *database.Workout) {
 					@helpers.IconFor("date")
 				</td>
 				<td>
-					@partials.SnippetDate(w.Date)
+					@SnippetDate(w.Date)
 				</td>
 			</tr>
 			<tr>
@@ -128,7 +127,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 					>
 						@helpers.IconFor("timezone")
 					</a>
-					@partials.SnippetDate(w.Date)
+					@SnippetDate(w.Date)
 					<div id="timeinfo" class="hidden">
 						<ul>
 							<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>

@@ -25,15 +25,15 @@ type (
 		MaxSpeed            float64       `json:",omitempty"` // The max speed in the bucket
 	}
 
-	// float64Record is a single record if the value is a float64
-	float64Record struct {
+	// Float64Record is a single record if the value is a float64
+	Float64Record struct {
 		Date  time.Time // The timestamp of the record
 		Value float64   // The value of the record
 		ID    uint      // The workout ID of the record
 	}
 
-	// durationRecord is a single record if the value is a time.Duration
-	durationRecord struct {
+	// DurationRecord is a single record if the value is a time.Duration
+	DurationRecord struct {
 		Date  time.Time     // The timestamp of the record
 		Value time.Duration // The value of the record
 		ID    uint          // The workout ID of the record
@@ -42,12 +42,12 @@ type (
 	// WorkoutRecord is the collection of records for a single workout type
 	WorkoutRecord struct {
 		WorkoutType         WorkoutType    // The type of the workout
-		AverageSpeed        float64Record  // The record with the maximum average speed
-		AverageSpeedNoPause float64Record  // The record with the maximum average speed without pause
-		MaxSpeed            float64Record  // The record with the maximum max speed
-		Distance            float64Record  // The record with the maximum distance
-		TotalUp             float64Record  // The record with the maximum up elevation
-		Duration            durationRecord // The record with the maximum duration
+		AverageSpeed        Float64Record  // The record with the maximum average speed
+		AverageSpeedNoPause Float64Record  // The record with the maximum average speed without pause
+		MaxSpeed            Float64Record  // The record with the maximum max speed
+		Distance            Float64Record  // The record with the maximum distance
+		TotalUp             Float64Record  // The record with the maximum up elevation
+		Duration            DurationRecord // The record with the maximum duration
 		Active              bool           // Whether there is any data in the record
 	}
 )

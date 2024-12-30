@@ -81,10 +81,12 @@ build-translations: translations
 
 build-templates:
 	templ generate
-	go test ./views/
 
-watch-templates:
-	templ generate --watch
+test-templates:
+	go test ./views/*/
+
+format-templates:
+	find . -type f -name '*.templ' -exec templ fmt -v {} \;
 
 translations:
 	xspreak \
@@ -98,7 +100,7 @@ translations:
 serve:
 	$(OUTPUT_FILE)
 
-test: test-go test-assets
+test: test-go test-assets test-templates
 
 test-assets:
 	prettier --check .

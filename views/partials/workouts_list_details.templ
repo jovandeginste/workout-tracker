@@ -1,0 +1,56 @@
+package partials
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ WorkoutsListDetails(w *database.Workout) {
+	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<div class="workouts_list_details flex flex-wrap gap-1">
+		if w.Type.IsLocation() {
+			<div
+				class="hidden 2xl:table-cell"
+				title={ helpers.I18n(ctx, "Location") + ": " + w.Address() }
+			>
+				@helpers.IconFor("location")
+				{ w.Address() }
+			</div>
+		}
+		if w.Type.IsDistance() {
+			<div class="font-mono" title={ helpers.I18n(ctx, "Distance") }>
+				@helpers.IconFor("distance")
+				{ helpers.HumanDistance(ctx, w.TotalDistance()) }
+				{ preferredUnits.Distance() }
+			</div>
+		}
+		if w.Type.IsDuration() {
+			<div class="hidden sm:table-cell font-mono" title={ helpers.I18n(ctx, "Duration") }>
+				@helpers.IconFor("duration")
+				{ helpers.HumanDuration(w.TotalDuration()) }
+			</div>
+		}
+		if w.Type.IsDistance()&& w.Type.IsDuration() {
+			<div
+				class="hidden xl:table-cell font-mono"
+				title={ helpers.I18n(ctx, "Average speed") }
+			>
+				@helpers.IconFor("speed")
+				@PreferredAverageSpeedMetric(w, preferredUnits)
+			</div>
+		}
+		if w.Type.IsWeight() {
+			<div class="font-mono" title={ helpers.I18n(ctx, "Weight") }>
+				@helpers.IconFor("weight")
+				{ fmt.Sprintf("%d", w.Weight) }
+			</div>
+		}
+		if w.Type.IsRepetition() {
+			<div class="font-mono" title={ helpers.I18n(ctx, "Repetitions") }>
+				@helpers.IconFor("repetitions")
+				{ fmt.Sprintf("%d", w.Repetitions) }
+			</div>
+		}
+	</div>
+}

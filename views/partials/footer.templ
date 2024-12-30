@@ -1,0 +1,33 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+templ Footer() {
+	{{ v := helpers.Version(ctx) }}
+	<div class="footer">
+		<div>
+			Workout Tracker,
+			<a
+				target="_blank"
+				title={ "Build time: " + v.BuildTime }
+				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha) }
+			>
+				{ v.PrettyVersion() }
+			</a>
+		</div>
+		<div>
+			<a
+				class="icon-brands icon-baseline icon-space-sm icon-outside icon-github"
+				target="_blank"
+				href="https://github.com/jovandeginste/workout-tracker"
+			>GitHub</a>
+		</div>
+		<div>
+			<a
+				class="icon-solid icon-baseline icon-space-sm icon-outside icon-clipboard-check"
+				target="_blank"
+				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
+			>Changelog</a>
+		</div>
+	</div>
+}

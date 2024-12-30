@@ -222,7 +222,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 
 	r := &WorkoutRecord{WorkoutType: t}
 
-	mapping := map[*float64Record]string{
+	mapping := map[*Float64Record]string{
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",

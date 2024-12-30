@@ -10,13 +10,11 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"context"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"time"
 )
 
-const timeFormat = "2006-01-02 15:04"
-
-func IconFor(name string) templ.Component {
+func humanizeDummy() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -37,33 +35,32 @@ func IconFor(name string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.Raw(iconFor(name)).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		return templ_7745c5c3_Err
 	})
 }
 
-func iconFor(name string) string {
-	return string(templatehelpers.IconFor(name))
+func HumanDuration(d time.Duration) string {
+	return templatehelpers.HumanDuration(d)
 }
 
-func RouteFor(ctx context.Context, name string, params ...any) string {
-	e := appEcho(ctx)
-	if e == nil {
-		return "/invalid/route/#" + name
-	}
-
-	if rev := e.Reverse(name, params...); rev != "" {
-		return rev
-	}
-
-	return "/invalid/route/#" + name
+func HumanElevation(ctx context.Context, d float64) string {
+	return templatehelpers.HumanElevationFor(CurrentUser(ctx).PreferredUnits().Elevation())(d)
 }
 
-func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
-	return CurrentUser(ctx).PreferredUnits()
+func HumanDistance(ctx context.Context, d float64) string {
+	return templatehelpers.HumanDistanceFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+}
+
+func HumanTempo(ctx context.Context, d float64) string {
+	return templatehelpers.HumanTempoFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+}
+
+func HumanSpeed(ctx context.Context, d float64) string {
+	return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed())(d)
+}
+
+func HumanCalories(d float64) string {
+	return templatehelpers.HumanCaloriesKcal(d)
 }
 
 var _ = templruntime.GeneratedTemplate

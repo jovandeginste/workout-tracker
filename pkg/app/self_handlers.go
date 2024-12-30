@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	appviews "github.com/jovandeginste/workout-tracker/views"
+	"github.com/jovandeginste/workout-tracker/views/user"
 	"github.com/labstack/echo/v4"
 )
 
@@ -106,5 +106,5 @@ func (a *App) userUpdateVersion(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	return Render(c, http.StatusOK, appviews.VersionUpdated())
+	return Render(c, http.StatusOK, user.VersionUpdated())
 }

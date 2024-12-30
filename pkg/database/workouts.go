@@ -392,8 +392,8 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 	return WorkoutTypeWalking
 }
 
-func GetRecentWorkouts(db *gorm.DB, count int) ([]Workout, error) {
-	var w []Workout
+func GetRecentWorkouts(db *gorm.DB, count int) ([]*Workout, error) {
+	var w []*Workout
 
 	if err := db.Preload("Data").Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
 		return nil, err
@@ -668,8 +668,4 @@ func (w *Workout) EquipmentIDs() []uint {
 
 func (w *Workout) Uses(e Equipment) bool {
 	return slices.Contains(w.EquipmentIDs(), e.ID)
-}
-
-func (w *Workout) PreferredAverageSpeedMetric(preferredUnits *UserPreferredUnits) template.HTML {
-	return w.Type.PreferredSpeedMetric(w.Data.AverageSpeedNoPause, preferredUnits)
 }

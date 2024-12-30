@@ -9,7 +9,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/importers"
-	appviews "github.com/jovandeginste/workout-tracker/views"
+	"github.com/jovandeginste/workout-tracker/views/partials"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -424,7 +424,7 @@ func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geoj
 	buf := templ.GetBuffer()
 	defer templ.ReleaseBuffer(buf)
 
-	t := appviews.WorkoutDetails(w)
+	t := partials.WorkoutDetails(w)
 	if err := t.Render(c.Request().Context(), buf); err != nil {
 		return
 	}
