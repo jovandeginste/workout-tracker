@@ -7,3 +7,134 @@ templ VersionUpdated() {
     vn.classList.add("vanish");
   </script>
 }
+
+templ UserLogin() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
+			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
+			<link href={ routeFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.css" }
+				rel="stylesheet"
+			/>
+			<link
+				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
+				rel="stylesheet"
+			/>
+			@Head()
+		</head>
+		<body>
+			@Header()
+			<div class="content">
+				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+					<div>
+						<div class="inner-form">
+							<h2
+								class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
+							>
+								{ i18n(ctx, "Welcome!") }
+							</h2>
+						</div>
+					</div>
+					<div>
+						<div class="inner-form">
+							<h3>
+								@IconFor("user-signin")
+								{ i18n(ctx, "Sign in") }
+							</h3>
+							<form
+								id="signin"
+								method="post"
+								action={ templ.SafeURL(routeFor(ctx, "user-signin")) }
+							>
+								<table>
+									<tbody>
+										<tr>
+											<td>
+												<label for="username">{ i18n(ctx, "Username (email)") }</label>
+											</td>
+											<td>
+												<input type="text" id="username" name="username"/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label for="password">{ i18n(ctx, "Password") }</label>
+											</td>
+											<td>
+												<input type="password" id="password" name="password"/>
+											</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td>
+												<button id="signin" type="submit">
+													{ i18n(ctx, "Sign in") }
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						if !AppConfig(ctx).RegistrationDisabled {
+							<div class="inner-form">
+								<h3>
+									@IconFor("user-register")
+									{ i18n(ctx, "Create a new account") }
+								</h3>
+								<form
+									id="register"
+									method="post"
+									action={ templ.SafeURL(routeFor(ctx, "user-register")) }
+								>
+									<table>
+										<tbody>
+											<tr>
+												<td>
+													<label for="username">{ i18n(ctx, "Username (email)") }</label>
+												</td>
+												<td>
+													<input type="text" id="username" name="username"/>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label for="name">{ i18n(ctx, "Name") }</label>
+												</td>
+												<td>
+													<input type="text" id="name" name="name"/>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label for="password">{ i18n(ctx, "Password") }</label>
+												</td>
+												<td>
+													<input type="password" id="password" name="password"/>
+												</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+													<button id="register" type="submit">
+														{ i18n(ctx, "Register") }
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+			@Footer()
+		</body>
+	</html>
+}

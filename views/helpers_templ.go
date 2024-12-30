@@ -37,6 +37,13 @@ func i18n(ctx context.Context, msg string, params ...any) string {
 	return translator(ctx).Getf(msg, params...)
 }
 
+func AppConfig(ctx context.Context) *database.Config {
+	if v := ctx.Value("config"); v != nil {
+		return v.(*database.Config)
+	}
+
+	return nil
+}
 func version(ctx context.Context) *appversion.Version {
 	if v := ctx.Value("version"); v != nil {
 		return v.(*appversion.Version)

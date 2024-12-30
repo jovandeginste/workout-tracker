@@ -55,9 +55,9 @@ func (a *App) dashboardHandler(c echo.Context) error {
 }
 
 func (a *App) userLoginHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	return c.Render(http.StatusOK, "user_login.html", data)
+	return Render(c, http.StatusOK, appviews.UserLogin())
 }
 
 func (a *App) lookupAddressHandler(c echo.Context) error {
