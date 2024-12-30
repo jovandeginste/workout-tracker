@@ -1,5 +1,7 @@
 package appviews
 
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
 var addressSetHandle = templ.NewOnceHandle()
 
 templ AddressResults(addresses []string) {
@@ -21,7 +23,7 @@ templ AddressResults(addresses []string) {
 		<ul class="list-none">
 			for _, a := range addresses {
 				<li>
-					@IconFor("location")
+					@helpers.IconFor("location")
 					<a href="#" onclick="setLocation(this)">
 						{ a }
 					</a>
@@ -29,8 +31,4 @@ templ AddressResults(addresses []string) {
 			}
 		</ul>
 	}
-}
-
-templ IconFor(name string) {
-	@templ.Raw(iconFor(name))
 }

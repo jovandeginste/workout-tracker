@@ -1,20 +1,23 @@
-package appviews
+package partials
 
-import "time"
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"time"
+)
 
 templ Head() {
 	<title>Workout Tracker</title>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link rel="icon" type="image/png" href={ routeFor(ctx, "assets") + "/dumbbell.png" }/>
-	<link href={ routeFor(ctx, "assets") + "/output.css" } rel="stylesheet"/>
-	<script src={ routeFor(ctx, "assets") + "/common.js" }></script>
-	<script src={ routeFor(ctx, "assets") + "/dist/htmx.min.js" }></script>
+	<link rel="icon" type="image/png" href={ helpers.RouteFor(ctx, "assets") + "/dumbbell.png" }/>
+	<link href={ helpers.RouteFor(ctx, "assets") + "/output.css" } rel="stylesheet"/>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/common.js" }></script>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/htmx.min.js" }></script>
 	@Theme()
 }
 
 templ Theme() {
-	switch CurrentUser(ctx).Profile.Theme {
+	switch helpers.CurrentUser(ctx).Profile.Theme {
 		case "light":
 			<script>
         document.documentElement.classList.toggle("dark", false);
@@ -34,16 +37,16 @@ templ Theme() {
 }
 
 templ SnippetDate(date *time.Time) {
-	if CurrentUser(ctx).ShowFullDate() {
-		<abbr title={ RelativeDate(ctx, date) }>{ LocalDate(ctx, date) }</abbr>
+	if helpers.CurrentUser(ctx).ShowFullDate() {
+		<abbr title={ helpers.RelativeDate(ctx, date) }>{ helpers.LocalDate(ctx, date) }</abbr>
 	} else {
-		<abbr title={ LocalDate(ctx, date) }>{ RelativeDate(ctx, date) }</abbr>
+		<abbr title={ helpers.LocalDate(ctx, date) }>{ helpers.RelativeDate(ctx, date) }</abbr>
 	}
 }
 
 templ Alerts() {
 	<div id="alerts" class="messages">
-		{{ ns := notices(ctx) }}
+		{{ ns := helpers.Notices(ctx) }}
 		if ns != nil {
 			<div class="notice" role="alert">
 				for _, n := range ns {
@@ -51,7 +54,7 @@ templ Alerts() {
 				}
 			</div>
 		}
-		{{ es := errors(ctx) }}
+		{{ es := helpers.Errors(ctx) }}
 		if es != nil {
 			<div class="alert" role="alert">
 				for _, e := range es {
@@ -63,7 +66,7 @@ templ Alerts() {
 }
 
 templ Footer() {
-	{{ v := version(ctx) }}
+	{{ v := helpers.Version(ctx) }}
 	<div class="footer">
 		<div>
 			Workout Tracker,
@@ -93,8 +96,8 @@ templ Footer() {
 }
 
 templ Version() {
-	{{ v := version(ctx) }}
-	{{ currentUser := CurrentUser(ctx) }}
+	{{ v := helpers.Version(ctx) }}
+	{{ currentUser := helpers.CurrentUser(ctx) }}
 	if currentUser.IsActive() {
 		if v.Sha != currentUser.LastVersion {
 			<div id="version-notification" class="version-notice max-h-48" role="alert">
@@ -116,7 +119,7 @@ templ Version() {
 						href="#"
 						hx-target="#version-notification"
 						hx-swap="beforeend"
-						hx-post={ routeFor(ctx, "user-update-version") }
+						hx-post={ helpers.RouteFor(ctx, "user-update-version") }
 					>hide until next update</a>)
 				</span>
 			</div>
@@ -126,9 +129,9 @@ templ Version() {
 
 templ Language() {
 	<select class="border-0" onchange="changeLanguage(this.value)">
-		for _, sl := range supportedLanguages(ctx) {
-			{{ linf := ToLanguageInformation(sl.String()) }}
-			<option value={ linf.Code } selected?={ linf.Code == language(ctx) }>
+		for _, sl := range helpers.SupportedLanguages(ctx) {
+			{{ linf := helpers.ToLanguageInformation(sl.String()) }}
+			<option value={ linf.Code } selected?={ linf.Code == helpers.Language(ctx) }>
 				{ linf.Flag } { linf.LocalName }
 				if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
 					({ linf.EnglishName }) 
@@ -144,68 +147,68 @@ templ Language() {
 }
 
 templ Header() {
-	{{ currentUser := CurrentUser(ctx) }}
+	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<div class="menu md:flex md:flex-wrap gap-4">
-		<h1><a href={ templ.SafeURL(routeFor(ctx, "dashboard")) }>Workout Tracker</a> </h1>
+		<h1><a href={ templ.SafeURL(helpers.RouteFor(ctx, "dashboard")) }>Workout Tracker</a> </h1>
 		if currentUser.IsActive() {
 			<div class="grow flex flex-wrap">
 				<div class="grow flex flex-wrap justify-start">
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "dashboard")) }>
-							@IconFor("dashboard")
-							<span class="autohide">{ i18n(ctx, "Dashboard") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "dashboard")) }>
+							@helpers.IconFor("dashboard")
+							<span class="autohide">{ helpers.I18n(ctx, "Dashboard") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "statistics")) }>
-							@IconFor("statistics")
-							<span class="autohide">{ i18n(ctx, "Statistics") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "statistics")) }>
+							@helpers.IconFor("statistics")
+							<span class="autohide">{ helpers.I18n(ctx, "Statistics") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "workouts")) }>
-							@IconFor("workout")
-							<span class="autohide">{ i18n(ctx, "Workouts") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
+							@helpers.IconFor("workout")
+							<span class="autohide">{ helpers.I18n(ctx, "Workouts") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "route-segments")) }>
-							@IconFor("route-segment")
-							<span class="autohide">{ i18n(ctx, "Route segments") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segments")) }>
+							@helpers.IconFor("route-segment")
+							<span class="autohide">{ helpers.I18n(ctx, "Route segments") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "equipment")) }>
-							@IconFor("equipment")
-							<span class="autohide">{ i18n(ctx, "Equipment") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment")) }>
+							@helpers.IconFor("equipment")
+							<span class="autohide">{ helpers.I18n(ctx, "Equipment") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "heatmap")) }>
-							@IconFor("heatmap")
-							<span class="autohide">{ i18n(ctx, "Heatmap") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "heatmap")) }>
+							@helpers.IconFor("heatmap")
+							<span class="autohide">{ helpers.I18n(ctx, "Heatmap") }</span>
 						</a>
 					</div>
 				</div>
 				<div class="flex flex-wrap md:min-w-[400px] justify-end">
 					if currentUser.Admin {
 						<div>
-							<a href={ templ.SafeURL(routeFor(ctx, "admin")) }>
-								@IconFor("admin")
-								<span class="autohide">{ i18n(ctx, "Manage") }</span>
+							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "admin")) }>
+								@helpers.IconFor("admin")
+								<span class="autohide">{ helpers.I18n(ctx, "Manage") }</span>
 							</a>
 						</div>
 					}
 					<div>
-						<a href={ templ.SafeURL(routeFor(ctx, "user-profile")) }>
-							@IconFor("user-profile")
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile")) }>
+							@helpers.IconFor("user-profile")
 							{ currentUser.Name }
 						</a>
 					</div>
 					<div class="-mr-5">
-						<a href={ templ.SafeURL(routeFor(ctx, "user-signout")) }>
-							@IconFor("user-signout")
-							<span class="autohide">{ i18n(ctx, "Logout") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-signout")) }>
+							@helpers.IconFor("user-signout")
+							<span class="autohide">{ helpers.I18n(ctx, "Logout") }</span>
 						</a>
 					</div>
 				</div>
@@ -223,34 +226,4 @@ templ Header() {
 	</div>
 	@Alerts()
 	@Version()
-}
-
-templ Test() {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
-			<link href={ routeFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
-			<link
-				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.css" }
-				rel="stylesheet"
-			/>
-			<link
-				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
-				rel="stylesheet"
-			/>
-			@Head()
-		</head>
-		<body>
-			@Header()
-			<div class="content">
-				{{ t := time.Now() }}
-				@SnippetDate(&t)
-			</div>
-			@Footer()
-		</body>
-	</html>
 }

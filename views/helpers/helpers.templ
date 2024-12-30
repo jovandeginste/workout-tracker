@@ -1,4 +1,4 @@
-package appviews
+package helpers
 
 import (
 	"context"
@@ -14,18 +14,22 @@ import (
 
 const timeFormat = "2006-01-02 15:04"
 
-func language(ctx context.Context) string {
+templ IconFor(name string) {
+	@templ.Raw(iconFor(name))
+}
+
+func Language(ctx context.Context) string {
 	return translator(ctx).Language().String()
 }
 
-func supportedLanguages(ctx context.Context) []lng.Tag {
+func SupportedLanguages(ctx context.Context) []lng.Tag {
 	return genericTranslator(ctx).SupportedLanguages()
 }
 func ToLanguageInformation(code string) templatehelpers.LanguageInformation {
 	return templatehelpers.ToLanguageInformation(code)
 }
 
-func i18n(ctx context.Context, msg string, params ...any) string {
+func I18n(ctx context.Context, msg string, params ...any) string {
 	return translator(ctx).Getf(msg, params...)
 }
 
@@ -36,7 +40,7 @@ func AppConfig(ctx context.Context) *database.Config {
 
 	return nil
 }
-func version(ctx context.Context) *appversion.Version {
+func Version(ctx context.Context) *appversion.Version {
 	if v := ctx.Value("version"); v != nil {
 		return v.(*appversion.Version)
 	}
@@ -44,14 +48,14 @@ func version(ctx context.Context) *appversion.Version {
 	return nil
 }
 
-func notices(ctx context.Context) []string {
+func Notices(ctx context.Context) []string {
 	if e := ctx.Value("notices"); e != nil {
 		return e.([]string)
 	}
 
 	return nil
 }
-func errors(ctx context.Context) []string {
+func Errors(ctx context.Context) []string {
 	if e := ctx.Value("errors"); e != nil {
 		return e.([]string)
 	}
@@ -92,7 +96,7 @@ func humanizer(ctx context.Context) *humanize.Humanizer {
 	return nil
 }
 
-func routeFor(ctx context.Context, name string, params ...any) string {
+func RouteFor(ctx context.Context, name string, params ...any) string {
 	e := appEcho(ctx)
 	if e == nil {
 		return "/invalid/route/#" + name
@@ -111,10 +115,6 @@ func CurrentUser(ctx context.Context) *database.User {
 	}
 
 	return database.AnonymousUser()
-}
-
-templ RouteFor(name string, params ...any) {
-	@templ.Raw(routeFor(ctx, name, params))
 }
 
 func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {

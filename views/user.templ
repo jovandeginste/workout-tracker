@@ -1,5 +1,10 @@
 package appviews
 
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
 templ VersionUpdated() {
 	<script lang="javascript">
     var vn = document.getElementById("version-notification");
@@ -12,23 +17,23 @@ templ UserLogin() {
 	<!DOCTYPE html>
 	<html>
 		<head>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
-			<script src={ routeFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
-			<link href={ routeFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
+			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
 			<link
-				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.css" }
+				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.css" }
 				rel="stylesheet"
 			/>
 			<link
-				href={ routeFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
+				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
 				rel="stylesheet"
 			/>
-			@Head()
+			@partials.Head()
 		</head>
 		<body>
-			@Header()
+			@partials.Header()
 			<div class="content">
 				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 					<div>
@@ -36,26 +41,26 @@ templ UserLogin() {
 							<h2
 								class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
 							>
-								{ i18n(ctx, "Welcome!") }
+								{ helpers.I18n(ctx, "Welcome!") }
 							</h2>
 						</div>
 					</div>
 					<div>
 						<div class="inner-form">
 							<h3>
-								@IconFor("user-signin")
-								{ i18n(ctx, "Sign in") }
+								@helpers.IconFor("user-signin")
+								{ helpers.I18n(ctx, "Sign in") }
 							</h3>
 							<form
 								id="signin"
 								method="post"
-								action={ templ.SafeURL(routeFor(ctx, "user-signin")) }
+								action={ templ.SafeURL(helpers.RouteFor(ctx, "user-signin")) }
 							>
 								<table>
 									<tbody>
 										<tr>
 											<td>
-												<label for="username">{ i18n(ctx, "Username (email)") }</label>
+												<label for="username">{ helpers.I18n(ctx, "Username (email)") }</label>
 											</td>
 											<td>
 												<input type="text" id="username" name="username"/>
@@ -63,7 +68,7 @@ templ UserLogin() {
 										</tr>
 										<tr>
 											<td>
-												<label for="password">{ i18n(ctx, "Password") }</label>
+												<label for="password">{ helpers.I18n(ctx, "Password") }</label>
 											</td>
 											<td>
 												<input type="password" id="password" name="password"/>
@@ -73,7 +78,7 @@ templ UserLogin() {
 											<td></td>
 											<td>
 												<button id="signin" type="submit">
-													{ i18n(ctx, "Sign in") }
+													{ helpers.I18n(ctx, "Sign in") }
 												</button>
 											</td>
 										</tr>
@@ -81,22 +86,22 @@ templ UserLogin() {
 								</table>
 							</form>
 						</div>
-						if !AppConfig(ctx).RegistrationDisabled {
+						if !helpers.AppConfig(ctx).RegistrationDisabled {
 							<div class="inner-form">
 								<h3>
-									@IconFor("user-register")
-									{ i18n(ctx, "Create a new account") }
+									@helpers.IconFor("user-register")
+									{ helpers.I18n(ctx, "Create a new account") }
 								</h3>
 								<form
 									id="register"
 									method="post"
-									action={ templ.SafeURL(routeFor(ctx, "user-register")) }
+									action={ templ.SafeURL(helpers.RouteFor(ctx, "user-register")) }
 								>
 									<table>
 										<tbody>
 											<tr>
 												<td>
-													<label for="username">{ i18n(ctx, "Username (email)") }</label>
+													<label for="username">{ helpers.I18n(ctx, "Username (email)") }</label>
 												</td>
 												<td>
 													<input type="text" id="username" name="username"/>
@@ -104,7 +109,7 @@ templ UserLogin() {
 											</tr>
 											<tr>
 												<td>
-													<label for="name">{ i18n(ctx, "Name") }</label>
+													<label for="name">{ helpers.I18n(ctx, "Name") }</label>
 												</td>
 												<td>
 													<input type="text" id="name" name="name"/>
@@ -112,7 +117,7 @@ templ UserLogin() {
 											</tr>
 											<tr>
 												<td>
-													<label for="password">{ i18n(ctx, "Password") }</label>
+													<label for="password">{ helpers.I18n(ctx, "Password") }</label>
 												</td>
 												<td>
 													<input type="password" id="password" name="password"/>
@@ -122,7 +127,7 @@ templ UserLogin() {
 												<td></td>
 												<td>
 													<button id="register" type="submit">
-														{ i18n(ctx, "Register") }
+														{ helpers.I18n(ctx, "Register") }
 													</button>
 												</td>
 											</tr>
@@ -134,7 +139,7 @@ templ UserLogin() {
 					</div>
 				</div>
 			</div>
-			@Footer()
+			@partials.Footer()
 		</body>
 	</html>
 }

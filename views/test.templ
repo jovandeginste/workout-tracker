@@ -1,0 +1,37 @@
+package appviews
+
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+	"time"
+)
+
+templ Test() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
+			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
+			<link
+				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.css" }
+				rel="stylesheet"
+			/>
+			<link
+				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
+				rel="stylesheet"
+			/>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				{{ t := time.Now() }}
+				@partials.SnippetDate(&t)
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

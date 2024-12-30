@@ -5,11 +5,9 @@ import (
 	"io"
 	"time"
 
-	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/pkg/version"
-	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak/humanize"
 	"golang.org/x/text/language"
@@ -114,17 +112,6 @@ func (a *App) viewTemplateFunctions() template.FuncMap {
 			return rev
 		},
 	}
-}
-
-func templComponent(name string) func() templ.Component {
-	switch name {
-	case "Head":
-		return appviews.Head
-	case "Theme":
-		return appviews.Theme
-	}
-
-	return nil
 }
 
 func filterOptions() []string {
