@@ -37,10 +37,10 @@ templ Heatmap(workouts []*database.Workout) {
 						id="map"
 						class="border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]"
 					>
-						@templ.JSONScript("user-coordinates-route", helpers.RouteFor(ctx, "user-coordinates"))
-						@templ.JSONScript("user-centers-route", helpers.RouteFor(ctx, "user-centers"))
-						@templ.JSONScript("helpers.I18n-streets", helpers.I18n(ctx, "Streets"))
-						@templ.JSONScript("helpers.I18n-aerial", helpers.I18n(ctx, "Aerial"))
+						@templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates"))
+						@templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers"))
+						@templ.JSONScript("i18n-streets", helpers.I18n(ctx, "Streets"))
+						@templ.JSONScript("i18n-aerial", helpers.I18n(ctx, "Aerial"))
 						<script>
             var map = L.map("map", {
               fadeAnimation: false,
@@ -63,8 +63,8 @@ templ Heatmap(workouts []*database.Workout) {
             L.control
               .layers(
                 {
-                  [JSON.parse(document.getElementById('helpers.I18n-streets').textContent)]: layerStreet,
-                  [JSON.parse(document.getElementById('helpers.I18n-aerial').textContent)]: layerAerial,
+                  [JSON.parse(document.getElementById('i18n-streets').textContent)]: layerStreet,
+                  [JSON.parse(document.getElementById('i18n-aerial').textContent)]: layerAerial,
                 }
               )
               .addTo(map);
