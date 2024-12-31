@@ -6,6 +6,11 @@ import (
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
+templ WorkoutEventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
+	@helpers.IconFor(w.Type.String())
+	{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
+}
+
 templ WorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>

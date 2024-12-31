@@ -1,11 +1,14 @@
 package partials
 
-import "github.com/jovandeginste/workout-tracker/pkg/database"
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
 
-// TODO: Get workouts via API
 templ UserProfileCalendar(workouts []*database.Workout) {
 	<div class="inner-form min-h-[450px]" id="calendar"></div>
-	<script src="{{ RouteFor `assets` }}/dist/fullcalendar.min.js"></script>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/fullcalendar.min.js" }></script>
+	@templ.JSONScript("api-workouts-calendar-route", helpers.RouteFor(ctx, "api-workouts-calendar"))
 	<script>
   document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
@@ -25,16 +28,16 @@ templ UserProfileCalendar(workouts []*database.Workout) {
 
         return { domNodes: [ eventSpan ] }
       },
-      events: [
-        {{ range .workouts }}
-        {
-          title: "{{ IconFor .Type.String }}{{ .Distance | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}",
-          start: "{{ .Date | LocalDate }}",
-          url: "/workouts/{{ .ID }}",
-          display: "block",
-        },
-        {{ end }}
-      ],
+      events: {
+        url: JSON.parse(document.getElementById('api-workouts-calendar-route').textContent),
+        display: "display",
+        failure: function() {
+          console.log('there was an error while fetching events!');
+        }, 
+        success: function(response) {
+          return response.results;
+        }
+      },
     });
     calendar.render();
   });

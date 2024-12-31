@@ -8,7 +8,10 @@ package partials
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/jovandeginste/workout-tracker/pkg/database"
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
 
 // TODO: Get workouts via API
 func UserProfileCalendar(workouts []*database.Workout) templ.Component {
@@ -32,7 +35,28 @@ func UserProfileCalendar(workouts []*database.Workout) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"inner-form min-h-[450px]\" id=\"calendar\"></div><script src=\"{{ RouteFor `assets` }}/dist/fullcalendar.min.js\"></script><script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    var calendarEl = document.getElementById(\"calendar\");\n    var calendar = new FullCalendar.Calendar(calendarEl, {\n      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,\n      initialView: \"dayGridMonth\",\n      locale: Intl.DateTimeFormat().resolvedOptions().locale,\n      firstDay: 1,\n      aspectRatio: 2,\n      eventContent: function(arg) {\n        let eventSpan = document.createElement(\"div\")\n\n        eventSpan.innerHTML = arg.event.title\n        eventSpan.classList.add(\n          \"px-2\", \"overflow-hidden\",\n        )\n\n        return { domNodes: [ eventSpan ] }\n      },\n      events: [\n        {{ range .workouts }}\n        {\n          title: \"{{ IconFor .Type.String }}{{ .Distance | HumanDistance }} {{ CurrentUser.PreferredUnits.Distance }}\",\n          start: \"{{ .Date | LocalDate }}\",\n          url: \"/workouts/{{ .ID }}\",\n          display: \"block\",\n        },\n        {{ end }}\n      ],\n    });\n    calendar.render();\n  });\n</script>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"inner-form min-h-[450px]\" id=\"calendar\"></div><script src=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/fullcalendar.min.js")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/user_profile_calendar.templ`, Line: 11, Col: 76}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.JSONScript("api-workouts-calendar-route", helpers.RouteFor(ctx, "api-workouts-calendar")).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    var calendarEl = document.getElementById(\"calendar\");\n    var calendar = new FullCalendar.Calendar(calendarEl, {\n      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,\n      initialView: \"dayGridMonth\",\n      locale: Intl.DateTimeFormat().resolvedOptions().locale,\n      firstDay: 1,\n      aspectRatio: 2,\n      eventContent: function(arg) {\n        let eventSpan = document.createElement(\"div\")\n\n        eventSpan.innerHTML = arg.event.title\n        eventSpan.classList.add(\n          \"px-2\", \"overflow-hidden\",\n        )\n\n        return { domNodes: [ eventSpan ] }\n      },\n      events: {\n        url: JSON.parse(document.getElementById('api-workouts-calendar-route').textContent),\n        display: \"display\",\n        failure: function() {\n          console.log('there was an error while fetching events!');\n        }, \n        success: function(response) {\n          return response.results;\n        }\n      },\n    });\n    calendar.render();\n  });\n</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
