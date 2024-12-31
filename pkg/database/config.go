@@ -23,12 +23,13 @@ type UserConfig struct {
 
 // EnvConfig are options that are read from the config file or environment only
 type EnvConfig struct {
-	Bind             string `mapstructure:"bind" gorm:"-"`
-	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"`
-	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`
-	DSN              string `mapstructure:"dsn" gorm:"-"`
-	Logging          bool   `mapstructure:"logging" gorm:"-"`
-	Debug            bool   `mapstructure:"debug" gorm:"-"`
+	Bind             string `mapstructure:"bind" gorm:"-"`               // Which address to bind to
+	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"` // Encryption key for JWT
+	Dev              bool   `mapstructure:"dev" gorm:"-"`                // Development mode
+	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`    // Which database driver to use
+	DSN              string `mapstructure:"dsn" gorm:"-"`                // Database DSN
+	Logging          bool   `mapstructure:"logging" gorm:"-"`            // Enable logging
+	Debug            bool   `mapstructure:"debug" gorm:"-"`              // Debug logging mode
 }
 
 func getConfig(db *gorm.DB) (*Config, error) {

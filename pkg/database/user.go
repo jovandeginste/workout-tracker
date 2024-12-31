@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/cat-dealer/go-rand/v2"
+	"github.com/vorlif/spreak"
+	"github.com/vorlif/spreak/humanize"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -27,7 +29,9 @@ var (
 )
 
 type User struct {
-	db *gorm.DB
+	db         *gorm.DB
+	translator *spreak.Localizer
+	humanizer  *humanize.Humanizer
 
 	Model
 
@@ -47,6 +51,26 @@ type User struct {
 	Admin  bool `form:"admin"`  // Whether the user is an admin
 
 	anonymous bool // Whether we have an actual user or not
+}
+
+func (u *User) SetTranslator(translator *spreak.Localizer) {
+	u.translator = translator
+}
+
+func (u *User) SetHumanizer(humanizer *humanize.Humanizer) {
+	u.humanizer = humanizer
+}
+
+func (u *User) I18n(message string, vars ...any) string {
+	return u.GetTranslator().Getf(message, vars...)
+}
+
+func (u *User) GetTranslator() *spreak.Localizer {
+	return u.translator
+}
+
+func (u *User) GetHumanizer() *humanize.Humanizer {
+	return u.humanizer
 }
 
 func AnonymousUser() *User {

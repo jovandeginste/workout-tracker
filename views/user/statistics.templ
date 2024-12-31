@@ -1,0 +1,257 @@
+package user
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Statistics(u *database.User, since, per string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/apexcharts.min.js" }></script>
+			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/apexcharts.css" } rel="stylesheet"/>
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<h2>
+					@helpers.IconFor("statistics")
+					{ helpers.I18n(ctx, "Your progress per %s for the past %s", helpers.I18n(ctx, per), helpers.I18n(ctx, since)) }
+				</h2>
+				<div class="content">
+					<form class="inner-form">
+						<label for="since">{ helpers.I18n(ctx, "Since") }</label>
+						<select id="since" name="since">
+							for _, o := range helpers.StatisticSinceOptions() {
+								<option value={ o } selected?={ o == since }>{ helpers.I18n(ctx, o) }</option>
+							}
+						</select>
+						<label for="per">{ helpers.I18n(ctx, "Per") }</label>
+						<select id="per" name="per">
+							for _, o := range helpers.StatisticPerOptions() {
+								<option value={ o } selected?={ o == per }>{ helpers.I18n(ctx, o) }</option>
+							}
+						</select>
+						<button type="submit" value="Submit">{ helpers.I18n(ctx, "refresh") }</button>
+					</form>
+					<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("workout")
+									{ helpers.I18n(ctx, "Workouts") }
+								</h3>
+								<div id="workouts-per-time"></div>
+							</div>
+						</div>
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("duration")
+									{ helpers.I18n(ctx, "Duration") }
+								</h3>
+								<div id="duration-per-time"></div>
+							</div>
+						</div>
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("distance")
+									{ helpers.I18n(ctx, "Distance") }
+								</h3>
+								<div id="distance-per-time"></div>
+							</div>
+						</div>
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("speed")
+									{ helpers.I18n(ctx, "Average speed") }
+								</h3>
+								<div id="average-speed-per-time"></div>
+							</div>
+						</div>
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("speed")
+									{ helpers.I18n(ctx, "Average speed (no pause)") }
+								</h3>
+								<div id="average-speed-no-pause-per-time"></div>
+							</div>
+						</div>
+						<div>
+							<div class="inner-form">
+								<h3>
+									@helpers.IconFor("max-speed")
+									{ helpers.I18n(ctx, "Max speed") }
+								</h3>
+								<div id="max-speed-per-time"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@partials.Footer()
+			{{ currentUser := helpers.CurrentUser(ctx) }}
+			{{
+	preferredUnits := map[string]string{
+		"Distance": currentUser.PreferredUnits().Distance(),
+		"Speed":    currentUser.PreferredUnits().Speed(),
+	}
+			}}
+			{{ stats, _ := currentUser.GetStatisticsFor(since, per) }}
+			@templ.JSONScript("stats", stats)
+			@templ.JSONScript("preferred-units", preferredUnits)
+			<script>
+      var stats = JSON.parse(document.getElementById('stats').textContent)
+      var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)
+
+      var theme = 'light';
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+
+      var options = {
+        theme: { mode: theme },
+        chart: {
+          width: "99%",
+          animations: { enabled: false },
+          toolbar: { show: false },
+          type: "bar",
+        },
+        dataLabels: { enabled: false },
+        legend: { position: 'top' },
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+        },
+        xaxis: { type: "datetime", },
+      }
+
+      new ApexCharts(document.querySelector("#workouts-per-time"), {
+        ...options,
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets).map(e => ({ x: e.Bucket, y: e.Workouts })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+
+      new ApexCharts(document.querySelector("#duration-per-time"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return formatDuration(val); } },
+          ],
+        },
+        yaxis: [
+          { labels: { formatter: (val) => { return formatDuration(val); } } },
+        ],
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets)
+            .filter(e => e.Duration > 0)
+            .map(e => ({ x: e.Bucket, y: e.DurationSeconds })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+
+      new ApexCharts(document.querySelector("#distance-per-time"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " " + preferredUnits.Distance; } },
+          ],
+        },
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.Distance; } } },
+        ],
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets)
+            .filter(e => e.Distance > 0)
+            .map(e => ({ x: e.Bucket, y: e.LocalDistance })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+
+      new ApexCharts(document.querySelector("#average-speed-per-time"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+          ],
+        },
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+        ],
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets)
+            .filter(e => e.Distance > 0)
+            .map(e => ({ x: e.Bucket, y: e.LocalAverageSpeed })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+
+      new ApexCharts(document.querySelector("#average-speed-no-pause-per-time"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+          ],
+        },
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+        ],
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets)
+            .filter(e => e.Distance > 0)
+            .map(e => ({ x: e.Bucket, y: e.LocalAverageSpeedNoPause })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+
+      new ApexCharts(document.querySelector("#max-speed-per-time"), {
+        ...options,
+        tooltip: {
+          x: { format: 'MMM \'yy', },
+          y: [
+            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+          ],
+        },
+        yaxis: [
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+        ],
+        series: Object.entries(stats.Buckets).map(entry => {
+          const [key, value] = entry;
+          return {
+            name: value.LocalWorkoutType,
+            data: Object.values(value.Buckets)
+            .filter(e => e.Distance > 0)
+            .map(e => ({ x: e.Bucket, y: e.LocalMaxSpeed })),
+          };
+        }).filter(e => e.data.length > 0),
+      }).render();
+    </script>
+		</body>
+	</html>
+}

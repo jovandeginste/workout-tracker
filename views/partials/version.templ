@@ -3,6 +3,12 @@ package partials
 import "github.com/jovandeginste/workout-tracker/views/helpers"
 
 templ Version() {
+	if !helpers.AppConfig(ctx).Dev {
+		@version()
+	}
+}
+
+templ version() {
 	{{ v := helpers.Version(ctx) }}
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	if currentUser.IsActive() {

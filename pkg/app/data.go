@@ -15,8 +15,6 @@ func (a *App) setContext(ctx echo.Context) {
 	ctx.Set("version", &a.Version)
 	ctx.Set("config", &a.Config)
 	ctx.Set("echo", a.echo)
-	ctx.Set("humanizer", a.humanizerFromContext(ctx))
-	ctx.Set("translator", a.translatorFromContext(ctx))
 	ctx.Set("generic_translator", a.translator)
 }
 
@@ -70,7 +68,17 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 		return database.AnonymousUser()
 	}
 
+	a.localizeUser(c, u)
+
 	return u
+}
+
+func (a *App) localizeUser(ctx echo.Context, u *database.User) {
+	tr := a.translatorFromContext(ctx)
+	h := a.humanizerFromContext(ctx)
+
+	u.SetTranslator(tr)
+	u.SetHumanizer(h)
 }
 
 func (a *App) defaultData(c echo.Context) map[string]any {

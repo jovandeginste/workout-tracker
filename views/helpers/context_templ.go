@@ -107,11 +107,7 @@ func appEcho(ctx context.Context) *echo.Echo {
 }
 
 func translator(ctx context.Context) *spreak.Localizer {
-	if t := ctx.Value("translator"); t != nil {
-		return t.(*spreak.Localizer)
-	}
-
-	return nil
+	return CurrentUser(ctx).GetTranslator()
 }
 
 func genericTranslator(ctx context.Context) *spreak.Bundle {
@@ -123,11 +119,7 @@ func genericTranslator(ctx context.Context) *spreak.Bundle {
 }
 
 func humanizer(ctx context.Context) *humanize.Humanizer {
-	if h := ctx.Value("humanizer"); h != nil {
-		return h.(*humanize.Humanizer)
-	}
-
-	return nil
+	return CurrentUser(ctx).GetHumanizer()
 }
 
 func CurrentUser(ctx context.Context) *database.User {

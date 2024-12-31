@@ -1,7 +1,6 @@
 package app
 
 import (
-	"cmp"
 	"errors"
 	"net/http"
 
@@ -24,16 +23,30 @@ func (a *App) redirectWithError(c echo.Context, target string, err error) error 
 }
 
 func (a *App) statisticsHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	data["since"] = cmp.Or(c.QueryParam("since"), "1 year")
-	data["per"] = cmp.Or(c.QueryParam("per"), "month")
+	a.setContext(c)
 
-	return c.Render(http.StatusOK, "user_statistics.html", data)
+	u := a.getCurrentUser(c)
+	if u == nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
+	}
+
+	statisticsParams := struct {
+		Since string `query:"since"`
+		Per   string `query:"per"`
+	}{
+		Since: "1 year",
+		Per:   "month",
+	}
+
+	if err := c.Bind(&statisticsParams); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per))
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
 	a.setContext(c)
-	data := a.defaultData(c)
 
 	u := a.getCurrentUser(c)
 	if u == nil {
@@ -54,8 +67,6 @@ func (a *App) dashboardHandler(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-
-	data["user"] = u
 
 	return Render(c, http.StatusOK, user.Show(u, users, w, recent))
 }
