@@ -43,13 +43,13 @@ templ WorkoutsListDetails(w *database.Workout) {
 		if w.Type.IsWeight() {
 			<div class="font-mono" title={ helpers.I18n(ctx, "Weight") }>
 				@helpers.IconFor("weight")
-				{ fmt.Sprintf("%d", w.Weight) }
+				{ fmt.Sprintf("%d", w.Weight()) }
 			</div>
 		}
 		if w.Type.IsRepetition() {
 			<div class="font-mono" title={ helpers.I18n(ctx, "Repetitions") }>
 				@helpers.IconFor("repetitions")
-				{ fmt.Sprintf("%d", w.Repetitions) }
+				{ fmt.Sprintf("%d", w.Repetitions()) }
 			</div>
 		}
 	</div>

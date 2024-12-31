@@ -8,7 +8,16 @@ import (
 
 templ WorkoutEventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
 	@helpers.IconFor(w.Type.String())
-	{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
+	switch  {
+		case w.Type.IsDistance():
+			{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
+		case w.Type.IsWeight():
+			{ fmt.Sprintf("%.2f", w.Weight()) } { preferredUnits.Weight() }
+		case w.Type.IsRepetition():
+			{ fmt.Sprintf("%d", w.Repetitions()) }
+		default:
+			{ w.Name }
+	}
 }
 
 templ WorkoutDetails(w *database.Workout) {
