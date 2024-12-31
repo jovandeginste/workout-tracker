@@ -74,7 +74,7 @@ templ Heatmap(workouts []*database.Workout) {
             var heatConfig = { radius: 10 };
             var clusterConfig = { showCoverageOnHover: false };
 
-            fetch(JSON.parse(document.getElementById('user-coordinates-route').textContent), {
+            fetch(JSON.parse(document.getElementById('api-workouts-coordinates-route').textContent), {
               method: "GET",
               headers: {
                 Accept: "application/json",
@@ -86,7 +86,7 @@ templ Heatmap(workouts []*database.Workout) {
                 L.heatLayer(data, heatConfig).addTo(map);
               });
 
-            fetch(JSON.parse(document.getElementById('user-centers-route').textContent), {
+            fetch(JSON.parse(document.getElementById('api-workouts-centers-route').textContent), {
               method: "GET",
               headers: {
                 Accept: "application/json",
