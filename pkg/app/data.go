@@ -15,6 +15,8 @@ func (a *App) setContext(ctx echo.Context) {
 	ctx.Set("version", &a.Version)
 	ctx.Set("config", &a.Config)
 	ctx.Set("echo", a.echo)
+	ctx.Set("humanizer", a.humanizerFromContext(ctx))
+	ctx.Set("translator", a.translatorFromContext(ctx))
 	ctx.Set("generic_translator", a.translator)
 }
 
