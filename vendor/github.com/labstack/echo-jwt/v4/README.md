@@ -14,6 +14,9 @@ as JWT implementation.
 This repository does not use semantic versioning. MAJOR version tracks which Echo version should be used. MINOR version
 tracks API changes (possibly backwards incompatible) and PATCH version is incremented for fixes.
 
+NB: When `golang-jwt` MAJOR version changes this library will release MINOR version with **breaking change**. Always 
+add at least one integration test in your project.
+
 For Echo `v4` use `v4.x.y` releases.
 Minimal needed Echo versions:
 * `v4.0.0` needs Echo `v4.7.0+`
@@ -64,6 +67,36 @@ e.GET("/", func(c echo.Context) error {
   return c.JSON(http.StatusOK, claims)
 })
 ```
+
+## IMPORTANT: Integration Testing with JWT Library
+
+Ensure that your project includes at least one integration test to detect changes in major versions of the `golang-jwt/jwt` library early.
+This is crucial because type assertions like `token := c.Get("user").(*jwt.Token)` may fail silently if the imported version of the JWT library (e.g., `import "github.com/golang-jwt/jwt/v5"`) differs from the version used internally by dependencies (e.g., echo-jwt may now use `v6`). Such discrepancies can lead to invalid casts, causing your handlers to panic or throw errors. Integration tests help safeguard against these version mismatches.
+
+```go
+func TestIntegrationMiddlewareWithHandler(t *testing.T) {
+	e := echo.New()
+	e.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey: []byte("secret"),
+	}))
+
+  // use handler that gets token from context to fail your CI flow when `golang-jwt/jwt` library version changes 
+  // a) `token, ok := c.Get("user").(*jwt.Token)`
+  // b) `token := c.Get("user").(*jwt.Token)`
+	e.GET("/example", exampleHandler) 
+
+	req := httptest.NewRequest(http.MethodGet, "/example", nil)
+	req.Header.Set(echo.HeaderAuthorization, "Bearer <TOKEN>")
+	res := httptest.NewRecorder()
+
+	e.ServeHTTP(res, req)
+	
+	if res.Code != 200 {
+		t.Failed()
+	}
+}
+```
+
 
 ## Full example
 
