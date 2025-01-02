@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/route_segments"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,13 +27,14 @@ func (a *App) addRoutesSegments(e *echo.Group) {
 }
 
 func (a *App) routeSegmentsHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	if err := a.addRouteSegments(data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	s, err := database.GetRouteSegments(a.db)
+	if err != nil {
+		return err
 	}
 
-	return c.Render(http.StatusOK, "route_segments_list.html", data)
+	return Render(c, http.StatusOK, route_segments.List(s))
 }
 
 func (a *App) routeSegmentsAddHandler(c echo.Context) error {
@@ -81,16 +83,14 @@ func (a *App) addRouteSegment(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
-	data["routeSegment"] = rs
-
-	return c.Render(http.StatusOK, "route_segments_show.html", data)
+	return Render(c, http.StatusOK, route_segments.Show(rs))
 }
 
 func (a *App) routeSegmentsDownloadHandler(c echo.Context) error {
@@ -107,16 +107,14 @@ func (a *App) routeSegmentsDownloadHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
 	}
 
-	data["routeSegment"] = rs
-
-	return c.Render(http.StatusOK, "route_segments_edit.html", data)
+	return Render(c, http.StatusOK, route_segments.Edit(rs))
 }
 
 func (a *App) routeSegmentsRefreshHandler(c echo.Context) error {

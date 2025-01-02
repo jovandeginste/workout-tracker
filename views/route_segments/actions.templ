@@ -1,0 +1,83 @@
+package route_segments
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ actions(s *database.RouteSegment) {
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-download", s.ID)) } method="get">
+		<button class="download" title={ helpers.I18n(ctx, "download") }>
+			<a>
+				@helpers.IconFor("download")
+			</a>
+		</button>
+	</form>
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-edit", s.ID)) } method="get">
+		<button class="edit" title={ helpers.I18n(ctx, "edit") }>
+			<a>
+				@helpers.IconFor("edit")
+			</a>
+		</button>
+	</form>
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-refresh", s.ID)) } method="post">
+		<button title={ helpers.I18n(ctx, "refresh") }>
+			<a>
+				@helpers.IconFor("refresh")
+			</a>
+		</button>
+	</form>
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-matches", s.ID)) } method="post">
+		<button title={ helpers.I18n(ctx, "find matches") }>
+			<a>
+				@helpers.IconFor("route-segment")
+			</a>
+		</button>
+	</form>
+	<form onsubmit="return false">
+		<button
+			onclick="openModal('modalConfirmDelete', this)"
+			data-id={ fmt.Sprintf("%d", s.ID) }
+			class="dangerous"
+			title={ helpers.I18n(ctx, "delete") }
+		>
+			<a>
+				@helpers.IconFor("delete")
+			</a>
+		</button>
+	</form>
+	<div id={ fmt.Sprintf("modalConfirmDelete_%d", s.ID) } class="modal">
+		<div class="window">
+			<div class="flex justify-end p-2">
+				<button
+					onclick="closeModal('modalConfirmDelete', this)"
+					data-id={ fmt.Sprintf("%d", s.ID) }
+					type="button"
+					class="close-modal"
+				>
+					<a>
+						@helpers.IconFor("close")
+					</a>
+				</button>
+			</div>
+			<div class="modal-content">
+				<h3>{ helpers.I18n(ctx, "Are you sure you want to delete this %s?", helpers.I18n(ctx, "route segment")) }</h3>
+				<div class="flex">
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-delete", s.ID)) }>
+						<button class="confirm">{ helpers.I18n(ctx, "Continue") }</button>
+					</form>
+					<form onsubmit="return false">
+						<button
+							onclick="closeModal('modalConfirmDelete', this)"
+							data-id={ fmt.Sprintf("%d", s.ID) }
+							class="cancel"
+						>
+							{ helpers.I18n(ctx, "Cancel") }
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+}

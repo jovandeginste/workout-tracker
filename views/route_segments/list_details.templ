@@ -1,0 +1,20 @@
+package route_segments
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ listDetails(s *database.RouteSegment) {
+	<div class="route_segment_list_details flex flex-wrap gap-3">
+		<div class="table-cell" title={ helpers.I18n(ctx, "Location") }>
+			@helpers.IconFor("location")
+			{ s.Address() }
+		</div>
+		<div class="table-cell" title={ helpers.I18n(ctx, "Matches") }>
+			@helpers.IconFor("totals")
+			{ fmt.Sprintf("%d", len(s.RouteSegmentMatches)) }
+		</div>
+	</div>
+}
