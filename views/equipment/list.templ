@@ -1,0 +1,114 @@
+package equipment
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ List(equipment []*database.Equipment) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<div class="items-baseline flex flex-wrap">
+					<h2 class="grow justify-start">
+						@helpers.IconFor("equipment")
+						{ helpers.I18n(ctx, "Equipment") } ({ fmt.Sprintf("%d", len(equipment)) })
+					</h2>
+					<div class="justify-end mr-2">
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
+							@helpers.IconFor("add")
+							<span>{ helpers.I18n(ctx, "Add equipment") }</span>
+						</a>
+					</div>
+				</div>
+				<table class="equipment-info">
+					<thead>
+						<tr>
+							<th>{ helpers.I18n(ctx, "Name") }</th>
+							<th>{ helpers.I18n(ctx, "Workouts") }</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, e := range equipment {
+							<tr>
+								<td>
+									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
+								</td>
+								<td>{ fmt.Sprintf("%d", len(e.Workouts)) }</td>
+								<td>
+									<span class="actions">
+										@actions(e)
+									</span>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}
+
+templ actions(e *database.Equipment) {
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
+		<button class="edit" title={ helpers.I18n(ctx, "edit") }>
+			<a>
+				@helpers.IconFor("edit")
+			</a>
+		</button>
+	</form>
+	<form onsubmit="return false">
+		<button
+			onclick="openModal('modalConfirmDelete', this)"
+			data-id={ fmt.Sprintf("%d", e.ID) }
+			class="dangerous"
+			title={ helpers.I18n(ctx, "delete") }
+		>
+			<a>
+				@helpers.IconFor("delete")
+			</a>
+		</button>
+	</form>
+	<div id={ fmt.Sprintf("modalConfirmDelete_%d", e.ID) } class="modal">
+		<div class="window">
+			<div class="flex justify-end p-2">
+				<button
+					onclick="closeModal('modalConfirmDelete', this)"
+					data-id={ fmt.Sprintf("%d", e.ID) }
+					type="button"
+					class="close-modal"
+				>
+					<a>
+						@helpers.IconFor("close")
+					</a>
+				</button>
+			</div>
+			<div class="modal-content">
+				<h3>{ helpers.I18n(ctx, "Are you sure you want to delete this %s?", helpers.I18n(ctx, "equipment")) }</h3>
+				<div class="flex">
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-delete", e.ID)) }>
+						<button class="confirm">{ helpers.I18n(ctx, "Continue") }</button>
+					</form>
+					<form onsubmit="return false">
+						<button
+							onclick="closeModal('modalConfirmDelete', this)"
+							data-id={ fmt.Sprintf("%d", e.ID) }
+							class="cancel"
+						>
+							{ helpers.I18n(ctx, "Cancel") }
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+}

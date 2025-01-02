@@ -31,7 +31,7 @@ func (a *App) adminRootHandler(c echo.Context) error {
 
 	users, err := database.GetUsers(a.db)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
 	return Render(c, http.StatusOK, admin.Root(users))

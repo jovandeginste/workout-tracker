@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/equipment"
 	"github.com/labstack/echo/v4"
 )
 
@@ -37,13 +38,16 @@ func (a *App) addEquipment(c echo.Context) error {
 }
 
 func (a *App) equipmentHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	if err := a.addAllEquipment(a.getCurrentUser(c), data); err != nil {
+	u := a.getCurrentUser(c)
+
+	w, err := u.GetAllEquipment(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	return c.Render(http.StatusOK, "equipment_list.html", data)
+	return Render(c, http.StatusOK, equipment.List(w))
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
