@@ -19,8 +19,11 @@ func (a *App) addRoutesSelf(e *echo.Group) {
 }
 
 func (a *App) userProfileHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "user_profile.html", data)
+	a.setContext(c)
+
+	u := a.getCurrentUser(c)
+
+	return Render(c, http.StatusOK, user.Profile(u))
 }
 
 func (a *App) userProfilePreferredUnitsUpdateHandler(c echo.Context) error {

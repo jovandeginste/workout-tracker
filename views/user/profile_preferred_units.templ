@@ -1,0 +1,128 @@
+package user
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ profilePreferredUnits() {
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<form
+		method="post"
+		action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-preferred-units-update")) }
+	>
+		<table class="table-fixed">
+			<tbody>
+				<tr>
+					<th>
+						<label for="speed">{ helpers.I18n(ctx, "Speed") }</label>
+					</th>
+					<td>
+						<select id="speed" name="speed">
+							<option value="kph" selected?={ pu.Speed() == "kph" }>
+								{ helpers.I18n(ctx, "kilometers per hour") }
+							</option>
+							<option value="mph" selected?={ pu.Speed() == "mph" }>
+								{ helpers.I18n(ctx, "miles per hour") }
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="distance">{ helpers.I18n(ctx, "Distance") }</label>
+					</th>
+					<td>
+						<select id="distance" name="distance">
+							<option value="km" selected?={ pu.Distance() == "km" }>
+								{ helpers.I18n(ctx, "kilometers") }
+							</option>
+							<option value="mi" selected?={ pu.Distance() == "mi" }>
+								{ helpers.I18n(ctx, "miles") }
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="elevation">{ helpers.I18n(ctx, "Elevation") }</label>
+					</th>
+					<td>
+						<select id="elevation" name="elevation">
+							<option value="m" selected?={ pu.Elevation() == "m" }>
+								{ helpers.I18n(ctx, "meters") }
+							</option>
+							<option value="ft" selected?={ pu.Elevation() == "ft" }>
+								{ helpers.I18n(ctx, "feet") }
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="weight">{ helpers.I18n(ctx, "Weight") }</label>
+					</th>
+					<td>
+						<select id="weight" name="weight">
+							<option value="lbs" selected?={ pu.Weight() == "lbs" }>
+								{ helpers.I18n(ctx, "pounds") }
+							</option>
+							<option value="kg" selected?={ pu.Weight() == "kg" }>
+								{ helpers.I18n(ctx, "kilograms") }
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit">{ helpers.I18n(ctx, "Update preferred units") }</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+}
+
+templ profileTotalsShow(uwt *database.WorkoutType) {
+	<select id="totals_show" name="totals_show">
+		<option value="auto">{ helpers.I18n(ctx, "Auto-detect") }</option>
+		for _, wt := range helpers.WorkoutTypes() {
+			if wt.IsDistance() {
+				<option value={ wt.String() } selected?={ wt.String() == uwt.String() }>
+					{ helpers.I18n(ctx, wt.String()) }
+				</option>
+			}
+		}
+	</select>
+}
+
+templ profileTimezone(utz string) {
+	<select id="timezone" name="timezone">
+		<option></option>
+		for _, tz := range helpers.Timezones() {
+			<option value={ tz.Name } selected?={ tz.Name == utz }>
+				{ tz.Description }
+			</option>
+		}
+	</select>
+}
+
+templ profileLanguage(ulang string) {
+	<select id="language" name="language">
+		<option value="browser" selected?={ ulang == "browser" }>
+			🌐 Browser language
+		</option>
+		for _, sl := range helpers.SupportedLanguages(ctx) {
+			{{ linf := helpers.ToLanguageInformation(sl.String()) }}
+			<option value={ linf.Code } selected?={ linf.Code == ulang }>
+				{ linf.Flag } { linf.LocalName }
+				if linf.EnglishName != "" {
+					if linf.EnglishName != linf.LocalName {
+						({ linf.EnglishName })
+					}
+				}
+			</option>
+		}
+	</select>
+}
