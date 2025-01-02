@@ -38,8 +38,8 @@ func (a *App) routeSegmentsHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsAddHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "route_segments_add.html", data)
+	a.setContext(c)
+	return Render(c, http.StatusOK, route_segments.Add())
 }
 
 func (a *App) addRouteSegment(c echo.Context) error {
