@@ -1,10 +1,12 @@
-window.openModal = function (modalId) {
-  document.getElementById(modalId).style.display = "block";
+window.openModal = function (modalName, obj) {
+  var name = modalName + "_" + obj.getAttribute("data-id");
+  document.getElementById(name).style.display = "block";
   document.getElementsByTagName("body")[0].classList.add("overflow-y-hidden");
 };
 
-window.closeModal = function (modalId) {
-  document.getElementById(modalId).style.display = "none";
+window.closeModal = function (modalName, obj) {
+  var name = modalName + "_" + obj.getAttribute("data-id");
+  document.getElementById(name).style.display = "none";
   document
     .getElementsByTagName("body")[0]
     .classList.remove("overflow-y-hidden");

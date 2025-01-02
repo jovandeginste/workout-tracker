@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 	"github.com/labstack/echo/v4"
 )
 
@@ -31,20 +32,24 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 }
 
 func (a *App) workoutsHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	filters, err := getWorkoutsFilters(c)
+	u := a.getCurrentUser(c)
+	if u == nil {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
+	}
+
+	filters, err := database.GetWorkoutsFilters(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["Filters"] = filters
-
-	if err := a.addWorkoutsWithFilter(a.getCurrentUser(c), data, filters.ToQuery(a.db)); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	w, err := u.GetWorkouts(filters.ToQuery(a.db))
+	if err != nil {
+		return err
 	}
 
-	return c.Render(http.StatusOK, "workouts_list.html", data)
+	return Render(c, http.StatusOK, workouts.List(w, filters))
 }
 
 func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl

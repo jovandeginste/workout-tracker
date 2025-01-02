@@ -43,7 +43,8 @@ templ WorkoutsListDetails(w *database.Workout) {
 		if w.Type.IsWeight() {
 			<div class="font-mono" title={ helpers.I18n(ctx, "Weight") }>
 				@helpers.IconFor("weight")
-				{ fmt.Sprintf("%d", w.Weight()) }
+				{ fmt.Sprintf("%.2f", w.Weight()) }
+				{ preferredUnits.Weight() }
 			</div>
 		}
 		if w.Type.IsRepetition() {

@@ -32,3 +32,34 @@ func RouteFor(ctx context.Context, name string, params ...any) string {
 func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
 	return CurrentUser(ctx).PreferredUnits()
 }
+
+func WorkoutTypes() []database.WorkoutType {
+	return database.WorkoutTypes()
+}
+
+func FilterOptions() []string {
+	return StatisticSinceOptions()
+}
+
+func OrderDirOptions() map[string]string {
+	return map[string]string{
+		"asc":  "ascending",
+		"desc": "descending",
+	}
+}
+
+func OrderByOptions() map[string]string {
+	return map[string]string{
+		"date": "Date",
+
+		"total_distance":    "Total distance",
+		"total_duration":    "Total duration",
+		"total_weight":      "Total weight",
+		"total_repetitions": "Total repetitions",
+		"total_up":          "Total up",
+		"total_down":        "Total down",
+
+		"average_speed_no_pause": "Average speed",
+		"max_speed":              "Max speed",
+	}
+}

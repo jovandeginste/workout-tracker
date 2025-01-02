@@ -1,21 +1,20 @@
-package app
+package database
 
 import (
-	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
 
 type WorkoutFilters struct {
 	db       *gorm.DB
-	Type     database.WorkoutType `query:"type"`
-	Active   bool                 `query:"active"`
-	Since    string               `query:"since"`
-	OrderBy  string               `query:"order_by"`
-	OrderDir string               `query:"order_dir"`
+	Type     WorkoutType `query:"type"`
+	Active   bool        `query:"active"`
+	Since    string      `query:"since"`
+	OrderBy  string      `query:"order_by"`
+	OrderDir string      `query:"order_dir"`
 }
 
-func getWorkoutsFilters(c echo.Context) (*WorkoutFilters, error) {
+func GetWorkoutsFilters(c echo.Context) (*WorkoutFilters, error) {
 	filters := WorkoutFilters{}
 
 	if err := c.Bind(&filters); err != nil {
@@ -56,7 +55,7 @@ func (wf *WorkoutFilters) setTypeFilter() {
 		return
 	}
 
-	wf.db = wf.db.Where(&database.Workout{Type: wf.Type})
+	wf.db = wf.db.Where(&Workout{Type: wf.Type})
 }
 
 func (wf *WorkoutFilters) setSinceFilter() {
@@ -65,7 +64,7 @@ func (wf *WorkoutFilters) setSinceFilter() {
 	}
 
 	sqlDialect := wf.db.Name()
-	wf.db = wf.db.Where(database.GetDateLimitExpression(sqlDialect), "-"+wf.Since)
+	wf.db = wf.db.Where(GetDateLimitExpression(sqlDialect), "-"+wf.Since)
 }
 
 func (wf *WorkoutFilters) setOrderFilter() {
