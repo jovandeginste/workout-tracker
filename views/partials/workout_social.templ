@@ -1,0 +1,58 @@
+package partials
+
+import (
+	"context"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"sort"
+	"strings"
+	"slices"
+)
+
+func workoutDataTitle(ctx context.Context, w *database.Workout) string {
+	preferredUnits := helpers.CurrentUser(ctx).PreferredUnits()
+
+	return helpers.I18n(
+		ctx,
+		`I completed a workout: %s.`,
+		helpers.I18n(ctx, w.Type.String()),
+	) + " " + helpers.I18n(
+		ctx,
+		`It took me %s to go %s. I averaged %s.`,
+		helpers.HumanDuration(w.TotalDuration()),
+		helpers.HumanDistance(ctx, w.TotalDistance())+" "+preferredUnits.Distance(),
+		helpers.HumanSpeed(ctx, w.AverageSpeed())+" "+preferredUnits.Speed(),
+	)
+}
+func workoutDataTags(ctx context.Context, w *database.Workout) string {
+	tags := []string{
+		"workout",
+		helpers.I18n(ctx, w.Type.String()),
+	}
+
+	if c := w.City(); c != "" {
+		tags = append(tags, c)
+	}
+
+	sort.Strings(tags)
+	slices.Compact(tags)
+
+	return strings.Join(tags, ",")
+}
+
+templ WorkoutSocial(w *database.Workout) {
+	<div
+		class="shareon print:hidden"
+		data-url=" "
+		data-title={ workoutDataTitle(ctx, w) }
+		data-hashtags={ workoutDataTags(ctx, w) }
+	>
+		<a class="twitter"></a>
+		<a class="mastodon"></a>
+		<a class="pinterest"></a>
+		<a class="reddit"></a>
+		<a class="teams"></a>
+		<a class="whatsapp"></a>
+		<a class="print"></a>
+	</div>
+}

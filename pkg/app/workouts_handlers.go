@@ -53,7 +53,7 @@ func (a *App) workoutsHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -65,9 +65,7 @@ func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["workout"] = w
-
-	return c.Render(http.StatusOK, "workouts_show.html", data)
+	return Render(c, http.StatusOK, workouts.Show(w))
 }
 
 func (a *App) workoutsAddHandler(c echo.Context) error {

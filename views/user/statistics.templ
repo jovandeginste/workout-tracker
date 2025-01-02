@@ -97,15 +97,9 @@ templ Statistics(u *database.User, since, per string) {
 			</div>
 			@partials.Footer()
 			{{ currentUser := helpers.CurrentUser(ctx) }}
-			{{
-	preferredUnits := map[string]string{
-		"Distance": currentUser.PreferredUnits().Distance(),
-		"Speed":    currentUser.PreferredUnits().Speed(),
-	}
-			}}
 			{{ stats, _ := currentUser.GetStatisticsFor(since, per) }}
 			@templ.JSONScript("stats", stats)
-			@templ.JSONScript("preferred-units", preferredUnits)
+			@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJson(currentUser.PreferredUnits()))
 			<script>
       var stats = JSON.parse(document.getElementById('stats').textContent)
       var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)

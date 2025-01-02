@@ -200,6 +200,10 @@ func (m *MapData) Save(db *gorm.DB) error {
 }
 
 func (m *MapPoint) AverageSpeed() float64 {
+	if m.Duration.Seconds() == 0 {
+		return 0
+	}
+
 	return m.Distance / m.Duration.Seconds()
 }
 

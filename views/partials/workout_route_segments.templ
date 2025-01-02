@@ -1,0 +1,44 @@
+package partials
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ WorkoutRouteSegments(segments []*database.RouteSegmentMatch) {
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>{ helpers.I18n(ctx, "Name") }</th>
+				<th>{ helpers.I18n(ctx, "Distance") }</th>
+				<th>{ helpers.I18n(ctx, "Duration") }</th>
+				<th>{ helpers.I18n(ctx, "Speed") }</th>
+				<th>{ helpers.I18n(ctx, "Tempo") }</th>
+			</tr>
+		</thead>
+		<tbody class="whitespace-nowrap font-mono">
+			for _, s := range segments {
+				<tr>
+					<td>
+						@helpers.IconFor("route-segment")
+					</td>
+					<td class="flex flex-wrap gap-1">
+						<a href="{{ RouteFor `route-segment-show` .RouteSegment.ID }}">{ s.RouteSegment.Name }</a>
+					</td>
+					<td>
+						{ helpers.HumanDistance(ctx, s.Distance) } { pu.Distance() }
+					</td>
+					<td>{ helpers.HumanDuration(s.Duration) }</td>
+					<td>
+						{ helpers.HumanSpeed(ctx, s.AverageSpeed()) } { pu.Speed() }
+					</td>
+					<td>
+						{ helpers.HumanTempo(ctx, s.AverageSpeed()) } { pu.Tempo() }
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

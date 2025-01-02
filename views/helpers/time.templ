@@ -13,11 +13,18 @@ func RelativeDate(ctx context.Context, t *time.Time) string {
 }
 
 func LocalDate(ctx context.Context, t *time.Time) string {
-	return t.In(CurrentUser(ctx).Timezone()).Format(timeFormat)
+	return t.In(timezone(ctx)).Format(timeFormat)
 }
 
 func LocalTime(ctx context.Context, t *time.Time) time.Time {
-	return t.In(CurrentUser(ctx).Timezone())
+	return t.In(timezone(ctx))
+}
+
+func Timezone(ctx context.Context) string {
+	return timezone(ctx).String()
+}
+func timezone(ctx context.Context) *time.Location {
+	return CurrentUser(ctx).Timezone()
 }
 
 func InTimezone(t *time.Time, tz string) time.Time {

@@ -190,14 +190,18 @@ function makeMap(params) {
   });
 }
 
-function set_marker(title, lat, lon) {
+function set_marker(obj) {
+  var lat = obj.getAttribute("data-lat");
+  var lng = obj.getAttribute("data-lng");
+  var title = obj.getAttribute("data-title");
+
   if (!hoverMarker) return;
 
   if (title != null) {
     hoverMarker.bindTooltip(title);
   }
 
-  hoverMarker.setLatLng([lat, lon]);
+  hoverMarker.setLatLng([lat, lng]);
 
   // Adding popup to the marker
   hoverMarker.openTooltip();

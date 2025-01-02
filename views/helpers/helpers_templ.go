@@ -96,5 +96,14 @@ func OrderByOptions() map[string]string {
 		"max_speed":              "Max speed",
 	}
 }
+func PreferredUnitsToJson(units *database.UserPreferredUnits) map[string]string {
+	return map[string]string{
+		"Distance":  units.Distance(),
+		"Speed":     units.Speed(),
+		"Elevation": units.Elevation(),
+		"HeartRate": units.HeartRate(),
+		"Cadence":   units.Cadence(),
+	}
+}
 
 var _ = templruntime.GeneratedTemplate
