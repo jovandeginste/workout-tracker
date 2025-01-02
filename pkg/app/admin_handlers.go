@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/admin"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,13 +27,14 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) adminRootHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	if err := a.addUsers(data); err != nil {
+	users, err := database.GetUsers(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	return c.Render(http.StatusOK, "admin_root.html", data)
+	return Render(c, http.StatusOK, admin.Root(users))
 }
 
 func (a *App) adminUserEditHandler(c echo.Context) error {

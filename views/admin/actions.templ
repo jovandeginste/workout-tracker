@@ -1,0 +1,62 @@
+package admin
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ actions(u *database.User) {
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-edit", u.ID)) } method="get">
+		<button class="edit" title={ helpers.I18n(ctx, "edit") }>
+			<a>
+				@helpers.IconFor("edit")
+			</a>
+		</button>
+	</form>
+	<form onsubmit="return false">
+		<button
+			onclick="openModal('modalConfirmDelete', this)"
+			data-id={ fmt.Sprintf("%d", u.ID) }
+			class="dangerous"
+			title={ helpers.I18n(ctx, "delete") }
+		>
+			<a>
+				@helpers.IconFor("delete")
+			</a>
+		</button>
+	</form>
+	<div id={ fmt.Sprintf("modalConfirmDelete_%d", u.ID) } class="modal">
+		<div class="window">
+			<div class="flex justify-end p-2">
+				<button
+					onclick="closeModal('modalConfirmDelete', this)"
+					data-id={ fmt.Sprintf("%d", u.ID) }
+					type="button"
+					class="close-modal"
+				>
+					<a>
+						@helpers.IconFor("close")
+					</a>
+				</button>
+			</div>
+			<div class="modal-content">
+				<h3>{ helpers.I18n(ctx, "Are you sure you want to delete this %s?", helpers.I18n(ctx, "user")) }</h3>
+				<div class="flex">
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-delete", u.ID)) }>
+						<button class="confirm">{ helpers.I18n(ctx, "Continue") }</button>
+					</form>
+					<form onsubmit="return false">
+						<button
+							onclick="closeModal('modalConfirmDelete', this)"
+							data-id={ fmt.Sprintf("%d", u.ID) }
+							class="cancel"
+						>
+							{ helpers.I18n(ctx, "Cancel") }
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+}

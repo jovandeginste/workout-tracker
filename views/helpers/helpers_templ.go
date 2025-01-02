@@ -106,4 +106,12 @@ func PreferredUnitsToJson(units *database.UserPreferredUnits) map[string]string 
 	}
 }
 
+func BoolToHTML(b bool) string {
+	if b {
+		return `<i class="text-green-500 icon-[fa-solid--check]"></i>`
+	}
+
+	return `<i class="text-rose-500 icon-[fa-solid--times]"></i>`
+}
+
 var _ = templruntime.GeneratedTemplate
