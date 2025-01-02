@@ -1,0 +1,74 @@
+package equipment
+
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Add() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<div class="inner-form">
+					<h2>
+						@helpers.IconFor("equipment-add")
+						{ helpers.I18n(ctx, "Add equipment") }
+					</h2>
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-create")) }>
+						<table class="sm:table-fixed">
+							<tbody>
+								<tr>
+									<td>
+										<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+									</td>
+									<td>
+										<input type="text" id="name" name="name"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="description">{ helpers.I18n(ctx, "Description") }</label>
+									</td>
+									<td>
+										<textarea
+											type="text"
+											id="description"
+											name="description"
+											rows="10"
+										></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="active">{ helpers.I18n(ctx, "Active") }</label>
+									</td>
+									<td>
+										<input
+											type="checkbox"
+											id="active"
+											name="active"
+											value="true"
+											checked="true"
+										/>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<button type="submit">{ helpers.I18n(ctx, "Add equipment") }</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

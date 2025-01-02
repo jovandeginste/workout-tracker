@@ -42,16 +42,16 @@ func (a *App) equipmentHandler(c echo.Context) error {
 
 	u := a.getCurrentUser(c)
 
-	w, err := u.GetAllEquipment(a.db)
+	e, err := u.GetAllEquipment(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, equipment.List(w))
+	return Render(c, http.StatusOK, equipment.List(e))
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -63,14 +63,12 @@ func (a *App) equipmentShowHandler(c echo.Context) error {
 		return a.redirectWithError(c, "/equipment", err)
 	}
 
-	data["equipment"] = e
-
-	return c.Render(http.StatusOK, "equipment_show.html", data)
+	return Render(c, http.StatusOK, equipment.Show(e))
 }
 
 func (a *App) equipmentAddHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "equipment_add.html", data)
+	a.setContext(c)
+	return Render(c, http.StatusOK, equipment.Add())
 }
 
 func (a *App) equipmentDeleteHandler(c echo.Context) error { //nolint:dupl
@@ -111,14 +109,12 @@ func (a *App) equipmentUpdateHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, "/equipment", err)
 	}
 
-	data["equipment"] = equipment
-
-	return c.Render(http.StatusOK, "equipment_edit.html", data)
+	return Render(c, http.StatusOK, equipment.Edit(e))
 }

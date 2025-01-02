@@ -32,6 +32,7 @@ templ List(equipment []*database.Equipment) {
 					<thead>
 						<tr>
 							<th>{ helpers.I18n(ctx, "Name") }</th>
+							<th>{ helpers.I18n(ctx, "Active") }</th>
 							<th>{ helpers.I18n(ctx, "Workouts") }</th>
 							<th></th>
 						</tr>
@@ -41,6 +42,9 @@ templ List(equipment []*database.Equipment) {
 							<tr>
 								<td>
 									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
+								</td>
+								<td>
+									@templ.Raw(helpers.BoolToHTML(e.Active))
 								</td>
 								<td>{ fmt.Sprintf("%d", len(e.Workouts)) }</td>
 								<td>
