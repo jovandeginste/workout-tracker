@@ -38,13 +38,17 @@ func (a *App) adminRootHandler(c echo.Context) error {
 }
 
 func (a *App) adminUserEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	if err := a.adminAddUser(data, c); err != nil {
-		a.addError(data, c)
+	a.setContext(c)
+	user, err := a.getUser(c)
+	if err != nil {
 		return a.redirectWithError(c, "/admin", err)
 	}
 
-	return c.Render(http.StatusOK, "admin_user_edit.html", data)
+	if user == nil {
+		return a.redirectWithError(c, "/admin", ErrUserNotFound)
+	}
+
+	return Render(c, http.StatusOK, admin.EditUser(user))
 }
 
 func (a *App) adminUserUpdateHandler(c echo.Context) error {
