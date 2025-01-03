@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ WorkoutActions(w *database.Workout) {
+templ Actions(w *database.Workout) {
 	if w.HasFile() {
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get">
 			<button class="download" title={ helpers.I18n(ctx, "download") }>

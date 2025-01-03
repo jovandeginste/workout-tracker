@@ -99,7 +99,7 @@ templ Statistics(u *database.User, since, per string) {
 			{{ currentUser := helpers.CurrentUser(ctx) }}
 			{{ stats, _ := currentUser.GetStatisticsFor(since, per) }}
 			@templ.JSONScript("stats", stats)
-			@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJson(currentUser.PreferredUnits()))
+			@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(currentUser.PreferredUnits()))
 			<script>
       var stats = JSON.parse(document.getElementById('stats').textContent)
       var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)

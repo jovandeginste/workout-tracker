@@ -1,11 +1,11 @@
-package partials
+package workouts
 
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ WorkoutMap(w *database.Workout) {
+templ Map(w *database.Workout) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<div
 		id="map"
@@ -52,7 +52,7 @@ templ WorkoutMap(w *database.Workout) {
 			Lng:       p.Lng,
 			Speed:     p.AverageSpeed(),
 			Elevation: p.ExtraMetrics.Get("elevation"),
-			Title:     WorkoutPointTitle(ctx, pu, &p),
+			Title:     PointTitle(ctx, pu, &p),
 		})
 	}
 		}}
@@ -76,7 +76,7 @@ templ WorkoutMap(w *database.Workout) {
 	</div>
 	<div class="flex flex-wrap">
 		if !helpers.AppConfig(ctx).SocialsDisabled && !helpers.CurrentUser(ctx).Profile.SocialsDisabled {
-			@WorkoutSocial(w)
+			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
 			<a href="#" title="{{ i18n `Show map in full width` }}" onclick="fullMap()">

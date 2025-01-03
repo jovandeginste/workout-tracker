@@ -1,11 +1,10 @@
-package partials
+package user
 
 import (
 	"fmt"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
-	"html"
+	"github.com/jovandeginste/workout-tracker/views/partials"
 	"time"
 )
 
@@ -66,25 +65,6 @@ templ StatsRecordDate(id uint, date *time.Time) {
 	</span>
 }
 
-templ PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *database.UserPreferredUnits) {
-	{{ 	speedUnit := preferredUnits.Speed() }}
-	{{ 	speedFormatter := templatehelpers.HumanSpeedFor(speedUnit) }}
-	{{ 	primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit) }}
-	{{ 	tempoUnit := preferredUnits.Tempo() }}
-	{{ 	tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit) }}
-	{{ 	secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit) }}
-	if *wt == database.WorkoutTypeRunning {
-		<!-- Swap tempo and speed, so that tempo is primarily shown for running -->
-		<abbr title={ primaryText }>{ secondaryText }</abbr>
-	} else {
-		<abbr title={ secondaryText }>{ primaryText }</abbr>
-	}
-}
-
-templ PreferredAverageSpeedMetric(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
-	@PreferredSpeedMetric(&w.Type, w.Data.AverageSpeedNoPause, preferredUnits)
-}
-
 templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<h3>
@@ -101,7 +81,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
-					@PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeed.Value, preferredUnits)
+					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeed.Value, preferredUnits)
 				</td>
 				<td>
 					@StatsRecordDistanceDate(&rec.AverageSpeed)
@@ -115,7 +95,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
-					@PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeedNoPause.Value, preferredUnits)
+					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeedNoPause.Value, preferredUnits)
 				</td>
 				<td>
 					@StatsRecordDistanceDate(&rec.AverageSpeedNoPause)
@@ -129,7 +109,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
-					@PreferredSpeedMetric(&rec.WorkoutType, rec.MaxSpeed.Value, preferredUnits)
+					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.MaxSpeed.Value, preferredUnits)
 				</td>
 				<td>
 					@StatsRecordDistanceDate(&rec.MaxSpeed)

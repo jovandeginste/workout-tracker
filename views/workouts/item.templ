@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ WorkoutItem(w *database.Workout) {
+templ Item(w *database.Workout) {
 	<div class="sm:w-[300px] p-1">
 		<div class="workout-item">
 			<div class="flex flex-wrap gap-2">
@@ -33,7 +33,7 @@ templ WorkoutItem(w *database.Workout) {
 				</abbr>
 			</div>
 			<span class="text-xs">
-				@WorkoutsListDetails(w)
+				@ListDetails(w)
 			</span>
 		</div>
 	</div>

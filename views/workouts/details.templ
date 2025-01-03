@@ -1,12 +1,13 @@
-package partials
+package workouts
 
 import (
 	"fmt"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
 )
 
-templ WorkoutEventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
+templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
 	@helpers.IconFor(w.Type.String())
 	switch  {
 		case w.Type.IsDistance():
@@ -20,7 +21,7 @@ templ WorkoutEventTitle(w *database.Workout, preferredUnits *database.UserPrefer
 	}
 }
 
-templ WorkoutDetails(w *database.Workout) {
+templ Details(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
@@ -37,7 +38,7 @@ templ WorkoutDetails(w *database.Workout) {
 					@helpers.IconFor("date")
 				</td>
 				<td>
-					@SnippetDate(w.Date)
+					@partials.SnippetDate(w.Date)
 				</td>
 			</tr>
 			<tr>
@@ -144,7 +145,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 					>
 						@helpers.IconFor("timezone")
 					</a>
-					@SnippetDate(w.Date)
+					@partials.SnippetDate(w.Date)
 					<div id="timeinfo" class="hidden">
 						<ul>
 							<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>

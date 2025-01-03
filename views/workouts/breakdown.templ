@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ WorkoutBreakdown(stats database.WorkoutBreakdown) {
+templ Breakdown(stats database.WorkoutBreakdown) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<table>
 		<thead>
@@ -25,7 +25,7 @@ templ WorkoutBreakdown(stats database.WorkoutBreakdown) {
 					onmouseout="clear_marker()"
 					data-lat={ fmt.Sprintf("%f", i.LastPoint.Lat) }
 					data-lng={ fmt.Sprintf("%f", i.LastPoint.Lng) }
-					data-title={ WorkoutPointTitle(ctx, preferredUnits, i.LastPoint) }
+					data-title={ PointTitle(ctx, preferredUnits, i.LastPoint) }
 				>
 					<td class="text-right">
 						if i.IsWorst {

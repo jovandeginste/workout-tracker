@@ -1,11 +1,11 @@
-package partials
+package user
 
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ UserProfileCalendar(workouts []*database.Workout) {
+templ ProfileCalendar(workouts []*database.Workout) {
 	<div class="inner-form min-h-[450px]" id="calendar"></div>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/fullcalendar.min.js" }></script>
 	@templ.JSONScript("api-workouts-calendar-route", helpers.RouteFor(ctx, "api-workouts-calendar"))

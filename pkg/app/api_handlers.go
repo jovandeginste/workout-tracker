@@ -10,7 +10,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/importers"
-	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -458,16 +458,16 @@ func (a *App) apiCalendar(c echo.Context) error {
 		db = db.Where("workouts.date < ?", queryParams.End)
 	}
 
-	workouts, err := u.GetWorkouts(db)
+	wos, err := u.GetWorkouts(db)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	for _, w := range workouts {
+	for _, w := range wos {
 		buf := templ.GetBuffer()
 		defer templ.ReleaseBuffer(buf)
 
-		t := partials.WorkoutEventTitle(w, u.PreferredUnits())
+		t := workouts.EventTitle(w, u.PreferredUnits())
 		if err := t.Render(c.Request().Context(), buf); err != nil {
 			return a.renderAPIError(c, resp, err)
 		}
@@ -498,7 +498,7 @@ func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geoj
 	buf := templ.GetBuffer()
 	defer templ.ReleaseBuffer(buf)
 
-	t := partials.WorkoutDetails(w)
+	t := workouts.Details(w)
 	if err := t.Render(c.Request().Context(), buf); err != nil {
 		return
 	}

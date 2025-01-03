@@ -11,7 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
-	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 )
 
 func RouteSegmentMap(s *database.RouteSegment) templ.Component {
@@ -93,7 +93,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 				Lng:       p.Lng,
 				Speed:     p.AverageSpeed(),
 				Elevation: p.ExtraMetrics.Get("elevation"),
-				Title:     partials.WorkoutPointTitle(ctx, pu, &p),
+				Title:     workouts.PointTitle(ctx, pu, &p),
 			})
 		}
 		templ_7745c5c3_Err = templ.JSONScript("map-points", points).Render(ctx, templ_7745c5c3_Buffer)

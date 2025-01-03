@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 templ DummyWorkoutPointTitle() {
 }
 
-func WorkoutPointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
+func PointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
 	t := []string{
 		"<ul><li><b>" + helpers.I18n(ctx, "Time") + ":</b> ",
 		helpers.LocalTime(ctx, &p.Time).Format("15:04"),

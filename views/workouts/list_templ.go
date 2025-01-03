@@ -508,7 +508,7 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = partials.WorkoutsListDetails(w).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ListDetails(w).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -534,7 +534,7 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = partials.WorkoutActions(w).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Actions(w).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

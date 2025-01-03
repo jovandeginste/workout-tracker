@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"context"
@@ -40,7 +40,7 @@ func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	return strings.Join(tags, ",")
 }
 
-templ WorkoutSocial(w *database.Workout) {
+templ Social(w *database.Workout) {
 	<div
 		class="shareon print:hidden"
 		data-url=" "
