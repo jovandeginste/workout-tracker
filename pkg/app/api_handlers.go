@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -479,7 +478,7 @@ func (a *App) apiCalendar(c echo.Context) error {
 		events = append(events, Event{
 			Title: d,
 			Start: w.Date,
-			URL:   "/workouts/" + fmt.Sprintf("%d", w.ID),
+			URL:   a.echo.Reverse("workout-show", w.ID),
 		})
 	}
 	resp.Results = events

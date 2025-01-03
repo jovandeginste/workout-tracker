@@ -137,7 +137,7 @@ type contextValue struct {
 	echo.Context
 }
 
-func (c contextValue) Get(key string) interface{} {
+func (c contextValue) Get(key string) any {
 	if val := c.Context.Get(key); val != nil {
 		return val
 	}
@@ -145,12 +145,12 @@ func (c contextValue) Get(key string) interface{} {
 	return c.Request().Context().Value(key)
 }
 
-func (c contextValue) Set(key string, val interface{}) {
+func (c contextValue) Set(key string, val any) {
 	// we're replacing the whole Request in echo.Context
 	// with a copied request that has the updated context value
 	c.SetRequest(
 		c.Request().WithContext(
-			context.WithValue(c.Request().Context(), key, val),
+			context.WithValue(c.Request().Context(), key, val), //nolint:staticcheck
 		),
 	)
 	c.Context.Set(key, val)

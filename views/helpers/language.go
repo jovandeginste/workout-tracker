@@ -6,7 +6,6 @@ import (
 
 	emojiflag "github.com/jayco/go-emoji-flag"
 	"golang.org/x/text/language"
-	lng "golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 )
 
@@ -23,7 +22,7 @@ func Language(ctx context.Context) string {
 	return translator(ctx).Language().String()
 }
 
-func SupportedLanguages(ctx context.Context) []lng.Tag {
+func SupportedLanguages(ctx context.Context) []language.Tag {
 	return genericTranslator(ctx).SupportedLanguages()
 }
 

@@ -61,7 +61,7 @@ func OrderByOptions() map[string]string {
 	}
 }
 
-func PreferredUnitsToJson(units *database.UserPreferredUnits) map[string]string {
+func PreferredUnitsToJSON(units *database.UserPreferredUnits) map[string]string {
 	return map[string]string{
 		"Distance":  units.Distance(),
 		"Speed":     units.Speed(),
