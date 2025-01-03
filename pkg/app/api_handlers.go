@@ -166,12 +166,12 @@ func (a *App) apiCenters(c echo.Context) error {
 	u := a.getCurrentUser(c)
 	db := a.db.Preload("Data").Preload("Data.Details")
 
-	workouts, err := u.GetWorkouts(db)
+	wos, err := u.GetWorkouts(db)
 	if err != nil {
 		resp.AddError(err)
 	}
 
-	for _, w := range workouts {
+	for _, w := range wos {
 		if w.Data == nil {
 			continue
 		}
@@ -207,12 +207,12 @@ func (a *App) apiCoordinates(c echo.Context) error {
 	db := a.db.Preload("Data").Preload("Data.Details")
 	u := a.getCurrentUser(c)
 
-	workouts, err := u.GetWorkouts(db)
+	wos, err := u.GetWorkouts(db)
 	if err != nil {
 		resp.AddError(err)
 	}
 
-	for _, w := range workouts {
+	for _, w := range wos {
 		if !w.HasTracks() {
 			continue
 		}
@@ -238,7 +238,7 @@ func (a *App) apiCoordinates(c echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /records [get]
-func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
+func (a *App) apiRecordsHandler(c echo.Context) error {
 	resp := APIResponse{}
 
 	var workoutType string
@@ -266,7 +266,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /totals [get]
-func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
+func (a *App) apiTotalsHandler(c echo.Context) error {
 	resp := APIResponse{}
 
 	var workoutType string

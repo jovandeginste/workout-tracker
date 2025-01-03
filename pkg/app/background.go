@@ -205,6 +205,7 @@ func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegm
 		}
 
 		l.Debug(fmt.Sprintf("rematchRouteSegmentsToWorkouts %d matching %d route segments against %d workouts OK", batchNo, len(routeSegments), len(workoutsBatch)))
+
 		return nil
 	})
 
@@ -214,6 +215,7 @@ func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegm
 
 	// Mark all route segments as non-dirty and save matches
 	var errs error
+
 	for _, rs := range routeSegments {
 		rs.Dirty = false
 		if err := rs.Save(a.db); err != nil {
@@ -221,6 +223,7 @@ func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegm
 			l.Error("Worker error saving route segment: " + err.Error())
 		}
 	}
+
 	return errs
 }
 

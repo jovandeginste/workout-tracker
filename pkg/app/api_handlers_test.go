@@ -6,21 +6,28 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/gorm"
 )
 
-func TestAPI_WhoAmI(t *testing.T) {
+func defaultAPIUser(db *gorm.DB) *database.User {
+	u := defaultUser(db)
+	u.APIKey = "my-api-key"
+	u.Profile.APIActive = true
+	u.Save(db)
+	u.Profile.Save(db)
+
+	return u
+}
+
+func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
 	a := configuredApp(t)
 	e := a.echo
 	ts := httptest.NewServer(e)
 	url := ts.URL + e.Reverse("api-whoami")
-	u := defaultUser(a.db)
-
-	u.APIKey = "my-api-key"
-	u.Profile.APIActive = true
-	u.Save(a.db)
-	u.Profile.Save(a.db)
+	u := defaultAPIUser(a.db)
 
 	t.Run("with valid authorization header", func(t *testing.T) {
 		client := &http.Client{}

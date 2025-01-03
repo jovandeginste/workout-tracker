@@ -1,39 +1,57 @@
 ## What's Changed
 
-- Remove dead functions
-- Fix remaining linting issues
-- Fix all linting issues
-- Fix all the tests
-- Remove obsolete test
-- Replace templ with go files where userful
-- Remove the old templating engine code
-- Convert the final html templates to templ
-- Add final route segment templ
-- Convert route segments to templ
-- Remove old admin html templates
-- Convert all equipment to templ
-- Convert equipment list to templ
-- Convert user editor to templ
-- Convert admin root page to templ
-- Convert user profile editor to templ
-- Convert workout show to templ
-- Convert workout list to templ
-- Fix anonymous humanizer/translator
-- Fix heatmap variables
-- Convert statistics to templ
-- Print details according to type
-- Fix inconsistent naming
-- Fix the profile calendar view
-- Convert dashboard to templ
-- Restructure the components into packages
-- Let the IDE do the formatting
-- Convert user sign-in form to templ
-- Cleanup, add version update html
-- Convert full heatmap to templ
-- Add all parts for a full page to templ
-- More learnings
-- Trying to get more basics to work
-- Switch from html/template to templ
+- Fix some more linting issues
+- Update the swagger API docs, by @jovandeginste, in
+  [#362](https://github.com/jovandeginste/workout-tracker/pull/362)
+- Add tests for the API, by @jovandeginste, in
+  [#360](https://github.com/jovandeginste/workout-tracker/pull/360)
+- Fix workouts display at time 0, by @jovandeginste, in
+  [#361](https://github.com/jovandeginste/workout-tracker/pull/361)
+- chore(deps): bump the all group across 1 directory with 6 updates, by
+  @jovandeginste, in
+  [#358](https://github.com/jovandeginste/workout-tracker/pull/358)
+  - chore(deps): bump the all group across 1 directory with 6 updates, by
+    @dependabot[bot]
+- Further cleanup after switch to templ, by @jovandeginste, in
+  [#359](https://github.com/jovandeginste/workout-tracker/pull/359)
+  - Relocate partials to their respective package, by @jovandeginste
+  - Further cleanup, by @jovandeginste
+- Switch html/template to templ, by @jovandeginste, in
+  [#357](https://github.com/jovandeginste/workout-tracker/pull/357)
+  - Remove dead functions, by @jovandeginste
+  - Fix remaining linting issues, by @jovandeginste
+  - Fix all linting issues, by @jovandeginste
+  - Fix all the tests, by @jovandeginste
+  - Remove obsolete test, by @jovandeginste
+  - Replace templ with go files where userful, by @jovandeginste
+  - Remove the old templating engine code, by @jovandeginste
+  - Convert the final html templates to templ, by @jovandeginste
+  - Add final route segment templ, by @jovandeginste
+  - Convert route segments to templ, by @jovandeginste
+  - Remove old admin html templates, by @jovandeginste
+  - Convert all equipment to templ, by @jovandeginste
+  - Convert equipment list to templ, by @jovandeginste
+  - Convert user editor to templ, by @jovandeginste
+  - Convert admin root page to templ, by @jovandeginste
+  - Convert user profile editor to templ, by @jovandeginste
+  - Convert workout show to templ, by @jovandeginste
+  - Convert workout list to templ, by @jovandeginste
+  - Fix anonymous humanizer/translator, by @jovandeginste
+  - Fix heatmap variables, by @jovandeginste
+  - Convert statistics to templ, by @jovandeginste
+  - Print details according to type, by @jovandeginste
+  - Fix inconsistent naming, by @jovandeginste
+  - Fix the profile calendar view, by @jovandeginste
+  - Convert dashboard to templ, by @jovandeginste
+  - Restructure the components into packages, by @jovandeginste
+  - Let the IDE do the formatting, by @jovandeginste
+  - Convert user sign-in form to templ, by @jovandeginste
+  - Cleanup, add version update html, by @jovandeginste
+  - Convert full heatmap to templ, by @jovandeginste
+  - Add all parts for a full page to templ, by @jovandeginste
+  - More learnings, by @jovandeginste
+  - Trying to get more basics to work, by @jovandeginste
+  - Switch from html/template to templ, by @jovandeginste
 - A number of fixes, by @jovandeginste, in
   [#355](https://github.com/jovandeginste/workout-tracker/pull/355)
   - Fix the user auth flow for API endpoints, by @jovandeginste
