@@ -30,6 +30,7 @@ func defaultUser(db *gorm.DB) *database.User {
 		Username: "my-username",
 		Password: "my-password",
 		Name:     "my-name",
+		Active:   true,
 	}
 
 	u.SetDB(db)
