@@ -352,6 +352,69 @@ const docTemplate = `{
                 }
             }
         },
+        "/workouts/coordinates": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List the calendar events of all workouts of the current user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Start date of the calendar view",
+                        "name": "start",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date of the calendar view",
+                        "name": "end",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/app.Event"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/workouts/{id}": {
             "get": {
                 "produces": [
@@ -494,6 +557,20 @@ const docTemplate = `{
                 "results": {}
             }
         },
+        "app.Event": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "database.BreakdownItem": {
             "type": "object",
             "properties": {
@@ -533,6 +610,30 @@ const docTemplate = `{
                         }
                     ]
                 },
+                "localAverageSpeed": {
+                    "description": "The average speed in the bucket, localized",
+                    "type": "string"
+                },
+                "localCadence": {
+                    "description": "The starting cadence in the bucket, localized",
+                    "type": "string"
+                },
+                "localDistance": {
+                    "description": "The total distance in the bucket, localized",
+                    "type": "string"
+                },
+                "localElevation": {
+                    "description": "The starting elevation in the bucket, localized",
+                    "type": "string"
+                },
+                "localHeartRate": {
+                    "description": "The starting heart rate in the bucket, localized",
+                    "type": "string"
+                },
+                "localTotalDistance": {
+                    "description": "Total distance in all items up to and including this item",
+                    "type": "string"
+                },
                 "speed": {
                     "description": "Speed in this item",
                     "type": "number"
@@ -544,6 +645,10 @@ const docTemplate = `{
                 "totalDuration": {
                     "description": "Total duration in all items up to and including this item",
                     "type": "integer"
+                },
+                "totalDurationSeconds": {
+                    "description": "The total duration in the bucket, in seconds",
+                    "type": "number"
                 },
                 "unitCount": {
                     "description": "Count of the unit per item",
@@ -578,6 +683,34 @@ const docTemplate = `{
                     "description": "The total duration in the bucket",
                     "type": "integer"
                 },
+                "durationSeconds": {
+                    "description": "The total duration in the bucket, in seconds",
+                    "type": "number"
+                },
+                "localAverageSpeed": {
+                    "description": "The average speed in the bucket, localized",
+                    "type": "string"
+                },
+                "localAverageSpeedNoPause": {
+                    "description": "The average speed without pause in the bucket, localized",
+                    "type": "string"
+                },
+                "localDistance": {
+                    "description": "The total distance in the bucket, localized",
+                    "type": "string"
+                },
+                "localDuration": {
+                    "description": "The total duration in the bucket, localized",
+                    "type": "string"
+                },
+                "localMaxSpeed": {
+                    "description": "The max speed in the bucket, localized",
+                    "type": "string"
+                },
+                "localUp": {
+                    "description": "The total up elevation in the bucket, localized",
+                    "type": "string"
+                },
                 "maxSpeed": {
                     "description": "The max speed in the bucket",
                     "type": "number"
@@ -596,6 +729,40 @@ const docTemplate = `{
                 },
                 "workouts": {
                     "description": "The number of workouts in the bucket",
+                    "type": "integer"
+                }
+            }
+        },
+        "database.Buckets": {
+            "type": "object",
+            "properties": {
+                "buckets": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/database.Bucket"
+                    }
+                },
+                "localWorkoutType": {
+                    "type": "string"
+                },
+                "workoutType": {
+                    "$ref": "#/definitions/database.WorkoutType"
+                }
+            }
+        },
+        "database.DurationRecord": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "The timestamp of the record",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The workout ID of the record",
+                    "type": "integer"
+                },
+                "value": {
+                    "description": "The value of the record",
                     "type": "integer"
                 }
             }
@@ -652,6 +819,23 @@ const docTemplate = `{
                 "type": "number"
             }
         },
+        "database.Float64Record": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "The timestamp of the record",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The workout ID of the record",
+                    "type": "integer"
+                },
+                "value": {
+                    "description": "The value of the record",
+                    "type": "number"
+                }
+            }
+        },
         "database.GPXData": {
             "type": "object",
             "properties": {
@@ -692,12 +876,16 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "lat": {
-                    "description": "The latitude of the center of the workout",
+                    "description": "Latitude",
                     "type": "number"
                 },
                 "lng": {
-                    "description": "The longitude of the center of the workout",
+                    "description": "Longitude",
                     "type": "number"
+                },
+                "tz": {
+                    "description": "Timezone",
+                    "type": "string"
                 }
             }
         },
@@ -746,6 +934,13 @@ const docTemplate = `{
                             "$ref": "#/definitions/database.MapDataDetails"
                         }
                     ]
+                },
+                "extraMetrics": {
+                    "description": "Extra metrcis available",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "id": {
                     "type": "integer"
@@ -1087,10 +1282,7 @@ const docTemplate = `{
                     "description": "The statistics buckets",
                     "type": "object",
                     "additionalProperties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/definitions/database.Bucket"
-                        }
+                        "$ref": "#/definitions/database.Buckets"
                     }
                 },
                 "userID": {
@@ -1279,7 +1471,7 @@ const docTemplate = `{
                     "description": "The record with the maximum average speed",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.float64Record"
+                            "$ref": "#/definitions/database.Float64Record"
                         }
                     ]
                 },
@@ -1287,7 +1479,7 @@ const docTemplate = `{
                     "description": "The record with the maximum average speed without pause",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.float64Record"
+                            "$ref": "#/definitions/database.Float64Record"
                         }
                     ]
                 },
@@ -1295,7 +1487,7 @@ const docTemplate = `{
                     "description": "The record with the maximum distance",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.float64Record"
+                            "$ref": "#/definitions/database.Float64Record"
                         }
                     ]
                 },
@@ -1303,7 +1495,7 @@ const docTemplate = `{
                     "description": "The record with the maximum duration",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.durationRecord"
+                            "$ref": "#/definitions/database.DurationRecord"
                         }
                     ]
                 },
@@ -1311,7 +1503,7 @@ const docTemplate = `{
                     "description": "The record with the maximum max speed",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.float64Record"
+                            "$ref": "#/definitions/database.Float64Record"
                         }
                     ]
                 },
@@ -1319,7 +1511,7 @@ const docTemplate = `{
                     "description": "The record with the maximum up elevation",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/database.float64Record"
+                            "$ref": "#/definitions/database.Float64Record"
                         }
                     ]
                 },
@@ -1366,40 +1558,6 @@ const docTemplate = `{
                 "WorkoutTypeWeightLifting"
             ]
         },
-        "database.durationRecord": {
-            "type": "object",
-            "properties": {
-                "date": {
-                    "description": "The timestamp of the record",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "The workout ID of the record",
-                    "type": "integer"
-                },
-                "value": {
-                    "description": "The value of the record",
-                    "type": "integer"
-                }
-            }
-        },
-        "database.float64Record": {
-            "type": "object",
-            "properties": {
-                "date": {
-                    "description": "The timestamp of the record",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "The workout ID of the record",
-                    "type": "integer"
-                },
-                "value": {
-                    "description": "The value of the record",
-                    "type": "number"
-                }
-            }
-        },
         "geo.Address": {
             "type": "object",
             "properties": {
@@ -1440,6 +1598,49 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "geojson.Feature": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "geometry": {},
+                "id": {},
+                "properties": {
+                    "$ref": "#/definitions/geojson.Properties"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "geojson.FeatureCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/geojson.Feature"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "geojson.Properties": {
+            "type": "object",
+            "additionalProperties": true
         }
     }
 }`

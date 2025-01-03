@@ -8,6 +8,15 @@ definitions:
         type: array
       results: {}
     type: object
+  app.Event:
+    properties:
+      start:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
   database.BreakdownItem:
     properties:
       counter:
@@ -33,6 +42,24 @@ definitions:
         allOf:
         - $ref: '#/definitions/database.MapPoint'
         description: Last GPS point in this item
+      localAverageSpeed:
+        description: The average speed in the bucket, localized
+        type: string
+      localCadence:
+        description: The starting cadence in the bucket, localized
+        type: string
+      localDistance:
+        description: The total distance in the bucket, localized
+        type: string
+      localElevation:
+        description: The starting elevation in the bucket, localized
+        type: string
+      localHeartRate:
+        description: The starting heart rate in the bucket, localized
+        type: string
+      localTotalDistance:
+        description: Total distance in all items up to and including this item
+        type: string
       speed:
         description: Speed in this item
         type: number
@@ -42,6 +69,9 @@ definitions:
       totalDuration:
         description: Total duration in all items up to and including this item
         type: integer
+      totalDurationSeconds:
+        description: The total duration in the bucket, in seconds
+        type: number
       unitCount:
         description: Count of the unit per item
         type: number
@@ -66,6 +96,27 @@ definitions:
       duration:
         description: The total duration in the bucket
         type: integer
+      durationSeconds:
+        description: The total duration in the bucket, in seconds
+        type: number
+      localAverageSpeed:
+        description: The average speed in the bucket, localized
+        type: string
+      localAverageSpeedNoPause:
+        description: The average speed without pause in the bucket, localized
+        type: string
+      localDistance:
+        description: The total distance in the bucket, localized
+        type: string
+      localDuration:
+        description: The total duration in the bucket, localized
+        type: string
+      localMaxSpeed:
+        description: The max speed in the bucket, localized
+        type: string
+      localUp:
+        description: The total up elevation in the bucket, localized
+        type: string
       maxSpeed:
         description: The max speed in the bucket
         type: number
@@ -78,6 +129,29 @@ definitions:
         description: The type of the workout
       workouts:
         description: The number of workouts in the bucket
+        type: integer
+    type: object
+  database.Buckets:
+    properties:
+      buckets:
+        additionalProperties:
+          $ref: '#/definitions/database.Bucket'
+        type: object
+      localWorkoutType:
+        type: string
+      workoutType:
+        $ref: '#/definitions/database.WorkoutType'
+    type: object
+  database.DurationRecord:
+    properties:
+      date:
+        description: The timestamp of the record
+        type: string
+      id:
+        description: The workout ID of the record
+        type: integer
+      value:
+        description: The value of the record
         type: integer
     type: object
   database.Equipment:
@@ -116,6 +190,18 @@ definitions:
     additionalProperties:
       type: number
     type: object
+  database.Float64Record:
+    properties:
+      date:
+        description: The timestamp of the record
+        type: string
+      id:
+        description: The workout ID of the record
+        type: integer
+      value:
+        description: The value of the record
+        type: number
+    type: object
   database.GPXData:
     properties:
       checksum:
@@ -144,11 +230,14 @@ definitions:
   database.MapCenter:
     properties:
       lat:
-        description: The latitude of the center of the workout
+        description: Latitude
         type: number
       lng:
-        description: The longitude of the center of the workout
+        description: Longitude
         type: number
+      tz:
+        description: Timezone
+        type: string
     type: object
   database.MapData:
     properties:
@@ -178,6 +267,11 @@ definitions:
         allOf:
         - $ref: '#/definitions/database.MapDataDetails'
         description: The details of the workout
+      extraMetrics:
+        description: Extra metrcis available
+        items:
+          type: string
+        type: array
       id:
         type: integer
       maxElevation:
@@ -413,9 +507,7 @@ definitions:
         type: string
       buckets:
         additionalProperties:
-          additionalProperties:
-            $ref: '#/definitions/database.Bucket'
-          type: object
+          $ref: '#/definitions/database.Buckets'
         description: The statistics buckets
         type: object
       userID:
@@ -541,27 +633,27 @@ definitions:
         type: boolean
       averageSpeed:
         allOf:
-        - $ref: '#/definitions/database.float64Record'
+        - $ref: '#/definitions/database.Float64Record'
         description: The record with the maximum average speed
       averageSpeedNoPause:
         allOf:
-        - $ref: '#/definitions/database.float64Record'
+        - $ref: '#/definitions/database.Float64Record'
         description: The record with the maximum average speed without pause
       distance:
         allOf:
-        - $ref: '#/definitions/database.float64Record'
+        - $ref: '#/definitions/database.Float64Record'
         description: The record with the maximum distance
       duration:
         allOf:
-        - $ref: '#/definitions/database.durationRecord'
+        - $ref: '#/definitions/database.DurationRecord'
         description: The record with the maximum duration
       maxSpeed:
         allOf:
-        - $ref: '#/definitions/database.float64Record'
+        - $ref: '#/definitions/database.Float64Record'
         description: The record with the maximum max speed
       totalUp:
         allOf:
-        - $ref: '#/definitions/database.float64Record'
+        - $ref: '#/definitions/database.Float64Record'
         description: The record with the maximum up elevation
       workoutType:
         allOf:
@@ -598,30 +690,6 @@ definitions:
     - WorkoutTypeHiking
     - WorkoutTypePushups
     - WorkoutTypeWeightLifting
-  database.durationRecord:
-    properties:
-      date:
-        description: The timestamp of the record
-        type: string
-      id:
-        description: The workout ID of the record
-        type: integer
-      value:
-        description: The value of the record
-        type: integer
-    type: object
-  database.float64Record:
-    properties:
-      date:
-        description: The timestamp of the record
-        type: string
-      id:
-        description: The workout ID of the record
-        type: integer
-      value:
-        description: The value of the record
-        type: number
-    type: object
   geo.Address:
     properties:
       city:
@@ -648,6 +716,35 @@ definitions:
         type: string
       suburb:
         type: string
+    type: object
+  geojson.Feature:
+    properties:
+      bbox:
+        items:
+          type: number
+        type: array
+      geometry: {}
+      id: {}
+      properties:
+        $ref: '#/definitions/geojson.Properties'
+      type:
+        type: string
+    type: object
+  geojson.FeatureCollection:
+    properties:
+      bbox:
+        items:
+          type: number
+        type: array
+      features:
+        items:
+          $ref: '#/definitions/geojson.Feature'
+        type: array
+      type:
+        type: string
+    type: object
+  geojson.Properties:
+    additionalProperties: true
     type: object
 info:
   contact:
@@ -936,4 +1033,42 @@ paths:
           schema:
             $ref: '#/definitions/app.APIResponse'
       summary: Break down a workdown per units
+  /workouts/coordinates:
+    get:
+      parameters:
+      - description: Start date of the calendar view
+        in: query
+        name: start
+        type: string
+      - description: End date of the calendar view
+        in: query
+        name: end
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                result:
+                  items:
+                    $ref: '#/definitions/app.Event'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: List the calendar events of all workouts of the current user
 swagger: "2.0"
