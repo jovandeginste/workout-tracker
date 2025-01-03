@@ -52,10 +52,6 @@ func (a *App) ConfigureWebserver() error {
 	e.Use(session.LoadAndSave(a.sessionManager))
 	e.Use(a.ContextValueMiddleware)
 
-	e.Renderer = &Template{
-		app: a,
-	}
-
 	publicGroup := e.Group("")
 
 	a.apiRoutes(publicGroup)
