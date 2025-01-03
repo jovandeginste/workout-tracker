@@ -1,5 +1,84 @@
 ## What's Changed
 
+- Remove dead functions
+- Fix remaining linting issues
+- Fix all linting issues
+- Fix all the tests
+- Remove obsolete test
+- Replace templ with go files where userful
+- Remove the old templating engine code
+- Convert the final html templates to templ
+- Add final route segment templ
+- Convert route segments to templ
+- Remove old admin html templates
+- Convert all equipment to templ
+- Convert equipment list to templ
+- Convert user editor to templ
+- Convert admin root page to templ
+- Convert user profile editor to templ
+- Convert workout show to templ
+- Convert workout list to templ
+- Fix anonymous humanizer/translator
+- Fix heatmap variables
+- Convert statistics to templ
+- Print details according to type
+- Fix inconsistent naming
+- Fix the profile calendar view
+- Convert dashboard to templ
+- Restructure the components into packages
+- Let the IDE do the formatting
+- Convert user sign-in form to templ
+- Cleanup, add version update html
+- Convert full heatmap to templ
+- Add all parts for a full page to templ
+- More learnings
+- Trying to get more basics to work
+- Switch from html/template to templ
+- A number of fixes, by @jovandeginste, in
+  [#355](https://github.com/jovandeginste/workout-tracker/pull/355)
+  - Fix the user auth flow for API endpoints, by @jovandeginste
+  - Improve the workout tooltip on the heatmap, by @jovandeginste
+  - Style(css): Increase default heatmap height, by @jovandeginste
+  - fix(app): Correctly return error when parsing view templates, by
+    @jovandeginste
+- Style(css): Update notice colors, by @jovandeginste, in
+  [#354](https://github.com/jovandeginste/workout-tracker/pull/354)
+- Add markers per workout to the heatmap, by @jovandeginste, in
+  [#353](https://github.com/jovandeginste/workout-tracker/pull/353)
+  - Add workout details to heat map, by @jovandeginste
+  - Add markers per workout to the heatmap, by @jovandeginste
+- A bundle of fixes, by @jovandeginste, in
+  [#352](https://github.com/jovandeginste/workout-tracker/pull/352)
+  - Update extra metrics when adding workouts, by @jovandeginste
+  - Collect extra metrics as separate field for quick lookups, by @jovandeginste
+  - feat(workout): Add timezone support to manual workout creation, by
+    @jovandeginste
+- Draw all coordinates individually, by @jovandeginste, in
+  [#351](https://github.com/jovandeginste/workout-tracker/pull/351)
+  - Load the coordinates async, by @jovandeginste
+  - Draw all coordinates individually, by @jovandeginste
+- Add heat map of workouts, by @jovandeginste, in
+  [#350](https://github.com/jovandeginste/workout-tracker/pull/350)
+- feat(style): Add cursor pointer style and apply to filter summary, by
+  @jovandeginste, in
+  [#349](https://github.com/jovandeginste/workout-tracker/pull/349)
+- chore(fit): Switch to different library for Garmin FIT, by @jovandeginste, in
+  [#348](https://github.com/jovandeginste/workout-tracker/pull/348)
+- feat(filter): Improved filter UI, by @jovandeginste, in
+  [#347](https://github.com/jovandeginste/workout-tracker/pull/347)
+- Parse and show workout timezone, by @jovandeginste, in
+  [#346](https://github.com/jovandeginste/workout-tracker/pull/346)
+- Fix timezone issues in workout statistics, by @jovandeginste, in
+  [#345](https://github.com/jovandeginste/workout-tracker/pull/345)
+- Fix struct alignment, by @jovandeginste, in
+  [#344](https://github.com/jovandeginste/workout-tracker/pull/344)
+  - feat(config): Improve configuration structure, by @jovandeginste
+  - refactor(structs): Re-align structs, by @jovandeginste
+  - docs: Add average speed and theme to docs, by @jovandeginste
+- Add profile option to switch app theme, by @jovandeginste, in
+  [#343](https://github.com/jovandeginste/workout-tracker/pull/343)
+- Update changelog, by @jovandeginste, in
+  [#342](https://github.com/jovandeginste/workout-tracker/pull/342)
 - Fix the user lookup function for API calls, by @jovandeginste, in
   [#341](https://github.com/jovandeginste/workout-tracker/pull/341)
 - chore(deps): bump golang.org/x/crypto from 0.27.0 to 0.31.0 in the go_modules
