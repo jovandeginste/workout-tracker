@@ -72,7 +72,10 @@ templ WorkoutDetails(w *database.Workout) {
 					<td>
 						@helpers.IconFor("weight")
 					</td>
-					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%.2f", w.Weight()) }</td>
+					<td class="whitespace-nowrap font-mono">
+						{ fmt.Sprintf("%.2f", w.Weight()) }
+						{ currentUser.PreferredUnits().Weight() }
+					</td>
 				</tr>
 			}
 			if w.Type.IsDuration() {
@@ -201,7 +204,10 @@ templ FullWorkoutDetails(w *database.Workout) {
 						@helpers.IconFor("weight")
 					</td>
 					<th>{ helpers.I18n(ctx, "Weight") }</th>
-					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%.2f", w.Weight()) }</td>
+					<td class="whitespace-nowrap font-mono">
+						{ fmt.Sprintf("%.2f", w.Weight()) }
+						{ currentUser.PreferredUnits().Weight() }
+					</td>
 				</tr>
 			}
 			if w.Type.IsDuration() {
