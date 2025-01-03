@@ -135,6 +135,13 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 				}
 			}
 
+			// Pass thru filters and skip early the code below, to prevent unnecessary processing.
+			for _, filter := range config.Filters {
+				if !filter(c) {
+					return
+				}
+			}
+
 			status := res.Status
 			method := req.Method
 			host := req.Host
@@ -259,12 +266,6 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 				switch attrs := v.(type) {
 				case []slog.Attr:
 					attributes = append(attributes, attrs...)
-				}
-			}
-
-			for _, filter := range config.Filters {
-				if !filter(c) {
-					return
 				}
 			}
 

@@ -105,6 +105,7 @@ Supported helpers for slices:
 - [DropRight](#dropright)
 - [DropWhile](#dropwhile)
 - [DropRightWhile](#droprightwhile)
+- [DropByIndex](#DropByIndex)
 - [Reject](#reject)
 - [RejectMap](#rejectmap)
 - [FilterReject](#filterreject)
@@ -124,9 +125,11 @@ Supported helpers for slices:
 Supported helpers for maps:
 
 - [Keys](#keys)
-- [HasKey](#HasKey)
+- [UniqKeys](#uniqkeys)
+- [HasKey](#haskey)
 - [ValueOr](#valueor)
 - [Values](#values)
+- [UniqValues](#uniqvalues)
 - [PickBy](#pickby)
 - [PickByKeys](#pickbykeys)
 - [PickByValues](#pickbyvalues)
@@ -253,6 +256,8 @@ Type manipulation helpers:
 - [FromPtr](#fromptr)
 - [FromPtrOr](#fromptror)
 - [ToSlicePtr](#tosliceptr)
+- [FromSlicePtr](#fromsliceptr)
+- [FromSlicePtrOr](#fromsliceptror)
 - [ToAnySlice](#toanyslice)
 - [FromAnySlice](#fromanyslice)
 - [Empty](#empty)
@@ -429,17 +434,18 @@ Iterates over collection elements and invokes iteratee for each element collecti
 ```go
 list := []int64{1, 2, -42, 4}
 
-ForEachWhile(list, func(x int64, _ int) bool {
-    if x < 0 {
-        return false
-    }
-    fmt.Println(x)
-    return true
+lo.ForEachWhile(list, func(x int64, _ int) bool {
+	if x < 0 {
+		return false
+	}
+	fmt.Println(x)
+	return true
 })
-
 // 1
 // 2
 ```
+
+[[play](https://go.dev/play/p/QnLGt35tnow)]
 
 ### Times
 
@@ -775,8 +781,8 @@ l := lo.DropRightWhile([]string{"a", "aa", "aaa", "aa", "aa"}, func(val string) 
 Drops elements from a slice or array by the index. A negative index will drop elements from the end of the slice.
 
 ```go
-l := lo.Drop([]int{0, 1, 2, 3, 4, 5}, 2, 4, -1)
-// []int{2, 3}
+l := lo.DropByIndex([]int{0, 1, 2, 3, 4, 5}, 2, 4, -1)
+// []int{0, 1, 3}
 ```
 
 [[play](https://go.dev/play/p/JswS7vXRJP2)]
@@ -1037,14 +1043,36 @@ result = lo.Splice([]string{"a", "b"}, 42, "1", "2")
 
 ### Keys
 
-Creates an array of the map keys.
+Creates a slice of the map keys.
+
+Use the UniqKeys variant to deduplicate common keys.
 
 ```go
 keys := lo.Keys(map[string]int{"foo": 1, "bar": 2})
 // []string{"foo", "bar"}
+
+keys := lo.Keys(map[string]int{"foo": 1, "bar": 2}, map[string]int{"baz": 3})
+// []string{"foo", "bar", "baz"}
+
+keys := lo.Keys(map[string]int{"foo": 1, "bar": 2}, map[string]int{"bar": 3})
+// []string{"foo", "bar", "bar"}
 ```
 
 [[play](https://go.dev/play/p/Uu11fHASqrU)]
+
+### UniqKeys
+
+Creates an array of unique map keys. 
+
+```go
+keys := lo.Keys(map[string]int{"foo": 1, "bar": 2}, map[string]int{"baz": 3})
+// []string{"foo", "bar", "baz"}
+
+keys := lo.Keys(map[string]int{"foo": 1, "bar": 2}, map[string]int{"bar": 3})
+// []string{"foo", "bar"}
+```
+
+[[play](https://go.dev/play/p/TPKAb6ILdHk)]
 
 ### HasKey
 
@@ -1064,12 +1092,37 @@ exists := lo.HasKey(map[string]int{"foo": 1, "bar": 2}, "baz")
 
 Creates an array of the map values.
 
+Use the UniqValues variant to deduplicate common values.
+
 ```go
 values := lo.Values(map[string]int{"foo": 1, "bar": 2})
 // []int{1, 2}
+
+values := lo.Values(map[string]int{"foo": 1, "bar": 2}, map[string]int{"baz": 3})
+// []int{1, 2, 3}
+
+values := lo.Values(map[string]int{"foo": 1, "bar": 2}, map[string]int{"bar": 2})
+// []int{1, 2, 2}
 ```
 
 [[play](https://go.dev/play/p/nnRTQkzQfF6)]
+
+### UniqValues
+
+Creates an array of unique map values.
+
+```go
+values := lo.UniqValues(map[string]int{"foo": 1, "bar": 2})
+// []int{1, 2}
+
+values := lo.UniqValues(map[string]int{"foo": 1, "bar": 2}, map[string]int{"baz": 3})
+// []int{1, 2, 3}
+
+values := lo.UniqValues(map[string]int{"foo": 1, "bar": 2}, map[string]int{"bar": 2})
+// []int{1, 2}
+```
+
+[[play](https://go.dev/play/p/nf6bXMh7rM3)]
 
 ### ValueOr
 
@@ -1649,7 +1702,7 @@ err, duration := lo.Duration1(func() error {
 // an error
 // 3s
 
-err, duration := lo.Duration3(func() (string, int, error) {
+str, nbr, err, duration := lo.Duration3(func() (string, int, error) {
     // very long job
     return "hello", 42, nil
 })
@@ -2678,6 +2731,36 @@ Returns a slice of pointer copy of value.
 ```go
 ptr := lo.ToSlicePtr([]string{"hello", "world"})
 // []*string{"hello", "world"}
+```
+
+### FromSlicePtr
+
+Returns a slice with the pointer values.
+Returns a zero value in case of a nil pointer element.
+
+```go
+str1 := "hello"
+str2 := "world"
+
+ptr := lo.FromSlicePtr[string]([]*string{&str1, &str2, nil})
+// []string{"hello", "world", ""}
+
+ptr := lo.Compact(
+    lo.FromSlicePtr[string]([]*string{&str1, &str2, nil}),
+)
+// []string{"hello", "world"}
+```
+
+### FromSlicePtrOr
+
+Returns a slice with the pointer values or the fallback value.
+
+```go
+str1 := "hello"
+str2 := "world"
+
+ptr := lo.FromSlicePtrOr[string]([]*string{&str1, &str2, "fallback value"})
+// []string{"hello", "world", "fallback value"}
 ```
 
 ### ToAnySlice

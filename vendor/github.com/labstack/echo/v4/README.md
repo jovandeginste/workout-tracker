@@ -1,5 +1,3 @@
-<a href="https://echo.labstack.com"><img height="80" src="https://cdn.labstack.com/images/echo-logo.svg"></a>
-
 [![Sourcegraph](https://sourcegraph.com/github.com/labstack/echo/-/badge.svg?style=flat-square)](https://sourcegraph.com/github.com/labstack/echo?badge)
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://pkg.go.dev/github.com/labstack/echo/v4)
 [![Go Report Card](https://goreportcard.com/badge/github.com/labstack/echo?style=flat-square)](https://goreportcard.com/report/github.com/labstack/echo)
@@ -77,6 +75,7 @@ package main
 import (
   "github.com/labstack/echo/v4"
   "github.com/labstack/echo/v4/middleware"
+  "log/slog"
   "net/http"
 )
 
@@ -92,7 +91,9 @@ func main() {
   e.GET("/", hello)
 
   // Start server
-  e.Logger.Fatal(e.Start(":1323"))
+  if err := e.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
+    slog.Error("failed to start server", "error", err)
+  }
 }
 
 // Handler
