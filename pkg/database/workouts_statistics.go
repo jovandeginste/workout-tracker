@@ -21,6 +21,27 @@ type BreakdownItem struct {
 	Speed         float64       // Speed in this item
 	IsBest        bool          // Whether this item is the best of the list
 	IsWorst       bool          // Whether this item is the worst of the list
+
+	LocalTotalDistance string `json:",omitempty"` // Total distance in all items up to and including this item
+	LocalDistance      string `json:",omitempty"` // The total distance in the bucket, localized
+	LocalAverageSpeed  string `json:",omitempty"` // The average speed in the bucket, localized
+	LocalElevation     string `json:",omitempty"` // The starting elevation in the bucket, localized
+	LocalHeartRate     string `json:",omitempty"` // The starting heart rate in the bucket, localized
+	LocalCadence       string `json:",omitempty"` // The starting cadence in the bucket, localized
+
+	TotalDurationSeconds float64 `json:",omitempty"` // The total duration in the bucket, in seconds
+}
+
+func (bi *BreakdownItem) Localize(units *UserPreferredUnits) {
+	bi.LocalTotalDistance = templatehelpers.HumanDistanceFor(units.Distance())(bi.TotalDistance)
+	bi.TotalDurationSeconds = bi.TotalDuration.Seconds()
+
+	bi.LocalDistance = templatehelpers.HumanDistanceFor(units.Distance())(bi.Distance)
+	bi.LocalAverageSpeed = templatehelpers.HumanSpeedFor(units.Distance())(bi.Speed)
+
+	bi.LocalElevation = templatehelpers.HumanElevationFor(units.Elevation())(bi.FirstPoint.ExtraMetrics.Get("elevation"))
+	bi.LocalHeartRate = fmt.Sprintf("%.0f", bi.FirstPoint.ExtraMetrics.Get("heart-rate"))
+	bi.LocalCadence = fmt.Sprintf("%.0f", bi.FirstPoint.ExtraMetrics.Get("cadence"))
 }
 
 func (bi *BreakdownItem) createNext(fp *MapPoint) BreakdownItem {

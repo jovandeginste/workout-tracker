@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"io/fs"
 	"log/slog"
 	"os"
@@ -13,6 +12,7 @@ import (
 	"github.com/fsouza/slognil"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/pkg/version"
 	"github.com/labstack/echo/v4"
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"
@@ -22,31 +22,8 @@ import (
 	"github.com/vorlif/spreak/humanize"
 )
 
-type Version struct {
-	BuildTime string
-	Ref       string
-	RefName   string
-	RefType   string
-	Sha       string
-}
-
-func (v Version) PrettyVersion() string {
-	rn := v.RefName
-
-	if v.RefType == "branch" {
-		rn = "branch " + rn
-	}
-
-	return fmt.Sprintf("%s (%.8s)", rn, v.Sha)
-}
-
-func (v Version) UserAgent() string {
-	return "workout-tracker/" + v.Ref
-}
-
 type App struct {
 	Assets       fs.FS
-	Views        fs.FS
 	Translations fs.FS
 
 	echo           *echo.Echo
@@ -56,7 +33,7 @@ type App struct {
 	sessionManager *scs.SessionManager
 	translator     *spreak.Bundle
 	humanizer      *humanize.Collection
-	Version        Version
+	Version        version.Version
 	Config         database.Config
 }
 
@@ -169,9 +146,9 @@ func (a *App) ConfigureLogger() {
 	a.logger = logger.With("module", "app")
 }
 
-func NewApp(version Version) *App {
+func NewApp(v version.Version) *App {
 	return &App{
-		Version:   version,
+		Version:   v,
 		logger:    newLogger(false),
 		rawLogger: newLogger(false),
 	}

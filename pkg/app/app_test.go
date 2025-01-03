@@ -6,8 +6,8 @@ import (
 
 	"github.com/fsouza/slognil"
 	appassets "github.com/jovandeginste/workout-tracker/assets"
+	"github.com/jovandeginste/workout-tracker/pkg/version"
 	apptranslations "github.com/jovandeginste/workout-tracker/translations"
-	appviews "github.com/jovandeginste/workout-tracker/views"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -16,10 +16,9 @@ func defaultApp(t *testing.T) *App {
 	t.Helper()
 	t.Setenv("WT_LOGGING", "false")
 
-	a := NewApp(Version{RefName: "test"})
+	a := NewApp(version.Version{RefName: "test"})
 
 	a.Assets = appassets.FS()
-	a.Views = appviews.FS()
 	a.Translations = apptranslations.FS()
 
 	return a

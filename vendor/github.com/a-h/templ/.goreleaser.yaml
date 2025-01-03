@@ -1,0 +1,72 @@
+builds:
+  - env:
+      - CGO_ENABLED=0
+    dir: cmd/templ
+    mod_timestamp: '{{ .CommitTimestamp }}'
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+    goos:
+      - linux
+      - windows
+      - darwin
+
+checksum:
+  name_template: 'checksums.txt'
+
+signs:
+  - id: checksums
+    cmd: cosign
+    stdin: '{{ .Env.COSIGN_PASSWORD }}'
+    output: true
+    artifacts: checksum
+    args:
+      - sign-blob
+      - --yes
+      - --key
+      - env://COSIGN_PRIVATE_KEY
+      - '--output-certificate=${certificate}'
+      - '--output-signature=${signature}'
+      - '${artifact}'
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+
+kos:
+  - repository: ghcr.io/a-h/templ
+    platforms:
+    - linux/amd64
+    - linux/arm64
+    tags:
+    - latest
+    - '{{.Tag}}'
+    bare: true
+
+docker_signs:
+  - cmd: cosign
+    artifacts: all
+    output: true
+    args:
+      - sign
+      - --yes
+      - --key
+      - env://COSIGN_PRIVATE_KEY
+      - '${artifact}'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

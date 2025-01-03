@@ -1,0 +1,181 @@
+package partials
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+type item struct {
+	Item  database.BreakdownItem
+	Label string
+}
+
+templ WorkoutShowStats(stats database.WorkoutBreakdown) {
+	<div id="chart"></div>
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	{{
+data := []item{}
+for _, i := range stats.Items {
+	i.Localize(pu)
+
+	data = append(data, item{
+		Item:  i,
+		Label: WorkoutPointTitle(ctx, pu, i.FirstPoint),
+	})
+}
+
+translations := map[string]string{
+	"distance":     helpers.I18n(ctx, "Distance"),
+	"duration":     helpers.I18n(ctx, "Duration"),
+	"calories":     helpers.I18n(ctx, "Calories"),
+	"heartrate":    helpers.I18n(ctx, "Heart rate"),
+	"speed":        helpers.I18n(ctx, "Speed"),
+	"elevation":    helpers.I18n(ctx, "Elevation"),
+	"cadence":      helpers.I18n(ctx, "Cadence"),
+	"averagespeed": helpers.I18n(ctx, "Average speed"),
+}
+	}}
+	@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJson(pu))
+	@templ.JSONScript("data", data)
+	@templ.JSONScript("tz", helpers.Timezone(ctx))
+	@templ.JSONScript("lang", helpers.Language(ctx))
+	@templ.JSONScript("translations", translations)
+	<script>
+  var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)
+  var data = JSON.parse(document.getElementById('data').textContent)
+  var tz = JSON.parse(document.getElementById('tz').textContent)
+  var lang = JSON.parse(document.getElementById('lang').textContent)
+  var translations = JSON.parse(document.getElementById('translations').textContent)
+
+  var theme = 'light';
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark';
+  }
+
+  var options = {
+    theme: { mode: theme },
+    chart: {
+      height: 400,
+      animations: { enabled: false },
+      toolbar: { show: false },
+    },
+    legend: {
+      position: 'top',
+      formatter: (seriesName, opts)=>{
+        if(opts.seriesIndex>3) return '';
+        return seriesName;
+      },
+      markers: { width: [12,12,12,12,0] }
+    },
+    tooltip: {
+      x: { format: 'HH:mm', },
+      y: [
+        {
+          formatter: function (val, opts) {
+          var p = data[opts.dataPointIndex]
+          var el = document.createElement('div');
+          el.setAttribute("data-lat", p.Item.FirstPoint.Lat);
+          el.setAttribute("data-lng", p.Item.FirstPoint.Lng);
+          el.setAttribute("data-title", p.Label);
+
+          set_marker(el)
+          return val + " " + preferredUnits.Speed;
+          }
+        },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.Elevation; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.HeartRate; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.Cadence; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.Distance; } },
+        { formatter: function (val, opts) { return formatDuration(val); } },
+      ],
+    },
+    stroke: {
+      width: 2,
+      curve: 'smooth',
+    },
+    markers: {
+      size: 1,
+    },
+    series: [
+      {
+        name: translations.averagespeed,
+        type: "line",
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalAverageSpeed })),
+      },
+      {
+        name: translations.elevation,
+        type: "area",
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalElevation })),
+      },
+      {
+        name: translations.heartrate,
+        type: "line",
+        display: false,
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalHeartRate })),
+      },
+      {
+        name: translations.cadence,
+        type: "line",
+        display: false,
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalCadence })),
+      },
+      {
+        name: translations.distance,
+        type: "none",
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalTotalDistance })),
+      },
+      {
+        name: translations.duration,
+        type: "none",
+        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.TotalDurationSeconds })),
+      },
+    ],
+    xaxis: {
+      labels: {
+        formatter: (val, ts, opts) => {
+          return new Date(ts).toLocaleTimeString(lang, { timeZone: tz })
+        },
+      },
+      type: "datetime",
+    },
+    yaxis: [
+      {
+        min: 0,
+        labels: {
+          formatter: (val) => {
+            return val + " " + preferredUnits.Speed;
+          },
+        },
+      },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " " + preferredUnits.Elevation;
+          },
+        },
+        opposite: true,
+      },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " " + preferredUnits.HeartRate;
+          },
+        },
+      },
+      {
+        labels: {
+          formatter: (val) => {
+            return val + " " + preferredUnits.Cadence;
+          },
+        },
+      },
+      { show: false },
+    ],
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+  chart.hideSeries(translations.heartrate);
+  chart.hideSeries(translations.cadence);
+</script>
+}

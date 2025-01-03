@@ -248,6 +248,7 @@ WT_DATABASE_DRIVER="sqlite"
 WT_DSN="./database.db"
 WT_REGISTRATION_DISABLED="false"
 WT_SOCIALS_DISABLED="false"
+WT_DEV="false"
 ```
 
 After starting the server, you can access it at <http://localhost:8080> (the

@@ -1,0 +1,29 @@
+package partials
+
+import (
+	"context"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"strings"
+)
+
+templ DummyWorkoutPointTitle() {
+}
+
+func WorkoutPointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
+	t := []string{
+		"<ul><li><b>" + helpers.I18n(ctx, "Time") + ":</b> ",
+		helpers.LocalTime(ctx, &p.Time).Format("15:04"),
+		"</li><li><b>" + helpers.I18n(ctx, "Distance") + ":</b> ",
+		helpers.HumanDistance(ctx, p.TotalDistance) + " " + preferredUnits.Distance(),
+		"</li><li><b>" + helpers.I18n(ctx, "Duration") + ":</b> ",
+		helpers.HumanDuration(p.TotalDuration),
+		"</li><li><b>" + helpers.I18n(ctx, "Speed") + ":</b> ",
+		helpers.HumanSpeed(ctx, p.AverageSpeed()) + " " + preferredUnits.Speed(),
+		"</li><li><b>" + helpers.I18n(ctx, "Elevation") + ":</b> ",
+		helpers.HumanElevation(ctx, p.ExtraMetrics.Get("elevation")) + " " + preferredUnits.Elevation(),
+		"</li></ul>",
+	}
+
+	return strings.Join(t, "")
+}

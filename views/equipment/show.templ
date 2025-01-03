@@ -1,0 +1,149 @@
+package equipment
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Show(e *database.Equipment) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			{{ currentUser := helpers.CurrentUser(ctx) }}
+			{{ pu := currentUser.PreferredUnits() }}
+			<div class="content">
+				<div class="gap-4">
+					if e.User.ID == currentUser.ID {
+						<span class="float-right actions">
+							@actions(e)
+						</span>
+					}
+					<h2>{ helpers.I18n(ctx, "Equipment") }: { e.Name }</h2>
+				</div>
+				<div class="lg:flex lg:flex-wrap">
+					<div class="basis-1/2">
+						<div class="inner-form">
+							<h3 class="grow justify-start">
+								@helpers.IconFor("totals")
+								{ helpers.I18n(ctx, "Totals") }
+							</h3>
+							<table>
+								{{ totals, _ := e.GetTotals() }}
+								<tbody>
+									<tr>
+										<td>
+											@helpers.IconFor("distance")
+										</td>
+										<th>{ helpers.I18n(ctx, "Total distance") }</th>
+										<td>
+											{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance() }
+										</td>
+									</tr>
+									<tr>
+										<td>
+											@helpers.IconFor("duration")
+										</td>
+										<th>{ helpers.I18n(ctx, "Total duration") }</th>
+										<td>{ helpers.HumanDuration(totals.Duration ) }</td>
+									</tr>
+									<tr>
+										<td>
+											@helpers.IconFor("repetitions")
+										</td>
+										<th>{ helpers.I18n(ctx, "Total repetitions") }</th>
+										<td>{ fmt.Sprintf("%d", totals.Repetitions) }</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="inner-form">
+							<table>
+								<tbody>
+									<tr>
+										<td>
+											@helpers.IconFor("date")
+										</td>
+										<th>{ helpers.I18n(ctx, "Created") }</th>
+										<td>
+											@partials.SnippetDate(&e.CreatedAt)
+										</td>
+									</tr>
+									<tr>
+										<td>
+											@helpers.IconFor("note")
+										</td>
+										<th>{ helpers.I18n(ctx, "Description") }</th>
+										<td>{ e.Description }</td>
+									</tr>
+									<tr>
+										<td>
+											@helpers.IconFor("check")
+										</td>
+										<th>{ helpers.I18n(ctx, "Active") }</th>
+										<td>
+											@templ.Raw(helpers.BoolToHTML(e.Active))
+										</td>
+									</tr>
+									<tr>
+										<td>
+											@helpers.IconFor("workout")
+										</td>
+										<th>{ helpers.I18n(ctx, "Default workout types") }</th>
+										<td>
+											<div class="flex flex-wrap">
+												for _, d := range  e.DefaultFor {
+													<span class="user-pill">{ d.String() }</span>
+												}
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="basis-1/2">
+						<div class="inner-form">
+							<h3 class="grow justify-start">
+								@helpers.IconFor("workout")
+								{ helpers.I18n(ctx, "Workouts") }
+							</h3>
+							<table class="workout-info">
+								<thead>
+									<tr>
+										<th></th>
+										<th>{ helpers.I18n(ctx, "Name") }</th>
+										<th class="hidden sm:table-cell">{ helpers.I18n(ctx, "Date") }</th>
+									</tr>
+								</thead>
+								<tbody>
+									for _, w := range e.Workouts {
+										<tr>
+											<td class="text-center">
+												<div title="{{ i18n .Type.String }}">
+													@helpers.IconFor(w.Type.String())
+												</div>
+											</td>
+											<td>
+												<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>{ w.Name }</a>
+											</td>
+											<td class="hidden sm:table-cell">
+												@partials.SnippetDate(w.Date)
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

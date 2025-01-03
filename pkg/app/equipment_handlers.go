@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/equipment"
 	"github.com/labstack/echo/v4"
 )
 
@@ -37,84 +38,83 @@ func (a *App) addEquipment(c echo.Context) error {
 }
 
 func (a *App) equipmentHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	if err := a.addAllEquipment(a.getCurrentUser(c), data); err != nil {
+	u := a.getCurrentUser(c)
+
+	e, err := u.GetAllEquipment(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	return c.Render(http.StatusOK, "equipment_list.html", data)
+	return Render(c, http.StatusOK, equipment.List(e))
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
 	e, err := database.GetEquipment(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
-	data["equipment"] = e
-
-	return c.Render(http.StatusOK, "equipment_show.html", data)
+	return Render(c, http.StatusOK, equipment.Show(e))
 }
 
 func (a *App) equipmentAddHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "equipment_add.html", data)
+	a.setContext(c)
+	return Render(c, http.StatusOK, equipment.Add())
 }
 
 func (a *App) equipmentDeleteHandler(c echo.Context) error { //nolint:dupl
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	if err := equipment.Delete(a.db); err != nil {
+	if err := e.Delete(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The equipment '%s' has been deleted.", equipment.Name)
+	a.addNotice(c, "The equipment '%s' has been deleted.", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
 
 func (a *App) equipmentUpdateHandler(c echo.Context) error {
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	equipment.DefaultFor = nil
-	equipment.Active = (c.FormValue("active") == "true")
+	e.DefaultFor = nil
+	e.Active = (c.FormValue("active") == "true")
 
-	if err := c.Bind(equipment); err != nil {
+	if err := c.Bind(e); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	if err := equipment.Save(a.db); err != nil {
+	if err := e.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The equipment '%s' has been updated.", equipment.Name)
+	a.addNotice(c, "The equipment '%s' has been updated.", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment-show", c.Param("id")))
 }
 
 func (a *App) equipmentEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
-	data["equipment"] = equipment
-
-	return c.Render(http.StatusOK, "equipment_edit.html", data)
+	return Render(c, http.StatusOK, equipment.Edit(e))
 }

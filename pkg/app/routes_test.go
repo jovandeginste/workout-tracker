@@ -46,13 +46,14 @@ func TestRoute_UserRender(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, e.Reverse("dashboard"), nil)
 		rec := httptest.NewRecorder()
 
-		c := e.NewContext(req, rec)
+		c := contextValue{e.NewContext(req, rec)}
 		c.Set("user_info", defaultUser(a.db))
 
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.dashboardHandler)
 
 		require.NoError(t, h(c))
+		assert.Empty(t, c.Get("errors"))
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Contains(t, rec.Body.String(), "Dashboard for my-name")
 	})
@@ -75,13 +76,14 @@ func TestRoute_UserRenderLang(t *testing.T) {
 
 			req.Header.Set("Accept-Language", lang)
 
-			c := e.NewContext(req, rec)
+			c := contextValue{e.NewContext(req, rec)}
 			c.Set("user_info", defaultUser(a.db))
 
 			s := session.LoadAndSave(a.sessionManager)
 			h := s(a.dashboardHandler)
 
 			require.NoError(t, h(c))
+			assert.Empty(t, c.Get("errors"))
 			assert.Equal(t, http.StatusOK, rec.Code)
 			assert.Contains(t, rec.Body.String(), expected+" my-name")
 		})
@@ -97,12 +99,13 @@ func TestRoute_NoUserRedirect(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, e.Reverse("dashboard"), nil)
 		rec := httptest.NewRecorder()
 
-		c := e.NewContext(req, rec)
+		c := contextValue{e.NewContext(req, rec)}
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.dashboardHandler)
 
-		require.Error(t, h(c))
-		assert.Equal(t, http.StatusOK, rec.Code)
+		require.NoError(t, h(c))
+		assert.NotEmpty(t, c.Get("errors"))
+		assert.Equal(t, http.StatusFound, rec.Code)
 	})
 }
 
@@ -115,12 +118,13 @@ func TestRoute_NoUserAccessLogin(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, e.Reverse("user-login"), nil)
 		rec := httptest.NewRecorder()
 
-		c := e.NewContext(req, rec)
+		c := contextValue{e.NewContext(req, rec)}
 
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.userLoginHandler)
 
 		require.NoError(t, h(c))
+		assert.Empty(t, c.Get("errors"))
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Contains(t, rec.Body.String(), `<button id="signin" type="submit">`)
 	})
@@ -143,12 +147,13 @@ func TestRoute_NoUserAccessLoginLang(t *testing.T) {
 
 			req.Header.Set("Accept-Language", lang)
 
-			c := e.NewContext(req, rec)
+			c := contextValue{e.NewContext(req, rec)}
 
 			s := session.LoadAndSave(a.sessionManager)
 			h := s(a.userLoginHandler)
 
 			require.NoError(t, h(c))
+			assert.Empty(t, c.Get("errors"))
 			assert.Equal(t, http.StatusOK, rec.Code)
 			assert.Contains(t, rec.Body.String(), expected)
 		})

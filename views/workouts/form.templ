@@ -1,0 +1,175 @@
+package workouts
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ Form(w *database.Workout) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	{{ preferredUnits := currentUser.PreferredUnits() }}
+	<tr>
+		<td><label for="name">{ helpers.I18n(ctx, "Name") }</label></td>
+		<td>
+			<input
+				type="text"
+				name="name"
+				id="name"
+				size="60"
+				value={ w.Name }
+				required
+			/>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="date">{ helpers.I18n(ctx, "Date") }</label></td>
+		<td>
+			<input
+				type="datetime-local"
+				name="date"
+				id="date"
+				value={ helpers.LocalDate(ctx, w.Date) }
+				required
+			/>
+			<input
+				type="hidden"
+				name="timezone"
+				id="timezone"
+				value={ helpers.Timezone(ctx) }
+				required
+			/>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="location">{ helpers.I18n(ctx, "Location") }</label></td>
+		<td>
+			<input
+				type="text"
+				name="location"
+				id="location"
+				size="60"
+				value={ w.FullAddress() }
+				autocomplete="off"
+				hx-trigger="load, input changed queue:last delay:300ms"
+				hx-target="#addresses"
+				hx-post={ helpers.RouteFor(ctx, "lookup-address") }
+			/>
+			<div id="addresses"></div>
+		</td>
+	</tr>
+	if w.Type.IsDuration() {
+		<tr>
+			<td><label for="duration">{ helpers.I18n(ctx, "Duration") }</label></td>
+			<td>
+				<input
+					type="number"
+					name="duration_hours"
+					id="duration_hours"
+					min="0"
+					max="999"
+					maxlength="3"
+					value={ fmt.Sprintf("%d", int(w.Duration().Hours())) }
+					required
+				/>:
+				<input
+					type="number"
+					name="duration_minutes"
+					id="duration_minutes"
+					min="0"
+					max="59"
+					maxlength="2"
+					value={ fmt.Sprintf("%d", int(w.Duration().Minutes())%60) }
+					required
+				/>:
+				<input
+					type="number"
+					name="duration_seconds"
+					id="duration_seconds"
+					min="0"
+					max="59"
+					maxlength="2"
+					value={ fmt.Sprintf("%d", int(w.Duration().Seconds())%60) }
+					required
+				/>
+				(hhh:mm:ss)
+			</td>
+		</tr>
+	}
+	if w.Type.IsDistance() {
+		<tr>
+			<td><label for="distance">{ helpers.I18n(ctx, "Distance") }</label></td>
+			<td>
+				<input
+					type="text"
+					name="distance"
+					id="distance"
+					value="{ helpers.HumanDistance(ctx, w.Distance) }"
+					required
+				/>
+				<span>{ preferredUnits.Distance() }</span>
+			</td>
+		</tr>
+	}
+	if w.Type.IsRepetition() {
+		<tr>
+			<td><label for="repetitions">{ helpers.I18n(ctx, "Repetitions") }</label></td>
+			<td>
+				<input
+					type="number"
+					name="repetitions"
+					id="repetitions"
+					value={ fmt.Sprintf("%d", w.Repetitions()) }
+					required
+				/>
+			</td>
+		</tr>
+	}
+	if w.Type.IsWeight() {
+		<tr>
+			<td><label for="weight">{ helpers.I18n(ctx, "Weight") }</label></td>
+			<td>
+				<input
+					type="text"
+					name="weight"
+					id="weight"
+					value={ fmt.Sprintf("%.2f", w.Weight()) }
+					required
+				/>
+				<span>{ preferredUnits.Weight() }</span>
+			</td>
+		</tr>
+	}
+	<tr>
+		<td>
+			<label for="notes">{ helpers.I18n(ctx, "Notes") }</label>
+		</td>
+		<td>
+			<textarea type="text" id="notes" name="notes" rows="10" cols="60">
+				{ w.Notes }
+			</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="equipment">{ helpers.I18n(ctx, "Equipment") }</label>
+		</td>
+		<td>
+			for _, e := range currentUser.Equipment {
+				<label class="inline">
+					<input
+						class="hidden peer"
+						type="checkbox"
+						id={ fmt.Sprintf("equipment_%d", e.ID) }
+						name="equipment"
+						value={ fmt.Sprintf("%d", e.ID) }
+						checked?={ w.Uses(e) }
+					/>
+					<span id={ fmt.Sprintf("%d", e.ID) } class="selectable-pill" for={ fmt.Sprintf("equipment_%d", e.ID) }>
+						{ e.Name }
+					</span>
+				</label>
+			}
+		</td>
+	</tr>
+}

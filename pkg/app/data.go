@@ -1,15 +1,24 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"gorm.io/gorm"
 
 	"github.com/labstack/echo/v4"
 )
+
+func (a *App) setContext(ctx echo.Context) {
+	ctx.Set("version", &a.Version)
+	ctx.Set("config", &a.Config)
+	ctx.Set("echo", a.echo)
+	ctx.Set("humanizer", a.humanizerFromContext(ctx))
+	ctx.Set("translator", a.translatorFromContext(ctx))
+	ctx.Set("generic_translator", a.translator)
+}
 
 func (a *App) setUserFromContext(ctx echo.Context) error {
 	if err := a.setUser(ctx); err != nil {
@@ -18,7 +27,7 @@ func (a *App) setUserFromContext(ctx echo.Context) error {
 
 	u := a.getCurrentUser(ctx)
 	if u.IsAnonymous() || !u.IsActive() {
-		return fmt.Errorf("user not found or active")
+		return errors.New("user not found or active")
 	}
 
 	return nil
@@ -61,68 +70,17 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 		return database.AnonymousUser()
 	}
 
+	a.localizeUser(c, u)
+
 	return u
 }
 
-func (a *App) defaultData(c echo.Context) map[string]any {
-	data := map[string]any{}
+func (a *App) localizeUser(ctx echo.Context, u *database.User) {
+	tr := a.translatorFromContext(ctx)
+	h := a.humanizerFromContext(ctx)
 
-	a.addError(data, c)
-	a.addNotice(data, c)
-
-	return data
-}
-
-func (a *App) addRouteSegments(data map[string]any) error {
-	w, err := database.GetRouteSegments(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["routeSegments"] = w
-
-	return nil
-}
-
-func (a *App) addWorkouts(u *database.User, data map[string]any) error {
-	return a.addWorkoutsWithFilter(u, data, a.db)
-}
-
-func (a *App) addWorkoutsWithFilter(u *database.User, data map[string]any, db *gorm.DB) error {
-	if u == nil {
-		return nil
-	}
-
-	w, err := u.GetWorkouts(db)
-	if err != nil {
-		return err
-	}
-
-	data["workouts"] = w
-
-	return nil
-}
-
-func (a *App) addRecentWorkouts(data map[string]any) error {
-	w, err := database.GetRecentWorkouts(a.db, 20)
-	if err != nil {
-		return err
-	}
-
-	data["recentWorkouts"] = w
-
-	return nil
-}
-
-func (a *App) addUsers(data map[string]any) error {
-	users, err := database.GetUsers(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["users"] = users
-
-	return nil
+	u.SetTranslator(tr)
+	u.SetHumanizer(h)
 }
 
 func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
@@ -151,21 +109,6 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 	}
 
 	return w, nil
-}
-
-func (a *App) addAllEquipment(u *database.User, data map[string]any) error {
-	if u == nil {
-		return nil
-	}
-
-	w, err := u.GetAllEquipment(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["equipment"] = w
-
-	return nil
 }
 
 func (a *App) getEquipment(c echo.Context) (*database.Equipment, error) {

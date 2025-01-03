@@ -1,0 +1,122 @@
+package route_segments
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Edit(s *database.RouteSegment) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<div class="gap-4">
+					<h2>
+						@helpers.IconFor("route-segment")
+						{ s.Name }
+					</h2>
+				</div>
+				<div class="sm:flex sm:flex-wrap">
+					<div class="basis-1/2">
+						<div class="inner-form">
+							<form
+								method="post"
+								action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-update", s.ID)) }
+							>
+								<table>
+									<tbody id="route-segment-form">
+										<tr>
+											<td><label for="name">{ helpers.I18n(ctx, "Name") }</label></td>
+											<td>
+												<input
+													type="text"
+													name="name"
+													id="name"
+													size="60"
+													value={ s.Name }
+													required
+												/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label for="name">{ helpers.I18n(ctx, "Bidirectional") }</label>
+											</td>
+											<td>
+												<input
+													type="checkbox"
+													name="bidirectional"
+													id="bidirectional"
+													checked?={ s.Bidirectional }
+												/>
+											</td>
+										</tr>
+										<tr>
+											<td><label for="name">{ helpers.I18n(ctx, "Circular") }</label></td>
+											<td>
+												<input
+													type="checkbox"
+													name="circular"
+													id="circular"
+													checked?={ s.Circular }
+												/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label for="notes">{ helpers.I18n(ctx, "Notes") }</label>
+											</td>
+											<td>
+												<textarea
+													type="text"
+													id="notes"
+													name="notes"
+													rows="10"
+													cols="60"
+												>
+													{ s.Notes }
+												</textarea>
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td></td>
+											<td>
+												<button type="submit">
+													{ helpers.I18n(ctx, "Update route segment") }
+												</button>
+												<button type="reset" class="edit">
+													{ helpers.I18n(ctx, "Reset changes") }
+												</button>
+												<button
+													type="button"
+													class="dangerous"
+													onclick="document.location=this.getAttribute('data-url')"
+													data-url={ helpers.RouteFor(ctx, "route-segment-show", s.ID) }
+												>
+													{ helpers.I18n(ctx, "Cancel") }
+												</button>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+					</div>
+					<div class="basis-1/4">
+						<div class="inner-form">
+							@details(s)
+						</div>
+					</div>
+				</div>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

@@ -1,0 +1,70 @@
+package user
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Show(user *database.User, users []*database.User, workouts []*database.Workout, recentWorkouts []*database.Workout) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<h2>
+					@helpers.IconFor("dashboard")
+					{ helpers.I18n(ctx, "Dashboard for %s", user.Name) }
+				</h2>
+				@partials.StatsRecordsTotal(user)
+				<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
+					<div>
+						{{ recs, _ := user.GetAllRecords() }}
+						for _, r := range recs {
+							if r.WorkoutType.IsDistance() && r.Active {
+								<div class="inner-form">
+									@partials.StatsRecordsDistance(r)
+								</div>
+							}
+						}
+					</div>
+					<div>
+						@partials.UserProfileCalendar(workouts)
+					</div>
+				</div>
+				if len(users) > 0 {
+					<div class="inner-form">
+						<h3>
+							@helpers.IconFor("users")
+							{ helpers.I18n(ctx, "Other users") }
+						</h3>
+						<div class="sm:flex sm:flex-wrap gap-5">
+							for _, u := range users {
+								if u.ID != user.ID {
+									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>
+										<span class="user-pill">{ u.Name } </span>
+									</a>
+								}
+							}
+						</div>
+					</div>
+					<div class="inner-form recent-activity">
+						<h3>
+							@helpers.IconFor("workout")
+							{ helpers.I18n(ctx, "Recent activity") }
+						</h3>
+						<div class="sm:flex sm:flex-wrap justify-center">
+							for _, w := range recentWorkouts {
+								@partials.WorkoutItem(w)
+							}
+						</div>
+					</div>
+				}
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

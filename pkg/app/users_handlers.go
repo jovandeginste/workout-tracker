@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/user"
 	"github.com/labstack/echo/v4"
 )
 
@@ -39,7 +40,7 @@ func (a *App) userSigninHandler(c echo.Context) error {
 	a.sessionManager.Put(c.Request().Context(), "username", u.Username)
 
 	if err := a.createToken(storedUser, c); err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), ErrLoginFailed)
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
@@ -82,20 +83,20 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
-	a.setNotice(c, "Your account has been created, but needs to be activated.")
+	a.addNotice(c, "Your account has been created, but needs to be activated.")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
 }
 
 func (a *App) userShowHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
 	u, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(
 			c,
 			a.echo.Reverse("dashboard"),
@@ -103,11 +104,10 @@ func (a *App) userShowHandler(c echo.Context) error {
 		)
 	}
 
-	data["user"] = u
-
-	if err := a.addWorkouts(u, data); err != nil {
+	w, err := u.GetWorkouts(a.db)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
 	}
 
-	return c.Render(http.StatusOK, "user_show.html", data)
+	return Render(c, http.StatusOK, user.Show(u, nil, w, nil))
 }

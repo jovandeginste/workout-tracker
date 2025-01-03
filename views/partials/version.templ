@@ -1,0 +1,41 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+templ Version() {
+	if !helpers.AppConfig(ctx).Dev {
+		@version()
+	}
+}
+
+templ version() {
+	{{ v := helpers.Version(ctx) }}
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	if currentUser.IsActive() {
+		if v.Sha != currentUser.LastVersion {
+			<div id="version-notification" class="version-notice max-h-48" role="alert">
+				<span class="block sm:inline">
+					This application was updated to version: 
+					<a
+						target="_blank"
+						title={ "Build time:" + v.BuildTime }
+						href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha) }
+					>
+						{ v.PrettyVersion() }
+					</a>
+					. You may find the changes in
+					<a
+						target="_blank"
+						href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
+					>the Changelog</a>. (
+					<a
+						href="#"
+						hx-target="#version-notification"
+						hx-swap="beforeend"
+						hx-post={ helpers.RouteFor(ctx, "user-update-version") }
+					>hide until next update</a>)
+				</span>
+			</div>
+		}
+	}
+}

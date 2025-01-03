@@ -1,0 +1,124 @@
+package workouts
+
+import (
+	"fmt"
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<div class="items-baseline flex flex-wrap">
+					<h2 class="grow justify-start">
+						@helpers.IconFor(`workout`)
+						{ helpers.I18n(ctx, "Workouts") } ({ fmt.Sprintf("%d", len(workouts)) })
+					</h2>
+					<div class="justify-end mr-2">
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-add")) }>
+							@helpers.IconFor("add")
+							{ helpers.I18n(ctx, "Add workout") }
+						</a>
+					</div>
+				</div>
+				<details class="inner-form" open?={ filters.Active }>
+					<summary class="cursor-pointer">Filter workouts</summary>
+					<form id="filters" method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
+						<input type="hidden" id="active" name="active" value="true"/>
+						<label for="type">{ helpers.I18n(ctx, "Type") }</label>
+						<select id="type" name="type">
+							<option value="">{ helpers.I18n(ctx, "All") }</option>
+							for _, wt := range helpers.WorkoutTypes() {
+								<option
+									value={ wt.String() }
+									selected?={ wt.String() == filters.Type.String() }
+								>
+									{ helpers.I18n(ctx, wt.String()) }
+								</option>
+							}
+						</select>
+						<label for="since">{ helpers.I18n(ctx, "Last") }</label>
+						<select id="since" name="since">
+							for _, opt := range helpers.FilterOptions() {
+								<option value={ opt } selected?={ opt ==  filters.Since }>
+									{ helpers.I18n(ctx, opt) }
+								</option>
+							}
+						</select>
+						<label for="order_by">{ helpers.I18n(ctx, "Sort by") }</label>
+						<select id="order_by" name="order_by">
+							for k, v := range helpers.OrderByOptions() {
+								<option value={ k } selected?={ k ==  filters.OrderBy }>
+									{ helpers.I18n(ctx, v) }
+								</option>
+							}
+						</select>
+						<select id="order_dir" name="order_dir">
+							for k, v := range helpers.OrderDirOptions() {
+								<option value={ k } selected?={ k == filters.OrderDir }>
+									{ helpers.I18n(ctx, v) }
+								</option>
+							}
+						</select>
+						<button type="submit">{ helpers.I18n(ctx, "Filter") }</button>
+					</form>
+				</details>
+				<table class="workout-info">
+					<thead>
+						<tr>
+							<th></th>
+							<th>{ helpers.I18n(ctx, "Name") }</th>
+							<th>{ helpers.I18n(ctx, "Date") }</th>
+							<th class="hidden lg:table-cell">{ helpers.I18n(ctx, "Details") }</th>
+							<th class="hidden sm:table-cell"></th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, w := range workouts {
+							<tr>
+								<td class="text-center">
+									<div title={ helpers.I18n(ctx, w.Type.String()) }>
+										@helpers.IconFor(w.Type.String())
+									</div>
+								</td>
+								<td>
+									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
+										if len(w.Name)> 20 {
+											<abbr title={ w.Name }>{ fmt.Sprintf("%.20s", w.Name) }...</abbr>
+										} else {
+											{ w.Name }
+										}
+									</a>
+								</td>
+								<td>
+									@partials.SnippetDate(w.Date)
+								</td>
+								<th class="hidden lg:table-cell">
+									@partials.WorkoutsListDetails(w)
+								</th>
+								<td class="hidden sm:table-cell">
+									if w.Dirty {
+										<span title="{{ i18n `refresh in progress` }}">
+											@helpers.IconFor("refresh")
+										</span>
+									}
+									<span class="actions">
+										@partials.WorkoutActions(w)
+									</span>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

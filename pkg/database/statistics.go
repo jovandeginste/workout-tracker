@@ -85,7 +85,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	r := &Statistics{
 		UserID:       u.ID,
 		BucketFormat: statConfig.GetBucketString(sqlDialect),
-		Buckets:      map[WorkoutType]map[string]Bucket{},
+		Buckets:      map[WorkoutType]Buckets{},
 	}
 
 	rows, err := u.db.
@@ -113,16 +113,24 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 
 	var result Bucket
 
+	units := u.PreferredUnits()
+
 	for rows.Next() {
 		if err := u.db.ScanRows(rows, &result); err != nil {
 			return nil, err
 		}
 
-		if r.Buckets[result.WorkoutType] == nil {
-			r.Buckets[result.WorkoutType] = map[string]Bucket{}
+		if _, ok := r.Buckets[result.WorkoutType]; !ok {
+			r.Buckets[result.WorkoutType] = Buckets{
+				WorkoutType:      result.WorkoutType,
+				LocalWorkoutType: u.I18n(result.WorkoutType.String()),
+				Buckets:          map[string]Bucket{},
+			}
 		}
 
-		r.Buckets[result.WorkoutType][result.Bucket] = result
+		result.Localize(units)
+
+		r.Buckets[result.WorkoutType].Buckets[result.Bucket] = result
 	}
 
 	return r, nil
@@ -222,7 +230,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 
 	r := &WorkoutRecord{WorkoutType: t}
 
-	mapping := map[*float64Record]string{
+	mapping := map[*Float64Record]string{
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",

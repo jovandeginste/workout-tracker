@@ -1,0 +1,23 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+templ Theme() {
+	switch helpers.CurrentUser(ctx).Profile.Theme {
+		case "light":
+			<script>
+        document.documentElement.classList.toggle("dark", false);
+      </script>
+		case "dark":
+			<script>
+        document.documentElement.classList.toggle("dark", true);
+      </script>
+		default:
+			<script>
+        var browserThemeDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.classList.toggle("dark", browserThemeDark);
+      </script>
+	}
+}

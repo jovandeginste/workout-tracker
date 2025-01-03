@@ -1,14 +1,16 @@
 package app
 
 import (
-	"bytes"
 	"errors"
 	"net/http"
 	"regexp"
 	"strconv"
+	"time"
 
+	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/importers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -80,8 +82,9 @@ func (a *App) apiRoutes(e *echo.Group) {
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
 	apiGroup.GET("/workouts/:id", a.apiWorkoutHandler).Name = "api-workout"
 	apiGroup.GET("/workouts/:id/breakdown", a.apiWorkoutBreakdownHandler).Name = "api-workout-breakdown"
-	apiGroup.GET("/workouts/coordinates", a.apiCoordinates).Name = "user-coordinates"
-	apiGroup.GET("/workouts/centers", a.apiCenters).Name = "user-centers"
+	apiGroup.GET("/workouts/coordinates", a.apiCoordinates).Name = "api-workouts-coordinates"
+	apiGroup.GET("/workouts/centers", a.apiCenters).Name = "api-workouts-centers"
+	apiGroup.GET("/workouts/calendar", a.apiCalendar).Name = "api-workouts-calendar"
 	apiGroup.GET("/statistics", a.apiStatisticsHandler).Name = "api-statistics"
 	apiGroup.GET("/totals", a.apiTotalsHandler).Name = "api-totals"
 	apiGroup.GET("/records", a.apiRecordsHandler).Name = "api-records"
@@ -146,6 +149,8 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
 func (a *App) apiCenters(c echo.Context) error {
+	a.setContext(c)
+
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 	u := a.getCurrentUser(c)
@@ -185,7 +190,7 @@ func (a *App) apiCenters(c echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
-func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
+func (a *App) apiCoordinates(c echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 
@@ -325,7 +330,7 @@ func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 		Unit:  "km",
 		Count: 1.0,
 	}
-	if err = c.Bind(&config); err != nil {
+	if err := c.Bind(&config); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
@@ -412,6 +417,77 @@ func (a *App) apiImportHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
+type Event struct {
+	Title string     `json:"title"`
+	Start *time.Time `json:"start"`
+	URL   string     `json:"url"`
+}
+
+// apiCalendar returns the calendar events of all workouts of the current user
+// @Summary      List the calendar events of all workouts of the current user
+// @Param        start query    string false "Start date of the calendar view"
+// @Param        end query    string false "End date of the calendar view"
+// @Produce      json
+// @Success      200  {object}  APIResponse{result=[]Event}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/coordinates [get]
+func (a *App) apiCalendar(c echo.Context) error {
+	a.setContext(c)
+
+	resp := APIResponse{}
+	events := []Event{}
+
+	queryParams := struct {
+		Start *string `query:"start"`
+		End   *string `query:"end"`
+	}{}
+	if err := c.Bind(&queryParams); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	u := a.getCurrentUser(c)
+	db := a.db.Preload("Data").Preload("Data.Details")
+
+	if queryParams.Start != nil {
+		db = db.Where("workouts.date >= ?", queryParams.Start)
+	}
+
+	if queryParams.End != nil {
+		db = db.Where("workouts.date < ?", queryParams.End)
+	}
+
+	workouts, err := u.GetWorkouts(db)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	for _, w := range workouts {
+		buf := templ.GetBuffer()
+		defer templ.ReleaseBuffer(buf)
+
+		t := partials.WorkoutEventTitle(w, u.PreferredUnits())
+		if err := t.Render(c.Request().Context(), buf); err != nil {
+			return a.renderAPIError(c, resp, err)
+		}
+
+		d := buf.String()
+		// Remove all newlines and surrounding whitespace
+		d = htmlConcatenizer.ReplaceAllString(d, "")
+
+		events = append(events, Event{
+			Title: d,
+			Start: w.Date,
+			URL:   a.echo.Reverse("workout-show", w.ID),
+		})
+	}
+
+	resp.Results = events
+
+	return c.JSON(http.StatusOK, resp)
+}
+
 func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error {
 	resp.Errors = append(resp.Errors, err.Error())
 
@@ -419,12 +495,15 @@ func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error 
 }
 
 func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geojson.Feature) {
-	o := bytes.NewBuffer(nil)
-	if err := a.echo.Renderer.Render(o, "workout_details.html", w, c); err != nil {
-		a.logger.Error("could not render workout details", "err", err)
+	buf := templ.GetBuffer()
+	defer templ.ReleaseBuffer(buf)
+
+	t := partials.WorkoutDetails(w)
+	if err := t.Render(c.Request().Context(), buf); err != nil {
+		return
 	}
 
-	d := o.String()
+	d := buf.String()
 	// Remove all newlines and surrounding whitespace
 	d = htmlConcatenizer.ReplaceAllString(d, "")
 

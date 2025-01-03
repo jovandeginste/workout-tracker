@@ -1,0 +1,14 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+templ Head() {
+	<title>Workout Tracker</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="icon" type="image/png" href={ helpers.RouteFor(ctx, "assets") + "/dumbbell.png" }/>
+	<link href={ helpers.RouteFor(ctx, "assets") + "/output.css" } rel="stylesheet"/>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/common.js" }></script>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/htmx.min.js" }></script>
+	@Theme()
+}

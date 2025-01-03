@@ -1,0 +1,109 @@
+
+package admin
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ EditUser(u *database.User) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="inner-form">
+				<h2>
+					@helpers.IconFor(`admin`)
+					{ helpers.I18n(ctx, "Manage user '%s'", u.Name) }
+				</h2>
+				<form
+					action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-update", u.ID)) }
+					method="post"
+					class="inner-form"
+				>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<label for="username">{ helpers.I18n(ctx, "Username") }</label>
+								</td>
+								<td>
+									<input
+										id="username"
+										name="username"
+										size="40"
+										value={ u.Username }
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+								</td>
+								<td>
+									<input id="name" name="name" size="40" value={ u.Name }/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="name">{ helpers.I18n(ctx, "Password") }</label>
+								</td>
+								<td>
+									<input
+										type="password"
+										id="password"
+										name="password"
+										size="40"
+										placeholder={ helpers.I18n(ctx, "Leave blank to keep current password") }
+										value=""
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="active">{ helpers.I18n(ctx, "Active") }</label>
+								</td>
+								<td>
+									<input
+										type="checkbox"
+										id="active"
+										name="active"
+										size="40"
+										checked?={ u.Active }
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="admin">{ helpers.I18n(ctx, "Admin") }</label>
+								</td>
+								<td>
+									<input
+										type="checkbox"
+										id="admin"
+										name="admin"
+										size="40"
+										checked?={ u.Admin }
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<button type="submit" size="40">
+										{ helpers.I18n(ctx, "Update user") }
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

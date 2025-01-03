@@ -1,0 +1,112 @@
+package route_segments
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ details(s *database.RouteSegment) {
+	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<table>
+		<tbody>
+			if s.HasFile() {
+				<tr>
+					<td>
+						@helpers.IconFor("file")
+					</td>
+					<th>{ helpers.I18n(ctx, "File") }</th>
+					<td>{ s.Filename }</td>
+				</tr>
+			}
+			<tr>
+				<td>
+					@helpers.IconFor("date")
+				</td>
+				<th>{ helpers.I18n(ctx, "Created") }</th>
+				<td>
+					@partials.SnippetDate(&s.CreatedAt)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("date")
+				</td>
+				<th>{ helpers.I18n(ctx, "Updated") }</th>
+				<td>
+					@partials.SnippetDate(&s.UpdatedAt)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("location")
+				</td>
+				<th>{ helpers.I18n(ctx, "Location") }</th>
+				<td>{ s.Address() }</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("bidirectional")
+				</td>
+				<th>{ helpers.I18n(ctx, "Bidirectional") }</th>
+				<td>
+					@templ.Raw(helpers.BoolToHTML(s.Bidirectional))
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("circular")
+				</td>
+				<th>{ helpers.I18n(ctx, "Circular") }</th>
+				<td>
+					@templ.Raw(helpers.BoolToHTML(s.Circular))
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("distance")
+				</td>
+				<th>{ helpers.I18n(ctx, "Total distance") }</th>
+				<td class="whitespace-nowrap font-mono">
+					{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance() }
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("elevation")
+				</td>
+				<th>{ helpers.I18n(ctx, "Min elevation") }</th>
+				<td class="whitespace-nowrap font-mono">
+					{ helpers.HumanElevation(ctx, s.MinElevation) } { preferredUnits.Elevation() }
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("elevation")
+				</td>
+				<th>{ helpers.I18n(ctx, "Max elevation") }</th>
+				<td class="whitespace-nowrap font-mono">
+					{ helpers.HumanElevation(ctx, s.MaxElevation) } { preferredUnits.Elevation() }
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("up")
+				</td>
+				<th>{ helpers.I18n(ctx, "Total up") }</th>
+				<td class="whitespace-nowrap font-mono">
+					{ helpers.HumanElevation(ctx, s.TotalUp) } { preferredUnits.Elevation() }
+				</td>
+			</tr>
+			<tr>
+				<td>
+					@helpers.IconFor("down")
+				</td>
+				<th>{ helpers.I18n(ctx, "Total down") }</th>
+				<td class="whitespace-nowrap font-mono">
+					{ helpers.HumanElevation(ctx, s.TotalDown) } { preferredUnits.Elevation() }
+				</td>
+			</tr>
+		</tbody>
+	</table>
+}

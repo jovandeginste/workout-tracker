@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/admin"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,23 +27,29 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) adminRootHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	if err := a.addUsers(data); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("user-signout"), err)
+	users, err := database.GetUsers(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	return c.Render(http.StatusOK, "admin_root.html", data)
+	return Render(c, http.StatusOK, admin.Root(users))
 }
 
 func (a *App) adminUserEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	if err := a.adminAddUser(data, c); err != nil {
-		a.addError(data, c)
+	a.setContext(c)
+
+	user, err := a.getUser(c)
+	if err != nil {
 		return a.redirectWithError(c, "/admin", err)
 	}
 
-	return c.Render(http.StatusOK, "admin_user_edit.html", data)
+	if user == nil {
+		return a.redirectWithError(c, "/admin", ErrUserNotFound)
+	}
+
+	return Render(c, http.StatusOK, admin.EditUser(user))
 }
 
 func (a *App) adminUserUpdateHandler(c echo.Context) error {
@@ -66,7 +73,7 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The user '%s' has been updated.", u.Name)
+	a.addNotice(c, "The user '%s' has been updated.", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-show", c.Param("id")))
 }
@@ -81,7 +88,7 @@ func (a *App) adminUserDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The user '%s' has been deleted.", u.Name)
+	a.addNotice(c, "The user '%s' has been deleted.", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }
@@ -98,10 +105,10 @@ func (a *App) adminConfigUpdateHandler(c echo.Context) error {
 	}
 
 	if err := a.ResetConfiguration(); err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
 	}
 
-	a.setNotice(c, "Config updated")
+	a.addNotice(c, "Config updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }

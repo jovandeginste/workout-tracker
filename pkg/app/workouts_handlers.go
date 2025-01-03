@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 	"github.com/labstack/echo/v4"
 )
 
@@ -31,24 +32,28 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 }
 
 func (a *App) workoutsHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	filters, err := getWorkoutsFilters(c)
-	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	u := a.getCurrentUser(c)
+	if u.IsAnonymous() {
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	data["Filters"] = filters
-
-	if err := a.addWorkoutsWithFilter(a.getCurrentUser(c), data, filters.ToQuery(a.db)); err != nil {
+	filters, err := database.GetWorkoutsFilters(c)
+	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	return c.Render(http.StatusOK, "workouts_list.html", data)
+	w, err := u.GetWorkouts(filters.ToQuery(a.db))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, workouts.List(w, filters))
 }
 
-func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
-	data := a.defaultData(c)
+func (a *App) workoutsShowHandler(c echo.Context) error {
+	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -60,28 +65,28 @@ func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["workout"] = w
-
-	return c.Render(http.StatusOK, "workouts_show.html", data)
+	return Render(c, http.StatusOK, workouts.Show(w))
 }
 
 func (a *App) workoutsAddHandler(c echo.Context) error {
-	data := a.defaultData(c)
-	return c.Render(http.StatusOK, "workouts_add.html", data)
+	a.setContext(c)
+	return Render(c, http.StatusOK, workouts.Add())
 }
 
 func (a *App) workoutsFormHandler(c echo.Context) error {
+	a.setContext(c)
+
 	w := &database.Workout{}
 
 	if c.FormValue("id") != "" {
 		id, err := strconv.Atoi(c.FormValue("id"))
 		if err != nil {
-			return c.Render(http.StatusOK, "workout_form.html", w)
+			return Render(c, http.StatusOK, workouts.Form(w))
 		}
 
 		w, err = a.getCurrentUser(c).GetWorkout(a.db, id)
 		if err != nil {
-			return c.Render(http.StatusOK, "workout_form.html", w)
+			return Render(c, http.StatusOK, workouts.Form(w))
 		}
 	}
 
@@ -98,7 +103,7 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 		w.Name = w.Type.String() + " - " + w.Date.Format(time.RFC3339)
 	}
 
-	return c.Render(http.StatusOK, "workout_form.html", w)
+	return Render(c, http.StatusOK, workouts.Form(w))
 }
 
 func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
@@ -111,13 +116,13 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been deleted.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been deleted.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
 
-func (a *App) workoutShowShared(c echo.Context) error { //nolint:dupl
-	data := a.defaultData(c)
+func (a *App) workoutShowShared(c echo.Context) error {
+	a.setContext(c)
 
 	u, err := uuid.Parse(c.Param("uuid"))
 	if err != nil {
@@ -129,9 +134,7 @@ func (a *App) workoutShowShared(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["workout"] = w
-
-	return c.Render(http.StatusOK, "workouts_show.html", data)
+	return Render(c, http.StatusOK, workouts.Show(w))
 }
 
 func (a *App) workoutsShareHandler(c echo.Context) error {
@@ -152,7 +155,7 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' now has a shareable link", workout.Name)
+	a.addNotice(c, "The workout '%s' now has a shareable link", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -173,7 +176,7 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' will be refreshed soon...", workout.Name)
+	a.addNotice(c, "The workout '%s' will be refreshed soon...", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -196,16 +199,14 @@ func (a *App) workoutsDownloadHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsEditHandler(c echo.Context) error {
-	data := a.defaultData(c)
+	a.setContext(c)
 
-	workout, err := a.getWorkout(c)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["workout"] = workout
-
-	return c.Render(http.StatusOK, "workouts_edit.html", data)
+	return Render(c, http.StatusOK, workouts.Edit(w))
 }
 
 func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error {
@@ -235,25 +236,23 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	a.setNotice(c, "The route segment '%s' has been created - we search for matches in the background.", rs.Name)
+	a.addNotice(c, "The route segment '%s' has been created - we search for matches in the background.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }
 
-func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error { //nolint:dupl
-	data := a.defaultData(c)
+func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
+	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	workout, err := database.GetWorkoutDetails(a.db, id)
+	w, err := database.GetWorkoutDetails(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	data["workout"] = workout
-
-	return c.Render(http.StatusOK, "workouts_route_segment.html", data)
+	return Render(c, http.StatusOK, workouts.CreateRouteSegment(w))
 }

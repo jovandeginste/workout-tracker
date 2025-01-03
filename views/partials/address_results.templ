@@ -1,0 +1,34 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+var addressSetHandle = templ.NewOnceHandle()
+
+templ AddressResults(addresses []string) {
+	@addressSetHandle.Once() {
+		<script>
+      function setLocation(address) {
+        var l = document.getElementById("location");
+        if (!l) {
+          return;
+        }
+
+        l.value = address.innerText;
+        l.focus();
+        l.setSelectionRange(0, 0);
+      }
+    </script>
+	}
+	if len(addresses) > 0 {
+		<ul class="list-none">
+			for _, a := range addresses {
+				<li>
+					@helpers.IconFor("location")
+					<a href="#" onclick="setLocation(this)">
+						{ a }
+					</a>
+				</li>
+			}
+		</ul>
+	}
+}

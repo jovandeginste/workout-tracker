@@ -111,12 +111,12 @@ type MapPoint struct {
 	TotalDuration time.Duration // The total duration of the workout up to this point
 }
 
-func (mc *MapCenter) ToOrbPoint() *orb.Point {
-	return &orb.Point{mc.Lng, mc.Lat}
+func (m *MapCenter) ToOrbPoint() *orb.Point {
+	return &orb.Point{m.Lng, m.Lat}
 }
 
-func (mp *MapPoint) ToOrbPoint() *orb.Point {
-	return &orb.Point{mp.Lng, mp.Lat}
+func (m *MapPoint) ToOrbPoint() *orb.Point {
+	return &orb.Point{m.Lng, m.Lat}
 }
 
 func (d *MapDataDetails) Save(db *gorm.DB) error {
@@ -200,6 +200,10 @@ func (m *MapData) Save(db *gorm.DB) error {
 }
 
 func (m *MapPoint) AverageSpeed() float64 {
+	if m.Duration.Seconds() == 0 {
+		return 0
+	}
+
 	return m.Distance / m.Duration.Seconds()
 }
 

@@ -1,0 +1,54 @@
+package partials
+
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"time"
+)
+
+templ SnippetDate(date *time.Time) {
+	if helpers.CurrentUser(ctx).ShowFullDate() {
+		<abbr title={ helpers.RelativeDate(ctx, date) }>{ helpers.LocalDate(ctx, date) }</abbr>
+	} else {
+		<abbr title={ helpers.LocalDate(ctx, date) }>{ helpers.RelativeDate(ctx, date) }</abbr>
+	}
+}
+
+templ Alerts() {
+	<div id="alerts" class="messages">
+		{{ ns := helpers.Notices(ctx) }}
+		if ns != nil {
+			<div class="notice" role="alert">
+				for _, n := range ns {
+					<span class="block sm:inline">{ n } </span>
+				}
+			</div>
+		}
+		{{ es := helpers.Errors(ctx) }}
+		if es != nil {
+			<div class="alert" role="alert">
+				for _, e := range es {
+					<span class="block sm:inline">{ e } </span>
+				}
+			</div>
+		}
+	</div>
+}
+
+templ Language() {
+	<select class="border-0" onchange="changeLanguage(this.value)">
+		for _, sl := range helpers.SupportedLanguages(ctx) {
+			{{ linf := helpers.ToLanguageInformation(sl.String()) }}
+			<option value={ linf.Code } selected?={ linf.Code == helpers.Language(ctx) }>
+				{ linf.Flag } { linf.LocalName }
+				if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
+					({ linf.EnglishName }) 
+				}
+			</option>
+		}
+	</select>
+	<script>
+    function changeLanguage(value) {
+      location.assign("?lang=" + value);
+    }
+  </script>
+}

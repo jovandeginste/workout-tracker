@@ -1,0 +1,77 @@
+package route_segments
+
+import (
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
+)
+
+templ Add() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			@partials.Head()
+		</head>
+		<body>
+			@partials.Header()
+			<div class="content">
+				<h2>
+					@helpers.IconFor("route-segment-add")
+					{ helpers.I18n(ctx, "Add route segment") }
+				</h2>
+				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+					<div>
+						<div class="inner-form">
+							<h3>{ helpers.I18n(ctx, "Use a file") }</h3>
+							<form
+								method="post"
+								action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segments-create")) }
+								enctype="multipart/form-data"
+							>
+								<table class="sm:table-fixed">
+									<tbody>
+										<tr>
+											<td><label for="file">{ helpers.I18n(ctx, "File") }</label></td>
+											<td>
+												<input
+													type="file"
+													id="file"
+													name="file"
+													accept=".gpx, .fit, .tcx"
+													multiple
+												/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label for="notes">{ helpers.I18n(ctx, "Notes") }</label>
+											</td>
+											<td>
+												<textarea
+													type="text"
+													id="notes"
+													name="notes"
+													rows="10"
+												></textarea>
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td></td>
+											<td>
+												<button type="submit">
+													{ helpers.I18n(ctx, "Add route segment") }
+												</button>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			@partials.Footer()
+		</body>
+	</html>
+}

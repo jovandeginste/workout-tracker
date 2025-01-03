@@ -1,0 +1,87 @@
+package partials
+
+import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/views/helpers"
+)
+
+templ WorkoutMap(w *database.Workout) {
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<div
+		id="map"
+		class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+	>
+		<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
+		{{
+	mapConfig := struct {
+		CenterLat     float64
+		CenterLng     float64
+		MinElevation  float64
+		MaxElevation  float64
+		MaxSpeed      float64
+		SpeedName     string
+		ElevationName string
+		StreetsName   string
+		AerialName    string
+	}{
+		CenterLat:     w.Center().Lat,
+		CenterLng:     w.Center().Lng,
+		MinElevation:  w.MinElevation(),
+		MaxElevation:  w.MaxElevation(),
+		MaxSpeed:      w.MaxSpeed(),
+		SpeedName:     helpers.I18n(ctx, "Average speed"),
+		ElevationName: helpers.I18n(ctx, "Elevation"),
+		StreetsName:   helpers.I18n(ctx, "Streets"),
+		AerialName:    helpers.I18n(ctx, "Aerial"),
+	}
+		}}
+		@templ.JSONScript("map-config", mapConfig)
+		{{
+	type point struct {
+		Lat       float64 `json:"lat"`
+		Lng       float64 `json:"lng"`
+		Speed     float64 `json:"speed"`
+		Elevation float64 `json:"elevation"`
+		Title     string  `json:"title"`
+	}
+	points := []point{}
+
+	for _, p := range w.Details().Points {
+		points = append(points, point{
+			Lat:       p.Lat,
+			Lng:       p.Lng,
+			Speed:     p.AverageSpeed(),
+			Elevation: p.ExtraMetrics.Get("elevation"),
+			Title:     WorkoutPointTitle(ctx, pu, &p),
+		})
+	}
+		}}
+		@templ.JSONScript("map-points", points)
+		<script>
+    mapConfig = JSON.parse(document.getElementById('map-config').textContent)
+    makeMap({
+      elementID: "map",
+      center: [mapConfig.CenterLat  ,   mapConfig.CenterLng  ],
+      minElevation: mapConfig.MinElevation ,
+      maxElevation:  mapConfig.MaxElevation ,
+      maxSpeed: mapConfig.MaxSpeed ,
+      speedName: mapConfig.SpeedName,
+      elevationName: mapConfig.ElevationName,
+      streetsName: mapConfig.StreetsName,
+      aerialName: mapConfig.AerialName,
+
+      points: JSON.parse(document.getElementById('map-points').textContent)
+    });
+  </script>
+	</div>
+	<div class="flex flex-wrap">
+		if !helpers.AppConfig(ctx).SocialsDisabled && !helpers.CurrentUser(ctx).Profile.SocialsDisabled {
+			@WorkoutSocial(w)
+		}
+		<div class="grow flex flex-wrap flex-row-reverse">
+			<a href="#" title="{{ i18n `Show map in full width` }}" onclick="fullMap()">
+				@helpers.IconFor("expand")
+			</a>
+		</div>
+	</div>
+}
