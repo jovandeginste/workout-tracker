@@ -19,6 +19,7 @@ import (
 )
 
 var (
+	ErrNotAuthorized = errors.New("not authorized")
 	ErrInvalidAPIKey = errors.New("invalid API key")
 	htmlConcatenizer = regexp.MustCompile(`\s*\n\s*`)
 )
@@ -26,6 +27,10 @@ var (
 type APIResponse struct {
 	Results any      `json:"results"`
 	Errors  []string `json:"errors"`
+}
+
+func (ar *APIResponse) AddError(err error) {
+	ar.Errors = append(ar.Errors, err.Error())
 }
 
 // @title Workout Tracker
@@ -43,7 +48,12 @@ func (a *App) apiRoutes(e *echo.Group) {
 		TokenLookup: "cookie:token",
 		ErrorHandler: func(c echo.Context, err error) error {
 			log.Warn(err.Error())
-			return c.JSON(http.StatusForbidden, "Not authorized")
+
+			r := APIResponse{}
+			r.AddError(err)
+			r.AddError(ErrNotAuthorized)
+
+			return c.JSON(http.StatusForbidden, r)
 		},
 		Skipper: func(ctx echo.Context) bool {
 			if ctx.Request().Header.Get("Authorization") != "" {
@@ -132,7 +142,7 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 
 	w, err := a.getCurrentUser(c).GetWorkouts(a.db)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results = w
@@ -158,7 +168,7 @@ func (a *App) apiCenters(c echo.Context) error {
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	for _, w := range workouts {
@@ -199,7 +209,7 @@ func (a *App) apiCoordinates(c echo.Context) error {
 
 	workouts, err := u.GetWorkouts(db)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	for _, w := range workouts {
@@ -239,7 +249,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error { //nolint:dupl
 
 	s, err := a.getCurrentUser(c).GetRecords(database.AsWorkoutType(workoutType))
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results = s
@@ -267,7 +277,7 @@ func (a *App) apiTotalsHandler(c echo.Context) error { //nolint:dupl
 
 	s, err := a.getCurrentUser(c).GetTotals(database.AsWorkoutType(workoutType))
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results = s
@@ -296,7 +306,7 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 
 	s, err := a.getCurrentUser(c).GetStatistics(statConfig)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results = s
@@ -336,7 +346,7 @@ func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 
 	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results, err = w.StatisticsPer(config.Count, config.Unit)
@@ -377,7 +387,7 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 
 	w, err := a.getCurrentUser(c).GetWorkout(db, id)
 	if err != nil {
-		resp.Errors = append(resp.Errors, err.Error())
+		resp.AddError(err)
 	}
 
 	resp.Results = w
@@ -489,7 +499,7 @@ func (a *App) apiCalendar(c echo.Context) error {
 }
 
 func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error {
-	resp.Errors = append(resp.Errors, err.Error())
+	resp.AddError(err)
 
 	return c.JSON(http.StatusBadRequest, resp)
 }
