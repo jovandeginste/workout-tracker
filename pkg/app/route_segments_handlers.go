@@ -31,7 +31,7 @@ func (a *App) routeSegmentsHandler(c echo.Context) error {
 
 	s, err := database.GetRouteSegments(a.db)
 	if err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
 	return Render(c, http.StatusOK, route_segments.List(s))

@@ -104,7 +104,7 @@ func (a *App) adminConfigUpdateHandler(c echo.Context) error {
 	}
 
 	if err := a.ResetConfiguration(); err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
 	}
 
 	a.setNotice(c, "Config updated")

@@ -55,12 +55,12 @@ func (a *App) equipmentShowHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
 	e, err := database.GetEquipment(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
 	return Render(c, http.StatusOK, equipment.Show(e))
@@ -113,7 +113,7 @@ func (a *App) equipmentEditHandler(c echo.Context) error {
 
 	e, err := a.getEquipment(c)
 	if err != nil {
-		return a.redirectWithError(c, "/equipment", err)
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
 
 	return Render(c, http.StatusOK, equipment.Edit(e))

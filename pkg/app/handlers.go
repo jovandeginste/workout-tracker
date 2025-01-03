@@ -26,7 +26,7 @@ func (a *App) statisticsHandler(c echo.Context) error {
 	a.setContext(c)
 
 	u := a.getCurrentUser(c)
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
@@ -49,23 +49,23 @@ func (a *App) dashboardHandler(c echo.Context) error {
 	a.setContext(c)
 
 	u := a.getCurrentUser(c)
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
 	w, err := u.GetWorkouts(a.db)
 	if err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
 	users, err := database.GetUsers(a.db)
 	if err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
 	recent, err := database.GetRecentWorkouts(a.db, 20)
 	if err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
 	return Render(c, http.StatusOK, user.Show(u, users, w, recent))
@@ -94,7 +94,7 @@ func (a *App) heatmapHandler(c echo.Context) error {
 	a.setContext(c)
 
 	u := a.getCurrentUser(c)
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 

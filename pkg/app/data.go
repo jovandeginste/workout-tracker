@@ -108,7 +108,7 @@ func (a *App) addWorkouts(u *database.User, data map[string]any) error {
 }
 
 func (a *App) addWorkoutsWithFilter(u *database.User, data map[string]any, db *gorm.DB) error {
-	if u == nil {
+	if u.IsAnonymous() {
 		return nil
 	}
 
@@ -173,7 +173,7 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 }
 
 func (a *App) addAllEquipment(u *database.User, data map[string]any) error {
-	if u == nil {
+	if u.IsAnonymous() {
 		return nil
 	}
 

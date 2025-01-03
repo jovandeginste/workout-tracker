@@ -35,18 +35,18 @@ func (a *App) workoutsHandler(c echo.Context) error {
 	a.setContext(c)
 
 	u := a.getCurrentUser(c)
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
 	}
 
 	filters, err := database.GetWorkoutsFilters(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
 	w, err := u.GetWorkouts(filters.ToQuery(a.db))
 	if err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
 	return Render(c, http.StatusOK, workouts.List(w, filters))

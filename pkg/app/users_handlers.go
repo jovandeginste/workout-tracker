@@ -40,7 +40,7 @@ func (a *App) userSigninHandler(c echo.Context) error {
 	a.sessionManager.Put(c.Request().Context(), "username", u.Username)
 
 	if err := a.createToken(storedUser, c); err != nil {
-		return err
+		return a.redirectWithError(c, a.echo.Reverse("user-login"), ErrLoginFailed)
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
@@ -96,7 +96,7 @@ func (a *App) userShowHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
 	}
 
-	if u == nil {
+	if u.IsAnonymous() {
 		return a.redirectWithError(
 			c,
 			a.echo.Reverse("dashboard"),
