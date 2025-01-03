@@ -4,9 +4,9 @@ import (
 	"context"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"slices"
 	"sort"
 	"strings"
-	"slices"
 )
 
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {

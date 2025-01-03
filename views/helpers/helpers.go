@@ -4,14 +4,9 @@ import (
 	"context"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 )
 
 const timeFormat = "2006-01-02 15:04"
-
-func iconFor(name string) string {
-	return string(templatehelpers.IconFor(name))
-}
 
 func RouteFor(ctx context.Context, name string, params ...any) string {
 	e := appEcho(ctx)
