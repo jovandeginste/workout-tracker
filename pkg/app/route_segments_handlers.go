@@ -72,11 +72,11 @@ func (a *App) addRouteSegment(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.setError(c, "Encountered %d problems while adding route segment: %s", len(errMsg), strings.Join(errMsg, "; "))
+		a.addError(c, "Encountered %d problems while adding route segment: %s", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.setNotice(c, "Added %d new route segment(s): %s - we search for matches in the background.", len(msg), strings.Join(msg, "; "))
+		a.addNotice(c, "Added %d new route segment(s): %s - we search for matches in the background.", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
@@ -131,7 +131,7 @@ func (a *App) routeSegmentsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been refreshed.", rs.Name)
+	a.addNotice(c, "The workout '%s' has been refreshed.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -146,7 +146,7 @@ func (a *App) routeSegmentsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been deleted.", rs.Name)
+	a.addNotice(c, "The workout '%s' has been deleted.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
 }
@@ -167,7 +167,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The route segment '%s' has been updated.", rs.Name)
+	a.addNotice(c, "The route segment '%s' has been updated.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -188,7 +188,7 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "Start searching in the background for matching workouts for route segment '%s'.", rs.Name)
+	a.addNotice(c, "Start searching in the background for matching workouts for route segment '%s'.", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }

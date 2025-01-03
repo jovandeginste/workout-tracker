@@ -44,7 +44,7 @@ func (a *App) userProfilePreferredUnitsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
-	a.setNotice(c, "Preferred units updated")
+	a.addNotice(c, "Preferred units updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
@@ -69,7 +69,7 @@ func (a *App) userProfileUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
-	a.setNotice(c, "Profile updated")
+	a.addNotice(c, "Profile updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
@@ -83,7 +83,7 @@ func (a *App) userProfileResetAPIKeyHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
-	a.setNotice(c, "API key updated")
+	a.addNotice(c, "API key updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
@@ -95,7 +95,7 @@ func (a *App) userRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
-	a.setNotice(c, "All workouts will be refreshed in the coming minutes.")
+	a.addNotice(c, "All workouts will be refreshed in the coming minutes.")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }

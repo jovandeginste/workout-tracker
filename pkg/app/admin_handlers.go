@@ -73,7 +73,7 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The user '%s' has been updated.", u.Name)
+	a.addNotice(c, "The user '%s' has been updated.", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-show", c.Param("id")))
 }
@@ -88,7 +88,7 @@ func (a *App) adminUserDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The user '%s' has been deleted.", u.Name)
+	a.addNotice(c, "The user '%s' has been deleted.", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }
@@ -108,7 +108,7 @@ func (a *App) adminConfigUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
 	}
 
-	a.setNotice(c, "Config updated")
+	a.addNotice(c, "Config updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }

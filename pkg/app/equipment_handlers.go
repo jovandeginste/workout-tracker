@@ -72,38 +72,38 @@ func (a *App) equipmentAddHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentDeleteHandler(c echo.Context) error { //nolint:dupl
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	if err := equipment.Delete(a.db); err != nil {
+	if err := e.Delete(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The equipment '%s' has been deleted.", equipment.Name)
+	a.addNotice(c, "The equipment '%s' has been deleted.", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
 
 func (a *App) equipmentUpdateHandler(c echo.Context) error {
-	equipment, err := a.getEquipment(c)
+	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	equipment.DefaultFor = nil
-	equipment.Active = (c.FormValue("active") == "true")
+	e.DefaultFor = nil
+	e.Active = (c.FormValue("active") == "true")
 
-	if err := c.Bind(equipment); err != nil {
+	if err := c.Bind(e); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	if err := equipment.Save(a.db); err != nil {
+	if err := e.Save(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The equipment '%s' has been updated.", equipment.Name)
+	a.addNotice(c, "The equipment '%s' has been updated.", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment-show", c.Param("id")))
 }

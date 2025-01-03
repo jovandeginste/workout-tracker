@@ -4,34 +4,20 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (a *App) addError(data map[string]any, c echo.Context) {
-	data["error"] = a.sessionManager.PopString(c.Request().Context(), "error")
-	c.Set("errors", data["error"])
-}
-
-func (a *App) addNotice(data map[string]any, c echo.Context) {
-	data["notice"] = a.sessionManager.PopString(c.Request().Context(), "notice")
-	c.Set("notices", data["notice"])
-}
-
-func (a *App) setNotice(c echo.Context, msg string, vars ...any) {
-	if msg == "" {
-		return
+func (a *App) addError(c echo.Context, msg string, vars ...any) {
+	switch msges := c.Get("errors").(type) {
+	case []string:
+		c.Set("errors", append(msges, a.i18n(c, msg, vars...)))
+	default:
+		c.Set("errors", []string{a.i18n(c, msg, vars...)})
 	}
-
-	theMsg := a.i18n(c, msg, vars...)
-
-	c.Set("notices", []string{theMsg})
-	a.sessionManager.Put(c.Request().Context(), "notice", theMsg)
 }
 
-func (a *App) setError(c echo.Context, msg string, vars ...any) {
-	if msg == "" {
-		return
+func (a *App) addNotice(c echo.Context, msg string, vars ...any) {
+	switch msges := c.Get("notices").(type) {
+	case []string:
+		c.Set("notices", append(msges, a.i18n(c, msg, vars...)))
+	default:
+		c.Set("notices", []string{a.i18n(c, msg, vars...)})
 	}
-
-	theMsg := a.i18n(c, msg, vars...)
-
-	c.Set("errors", []string{theMsg})
-	a.sessionManager.Put(c.Request().Context(), "error", theMsg)
 }

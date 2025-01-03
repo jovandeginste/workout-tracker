@@ -1,12 +1,12 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"gorm.io/gorm"
 
 	"github.com/labstack/echo/v4"
 )
@@ -27,7 +27,7 @@ func (a *App) setUserFromContext(ctx echo.Context) error {
 
 	u := a.getCurrentUser(ctx)
 	if u.IsAnonymous() || !u.IsActive() {
-		return fmt.Errorf("user not found or active")
+		return errors.New("user not found or active")
 	}
 
 	return nil
@@ -83,67 +83,6 @@ func (a *App) localizeUser(ctx echo.Context, u *database.User) {
 	u.SetHumanizer(h)
 }
 
-func (a *App) defaultData(c echo.Context) map[string]any {
-	data := map[string]any{}
-
-	a.addError(data, c)
-	a.addNotice(data, c)
-
-	return data
-}
-
-func (a *App) addRouteSegments(data map[string]any) error {
-	w, err := database.GetRouteSegments(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["routeSegments"] = w
-
-	return nil
-}
-
-func (a *App) addWorkouts(u *database.User, data map[string]any) error {
-	return a.addWorkoutsWithFilter(u, data, a.db)
-}
-
-func (a *App) addWorkoutsWithFilter(u *database.User, data map[string]any, db *gorm.DB) error {
-	if u.IsAnonymous() {
-		return nil
-	}
-
-	w, err := u.GetWorkouts(db)
-	if err != nil {
-		return err
-	}
-
-	data["workouts"] = w
-
-	return nil
-}
-
-func (a *App) addRecentWorkouts(data map[string]any) error {
-	w, err := database.GetRecentWorkouts(a.db, 20)
-	if err != nil {
-		return err
-	}
-
-	data["recentWorkouts"] = w
-
-	return nil
-}
-
-func (a *App) addUsers(data map[string]any) error {
-	users, err := database.GetUsers(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["users"] = users
-
-	return nil
-}
-
 func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -170,21 +109,6 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 	}
 
 	return w, nil
-}
-
-func (a *App) addAllEquipment(u *database.User, data map[string]any) error {
-	if u.IsAnonymous() {
-		return nil
-	}
-
-	w, err := u.GetAllEquipment(a.db)
-	if err != nil {
-		return err
-	}
-
-	data["equipment"] = w
-
-	return nil
 }
 
 func (a *App) getEquipment(c echo.Context) (*database.Equipment, error) {

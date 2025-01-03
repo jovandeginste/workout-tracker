@@ -187,7 +187,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been created.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been created.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -226,7 +226,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.setNotice(c, "The workout '%s' has been updated.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been updated.", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -262,11 +262,11 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.setError(c, "Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; "))
+		a.addError(c, "Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.setNotice(c, "Added %d new workout(s): %s", len(msg), strings.Join(msg, "; "))
+		a.addNotice(c, "Added %d new workout(s): %s", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
