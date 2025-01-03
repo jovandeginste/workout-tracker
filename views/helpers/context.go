@@ -2,15 +2,13 @@ package helpers
 
 import (
 	"context"
+
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	appversion "github.com/jovandeginste/workout-tracker/pkg/version"
 	"github.com/labstack/echo/v4"
 	"github.com/vorlif/spreak"
 	"github.com/vorlif/spreak/humanize"
 )
-
-templ contextDummy() {
-}
 
 func AppConfig(ctx context.Context) *database.Config {
 	if v := ctx.Value("config"); v != nil {

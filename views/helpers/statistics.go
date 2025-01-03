@@ -1,8 +1,5 @@
 package helpers
 
-templ DummyStatistics() {
-}
-
 func StatisticSinceOptions() []string {
 	return []string{
 		"1 day",

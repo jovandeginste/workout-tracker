@@ -2,12 +2,10 @@ package helpers
 
 import (
 	"context"
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"time"
-)
 
-templ humanizeDummy() {
-}
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+)
 
 func HumanDuration(d time.Duration) string {
 	return templatehelpers.HumanDuration(d)

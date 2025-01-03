@@ -43,22 +43,7 @@ func TestHumanTempoKM(t *testing.T) {
 	assert.Equal(t, "5:01", HumanTempoKM(3.32))
 }
 
-func TestBoolToHTML(t *testing.T) {
-	assert.Equal(t, template.HTML("<i class=\"text-green-500 fas fa-check\"></i>"), BoolToHTML(true))
-	assert.Equal(t, template.HTML("<i class=\"text-rose-500 fas fa-times\"></i>"), BoolToHTML(false))
-}
-
 func TestBoolToCheckbox(t *testing.T) {
 	assert.Equal(t, template.HTML("checked"), BoolToCheckbox(true))
 	assert.Equal(t, template.HTML(""), BoolToCheckbox(false))
-}
-
-func TestBuildDecoratedAttribute(t *testing.T) {
-	r := BuildDecoratedAttribute("the-icon", "the-name", "the-value", "the-unit")
-
-	assert.NotNil(t, r)
-	assert.Equal(t, "the-icon", r.Icon)
-	assert.Equal(t, "the-name", r.Name)
-	assert.Equal(t, "the-value", r.Value)
-	assert.Equal(t, "the-unit", r.Unit)
 }

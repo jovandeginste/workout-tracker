@@ -5,9 +5,6 @@ import (
 	"time"
 )
 
-templ timeDummy() {
-}
-
 func RelativeDate(ctx context.Context, t *time.Time) string {
 	return humanizer(ctx).NaturalTime(t)
 }
@@ -23,6 +20,7 @@ func LocalTime(ctx context.Context, t *time.Time) time.Time {
 func Timezone(ctx context.Context) string {
 	return timezone(ctx).String()
 }
+
 func timezone(ctx context.Context) *time.Location {
 	return CurrentUser(ctx).Timezone()
 }
