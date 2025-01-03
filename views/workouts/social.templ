@@ -1,12 +1,12 @@
-package partials
+package workouts
 
 import (
 	"context"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"slices"
 	"sort"
 	"strings"
-	"slices"
 )
 
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {
@@ -40,7 +40,7 @@ func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	return strings.Join(tags, ",")
 }
 
-templ WorkoutSocial(w *database.Workout) {
+templ Social(w *database.Workout) {
 	<div
 		class="shareon print:hidden"
 		data-url=" "

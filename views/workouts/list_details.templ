@@ -1,12 +1,13 @@
-package partials
+package workouts
 
 import (
 	"fmt"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"github.com/jovandeginste/workout-tracker/views/partials"
 )
 
-templ WorkoutsListDetails(w *database.Workout) {
+templ ListDetails(w *database.Workout) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<div class="workouts_list_details flex flex-wrap gap-1">
 		if w.Type.IsLocation() {
@@ -37,7 +38,7 @@ templ WorkoutsListDetails(w *database.Workout) {
 				title={ helpers.I18n(ctx, "Average speed") }
 			>
 				@helpers.IconFor("speed")
-				@PreferredAverageSpeedMetric(w, preferredUnits)
+				@partials.PreferredAverageSpeedMetric(w, preferredUnits)
 			</div>
 		}
 		if w.Type.IsWeight() {

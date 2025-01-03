@@ -4,9 +4,10 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 )
 
-templ Show(user *database.User, users []*database.User, workouts []*database.Workout, recentWorkouts []*database.Workout) {
+templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -19,20 +20,20 @@ templ Show(user *database.User, users []*database.User, workouts []*database.Wor
 					@helpers.IconFor("dashboard")
 					{ helpers.I18n(ctx, "Dashboard for %s", user.Name) }
 				</h2>
-				@partials.StatsRecordsTotal(user)
+				@StatsRecordsTotal(user)
 				<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
 					<div>
 						{{ recs, _ := user.GetAllRecords() }}
 						for _, r := range recs {
 							if r.WorkoutType.IsDistance() && r.Active {
 								<div class="inner-form">
-									@partials.StatsRecordsDistance(r)
+									@StatsRecordsDistance(r)
 								</div>
 							}
 						}
 					</div>
 					<div>
-						@partials.UserProfileCalendar(workouts)
+						@ProfileCalendar(wos)
 					</div>
 				</div>
 				if len(users) > 0 {
@@ -58,7 +59,7 @@ templ Show(user *database.User, users []*database.User, workouts []*database.Wor
 						</h3>
 						<div class="sm:flex sm:flex-wrap justify-center">
 							for _, w := range recentWorkouts {
-								@partials.WorkoutItem(w)
+								@workouts.Item(w)
 							}
 						</div>
 					</div>

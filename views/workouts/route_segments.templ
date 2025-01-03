@@ -1,11 +1,11 @@
-package partials
+package workouts
 
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
-templ WorkoutRouteSegments(segments []*database.RouteSegmentMatch) {
+templ RouteSegments(segments []*database.RouteSegmentMatch) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<table>
 		<thead>

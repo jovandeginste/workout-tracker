@@ -101,7 +101,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 									@partials.SnippetDate(w.Date)
 								</td>
 								<th class="hidden lg:table-cell">
-									@partials.WorkoutsListDetails(w)
+									@ListDetails(w)
 								</th>
 								<td class="hidden sm:table-cell">
 									if w.Dirty {
@@ -110,7 +110,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 										</span>
 									}
 									<span class="actions">
-										@partials.WorkoutActions(w)
+										@Actions(w)
 									</span>
 								</td>
 							</tr>

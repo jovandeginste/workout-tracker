@@ -162,7 +162,7 @@ func Show(w *database.Workout) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = partials.WorkoutActions(w).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Actions(w).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -197,7 +197,7 @@ func Show(w *database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = partials.WorkoutMap(w).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Map(w).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -210,7 +210,7 @@ func Show(w *database.Workout) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = partials.FullWorkoutDetails(w).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = FullWorkoutDetails(w).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -224,7 +224,7 @@ func Show(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if stats, err := w.StatisticsPer(1, currentUser.PreferredUnits().Distance()); err == nil {
-				templ_7745c5c3_Err = partials.WorkoutBreakdown(stats).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = Breakdown(stats).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -260,7 +260,7 @@ func Show(w *database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = partials.WorkoutRouteSegments(w.RouteSegmentMatches).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = RouteSegments(w.RouteSegmentMatches).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -348,7 +348,7 @@ func Show(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if stats, err := w.StatisticsPer(1, "min"); err == nil {
-				templ_7745c5c3_Err = partials.WorkoutShowStats(stats).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ShowStats(stats).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

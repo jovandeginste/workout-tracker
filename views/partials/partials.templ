@@ -1,7 +1,10 @@
 package partials
 
 import (
+	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
+	"html"
 	"time"
 )
 
@@ -51,4 +54,23 @@ templ Language() {
       location.assign("?lang=" + value);
     }
   </script>
+}
+
+templ PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *database.UserPreferredUnits) {
+	{{ 	speedUnit := preferredUnits.Speed() }}
+	{{ 	speedFormatter := templatehelpers.HumanSpeedFor(speedUnit) }}
+	{{ 	primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit) }}
+	{{ 	tempoUnit := preferredUnits.Tempo() }}
+	{{ 	tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit) }}
+	{{ 	secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit) }}
+	if *wt == database.WorkoutTypeRunning {
+		<!-- Swap tempo and speed, so that tempo is primarily shown for running -->
+		<abbr title={ primaryText }>{ secondaryText }</abbr>
+	} else {
+		<abbr title={ secondaryText }>{ primaryText }</abbr>
+	}
+}
+
+templ PreferredAverageSpeedMetric(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
+	@PreferredSpeedMetric(&w.Type, w.Data.AverageSpeedNoPause, preferredUnits)
 }

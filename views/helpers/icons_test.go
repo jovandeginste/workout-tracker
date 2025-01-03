@@ -1,4 +1,4 @@
-package templatehelpers
+package helpers
 
 import (
 	"testing"
@@ -12,14 +12,14 @@ func TestIconFor_Default(t *testing.T) {
 		"invalid-value-to-get-icon",
 		";invalid-value-to-get-icon",
 	} {
-		d := IconFor(dummy)
+		d := iconFor(dummy)
 		assert.Contains(t, d, "icon-decoration")
 	}
 }
 
 func TestIconFor_Types(t *testing.T) {
-	assert.Contains(t, IconFor("distance"), "fa6-solid--road")
-	assert.Contains(t, IconFor("close"), "fa6-solid--xmark")
-	assert.Contains(t, IconFor("dashboard"), "fa6-solid--chart-line")
-	assert.Contains(t, IconFor("running"), "fa6-solid--person-running")
+	assert.Contains(t, iconFor("distance"), "fa6-solid--road")
+	assert.Contains(t, iconFor("close"), "fa6-solid--xmark")
+	assert.Contains(t, iconFor("dashboard"), "fa6-solid--chart-line")
+	assert.Contains(t, iconFor("running"), "fa6-solid--person-running")
 }

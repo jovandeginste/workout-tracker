@@ -1,4 +1,4 @@
-package partials
+package workouts
 
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
@@ -10,7 +10,7 @@ type item struct {
 	Label string
 }
 
-templ WorkoutShowStats(stats database.WorkoutBreakdown) {
+templ ShowStats(stats database.WorkoutBreakdown) {
 	<div id="chart"></div>
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
 	{{
@@ -20,7 +20,7 @@ for _, i := range stats.Items {
 
 	data = append(data, item{
 		Item:  i,
-		Label: WorkoutPointTitle(ctx, pu, i.FirstPoint),
+		Label: PointTitle(ctx, pu, i.FirstPoint),
 	})
 }
 
@@ -35,7 +35,7 @@ translations := map[string]string{
 	"averagespeed": helpers.I18n(ctx, "Average speed"),
 }
 	}}
-	@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJson(pu))
+	@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(pu))
 	@templ.JSONScript("data", data)
 	@templ.JSONScript("tz", helpers.Timezone(ctx))
 	@templ.JSONScript("lang", helpers.Language(ctx))

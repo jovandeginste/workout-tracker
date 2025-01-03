@@ -3,7 +3,7 @@ package route_segments
 import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
-	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 )
 
 templ RouteSegmentMap(s *database.RouteSegment) {
@@ -51,7 +51,7 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 			Lng:       p.Lng,
 			Speed:     p.AverageSpeed(),
 			Elevation: p.ExtraMetrics.Get("elevation"),
-			Title:     partials.WorkoutPointTitle(ctx, pu, &p),
+			Title:     workouts.PointTitle(ctx, pu, &p),
 		})
 	}
 		}}
