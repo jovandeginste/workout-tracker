@@ -11,30 +11,27 @@ import (
 )
 
 func AppConfig(ctx context.Context) *database.Config {
-	if v := ctx.Value("config"); v != nil {
-		return v.(*database.Config)
+	switch v := ctx.Value("config").(type) {
+	case *database.Config:
+		return v
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func Version(ctx context.Context) *appversion.Version {
-	if v := ctx.Value("version"); v != nil {
-		return v.(*appversion.Version)
+	switch v := ctx.Value("version").(type) {
+	case *appversion.Version:
+		return v
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func Notices(ctx context.Context) []string {
-	e := ctx.Value("notices")
-	if e == nil {
-		return nil
-	}
-
-	switch v := e.(type) {
+	switch v := ctx.Value("notices").(type) {
 	case string:
-		if len(v) == 0 {
+		if v == "" {
 			return nil
 		}
 
@@ -47,14 +44,9 @@ func Notices(ctx context.Context) []string {
 }
 
 func Errors(ctx context.Context) []string {
-	e := ctx.Value("errors")
-	if e == nil {
-		return nil
-	}
-
-	switch v := e.(type) {
+	switch v := ctx.Value("errors").(type) {
 	case string:
-		if len(v) == 0 {
+		if v == "" {
 			return nil
 		}
 
@@ -67,11 +59,12 @@ func Errors(ctx context.Context) []string {
 }
 
 func appEcho(ctx context.Context) *echo.Echo {
-	if e := ctx.Value("echo"); e != nil {
-		return e.(*echo.Echo)
+	switch v := ctx.Value("echo").(type) {
+	case *echo.Echo:
+		return v
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func translator(ctx context.Context) *spreak.Localizer {
@@ -79,19 +72,21 @@ func translator(ctx context.Context) *spreak.Localizer {
 		return t
 	}
 
-	if t := ctx.Value("translator"); t != nil {
-		return t.(*spreak.Localizer)
+	switch t := ctx.Value("translator").(type) {
+	case *spreak.Localizer:
+		return t
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func genericTranslator(ctx context.Context) *spreak.Bundle {
-	if t := ctx.Value("generic_translator"); t != nil {
-		return t.(*spreak.Bundle)
+	switch v := ctx.Value("generic_translator").(type) {
+	case *spreak.Bundle:
+		return v
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func humanizer(ctx context.Context) *humanize.Humanizer {
@@ -99,17 +94,19 @@ func humanizer(ctx context.Context) *humanize.Humanizer {
 		return h
 	}
 
-	if h := ctx.Value("humanizer"); h != nil {
-		return h.(*humanize.Humanizer)
+	switch v := ctx.Value("humanizer").(type) {
+	case *humanize.Humanizer:
+		return v
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 func CurrentUser(ctx context.Context) *database.User {
-	if dbUser := ctx.Value("user_info"); dbUser != nil {
-		return dbUser.(*database.User)
+	switch v := ctx.Value("user_info").(type) {
+	case *database.User:
+		return v
+	default:
+		return database.AnonymousUser()
 	}
-
-	return database.AnonymousUser()
 }

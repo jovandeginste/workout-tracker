@@ -52,7 +52,7 @@ func (a *App) workoutsHandler(c echo.Context) error {
 	return Render(c, http.StatusOK, workouts.List(w, filters))
 }
 
-func (a *App) workoutsShowHandler(c echo.Context) error { //nolint:dupl
+func (a *App) workoutsShowHandler(c echo.Context) error {
 	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))
@@ -121,7 +121,7 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
 
-func (a *App) workoutShowShared(c echo.Context) error { //nolint:dupl
+func (a *App) workoutShowShared(c echo.Context) error {
 	a.setContext(c)
 
 	u, err := uuid.Parse(c.Param("uuid"))
@@ -241,7 +241,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }
 
-func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error { //nolint:dupl
+func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
 	a.setContext(c)
 
 	id, err := strconv.Atoi(c.Param("id"))

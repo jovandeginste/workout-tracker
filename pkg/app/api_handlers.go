@@ -149,9 +149,10 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
 func (a *App) apiCenters(c echo.Context) error {
+	a.setContext(c)
+
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
-	a.setContext(c)
 	u := a.getCurrentUser(c)
 	db := a.db.Preload("Data").Preload("Data.Details")
 
@@ -189,7 +190,7 @@ func (a *App) apiCenters(c echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
-func (a *App) apiCoordinates(c echo.Context) error { //nolint:dupl
+func (a *App) apiCoordinates(c echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 
@@ -438,10 +439,10 @@ func (a *App) apiCalendar(c echo.Context) error {
 	resp := APIResponse{}
 	events := []Event{}
 
-	var queryParams struct {
+	queryParams := struct {
 		Start *string `query:"start"`
 		End   *string `query:"end"`
-	}
+	}{}
 	if err := c.Bind(&queryParams); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -481,6 +482,7 @@ func (a *App) apiCalendar(c echo.Context) error {
 			URL:   a.echo.Reverse("workout-show", w.ID),
 		})
 	}
+
 	resp.Results = events
 
 	return c.JSON(http.StatusOK, resp)
