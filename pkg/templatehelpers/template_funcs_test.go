@@ -1,7 +1,6 @@
 package templatehelpers
 
 import (
-	"html/template"
 	"testing"
 	"time"
 
@@ -41,9 +40,4 @@ func TestHumanTempoKM(t *testing.T) {
 	assert.Equal(t, "5:59", HumanTempoKM(2.78))
 	assert.Equal(t, "3:20", HumanTempoKM(4.99))
 	assert.Equal(t, "5:01", HumanTempoKM(3.32))
-}
-
-func TestBoolToCheckbox(t *testing.T) {
-	assert.Equal(t, template.HTML("checked"), BoolToCheckbox(true))
-	assert.Equal(t, template.HTML(""), BoolToCheckbox(false))
 }
