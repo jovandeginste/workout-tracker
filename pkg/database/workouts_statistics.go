@@ -75,6 +75,11 @@ func (bi *BreakdownItem) canHaveDuration(duration, next time.Duration) bool {
 }
 
 func (bi *BreakdownItem) CalcultateSpeed() {
+	if bi.Duration.Seconds() == 0 {
+		bi.Speed = 0
+		return
+	}
+
 	bi.Speed = bi.Distance / bi.Duration.Seconds()
 }
 
