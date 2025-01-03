@@ -150,15 +150,7 @@ func (m Migrator) CreateIndex(value interface{}, name string) error {
 					createIndexSQL += " WHERE " + idx.Where
 				}
 
-				err := m.DB.Exec(createIndexSQL, values...).Error
-				if err != nil {
-					return err
-				}
-
-				if !m.HasIndex(value, name) {
-					return fmt.Errorf("failed to create index with name %v", name)
-				}
-				return nil
+				return m.DB.Exec(createIndexSQL, values...).Error
 			}
 		}
 

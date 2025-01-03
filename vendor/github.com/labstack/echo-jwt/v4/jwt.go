@@ -254,11 +254,11 @@ func (config Config) ToMiddleware() (echo.MiddlewareFunc, error) {
 				return tmpErr
 			}
 
-			message := "invalid or expired jwt"
 			if lastTokenErr == nil {
-				message = "missing or malformed jwt"
+				return echo.NewHTTPError(http.StatusBadRequest, "missing or malformed jwt").SetInternal(err)
 			}
-			return echo.NewHTTPError(http.StatusUnauthorized, message).SetInternal(err)
+
+			return echo.NewHTTPError(http.StatusUnauthorized, "invalid or expired jwt").SetInternal(err)
 		}
 	}, nil
 }

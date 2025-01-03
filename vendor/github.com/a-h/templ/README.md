@@ -28,12 +28,6 @@ cd cmd/templ
 go build
 ```
 
-### nix-update-gomod2nix
-
-```sh
-gomod2nix
-```
-
 ### install-snapshot
 
 Build and install current version.
@@ -116,6 +110,13 @@ go tool cover -func coverage.out | grep total
 
 ```sh
 gotestsum --watch -- -coverprofile=coverage.out
+```
+
+### test-fuzz
+
+```sh
+./parser/v2/fuzz.sh
+./parser/v2/goexpression/fuzz.sh
 ```
 
 ### benchmark
