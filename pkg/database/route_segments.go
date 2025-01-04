@@ -2,7 +2,6 @@ package database
 
 import (
 	"crypto/sha256"
-	"html/template"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -196,12 +195,12 @@ func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	return rs, nil
 }
 
-func (rs *RouteSegment) MarkdownNotes() template.HTML {
+func (rs *RouteSegment) MarkdownNotes() string {
 	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(rs.Notes))
 	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
 	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
 
-	return template.HTML(safeHTML) //nolint:gosec // We escaped all unsafe HTML with bluemonday
+	return string(safeHTML)
 }
 
 func (rs *RouteSegment) Address() string {
