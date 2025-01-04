@@ -54,16 +54,16 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</select>
 						<label for="order_by">{ helpers.I18n(ctx, "Sort by") }</label>
 						<select id="order_by" name="order_by">
-							for k, v := range helpers.OrderByOptions() {
-								<option value={ k } selected?={ k ==  filters.OrderBy }>
-									{ helpers.I18n(ctx, v) }
+							for _, o := range helpers.OrderByOptions() {
+								<option value={ o.Key } selected?={ o.Key ==  filters.OrderBy }>
+									{ helpers.I18n(ctx, o.Translation) }
 								</option>
 							}
 						</select>
 						<select id="order_dir" name="order_dir">
-							for k, v := range helpers.OrderDirOptions() {
-								<option value={ k } selected?={ k == filters.OrderDir }>
-									{ helpers.I18n(ctx, v) }
+							for _, o := range helpers.OrderDirOptions() {
+								<option value={ o.Key } selected?={ o.Key == filters.OrderDir }>
+									{ helpers.I18n(ctx, o.Translation) }
 								</option>
 							}
 						</select>
