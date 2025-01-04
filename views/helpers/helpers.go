@@ -33,26 +33,31 @@ func FilterOptions() []string {
 	return StatisticSinceOptions()
 }
 
-func OrderDirOptions() map[string]string {
-	return map[string]string{
-		"asc":  "ascending",
-		"desc": "descending",
+type TranslatedKey struct {
+	Key         string
+	Translation string
+}
+
+func OrderDirOptions() []TranslatedKey {
+	return []TranslatedKey{
+		{"asc", "ascending"},
+		{"desc", "descending"},
 	}
 }
 
-func OrderByOptions() map[string]string {
-	return map[string]string{
-		"date": "Date",
+func OrderByOptions() []TranslatedKey {
+	return []TranslatedKey{
+		{"date", "Date"},
 
-		"total_distance":    "Total distance",
-		"total_duration":    "Total duration",
-		"total_weight":      "Total weight",
-		"total_repetitions": "Total repetitions",
-		"total_up":          "Total up",
-		"total_down":        "Total down",
+		{"total_distance", "Total distance"},
+		{"total_duration", "Total duration"},
+		{"total_weight", "Total weight"},
+		{"total_repetitions", "Total repetitions"},
+		{"total_up", "Total up"},
+		{"total_down", "Total down"},
 
-		"average_speed_no_pause": "Average speed",
-		"max_speed":              "Max speed",
+		{"average_speed_no_pause", "Average speed"},
+		{"max_speed", "Max speed"},
 	}
 }
 
