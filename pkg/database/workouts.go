@@ -3,7 +3,6 @@ package database
 import (
 	"crypto/sha256"
 	"errors"
-	"html/template"
 	"path/filepath"
 	"slices"
 	"sort"
@@ -284,12 +283,12 @@ func (w *Workout) Distance() float64 {
 	return w.Data.TotalDistance
 }
 
-func (w *Workout) MarkdownNotes() template.HTML {
+func (w *Workout) MarkdownNotes() string {
 	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(w.Notes))
 	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
 	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
 
-	return template.HTML(safeHTML) //nolint:gosec // We escaped all unsafe HTML with bluemonday
+	return string(safeHTML)
 }
 
 func (d *GPXData) Save(db *gorm.DB) error {
