@@ -79,7 +79,7 @@ templ Map(w *database.Workout) {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title="{{ i18n `Show map in full width` }}" onclick="fullMap()">
+			<a href="#" title={ helpers.I18n(ctx, "Show map in full width") } onclick="fullMap()">
 				@helpers.IconFor("expand")
 			</a>
 		</div>
