@@ -17,17 +17,21 @@ templ Footer() {
 		</div>
 		<div>
 			<a
-				class="icon-brands icon-baseline icon-space-sm icon-outside icon-github"
 				target="_blank"
 				href="https://github.com/jovandeginste/workout-tracker"
-			>GitHub</a>
+			>
+				@helpers.IconFor("github")
+				GitHub
+			</a>
 		</div>
 		<div>
 			<a
-				class="icon-solid icon-baseline icon-space-sm icon-outside icon-clipboard-check"
 				target="_blank"
 				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
-			>Changelog</a>
+			>
+				@helpers.IconFor("changelog")
+				Changelog
+			</a>
 		</div>
 	</div>
 }

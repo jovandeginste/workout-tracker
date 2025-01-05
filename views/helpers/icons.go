@@ -25,6 +25,7 @@ var iconMap = map[string]string{
 	"calories":    "icon-[fa6-solid--fire]",
 
 	// Misc Icons
+	"welcome":        "icon-[fa6-solid--chevron-right]",
 	"circular":       "icon-[fa6-solid--circle-notch]",
 	"bidirectional":  "icon-[fa6-solid--arrow-right-arrow-left]",
 	"units":          "icon-[fa6-solid--ruler]",
@@ -68,6 +69,7 @@ var iconMap = map[string]string{
 	"equipment-add":     "icon-[fa6-solid--circle-plus]",
 	"route-segment-add": "icon-[fa6-solid--circle-plus]",
 	"heatmap":           "icon-[fa6-solid--fire]",
+	"changelog":         "icon-[mdi--clipboard-check]",
 
 	// Utility Icons
 	"close":         "icon-[fa6-solid--xmark]",
@@ -88,6 +90,9 @@ var iconMap = map[string]string{
 	"attention":     "icon-[fa6-solid--circle-exclamation]",
 	"check":         "icon-[fa6-solid--square-check]",
 	"totals":        "icon-[fa6-solid--calculator]",
+
+	// Brand Icons
+	"github": "icon-[octicon--mark-github-16]",
 }
 
 func iconFor(what string) string {
