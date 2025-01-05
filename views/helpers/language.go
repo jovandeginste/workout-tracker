@@ -2,9 +2,11 @@ package helpers
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
+	"github.com/invopop/ctxi18n/i18n"
 	emojiflag "github.com/jayco/go-emoji-flag"
 	"github.com/sersh88/timeago"
 	"golang.org/x/text/language"
@@ -12,6 +14,14 @@ import (
 )
 
 var englishTag = display.English.Languages()
+
+func THas(ctx context.Context, key string, args ...any) string {
+	if i18n.Has(ctx, key) {
+		return i18n.T(ctx, key, args...)
+	}
+
+	return fmt.Sprintf(key, args...)
+}
 
 type LanguageInformation struct {
 	Code        string

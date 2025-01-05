@@ -167,7 +167,7 @@ templ Form(w *database.Workout) {
 						checked?={ w.Uses(e) }
 					/>
 					<span id={ fmt.Sprintf("%d", e.ID) } class="selectable-pill" for={ fmt.Sprintf("equipment_%d", e.ID) }>
-						{ e.Name }
+						{ helpers.THas(ctx, e.Name) }
 					</span>
 				</label>
 			}
