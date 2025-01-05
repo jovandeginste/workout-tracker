@@ -26,23 +26,24 @@ templ Actions(w *database.Workout) {
 	</form>
 	if w.PublicUUID != nil {
 		<form
-			onsubmit="copyToClipboard('public_uuid'); showMessage('notice', '{ i18n.T(ctx, `Publicly shareable link was copied to clipboard`) }'); return false;"
+			onsubmit="copyToClipboard('public_uuid'); return false;"
 		>
 			<input
 				type="text"
 				name="public_uuid"
 				id="public_uuid"
+				data-notice={ i18n.T(ctx, "Publicly shareable link was copied to clipboard") }
 				class="hidden"
-				value="..."
+				value={ helpers.RouteFor(ctx, "share", w.PublicUUID) }
 			/>
 			<script>
-    var uuidText = document.getElementById("public_uuid");
-    uuidText.value = new URL(
-      "{ helpers.RouteFor(ctx, "share" .PublicUUID }}",
-      document.location,
-    ).href;
-  </script>
-			<button class="share" title="{ i18n.T(ctx, `Copy publicly shareable link`) }">
+        var uuidText = document.getElementById("public_uuid");
+        uuidText.value = new URL(uuidText.value, document.location).href;
+      </script>
+			<button
+				class="share"
+				title={ i18n.T(ctx, "Copy publicly shareable link") }
+			>
 				<a>
 					@helpers.IconFor("share")
 				</a>
@@ -52,7 +53,7 @@ templ Actions(w *database.Workout) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-share", w.ID)) } method="post">
 		<button
 			class="share dangerous"
-			title={ i18n.T(ctx, `(Re)generate publicly shareable link`) }
+			title={ i18n.T(ctx, "(Re)generate publicly shareable link") }
 		>
 			<a>
 				@helpers.IconFor("generate-share")
