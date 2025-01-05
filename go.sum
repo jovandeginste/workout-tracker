@@ -234,6 +234,8 @@ github.com/samber/lo v1.47.0/go.mod h1:RmDH9Ct32Qy3gduHQuKJ3gW1fMHAnE/fAzQuf6He5
 github.com/samber/slog-echo v1.15.0 h1:xzdHyyM9bTyQpEFIGHi6oERY1puUh5zYxiRhOhzT4MA=
 github.com/samber/slog-echo v1.15.0/go.mod h1:K21nbusPmai/MYm8PFactmZoFctkMmkeaTdXXyvhY1c=
 github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
+github.com/sersh88/timeago v1.0.0 h1:iJTRqnIesA3aD9Ps05PyebwVkOjJJ5Umaor13u1Yf2c=
+github.com/sersh88/timeago v1.0.0/go.mod h1:XytB6DdM+ihjmQuJmoMgIpVJh/ILdtcKLdW7pOrwgdI=
 github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24/go.mod h1:M+9NzErvs504Cn4c5DxATwIqPbtswREoFCre64PpcG4=
 github.com/shopspring/decimal v1.2.0/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=
 github.com/sirupsen/logrus v1.4.1/go.mod h1:ni0Sbl8bgC9z8RoU9G6nDWqqs/fq4eDPysMBDgk/93Q=
@@ -301,8 +303,6 @@ github.com/valyala/fasttemplate v1.0.1/go.mod h1:UQGH1tvbgY+Nz5t2n7tXsz52dQxojPU
 github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
 github.com/valyala/fasttemplate v1.2.2 h1:lxLXG0uE3Qnshl9QyaK6XJxMXlQZELvChBOCmQD0Loo=
 github.com/valyala/fasttemplate v1.2.2/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
-github.com/vorlif/spreak v0.6.0 h1:+WrtSGKx9zcZy8d/Tp6t+OA3x9RgmA8TQYPzQ+U7Ddc=
-github.com/vorlif/spreak v0.6.0/go.mod h1:vcqv4dB1XgHpxIXhV5C+8EgqlzKfL37Atj2O/bOB1Bw=
 github.com/westphae/geomag v1.0.2 h1:dpcizAXfjKV0PR6ohY7PX3hHfiIPVjJC03M8KyJjqRI=
 github.com/westphae/geomag v1.0.2/go.mod h1:xOwtBFVzYXv+tutDPYOuV3PSwS1f9hHuGQsPAUzVYf8=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
