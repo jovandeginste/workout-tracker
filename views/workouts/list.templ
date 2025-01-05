@@ -30,7 +30,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 					</div>
 				</div>
 				<details class="inner-form" open?={ filters.Active }>
-					<summary class="cursor-pointer">Filter workouts</summary>
+					<summary class="cursor-pointer">{ i18n.T(ctx, "Filter workouts") }</summary>
 					<form id="filters" method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
 						<input type="hidden" id="active" name="active" value="true"/>
 						<label for="type">{ i18n.T(ctx, "Type") }</label>
