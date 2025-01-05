@@ -2,6 +2,7 @@ package workouts
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -30,7 +31,7 @@ templ Edit(w *database.Workout) {
 									<thead>
 										<tr>
 											<td>
-												<label for="type">{ helpers.I18n(ctx, "Workout type") }</label>
+												<label for="type">{ i18n.T(ctx, "Workout type") }</label>
 											</td>
 											<td>
 												<input type="hidden" name="id" value={ fmt.Sprintf("%d", w.ID) }/>
@@ -44,7 +45,7 @@ templ Edit(w *database.Workout) {
 												>
 													for _, wt := range helpers.WorkoutTypes() {
 														<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
-															{ helpers.I18n(ctx, wt.String()) }
+															{ i18n.T(ctx, wt.String()) }
 														</option>
 													}
 												</select>
@@ -61,9 +62,9 @@ templ Edit(w *database.Workout) {
 										<tr>
 											<td></td>
 											<td>
-												<button type="submit">{ helpers.I18n(ctx, "Update workout") }</button>
+												<button type="submit">{ i18n.T(ctx, "Update workout") }</button>
 												<button type="reset" class="edit">
-													{ helpers.I18n(ctx, "Reset changes") }
+													{ i18n.T(ctx, "Reset changes") }
 												</button>
 												<button
 													type="button"
@@ -71,7 +72,7 @@ templ Edit(w *database.Workout) {
 													onclick="document.location=this.getAttribute('data-url')"
 													data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
 												>
-													{ helpers.I18n(ctx, "Cancel") }
+													{ i18n.T(ctx, "Cancel") }
 												</button>
 											</td>
 										</tr>

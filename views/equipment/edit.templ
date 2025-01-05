@@ -1,6 +1,7 @@
 package equipment
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -16,7 +17,7 @@ templ Edit(e *database.Equipment) {
 			@partials.Header()
 			<div class="content">
 				<div class="gap-4">
-					<h2>{ helpers.I18n(ctx, "Equipment") }: { e.Name }</h2>
+					<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
 				</div>
 				<div class="sm:flex sm:flex-wrap">
 					<div class="basis-1/2">
@@ -26,7 +27,7 @@ templ Edit(e *database.Equipment) {
 									<tbody>
 										<tr>
 											<td>
-												<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+												<label for="name">{ i18n.T(ctx, "Name") }</label>
 											</td>
 											<td>
 												<input id="name" name="name" value={ e.Name }/>
@@ -34,7 +35,7 @@ templ Edit(e *database.Equipment) {
 										</tr>
 										<tr>
 											<th>
-												<label for="description">{ helpers.I18n(ctx, "Description") }</label>
+												<label for="description">{ i18n.T(ctx, "Description") }</label>
 											</th>
 											<td>
 												<textarea
@@ -49,7 +50,7 @@ templ Edit(e *database.Equipment) {
 										</tr>
 										<tr>
 											<td>
-												<label for="active">{ helpers.I18n(ctx, "Active") }</label>
+												<label for="active">{ i18n.T(ctx, "Active") }</label>
 											</td>
 											<td>
 												<input
@@ -63,7 +64,7 @@ templ Edit(e *database.Equipment) {
 										</tr>
 										<tr>
 											<td>
-												<label>{ helpers.I18n(ctx, "Default workout types") }</label>
+												<label>{ i18n.T(ctx, "Default workout types") }</label>
 											</td>
 											<td>
 												for _, wt := range helpers.WorkoutTypes() {
@@ -93,7 +94,7 @@ templ Edit(e *database.Equipment) {
 											<td></td>
 											<td>
 												<button type="submit">
-													{ helpers.I18n(ctx, "Update equipment") }
+													{ i18n.T(ctx, "Update equipment") }
 												</button>
 											</td>
 										</tr>

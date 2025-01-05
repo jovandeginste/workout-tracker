@@ -1,6 +1,7 @@
 package route_segments
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/workouts"
@@ -28,10 +29,10 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 		CenterLng:     s.Center.Lng,
 		MinElevation:  s.MinElevation,
 		MaxElevation:  s.MaxElevation,
-		SpeedName:     helpers.I18n(ctx, "Average speed"),
-		ElevationName: helpers.I18n(ctx, "Elevation"),
-		StreetsName:   helpers.I18n(ctx, "Streets"),
-		AerialName:    helpers.I18n(ctx, "Aerial"),
+		SpeedName:     i18n.T(ctx, "Average speed"),
+		ElevationName: i18n.T(ctx, "Elevation"),
+		StreetsName:   i18n.T(ctx, "Streets"),
+		AerialName:    i18n.T(ctx, "Aerial"),
 	}
 		}}
 		@templ.JSONScript("map-config", mapConfig)

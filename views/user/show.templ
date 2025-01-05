@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -18,7 +19,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 			<div class="content">
 				<h2>
 					@helpers.IconFor("dashboard")
-					{ helpers.I18n(ctx, "Dashboard for %s", user.Name) }
+					{ i18n.T(ctx, "Dashboard for %s", user.Name) }
 				</h2>
 				@StatsRecordsTotal(user)
 				<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
@@ -40,7 +41,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("users")
-							{ helpers.I18n(ctx, "Other users") }
+							{ i18n.T(ctx, "Other users") }
 						</h3>
 						<div class="sm:flex sm:flex-wrap gap-5">
 							for _, u := range users {
@@ -55,7 +56,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 					<div class="inner-form recent-activity">
 						<h3>
 							@helpers.IconFor("workout")
-							{ helpers.I18n(ctx, "Recent activity") }
+							{ i18n.T(ctx, "Recent activity") }
 						</h3>
 						<div class="sm:flex sm:flex-wrap justify-center">
 							for _, w := range recentWorkouts {

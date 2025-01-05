@@ -4,3 +4,4 @@
 /pkg/
 /docs/swagger.*
 *.yml
+/translations/*.yaml

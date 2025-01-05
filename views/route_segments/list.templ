@@ -2,6 +2,7 @@ package route_segments
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -19,20 +20,20 @@ templ List(segments []*database.RouteSegment) {
 				<div class="items-baseline flex flex-wrap">
 					<h2 class="grow justify-start">
 						@helpers.IconFor("route-segment")
-						{ helpers.I18n(ctx, "Route segments") } ({ fmt.Sprintf("%d", len(segments)) })
+						{ i18n.T(ctx, "Route segments") } ({ fmt.Sprintf("%d", len(segments)) })
 					</h2>
 					<div class="justify-end mr-2">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-add")) }>
 							@helpers.IconFor("add")
-							<span>{ helpers.I18n(ctx, "Add route segment") }</span>
+							<span>{ i18n.T(ctx, "Add route segment") }</span>
 						</a>
 					</div>
 				</div>
 				<table class="route-segment-info">
 					<thead>
 						<tr>
-							<th>{ helpers.I18n(ctx, "Name") }</th>
-							<th class="hidden xl:table-cell">{ helpers.I18n(ctx, "Details") }</th>
+							<th>{ i18n.T(ctx, "Name") }</th>
+							<th class="hidden xl:table-cell">{ i18n.T(ctx, "Details") }</th>
 							<th class="hidden lg:table-cell"></th>
 						</tr>
 					</thead>

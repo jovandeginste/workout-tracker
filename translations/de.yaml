@@ -1,0 +1,198 @@
+---
+de:
+  API key updated: API-Schlüssel aktualisiert
+  Actions: Aktionen
+  Active: Aktiv
+  Add a workout: Neues Training hinzufügen
+  Add equipment: Ausrüstung hinzufügen
+  Add workout: Training hinzufügen
+  Add workouts: Trainings hinzufügen
+  'Added %d new workout(s): %s': 'Neue(s) %d Training(s) hinzugefügt: %s'
+  Admin: Administrator
+  All workouts will be refreshed in the coming minutes.: Alle Trainings werden in
+    den nächsten Minuten aktualisiert.
+  Application settings: Anwendungseinstellungen
+  Are you sure you want to delete this %s?: Möchten Sie dieses %s wirklich löschen?
+  Auto import directory: Verzeichnis für automatischen Import
+  Auto-detect: Automatisch erkennen
+  Average speed: Durchschnittsgeschwindigkeit
+  Average speed (no pause): Durchschnittsgeschwindigkeit (ohne Pause)
+  Average tempo: Durchschnittliches Tempo
+  Average tempo (no pause): Durchschnittliches Tempo (ohne Pause)
+  Cadence: Kadenz
+  Cancel: Abbrechen
+  Continue: Weiter
+  Create a new account: Neues Konto erstellen
+  Created: Erstellt
+  Dashboard for %s: Dashboard für %s
+  Date: Datum
+  Default workout types: Standard-Trainingsarten
+  Disable account registration: Benutzer Registrierung deaktivieren
+  Disable social sharing buttons: Buttons für soziale Netzwerke deaktivieren
+  Distance: Distanz
+  Duration: Dauer
+  Elevation: Höhe
+  Enable API access: API-Zugriff aktivieren
+  'Encountered %d problems while adding workouts: %s': Beim Hinzufügen vom Training
+    %s sind folgende Probleme aufgetreten %d
+  Equipment: Ausrüstung
+  File: Datei
+  Heart rate: Herzfrequenz
+  'I completed a workout: %s.': Ich habe das Training %s absolviert.
+  It took me %s to go %s. I averaged %s.: Es hat mich %s gekostet, um %s zu gehen.
+    Ich habe im Durchschnitt %s.
+  Language: Sprache
+  Leave blank to keep current password: Leer lassen, um das aktuelle Passwort beizubehalten
+  Location: Standort
+  Logout: Abmelden
+  Manage: Verwalten
+  Manage user '%s': Benutzer '%s' verwalten
+  Manage users: Benutzerverwaltung
+  Manual: Manuell
+  Max elevation: Maximale Höhe
+  Max speed: Höchstgeschwindigkeit
+  Min elevation: Minimale Höhe
+  Name: Name
+  Notes: Notizen
+  Other users: Andere Benutzer
+  Password: Passwort
+  Preferred units: Bevorzugte Einheiten
+  Profile updated: Profil wurde aktualisiert
+  Recent activity: Kürzliche Aktivität
+  Records for %s: Aufzeichnungen für %s
+  Refresh all your workouts: Alle Trainingseinheiten aktualisieren
+  Register: Registrieren
+  Repetitions: Wiederholungen
+  Show full date by default: Standardmäßig das vollständige Datum anzeigen
+  Sign in: Anmelden
+  Source: Quelle
+  Speed: Geschwindigkeit
+  Statistics: Statistik
+  Tempo: Tempo
+  The user '%s' has been deleted.: Der Benutzer '%s' wurde gelöscht.
+  The user '%s' has been updated.: Der Benutzer '%s' wurde aktualisiert.
+  The workout '%s' has been deleted.: Das Training '%s' wurde gelöscht.
+  The workout '%s' has been refreshed.: Das Training '%s' wurde aktualisiert.
+  The workout '%s' has been updated.: Das Training '%s' wurde aktualisiert.
+  'These settings may be overwritten by:': 'Diese Einstellungen können überschrieben
+    werden durch:'
+  Time: Zeit
+  Time paused: Pause
+  Time zone: Zeitzone
+  Total distance: Gesamtentfernung
+  Total down: Abstieg (gesamt)
+  Total duration: Gesamtdauer
+  Total repetitions: Wiederholungen insgesamt
+  Total up: Aufstieg (gesamt)
+  Totals: Gesamt
+  Totals to show on dashboard: Zusammenfassung aller Werte auf dem Dashboard anzeigen
+  Type: Art
+  Update preferred units: Bevorzugte Einheiten speichern
+  Update profile: Profil aktualisieren
+  Update settings: Einstellungen speichern
+  Update user: Benutzer aktualisieren
+  Update workout: Training aktualisieren
+  Use a file: Eine Datei verwenden
+  Username: Benutzername
+  Username (email): Benutzername (E-Mail)
+  Weight: Gewicht
+  Welcome!: Herzlich willkommen!
+  Workout type: Trainingsart
+  Workouts: Trainings
+  Your account has been created, but needs to be activated.: Ihr Konto wurde bereits
+    erstellt, muss aber noch aktiviert werden.
+  Your profile: Dein Profil
+  copy to clipboard: In die Zwischenablage kopieren
+  cycling: Radfahren
+  delete: löschen
+  distance: Entfernung
+  download: herunterladen
+  duration: Dauer
+  edit: bearbeiten
+  environment variables: Umgebungsvariablen
+  equipment: Ausrüstung
+  feet: Fuß
+  generate a new API key: Neuen API-Schlüssel generieren
+  golfing: Golfen
+  hiking: Wandern
+  how to use: Hilfe
+  kilograms: Kilogramm
+  kilometers: Kilometer
+  kilometers per hour: Kilometer pro Stunde
+  meters: Meter
+  miles: Meilen
+  miles per hour: Meilen pro Stunde
+  pounds: pfund
+  refresh: aktualisieren
+  running: Laufen
+  sailboat: Segelschiff
+  show/hide: Anzeigen/Verbergen
+  skiing: Skifahren
+  snowboarding: Snowboarden
+  swimming: Schwimmen
+  the configuration file: Konfigurationsdatei
+  up: Höhenmeter
+  user: Benutzer
+  walking: Gehen
+  workout: Training
+  workouts: Trainings
+  7 days: 7 Tage
+  6 months: 6 Monate
+  day: Tag
+  Update equipment: Ausrüstung aktualisieren
+  no equipment: keine Ausrüstung
+  weight lifting: Gewichtheben
+  Description: Beschreibung
+  1 year: 1 Jahr
+  Details: Details
+  Reset changes: Änderungen zurücksetzen
+  month: Monat
+  Since: Seit
+  Please help translate via Weblate: Hilf bei der Übersetzung mit Weblate
+  Extra metrics: Zusätzliche Metriken
+  10 years: 10 Jahre
+  2 years: 2 Jahre
+  5 years: 5 Jahre
+  Average per minute: Durchschnitt pro Minute
+  Create route segment: Streckensegment erstellen
+  Est. calories burned: Geschätzter Kalorienverbrauch
+  Estimated based on the activity, assuming 70 kg: Anhand der Aktivität für 70 kg
+    geschätzt
+  Matches: Treffer
+  Matching route segments: Übereinstimmende Streckenabschnitte
+  Route segments: Streckenabschnitte
+  Add route segment: Streckensegment hinzufügen
+  Per: pro
+  Dashboard: Dashboard
+  push-ups: Liegestütze
+  "(Re)generate publicly shareable link": "(Re)generiere öffentlich teilbaren Link"
+  Aerial: Luftbild
+  Bidirectional: Bidirektional
+  Circular: Rundtour
+  Copy publicly shareable link: Kopiere öffentlich teilbaren Link
+  Publicly shareable link was copied to clipboard: Öffentlich teilbarer Link wurde
+    in die Zwischenablage kopiert
+  Show map in full width: Karte in voller Breite anzeigen
+  Start: Start
+  Streets: Straßen
+  Workout: Training
+  create route segment: Streckenabschnitt erstellen
+  e-cycling: E-Biken
+  find matches: Übereinstimmungen finden
+  refresh in progress: Aktualisierung läuft
+  User: Benutzer
+  Updated: Aktualisiert
+  route segment: Streckenabschnitt
+  Heading: Kurs
+  Your progress per %s for the past %s: Dein Fortschritt pro %s für die vergangenen
+    %s
+  Update route segment: Streckenabschnitt aktualisieren
+  End: Ende
+  Last: Letzte
+  Filter: Filter
+  All: Alle
+  1 day: 1 Tag
+  15 days: 15 Tage
+  3 months: 3 Monate
+  1 month: 1 Monat
+  Sort by: Sortieren nach

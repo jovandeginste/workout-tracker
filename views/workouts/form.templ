@@ -2,6 +2,7 @@ package workouts
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -10,7 +11,7 @@ templ Form(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	{{ preferredUnits := currentUser.PreferredUnits() }}
 	<tr>
-		<td><label for="name">{ helpers.I18n(ctx, "Name") }</label></td>
+		<td><label for="name">{ i18n.T(ctx, "Name") }</label></td>
 		<td>
 			<input
 				type="text"
@@ -23,7 +24,7 @@ templ Form(w *database.Workout) {
 		</td>
 	</tr>
 	<tr>
-		<td><label for="date">{ helpers.I18n(ctx, "Date") }</label></td>
+		<td><label for="date">{ i18n.T(ctx, "Date") }</label></td>
 		<td>
 			<input
 				type="datetime-local"
@@ -42,7 +43,7 @@ templ Form(w *database.Workout) {
 		</td>
 	</tr>
 	<tr>
-		<td><label for="location">{ helpers.I18n(ctx, "Location") }</label></td>
+		<td><label for="location">{ i18n.T(ctx, "Location") }</label></td>
 		<td>
 			<input
 				type="text"
@@ -60,7 +61,7 @@ templ Form(w *database.Workout) {
 	</tr>
 	if w.Type.IsDuration() {
 		<tr>
-			<td><label for="duration">{ helpers.I18n(ctx, "Duration") }</label></td>
+			<td><label for="duration">{ i18n.T(ctx, "Duration") }</label></td>
 			<td>
 				<input
 					type="number"
@@ -98,7 +99,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsDistance() {
 		<tr>
-			<td><label for="distance">{ helpers.I18n(ctx, "Distance") }</label></td>
+			<td><label for="distance">{ i18n.T(ctx, "Distance") }</label></td>
 			<td>
 				<input
 					type="text"
@@ -113,7 +114,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsRepetition() {
 		<tr>
-			<td><label for="repetitions">{ helpers.I18n(ctx, "Repetitions") }</label></td>
+			<td><label for="repetitions">{ i18n.T(ctx, "Repetitions") }</label></td>
 			<td>
 				<input
 					type="number"
@@ -127,7 +128,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsWeight() {
 		<tr>
-			<td><label for="weight">{ helpers.I18n(ctx, "Weight") }</label></td>
+			<td><label for="weight">{ i18n.T(ctx, "Weight") }</label></td>
 			<td>
 				<input
 					type="text"
@@ -142,7 +143,7 @@ templ Form(w *database.Workout) {
 	}
 	<tr>
 		<td>
-			<label for="notes">{ helpers.I18n(ctx, "Notes") }</label>
+			<label for="notes">{ i18n.T(ctx, "Notes") }</label>
 		</td>
 		<td>
 			<textarea type="text" id="notes" name="notes" rows="10" cols="60">
@@ -152,7 +153,7 @@ templ Form(w *database.Workout) {
 	</tr>
 	<tr>
 		<td>
-			<label for="equipment">{ helpers.I18n(ctx, "Equipment") }</label>
+			<label for="equipment">{ i18n.T(ctx, "Equipment") }</label>
 		</td>
 		<td>
 			for _, e := range currentUser.Equipment {

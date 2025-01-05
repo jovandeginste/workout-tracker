@@ -88,15 +88,6 @@ test-templates:
 format-templates:
 	find . -type f -name '*.templ' -exec templ fmt -v {} \;
 
-translations:
-	xspreak \
-			--output translations/en.json \
-			--format json \
-			--template-keyword "i18n" \
-			--template-directory "views/**/*.html" \
-			--template-directory "views/**/*.templ"
-	prettier --write translations/*.json
-
 serve:
 	$(OUTPUT_FILE)
 

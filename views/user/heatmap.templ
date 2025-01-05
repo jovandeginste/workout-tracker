@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -30,7 +31,7 @@ templ Heatmap(workouts []*database.Workout) {
 			<div class="content">
 				<h2>
 					@helpers.IconFor(`heatmap`)
-					{ helpers.I18n(ctx, "Heatmap") }
+					{ i18n.T(ctx, "Heatmap") }
 				</h2>
 				<div id="map-container" class="small-size pagebreak">
 					<div
@@ -39,8 +40,8 @@ templ Heatmap(workouts []*database.Workout) {
 					>
 						@templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates"))
 						@templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers"))
-						@templ.JSONScript("i18n-streets", helpers.I18n(ctx, "Streets"))
-						@templ.JSONScript("i18n-aerial", helpers.I18n(ctx, "Aerial"))
+						@templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets"))
+						@templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial"))
 						<script>
             var map = L.map("map", {
               fadeAnimation: false,

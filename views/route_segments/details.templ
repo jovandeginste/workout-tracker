@@ -1,6 +1,7 @@
 package route_segments
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -15,7 +16,7 @@ templ details(s *database.RouteSegment) {
 					<td>
 						@helpers.IconFor("file")
 					</td>
-					<th>{ helpers.I18n(ctx, "File") }</th>
+					<th>{ i18n.T(ctx, "File") }</th>
 					<td>{ s.Filename }</td>
 				</tr>
 			}
@@ -23,7 +24,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("date")
 				</td>
-				<th>{ helpers.I18n(ctx, "Created") }</th>
+				<th>{ i18n.T(ctx, "Created") }</th>
 				<td>
 					@partials.SnippetDate(&s.CreatedAt)
 				</td>
@@ -32,7 +33,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("date")
 				</td>
-				<th>{ helpers.I18n(ctx, "Updated") }</th>
+				<th>{ i18n.T(ctx, "Updated") }</th>
 				<td>
 					@partials.SnippetDate(&s.UpdatedAt)
 				</td>
@@ -41,14 +42,14 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("location")
 				</td>
-				<th>{ helpers.I18n(ctx, "Location") }</th>
+				<th>{ i18n.T(ctx, "Location") }</th>
 				<td>{ s.Address() }</td>
 			</tr>
 			<tr>
 				<td>
 					@helpers.IconFor("bidirectional")
 				</td>
-				<th>{ helpers.I18n(ctx, "Bidirectional") }</th>
+				<th>{ i18n.T(ctx, "Bidirectional") }</th>
 				<td>
 					@templ.Raw(helpers.BoolToHTML(s.Bidirectional))
 				</td>
@@ -57,7 +58,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("circular")
 				</td>
-				<th>{ helpers.I18n(ctx, "Circular") }</th>
+				<th>{ i18n.T(ctx, "Circular") }</th>
 				<td>
 					@templ.Raw(helpers.BoolToHTML(s.Circular))
 				</td>
@@ -66,7 +67,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("distance")
 				</td>
-				<th>{ helpers.I18n(ctx, "Total distance") }</th>
+				<th>{ i18n.T(ctx, "Total distance") }</th>
 				<td class="whitespace-nowrap font-mono">
 					{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance() }
 				</td>
@@ -75,7 +76,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("elevation")
 				</td>
-				<th>{ helpers.I18n(ctx, "Min elevation") }</th>
+				<th>{ i18n.T(ctx, "Min elevation") }</th>
 				<td class="whitespace-nowrap font-mono">
 					{ helpers.HumanElevation(ctx, s.MinElevation) } { preferredUnits.Elevation() }
 				</td>
@@ -84,7 +85,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("elevation")
 				</td>
-				<th>{ helpers.I18n(ctx, "Max elevation") }</th>
+				<th>{ i18n.T(ctx, "Max elevation") }</th>
 				<td class="whitespace-nowrap font-mono">
 					{ helpers.HumanElevation(ctx, s.MaxElevation) } { preferredUnits.Elevation() }
 				</td>
@@ -93,7 +94,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("up")
 				</td>
-				<th>{ helpers.I18n(ctx, "Total up") }</th>
+				<th>{ i18n.T(ctx, "Total up") }</th>
 				<td class="whitespace-nowrap font-mono">
 					{ helpers.HumanElevation(ctx, s.TotalUp) } { preferredUnits.Elevation() }
 				</td>
@@ -102,7 +103,7 @@ templ details(s *database.RouteSegment) {
 				<td>
 					@helpers.IconFor("down")
 				</td>
-				<th>{ helpers.I18n(ctx, "Total down") }</th>
+				<th>{ i18n.T(ctx, "Total down") }</th>
 				<td class="whitespace-nowrap font-mono">
 					{ helpers.HumanElevation(ctx, s.TotalDown) } { preferredUnits.Elevation() }
 				</td>

@@ -2,6 +2,7 @@
 package admin
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -18,7 +19,7 @@ templ EditUser(u *database.User) {
 			<div class="inner-form">
 				<h2>
 					@helpers.IconFor(`admin`)
-					{ helpers.I18n(ctx, "Manage user '%s'", u.Name) }
+					{ i18n.T(ctx, "Manage user '%s'", u.Name) }
 				</h2>
 				<form
 					action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-update", u.ID)) }
@@ -29,7 +30,7 @@ templ EditUser(u *database.User) {
 						<tbody>
 							<tr>
 								<td>
-									<label for="username">{ helpers.I18n(ctx, "Username") }</label>
+									<label for="username">{ i18n.T(ctx, "Username") }</label>
 								</td>
 								<td>
 									<input
@@ -42,7 +43,7 @@ templ EditUser(u *database.User) {
 							</tr>
 							<tr>
 								<td>
-									<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+									<label for="name">{ i18n.T(ctx, "Name") }</label>
 								</td>
 								<td>
 									<input id="name" name="name" size="40" value={ u.Name }/>
@@ -50,7 +51,7 @@ templ EditUser(u *database.User) {
 							</tr>
 							<tr>
 								<td>
-									<label for="name">{ helpers.I18n(ctx, "Password") }</label>
+									<label for="name">{ i18n.T(ctx, "Password") }</label>
 								</td>
 								<td>
 									<input
@@ -58,14 +59,14 @@ templ EditUser(u *database.User) {
 										id="password"
 										name="password"
 										size="40"
-										placeholder={ helpers.I18n(ctx, "Leave blank to keep current password") }
+										placeholder={ i18n.T(ctx, "Leave blank to keep current password") }
 										value=""
 									/>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<label for="active">{ helpers.I18n(ctx, "Active") }</label>
+									<label for="active">{ i18n.T(ctx, "Active") }</label>
 								</td>
 								<td>
 									<input
@@ -79,7 +80,7 @@ templ EditUser(u *database.User) {
 							</tr>
 							<tr>
 								<td>
-									<label for="admin">{ helpers.I18n(ctx, "Admin") }</label>
+									<label for="admin">{ i18n.T(ctx, "Admin") }</label>
 								</td>
 								<td>
 									<input
@@ -95,7 +96,7 @@ templ EditUser(u *database.User) {
 								<td></td>
 								<td>
 									<button type="submit" size="40">
-										{ helpers.I18n(ctx, "Update user") }
+										{ i18n.T(ctx, "Update user") }
 									</button>
 								</td>
 							</tr>

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -15,60 +16,60 @@ templ profilePreferredUnits() {
 			<tbody>
 				<tr>
 					<th>
-						<label for="speed">{ helpers.I18n(ctx, "Speed") }</label>
+						<label for="speed">{ i18n.T(ctx, "Speed") }</label>
 					</th>
 					<td>
 						<select id="speed" name="speed">
 							<option value="kph" selected?={ pu.Speed() == "kph" }>
-								{ helpers.I18n(ctx, "kilometers per hour") }
+								{ i18n.T(ctx, "kilometers per hour") }
 							</option>
 							<option value="mph" selected?={ pu.Speed() == "mph" }>
-								{ helpers.I18n(ctx, "miles per hour") }
+								{ i18n.T(ctx, "miles per hour") }
 							</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="distance">{ helpers.I18n(ctx, "Distance") }</label>
+						<label for="distance">{ i18n.T(ctx, "Distance") }</label>
 					</th>
 					<td>
 						<select id="distance" name="distance">
 							<option value="km" selected?={ pu.Distance() == "km" }>
-								{ helpers.I18n(ctx, "kilometers") }
+								{ i18n.T(ctx, "kilometers") }
 							</option>
 							<option value="mi" selected?={ pu.Distance() == "mi" }>
-								{ helpers.I18n(ctx, "miles") }
+								{ i18n.T(ctx, "miles") }
 							</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="elevation">{ helpers.I18n(ctx, "Elevation") }</label>
+						<label for="elevation">{ i18n.T(ctx, "Elevation") }</label>
 					</th>
 					<td>
 						<select id="elevation" name="elevation">
 							<option value="m" selected?={ pu.Elevation() == "m" }>
-								{ helpers.I18n(ctx, "meters") }
+								{ i18n.T(ctx, "meters") }
 							</option>
 							<option value="ft" selected?={ pu.Elevation() == "ft" }>
-								{ helpers.I18n(ctx, "feet") }
+								{ i18n.T(ctx, "feet") }
 							</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="weight">{ helpers.I18n(ctx, "Weight") }</label>
+						<label for="weight">{ i18n.T(ctx, "Weight") }</label>
 					</th>
 					<td>
 						<select id="weight" name="weight">
 							<option value="lbs" selected?={ pu.Weight() == "lbs" }>
-								{ helpers.I18n(ctx, "pounds") }
+								{ i18n.T(ctx, "pounds") }
 							</option>
 							<option value="kg" selected?={ pu.Weight() == "kg" }>
-								{ helpers.I18n(ctx, "kilograms") }
+								{ i18n.T(ctx, "kilograms") }
 							</option>
 						</select>
 					</td>
@@ -76,7 +77,7 @@ templ profilePreferredUnits() {
 				<tr>
 					<td></td>
 					<td>
-						<button type="submit">{ helpers.I18n(ctx, "Update preferred units") }</button>
+						<button type="submit">{ i18n.T(ctx, "Update preferred units") }</button>
 					</td>
 				</tr>
 			</tbody>
@@ -86,11 +87,11 @@ templ profilePreferredUnits() {
 
 templ profileTotalsShow(uwt *database.WorkoutType) {
 	<select id="totals_show" name="totals_show">
-		<option value="auto">{ helpers.I18n(ctx, "Auto-detect") }</option>
+		<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
 		for _, wt := range helpers.WorkoutTypes() {
 			if wt.IsDistance() {
 				<option value={ wt.String() } selected?={ wt.String() == uwt.String() }>
-					{ helpers.I18n(ctx, wt.String()) }
+					{ i18n.T(ctx, wt.String()) }
 				</option>
 			}
 		}

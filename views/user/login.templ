@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
 )
@@ -33,7 +34,7 @@ templ Login() {
 							<h2
 								class="icon-solid icon-baseline icon-space-sm icon-before icon-chevron-right"
 							>
-								{ helpers.I18n(ctx, "Welcome!") }
+								{ i18n.T(ctx, "Welcome!") }
 							</h2>
 						</div>
 					</div>
@@ -41,7 +42,7 @@ templ Login() {
 						<div class="inner-form">
 							<h3>
 								@helpers.IconFor("user-signin")
-								{ helpers.I18n(ctx, "Sign in") }
+								{ i18n.T(ctx, "Sign in") }
 							</h3>
 							<form
 								id="signin"
@@ -52,7 +53,7 @@ templ Login() {
 									<tbody>
 										<tr>
 											<td>
-												<label for="username">{ helpers.I18n(ctx, "Username (email)") }</label>
+												<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
 											</td>
 											<td>
 												<input type="text" id="username" name="username"/>
@@ -60,7 +61,7 @@ templ Login() {
 										</tr>
 										<tr>
 											<td>
-												<label for="password">{ helpers.I18n(ctx, "Password") }</label>
+												<label for="password">{ i18n.T(ctx, "Password") }</label>
 											</td>
 											<td>
 												<input type="password" id="password" name="password"/>
@@ -70,7 +71,7 @@ templ Login() {
 											<td></td>
 											<td>
 												<button id="signin" type="submit">
-													{ helpers.I18n(ctx, "Sign in") }
+													{ i18n.T(ctx, "Sign in") }
 												</button>
 											</td>
 										</tr>
@@ -82,7 +83,7 @@ templ Login() {
 							<div class="inner-form">
 								<h3>
 									@helpers.IconFor("user-register")
-									{ helpers.I18n(ctx, "Create a new account") }
+									{ i18n.T(ctx, "Create a new account") }
 								</h3>
 								<form
 									id="register"
@@ -93,7 +94,7 @@ templ Login() {
 										<tbody>
 											<tr>
 												<td>
-													<label for="username">{ helpers.I18n(ctx, "Username (email)") }</label>
+													<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
 												</td>
 												<td>
 													<input type="text" id="username" name="username"/>
@@ -101,7 +102,7 @@ templ Login() {
 											</tr>
 											<tr>
 												<td>
-													<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+													<label for="name">{ i18n.T(ctx, "Name") }</label>
 												</td>
 												<td>
 													<input type="text" id="name" name="name"/>
@@ -109,7 +110,7 @@ templ Login() {
 											</tr>
 											<tr>
 												<td>
-													<label for="password">{ helpers.I18n(ctx, "Password") }</label>
+													<label for="password">{ i18n.T(ctx, "Password") }</label>
 												</td>
 												<td>
 													<input type="password" id="password" name="password"/>
@@ -119,7 +120,7 @@ templ Login() {
 												<td></td>
 												<td>
 													<button id="register" type="submit">
-														{ helpers.I18n(ctx, "Register") }
+														{ i18n.T(ctx, "Register") }
 													</button>
 												</td>
 											</tr>

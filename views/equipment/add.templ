@@ -1,6 +1,7 @@
 package equipment
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
 )
@@ -17,14 +18,14 @@ templ Add() {
 				<div class="inner-form">
 					<h2>
 						@helpers.IconFor("equipment-add")
-						{ helpers.I18n(ctx, "Add equipment") }
+						{ i18n.T(ctx, "Add equipment") }
 					</h2>
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-create")) }>
 						<table class="sm:table-fixed">
 							<tbody>
 								<tr>
 									<td>
-										<label for="name">{ helpers.I18n(ctx, "Name") }</label>
+										<label for="name">{ i18n.T(ctx, "Name") }</label>
 									</td>
 									<td>
 										<input type="text" id="name" name="name"/>
@@ -32,7 +33,7 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="description">{ helpers.I18n(ctx, "Description") }</label>
+										<label for="description">{ i18n.T(ctx, "Description") }</label>
 									</td>
 									<td>
 										<textarea
@@ -45,7 +46,7 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="active">{ helpers.I18n(ctx, "Active") }</label>
+										<label for="active">{ i18n.T(ctx, "Active") }</label>
 									</td>
 									<td>
 										<input
@@ -60,7 +61,7 @@ templ Add() {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ helpers.I18n(ctx, "Add equipment") }</button>
+										<button type="submit">{ i18n.T(ctx, "Add equipment") }</button>
 									</td>
 								</tr>
 							</tbody>

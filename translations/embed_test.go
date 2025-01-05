@@ -7,7 +7,7 @@ import (
 )
 
 func TestEmbedded(t *testing.T) {
-	c, err := FS().Open("en.json")
+	c, err := FS().Open("en.yaml")
 	require.NoError(t, err)
 
 	s, err := c.Stat()

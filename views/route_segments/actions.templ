@@ -2,34 +2,35 @@ package route_segments
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
 
 templ actions(s *database.RouteSegment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-download", s.ID)) } method="get">
-		<button class="download" title={ helpers.I18n(ctx, "download") }>
+		<button class="download" title={ i18n.T(ctx, "download") }>
 			<a>
 				@helpers.IconFor("download")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-edit", s.ID)) } method="get">
-		<button class="edit" title={ helpers.I18n(ctx, "edit") }>
+		<button class="edit" title={ i18n.T(ctx, "edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-refresh", s.ID)) } method="post">
-		<button title={ helpers.I18n(ctx, "refresh") }>
+		<button title={ i18n.T(ctx, "refresh") }>
 			<a>
 				@helpers.IconFor("refresh")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-matches", s.ID)) } method="post">
-		<button title={ helpers.I18n(ctx, "find matches") }>
+		<button title={ i18n.T(ctx, "find matches") }>
 			<a>
 				@helpers.IconFor("route-segment")
 			</a>
@@ -40,7 +41,7 @@ templ actions(s *database.RouteSegment) {
 			onclick="openModal('modalConfirmDelete', this)"
 			data-id={ fmt.Sprintf("%d", s.ID) }
 			class="dangerous"
-			title={ helpers.I18n(ctx, "delete") }
+			title={ i18n.T(ctx, "delete") }
 		>
 			<a>
 				@helpers.IconFor("delete")
@@ -62,10 +63,10 @@ templ actions(s *database.RouteSegment) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ helpers.I18n(ctx, "Are you sure you want to delete this %s?", helpers.I18n(ctx, "route segment")) }</h3>
+				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "route segment")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-delete", s.ID)) }>
-						<button class="confirm">{ helpers.I18n(ctx, "Continue") }</button>
+						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>
 					</form>
 					<form onsubmit="return false">
 						<button
@@ -73,7 +74,7 @@ templ actions(s *database.RouteSegment) {
 							data-id={ fmt.Sprintf("%d", s.ID) }
 							class="cancel"
 						>
-							{ helpers.I18n(ctx, "Cancel") }
+							{ i18n.T(ctx, "Cancel") }
 						</button>
 					</form>
 				</div>
