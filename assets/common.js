@@ -66,6 +66,10 @@ function copyToClipboard(id) {
 
   // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
+  var noticeText = copyText.getAttribute("data-notice");
+  if (noticeText != null) {
+    showMessage("notice", noticeText);
+  }
 }
 
 function showMessage(cls, message) {
