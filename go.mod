@@ -30,12 +30,12 @@ require (
 	github.com/paulmach/orb v0.11.1
 	github.com/ringsaturn/tzf v0.16.0
 	github.com/samber/slog-echo v1.15.0
+	github.com/sersh88/timeago v1.0.0
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.10.0
 	github.com/swaggo/swag v1.16.4
 	github.com/tkrajina/gpxgo v1.4.0
-	github.com/vorlif/spreak v0.6.0
 	github.com/westphae/geomag v1.0.2
 	golang.org/x/crypto v0.31.0
 	golang.org/x/text v0.21.0

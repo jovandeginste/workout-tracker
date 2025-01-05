@@ -6,34 +6,12 @@ import (
 	"time"
 
 	emojiflag "github.com/jayco/go-emoji-flag"
-	"github.com/vorlif/spreak/humanize"
-	"github.com/vorlif/spreak/humanize/locale/de"
-	"github.com/vorlif/spreak/humanize/locale/fa"
-	"github.com/vorlif/spreak/humanize/locale/fr"
-	"github.com/vorlif/spreak/humanize/locale/id"
-	"github.com/vorlif/spreak/humanize/locale/it"
-	"github.com/vorlif/spreak/humanize/locale/nb"
-	"github.com/vorlif/spreak/humanize/locale/nl"
-	"github.com/vorlif/spreak/humanize/locale/ru"
+	"github.com/sersh88/timeago"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 )
 
-var (
-	englishTag   = display.English.Languages()
-	humanLocales = []*humanize.LocaleData{
-		de.New(),
-		fa.New(),
-		fr.New(),
-		id.New(),
-		it.New(),
-		nb.New(),
-		nl.New(),
-		ru.New(),
-	}
-
-	humanizer = humanize.MustNew(humanize.WithLocale(humanLocales...))
-)
+var englishTag = display.English.Languages()
 
 type LanguageInformation struct {
 	Code        string
@@ -87,5 +65,5 @@ func ToLanguageInformation(code string) LanguageInformation {
 }
 
 func RelativeDate(ctx context.Context, t *time.Time) string {
-	return humanizer.CreateHumanizer(Language(ctx)).NaturalTime(t)
+	return timeago.New(*t).WithLocale(Language(ctx)).Format()
 }
