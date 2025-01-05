@@ -1,6 +1,40 @@
-## What's Changed
+## What's Changed in v2.0.0
 
-- Fix some more linting issues
+- refactor: Improve error handling in equipment handlers
+- Fix a few more template errors, by @jovandeginste, in
+  [#375](https://github.com/jovandeginste/workout-tracker/pull/375)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#373](https://github.com/jovandeginste/workout-tracker/pull/373)
+  - Translated using Weblate (Dutch)
+- Add more missing translations, by @jovandeginste, in
+  [#374](https://github.com/jovandeginste/workout-tracker/pull/374)
+  - Add helper for default value for selectable items, by @jovandeginste
+  - Add more missing translations, by @jovandeginste
+- Add all remaining missing translations, by @jovandeginste, in
+  [#372](https://github.com/jovandeginste/workout-tracker/pull/372)
+- More cleanups after templ + i18n switch, by @jovandeginste, in
+  [#371](https://github.com/jovandeginste/workout-tracker/pull/371)
+- Replace github.com/vorlif/spreak with github.com/sersh88/timeago, by
+  @jovandeginste, in
+  [#370](https://github.com/jovandeginste/workout-tracker/pull/370)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#368](https://github.com/jovandeginste/workout-tracker/pull/368)
+  - Added translation using Weblate (Norwegian Bokmål), by @weblate
+- Remove untranslated language files, by @jovandeginste, in
+  [#369](https://github.com/jovandeginste/workout-tracker/pull/369)
+- Switch i18n library to ctxi18n, by @jovandeginste, in
+  [#367](https://github.com/jovandeginste/workout-tracker/pull/367)
+- Fix the missing tailwind class generation, by @jovandeginste, in
+  [#366](https://github.com/jovandeginste/workout-tracker/pull/366)
+- Improve filters, by @jovandeginste, in
+  [#365](https://github.com/jovandeginste/workout-tracker/pull/365)
+  - Add back the missing translations, by @jovandeginste
+  - Refactor(helpers): Improve OrderByOptions and OrderDirOptions functions, by
+    @jovandeginste
+- Remove html/template from markdown conversion, by @jovandeginste, in
+  [#364](https://github.com/jovandeginste/workout-tracker/pull/364)
+- Fix some more linting issues, by @jovandeginste, in
+  [#363](https://github.com/jovandeginste/workout-tracker/pull/363)
 - Update the swagger API docs, by @jovandeginste, in
   [#362](https://github.com/jovandeginste/workout-tracker/pull/362)
 - Add tests for the API, by @jovandeginste, in
@@ -339,12 +373,20 @@
 
 ## New Contributors
 
+- @jovandeginste made their first contribution in
+  [#375](https://github.com/jovandeginste/workout-tracker/pull/375)
+- @ made their first contribution
+- @weblate made their first contribution
 - @dependabot[bot] made their first contribution
 - @sikmir made their first contribution
 - @woernsn made their first contribution
 - @Monirzadeh made their first contribution
 - @Leiasticot made their first contribution
+- @pixelspark made their first contribution
 - @Atalanttore made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v1.18.1...v2.0.0
 
 ## What's Changed in v1.18.1
 
