@@ -26,7 +26,7 @@ templ RouteSegments(segments []*database.RouteSegmentMatch) {
 						@helpers.IconFor("route-segment")
 					</td>
 					<td class="flex flex-wrap gap-1">
-						<a href="{{ RouteFor `route-segment-show` .RouteSegment.ID }}">{ s.RouteSegment.Name }</a>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-show", s.RouteSegment.ID)) }>{ s.RouteSegment.Name }</a>
 					</td>
 					<td>
 						{ helpers.HumanDistance(ctx, s.Distance) } { pu.Distance() }

@@ -21,7 +21,7 @@ templ Item(w *database.Workout) {
 					</a>
 				</div>
 				<div class="text-right text-sm">
-					<a href="{{ RouteFor `user-show` .User.ID }}">
+					<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", w.User.ID)) }>
 						@helpers.IconFor("user")
 						{ w.User.Name }
 					</a>
