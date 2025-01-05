@@ -10,6 +10,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/pkg/version"
@@ -17,9 +18,6 @@ import (
 	"github.com/lmittmann/tint"
 	"github.com/mattn/go-isatty"
 	"gorm.io/gorm"
-
-	"github.com/vorlif/spreak"
-	"github.com/vorlif/spreak/humanize"
 )
 
 type App struct {
@@ -31,8 +29,7 @@ type App struct {
 	rawLogger      *slog.Logger
 	db             *gorm.DB
 	sessionManager *scs.SessionManager
-	translator     *spreak.Bundle
-	humanizer      *humanize.Collection
+	translator     *i18n.Locale
 	Version        version.Version
 	Config         database.Config
 }

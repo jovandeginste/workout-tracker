@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -42,7 +43,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 13, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -55,7 +56,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/simpleheat.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 72}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 15, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -68,7 +69,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet-heat.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 15, Col: 74}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 16, Col: 74}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -81,7 +82,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.markercluster.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 16, Col: 83}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 17, Col: 83}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -94,7 +95,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 17, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 18, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -107,7 +108,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.css")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 19, Col: 70}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 20, Col: 70}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -120,7 +121,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.Default.css")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 23, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 24, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -151,9 +152,9 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Heatmap"))
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Heatmap"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 33, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 34, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -171,11 +172,11 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("i18n-streets", helpers.I18n(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", helpers.I18n(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

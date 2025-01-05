@@ -1,6 +1,7 @@
 package workouts
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
 )
@@ -16,12 +17,12 @@ templ Add() {
 			<div class="content">
 				<h2>
 					@helpers.IconFor("workout-add")
-					{ helpers.I18n(ctx, "Add a workout") }
+					{ i18n.T(ctx, "Add a workout") }
 				</h2>
 				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 					<div>
 						<div class="inner-form">
-							<h3>{ helpers.I18n(ctx, "Use a file") }</h3>
+							<h3>{ i18n.T(ctx, "Use a file") }</h3>
 							<form
 								method="post"
 								action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }
@@ -30,7 +31,7 @@ templ Add() {
 								<table class="sm:table-fixed">
 									<tbody>
 										<tr>
-											<td><label for="file">{ helpers.I18n(ctx, "File") }</label></td>
+											<td><label for="file">{ i18n.T(ctx, "File") }</label></td>
 											<td>
 												<input
 													type="file"
@@ -43,14 +44,14 @@ templ Add() {
 										</tr>
 										<tr>
 											<td>
-												<label for="type">{ helpers.I18n(ctx, "Type") }</label>
+												<label for="type">{ i18n.T(ctx, "Type") }</label>
 											</td>
 											<td>
 												<select id="type" name="type">
-													<option value="auto">{ helpers.I18n(ctx, "Auto-detect") }</option>
+													<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
 													for _, wt := range helpers.WorkoutTypes() {
 														<option value={ wt.String() }>
-															{ helpers.I18n(ctx, wt.String()) }
+															{ i18n.T(ctx, wt.String()) }
 														</option>
 													}
 												</select>
@@ -58,7 +59,7 @@ templ Add() {
 										</tr>
 										<tr>
 											<td>
-												<label for="notes">{ helpers.I18n(ctx, "Notes") }</label>
+												<label for="notes">{ i18n.T(ctx, "Notes") }</label>
 											</td>
 											<td>
 												<textarea
@@ -74,7 +75,7 @@ templ Add() {
 										<tr>
 											<td></td>
 											<td>
-												<button type="submit">{ helpers.I18n(ctx, "Add workouts") }</button>
+												<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
 											</td>
 										</tr>
 									</tfoot>
@@ -84,13 +85,13 @@ templ Add() {
 					</div>
 					<div>
 						<div class="inner-form">
-							<h3>{ helpers.I18n(ctx, "Manual") }</h3>
+							<h3>{ i18n.T(ctx, "Manual") }</h3>
 							<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
 								<table class="sm:table-auto">
 									<thead>
 										<tr>
 											<td>
-												<label for="type">{ helpers.I18n(ctx, "Workout type") }</label>
+												<label for="type">{ i18n.T(ctx, "Workout type") }</label>
 											</td>
 											<td>
 												<select
@@ -103,7 +104,7 @@ templ Add() {
 													<option value="select" selected>Select...</option>
 													for _, wt := range helpers.WorkoutTypes() {
 														<option value={ wt.String() }>
-															{ helpers.I18n(ctx, wt.String()) }
+															{ i18n.T(ctx, wt.String()) }
 														</option>
 													}
 												</select>
@@ -120,7 +121,7 @@ templ Add() {
 										<tr>
 											<td></td>
 											<td>
-												<button type="submit">{ helpers.I18n(ctx, "Add workouts") }</button>
+												<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
 											</td>
 										</tr>
 									</tfoot>

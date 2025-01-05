@@ -10,6 +10,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -61,9 +62,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Manage user '%s'", u.Name))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Manage user '%s'", u.Name))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 21, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 22, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -83,9 +84,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Username"))
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Username"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 32, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 33, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -98,7 +99,7 @@ func EditUser(u *database.User) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(u.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 39, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 40, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -109,9 +110,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Name"))
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Name"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 45, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 46, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -124,7 +125,7 @@ func EditUser(u *database.User) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(u.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 48, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 49, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -135,9 +136,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Password"))
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Password"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 53, Col: 58}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 54, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -148,9 +149,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Leave blank to keep current password"))
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Leave blank to keep current password"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 61, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 62, Col: 75}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -161,9 +162,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Active"))
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Active"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 68, Col: 58}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 69, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -184,9 +185,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Admin"))
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Admin"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 82, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 83, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -207,9 +208,9 @@ func EditUser(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Update user"))
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Update user"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 98, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/admin/edit_user.templ`, Line: 99, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {

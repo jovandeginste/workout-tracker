@@ -2,6 +2,7 @@ package workouts
 
 import (
 	"context"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"slices"
@@ -12,11 +13,11 @@ import (
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 	preferredUnits := helpers.CurrentUser(ctx).PreferredUnits()
 
-	return helpers.I18n(
+	return i18n.T(
 		ctx,
 		`I completed a workout: %s.`,
-		helpers.I18n(ctx, w.Type.String()),
-	) + " " + helpers.I18n(
+		i18n.T(ctx, w.Type.String()),
+	) + " " + i18n.T(
 		ctx,
 		`It took me %s to go %s. I averaged %s.`,
 		helpers.HumanDuration(w.TotalDuration()),
@@ -27,7 +28,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
 		"workout",
-		helpers.I18n(ctx, w.Type.String()),
+		i18n.T(ctx, w.Type.String()),
 	}
 
 	if c := w.City(); c != "" {

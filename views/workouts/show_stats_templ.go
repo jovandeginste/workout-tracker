@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -56,14 +57,14 @@ func ShowStats(stats database.WorkoutBreakdown) templ.Component {
 		}
 
 		translations := map[string]string{
-			"distance":     helpers.I18n(ctx, "Distance"),
-			"duration":     helpers.I18n(ctx, "Duration"),
-			"calories":     helpers.I18n(ctx, "Calories"),
-			"heartrate":    helpers.I18n(ctx, "Heart rate"),
-			"speed":        helpers.I18n(ctx, "Speed"),
-			"elevation":    helpers.I18n(ctx, "Elevation"),
-			"cadence":      helpers.I18n(ctx, "Cadence"),
-			"averagespeed": helpers.I18n(ctx, "Average speed"),
+			"distance":     i18n.T(ctx, "Distance"),
+			"duration":     i18n.T(ctx, "Duration"),
+			"calories":     i18n.T(ctx, "Calories"),
+			"heartrate":    i18n.T(ctx, "Heart rate"),
+			"speed":        i18n.T(ctx, "Speed"),
+			"elevation":    i18n.T(ctx, "Elevation"),
+			"cadence":      i18n.T(ctx, "Cadence"),
+			"averagespeed": i18n.T(ctx, "Average speed"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(pu)).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

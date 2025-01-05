@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -17,7 +18,7 @@ templ Profile(u *database.User) {
 			<div class="content">
 				<h2>
 					@helpers.IconFor("user-profile")
-					{ helpers.I18n(ctx, "Your profile") }
+					{ i18n.T(ctx, "Your profile") }
 				</h2>
 				<div class="inner-form">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-update")) }>
@@ -26,9 +27,9 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="api_active">
-											{ helpers.I18n(ctx, "Enable API access") }
+											{ i18n.T(ctx, "Enable API access") }
 											<a
-												title={ helpers.I18n(ctx, "how to use") }
+												title={ i18n.T(ctx, "how to use") }
 												target="_blank"
 												href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
 											>
@@ -61,21 +62,21 @@ templ Profile(u *database.User) {
 												<button
 													type="button"
 													class="edit"
-													title={ helpers.I18n(ctx, "show/hide") }
+													title={ i18n.T(ctx, "show/hide") }
 													onclick="toggleTextPassword(this, 'api_key');"
 												>
 													@helpers.IconFor("show")
 												</button>
 												<button
 													type="button"
-													title={ helpers.I18n(ctx, "copy to clipboard") }
+													title={ i18n.T(ctx, "copy to clipboard") }
 													onclick="copyToClipboard('api_key');"
 												>
 													@helpers.IconFor("copy")
 												</button>
 												<button
 													class="dangerous"
-													title={ helpers.I18n(ctx, "generate a new API key") }
+													title={ i18n.T(ctx, "generate a new API key") }
 												>
 													@helpers.IconFor("refresh")
 												</button>
@@ -86,7 +87,7 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="totals_show">
-											{ helpers.I18n(ctx, "Totals to show on dashboard") }
+											{ i18n.T(ctx, "Totals to show on dashboard") }
 										</label>
 									</th>
 									<td>
@@ -95,7 +96,7 @@ templ Profile(u *database.User) {
 								</tr>
 								<tr>
 									<th>
-										<label for="timezone">{ helpers.I18n(ctx, "Time zone") }</label>
+										<label for="timezone">{ i18n.T(ctx, "Time zone") }</label>
 									</th>
 									<td>
 										@profileTimezone(u.Profile.Timezone)
@@ -104,11 +105,11 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="language">
-											{ helpers.I18n(ctx, "Language") }
+											{ i18n.T(ctx, "Language") }
 											<a
 												href="https://hosted.weblate.org/projects/workout-tracker/"
 												target="_blank"
-												title={ helpers.I18n(ctx, "Please help translate via Weblate") }
+												title={ i18n.T(ctx, "Please help translate via Weblate") }
 											>
 												@helpers.IconFor("translate")
 											</a>
@@ -120,18 +121,18 @@ templ Profile(u *database.User) {
 								</tr>
 								<tr>
 									<th>
-										<label for="theme">{ helpers.I18n(ctx, "Theme") }</label>
+										<label for="theme">{ i18n.T(ctx, "Theme") }</label>
 									</th>
 									<td>
 										<select id="theme" name="theme">
 											<option value="light" selected?={ u.Profile.Theme == "light" }>
-												{ helpers.I18n(ctx, "Light") }
+												{ i18n.T(ctx, "Light") }
 											</option>
 											<option value="dark" selected?={ u.Profile.Theme == "dark" }>
-												{ helpers.I18n(ctx, "Dark") }
+												{ i18n.T(ctx, "Dark") }
 											</option>
 											<option value="browser" selected?={ u.Profile.Theme == "browser" }>
-												{ helpers.I18n(ctx, "Browser / System") }
+												{ i18n.T(ctx, "Browser / System") }
 											</option>
 										</select>
 									</td>
@@ -139,7 +140,7 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="auto_import_directory">
-											{ helpers.I18n(ctx, "Auto import directory") }
+											{ i18n.T(ctx, "Auto import directory") }
 										</label>
 									</th>
 									<td>
@@ -156,7 +157,7 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="prefer_full_date">
-											{ helpers.I18n(ctx, "Show full date by default") }
+											{ i18n.T(ctx, "Show full date by default") }
 										</label>
 									</th>
 									<td>
@@ -172,7 +173,7 @@ templ Profile(u *database.User) {
 								<tr>
 									<th>
 										<label for="socials_disabled">
-											{ helpers.I18n(ctx, "Disable social sharing buttons") }
+											{ i18n.T(ctx, "Disable social sharing buttons") }
 										</label>
 									</th>
 									<td>
@@ -188,7 +189,7 @@ templ Profile(u *database.User) {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ helpers.I18n(ctx, "Update profile") }</button>
+										<button type="submit">{ i18n.T(ctx, "Update profile") }</button>
 									</td>
 								</tr>
 							</tbody>
@@ -198,17 +199,17 @@ templ Profile(u *database.User) {
 				<div class="inner-form">
 					<h2>
 						@helpers.IconFor("units")
-						{ helpers.I18n(ctx, "Preferred units") }
+						{ i18n.T(ctx, "Preferred units") }
 					</h2>
 					@profilePreferredUnits()
 				</div>
 				<div class="inner-form">
 					<h2>
 						@helpers.IconFor("actions")
-						{ helpers.I18n(ctx, "Actions") }
+						{ i18n.T(ctx, "Actions") }
 					</h2>
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
-						<label for="refresh">{ helpers.I18n(ctx, "Refresh all your workouts") }</label>
+						<label for="refresh">{ i18n.T(ctx, "Refresh all your workouts") }</label>
 						<button type="submit">
 							<a>
 								@helpers.IconFor("refresh")

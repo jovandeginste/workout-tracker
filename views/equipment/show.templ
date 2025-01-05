@@ -2,6 +2,7 @@ package equipment
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -24,14 +25,14 @@ templ Show(e *database.Equipment) {
 							@actions(e)
 						</span>
 					}
-					<h2>{ helpers.I18n(ctx, "Equipment") }: { e.Name }</h2>
+					<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
 				</div>
 				<div class="lg:flex lg:flex-wrap">
 					<div class="basis-1/2">
 						<div class="inner-form">
 							<h3 class="grow justify-start">
 								@helpers.IconFor("totals")
-								{ helpers.I18n(ctx, "Totals") }
+								{ i18n.T(ctx, "Totals") }
 							</h3>
 							<table>
 								{{ totals, _ := e.GetTotals() }}
@@ -40,7 +41,7 @@ templ Show(e *database.Equipment) {
 										<td>
 											@helpers.IconFor("distance")
 										</td>
-										<th>{ helpers.I18n(ctx, "Total distance") }</th>
+										<th>{ i18n.T(ctx, "Total distance") }</th>
 										<td>
 											{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance() }
 										</td>
@@ -49,14 +50,14 @@ templ Show(e *database.Equipment) {
 										<td>
 											@helpers.IconFor("duration")
 										</td>
-										<th>{ helpers.I18n(ctx, "Total duration") }</th>
+										<th>{ i18n.T(ctx, "Total duration") }</th>
 										<td>{ helpers.HumanDuration(totals.Duration ) }</td>
 									</tr>
 									<tr>
 										<td>
 											@helpers.IconFor("repetitions")
 										</td>
-										<th>{ helpers.I18n(ctx, "Total repetitions") }</th>
+										<th>{ i18n.T(ctx, "Total repetitions") }</th>
 										<td>{ fmt.Sprintf("%d", totals.Repetitions) }</td>
 									</tr>
 								</tbody>
@@ -69,7 +70,7 @@ templ Show(e *database.Equipment) {
 										<td>
 											@helpers.IconFor("date")
 										</td>
-										<th>{ helpers.I18n(ctx, "Created") }</th>
+										<th>{ i18n.T(ctx, "Created") }</th>
 										<td>
 											@partials.SnippetDate(&e.CreatedAt)
 										</td>
@@ -78,14 +79,14 @@ templ Show(e *database.Equipment) {
 										<td>
 											@helpers.IconFor("note")
 										</td>
-										<th>{ helpers.I18n(ctx, "Description") }</th>
+										<th>{ i18n.T(ctx, "Description") }</th>
 										<td>{ e.Description }</td>
 									</tr>
 									<tr>
 										<td>
 											@helpers.IconFor("check")
 										</td>
-										<th>{ helpers.I18n(ctx, "Active") }</th>
+										<th>{ i18n.T(ctx, "Active") }</th>
 										<td>
 											@templ.Raw(helpers.BoolToHTML(e.Active))
 										</td>
@@ -94,7 +95,7 @@ templ Show(e *database.Equipment) {
 										<td>
 											@helpers.IconFor("workout")
 										</td>
-										<th>{ helpers.I18n(ctx, "Default workout types") }</th>
+										<th>{ i18n.T(ctx, "Default workout types") }</th>
 										<td>
 											<div class="flex flex-wrap">
 												for _, d := range  e.DefaultFor {
@@ -111,21 +112,21 @@ templ Show(e *database.Equipment) {
 						<div class="inner-form">
 							<h3 class="grow justify-start">
 								@helpers.IconFor("workout")
-								{ helpers.I18n(ctx, "Workouts") }
+								{ i18n.T(ctx, "Workouts") }
 							</h3>
 							<table class="workout-info">
 								<thead>
 									<tr>
 										<th></th>
-										<th>{ helpers.I18n(ctx, "Name") }</th>
-										<th class="hidden sm:table-cell">{ helpers.I18n(ctx, "Date") }</th>
+										<th>{ i18n.T(ctx, "Name") }</th>
+										<th class="hidden sm:table-cell">{ i18n.T(ctx, "Date") }</th>
 									</tr>
 								</thead>
 								<tbody>
 									for _, w := range e.Workouts {
 										<tr>
 											<td class="text-center">
-												<div title={ helpers.I18n(ctx, w.Type.String()) }>
+												<div title={ i18n.T(ctx, w.Type.String()) }>
 													@helpers.IconFor(w.Type.String())
 												</div>
 											</td>

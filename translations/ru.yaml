@@ -1,0 +1,175 @@
+---
+ru:
+  tempo: темп
+  segment: участок
+  Admin: Админ
+  Use a file: Использовать файл
+  User: Пользователь
+  Weight: Вес
+  Welcome!: Добро пожаловать!
+  Your profile: Ваш профиль
+  snowboarding: сноуборд
+  workouts: тренировки
+  workout: тренировка
+  walking: ходьба
+  Average tempo: Средний темп
+  1 year: 1 год
+  2 years: 2 года
+  10 years: 10 лет
+  5 years: 5 лет
+  6 months: 6 месяцев
+  Average speed: Средняя скорость
+  Cancel: Отмена
+  Continue: Продолжить
+  7 days: 7 дней
+  Cadence: Каденс
+  Date: Дата
+  Description: Описание
+  Time: Время
+  Details: Подробности
+  End: Конец
+  Time zone: Часовой пояс
+  Type: Тип
+  distance: расстояние
+  Total distance: Общее расстояние
+  Distance: Расстояние
+  Duration: Продолжительность
+  day: день
+  delete: удалить
+  Extra metrics: Дополнительные метрики
+  File: Файл
+  Notes: Заметки
+  Language: Язык
+  Logout: Выход
+  Name: Название
+  Max speed: Максимальная скорость
+  Password: Пароль
+  Source: Источник
+  Speed: Скорость
+  Statistics: Статистика
+  Add a workout: Добавить тренировку
+  Add workout: Добавить тренировку
+  Add workouts: Добавить тренировки
+  Application settings: Настройки
+  Updated: Обновлено
+  Elevation: Высота
+  Heading: Направление
+  Max elevation: Максимальная высота
+  Other users: Другие пользователи
+  Start: Начало
+  Sign in: Войти
+  Tempo: Темп
+  Update profile: Обновить профиль
+  Update settings: Обновить настройки
+  Update user: Обновить пользователя
+  Workout: Тренировка
+  Update workout: Обновить тренировку
+  Workouts: Тренировки
+  Workout type: Тип тренировки
+  the configuration file: файл конфигурации
+  month: месяц
+  Create route segment: Создать участок маршрута
+  Created: Создано
+  Add route segment: Добавить участок маршрута
+  Average tempo (no pause): Средний темп (без остановок)
+  Average speed (no pause): Средняя скорость (без остановок)
+  Create a new account: Создать новый аккаунт
+  Equipment: Снаряжение
+  Add equipment: Добавить снаряжение
+  running: бег
+  hiking: хайкинг
+  equipment: снаряжение
+  environment variables: переменные окружения
+  edit: редактировать
+  Update equipment: Обновить снаряжение
+  download: скачать
+  skiing: лыжи
+  swimming: плавание
+  cycling: велосипед
+  kilometers per hour: километры в час
+  miles per hour: мили в час
+  e-cycling: электровелосипед
+  kilometers: километры
+  pounds: фунты
+  miles: мили
+  feet: футы
+  meters: метры
+  kilograms: килограммы
+  Actions: Действия
+  Preferred units: Единицы измерения
+  Update preferred units: Обновить единицы измерения
+  Active: Активное
+  Route segments: Участки маршрута
+  create route segment: создать участок маршрута
+  Update route segment: Обновить участок маршрута
+  route segment: участок маршрута
+  Manual: Вручную
+  Min elevation: Минимальная высота
+  no equipment: нет снаряжения
+  Time paused: Время остановок
+  Heart rate: ЧСС
+  Recent activity: Недавняя активность
+  Disable social sharing buttons: Отключить кнопки социальных сетей
+  refresh: обновить
+  Manage: Управление
+  Show full date by default: Показывать полную дату по умолчанию
+  Manage users: Управление пользователями
+  'These settings may be overwritten by:': 'Эти параметры могут быть переопределены
+    через:'
+  Disable account registration: Отключить регистрацию
+  refresh in progress: обновление в процессе
+  Dashboard: Панель управления
+  Manage user '%s': Управление пользователем '%s'
+  'Added %d new workout(s): %s': 'Добавлена %d новая тренировка: %s'
+  weight lifting: силовая
+  duration: продолжительность
+  Total duration: Общая продолжительность
+  Total up: Набор высоты
+  Circular: Круговой
+  Total down: Потеря высоты
+  user: пользователь
+  golfing: гольф
+  show/hide: показать/скрыть
+  push-ups: отжимания
+  how to use: как использовать
+  generate a new API key: сгенерировать новый API-ключ
+  copy to clipboard: скопировать в буфер обмена
+  The workout '%s' has been updated.: Тренировка '%s' обновлена.
+  Copy publicly shareable link: Копировать общедоступную ссылку
+  Default workout types: Типы тренировок по умолчанию
+  Enable API access: Включить доступ к API
+  Location: Местоположение
+  Refresh all your workouts: Обновить все ваши тренировки
+  The user '%s' has been updated.: Пользователь '%s' обновлен.
+  Register: Зарегистрироваться
+  Show map in full width: Показать карту в полную ширину
+  The workout '%s' has been deleted.: Тренировка '%s' удалена.
+  API key updated: API-ключ обновлен
+  Est. calories burned: Сожжено калорий
+  Profile updated: Профиль обновлен
+  The user '%s' has been deleted.: Пользователь '%s' удален.
+  "(Re)generate publicly shareable link": Сгенерировать общедоступную ссылку
+  Estimated based on the activity, assuming 70 kg: Оценка основана на виде активности,
+    предполагаемый вес 70 кг
+  Username (email): Имя пользователя (email)
+  Streets: OSM Carto
+  Aerial: Esri World Imagery
+  All workouts will be refreshed in the coming minutes.: Все тренировки будут обновлены
+    в ближайшие минуты.
+  Dashboard for %s: Панель управления для %s
+  Auto import directory: Каталог автоматического импорта
+  Publicly shareable link was copied to clipboard: Общедоступная ссылка скопирована
+    в буфер обмена
+  Username: Имя пользователя
+  Your account has been created, but needs to be activated.: Ваш аккаунт создан, но
+    его необходимо активировать.
+  Auto-detect: Автоопределение
+  Are you sure you want to delete this %s?: Вы уверены, что хотите удалить %s?
+  Please help translate via Weblate: Пожалуйста, помогите c переводом на Weblate
+  The workout '%s' has been refreshed.: Тренировка '%s' обновлена.
+  sailboat: парусник
+  Average per minute: Среднее в минуту
+  Leave blank to keep current password: Оставьте пустым, чтобы сохранить текущий пароль
+  Per: в
+  Since: За прошедшие
+  Your progress per %s for the past %s: Ваш прогресс в %s за прошедшие %s

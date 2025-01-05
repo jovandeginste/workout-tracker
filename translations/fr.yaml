@@ -1,0 +1,184 @@
+---
+fr:
+  API key updated: Clé API mise à jour
+  Actions: Actions
+  Active: Actif
+  Add a workout: Ajouter un entraînement
+  Add equipment: Ajouter des équipements
+  Add workout: Ajouter un entraînement
+  Add workouts: Ajouter des entraînements
+  'Added %d new workout(s): %s': 'Ajout de %d nouveau(x) entraînement(s) : %s'
+  Admin: Admin
+  All workouts will be refreshed in the coming minutes.: Toutes les séances d'entraînement
+    seront actualisées dans les prochaines minutes.
+  Application settings: Paramètres de l'application
+  Are you sure you want to delete this %s?: Voulez-vous vraiment supprimer ce %s ?
+  Auto import directory: Importation de répertoire automatique
+  Auto-detect: Détection automatique
+  Average speed: Vitesse moyenne
+  Average speed (no pause): Vitesse moyenne (sans pause(s))
+  Average tempo: Allure moyenne
+  Average tempo (no pause): Allure moyenne (sans pause(s))
+  Cancel: Annuler
+  Continue: Continuer
+  Create a new account: Créer un nouveau compte
+  Created: Créé
+  Dashboard: Tableau de bord
+  Dashboard for %s: Tableau de bord pour %s
+  Date: Date
+  Default workout types: Types d'entraînement par défaut
+  Disable account registration: Désactiver l'enregistrement des nouveaux utilisateurs
+  Disable social sharing buttons: Désactiver les boutons de partage sur les réseaux
+    sociaux
+  Distance: Distance
+  Duration: Durée
+  Elevation: Dénivelé positif
+  Enable API access: Activer l'accès à l'API
+  'Encountered %d problems while adding workouts: %s': "%d problèmes rencontrés lors
+    de l'ajout d'entraînements : %s"
+  Equipment: Équipement
+  File: Fichier
+  Heart rate: Rythme cardiaque
+  'I completed a workout: %s.': 'J''ai terminé une séance d''entraînement : %s.'
+  It took me %s to go %s. I averaged %s.: Il m'a fallu %s pour aller %s. J'ai fait
+    la moyenne de %s.
+  Language: Langue
+  Leave blank to keep current password: Laissez le champ vide pour conserver le mot
+    de passe actuel
+  Location: Emplacement
+  Logout: Déconnexion
+  Manage: Gérer
+  Manage user '%s': Gérer l'utilisateur '%s'
+  Manage users: Gérer les utilisateurs
+  Max elevation: Altitude la plus haute
+  Max speed: Vitesse maximale
+  Min elevation: Altitude la plus basse
+  Name: Nom
+  Notes: Notes
+  Other users: Autres utilisateurs
+  Password: Mot de passe
+  Preferred units: Unités préférées
+  Profile updated: Profil mis à jour
+  Recent activity: Activité récente
+  Records for %s: Enregistrements pour %s
+  Refresh all your workouts: Rafraîchissez toutes vos séances d'entraînement
+  Register: S'enregistrer
+  Show full date by default: Afficher la date complète par défaut
+  Sign in: Connexion
+  Source: Source
+  Speed: Vitesse
+  Statistics: Statistiques
+  Tempo: Allure
+  The user '%s' has been deleted.: L'utilisateur '%s' a été supprimé.
+  The user '%s' has been updated.: L'utilisateur '%s' a été mis à jour.
+  The workout '%s' has been deleted.: L'entraînement '%s' a été supprimé.
+  The workout '%s' has been refreshed.: L'entraînement '%s' a été rafraîchi.
+  The workout '%s' has been updated.: L'entraînement '%s' a été mis à jour.
+  'These settings may be overwritten by:': 'Ces paramètres peuvent être remplacés
+    par :'
+  Time: Temps
+  Time paused: Temps de pause
+  Time zone: Fuseau horaire
+  Total distance: Distance totale
+  Total down: Dénivelé négatif total
+  Total duration: Durée totale
+  Total up: Dénivelé positif total
+  Totals: Totaux
+  Totals to show on dashboard: Totaux à afficher sur le tableau de bord
+  Type: Type
+  Update preferred units: Mettre à jour les unités préférées
+  Update profile: Mettre à jour le profil
+  Update settings: Mettre à jour les paramètres
+  Update user: Mettre à jour l'utilisateur
+  Update workout: Mettre à jour l'entraînement
+  Username: Nom d'utilisateur
+  Username (email): Nom d'utilisateur (courriel)
+  Welcome!: Bienvenue !
+  Workouts: Entraînements
+  Your account has been created, but needs to be activated.: Votre compte a été créé,
+    mais doit être activé.
+  Your profile: Votre profil
+  copy to clipboard: copier dans le Presse-papiers
+  cycling: cyclisme
+  delete: supprimer
+  distance: distance
+  download: télécharger
+  duration: durée
+  edit: éditer
+  environment variables: variables d'environnement
+  equipment: équipement
+  feet: pieds
+  generate a new API key: générer une nouvelle clé API
+  golfing: golf
+  hiking: randonnée
+  how to use: mode d'emploi
+  kilometers: kilomètres
+  kilometers per hour: kilomètres par heure
+  meters: mètres
+  miles: miles
+  miles per hour: miles à l'heure
+  refresh: rafraîchir
+  running: course à pieds
+  sailboat: voilier
+  show/hide: afficher/masquer
+  skiing: ski
+  snowboarding: snowboard
+  swimming: natation
+  the configuration file: le fichier de configuration
+  up: dénivelé positif
+  user: utilisateur
+  walking: marche
+  workout: entraînement
+  workouts: entraînements
+  Estimated based on the activity, assuming 70 kg: Estimé en fonction de l'activité,
+    en supposant un poids de 70 kg
+  Matches: Correspondance
+  Start: Début
+  Use a file: Utiliser un fichier
+  Bidirectional: Bidirectionnel
+  create route segment: Créer un segment
+  Please help translate via Weblate: S'il vous plaît, aidez-nous à traduire via Weblate
+  month: mois
+  push-ups: pompes
+  Since: Depuis
+  Weight: Poids
+  Per: Par
+  6 months: 6 mois
+  7 days: 7 jours
+  Update equipment: Mettre à jour l'équipement
+  10 years: 10 ans
+  2 years: 2 ans
+  5 years: 5 ans
+  Details: Détails
+  kilograms: Kilogrammes
+  Total repetitions: Répétitions totales
+  Add route segment: Ajouter un segment
+  Circular: Circulaire
+  End: Fin
+  Extra metrics: Mesures supplémentaires
+  Create route segment: Créer un segment
+  Route segments: Segment
+  1 year: 1 an
+  Manual: Manuel
+  Repetitions: Répétitions
+  Reset changes: Annuler les changements
+  Description: Description
+  day: jour
+  pounds: livres
+  Cadence: Cadence
+  Average per minute: Moyenne par minute
+  weight lifting: haltérophilie
+  Aerial: Aérien
+  Est. calories burned: Est. calories brulées
+  Show map in full width: Afficher la carte en grand format
+  Street: Rue
+  Update route segment: Mettre à jour les segments
+  Updated: Mis à jour
+  User: Utilisateur
+  Workout: Entrainement
+  Workout type: Type d'entrainement
+  Your progress per %s for the past %s: Votre progression pour %s au cours des %s
+  find matches: Chercher des correspondances
+  no equipment: sans équipement
+  refresh in progress: Actualisation en cours
+  route segment: segment

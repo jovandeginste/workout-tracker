@@ -45,16 +45,12 @@ func TestApp_NewApp(t *testing.T) {
 func TestApp_Configure(t *testing.T) {
 	a := defaultApp(t)
 	assert.Nil(t, a.db)
-	assert.Nil(t, a.translator)
-	assert.Nil(t, a.humanizer)
 
 	t.Setenv("WT_DATABASE_DRIVER", "memory")
 	require.NoError(t, a.Configure())
 
 	assert.Equal(t, "memory", a.Config.DatabaseDriver)
 	assert.NotNil(t, a.db)
-	assert.NotNil(t, a.translator)
-	assert.NotNil(t, a.humanizer)
 }
 
 func TestApp_NewLogger(t *testing.T) {

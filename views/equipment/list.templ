@@ -2,6 +2,7 @@ package equipment
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -19,21 +20,21 @@ templ List(equipment []*database.Equipment) {
 				<div class="items-baseline flex flex-wrap">
 					<h2 class="grow justify-start">
 						@helpers.IconFor("equipment")
-						{ helpers.I18n(ctx, "Equipment") } ({ fmt.Sprintf("%d", len(equipment)) })
+						{ i18n.T(ctx, "Equipment") } ({ fmt.Sprintf("%d", len(equipment)) })
 					</h2>
 					<div class="justify-end mr-2">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
 							@helpers.IconFor("add")
-							<span>{ helpers.I18n(ctx, "Add equipment") }</span>
+							<span>{ i18n.T(ctx, "Add equipment") }</span>
 						</a>
 					</div>
 				</div>
 				<table class="equipment-info">
 					<thead>
 						<tr>
-							<th>{ helpers.I18n(ctx, "Name") }</th>
-							<th>{ helpers.I18n(ctx, "Active") }</th>
-							<th>{ helpers.I18n(ctx, "Workouts") }</th>
+							<th>{ i18n.T(ctx, "Name") }</th>
+							<th>{ i18n.T(ctx, "Active") }</th>
+							<th>{ i18n.T(ctx, "Workouts") }</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -64,7 +65,7 @@ templ List(equipment []*database.Equipment) {
 
 templ actions(e *database.Equipment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
-		<button class="edit" title={ helpers.I18n(ctx, "edit") }>
+		<button class="edit" title={ i18n.T(ctx, "edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
@@ -75,7 +76,7 @@ templ actions(e *database.Equipment) {
 			onclick="openModal('modalConfirmDelete', this)"
 			data-id={ fmt.Sprintf("%d", e.ID) }
 			class="dangerous"
-			title={ helpers.I18n(ctx, "delete") }
+			title={ i18n.T(ctx, "delete") }
 		>
 			<a>
 				@helpers.IconFor("delete")
@@ -97,10 +98,10 @@ templ actions(e *database.Equipment) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ helpers.I18n(ctx, "Are you sure you want to delete this %s?", helpers.I18n(ctx, "equipment")) }</h3>
+				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "equipment")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-delete", e.ID)) }>
-						<button class="confirm">{ helpers.I18n(ctx, "Continue") }</button>
+						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>
 					</form>
 					<form onsubmit="return false">
 						<button
@@ -108,7 +109,7 @@ templ actions(e *database.Equipment) {
 							data-id={ fmt.Sprintf("%d", e.ID) }
 							class="cancel"
 						>
-							{ helpers.I18n(ctx, "Cancel") }
+							{ i18n.T(ctx, "Cancel") }
 						</button>
 					</form>
 				</div>

@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/workouts"
@@ -43,7 +44,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/map.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 15, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 16, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -68,10 +69,10 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			CenterLng:     s.Center.Lng,
 			MinElevation:  s.MinElevation,
 			MaxElevation:  s.MaxElevation,
-			SpeedName:     helpers.I18n(ctx, "Average speed"),
-			ElevationName: helpers.I18n(ctx, "Elevation"),
-			StreetsName:   helpers.I18n(ctx, "Streets"),
-			AerialName:    helpers.I18n(ctx, "Aerial"),
+			SpeedName:     i18n.T(ctx, "Average speed"),
+			ElevationName: i18n.T(ctx, "Elevation"),
+			StreetsName:   i18n.T(ctx, "Streets"),
+			AerialName:    i18n.T(ctx, "Aerial"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("map-config", mapConfig).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

@@ -3,11 +3,11 @@ package helpers
 import (
 	"context"
 
+	"github.com/invopop/ctxi18n"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	appversion "github.com/jovandeginste/workout-tracker/pkg/version"
 	"github.com/labstack/echo/v4"
-	"github.com/vorlif/spreak"
-	"github.com/vorlif/spreak/humanize"
 )
 
 func AppConfig(ctx context.Context) *database.Config {
@@ -67,39 +67,12 @@ func appEcho(ctx context.Context) *echo.Echo {
 	}
 }
 
-func translator(ctx context.Context) *spreak.Localizer {
-	if t := CurrentUser(ctx).GetTranslator(); t != nil {
+func translator(ctx context.Context) *i18n.Locale {
+	if t := ctxi18n.Locale(ctx); t != nil {
 		return t
 	}
 
-	switch t := ctx.Value("translator").(type) {
-	case *spreak.Localizer:
-		return t
-	default:
-		return nil
-	}
-}
-
-func genericTranslator(ctx context.Context) *spreak.Bundle {
-	switch v := ctx.Value("generic_translator").(type) {
-	case *spreak.Bundle:
-		return v
-	default:
-		return nil
-	}
-}
-
-func humanizer(ctx context.Context) *humanize.Humanizer {
-	if h := CurrentUser(ctx).GetHumanizer(); h != nil {
-		return h
-	}
-
-	switch v := ctx.Value("humanizer").(type) {
-	case *humanize.Humanizer:
-		return v
-	default:
-		return nil
-	}
+	return ctxi18n.Match(string(ctxi18n.DefaultLocale))
 }
 
 func CurrentUser(ctx context.Context) *database.User {

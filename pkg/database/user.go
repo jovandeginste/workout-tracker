@@ -1,14 +1,15 @@
 package database
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/mail"
 	"time"
 
 	"github.com/cat-dealer/go-rand/v2"
-	"github.com/vorlif/spreak"
-	"github.com/vorlif/spreak/humanize"
+	"github.com/invopop/ctxi18n"
+	"github.com/invopop/ctxi18n/i18n"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -29,9 +30,8 @@ var (
 )
 
 type User struct {
-	db         *gorm.DB
-	translator *spreak.Localizer
-	humanizer  *humanize.Humanizer
+	db      *gorm.DB
+	context context.Context
 
 	Model
 
@@ -53,24 +53,20 @@ type User struct {
 	anonymous bool // Whether we have an actual user or not
 }
 
-func (u *User) SetTranslator(translator *spreak.Localizer) {
-	u.translator = translator
+func (u *User) GetContext() context.Context {
+	return u.context
 }
 
-func (u *User) SetHumanizer(humanizer *humanize.Humanizer) {
-	u.humanizer = humanizer
+func (u *User) SetContext(ctx context.Context) {
+	u.context = ctx
 }
 
 func (u *User) I18n(message string, vars ...any) string {
-	return u.GetTranslator().Getf(message, vars...)
+	return u.GetTranslator().T(message, vars...)
 }
 
-func (u *User) GetTranslator() *spreak.Localizer {
-	return u.translator
-}
-
-func (u *User) GetHumanizer() *humanize.Humanizer {
-	return u.humanizer
+func (u *User) GetTranslator() *i18n.Locale {
+	return ctxi18n.Locale(u.context)
 }
 
 func AnonymousUser() *User {

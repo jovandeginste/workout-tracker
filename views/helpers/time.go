@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-func RelativeDate(ctx context.Context, t *time.Time) string {
-	return humanizer(ctx).NaturalTime(t)
-}
-
 func LocalDate(ctx context.Context, t *time.Time) string {
 	return t.In(timezone(ctx)).Format(timeFormat)
 }

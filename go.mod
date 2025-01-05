@@ -17,6 +17,7 @@ require (
 	github.com/gomarkdown/markdown v0.0.0-20240730141124-034f12af3bf6
 	github.com/google/go-querystring v1.1.0
 	github.com/google/uuid v1.6.0
+	github.com/invopop/ctxi18n v0.9.0
 	github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
 	github.com/labstack/echo-jwt/v4 v4.3.0
 	github.com/labstack/echo/v4 v4.13.3
@@ -58,6 +59,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect

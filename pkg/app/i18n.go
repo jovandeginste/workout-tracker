@@ -1,19 +1,12 @@
 package app
 
 import (
+	"strings"
+
+	"github.com/invopop/ctxi18n"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/labstack/echo/v4"
-	"github.com/vorlif/spreak"
-	"github.com/vorlif/spreak/humanize"
-	"github.com/vorlif/spreak/humanize/locale/de"
-	"github.com/vorlif/spreak/humanize/locale/fa"
-	"github.com/vorlif/spreak/humanize/locale/fr"
-	"github.com/vorlif/spreak/humanize/locale/id"
-	"github.com/vorlif/spreak/humanize/locale/it"
-	"github.com/vorlif/spreak/humanize/locale/nb"
-	"github.com/vorlif/spreak/humanize/locale/nl"
-	"github.com/vorlif/spreak/humanize/locale/ru"
-	"golang.org/x/text/language"
 )
 
 const (
@@ -23,60 +16,28 @@ const (
 )
 
 func (a *App) ConfigureLocalizer() error {
-	var domain spreak.FsOption
-
-	if a.Translations != nil {
-		domain = spreak.WithFs(a.Translations)
-	} else {
-		domain = spreak.WithPath(".")
-	}
-
-	bundle, err := spreak.NewBundle(
-		// Set the language used in the program code/templates
-		spreak.WithSourceLanguage(language.English),
-		// Set the path from which the translations should be loaded
-		spreak.WithFilesystemLoader(spreak.NoDomain, domain),
-		// Specify the languages you want to load
-		spreak.WithLanguage(translations()...),
-	)
-	if err != nil {
+	if err := ctxi18n.LoadWithDefault(a.Translations, "en"); err != nil {
 		return err
 	}
 
-	a.translator = bundle
-
-	a.humanizer = humanize.MustNew(
-		humanize.WithLocale(humanLocales()...),
-	)
+	a.translator = ctxi18n.Match(string(ctxi18n.DefaultLocale))
 
 	return nil
 }
 
-func translations() []any {
-	return []any{
-		language.Dutch,
-		language.English,
-		language.French,
-		language.German,
-		language.Indonesian,
-		language.Italian,
-		language.Norwegian,
-		language.Persian,
-		language.Russian,
-	}
-}
+func langFromContextString(ctx echo.Context) string {
+	langs := langFromContext(ctx)
+	res := []string{}
 
-func humanLocales() []*humanize.LocaleData {
-	return []*humanize.LocaleData{
-		de.New(),
-		fa.New(),
-		fr.New(),
-		id.New(),
-		it.New(),
-		nb.New(),
-		nl.New(),
-		ru.New(),
+	for _, lang := range langs {
+		if l, ok := lang.(string); ok {
+			if l != "" {
+				res = append(res, lang.(string))
+			}
+		}
 	}
+
+	return strings.Join(res, ";")
 }
 
 func langFromContext(ctx echo.Context) []any {
@@ -88,13 +49,13 @@ func langFromContext(ctx echo.Context) []any {
 }
 
 func (a *App) i18n(ctx echo.Context, message string, vars ...any) string {
-	return a.translatorFromContext(ctx).Getf(message, vars...)
+	return a.translatorFromContext(ctx).T(message, vars...)
 }
 
-func (a *App) translatorFromContext(ctx echo.Context) *spreak.Localizer {
-	return spreak.NewLocalizer(a.translator, langFromContext(ctx)...)
-}
+func (a *App) translatorFromContext(ctx echo.Context) *i18n.Locale {
+	if l := ctxi18n.Locale(ctx.Request().Context()); l != nil {
+		return l
+	}
 
-func (a *App) humanizerFromContext(ctx echo.Context) *humanize.Humanizer {
-	return a.humanizer.CreateHumanizer(langFromContext(ctx)...)
+	return a.translator
 }

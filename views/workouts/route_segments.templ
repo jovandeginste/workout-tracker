@@ -1,6 +1,7 @@
 package workouts
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -11,11 +12,11 @@ templ RouteSegments(segments []*database.RouteSegmentMatch) {
 		<thead>
 			<tr>
 				<th></th>
-				<th>{ helpers.I18n(ctx, "Name") }</th>
-				<th>{ helpers.I18n(ctx, "Distance") }</th>
-				<th>{ helpers.I18n(ctx, "Duration") }</th>
-				<th>{ helpers.I18n(ctx, "Speed") }</th>
-				<th>{ helpers.I18n(ctx, "Tempo") }</th>
+				<th>{ i18n.T(ctx, "Name") }</th>
+				<th>{ i18n.T(ctx, "Distance") }</th>
+				<th>{ i18n.T(ctx, "Duration") }</th>
+				<th>{ i18n.T(ctx, "Speed") }</th>
+				<th>{ i18n.T(ctx, "Tempo") }</th>
 			</tr>
 		</thead>
 		<tbody class="whitespace-nowrap font-mono">

@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"context"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"slices"
@@ -20,11 +21,11 @@ import (
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 	preferredUnits := helpers.CurrentUser(ctx).PreferredUnits()
 
-	return helpers.I18n(
+	return i18n.T(
 		ctx,
 		`I completed a workout: %s.`,
-		helpers.I18n(ctx, w.Type.String()),
-	) + " " + helpers.I18n(
+		i18n.T(ctx, w.Type.String()),
+	) + " " + i18n.T(
 		ctx,
 		`It took me %s to go %s. I averaged %s.`,
 		helpers.HumanDuration(w.TotalDuration()),
@@ -35,7 +36,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
 		"workout",
-		helpers.I18n(ctx, w.Type.String()),
+		i18n.T(ctx, w.Type.String()),
 	}
 
 	if c := w.City(); c != "" {
@@ -76,7 +77,7 @@ func Social(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(workoutDataTitle(ctx, w))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 47, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 48, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -89,7 +90,7 @@ func Social(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(workoutDataTags(ctx, w))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 48, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 49, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

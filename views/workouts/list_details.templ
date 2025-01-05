@@ -2,6 +2,7 @@ package workouts
 
 import (
 	"fmt"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -13,21 +14,21 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsLocation() {
 			<div
 				class="hidden 2xl:table-cell"
-				title={ helpers.I18n(ctx, "Location") + ": " + w.Address() }
+				title={ i18n.T(ctx, "Location") + ": " + w.Address() }
 			>
 				@helpers.IconFor("location")
 				{ w.Address() }
 			</div>
 		}
 		if w.Type.IsDistance() {
-			<div class="font-mono" title={ helpers.I18n(ctx, "Distance") }>
+			<div class="font-mono" title={ i18n.T(ctx, "Distance") }>
 				@helpers.IconFor("distance")
 				{ helpers.HumanDistance(ctx, w.TotalDistance()) }
 				{ preferredUnits.Distance() }
 			</div>
 		}
 		if w.Type.IsDuration() {
-			<div class="hidden sm:table-cell font-mono" title={ helpers.I18n(ctx, "Duration") }>
+			<div class="hidden sm:table-cell font-mono" title={ i18n.T(ctx, "Duration") }>
 				@helpers.IconFor("duration")
 				{ helpers.HumanDuration(w.TotalDuration()) }
 			</div>
@@ -35,21 +36,21 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsDistance()&& w.Type.IsDuration() {
 			<div
 				class="hidden xl:table-cell font-mono"
-				title={ helpers.I18n(ctx, "Average speed") }
+				title={ i18n.T(ctx, "Average speed") }
 			>
 				@helpers.IconFor("speed")
 				@partials.PreferredAverageSpeedMetric(w, preferredUnits)
 			</div>
 		}
 		if w.Type.IsWeight() {
-			<div class="font-mono" title={ helpers.I18n(ctx, "Weight") }>
+			<div class="font-mono" title={ i18n.T(ctx, "Weight") }>
 				@helpers.IconFor("weight")
 				{ fmt.Sprintf("%.2f", w.Weight()) }
 				{ preferredUnits.Weight() }
 			</div>
 		}
 		if w.Type.IsRepetition() {
-			<div class="font-mono" title={ helpers.I18n(ctx, "Repetitions") }>
+			<div class="font-mono" title={ i18n.T(ctx, "Repetitions") }>
 				@helpers.IconFor("repetitions")
 				{ fmt.Sprintf("%d", w.Repetitions()) }
 			</div>

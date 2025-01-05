@@ -1,6 +1,7 @@
 package route_segments
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
@@ -23,7 +24,7 @@ templ Show(s *database.RouteSegment) {
 						if s.Dirty {
 							<span class="dirty">
 								@helpers.IconFor("refresh")
-								{ helpers.I18n(ctx, "refresh in progress") }
+								{ i18n.T(ctx, "refresh in progress") }
 							</span>
 						}
 						@actions(s)
@@ -48,11 +49,11 @@ templ Show(s *database.RouteSegment) {
 								<table>
 									<thead>
 										<tr>
-											<th>{ helpers.I18n(ctx, "User") }</th>
-											<th>{ helpers.I18n(ctx, "Workout") }</th>
-											<th>{ helpers.I18n(ctx, "Distance") }</th>
-											<th>{ helpers.I18n(ctx, "Duration") }</th>
-											<th>{ helpers.I18n(ctx, "Tempo") }</th>
+											<th>{ i18n.T(ctx, "User") }</th>
+											<th>{ i18n.T(ctx, "Workout") }</th>
+											<th>{ i18n.T(ctx, "Distance") }</th>
+											<th>{ i18n.T(ctx, "Duration") }</th>
+											<th>{ i18n.T(ctx, "Tempo") }</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -89,7 +90,7 @@ templ Show(s *database.RouteSegment) {
 							<div class="inner-form">
 								<h3>
 									@helpers.IconFor("note")
-									{ helpers.I18n(ctx, "Notes") }
+									{ i18n.T(ctx, "Notes") }
 								</h3>
 								<div>
 									@templ.Raw(s.MarkdownNotes())

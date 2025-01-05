@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -42,7 +43,7 @@ func Map(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/map.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 14, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 15, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -69,10 +70,10 @@ func Map(w *database.Workout) templ.Component {
 			MinElevation:  w.MinElevation(),
 			MaxElevation:  w.MaxElevation(),
 			MaxSpeed:      w.MaxSpeed(),
-			SpeedName:     helpers.I18n(ctx, "Average speed"),
-			ElevationName: helpers.I18n(ctx, "Elevation"),
-			StreetsName:   helpers.I18n(ctx, "Streets"),
-			AerialName:    helpers.I18n(ctx, "Aerial"),
+			SpeedName:     i18n.T(ctx, "Average speed"),
+			ElevationName: i18n.T(ctx, "Elevation"),
+			StreetsName:   i18n.T(ctx, "Streets"),
+			AerialName:    i18n.T(ctx, "Aerial"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("map-config", mapConfig).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -116,9 +117,9 @@ func Map(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.I18n(ctx, "Show map in full width"))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Show map in full width"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 82, Col: 66}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 83, Col: 60}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
