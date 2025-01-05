@@ -25,13 +25,13 @@ func (a *App) addEquipment(c echo.Context) error {
 	p := database.Equipment{}
 
 	if err := c.Bind(&p); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("add-equipment"), err)
+		return a.renderError(c, http.StatusBadRequest, err, "add-equipment")
 	}
 
 	p.UserID = u.ID
 
 	if err := p.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("add-equipment"), err)
+		return a.renderError(c, http.StatusInternalServerError, err, "add-equipment")
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
@@ -44,7 +44,7 @@ func (a *App) equipmentHandler(c echo.Context) error {
 
 	e, err := u.GetAllEquipment(a.db)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
+		return a.renderError(c, http.StatusInternalServerError, err, "dashboard")
 	}
 
 	return Render(c, http.StatusOK, equipment.List(e))
@@ -55,12 +55,12 @@ func (a *App) equipmentShowHandler(c echo.Context) error {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
+		return a.renderError(c, http.StatusBadRequest, err, "equipment")
 	}
 
 	e, err := database.GetEquipment(a.db, id)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
+		return a.renderError(c, http.StatusNotFound, err, "equipment")
 	}
 
 	return Render(c, http.StatusOK, equipment.Show(e))
@@ -71,14 +71,14 @@ func (a *App) equipmentAddHandler(c echo.Context) error {
 	return Render(c, http.StatusOK, equipment.Add())
 }
 
-func (a *App) equipmentDeleteHandler(c echo.Context) error { //nolint:dupl
+func (a *App) equipmentDeleteHandler(c echo.Context) error {
 	e, err := a.getEquipment(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
+		return a.renderError(c, http.StatusNotFound, err, "equipment-show", c.Param("id"))
 	}
 
 	if err := e.Delete(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
+		return a.renderError(c, http.StatusInternalServerError, err, "equipment-show", c.Param("id"))
 	}
 
 	a.addNotice(c, "The equipment '%s' has been deleted.", e.Name)
@@ -89,18 +89,18 @@ func (a *App) equipmentDeleteHandler(c echo.Context) error { //nolint:dupl
 func (a *App) equipmentUpdateHandler(c echo.Context) error {
 	e, err := a.getEquipment(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
+		return a.renderError(c, http.StatusNotFound, err, "equipment-edit", c.Param("id"))
 	}
 
 	e.DefaultFor = nil
 	e.Active = (c.FormValue("active") == "true")
 
 	if err := c.Bind(e); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
+		return a.renderError(c, http.StatusBadRequest, err, "equipment-edit", c.Param("id"))
 	}
 
 	if err := e.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
+		return a.renderError(c, http.StatusInternalServerError, err, "equipment-edit", c.Param("id"))
 	}
 
 	a.addNotice(c, "The equipment '%s' has been updated.", e.Name)
@@ -113,8 +113,16 @@ func (a *App) equipmentEditHandler(c echo.Context) error {
 
 	e, err := a.getEquipment(c)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
+		return a.renderError(c, http.StatusNotFound, err, "equipment")
 	}
 
 	return Render(c, http.StatusOK, equipment.Edit(e))
+}
+
+func (a *App) renderError(c echo.Context, statusCode int, err error, route string, params ...any) error {
+	a.addError(c, err.Error())
+	if len(params) > 0 {
+		return c.Redirect(statusCode, a.echo.Reverse(route, params...))
+	}
+	return c.Redirect(statusCode, a.echo.Reverse(route))
 }
