@@ -1,4 +1,3 @@
----
 nl:
   1 year: 1 jaar
   10 years: 10 jaar
@@ -184,3 +183,29 @@ nl:
   Aerial: Lucht
   Street: Straat
   Show map in full width: Toon de kaart in volle breedte
+  1 day: 1 dag
+  15 days: 15 dagen
+  3 months: 3 maand
+  Filter: Filter
+  Sort by: Sorteer op
+  "(Re)generate publicly shareable link": (Her)genereer publieke koppeling
+  All: Alles
+  1 month: 1 maand
+  e-cycling: e-fietsen
+  Copy publicly shareable link: Kopieer publieke koppeling
+  Last: Laatste
+  Publicly shareable link was copied to clipboard: Publieke koppeling is naar het
+    klembord gekopieerd
+  Streets: Straten
+  Heatmap: Hittekaart
+  Calories: Calorieën
+  Accuracy: Nauwkeurigheid
+  Dark: Donker
+  Browser / System: Browser / Systeem
+  Light: Licht
+  Theme: Thema
+  Total weight: Totaal gewicht
+  ascending: oplopend
+  descending: aflopend
+  kayaking: kajakken
+  Filter workouts: Filter workouts
