@@ -9,7 +9,7 @@ import (
 )
 
 templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("dashboard")
 			{ i18n.T(ctx, "Dashboard for %s", user.Name) }

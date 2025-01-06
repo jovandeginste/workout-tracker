@@ -8,7 +8,7 @@ import (
 )
 
 templ Edit(s *database.RouteSegment) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<div class="gap-4">
 			<h2>
 				@helpers.IconFor("route-segment")

@@ -9,7 +9,7 @@ import (
 )
 
 templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<div class="items-baseline flex flex-wrap">
 			<h2 class="grow justify-start">
 				@helpers.IconFor(`workout`)

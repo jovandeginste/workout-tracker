@@ -8,7 +8,7 @@ import (
 )
 
 templ Edit(w *database.Workout) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<div class="gap-4">
 			<h2>
 				@helpers.IconFor(w.Type.String())

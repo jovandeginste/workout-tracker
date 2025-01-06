@@ -8,7 +8,7 @@ import (
 )
 
 templ Show(e *database.Equipment) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		{{ currentUser := helpers.CurrentUser(ctx) }}
 		{{ pu := currentUser.PreferredUnits() }}
 		<div class="gap-4">

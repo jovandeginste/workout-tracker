@@ -9,7 +9,7 @@ import (
 )
 
 templ EditUser(u *database.User) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor(`admin`)
 			{ i18n.T(ctx, "Manage user '%s'", u.Name) }

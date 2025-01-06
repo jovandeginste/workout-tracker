@@ -8,7 +8,7 @@ import (
 )
 
 templ Profile(u *database.User) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("user-profile")
 			{ i18n.T(ctx, "Your profile") }
