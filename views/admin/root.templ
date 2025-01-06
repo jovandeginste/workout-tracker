@@ -8,108 +8,102 @@ import (
 )
 
 templ Root(users []*database.User) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="inner-form">
-				<h2>
-					@helpers.IconFor(`admin`)
-					{ i18n.T(ctx, "Manage users") } ({ helpers.A2S(len(users)) })
-				</h2>
-				<table>
-					<thead>
+	@partials.Page(partials.PageOptions{}) {
+		<h2>
+			@helpers.IconFor(`admin`)
+			{ i18n.T(ctx, "Manage") }
+		</h2>
+		<div class="inner-form">
+			<h3>
+				{ i18n.T(ctx, "Manage users") } ({ helpers.A2S(len(users)) })
+			</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>{ i18n.T(ctx, "Username") }</th>
+						<th>{ i18n.T(ctx, "Name") }</th>
+						<th>{ i18n.T(ctx, "Active") }</th>
+						<th>{ i18n.T(ctx, "Admin") }</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					for _, u := range users {
 						<tr>
-							<th>{ i18n.T(ctx, "Username") }</th>
-							<th>{ i18n.T(ctx, "Name") }</th>
-							<th>{ i18n.T(ctx, "Active") }</th>
-							<th>{ i18n.T(ctx, "Admin") }</th>
-							<th></th>
+							<th>
+								<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>{ u.Username }</a>
+							</th>
+							<td>{ u.Name }</td>
+							<td>
+								@templ.Raw(helpers.BoolToHTML(u.Active))
+							</td>
+							<td>
+								@templ.Raw(helpers.BoolToHTML(u.Admin))
+							</td>
+							<td>
+								<span class="actions">
+									@actions(u)
+								</span>
+							</td>
 						</tr>
-					</thead>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="inner-form">
+			<h3>
+				{ i18n.T(ctx, "Application settings") }
+			</h3>
+			<ul class="note">
+				{ i18n.T(ctx, "These settings may be overwritten by:") }
+				<li>{ i18n.T(ctx, "the configuration file") }</li>
+				<li>{ i18n.T(ctx, "environment variables") }</li>
+			</ul>
+			{{ ac := helpers.AppConfig(ctx) }}
+			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-config-update")) }>
+				<table class="table-fixed">
 					<tbody>
-						for _, u := range users {
-							<tr>
-								<th>
-									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>{ u.Username }</a>
-								</th>
-								<td>{ u.Name }</td>
-								<td>
-									@templ.Raw(helpers.BoolToHTML(u.Active))
-								</td>
-								<td>
-									@templ.Raw(helpers.BoolToHTML(u.Admin))
-								</td>
-								<td>
-									<span class="actions">
-										@actions(u)
-									</span>
-								</td>
-							</tr>
-						}
+						<tr>
+							<th>
+								<label for="registration_disabled">
+									{ i18n.T(ctx, "Disable account registration") }
+								</label>
+							</th>
+							<td>
+								<input
+									type="checkbox"
+									id="registration_disabled"
+									name="registration_disabled"
+									value="true"
+									checked?={ ac.RegistrationDisabled }
+								/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="socials_disabled">
+									{ i18n.T(ctx, "Disable social sharing buttons") }
+								</label>
+							</th>
+							<td>
+								<input
+									type="checkbox"
+									id="socials_disabled"
+									name="socials_disabled"
+									value="true"
+									checked?={ ac.SocialsDisabled }
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button type="submit">{ i18n.T(ctx, "Update settings") }</button>
+							</td>
+						</tr>
 					</tbody>
 				</table>
-			</div>
-			<div class="inner-form">
-				<h2>
-					@helpers.IconFor("admin")
-					{ i18n.T(ctx, "Application settings") }
-				</h2>
-				<ul class="note">
-					{ i18n.T(ctx, "These settings may be overwritten by:") }
-					<li>{ i18n.T(ctx, "the configuration file") }</li>
-					<li>{ i18n.T(ctx, "environment variables") }</li>
-				</ul>
-				{{ ac := helpers.AppConfig(ctx) }}
-				<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-config-update")) }>
-					<table class="table-fixed">
-						<tbody>
-							<tr>
-								<th>
-									<label for="registration_disabled">
-										{ i18n.T(ctx, "Disable account registration") }
-									</label>
-								</th>
-								<td>
-									<input
-										type="checkbox"
-										id="registration_disabled"
-										name="registration_disabled"
-										value="true"
-										checked?={ ac.RegistrationDisabled }
-									/>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label for="socials_disabled">
-										{ i18n.T(ctx, "Disable social sharing buttons") }
-									</label>
-								</th>
-								<td>
-									<input
-										type="checkbox"
-										id="socials_disabled"
-										name="socials_disabled"
-										value="true"
-										checked?={ ac.SocialsDisabled }
-									/>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									<button type="submit">{ i18n.T(ctx, "Update settings") }</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			</form>
+		</div>
+	}
 }

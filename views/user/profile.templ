@@ -8,217 +8,207 @@ import (
 )
 
 templ Profile(u *database.User) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<h2>
-					@helpers.IconFor("user-profile")
-					{ i18n.T(ctx, "Your profile") }
-				</h2>
-				<div class="inner-form">
-					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-update")) }>
-						<table class="table-fixed">
-							<tbody>
-								<tr>
-									<th>
-										<label for="api_active">
-											{ i18n.T(ctx, "Enable API access") }
-											<a
-												title={ i18n.T(ctx, "how to use") }
-												target="_blank"
-												href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
-											>
-												@helpers.IconFor("info")
-											</a>
-										</label>
-									</th>
-									<td class="flex flex-wrap gap-5">
-										<input
-											type="checkbox"
-											id="api_active"
-											name="api_active"
-											value="true"
-											checked?={ u.Profile.APIActive }
-										/>
-										if u.Profile.APIActive {
-											<input
-												type="password"
-												id="api_key"
-												name="api_key"
-												size="40"
-												value={ u.APIKey }
-												readonly
-											/>
-											<form
-												class="flex flex-wrap items-center"
-												method="post"
-												action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-reset-api-key")) }
-											>
-												<button
-													type="button"
-													class="edit"
-													title={ i18n.T(ctx, "show/hide") }
-													onclick="toggleTextPassword(this, 'api_key');"
-												>
-													@helpers.IconFor("show")
-												</button>
-												<button
-													type="button"
-													title={ i18n.T(ctx, "copy to clipboard") }
-													onclick="copyToClipboard('api_key');"
-												>
-													@helpers.IconFor("copy")
-												</button>
-												<button
-													class="dangerous"
-													title={ i18n.T(ctx, "generate a new API key") }
-												>
-													@helpers.IconFor("refresh")
-												</button>
-											</form>
-										}
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="totals_show">
-											{ i18n.T(ctx, "Totals to show on dashboard") }
-										</label>
-									</th>
-									<td>
-										@profileTotalsShow(&u.Profile.TotalsShow)
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="timezone">{ i18n.T(ctx, "Time zone") }</label>
-									</th>
-									<td>
-										@profileTimezone(u.Profile.Timezone)
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="language">
-											{ i18n.T(ctx, "Language") }
-											<a
-												href="https://hosted.weblate.org/projects/workout-tracker/"
-												target="_blank"
-												title={ i18n.T(ctx, "Please help translate via Weblate") }
-											>
-												@helpers.IconFor("translate")
-											</a>
-										</label>
-									</th>
-									<td>
-										@profileLanguage(u.Profile.Language)
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="theme">{ i18n.T(ctx, "Theme") }</label>
-									</th>
-									<td>
-										<select id="theme" name="theme">
-											<option value="light" selected?={ u.Profile.Theme == "light" }>
-												{ i18n.T(ctx, "Light") }
-											</option>
-											<option value="dark" selected?={ u.Profile.Theme == "dark" }>
-												{ i18n.T(ctx, "Dark") }
-											</option>
-											<option value="browser" selected?={ u.Profile.Theme == "browser" }>
-												{ i18n.T(ctx, "Browser / System") }
-											</option>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="auto_import_directory">
-											{ i18n.T(ctx, "Auto import directory") }
-										</label>
-									</th>
-									<td>
-										<input
-											type="text"
-											id="auto_import_directory"
-											name="auto_import_directory"
-											size="40"
-											value={ u.Profile.AutoImportDirectory }
-											placeholder={ "/imports/" + u.Username + "/" }
-										/>
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="prefer_full_date">
-											{ i18n.T(ctx, "Show full date by default") }
-										</label>
-									</th>
-									<td>
-										<input
-											type="checkbox"
-											id="prefer_full_date"
-											name="prefer_full_date"
-											value="true"
-											checked?={ u.Profile.PreferFullDate }
-										/>
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<label for="socials_disabled">
-											{ i18n.T(ctx, "Disable social sharing buttons") }
-										</label>
-									</th>
-									<td>
-										<input
-											type="checkbox"
-											id="socials_disabled"
-											name="socials_disabled"
-											value="true"
-											checked?={ u.Profile.SocialsDisabled }
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<button type="submit">{ i18n.T(ctx, "Update profile") }</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="inner-form">
-					<h2>
-						@helpers.IconFor("units")
-						{ i18n.T(ctx, "Preferred units") }
-					</h2>
-					@profilePreferredUnits()
-				</div>
-				<div class="inner-form">
-					<h2>
-						@helpers.IconFor("actions")
-						{ i18n.T(ctx, "Actions") }
-					</h2>
-					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
-						<label for="refresh">{ i18n.T(ctx, "Refresh all your workouts") }</label>
-						<button type="submit">
-							<a>
-								@helpers.IconFor("refresh")
-							</a>
-						</button>
-					</form>
-				</div>
-			</div>
-			@partials.Footer()
-		</body>
-	</html>
+	@partials.Page(partials.PageOptions{}) {
+		<h2>
+			@helpers.IconFor("user-profile")
+			{ i18n.T(ctx, "Your profile") }
+		</h2>
+		<div class="inner-form">
+			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-update")) }>
+				<table class="table-fixed">
+					<tbody>
+						<tr>
+							<th>
+								<label for="api_active">
+									{ i18n.T(ctx, "Enable API access") }
+									<a
+										title={ i18n.T(ctx, "how to use") }
+										target="_blank"
+										href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
+									>
+										@helpers.IconFor("info")
+									</a>
+								</label>
+							</th>
+							<td class="flex flex-wrap gap-5">
+								<input
+									type="checkbox"
+									id="api_active"
+									name="api_active"
+									value="true"
+									checked?={ u.Profile.APIActive }
+								/>
+								if u.Profile.APIActive {
+									<input
+										type="password"
+										id="api_key"
+										name="api_key"
+										size="40"
+										value={ u.APIKey }
+										readonly
+									/>
+									<form
+										class="flex flex-wrap items-center"
+										method="post"
+										action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-reset-api-key")) }
+									>
+										<button
+											type="button"
+											class="edit"
+											title={ i18n.T(ctx, "show/hide") }
+											onclick="toggleTextPassword(this, 'api_key');"
+										>
+											@helpers.IconFor("show")
+										</button>
+										<button
+											type="button"
+											title={ i18n.T(ctx, "copy to clipboard") }
+											onclick="copyToClipboard('api_key');"
+										>
+											@helpers.IconFor("copy")
+										</button>
+										<button
+											class="dangerous"
+											title={ i18n.T(ctx, "generate a new API key") }
+										>
+											@helpers.IconFor("refresh")
+										</button>
+									</form>
+								}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="totals_show">
+									{ i18n.T(ctx, "Totals to show on dashboard") }
+								</label>
+							</th>
+							<td>
+								@profileTotalsShow(&u.Profile.TotalsShow)
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="timezone">{ i18n.T(ctx, "Time zone") }</label>
+							</th>
+							<td>
+								@profileTimezone(u.Profile.Timezone)
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="language">
+									{ i18n.T(ctx, "Language") }
+									<a
+										href="https://hosted.weblate.org/projects/workout-tracker/"
+										target="_blank"
+										title={ i18n.T(ctx, "Please help translate via Weblate") }
+									>
+										@helpers.IconFor("translate")
+									</a>
+								</label>
+							</th>
+							<td>
+								@profileLanguage(u.Profile.Language)
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="theme">{ i18n.T(ctx, "Theme") }</label>
+							</th>
+							<td>
+								<select id="theme" name="theme">
+									<option value="light" selected?={ u.Profile.Theme == "light" }>
+										{ i18n.T(ctx, "Light") }
+									</option>
+									<option value="dark" selected?={ u.Profile.Theme == "dark" }>
+										{ i18n.T(ctx, "Dark") }
+									</option>
+									<option value="browser" selected?={ u.Profile.Theme == "browser" }>
+										{ i18n.T(ctx, "Browser / System") }
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="auto_import_directory">
+									{ i18n.T(ctx, "Auto import directory") }
+								</label>
+							</th>
+							<td>
+								<input
+									type="text"
+									id="auto_import_directory"
+									name="auto_import_directory"
+									size="40"
+									value={ u.Profile.AutoImportDirectory }
+									placeholder={ "/imports/" + u.Username + "/" }
+								/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="prefer_full_date">
+									{ i18n.T(ctx, "Show full date by default") }
+								</label>
+							</th>
+							<td>
+								<input
+									type="checkbox"
+									id="prefer_full_date"
+									name="prefer_full_date"
+									value="true"
+									checked?={ u.Profile.PreferFullDate }
+								/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="socials_disabled">
+									{ i18n.T(ctx, "Disable social sharing buttons") }
+								</label>
+							</th>
+							<td>
+								<input
+									type="checkbox"
+									id="socials_disabled"
+									name="socials_disabled"
+									value="true"
+									checked?={ u.Profile.SocialsDisabled }
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button type="submit">{ i18n.T(ctx, "Update profile") }</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<div class="inner-form">
+			<h2>
+				@helpers.IconFor("units")
+				{ i18n.T(ctx, "Preferred units") }
+			</h2>
+			@profilePreferredUnits()
+		</div>
+		<div class="inner-form">
+			<h2>
+				@helpers.IconFor("actions")
+				{ i18n.T(ctx, "Actions") }
+			</h2>
+			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
+				<label for="refresh">{ i18n.T(ctx, "Refresh all your workouts") }</label>
+				<button type="submit">
+					<a>
+						@helpers.IconFor("refresh")
+					</a>
+				</button>
+			</form>
+		</div>
+	}
 }

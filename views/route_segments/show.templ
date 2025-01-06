@@ -8,99 +8,94 @@ import (
 )
 
 templ Show(s *database.RouteSegment) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js" }></script>
-			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
-		</head>
-		<body>
-			@partials.Header()
-			{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
-			<div class="content">
-				<div class="gap-4">
-					<span class="float-right actions">
-						if s.Dirty {
-							<span class="dirty">
-								@helpers.IconFor("refresh")
-								{ i18n.T(ctx, "refresh in progress") }
-							</span>
-						}
-						@actions(s)
+	@partials.Page(partials.PageOptions{
+		Scripts: []string{
+			"/dist/leaflet.js",
+		},
+		Styles: []string{
+			"/dist/leaflet.css",
+		},
+	}) {
+		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
+		<div class="gap-4">
+			<span class="float-right actions">
+				if s.Dirty {
+					<span class="dirty">
+						@helpers.IconFor("refresh")
+						{ i18n.T(ctx, "refresh in progress") }
 					</span>
-					<h2>
-						@helpers.IconFor("route-segment")
-						{ s.Name }
-					</h2>
-					<div class="lg:flex lg:flex-wrap print:block">
-						<div class="basis-1/2 2xl:basis-1/3 pagebreak">
-							<div class="inner-form">
-								@RouteSegmentMap(s)
-							</div>
-						</div>
-						<div class="basis-1/2 2xl:basis-1/3">
-							<div class="inner-form">
-								@details(s)
-							</div>
-						</div>
-						<div class="basis-1/2 2xl:basis-1/3">
-							<div class="inner-form">
-								<table>
-									<thead>
-										<tr>
-											<th>{ i18n.T(ctx, "User") }</th>
-											<th>{ i18n.T(ctx, "Workout") }</th>
-											<th>{ i18n.T(ctx, "Distance") }</th>
-											<th>{ i18n.T(ctx, "Duration") }</th>
-											<th>{ i18n.T(ctx, "Tempo") }</th>
-										</tr>
-									</thead>
-									<tbody>
-										for _, m := range s.RouteSegmentMatches {
-											<tr>
-												<td>
-													<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", m.Workout.UserID)) }>
-														{ m.Workout.User.Name }
-													</a>
-												</td>
-												<td>
-													<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", m.WorkoutID)) }>
-														{ m.Workout.Name }
-													</a>
-												</td>
-												<td class="whitespace-nowrap font-mono">
-													{ helpers.HumanDistance(ctx, m.Distance) } { preferredUnits.Distance() }
-												</td>
-												<td class="whitespace-nowrap font-mono">
-													{ helpers.HumanDuration(m.Duration) }
-												</td>
-												<td class="whitespace-nowrap font-mono">
-													{ helpers.HumanTempo(ctx, m.AverageSpeed()) } { preferredUnits.Tempo() }
-												</td>
-											</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>
+				}
+				@actions(s)
+			</span>
+			<h2>
+				@helpers.IconFor("route-segment")
+				{ s.Name }
+			</h2>
+			<div class="lg:flex lg:flex-wrap print:block">
+				<div class="basis-1/2 2xl:basis-1/3 pagebreak">
+					<div class="inner-form">
+						@RouteSegmentMap(s)
 					</div>
-					<div class="pagebreak">
-						if len(s.Notes) > 0 {
-							<div class="inner-form">
-								<h3>
-									@helpers.IconFor("note")
-									{ i18n.T(ctx, "Notes") }
-								</h3>
-								<div>
-									@templ.Raw(s.MarkdownNotes())
-								</div>
-							</div>
-						}
+				</div>
+				<div class="basis-1/2 2xl:basis-1/3">
+					<div class="inner-form">
+						@details(s)
+					</div>
+				</div>
+				<div class="basis-1/2 2xl:basis-1/3">
+					<div class="inner-form">
+						<table>
+							<thead>
+								<tr>
+									<th>{ i18n.T(ctx, "User") }</th>
+									<th>{ i18n.T(ctx, "Workout") }</th>
+									<th>{ i18n.T(ctx, "Distance") }</th>
+									<th>{ i18n.T(ctx, "Duration") }</th>
+									<th>{ i18n.T(ctx, "Tempo") }</th>
+								</tr>
+							</thead>
+							<tbody>
+								for _, m := range s.RouteSegmentMatches {
+									<tr>
+										<td>
+											<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", m.Workout.UserID)) }>
+												{ m.Workout.User.Name }
+											</a>
+										</td>
+										<td>
+											<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", m.WorkoutID)) }>
+												{ m.Workout.Name }
+											</a>
+										</td>
+										<td class="whitespace-nowrap font-mono">
+											{ helpers.HumanDistance(ctx, m.Distance) } { preferredUnits.Distance() }
+										</td>
+										<td class="whitespace-nowrap font-mono">
+											{ helpers.HumanDuration(m.Duration) }
+										</td>
+										<td class="whitespace-nowrap font-mono">
+											{ helpers.HumanTempo(ctx, m.AverageSpeed()) } { preferredUnits.Tempo() }
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			<div class="pagebreak">
+				if len(s.Notes) > 0 {
+					<div class="inner-form">
+						<h3>
+							@helpers.IconFor("note")
+							{ i18n.T(ctx, "Notes") }
+						</h3>
+						<div>
+							@templ.Raw(s.MarkdownNotes())
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	}
 }

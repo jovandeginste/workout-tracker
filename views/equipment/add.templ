@@ -7,69 +7,59 @@ import (
 )
 
 templ Add() {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<div class="inner-form">
-					<h2>
-						@helpers.IconFor("equipment-add")
-						{ i18n.T(ctx, "Add equipment") }
-					</h2>
-					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-create")) }>
-						<table class="sm:table-fixed">
-							<tbody>
-								<tr>
-									<td>
-										<label for="name">{ i18n.T(ctx, "Name") }</label>
-									</td>
-									<td>
-										<input type="text" id="name" name="name"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="description">{ i18n.T(ctx, "Description") }</label>
-									</td>
-									<td>
-										<textarea
-											type="text"
-											id="description"
-											name="description"
-											rows="10"
-										></textarea>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="active">{ i18n.T(ctx, "Active") }</label>
-									</td>
-									<td>
-										<input
-											type="checkbox"
-											id="active"
-											name="active"
-											value="true"
-											checked="true"
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<button type="submit">{ i18n.T(ctx, "Add equipment") }</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-			</div>
-			@partials.Footer()
-		</body>
-	</html>
+	@partials.Page(partials.PageOptions{}) {
+		<h2>
+			@helpers.IconFor("equipment-add")
+			{ i18n.T(ctx, "Add equipment") }
+		</h2>
+		<div class="inner-form">
+			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-create")) }>
+				<table class="sm:table-fixed">
+					<tbody>
+						<tr>
+							<td>
+								<label for="name">{ i18n.T(ctx, "Name") }</label>
+							</td>
+							<td>
+								<input type="text" id="name" name="name"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="description">{ i18n.T(ctx, "Description") }</label>
+							</td>
+							<td>
+								<textarea
+									type="text"
+									id="description"
+									name="description"
+									rows="10"
+								></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="active">{ i18n.T(ctx, "Active") }</label>
+							</td>
+							<td>
+								<input
+									type="checkbox"
+									id="active"
+									name="active"
+									value="true"
+									checked="true"
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button type="submit">{ i18n.T(ctx, "Add equipment") }</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	}
 }

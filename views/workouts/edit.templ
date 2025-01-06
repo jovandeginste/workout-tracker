@@ -8,86 +8,76 @@ import (
 )
 
 templ Edit(w *database.Workout) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<div class="gap-4">
-					<h2>
-						@helpers.IconFor(w.Type.String())
-						{ w.Name }
-					</h2>
-				</div>
-				<div class="sm:flex sm:flex-wrap">
-					<div class="basis-1/2">
-						<div class="inner-form">
-							<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-update", w.ID)) }>
-								<table>
-									<thead>
-										<tr>
-											<td>
-												<label for="type">{ i18n.T(ctx, "Workout type") }</label>
-											</td>
-											<td>
-												<input type="hidden" name="id" value={ helpers.A2S(w.ID) }/>
-												<select
-													id="type"
-													name="type"
-													hx-get={ helpers.RouteFor(ctx, "workout-form") }
-													hx-target="#workout-form"
-													hx-trigger="load, input changed delay:300ms"
-													hx-include="[name='id']"
-												>
-													for _, wt := range helpers.WorkoutTypes() {
-														<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
-															{ i18n.T(ctx, wt.String()) }
-														</option>
-													}
-												</select>
-											</td>
-										</tr>
-									</thead>
-									<tbody id="workout-form">
-										<tr>
-											<td></td>
-											<td>Select a category</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td></td>
-											<td>
-												<button type="submit">{ i18n.T(ctx, "Update workout") }</button>
-												<button type="reset" class="edit">
-													{ i18n.T(ctx, "Reset changes") }
-												</button>
-												<button
-													type="button"
-													class="dangerous"
-													onclick="document.location=this.getAttribute('data-url')"
-													data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
-												>
-													{ i18n.T(ctx, "Cancel") }
-												</button>
-											</td>
-										</tr>
-									</tfoot>
-								</table>
-							</form>
-						</div>
-					</div>
-					<div class="basis-1/4">
-						<div class="inner-form">
-							@FullWorkoutDetails(w)
-						</div>
-					</div>
+	@partials.Page(partials.PageOptions{}) {
+		<div class="gap-4">
+			<h2>
+				@helpers.IconFor(w.Type.String())
+				{ w.Name }
+			</h2>
+		</div>
+		<div class="sm:flex sm:flex-wrap">
+			<div class="basis-1/2">
+				<div class="inner-form">
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-update", w.ID)) }>
+						<table>
+							<thead>
+								<tr>
+									<td>
+										<label for="type">{ i18n.T(ctx, "Workout type") }</label>
+									</td>
+									<td>
+										<input type="hidden" name="id" value={ helpers.A2S(w.ID) }/>
+										<select
+											id="type"
+											name="type"
+											hx-get={ helpers.RouteFor(ctx, "workout-form") }
+											hx-target="#workout-form"
+											hx-trigger="load, input changed delay:300ms"
+											hx-include="[name='id']"
+										>
+											for _, wt := range helpers.WorkoutTypes() {
+												<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
+													{ i18n.T(ctx, wt.String()) }
+												</option>
+											}
+										</select>
+									</td>
+								</tr>
+							</thead>
+							<tbody id="workout-form">
+								<tr>
+									<td></td>
+									<td>Select a category</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td>
+										<button type="submit">{ i18n.T(ctx, "Update workout") }</button>
+										<button type="reset" class="edit">
+											{ i18n.T(ctx, "Reset changes") }
+										</button>
+										<button
+											type="button"
+											class="dangerous"
+											onclick="document.location=this.getAttribute('data-url')"
+											data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
+										>
+											{ i18n.T(ctx, "Cancel") }
+										</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
 				</div>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			<div class="basis-1/4">
+				<div class="inner-form">
+					@FullWorkoutDetails(w)
+				</div>
+			</div>
+		</div>
+	}
 }

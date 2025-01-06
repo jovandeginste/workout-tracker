@@ -9,58 +9,48 @@ import (
 )
 
 templ List(equipment []*database.Equipment) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<div class="items-baseline flex flex-wrap">
-					<h2 class="grow justify-start">
-						@helpers.IconFor("equipment")
-						{ i18n.T(ctx, "Equipment") } ({ helpers.A2S(len(equipment)) })
-					</h2>
-					<div class="justify-end mr-2">
-						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
-							@helpers.IconFor("add")
-							<span>{ i18n.T(ctx, "Add equipment") }</span>
-						</a>
-					</div>
-				</div>
-				<table class="equipment-info">
-					<thead>
-						<tr>
-							<th>{ i18n.T(ctx, "Name") }</th>
-							<th>{ i18n.T(ctx, "Active") }</th>
-							<th>{ i18n.T(ctx, "Workouts") }</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						for _, e := range equipment {
-							<tr>
-								<td>
-									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
-								</td>
-								<td>
-									@templ.Raw(helpers.BoolToHTML(e.Active))
-								</td>
-								<td>{ helpers.A2S(len(e.Workouts)) }</td>
-								<td>
-									<span class="actions">
-										@actions(e)
-									</span>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
+	@partials.Page(partials.PageOptions{}) {
+		<div class="items-baseline flex flex-wrap">
+			<h2 class="grow justify-start">
+				@helpers.IconFor("equipment")
+				{ i18n.T(ctx, "Equipment") } ({ helpers.A2S(len(equipment)) })
+			</h2>
+			<div class="justify-end mr-2">
+				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
+					@helpers.IconFor("add")
+					<span>{ i18n.T(ctx, "Add equipment") }</span>
+				</a>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+		</div>
+		<table class="equipment-info">
+			<thead>
+				<tr>
+					<th>{ i18n.T(ctx, "Name") }</th>
+					<th>{ i18n.T(ctx, "Active") }</th>
+					<th>{ i18n.T(ctx, "Workouts") }</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, e := range equipment {
+					<tr>
+						<td>
+							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
+						</td>
+						<td>
+							@templ.Raw(helpers.BoolToHTML(e.Active))
+						</td>
+						<td>{ helpers.A2S(len(e.Workouts)) }</td>
+						<td>
+							<span class="actions">
+								@actions(e)
+							</span>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
 }
 
 templ actions(e *database.Equipment) {
