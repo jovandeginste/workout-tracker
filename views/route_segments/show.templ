@@ -8,14 +8,7 @@ import (
 )
 
 templ Show(s *database.RouteSegment) {
-	@partials.Page(partials.PageOptions{
-		Scripts: []string{
-			"/dist/leaflet.js",
-		},
-		Styles: []string{
-			"/dist/leaflet.css",
-		},
-	}) {
+	@partials.Page(partials.NewPageOptions().WithMaps()) {
 		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 		<div class="gap-4">
 			<span class="float-right actions">

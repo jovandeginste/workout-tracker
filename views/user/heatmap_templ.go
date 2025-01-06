@@ -59,7 +59,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Heatmap"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 26, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -91,19 +91,7 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = partials.Page(partials.PageOptions{
-			Scripts: []string{
-				"/dist/leaflet.js",
-				"/dist/simpleheat.js",
-				"/dist/leaflet-heat.js",
-				"/dist/leaflet.markercluster.js",
-			},
-			Styles: []string{
-				"/dist/leaflet.css",
-				"/dist/MarkerCluster.css",
-				"/dist/MarkerCluster.Default.css",
-			},
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.Page(partials.NewPageOptions().WithHeatMaps()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

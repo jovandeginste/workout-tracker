@@ -8,7 +8,7 @@ import (
 )
 
 templ Root(users []*database.User) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor(`admin`)
 			{ i18n.T(ctx, "Manage") }

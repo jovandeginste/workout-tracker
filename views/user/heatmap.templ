@@ -8,19 +8,7 @@ import (
 )
 
 templ Heatmap(workouts []*database.Workout) {
-	@partials.Page(partials.PageOptions{
-		Scripts: []string{
-			"/dist/leaflet.js",
-			"/dist/simpleheat.js",
-			"/dist/leaflet-heat.js",
-			"/dist/leaflet.markercluster.js",
-		},
-		Styles: []string{
-			"/dist/leaflet.css",
-			"/dist/MarkerCluster.css",
-			"/dist/MarkerCluster.Default.css",
-		},
-	}) {
+	@partials.Page(partials.NewPageOptions().WithHeatMaps()) {
 		<h2>
 			@helpers.IconFor(`heatmap`)
 			{ i18n.T(ctx, "Heatmap") }

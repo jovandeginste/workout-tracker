@@ -8,7 +8,7 @@ import (
 )
 
 templ Edit(e *database.Equipment) {
-	@partials.Page(partials.PageOptions{}) {
+	@partials.Page(partials.NewPageOptions()) {
 		<div class="gap-4">
 			<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
 		</div>

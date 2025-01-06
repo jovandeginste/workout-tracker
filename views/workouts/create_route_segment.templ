@@ -8,19 +8,11 @@ import (
 )
 
 templ CreateRouteSegment(w *database.Workout) {
-	@partials.Page(partials.PageOptions{
-		Scripts: []string{
-			"/dist/leaflet.js",
-			"/route_segments.js",
-			"/dist/apexcharts.min.js",
-			"/dist/shareon.iife.js",
-		},
-		Styles: []string{
-			"/dist/leaflet.css",
-			"/dist/apexcharts.css",
-			"/dist/shareon.min.css",
-		},
-	}) {
+	@partials.Page(
+		partials.NewPageOptions().
+			WithSharing().WithCharts().WithMaps().
+			WithScripts("/route_segments.js"),
+	) {
 		<div class="gap-4">
 			<h2>
 				@helpers.IconFor(w.Type.String())

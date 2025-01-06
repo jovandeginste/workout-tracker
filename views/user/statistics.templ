@@ -8,14 +8,7 @@ import (
 )
 
 templ Statistics(u *database.User, since, per string) {
-	@partials.Page(partials.PageOptions{
-		Scripts: []string{
-			"/dist/apexcharts.min.js",
-		},
-		Styles: []string{
-			"/dist/apexcharts.css",
-		},
-	}) {
+	@partials.Page(partials.NewPageOptions().WithCharts()) {
 		<h2>
 			@helpers.IconFor("statistics")
 			{ i18n.T(ctx, "Your progress per %s for the past %s", i18n.T(ctx, per), i18n.T(ctx, since)) }
