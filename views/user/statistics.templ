@@ -86,7 +86,6 @@ templ Statistics(u *database.User, since, per string) {
 				</div>
 			</div>
 		</div>
-		@partials.Footer()
 		{{ currentUser := helpers.CurrentUser(ctx) }}
 		{{ stats, _ := currentUser.GetStatisticsFor(since, per) }}
 		@templ.JSONScript("stats", stats)

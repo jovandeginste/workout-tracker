@@ -3505,10 +3505,6 @@ table {
     display: inline;
   }
 
-  .\32xl\:table-cell {
-    display: table-cell;
-  }
-
   .\32xl\:basis-1\/3 {
     flex-basis: 33.333333%;
   }
