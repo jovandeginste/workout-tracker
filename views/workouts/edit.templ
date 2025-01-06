@@ -1,7 +1,6 @@
 package workouts
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -34,7 +33,7 @@ templ Edit(w *database.Workout) {
 												<label for="type">{ i18n.T(ctx, "Workout type") }</label>
 											</td>
 											<td>
-												<input type="hidden" name="id" value={ fmt.Sprintf("%d", w.ID) }/>
+												<input type="hidden" name="id" value={ helpers.A2S(w.ID) }/>
 												<select
 													id="type"
 													name="type"

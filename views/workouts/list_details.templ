@@ -52,7 +52,7 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsRepetition() {
 			<div class="font-mono" title={ i18n.T(ctx, "Repetitions") }>
 				@helpers.IconFor("repetitions")
-				{ fmt.Sprintf("%d", w.Repetitions()) }
+				{ helpers.A2S(w.Repetitions()) }
 			</div>
 		}
 	</div>

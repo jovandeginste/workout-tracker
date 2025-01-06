@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 )
@@ -77,4 +78,23 @@ func BoolToHTML(b bool) string {
 	}
 
 	return `<i class="text-rose-500 icon-[fa-solid--times]"></i>`
+}
+
+func A2S(v any) string {
+	switch e := v.(type) {
+	case string:
+		return e
+	case bool:
+		if e {
+			return "true"
+		}
+
+		return "false"
+	case int, uint:
+		return fmt.Sprintf("%d", e)
+	case float64:
+		return fmt.Sprintf("%.2f", e)
+	default:
+		return fmt.Sprintf("%v", e)
+	}
 }

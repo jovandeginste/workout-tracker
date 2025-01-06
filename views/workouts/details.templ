@@ -16,7 +16,7 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 		case w.Type.IsWeight():
 			{ fmt.Sprintf("%.2f", w.Weight()) } { preferredUnits.Weight() }
 		case w.Type.IsRepetition():
-			{ fmt.Sprintf("%d", w.Repetitions()) }
+			{ helpers.A2S(w.Repetitions()) }
 		default:
 			{ w.Name }
 	}
@@ -58,7 +58,7 @@ templ Details(w *database.Workout) {
 					<td>
 						@helpers.IconFor("repetitions")
 					</td>
-					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%d", w.TotalRepetitions()) }</td>
+					<td class="whitespace-nowrap font-mono">{ helpers.A2S(w.TotalRepetitions()) }</td>
 				</tr>
 				<tr>
 					<td>
@@ -188,7 +188,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 						@helpers.IconFor("repetitions")
 					</td>
 					<th>{ i18n.T(ctx, "Repetitions") }</th>
-					<td class="whitespace-nowrap font-mono">{ fmt.Sprintf("%d", w.TotalRepetitions()) }</td>
+					<td class="whitespace-nowrap font-mono">{ helpers.A2S(w.TotalRepetitions()) }</td>
 				</tr>
 				<tr>
 					<td>

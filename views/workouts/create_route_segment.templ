@@ -1,7 +1,6 @@
 package workouts
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -105,7 +104,7 @@ templ CreateRouteSegment(w *database.Workout) {
 												id="start"
 												name="start"
 												min="1"
-												max={ fmt.Sprintf("%d", len(w.Details().Points)) }
+												max={ helpers.A2S(len(w.Details().Points)) }
 												value="1"
 												oninput="updateStart()"
 											/>
@@ -121,8 +120,8 @@ templ CreateRouteSegment(w *database.Workout) {
 												id="end"
 												name="end"
 												min="1"
-												max={ fmt.Sprintf("%d", len(w.Details().Points)) }
-												value={ fmt.Sprintf("%d", len(w.Details().Points)) }
+												max={ helpers.A2S(len(w.Details().Points)) }
+												value={ helpers.A2S(len(w.Details().Points)) }
 												oninput="updateEnd()"
 											/>
 											<span id="end-show"></span>

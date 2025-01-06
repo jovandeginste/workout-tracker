@@ -39,7 +39,7 @@ templ Breakdown(stats database.WorkoutBreakdown) {
 								@helpers.IconFor("best")
 							</span>
 						}
-						{ fmt.Sprintf("%d", i.Counter) }
+						{ helpers.A2S(i.Counter) }
 					</td>
 					<td>
 						{ helpers.HumanDistance(ctx, i.TotalDistance) } { preferredUnits.Distance() }

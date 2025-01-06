@@ -20,7 +20,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 				<div class="items-baseline flex flex-wrap">
 					<h2 class="grow justify-start">
 						@helpers.IconFor(`workout`)
-						{ i18n.T(ctx, "Workouts") } ({ fmt.Sprintf("%d", len(workouts)) })
+						{ i18n.T(ctx, "Workouts") } ({ helpers.A2S(len(workouts)) })
 					</h2>
 					<div class="justify-end mr-2">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-add")) }>

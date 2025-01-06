@@ -39,7 +39,7 @@ templ actions(s *database.RouteSegment) {
 	<form onsubmit="return false">
 		<button
 			onclick="openModal('modalConfirmDelete', this)"
-			data-id={ fmt.Sprintf("%d", s.ID) }
+			data-id={ helpers.A2S(s.ID) }
 			class="dangerous"
 			title={ i18n.T(ctx, "delete") }
 		>
@@ -53,7 +53,7 @@ templ actions(s *database.RouteSegment) {
 			<div class="flex justify-end p-2">
 				<button
 					onclick="closeModal('modalConfirmDelete', this)"
-					data-id={ fmt.Sprintf("%d", s.ID) }
+					data-id={ helpers.A2S(s.ID) }
 					type="button"
 					class="close-modal"
 				>
@@ -71,7 +71,7 @@ templ actions(s *database.RouteSegment) {
 					<form onsubmit="return false">
 						<button
 							onclick="closeModal('modalConfirmDelete', this)"
-							data-id={ fmt.Sprintf("%d", s.ID) }
+							data-id={ helpers.A2S(s.ID) }
 							class="cancel"
 						>
 							{ i18n.T(ctx, "Cancel") }

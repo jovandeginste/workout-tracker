@@ -20,7 +20,7 @@ templ List(equipment []*database.Equipment) {
 				<div class="items-baseline flex flex-wrap">
 					<h2 class="grow justify-start">
 						@helpers.IconFor("equipment")
-						{ i18n.T(ctx, "Equipment") } ({ fmt.Sprintf("%d", len(equipment)) })
+						{ i18n.T(ctx, "Equipment") } ({ helpers.A2S(len(equipment)) })
 					</h2>
 					<div class="justify-end mr-2">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
@@ -47,7 +47,7 @@ templ List(equipment []*database.Equipment) {
 								<td>
 									@templ.Raw(helpers.BoolToHTML(e.Active))
 								</td>
-								<td>{ fmt.Sprintf("%d", len(e.Workouts)) }</td>
+								<td>{ helpers.A2S(len(e.Workouts)) }</td>
 								<td>
 									<span class="actions">
 										@actions(e)
@@ -74,7 +74,7 @@ templ actions(e *database.Equipment) {
 	<form onsubmit="return false">
 		<button
 			onclick="openModal('modalConfirmDelete', this)"
-			data-id={ fmt.Sprintf("%d", e.ID) }
+			data-id={ helpers.A2S(e.ID) }
 			class="dangerous"
 			title={ i18n.T(ctx, "delete") }
 		>
@@ -88,7 +88,7 @@ templ actions(e *database.Equipment) {
 			<div class="flex justify-end p-2">
 				<button
 					onclick="closeModal('modalConfirmDelete', this)"
-					data-id={ fmt.Sprintf("%d", e.ID) }
+					data-id={ helpers.A2S(e.ID) }
 					type="button"
 					class="close-modal"
 				>
@@ -106,7 +106,7 @@ templ actions(e *database.Equipment) {
 					<form onsubmit="return false">
 						<button
 							onclick="closeModal('modalConfirmDelete', this)"
-							data-id={ fmt.Sprintf("%d", e.ID) }
+							data-id={ helpers.A2S(e.ID) }
 							class="cancel"
 						>
 							{ i18n.T(ctx, "Cancel") }
