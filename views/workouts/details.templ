@@ -14,7 +14,7 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 		case w.Type.IsDistance():
 			{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
 		case w.Type.IsWeight():
-			{ fmt.Sprintf("%.2f", w.Weight()) } { preferredUnits.Weight() }
+			{ helpers.A2S(w.Weight()) } { preferredUnits.Weight() }
 		case w.Type.IsRepetition():
 			{ helpers.A2S(w.Repetitions()) }
 		default:
@@ -65,7 +65,7 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("tempo")
 					</td>
 					<td class="whitespace-nowrap font-mono">
-						{ fmt.Sprintf("%.2f", w.RepetitionFrequencyPerMinute()) }
+						{ helpers.A2S(w.RepetitionFrequencyPerMinute()) }
 					</td>
 				</tr>
 			}
@@ -75,7 +75,7 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("weight")
 					</td>
 					<td class="whitespace-nowrap font-mono">
-						{ fmt.Sprintf("%.2f", w.Weight()) }
+						{ helpers.A2S(w.Weight()) }
 						{ currentUser.PreferredUnits().Weight() }
 					</td>
 				</tr>
@@ -196,7 +196,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "Average per minute") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ fmt.Sprintf("%.2f", w.RepetitionFrequencyPerMinute()) }
+						{ helpers.A2S(w.RepetitionFrequencyPerMinute()) }
 					</td>
 				</tr>
 			}
@@ -207,7 +207,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "Weight") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ fmt.Sprintf("%.2f", w.Weight()) }
+						{ helpers.A2S(w.Weight()) }
 						{ currentUser.PreferredUnits().Weight() }
 					</td>
 				</tr>

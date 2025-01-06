@@ -134,7 +134,7 @@ templ Form(w *database.Workout) {
 					type="text"
 					name="weight"
 					id="weight"
-					value={ fmt.Sprintf("%.2f", w.Weight()) }
+					value={ helpers.A2S(w.Weight()) }
 					required
 				/>
 				<span>{ preferredUnits.Weight() }</span>
