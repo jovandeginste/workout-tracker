@@ -1,0 +1,31 @@
+package partials
+
+import "github.com/jovandeginste/workout-tracker/views/helpers"
+
+type PageOptions struct {
+	Scripts []string
+	Styles  []string
+}
+
+templ Page(options PageOptions) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			for _, script := range options.Scripts {
+				<script src={ helpers.RouteFor(ctx, "assets") + script }></script>
+			}
+			for _, stylesheet := range options.Styles {
+				<link href={ helpers.RouteFor(ctx, "assets") + stylesheet } rel="stylesheet"/>
+			}
+			@Head()
+		</head>
+		<body>
+			@Header()
+			<div class="content">
+				{ children... }
+			</div>
+			@Footer()
+		</body>
+	</html>
+}

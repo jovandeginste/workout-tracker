@@ -7,131 +7,108 @@ import (
 )
 
 templ Login() {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js" }></script>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/simpleheat.js" }></script>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet-heat.js" }></script>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.markercluster.js" }></script>
-			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
-			<link
-				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.css" }
-				rel="stylesheet"
-			/>
-			<link
-				href={ helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.Default.css" }
-				rel="stylesheet"
-			/>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
-					<div>
-						<div class="inner-form">
-							<h2>
-								@helpers.IconFor("welcome")
-								{ i18n.T(ctx, "Welcome!") }
-							</h2>
-						</div>
-					</div>
-					<div>
-						<div class="inner-form">
-							<h3>
-								@helpers.IconFor("user-signin")
-								{ i18n.T(ctx, "Sign in") }
-							</h3>
-							<form
-								id="signin"
-								method="post"
-								action={ templ.SafeURL(helpers.RouteFor(ctx, "user-signin")) }
-							>
-								<table>
-									<tbody>
-										<tr>
-											<td>
-												<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
-											</td>
-											<td>
-												<input type="text" id="username" name="username"/>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<label for="password">{ i18n.T(ctx, "Password") }</label>
-											</td>
-											<td>
-												<input type="password" id="password" name="password"/>
-											</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>
-												<button id="signin" type="submit">
-													{ i18n.T(ctx, "Sign in") }
-												</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
-						</div>
-						if !helpers.AppConfig(ctx).RegistrationDisabled {
-							<div class="inner-form">
-								<h3>
-									@helpers.IconFor("user-register")
-									{ i18n.T(ctx, "Create a new account") }
-								</h3>
-								<form
-									id="register"
-									method="post"
-									action={ templ.SafeURL(helpers.RouteFor(ctx, "user-register")) }
-								>
-									<table>
-										<tbody>
-											<tr>
-												<td>
-													<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
-												</td>
-												<td>
-													<input type="text" id="username" name="username"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="name">{ i18n.T(ctx, "Name") }</label>
-												</td>
-												<td>
-													<input type="text" id="name" name="name"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="password">{ i18n.T(ctx, "Password") }</label>
-												</td>
-												<td>
-													<input type="password" id="password" name="password"/>
-												</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td>
-													<button id="register" type="submit">
-														{ i18n.T(ctx, "Register") }
-													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
-						}
-					</div>
+	@partials.Page(partials.PageOptions{}) {
+		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+			<div>
+				<div class="inner-form">
+					<h2>
+						@helpers.IconFor("welcome")
+						{ i18n.T(ctx, "Welcome!") }
+					</h2>
 				</div>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			<div>
+				<div class="inner-form">
+					<h3>
+						@helpers.IconFor("user-signin")
+						{ i18n.T(ctx, "Sign in") }
+					</h3>
+					<form
+						id="signin"
+						method="post"
+						action={ templ.SafeURL(helpers.RouteFor(ctx, "user-signin")) }
+					>
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
+									</td>
+									<td>
+										<input type="text" id="username" name="username"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="password">{ i18n.T(ctx, "Password") }</label>
+									</td>
+									<td>
+										<input type="password" id="password" name="password"/>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<button id="signin" type="submit">
+											{ i18n.T(ctx, "Sign in") }
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+				if !helpers.AppConfig(ctx).RegistrationDisabled {
+					<div class="inner-form">
+						<h3>
+							@helpers.IconFor("user-register")
+							{ i18n.T(ctx, "Create a new account") }
+						</h3>
+						<form
+							id="register"
+							method="post"
+							action={ templ.SafeURL(helpers.RouteFor(ctx, "user-register")) }
+						>
+							<table>
+								<tbody>
+									<tr>
+										<td>
+											<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
+										</td>
+										<td>
+											<input type="text" id="username" name="username"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label for="name">{ i18n.T(ctx, "Name") }</label>
+										</td>
+										<td>
+											<input type="text" id="name" name="name"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label for="password">{ i18n.T(ctx, "Password") }</label>
+										</td>
+										<td>
+											<input type="password" id="password" name="password"/>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+											<button id="register" type="submit">
+												{ i18n.T(ctx, "Register") }
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				}
+			</div>
+		</div>
+	}
 }

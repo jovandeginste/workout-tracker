@@ -7,131 +7,121 @@ import (
 )
 
 templ Add() {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<h2>
-					@helpers.IconFor("workout-add")
-					{ i18n.T(ctx, "Add a workout") }
-				</h2>
-				<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
-					<div>
-						<div class="inner-form">
-							<h3>{ i18n.T(ctx, "Use a file") }</h3>
-							<form
-								method="post"
-								action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }
-								enctype="multipart/form-data"
-							>
-								<table class="sm:table-fixed">
-									<tbody>
-										<tr>
-											<td><label for="file">{ i18n.T(ctx, "File") }</label></td>
-											<td>
-												<input
-													type="file"
-													id="file"
-													name="file"
-													accept=".gpx, .fit, .tcx"
-													multiple
-												/>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<label for="type">{ i18n.T(ctx, "Type") }</label>
-											</td>
-											<td>
-												<select id="type" name="type">
-													<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
-													for _, wt := range helpers.WorkoutTypes() {
-														<option value={ wt.String() }>
-															{ i18n.T(ctx, wt.String()) }
-														</option>
-													}
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<label for="notes">{ i18n.T(ctx, "Notes") }</label>
-											</td>
-											<td>
-												<textarea
-													type="text"
-													id="notes"
-													name="notes"
-													rows="10"
-												></textarea>
-											</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td></td>
-											<td>
-												<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
-											</td>
-										</tr>
-									</tfoot>
-								</table>
-							</form>
-						</div>
-					</div>
-					<div>
-						<div class="inner-form">
-							<h3>{ i18n.T(ctx, "Manual") }</h3>
-							<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
-								<table class="sm:table-auto">
-									<thead>
-										<tr>
-											<td>
-												<label for="type">{ i18n.T(ctx, "Workout type") }</label>
-											</td>
-											<td>
-												<select
-													id="type"
-													name="type"
-													hx-get={ helpers.RouteFor(ctx, "workout-form") }
-													hx-target="#workout-form"
-													hx-trigger="input changed delay:300ms"
-												>
-													<option value="select" selected>Select...</option>
-													for _, wt := range helpers.WorkoutTypes() {
-														<option value={ wt.String() }>
-															{ i18n.T(ctx, wt.String()) }
-														</option>
-													}
-												</select>
-											</td>
-										</tr>
-									</thead>
-									<tbody id="workout-form">
-										<tr>
-											<td></td>
-											<td>Select a category</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td></td>
-											<td>
-												<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
-											</td>
-										</tr>
-									</tfoot>
-								</table>
-							</form>
-						</div>
-					</div>
+	@partials.Page(partials.PageOptions{}) {
+		<h2>
+			@helpers.IconFor("workout-add")
+			{ i18n.T(ctx, "Add a workout") }
+		</h2>
+		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
+			<div>
+				<div class="inner-form">
+					<h3>{ i18n.T(ctx, "Use a file") }</h3>
+					<form
+						method="post"
+						action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }
+						enctype="multipart/form-data"
+					>
+						<table class="sm:table-fixed">
+							<tbody>
+								<tr>
+									<td><label for="file">{ i18n.T(ctx, "File") }</label></td>
+									<td>
+										<input
+											type="file"
+											id="file"
+											name="file"
+											accept=".gpx, .fit, .tcx"
+											multiple
+										/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="type">{ i18n.T(ctx, "Type") }</label>
+									</td>
+									<td>
+										<select id="type" name="type">
+											<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
+											for _, wt := range helpers.WorkoutTypes() {
+												<option value={ wt.String() }>
+													{ i18n.T(ctx, wt.String()) }
+												</option>
+											}
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="notes">{ i18n.T(ctx, "Notes") }</label>
+									</td>
+									<td>
+										<textarea
+											type="text"
+											id="notes"
+											name="notes"
+											rows="10"
+										></textarea>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td>
+										<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
 				</div>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			<div>
+				<div class="inner-form">
+					<h3>{ i18n.T(ctx, "Manual") }</h3>
+					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
+						<table class="sm:table-auto">
+							<thead>
+								<tr>
+									<td>
+										<label for="type">{ i18n.T(ctx, "Workout type") }</label>
+									</td>
+									<td>
+										<select
+											id="type"
+											name="type"
+											hx-get={ helpers.RouteFor(ctx, "workout-form") }
+											hx-target="#workout-form"
+											hx-trigger="input changed delay:300ms"
+										>
+											<option value="select" selected>Select...</option>
+											for _, wt := range helpers.WorkoutTypes() {
+												<option value={ wt.String() }>
+													{ i18n.T(ctx, wt.String()) }
+												</option>
+											}
+										</select>
+									</td>
+								</tr>
+							</thead>
+							<tbody id="workout-form">
+								<tr>
+									<td></td>
+									<td>Select a category</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td>
+										<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	}
 }

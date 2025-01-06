@@ -9,64 +9,54 @@ import (
 )
 
 templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<h2>
-					@helpers.IconFor("dashboard")
-					{ i18n.T(ctx, "Dashboard for %s", user.Name) }
-				</h2>
-				@StatsRecordsTotal(user)
-				<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
-					<div>
-						{{ recs, _ := user.GetAllRecords() }}
-						for _, r := range recs {
-							if r.WorkoutType.IsDistance() && r.Active {
-								<div class="inner-form">
-									@StatsRecordsDistance(r)
-								</div>
-							}
-						}
-					</div>
-					<div>
-						@ProfileCalendar(wos)
-					</div>
-				</div>
-				if len(users) > 0 {
-					<div class="inner-form">
-						<h3>
-							@helpers.IconFor("users")
-							{ i18n.T(ctx, "Other users") }
-						</h3>
-						<div class="sm:flex sm:flex-wrap gap-5">
-							for _, u := range users {
-								if u.ID != user.ID {
-									<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>
-										<span class="user-pill">{ u.Name } </span>
-									</a>
-								}
-							}
+	@partials.Page(partials.PageOptions{}) {
+		<h2>
+			@helpers.IconFor("dashboard")
+			{ i18n.T(ctx, "Dashboard for %s", user.Name) }
+		</h2>
+		@StatsRecordsTotal(user)
+		<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
+			<div>
+				{{ recs, _ := user.GetAllRecords() }}
+				for _, r := range recs {
+					if r.WorkoutType.IsDistance() && r.Active {
+						<div class="inner-form">
+							@StatsRecordsDistance(r)
 						</div>
-					</div>
-					<div class="inner-form recent-activity">
-						<h3>
-							@helpers.IconFor("workout")
-							{ i18n.T(ctx, "Recent activity") }
-						</h3>
-						<div class="sm:flex sm:flex-wrap justify-center">
-							for _, w := range recentWorkouts {
-								@workouts.Item(w)
-							}
-						</div>
-					</div>
+					}
 				}
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+			<div>
+				@ProfileCalendar(wos)
+			</div>
+		</div>
+		if len(users) > 0 {
+			<div class="inner-form">
+				<h3>
+					@helpers.IconFor("users")
+					{ i18n.T(ctx, "Other users") }
+				</h3>
+				<div class="sm:flex sm:flex-wrap gap-5">
+					for _, u := range users {
+						if u.ID != user.ID {
+							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>
+								<span class="user-pill">{ u.Name } </span>
+							</a>
+						}
+					}
+				</div>
+			</div>
+			<div class="inner-form recent-activity">
+				<h3>
+					@helpers.IconFor("workout")
+					{ i18n.T(ctx, "Recent activity") }
+				</h3>
+				<div class="sm:flex sm:flex-wrap justify-center">
+					for _, w := range recentWorkouts {
+						@workouts.Item(w)
+					}
+				</div>
+			</div>
+		}
+	}
 }

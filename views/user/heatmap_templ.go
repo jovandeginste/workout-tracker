@@ -36,159 +36,74 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><script src=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 69}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"></script><script src=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/simpleheat.js")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 15, Col: 72}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"></script><script src=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet-heat.js")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 16, Col: 74}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"></script><script src=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.markercluster.js")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 17, Col: 83}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"></script><link href=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 18, Col: 69}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" rel=\"stylesheet\"><link href=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.css")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 20, Col: 70}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" rel=\"stylesheet\"><link href=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/dist/MarkerCluster.Default.css")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 24, Col: 78}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" rel=\"stylesheet\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = partials.Head().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</head><body>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = partials.Header().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"content\"><h2>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = helpers.IconFor(`heatmap`).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Heatmap"))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 34, Col: 29}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</h2><div id=\"map-container\" class=\"small-size pagebreak\"><div id=\"map\" class=\"border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates")).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers")).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<script>\n            var map = L.map(\"map\", {\n              fadeAnimation: false,\n            });\n            const layerStreet = L.tileLayer(\n              \"https://tile.openstreetmap.org/{z}/{x}/{y}.png\",\n              {\n                attribution:\n                  '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>',\n                className: \"map-tiles\",\n              },\n            );\n\n            const layerAerial = L.tileLayer(\n              \"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}\",\n              {\n                attribution: \"Powered by Esri\",\n              },\n            );\n            L.control\n              .layers(\n                {\n                  [JSON.parse(document.getElementById('i18n-streets').textContent)]: layerStreet,\n                  [JSON.parse(document.getElementById('i18n-aerial').textContent)]: layerAerial,\n                }\n              )\n              .addTo(map);\n\n            layerStreet.addTo(map);\n\n            var heatConfig = { radius: 10 };\n            var clusterConfig = { showCoverageOnHover: false };\n\n            fetch(JSON.parse(document.getElementById('api-workouts-coordinates-route').textContent), {\n              method: \"GET\",\n              headers: {\n                Accept: \"application/json\",\n              },\n            })\n              .then((response) => response.json())\n              .then((response) => {\n                var data = geoJson2heat(response.results);\n                L.heatLayer(data, heatConfig).addTo(map);\n              });\n\n            fetch(JSON.parse(document.getElementById('api-workouts-centers-route').textContent), {\n              method: \"GET\",\n              headers: {\n                Accept: \"application/json\",\n              },\n            })\n              .then((response) => response.json())\n              .then((response) => {\n                var markers = L.markerClusterGroup(clusterConfig);\n                var geoJsonLayer = L.geoJson(response.results, {\n                  onEachFeature: function (feature, layer) {\n                    layer.bindPopup(feature.properties.details);\n                  },\n                });\n                geoJsonLayer.onEachFeature;\n\n                markers.addLayer(geoJsonLayer);\n                markers.addTo(map);\n\n                map.fitBounds(markers.getBounds());\n              });\n          </script></div></div></div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = partials.Footer().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</body></html>")
+		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h2>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = helpers.IconFor(`heatmap`).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Heatmap"))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 26, Col: 27}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2><div id=\"map-container\" class=\"small-size pagebreak\"><div id=\"map\" class=\"border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates")).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers")).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<script>\n            var map = L.map(\"map\", {\n              fadeAnimation: false,\n            });\n            const layerStreet = L.tileLayer(\n              \"https://tile.openstreetmap.org/{z}/{x}/{y}.png\",\n              {\n                attribution:\n                  '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>',\n                className: \"map-tiles\",\n              },\n            );\n\n            const layerAerial = L.tileLayer(\n              \"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}\",\n              {\n                attribution: \"Powered by Esri\",\n              },\n            );\n            L.control\n              .layers(\n                {\n                  [JSON.parse(document.getElementById('i18n-streets').textContent)]: layerStreet,\n                  [JSON.parse(document.getElementById('i18n-aerial').textContent)]: layerAerial,\n                }\n              )\n              .addTo(map);\n\n            layerStreet.addTo(map);\n\n            var heatConfig = { radius: 10 };\n            var clusterConfig = { showCoverageOnHover: false };\n\n            fetch(JSON.parse(document.getElementById('api-workouts-coordinates-route').textContent), {\n              method: \"GET\",\n              headers: {\n                Accept: \"application/json\",\n              },\n            })\n              .then((response) => response.json())\n              .then((response) => {\n                var data = geoJson2heat(response.results);\n                L.heatLayer(data, heatConfig).addTo(map);\n              });\n\n            fetch(JSON.parse(document.getElementById('api-workouts-centers-route').textContent), {\n              method: \"GET\",\n              headers: {\n                Accept: \"application/json\",\n              },\n            })\n              .then((response) => response.json())\n              .then((response) => {\n                var markers = L.markerClusterGroup(clusterConfig);\n                var geoJsonLayer = L.geoJson(response.results, {\n                  onEachFeature: function (feature, layer) {\n                    layer.bindPopup(feature.properties.details);\n                  },\n                });\n                geoJsonLayer.onEachFeature;\n\n                markers.addLayer(geoJsonLayer);\n                markers.addTo(map);\n\n                map.fitBounds(markers.getBounds());\n              });\n          </script></div></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = partials.Page(partials.PageOptions{
+			Scripts: []string{
+				"/dist/leaflet.js",
+				"/dist/simpleheat.js",
+				"/dist/leaflet-heat.js",
+				"/dist/leaflet.markercluster.js",
+			},
+			Styles: []string{
+				"/dist/leaflet.css",
+				"/dist/MarkerCluster.css",
+				"/dist/MarkerCluster.Default.css",
+			},
+		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

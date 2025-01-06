@@ -8,38 +8,33 @@ import (
 )
 
 templ CreateRouteSegment(w *database.Workout) {
-	<!DOCTYPE html>
-	<html>
-		<head>
-			@partials.Head()
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.js" }></script>
-			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/leaflet.css" } rel="stylesheet"/>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/route_segments.js" }></script>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/apexcharts.min.js" }></script>
-			<link href={ helpers.RouteFor(ctx, "assets") + "/dist/apexcharts.css" } rel="stylesheet"/>
-			<link
-				href={ helpers.RouteFor(ctx, "assets") + "/dist/shareon.min.css" }
-				rel="stylesheet"
-			/>
-			<script src={ helpers.RouteFor(ctx, "assets") + "/dist/shareon.iife.js" } defer init></script>
-		</head>
-		<body>
-			@partials.Header()
-			<div class="content">
-				<div class="gap-4">
-					<h2>
-						@helpers.IconFor(w.Type.String())
-						{ w.Name }
-					</h2>
-				</div>
-				<div class="lg:flex lg:flex-wrap">
-					<div class="basis-1/2">
-						<div class="inner-form">
-							<div
-								id="map"
-								class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
-							>
-								{{
+	@partials.Page(partials.PageOptions{
+		Scripts: []string{
+			"/dist/leaflet.js",
+			"/route_segments.js",
+			"/dist/apexcharts.min.js",
+			"/dist/shareon.iife.js",
+		},
+		Styles: []string{
+			"/dist/leaflet.css",
+			"/dist/apexcharts.css",
+			"/dist/shareon.min.css",
+		},
+	}) {
+		<div class="gap-4">
+			<h2>
+				@helpers.IconFor(w.Type.String())
+				{ w.Name }
+			</h2>
+		</div>
+		<div class="lg:flex lg:flex-wrap">
+			<div class="basis-1/2">
+				<div class="inner-form">
+					<div
+						id="map"
+						class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+					>
+						{{
 	type mapPoint struct {
 		Lat           float64 `json:"lat"`
 		Lng           float64 `json:"lng"`
@@ -64,98 +59,95 @@ templ CreateRouteSegment(w *database.Workout) {
 			TotalDistance: p.TotalDistance,
 		})
 	}
-								}}
-								@templ.JSONScript("map-config", cfg)
-								<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
-								<script>
+						}}
+						@templ.JSONScript("map-config", cfg)
+						<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
+						<script>
                 var cfg = JSON.parse(document.getElementById('map-config').textContent)
                 var points = cfg.points
 
                 editMap(cfg)
               </script>
-							</div>
-						</div>
 					</div>
-					<div class="basis-1/2">
-						<form
-							class="inner-form"
-							method="post"
-							action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment-create", w.ID)) }
-						>
-							<table>
-								<tbody>
-									<tr>
-										<td><label for="name">{ i18n.T(ctx, "Name") }</label></td>
-										<td>
-											<input
-												type="text"
-												id="name"
-												name="name"
-												value={ w.Name }
-											/>
-										</td>
-									</tr>
-									<tr>
-										<td><label for="start">{ i18n.T(ctx, "Start") }</label></td>
-										<td>
-											<input
-												class="w-96"
-												type="range"
-												id="start"
-												name="start"
-												min="1"
-												max={ helpers.A2S(len(w.Details().Points)) }
-												value="1"
-												oninput="updateStart()"
-											/>
-											<span id="start-show"></span>
-										</td>
-									</tr>
-									<tr>
-										<td><label for="end">{ i18n.T(ctx, "End") }</label></td>
-										<td>
-											<input
-												class="w-96"
-												type="range"
-												id="end"
-												name="end"
-												min="1"
-												max={ helpers.A2S(len(w.Details().Points)) }
-												value={ helpers.A2S(len(w.Details().Points)) }
-												oninput="updateEnd()"
-											/>
-											<span id="end-show"></span>
-										</td>
-									</tr>
-									<tr>
-										<td><label for="distance">{ i18n.T(ctx, "Distance") }</label></td>
-										<td>
-											<span id="distance-show"></span>
-										</td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td></td>
-										<td>
-											<button type="submit">
-												{ i18n.T(ctx, "Create route segment") }
-											</button>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</form>
-						<script>
+				</div>
+			</div>
+			<div class="basis-1/2">
+				<form
+					class="inner-form"
+					method="post"
+					action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment-create", w.ID)) }
+				>
+					<table>
+						<tbody>
+							<tr>
+								<td><label for="name">{ i18n.T(ctx, "Name") }</label></td>
+								<td>
+									<input
+										type="text"
+										id="name"
+										name="name"
+										value={ w.Name }
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td><label for="start">{ i18n.T(ctx, "Start") }</label></td>
+								<td>
+									<input
+										class="w-96"
+										type="range"
+										id="start"
+										name="start"
+										min="1"
+										max={ helpers.A2S(len(w.Details().Points)) }
+										value="1"
+										oninput="updateStart()"
+									/>
+									<span id="start-show"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><label for="end">{ i18n.T(ctx, "End") }</label></td>
+								<td>
+									<input
+										class="w-96"
+										type="range"
+										id="end"
+										name="end"
+										min="1"
+										max={ helpers.A2S(len(w.Details().Points)) }
+										value={ helpers.A2S(len(w.Details().Points)) }
+										oninput="updateEnd()"
+									/>
+									<span id="end-show"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><label for="distance">{ i18n.T(ctx, "Distance") }</label></td>
+								<td>
+									<span id="distance-show"></span>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td>
+									<button type="submit">
+										{ i18n.T(ctx, "Create route segment") }
+									</button>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</form>
+				<script>
             // When document is loaded, run functions
             document.addEventListener("DOMContentLoaded", function () {
               updateInfo();
             });
           </script>
-					</div>
-				</div>
 			</div>
-			@partials.Footer()
-		</body>
-	</html>
+		</div>
+	}
 }
