@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -19,7 +18,7 @@ templ Root(users []*database.User) {
 			<div class="inner-form">
 				<h2>
 					@helpers.IconFor(`admin`)
-					{ i18n.T(ctx, "Manage users") } ({ fmt.Sprintf("%d", len(users)) })
+					{ i18n.T(ctx, "Manage users") } ({ helpers.A2S(len(users)) })
 				</h2>
 				<table>
 					<thead>

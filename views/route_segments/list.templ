@@ -1,7 +1,6 @@
 package route_segments
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -20,7 +19,7 @@ templ List(segments []*database.RouteSegment) {
 				<div class="items-baseline flex flex-wrap">
 					<h2 class="grow justify-start">
 						@helpers.IconFor("route-segment")
-						{ i18n.T(ctx, "Route segments") } ({ fmt.Sprintf("%d", len(segments)) })
+						{ i18n.T(ctx, "Route segments") } ({ helpers.A2S(len(segments)) })
 					</h2>
 					<div class="justify-end mr-2">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-add")) }>

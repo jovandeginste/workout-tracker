@@ -18,7 +18,7 @@ templ actions(u *database.User) {
 	<form onsubmit="return false">
 		<button
 			onclick="openModal('modalConfirmDelete', this)"
-			data-id={ fmt.Sprintf("%d", u.ID) }
+			data-id={ helpers.A2S(u.ID) }
 			class="dangerous"
 			title={ i18n.T(ctx, "delete") }
 		>
@@ -32,7 +32,7 @@ templ actions(u *database.User) {
 			<div class="flex justify-end p-2">
 				<button
 					onclick="closeModal('modalConfirmDelete', this)"
-					data-id={ fmt.Sprintf("%d", u.ID) }
+					data-id={ helpers.A2S(u.ID) }
 					type="button"
 					class="close-modal"
 				>
@@ -50,7 +50,7 @@ templ actions(u *database.User) {
 					<form onsubmit="return false">
 						<button
 							onclick="closeModal('modalConfirmDelete', this)"
-							data-id={ fmt.Sprintf("%d", u.ID) }
+							data-id={ helpers.A2S(u.ID) }
 							class="cancel"
 						>
 							{ i18n.T(ctx, "Cancel") }

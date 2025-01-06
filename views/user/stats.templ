@@ -1,7 +1,6 @@
 package user
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -13,7 +12,7 @@ templ StatsRecordsTotal(user *database.User) {
 	{{ totals, _ := user.GetDefaultTotals() }}
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<div class="md:flex md:flex-wrap">
-		@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.String()), fmt.Sprintf("%d", totals.Workouts), "")
+		@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.String()), helpers.A2S(totals.Workouts), "")
 		@StatisticTile("distance", i18n.T(ctx, "distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
 		@StatisticTile("up", i18n.T(ctx, "up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
 		@StatisticTile("duration", i18n.T(ctx, "duration"), helpers.HumanDuration(totals.Duration), "")

@@ -1,7 +1,6 @@
 package workouts
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -45,14 +44,14 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsWeight() {
 			<div class="font-mono" title={ i18n.T(ctx, "Weight") }>
 				@helpers.IconFor("weight")
-				{ fmt.Sprintf("%.2f", w.Weight()) }
+				{ helpers.A2S(w.Weight()) }
 				{ preferredUnits.Weight() }
 			</div>
 		}
 		if w.Type.IsRepetition() {
 			<div class="font-mono" title={ i18n.T(ctx, "Repetitions") }>
 				@helpers.IconFor("repetitions")
-				{ fmt.Sprintf("%d", w.Repetitions()) }
+				{ helpers.A2S(w.Repetitions()) }
 			</div>
 		}
 	</div>

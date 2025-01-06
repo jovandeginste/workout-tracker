@@ -70,7 +70,7 @@ templ Form(w *database.Workout) {
 					min="0"
 					max="999"
 					maxlength="3"
-					value={ fmt.Sprintf("%d", int(w.Duration().Hours())) }
+					value={ helpers.A2S(int(w.Duration().Hours())) }
 					required
 				/>:
 				<input
@@ -80,7 +80,7 @@ templ Form(w *database.Workout) {
 					min="0"
 					max="59"
 					maxlength="2"
-					value={ fmt.Sprintf("%d", int(w.Duration().Minutes())%60) }
+					value={ helpers.A2S(int(w.Duration().Minutes()) % 60) }
 					required
 				/>:
 				<input
@@ -90,7 +90,7 @@ templ Form(w *database.Workout) {
 					min="0"
 					max="59"
 					maxlength="2"
-					value={ fmt.Sprintf("%d", int(w.Duration().Seconds())%60) }
+					value={ helpers.A2S(int(w.Duration().Seconds()) % 60) }
 					required
 				/>
 				(hhh:mm:ss)
@@ -120,7 +120,7 @@ templ Form(w *database.Workout) {
 					type="number"
 					name="repetitions"
 					id="repetitions"
-					value={ fmt.Sprintf("%d", w.Repetitions()) }
+					value={ helpers.A2S(w.Repetitions()) }
 					required
 				/>
 			</td>
@@ -134,7 +134,7 @@ templ Form(w *database.Workout) {
 					type="text"
 					name="weight"
 					id="weight"
-					value={ fmt.Sprintf("%.2f", w.Weight()) }
+					value={ helpers.A2S(w.Weight()) }
 					required
 				/>
 				<span>{ preferredUnits.Weight() }</span>
@@ -163,10 +163,10 @@ templ Form(w *database.Workout) {
 						type="checkbox"
 						id={ fmt.Sprintf("equipment_%d", e.ID) }
 						name="equipment"
-						value={ fmt.Sprintf("%d", e.ID) }
+						value={ helpers.A2S(e.ID) }
 						checked?={ w.Uses(e) }
 					/>
-					<span id={ fmt.Sprintf("%d", e.ID) } class="selectable-pill" for={ fmt.Sprintf("equipment_%d", e.ID) }>
+					<span id={ helpers.A2S(e.ID) } class="selectable-pill" for={ fmt.Sprintf("equipment_%d", e.ID) }>
 						{ helpers.THas(ctx, e.Name) }
 					</span>
 				</label>

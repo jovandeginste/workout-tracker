@@ -1,7 +1,6 @@
 package equipment
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -58,7 +57,7 @@ templ Show(e *database.Equipment) {
 											@helpers.IconFor("repetitions")
 										</td>
 										<th>{ i18n.T(ctx, "Total repetitions") }</th>
-										<td>{ fmt.Sprintf("%d", totals.Repetitions) }</td>
+										<td>{ helpers.A2S(totals.Repetitions) }</td>
 									</tr>
 								</tbody>
 							</table>
