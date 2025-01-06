@@ -66,14 +66,13 @@ func (a *App) setUser(c echo.Context) error {
 
 func (a *App) getCurrentUser(c echo.Context) *database.User {
 	d := c.Get("user_info")
-	if d == nil {
-		return database.AnonymousUser()
-	}
 
 	u, ok := d.(*database.User)
 	if !ok {
-		return database.AnonymousUser()
+		u = database.AnonymousUser()
 	}
+
+	u.SetContext(c.Request().Context())
 
 	return u
 }
