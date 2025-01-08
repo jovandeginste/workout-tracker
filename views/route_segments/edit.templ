@@ -12,7 +12,7 @@ templ Edit(s *database.RouteSegment) {
 		<div class="gap-4">
 			<h2>
 				@helpers.IconFor("route-segment")
-				{ s.Name }
+				@Name(s, 0)
 			</h2>
 		</div>
 		<div class="sm:flex sm:flex-wrap">

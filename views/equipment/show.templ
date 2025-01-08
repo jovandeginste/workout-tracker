@@ -5,6 +5,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
+	"github.com/jovandeginste/workout-tracker/views/workouts"
 )
 
 templ Show(e *database.Equipment) {
@@ -123,7 +124,9 @@ templ Show(e *database.Equipment) {
 										</div>
 									</td>
 									<td>
-										<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>{ w.Name }</a>
+										<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
+											@workouts.Name(&w, 20)
+										</a>
 									</td>
 									<td class="hidden sm:table-cell">
 										@partials.SnippetDate(w.Date)

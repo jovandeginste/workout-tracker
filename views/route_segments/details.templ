@@ -1,11 +1,22 @@
 package route_segments
 
 import (
+	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 	"github.com/jovandeginste/workout-tracker/views/partials"
 )
+
+templ Name(s *database.RouteSegment, maxLength int) {
+	if s.Name == "" {
+		<i>(no name)</i>
+	} else if maxLength > 0 && len(s.Name) > maxLength {
+		<abbr title={ s.Name }>{ fmt.Sprintf("%.*s", maxLength, s.Name) }...</abbr>
+	} else {
+		{ s.Name }
+	}
+}
 
 templ details(s *database.RouteSegment) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}

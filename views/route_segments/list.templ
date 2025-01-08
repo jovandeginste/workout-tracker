@@ -33,7 +33,9 @@ templ List(segments []*database.RouteSegment) {
 				for _, s := range segments {
 					<tr>
 						<td>
-							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-show", s.ID)) }>{ s.Name }</a>
+							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-show", s.ID)) }>
+								@Name(s, 20)
+							</a>
 						</td>
 						<th class="hidden xl:table-cell">
 							@listDetails(s)

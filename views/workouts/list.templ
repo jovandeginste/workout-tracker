@@ -1,7 +1,6 @@
 package workouts
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
@@ -84,11 +83,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</td>
 						<td>
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
-								if len(w.Name)> 20 {
-									<abbr title={ w.Name }>{ fmt.Sprintf("%.20s", w.Name) }...</abbr>
-								} else {
-									{ w.Name }
-								}
+								@Name(w, 20)
 							</a>
 						</td>
 						<td>
