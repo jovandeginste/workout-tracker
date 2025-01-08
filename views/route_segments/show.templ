@@ -22,7 +22,7 @@ templ Show(s *database.RouteSegment) {
 			</span>
 			<h2>
 				@helpers.IconFor("route-segment")
-				{ s.Name }
+				@Name(s, 0)
 			</h2>
 			<div class="lg:flex lg:flex-wrap print:block">
 				<div class="basis-1/2 2xl:basis-1/3 pagebreak">

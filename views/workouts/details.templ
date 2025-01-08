@@ -22,6 +22,16 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 	}
 }
 
+templ Name(w *database.Workout, maxLength int) {
+	if w.Name == "" {
+		<i>(no name)</i>
+	} else if maxLength > 0 && len(w.Name) > maxLength {
+		<abbr title={ w.Name }>{ fmt.Sprintf("%.*s", maxLength, w.Name) }...</abbr>
+	} else {
+		{ w.Name }
+	}
+}
+
 templ Details(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
@@ -31,7 +41,9 @@ templ Details(w *database.Workout) {
 					@helpers.IconFor("name")
 				</td>
 				<td class="max-w-[0px] overflow-hidden whitespace-nowrap text-ellipsis">
-					<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>{ w.Name }</a>
+					<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
+						@Name(w, 0)
+					</a>
 				</td>
 			</tr>
 			<tr>

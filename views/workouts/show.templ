@@ -28,7 +28,7 @@ templ Show(w *database.Workout) {
 			}
 			<h2>
 				@helpers.IconFor(w.Type.String())
-				{ w.Name }
+				@Name(w, 0)
 			</h2>
 		</div>
 		<div class="lg:flex lg:flex-wrap print:block">

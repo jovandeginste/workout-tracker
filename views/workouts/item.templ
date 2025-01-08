@@ -1,7 +1,6 @@
 package workouts
 
 import (
-	"fmt"
 	"github.com/jovandeginste/workout-tracker/pkg/database"
 	"github.com/jovandeginste/workout-tracker/views/helpers"
 )
@@ -13,11 +12,7 @@ templ Item(w *database.Workout) {
 				<div class="grow">
 					<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
 						@helpers.IconFor(w.Type.String())
-						if len(w.Name) > 20 {
-							<abbr title={ w.Name }>{ fmt.Sprintf("%.20s", w.Name) }...</abbr>
-						} else {
-							{ w.Name }
-						}
+						@Name(w, 20)
 					</a>
 				</div>
 				<div class="text-right text-sm">

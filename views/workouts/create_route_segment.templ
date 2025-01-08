@@ -16,7 +16,7 @@ templ CreateRouteSegment(w *database.Workout) {
 		<div class="gap-4">
 			<h2>
 				@helpers.IconFor(w.Type.String())
-				{ w.Name }
+				@Name(w, 0)
 			</h2>
 		</div>
 		<div class="lg:flex lg:flex-wrap">
