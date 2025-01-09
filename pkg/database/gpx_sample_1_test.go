@@ -14,7 +14,7 @@ const GpxSample1 = `<?xml version="1.0" encoding="UTF-8"?>
     <time>2012-10-24T23:22:51.000Z</time>
   </metadata>
   <trk>
-    <name>Untitled</name>
+    <name>Some name</name>
     <trkseg>
       <trkpt lon="-77.02016168273985" lat="38.92747367732227">
         <ele>25.600000381469727</ele>
