@@ -16,6 +16,23 @@ func Parse(filename string, content []byte) (*gpx.GPX, error) {
 		return ParseGPX(content)
 	}
 
+	basename := path.Base(filename)
+
+	c, err := parseContent(basename, content)
+	if err != nil {
+		return nil, err
+	}
+
+	if c.Name != "" || len(c.Tracks) > 0 {
+		return c, nil
+	}
+
+	c.Name = basename
+
+	return c, nil
+}
+
+func parseContent(filename string, content []byte) (*gpx.GPX, error) {
 	suffix := path.Ext(filename)
 
 	switch suffix {
