@@ -23,7 +23,11 @@ func Parse(filename string, content []byte) (*gpx.GPX, error) {
 		return nil, err
 	}
 
-	if c.Name != "" || len(c.Tracks) > 0 {
+	if c.Name != "" {
+		return c, nil
+	}
+
+	if len(c.Tracks) > 0 && c.Tracks[0].Name != "" {
 		return c, nil
 	}
 
