@@ -8,7 +8,7 @@ OUTPUT_FILE ?= tmp/main
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 
-.PHONY: all clean test build screenshots meta translations install-dev-deps install-deps
+.PHONY: all clean test build screenshots meta install-dev-deps install-deps
 
 all: clean install-deps test build
 
@@ -27,7 +27,7 @@ clean:
 dev:
 	air
 
-build: build-dist build-server build-docker build-translations screenshots
+build: build-dist build-server build-docker screenshots
 meta: swagger screenshots changelog
 
 build-server: build-tw build-templates
@@ -77,7 +77,6 @@ build-dist: clean-dist
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
-build-translations: translations
 
 build-templates:
 	templ generate

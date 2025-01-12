@@ -20,7 +20,7 @@ templ AddressResults(addresses []string) {
     </script>
 	}
 	if len(addresses) > 0 {
-		<ul class="list-none">
+		<ul id="address-results" class="list-none">
 			for _, a := range addresses {
 				<li>
 					@helpers.IconFor("location")
