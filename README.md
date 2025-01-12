@@ -3,12 +3,11 @@
 [![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/jovandeginste/workout-tracker/latest/total)](https://github.com/jovandeginste/workout-tracker/releases/latest)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/jovandeginste/workout-tracker)](https://goreportcard.com/report/github.com/jovandeginste/workout-tracker)
-[![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/jovandeginste/workout-tracker)](https://libraries.io/github/jovandeginste/workout-tracker/)
+[![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/jovandeginste/workout-tracker)](https://libraries.io/go/github.com%2Fjovandeginste%2Fworkout-tracker%2Fv2)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Swagger Validator](https://img.shields.io/swagger/valid/3.0?specUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjovandeginste%2Fworkout-tracker%2Fmaster%2Fdocs%2Fswagger.json)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.json)
 
 [![Translation status](https://hosted.weblate.org/widget/workout-tracker/svg-badge.svg)](https://hosted.weblate.org/engage/workout-tracker/)
-[![GitHub language count](https://img.shields.io/github/languages/count/jovandeginste/workout-tracker)](https://hosted.weblate.org/projects/workout-tracker/#languages)
 
 [![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#workout-tracker:matrix.org)
 
@@ -59,9 +58,9 @@ directory.
 docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:latest
 
 # Tagged release
-docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0.11.3
-docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0.11
-docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:0
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:2.0.2
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:2.0
+docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:2
 
 # Latest release
 docker run -p 8080:8080 -v .:/data ghcr.io/jovandeginste/workout-tracker:release
@@ -108,11 +107,11 @@ Download a
 [pre-built binary](https://github.com/jovandeginste/workout-tracker/releases) or
 build it yourself (see [Development](#development) below).
 
-Eg. for v0.11.3 on Linux x86_64:
+Eg. for v2.0.2 on Linux x86_64:
 
 ```bash
-wget https://github.com/jovandeginste/workout-tracker/releases/download/v0.11.3/workout-tracker-v0.11.3-linux-amd64.tar.gz
-tar xf workout-tracker-v0.11.3-linux-amd64.tar.gz
+wget https://github.com/jovandeginste/workout-tracker/releases/download/v2.0.2/workout-tracker-v2.0.2-linux-amd64.tar.gz
+tar xf workout-tracker-v2.0.2-linux-amd64.tar.gz
 ./workout-tracker
 ```
 
@@ -199,7 +198,7 @@ Details of a workout, with:
 
 - Switch between (supported) languages
   - Please help translate via
-    [Weblate](https://hosted.weblate.org/projects/workout-tracker/)
+    [Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
 - Use the language configured in the browser (default)
 - Very limited amount of languages supported for now :smile:
 - Re-calculate all previously uploaded workouts (useful while developing)
@@ -330,13 +329,11 @@ make test-assets test-go # Run tests for the individual components
 # Building
 make build # Builds all components
 make build-tw # Builds the Tailwind CSS output file
-make build-server # Builds the web server
+make build-templates # Builds the templ templates
+make build-server # Builds the web server (includes build-tw and build-templates)
 make build-docker # Performs all builds inside Docker containers, creates a Docker image
 make build-swagger # Generates swagger docs
 
-# Translating
-make generate-messages # Detects all translatable strings and write them to translations/messages.yaml
-make generate-translations # Populates the translation files per language
 
 
 # Running it
