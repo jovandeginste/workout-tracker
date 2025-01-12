@@ -51,6 +51,10 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 		return nil, err
 	}
 
+	if err := db.Use(NewMemoryCache()); err != nil {
+		return nil, err
+	}
+
 	if err := preMigrationActions(db); err != nil {
 		return nil, err
 	}

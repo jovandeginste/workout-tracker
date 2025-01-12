@@ -48,6 +48,9 @@ github.com/glebarez/go-sqlite
 # github.com/glebarez/sqlite v1.11.0
 ## explicit; go 1.18
 github.com/glebarez/sqlite
+# github.com/go-gorm/caches/v4 v4.0.5
+## explicit; go 1.18
+github.com/go-gorm/caches/v4
 # github.com/go-openapi/jsonpointer v0.21.0
 ## explicit; go 1.20
 github.com/go-openapi/jsonpointer
@@ -315,8 +318,6 @@ github.com/valyala/bytebufferpool
 # github.com/valyala/fasttemplate v1.2.2
 ## explicit; go 1.12
 github.com/valyala/fasttemplate
-# github.com/vorlif/spreak v0.6.0
-## explicit; go 1.19
 # github.com/westphae/geomag v1.0.2
 ## explicit; go 1.13
 github.com/westphae/geomag/pkg/egm96
