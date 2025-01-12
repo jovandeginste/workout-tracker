@@ -7,26 +7,26 @@ import (
 
 // MaxDeltaMeter is the maximum distance in meters that a point can be away from
 // the route segment
-const MaxDeltaMeter = 20
+const MaxDeltaMeter = 20.0
 
 // MaxTotalDistancePercentage is the maximum percentage of the total distance of
 // the route segment that can be exceeded by the total distance matching part of
 // the route
-const MaxTotalDistancePercentage = 0.02
+const MaxTotalDistanceFraction = 0.9
 
 // RouteSegmentMatch is a match between a route segment and a workout
 type RouteSegmentMatch struct {
 	Workout      *Workout
 	RouteSegment *RouteSegment
 
-	first, last, end MapPoint // The first and last point of the route
+	first, last MapPoint // The first and last point of the route
+	end         MapPoint // The last point of the workout
 
 	RouteSegmentID  uint          `gorm:"primaryKey"` // The ID of the route segment
 	WorkoutID       uint          `gorm:"primaryKey"` // The ID of the workout
 	FirstID, LastID int           // The index of the first and last point of the route
 	Distance        float64       // The total distance of the route segment for this workout
 	Duration        time.Duration // The total duration of the route segment for this workout
-	Points          int           // The total number of points of the route segment for this workout
 }
 
 func (rsm *RouteSegmentMatch) AverageSpeed() float64 {
@@ -37,14 +37,10 @@ func (rsm *RouteSegmentMatch) AverageSpeed() float64 {
 // the first and last point of the route along the route segment
 func (rs *RouteSegment) NewRouteSegmentMatch(workout *Workout, p, last int) *RouteSegmentMatch {
 	rsm := &RouteSegmentMatch{
-		RouteSegmentID: rs.ID,
-		WorkoutID:      workout.ID,
-		FirstID:        p,
-		LastID:         last,
-
-		first: workout.Data.Details.Points[p],
-		last:  workout.Data.Details.Points[last],
-		end:   workout.Data.Details.Points[len(workout.Data.Details.Points)-1],
+		Workout:      workout,
+		RouteSegment: rs,
+		FirstID:      p,
+		LastID:       last,
 	}
 
 	rsm.calculate()
@@ -62,13 +58,19 @@ func (rsm *RouteSegmentMatch) IsBetterThan(current *RouteSegmentMatch) bool {
 // within MaxTotalDistancePercentage of the distance of the current route
 // segment
 func (rsm *RouteSegmentMatch) MatchesDistance(distance float64) bool {
-	return math.Abs(1-(rsm.Distance/distance)) < MaxTotalDistancePercentage
+	return math.Abs(rsm.Distance/distance) > MaxTotalDistanceFraction
 }
 
 // calculate will calculate the total distance and duration of the route
 // segment, and the total number of points of this workout along the route
 // segment
 func (rsm *RouteSegmentMatch) calculate() {
+	rsm.RouteSegmentID = rsm.RouteSegment.ID
+	rsm.WorkoutID = rsm.Workout.ID
+	rsm.first = rsm.Workout.Data.Details.Points[rsm.FirstID]
+	rsm.last = rsm.Workout.Data.Details.Points[rsm.LastID]
+	rsm.end = rsm.Workout.Data.Details.Points[len(rsm.Workout.Data.Details.Points)-1]
+
 	if rsm.FirstID <= rsm.LastID {
 		rsm.Distance = rsm.last.TotalDistance - rsm.first.TotalDistance
 		rsm.Duration = rsm.last.TotalDuration - rsm.first.TotalDuration
@@ -166,12 +168,16 @@ func (rs *RouteSegment) MatchSegment(workout *Workout, start int, forward bool) 
 
 		if forward {
 			cur++
+
+			if cur == segmentLength {
+				return index, true
+			}
 		} else {
 			cur--
-		}
 
-		if cur%segmentLength == 0 {
-			return index, true
+			if cur == 0 {
+				return index, true
+			}
 		}
 
 		if !rs.Circular && index < start {
@@ -190,7 +196,8 @@ func (rs *RouteSegment) StartingPoints(points []MapPoint) []int {
 	start := rs.Points[0]
 
 	for i, p := range points {
-		if start.DistanceTo(&p) < MaxDeltaMeter {
+		d := start.DistanceTo(&p)
+		if d < MaxDeltaMeter {
 			r = append(r, i)
 		}
 	}

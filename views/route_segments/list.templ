@@ -41,6 +41,11 @@ templ List(segments []*database.RouteSegment) {
 							@listDetails(s)
 						</th>
 						<td class="hidden lg:table-cell">
+							if s.Dirty {
+								<span title={ i18n.T(ctx, "refresh in progress") }>
+									@helpers.IconFor("refresh")
+								</span>
+							}
 							<span class="actions">
 								@actions(s)
 							</span>
