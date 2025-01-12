@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/a-h/templ"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
-	"github.com/jovandeginste/workout-tracker/views/partials"
-	"github.com/jovandeginste/workout-tracker/views/user"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v4"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/jovandeginste/workout-tracker/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 )
 
 func HumanDuration(d time.Duration) string {

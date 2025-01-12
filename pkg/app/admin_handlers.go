@@ -3,8 +3,8 @@ package app
 import (
 	"net/http"
 
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/views/admin"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/admin"
 	"github.com/labstack/echo/v4"
 )
 

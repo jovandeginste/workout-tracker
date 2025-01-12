@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jovandeginste/workout-tracker/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 )
 
 const timeFormat = "2006-01-02 15:04"

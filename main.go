@@ -1,10 +1,10 @@
 package main
 
 import (
-	appassets "github.com/jovandeginste/workout-tracker/assets"
-	"github.com/jovandeginste/workout-tracker/pkg/app"
-	"github.com/jovandeginste/workout-tracker/pkg/version"
-	apptranslations "github.com/jovandeginste/workout-tracker/translations"
+	appassets "github.com/jovandeginste/workout-tracker/v2/assets"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/app"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/version"
+	apptranslations "github.com/jovandeginste/workout-tracker/v2/translations"
 )
 
 var (

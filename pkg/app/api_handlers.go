@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/importers"
-	"github.com/jovandeginste/workout-tracker/views/workouts"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/importers"
+	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

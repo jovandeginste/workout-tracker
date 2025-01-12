@@ -10,7 +10,7 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
-	"github.com/jovandeginste/workout-tracker/pkg/converters"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
