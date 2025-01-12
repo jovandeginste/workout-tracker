@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/labstack/echo/v4"
 )
 

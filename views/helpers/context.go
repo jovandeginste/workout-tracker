@@ -5,8 +5,8 @@ import (
 
 	"github.com/invopop/ctxi18n"
 	"github.com/invopop/ctxi18n/i18n"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	appversion "github.com/jovandeginste/workout-tracker/pkg/version"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	appversion "github.com/jovandeginste/workout-tracker/v2/pkg/version"
 	"github.com/labstack/echo/v4"
 )
 

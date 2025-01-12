@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/views/equipment"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/equipment"
 	"github.com/labstack/echo/v4"
 )
 

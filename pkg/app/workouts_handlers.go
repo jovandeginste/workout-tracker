@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/jovandeginste/workout-tracker/pkg/database"
-	"github.com/jovandeginste/workout-tracker/views/workouts"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	"github.com/labstack/echo/v4"
 )
 

@@ -1,4 +1,4 @@
-module github.com/jovandeginste/workout-tracker
+module github.com/jovandeginste/workout-tracker/v2
 
 go 1.23
 

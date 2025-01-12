@@ -8,7 +8,7 @@ package partials
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/jovandeginste/workout-tracker/views/helpers"
+import "github.com/jovandeginste/workout-tracker/v2/views/helpers"
 
 var addressSetHandle = templ.NewOnceHandle()
 
