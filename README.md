@@ -136,6 +136,10 @@ Login / registration form
 - new users have to be activated by an admin
 - registration can be disabled
 
+#### Multilingual
+
+![](docs/login-nl.png)
+
 ### Dashboard
 
 ![](docs/dashboard.png)
@@ -184,6 +188,8 @@ Details of a workout, with:
 - The files are parsed when uploaded: statistics and other information are
   calculated and stored in the database (serialized).
 - Or add a workout manually.
+
+![](docs/upload_workouts_manual.png)
 
 ### Statistics to follow your progress
 
@@ -320,6 +326,8 @@ Because I keep forgetting how to build every component, I created a Makefile.
 make all # Run tests and build all components
 
 # Install system dependencies
+make install-dev-deps
+# Install Javascript libraries
 make install-deps
 
 # Testing

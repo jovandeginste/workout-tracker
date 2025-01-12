@@ -26,6 +26,13 @@ export default async function () {
   try {
     await Promise.all([
       page.waitForNavigation(),
+      page.goto("http://localhost:8080/user/signin?lang=nl"),
+    ]);
+
+    page.screenshot({ path: "docs/login-nl.png", fullPage: true });
+
+    await Promise.all([
+      page.waitForNavigation(),
       page.goto("http://localhost:8080"),
     ]);
 
@@ -60,7 +67,7 @@ export default async function () {
 
     await Promise.all([
       page.waitForNavigation(),
-      page.goto("http://localhost:8080/workouts/10"),
+      page.goto("http://localhost:8080/workouts/250"),
     ]);
     page.screenshot({ path: "docs/single_workout-dark.png", fullPage: true });
 
@@ -69,13 +76,22 @@ export default async function () {
       page.goto("http://localhost:8080/workouts/add"),
     ]);
     page.screenshot({ path: "docs/upload_workouts.png", fullPage: true });
+    const options = page.locator("#manual #type");
+    await options.selectOption("running");
+    await page.waitForSelector("#manual #location");
+    page.locator("#manual #location").fill("brussels");
+    await page.waitForSelector("#manual #address-results");
+    page.screenshot({
+      path: "docs/upload_workouts_manual.png",
+      fullPage: true,
+    });
 
     page.emulateMedia({
       colorScheme: "light",
     });
     await Promise.all([
       page.waitForNavigation(),
-      page.goto("http://localhost:8080/workouts/10"),
+      page.goto("http://localhost:8080/workouts/250"),
     ]);
     page.screenshot({ path: "docs/single_workout-light.png", fullPage: true });
 
@@ -96,7 +112,7 @@ export default async function () {
 
     await Promise.all([
       page.waitForNavigation(),
-      page.goto("http://localhost:8080/workouts/10"),
+      page.goto("http://localhost:8080/workouts/250"),
     ]);
     page.screenshot({ path: "docs/single_workout-responsive.png" });
 

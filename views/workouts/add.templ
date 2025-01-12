@@ -17,6 +17,7 @@ templ Add() {
 				<div class="inner-form">
 					<h3>{ i18n.T(ctx, "Use a file") }</h3>
 					<form
+						id="upload"
 						method="post"
 						action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }
 						enctype="multipart/form-data"
@@ -79,7 +80,7 @@ templ Add() {
 			<div>
 				<div class="inner-form">
 					<h3>{ i18n.T(ctx, "Manual") }</h3>
-					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
+					<form id="manual" method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
 						<table class="sm:table-auto">
 							<thead>
 								<tr>
