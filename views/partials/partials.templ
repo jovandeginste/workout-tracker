@@ -43,8 +43,8 @@ templ Alerts() {
 
 templ Language() {
 	<select class="border-0" onchange="changeLanguage(this.value)">
-		for _, sl := range helpers.SupportedLanguages(ctx) {
-			{{ linf := helpers.ToLanguageInformation(sl.String()) }}
+		for _, sl := range helpers.SupportedLanguages() {
+			{{ linf := helpers.ToLanguageInformation(sl) }}
 			<option value={ linf.Code } selected?={ linf.Code == helpers.Language(ctx) }>
 				{ linf.Flag } { linf.LocalName }
 				if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
