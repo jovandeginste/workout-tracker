@@ -114,8 +114,8 @@ templ profileLanguage(ulang string) {
 		<option value="browser" selected?={ ulang == "browser" }>
 			🌐 Browser language
 		</option>
-		for _, sl := range helpers.SupportedLanguages(ctx) {
-			{{ linf := helpers.ToLanguageInformation(sl.String()) }}
+		for _, sl := range helpers.SupportedLanguages() {
+			{{ linf := helpers.ToLanguageInformation(sl) }}
 			<option value={ linf.Code } selected?={ linf.Code == ulang }>
 				{ linf.Flag } { linf.LocalName }
 				if linf.EnglishName != "" {

@@ -251,8 +251,8 @@ func Language() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, sl := range helpers.SupportedLanguages(ctx) {
-			linf := helpers.ToLanguageInformation(sl.String())
+		for _, sl := range helpers.SupportedLanguages() {
+			linf := helpers.ToLanguageInformation(sl)
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<option value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

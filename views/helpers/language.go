@@ -1,8 +1,10 @@
 package helpers
 
 import (
+	"cmp"
 	"context"
 	"fmt"
+	"slices"
 	"strings"
 	"time"
 
@@ -13,7 +15,23 @@ import (
 	"golang.org/x/text/language/display"
 )
 
-var englishTag = display.English.Languages()
+var (
+	englishTag = display.English.Languages()
+
+	languagesSorted = false
+	languages       = []language.Tag{
+		language.Dutch,
+		language.English,
+		language.Finnish,
+		language.French,
+		language.German,
+		language.Indonesian,
+		language.Italian,
+		language.Norwegian,
+		language.Persian,
+		language.Russian,
+	}
+)
 
 func THas(ctx context.Context, key string, args ...any) string {
 	if i18n.Has(ctx, key) {
@@ -34,22 +52,26 @@ func Language(ctx context.Context) string {
 	return translator(ctx).Code().String()
 }
 
-func SupportedLanguages(ctx context.Context) []language.Tag {
-	return []language.Tag{
-		language.Dutch,
-		language.English,
-		language.French,
-		language.German,
-		language.Indonesian,
-		language.Italian,
-		language.Norwegian,
-		language.Persian,
-		language.Russian,
-	}
+func SupportedLanguages() []language.Tag {
+	sortLanguages()
+
+	return languages
 }
 
-func ToLanguageInformation(code string) LanguageInformation {
-	cc := code
+func sortLanguages() {
+	if languagesSorted {
+		return
+	}
+
+	slices.SortFunc(languages, func(a, b language.Tag) int {
+		return cmp.Compare(a.String(), b.String())
+	})
+
+	languagesSorted = true
+}
+
+func ToLanguageInformation(code language.Tag) LanguageInformation {
+	cc := code.String()
 	if strings.Contains(cc, "-") {
 		cc = strings.Split(cc, "-")[1]
 	}
@@ -59,7 +81,7 @@ func ToLanguageInformation(code string) LanguageInformation {
 	}
 
 	l := LanguageInformation{
-		Code: code,
+		Code: code.String(),
 		Flag: emojiflag.GetFlag(cc),
 	}
 
@@ -67,7 +89,7 @@ func ToLanguageInformation(code string) LanguageInformation {
 		l.Flag = "👽"
 	}
 
-	localTag := language.MustParse(code)
+	localTag := language.MustParse(code.String())
 	l.LocalName = display.Self.Name(localTag)
 	l.EnglishName = englishTag.Name(localTag)
 
