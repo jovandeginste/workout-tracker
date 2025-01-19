@@ -88,7 +88,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		Buckets:      map[WorkoutType]Buckets{},
 	}
 
-	rows, err := u.db.
+	q := u.db.
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
@@ -102,9 +102,13 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			statConfig.GetBucketFormatExpression(sqlDialect),
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
-		Where("user_id = ?", u.ID).
-		Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince()).
-		Group("bucket, workout_type").Rows()
+		Where("user_id = ?", u.ID)
+
+	if statConfig.Since != "" && statConfig.Since != "forever" {
+		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())
+	}
+
+	rows, err := q.Group("bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
 	}

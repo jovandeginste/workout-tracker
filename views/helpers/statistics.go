@@ -2,10 +2,10 @@ package helpers
 
 func StatisticSinceOptions() []string {
 	return []string{
-		"1 day",
 		"7 days",
 		"1 month", "3 months", "6 months",
 		"1 year", "2 years", "5 years", "10 years",
+		"forever",
 	}
 }
 
