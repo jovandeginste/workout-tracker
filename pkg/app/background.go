@@ -245,7 +245,7 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 }
 
 func (a *App) updateWorkout(l *slog.Logger) {
-	var wID []int
+	var wID []uint64
 
 	db := a.db.Preload("Data.Details").Preload("User")
 
@@ -263,7 +263,7 @@ func (a *App) updateWorkout(l *slog.Logger) {
 	}
 }
 
-func (a *App) UpdateWorkout(i int) error {
+func (a *App) UpdateWorkout(i uint64) error {
 	w, err := database.GetWorkoutWithGPX(a.db, i)
 	if err != nil {
 		return err

@@ -31,7 +31,7 @@ func (c *cli) workoutsDiagCmd() *cobra.Command {
 			t := table.New(os.Stdout)
 			t.SetHeaders("ID", "Name", "Issues")
 
-			var ids []uint
+			var ids []uint64
 
 			if err := c.getDatabase().Model(&database.Workout{}).Pluck("ID", &ids).Error; err != nil {
 				return err
@@ -40,7 +40,7 @@ func (c *cli) workoutsDiagCmd() *cobra.Command {
 			for _, id := range ids {
 				issues := []string{}
 
-				wo, err := database.GetWorkout(c.getDatabase(), int(id))
+				wo, err := database.GetWorkout(c.getDatabase(), id)
 				if err != nil {
 					issues = append(issues, err.Error())
 				}
@@ -49,7 +49,7 @@ func (c *cli) workoutsDiagCmd() *cobra.Command {
 					issues = []string{"OK"}
 				}
 
-				t.AddRow(strconv.FormatUint(uint64(id), 10), wo.Name, strings.Join(issues, "; "))
+				t.AddRow(strconv.FormatUint(id, 10), wo.Name, strings.Join(issues, "; "))
 			}
 
 			t.Render()
@@ -73,7 +73,7 @@ func (c *cli) workoutsListCmd() *cobra.Command {
 			}
 
 			for _, wo := range workouts {
-				t.AddRow(strconv.FormatUint(uint64(wo.ID), 10), wo.Date.String(), wo.Name)
+				t.AddRow(strconv.FormatUint(wo.ID, 10), wo.Date.String(), wo.Name)
 			}
 
 			t.Render()
@@ -89,7 +89,7 @@ func (c *cli) workoutsShowCmd() *cobra.Command {
 		Short: "Show information about a workout",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			id, err := strconv.Atoi(args[0])
+			id, err := strconv.ParseUint(args[0], 10, 32)
 			if err != nil {
 				return err
 			}
@@ -102,7 +102,7 @@ func (c *cli) workoutsShowCmd() *cobra.Command {
 				return err
 			}
 
-			t.AddRow("ID", strconv.FormatUint(uint64(wo.ID), 10))
+			t.AddRow("ID", strconv.FormatUint(wo.ID, 10))
 			t.AddRow("Date", wo.Date.String())
 			t.AddRow("Name", wo.Name)
 

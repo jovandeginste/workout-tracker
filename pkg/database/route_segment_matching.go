@@ -22,8 +22,8 @@ type RouteSegmentMatch struct {
 	first, last MapPoint // The first and last point of the route
 	end         MapPoint // The last point of the workout
 
-	RouteSegmentID  uint          `gorm:"primaryKey"` // The ID of the route segment
-	WorkoutID       uint          `gorm:"primaryKey"` // The ID of the workout
+	RouteSegmentID  uint64        `gorm:"primaryKey"` // The ID of the route segment
+	WorkoutID       uint64        `gorm:"primaryKey"` // The ID of the workout
 	FirstID, LastID int           // The index of the first and last point of the route
 	Distance        float64       // The total distance of the route segment for this workout
 	Duration        time.Duration // The total duration of the route segment for this workout

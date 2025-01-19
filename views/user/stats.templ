@@ -49,7 +49,7 @@ templ StatsRecordDistanceDate(workout *database.Float64Record) {
 	@StatsRecordDate(workout.ID, &workout.Date)
 }
 
-templ StatsRecordDate(id uint, date *time.Time) {
+templ StatsRecordDate(id uint64, date *time.Time) {
 	<span class="hidden xl:inline">
 		<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", id)) }>
 			{ helpers.LocalDate(ctx, date ) }

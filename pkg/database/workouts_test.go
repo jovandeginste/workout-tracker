@@ -99,7 +99,7 @@ func TestWorkout_SaveAndGet(t *testing.T) {
 	require.NoError(t, w.Save(db))
 	assert.NotZero(t, w.UpdatedAt)
 
-	newW, err := GetWorkoutDetails(db, int(w.ID))
+	newW, err := GetWorkoutDetails(db, w.ID)
 	require.NoError(t, err)
 	assert.Equal(t, w.ID, newW.ID)
 	assert.Equal(t, w.Data.Details.Points, newW.Data.Details.Points)

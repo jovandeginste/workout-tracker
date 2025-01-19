@@ -20,7 +20,7 @@ type Profile struct {
 	TotalsShow          WorkoutType `form:"totals_show"`           // What workout type of totals to show
 	Timezone            string      `form:"timezone"`              // The user's preferred timezone
 	AutoImportDirectory string      `form:"auto_import_directory"` // The user's preferred directory for auto-import
-	UserID              uint        // The ID of the user who owns this profile
+	UserID              uint64      // The ID of the user who owns this profile
 	APIActive           bool        `form:"api_active"`       // Whether the user's API key is active
 	SocialsDisabled     bool        `form:"socials_disabled"` // Whether social sharing buttons are disabled when viewing a workout
 	PreferFullDate      bool        `form:"prefer_full_date"` // Whether to show full dates in the workout details

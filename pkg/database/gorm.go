@@ -22,7 +22,7 @@ var ErrUnsuportedDriver = errors.New("unsupported driver")
 type Model struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	ID        uint `gorm:"primaryKey"`
+	ID        uint64 `gorm:"primaryKey"`
 }
 
 func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, error) {
