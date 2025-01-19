@@ -3,7 +3,7 @@ GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch
 GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-OUTPUT_FILE ?= tmp/main
+OUTPUT_FILE ?= tmp/workout-tracker
 
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
@@ -33,7 +33,7 @@ meta: swagger screenshots changelog
 build-server: build-tw build-templates
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
-		-o $(OUTPUT_FILE) ./
+		-o $(OUTPUT_FILE) ./cmd/workout-tracker/
 
 build-docker:
 	docker build -t workout-tracker --pull \

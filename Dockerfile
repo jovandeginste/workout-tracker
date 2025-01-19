@@ -1,4 +1,4 @@
-FROM node:alpine as frontend
+FROM node:alpine AS frontend
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY assets ./assets
 
 RUN make build-dist build-tw
 
-FROM golang:alpine as backend
+FROM golang:alpine AS backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
@@ -26,7 +26,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY main.go ./main.go
+COPY cmd ./cmd
 COPY pkg ./pkg
 COPY vendor ./vendor
 COPY views ./views
@@ -37,8 +37,8 @@ COPY --from=frontend /app/assets/dist ./assets/dist
 
 ENV CGO_ENABLED=0
 RUN go build \
-	-ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
-	-o /workout-tracker ./
+  -ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
+  -o /workout-tracker ./cmd/workout-tracker/
 
 FROM alpine:latest
 
