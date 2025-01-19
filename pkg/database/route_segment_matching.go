@@ -9,9 +9,9 @@ import (
 // the route segment
 const MaxDeltaMeter = 20.0
 
-// MaxTotalDistancePercentage is the maximum percentage of the total distance of
+// MaxTotalDistanceFraction is the maximum percentage of the total distance of
 // the route segment that can be exceeded by the total distance matching part of
-// the route
+// the route (1.0 = 100%)
 const MaxTotalDistanceFraction = 0.9
 
 // RouteSegmentMatch is a match between a route segment and a workout
