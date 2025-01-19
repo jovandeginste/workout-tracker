@@ -1,5 +1,5 @@
 [build]
-  bin               = "./tmp/main"
+  bin               = "./tmp/workout-tracker"
   cmd               = "make build-server"
   delay             = 1000
   exclude_dir       = ["docs", "testdata", "tmp", "vendor"]
