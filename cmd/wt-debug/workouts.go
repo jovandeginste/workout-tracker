@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/aquasecurity/table"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -16,9 +17,46 @@ func (c *cli) workoutsCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(c.workoutsListCmd())
+	cmd.AddCommand(c.workoutsDiagCmd())
 	cmd.AddCommand(c.workoutsShowCmd())
 
 	return cmd
+}
+
+func (c *cli) workoutsDiagCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "diag",
+		Short: "Perform diagnose on all workouts",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			t := table.New(os.Stdout)
+			t.SetHeaders("ID", "Name", "Issues")
+
+			var ids []uint
+
+			if err := c.getDatabase().Model(&database.Workout{}).Pluck("ID", &ids).Error; err != nil {
+				return err
+			}
+
+			for _, id := range ids {
+				issues := []string{}
+
+				wo, err := database.GetWorkout(c.getDatabase(), int(id))
+				if err != nil {
+					issues = append(issues, err.Error())
+				}
+
+				if len(issues) == 0 {
+					issues = []string{"OK"}
+				}
+
+				t.AddRow(strconv.FormatUint(uint64(id), 10), wo.Name, strings.Join(issues, "; "))
+			}
+
+			t.Render()
+
+			return nil
+		},
+	}
 }
 
 func (c *cli) workoutsListCmd() *cobra.Command {
