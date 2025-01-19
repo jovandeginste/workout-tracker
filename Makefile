@@ -88,7 +88,10 @@ build-templates:
 	templ generate
 
 test-templates:
-	go test ./views/*/
+	go test ./views/...
+
+test-commands:
+	go test ./cmd/...
 
 format-templates:
 	find . -type f -name '*.templ' -exec templ fmt -v {} \;
@@ -96,7 +99,7 @@ format-templates:
 serve:
 	$(WT_OUTPUT_FILE)
 
-test: test-go test-assets test-templates
+test: test-go test-assets test-templates test-commands
 
 test-assets:
 	prettier --check .

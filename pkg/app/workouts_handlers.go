@@ -55,7 +55,7 @@ func (a *App) workoutsHandler(c echo.Context) error {
 func (a *App) workoutsShowHandler(c echo.Context) error {
 	a.setContext(c)
 
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
@@ -210,7 +210,7 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
@@ -244,7 +244,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
 	a.setContext(c)
 
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}

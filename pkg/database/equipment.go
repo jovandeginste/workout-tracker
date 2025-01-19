@@ -20,16 +20,16 @@ type Equipment struct {
 
 	User User
 
-	UserID uint `gorm:"not null;index"`                           // The ID of the user who owns the workout
-	Active bool `gorm:"default:true" json:"active" form:"active"` // Whether this equipment is active
+	UserID uint64 `gorm:"not null;index"`                           // The ID of the user who owns the workout
+	Active bool   `gorm:"default:true" json:"active" form:"active"` // Whether this equipment is active
 }
 
 type WorkoutEquipment struct {
 	Model
 	Workout     Workout
 	Equipment   Equipment
-	WorkoutID   uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
-	EquipmentID uint `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
+	WorkoutID   uint64 `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
+	EquipmentID uint64 `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
 }
 
 func GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
@@ -60,7 +60,7 @@ func (e *Equipment) Save(db *gorm.DB) error {
 	return db.Omit(clause.Associations).Save(e).Error
 }
 
-func GetEquipmentByIDs(db *gorm.DB, userID uint, ids []uint) ([]*Equipment, error) {
+func GetEquipmentByIDs(db *gorm.DB, userID uint64, ids []uint64) ([]*Equipment, error) {
 	var equipment []*Equipment
 
 	if len(ids) == 0 {

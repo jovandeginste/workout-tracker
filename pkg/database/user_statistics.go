@@ -11,7 +11,7 @@ type (
 	Statistics struct {
 		Buckets      map[WorkoutType]Buckets // The statistics buckets
 		BucketFormat string                  // The bucket format in strftime format
-		UserID       uint                    // The user ID
+		UserID       uint64                  // The user ID
 	}
 
 	Buckets struct {
@@ -46,14 +46,14 @@ type (
 	Float64Record struct {
 		Date  time.Time // The timestamp of the record
 		Value float64   // The value of the record
-		ID    uint      // The workout ID of the record
+		ID    uint64    // The workout ID of the record
 	}
 
 	// DurationRecord is a single record if the value is a time.Duration
 	DurationRecord struct {
 		Date  time.Time     // The timestamp of the record
 		Value time.Duration // The value of the record
-		ID    uint          // The workout ID of the record
+		ID    uint64        // The workout ID of the record
 	}
 
 	// WorkoutRecord is the collection of records for a single workout type

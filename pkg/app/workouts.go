@@ -167,7 +167,7 @@ func (a *App) addWorkout(c echo.Context) error {
 	workout.Data.Creator = "web-interface"
 
 	var equipmentIDS struct {
-		EquipmentIDs []uint `form:"equipment"`
+		EquipmentIDs []uint64 `form:"equipment"`
 	}
 
 	if err := c.Bind(&equipmentIDS); err != nil {
@@ -206,7 +206,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 	d.Update(workout)
 
 	var equipmentIDS struct {
-		EquipmentIDs []uint `form:"equipment"`
+		EquipmentIDs []uint64 `form:"equipment"`
 	}
 
 	if err := c.Bind(&equipmentIDS); err != nil {

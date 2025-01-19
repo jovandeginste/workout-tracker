@@ -90,7 +90,7 @@ func A2S(v any) string {
 		}
 
 		return "false"
-	case int, uint:
+	case int, uint64:
 		return fmt.Sprintf("%d", e)
 	case float64:
 		return fmt.Sprintf("%.2f", e)

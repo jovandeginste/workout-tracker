@@ -34,7 +34,7 @@ type Workout struct {
 	Type                WorkoutType          // The type of the workout
 	Equipment           []Equipment          `json:",omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
 	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"`                             // Which route segments match
-	UserID              uint                 `gorm:"not null;index;uniqueIndex:idx_start_user"`                                 // The ID of the user who owns the workout
+	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user"`                                 // The ID of the user who owns the workout
 	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
 }
 
@@ -43,7 +43,7 @@ type GPXData struct {
 	Filename  string // The filename of the file
 	Content   []byte `gorm:"type:text"`            // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
-	WorkoutID uint   `gorm:"not null;uniqueIndex"` // The ID of the workout
+	WorkoutID uint64 `gorm:"not null;uniqueIndex"` // The ID of the workout
 }
 
 func (w *Workout) GetDate() time.Time {
@@ -415,7 +415,7 @@ func GetWorkoutWithGPXByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
 	return GetWorkoutByUUID(db.Preload("GPX"), u)
 }
 
-func GetWorkoutWithGPX(db *gorm.DB, id int) (*Workout, error) {
+func GetWorkoutWithGPX(db *gorm.DB, id uint64) (*Workout, error) {
 	return GetWorkout(db.Preload("GPX").Preload("Data.Details"), id)
 }
 
@@ -423,7 +423,7 @@ func GetWorkoutDetailsByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
 	return GetWorkoutWithGPXByUUID(db.Preload("Data.Details"), u)
 }
 
-func GetWorkoutDetails(db *gorm.DB, id int) (*Workout, error) {
+func GetWorkoutDetails(db *gorm.DB, id uint64) (*Workout, error) {
 	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
 }
 
@@ -450,7 +450,7 @@ func GetWorkoutByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
 	return &w, nil
 }
 
-func GetWorkout(db *gorm.DB, id int) (*Workout, error) {
+func GetWorkout(db *gorm.DB, id uint64) (*Workout, error) {
 	var w Workout
 
 	if err := db.
@@ -655,8 +655,8 @@ func (w *Workout) HasExtraMetric(name string) bool {
 	return slices.Contains(w.Data.ExtraMetrics, name)
 }
 
-func (w *Workout) EquipmentIDs() []uint {
-	ids := make([]uint, 0, len(w.Equipment))
+func (w *Workout) EquipmentIDs() []uint64 {
+	ids := make([]uint64, 0, len(w.Equipment))
 
 	for _, e := range w.Equipment {
 		ids = append(ids, e.ID)

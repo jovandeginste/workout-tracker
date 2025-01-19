@@ -67,7 +67,7 @@ type MapData struct {
 	Name                string        // The name of the workout
 	AddressString       string        // The generic location of the workout
 	Center              MapCenter     `gorm:"serializer:json"`      // The center of the workout (in coordinates)
-	WorkoutID           uint          `gorm:"not null;uniqueIndex"` // The workout this data belongs to
+	WorkoutID           uint64        `gorm:"not null;uniqueIndex"` // The workout this data belongs to
 	TotalDistance       float64       // The total distance of the workout
 	TotalDuration       time.Duration // The total duration of the workout
 	MaxSpeed            float64       // The maximum speed of the workout
@@ -89,7 +89,7 @@ type MapDataDetails struct {
 	MapData *MapData   `gorm:"foreignKey:MapDataID" json:"-"`
 	Points  []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
 
-	MapDataID uint `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
+	MapDataID uint64 `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
 }
 
 // MapCenter is the center of the workout
