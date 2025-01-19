@@ -169,3 +169,7 @@ func (a *App) createAdminUser() error {
 
 	return u.Create(a.db)
 }
+
+func (a *App) DB() *gorm.DB {
+	return a.db
+}

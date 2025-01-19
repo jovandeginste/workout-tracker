@@ -39,6 +39,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
+          multi_binaries: true
+          project_path: ./cmd/...
           ldflags: |
             -X "main.buildTime=${{ env.BUILD_TIME }}"
             -X main.gitCommit=${{ github.sha }}
