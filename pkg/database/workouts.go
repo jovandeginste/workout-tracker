@@ -544,7 +544,12 @@ func (w *Workout) setData(data *MapData) {
 }
 
 func (w *Workout) UpdateAverages() {
-	w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+	if w.Data.TotalDuration == 0 {
+		w.Data.AverageSpeed = 0
+	} else {
+		w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+	}
+
 	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
 }
 
