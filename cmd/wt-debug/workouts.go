@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -19,6 +22,8 @@ func (c *cli) workoutsCmd() *cobra.Command {
 	cmd.AddCommand(c.workoutsListCmd())
 	cmd.AddCommand(c.workoutsDiagCmd())
 	cmd.AddCommand(c.workoutsShowCmd())
+	cmd.AddCommand(c.workoutsExportCmd())
+	cmd.AddCommand(c.workoutsImportCmd())
 
 	return cmd
 }
@@ -85,7 +90,7 @@ func (c *cli) workoutsListCmd() *cobra.Command {
 
 func (c *cli) workoutsShowCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "show",
+		Use:   "show workout-id",
 		Short: "Show information about a workout",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -111,6 +116,83 @@ func (c *cli) workoutsShowCmd() *cobra.Command {
 			t.AddRow("Duration (s)", strconv.FormatFloat(wo.TotalDuration().Seconds(), 'f', 2, 64))
 
 			t.Render()
+
+			return nil
+		},
+	}
+}
+
+func (c *cli) workoutsExportCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "export [workout-id...]",
+		Short: "Export all, or some workouts to json (stdout)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var ids []uint64
+
+			if err := c.getDatabase().Model(&database.Workout{}).Pluck("ID", &ids).Error; err != nil {
+				return err
+			}
+
+			filter := len(args) > 0
+
+			for _, id := range ids {
+				if filter && !slices.Contains(args, strconv.FormatUint(id, 10)) {
+					continue
+				}
+
+				c.app.Logger().Info("Exporting workout", "id", id)
+
+				wo, err := database.GetWorkoutDetails(c.getDatabase(), id)
+				if err != nil {
+					return err
+				}
+
+				e, err := wo.Export()
+				if err != nil {
+					return err
+				}
+
+				os.Stdout.Write(e)
+			}
+
+			return nil
+		},
+	}
+}
+
+func (c *cli) workoutsImportCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "import <file>",
+		Short: "Import workouts from a json file (eg. from an earlier export)",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			filename := args[0]
+			c.app.Logger().Info(fmt.Sprintf("Importing from '%s'", filename))
+
+			dat, err := os.ReadFile(filename)
+			if err != nil {
+				return err
+			}
+
+			lines := strings.Split(string(dat), "\n")
+
+			for _, line := range lines {
+				if line == "" {
+					continue
+				}
+
+				var wo database.Workout
+
+				if err := json.Unmarshal([]byte(line), &wo); err != nil {
+					return err
+				}
+
+				c.app.Logger().Info("Importing workout", "id", wo.ID)
+
+				if err := wo.Save(c.app.DB()); err != nil {
+					return err
+				}
+			}
 
 			return nil
 		},

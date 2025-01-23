@@ -264,7 +264,7 @@ func (a *App) updateWorkout(l *slog.Logger) {
 }
 
 func (a *App) UpdateWorkout(i uint64) error {
-	w, err := database.GetWorkoutWithGPX(a.db, i)
+	w, err := database.GetWorkoutDetails(a.db, i)
 	if err != nil {
 		return err
 	}
