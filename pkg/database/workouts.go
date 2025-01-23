@@ -1,7 +1,9 @@
 package database
 
 import (
+	"bytes"
 	"crypto/sha256"
+	"encoding/json"
 	"errors"
 	"path/filepath"
 	"slices"
@@ -411,20 +413,12 @@ func GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	return w, nil
 }
 
-func GetWorkoutWithGPXByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
-	return GetWorkoutByUUID(db.Preload("GPX"), u)
-}
-
-func GetWorkoutWithGPX(db *gorm.DB, id uint64) (*Workout, error) {
-	return GetWorkout(db.Preload("GPX").Preload("Data.Details"), id)
-}
-
 func GetWorkoutDetailsByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
-	return GetWorkoutWithGPXByUUID(db.Preload("Data.Details"), u)
+	return GetWorkoutByUUID(db.Preload("GPX").Preload("Data.Details"), u)
 }
 
 func GetWorkoutDetails(db *gorm.DB, id uint64) (*Workout, error) {
-	return GetWorkoutWithGPX(db.Preload("Data.Details"), id)
+	return GetWorkout(db.Preload("GPX").Preload("Data.Details"), id)
 }
 
 func GetWorkoutByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
@@ -672,4 +666,14 @@ func (w *Workout) EquipmentIDs() []uint64 {
 
 func (w *Workout) Uses(e Equipment) bool {
 	return slices.Contains(w.EquipmentIDs(), e.ID)
+}
+
+func (w *Workout) Export() ([]byte, error) {
+	var buf bytes.Buffer
+
+	if err := json.NewEncoder(&buf).Encode(w); err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
 }

@@ -122,9 +122,9 @@ func newLogger(enabled bool) *slog.Logger {
 }
 
 func newLogHandler() slog.Handler {
-	w := os.Stdout
+	w := os.Stderr
 	if isatty.IsTerminal(w.Fd()) {
-		return tint.NewHandler(os.Stdout, &tint.Options{
+		return tint.NewHandler(os.Stderr, &tint.Options{
 			Level:      slog.LevelDebug,
 			TimeFormat: time.Kitchen,
 		})
@@ -172,4 +172,8 @@ func (a *App) createAdminUser() error {
 
 func (a *App) DB() *gorm.DB {
 	return a.db
+}
+
+func (a *App) Logger() *slog.Logger {
+	return a.logger
 }

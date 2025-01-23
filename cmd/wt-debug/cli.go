@@ -27,6 +27,8 @@ func newCLI() (*cli, error) {
 		return nil, err
 	}
 
+	a.ConfigureLogger()
+
 	if err := a.ConfigureDatabase(); err != nil {
 		return nil, err
 	}
