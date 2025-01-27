@@ -171,20 +171,20 @@ func (a *App) addWorkout(c echo.Context) error {
 	}
 
 	if err := c.Bind(&equipmentIDS); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-add"), err)
 	}
 
 	equipment, err := database.GetEquipmentByIDs(a.db, a.getCurrentUser(c).ID, equipmentIDS.EquipmentIDs)
 	if err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-add"), err)
 	}
 
 	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-edit", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-add"), err)
 	}
 
 	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
-		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", workout.ID), err)
 	}
 
 	a.addNotice(c, "The workout '%s' has been created.", workout.Name)
