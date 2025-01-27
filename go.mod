@@ -8,6 +8,7 @@ require (
 	github.com/a-h/templ v0.3.833
 	github.com/alexedwards/scs/gormstore v0.0.0-20250206205117-b6793b4a9566
 	github.com/alexedwards/scs/v2 v2.8.0
+	github.com/anyappinc/fitbit v0.0.3
 	github.com/aquasecurity/table v1.8.0
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.4
@@ -34,6 +35,7 @@ require (
 	github.com/ringsaturn/tzf v0.16.1
 	github.com/samber/slog-echo v1.15.1
 	github.com/sersh88/timeago v1.0.0
+	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
@@ -105,6 +107,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20250207012021-f9890c6ad9f3 // indirect
 	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/oauth2 v0.25.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect
