@@ -485,6 +485,13 @@ func (w *Workout) Save(db *gorm.DB) error {
 		w.UpdateAverages()
 	}
 
+	if w.ID == 0 {
+		if err := db.Save(w).Error; err != nil {
+			return err
+		}
+	}
+
+	w.Data.WorkoutID = w.ID
 	if err := w.Data.Save(db); err != nil {
 		return err
 	}
