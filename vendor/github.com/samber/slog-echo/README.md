@@ -229,11 +229,32 @@ e.Use(middleware.Recover())
 ```
 
 Available filters:
+
+### Filters
+
+```go
+logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+
+router := gin.New()
+router.Use(
+	sloggin.NewWithFilters(
+		logger,
+		sloggin.Accept(func (c *gin.Context) bool {
+			return xxx
+		}),
+		sloggin.IgnoreStatus(401, 404),
+	),
+)
+```
+
+Available filters:
 - Accept / Ignore
 - AcceptMethod / IgnoreMethod
 - AcceptStatus / IgnoreStatus
-- AcceptStatusGreaterThan / IgnoreStatusLessThan
-- AcceptStatusGreaterThanOrEqual / IgnoreStatusLessThanOrEqual
+- AcceptStatusGreaterThan / IgnoreStatusGreaterThan
+- AcceptStatusLessThan / IgnoreStatusLessThan
+- AcceptStatusGreaterThanOrEqual / IgnoreStatusGreaterThanOrEqual
+- AcceptStatusLessThanOrEqual / IgnoreStatusLessThanOrEqual
 - AcceptPath / IgnorePath
 - AcceptPathContains / IgnorePathContains
 - AcceptPathPrefix / IgnorePathPrefix

@@ -73,22 +73,38 @@ func AcceptStatusGreaterThan(status int) Filter {
 	}
 }
 
-func IgnoreStatusLessThan(status int) Filter {
-	return func(c echo.Context) bool {
-		return c.Response().Status < status
-	}
-}
-
 func AcceptStatusGreaterThanOrEqual(status int) Filter {
 	return func(c echo.Context) bool {
 		return c.Response().Status >= status
 	}
 }
 
-func IgnoreStatusLessThanOrEqual(status int) Filter {
+func AcceptStatusLessThan(status int) Filter {
+	return func(c echo.Context) bool {
+		return c.Response().Status < status
+	}
+}
+
+func AcceptStatusLessThanOrEqual(status int) Filter {
 	return func(c echo.Context) bool {
 		return c.Response().Status <= status
 	}
+}
+
+func IgnoreStatusGreaterThan(status int) Filter {
+	return AcceptStatusLessThanOrEqual(status)
+}
+
+func IgnoreStatusGreaterThanOrEqual(status int) Filter {
+	return AcceptStatusLessThan(status)
+}
+
+func IgnoreStatusLessThan(status int) Filter {
+	return AcceptStatusGreaterThanOrEqual(status)
+}
+
+func IgnoreStatusLessThanOrEqual(status int) Filter {
+	return AcceptStatusGreaterThan(status)
 }
 
 // Path
