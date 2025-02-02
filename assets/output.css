@@ -1,5 +1,113 @@
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
 /*
-! tailwindcss v3.4.7 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -442,7 +550,7 @@ video {
 
 /* Make elements with the HTML hidden attribute stay hidden by default */
 
-[hidden] {
+[hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
 
@@ -486,17 +594,17 @@ video {
 .leaflet-popup-content-wrapper,
   .leaflet-popup-tip {
   --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(24 24 27 / var(--tw-text-opacity));
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
 }
 
 .leaflet-popup-content-wrapper:where(.dark, .dark *),
   .leaflet-popup-tip:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+  background-color: rgb(23 23 23 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(244 244 245 / var(--tw-text-opacity));
+  color: rgb(244 244 245 / var(--tw-text-opacity, 1));
 }
 
 @media (min-width: 768px) {
@@ -508,16 +616,16 @@ video {
 
 body {
   --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(24 24 27 / var(--tw-text-opacity));
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
 }
 
 body:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+  background-color: rgb(23 23 23 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(244 244 245 / var(--tw-text-opacity));
+  color: rgb(244 244 245 / var(--tw-text-opacity, 1));
 }
 
 ol {
@@ -554,32 +662,32 @@ ul {
 
 .dirty {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
 }
 
 .dirty:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
 }
 
 .dirty {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-border-opacity: 1;
-  border-color: rgb(217 119 6 / var(--tw-border-opacity));
+  border-color: rgb(217 119 6 / var(--tw-border-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(217 119 6 / var(--tw-text-opacity));
+  color: rgb(217 119 6 / var(--tw-text-opacity, 1));
 }
 
 .dirty:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(252 211 77 / var(--tw-border-opacity));
+  border-color: rgb(252 211 77 / var(--tw-border-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(252 211 77 / var(--tw-text-opacity));
+  color: rgb(252 211 77 / var(--tw-text-opacity, 1));
 }
 
 textarea,
@@ -592,42 +700,42 @@ textarea,
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+  border-color: rgb(212 212 216 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(244 244 245 / var(--tw-bg-opacity));
+  background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
 }
 
 textarea::-moz-placeholder, select::-moz-placeholder, input::-moz-placeholder {
   --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
 }
 
 textarea::placeholder,
   select::placeholder,
   input::placeholder {
   --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
 }
 
 textarea:where(.dark, .dark *),
   select:where(.dark, .dark *),
   input:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(63 63 70 / var(--tw-border-opacity));
+  border-color: rgb(63 63 70 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1));
 }
 
 textarea:where(.dark, .dark *)::-moz-placeholder, select:where(.dark, .dark *)::-moz-placeholder, input:where(.dark, .dark *)::-moz-placeholder {
   --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
 }
 
 textarea:where(.dark, .dark *)::placeholder,
   select:where(.dark, .dark *)::placeholder,
   input:where(.dark, .dark *)::placeholder {
   --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
+  color: rgb(100 116 139 / var(--tw-text-opacity, 1));
 }
 
 textarea:hover,
@@ -649,43 +757,43 @@ textarea:focus,
 button.edit,
   button.share {
   --tw-border-opacity: 1;
-  border-color: rgb(251 191 36 / var(--tw-border-opacity));
+  border-color: rgb(251 191 36 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(252 211 77 / var(--tw-bg-opacity));
+  background-color: rgb(252 211 77 / var(--tw-bg-opacity, 1));
 }
 
 button.edit:where(.dark, .dark *),
   button.share:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(245 158 11 / var(--tw-bg-opacity));
+  background-color: rgb(245 158 11 / var(--tw-bg-opacity, 1));
 }
 
 button.dangerous {
   --tw-border-opacity: 1;
-  border-color: rgb(225 29 72 / var(--tw-border-opacity));
+  border-color: rgb(225 29 72 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(244 63 94 / var(--tw-bg-opacity));
+  background-color: rgb(244 63 94 / var(--tw-bg-opacity, 1));
 }
 
 button.dangerous:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(190 18 60 / var(--tw-bg-opacity));
+  background-color: rgb(190 18 60 / var(--tw-bg-opacity, 1));
 }
 
 button {
   --tw-border-opacity: 1;
-  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+  border-color: rgb(22 163 74 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 button:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 button {
@@ -731,12 +839,12 @@ h2 {
 
 h2 {
   --tw-text-opacity: 1;
-  color: rgb(39 39 42 / var(--tw-text-opacity));
+  color: rgb(39 39 42 / var(--tw-text-opacity, 1));
 }
 
 h2:where(.dark, .dark *) {
   --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
+  color: rgb(228 228 231 / var(--tw-text-opacity, 1));
 }
 
 h3 {
@@ -754,12 +862,12 @@ h3 {
 
 h3 {
   --tw-text-opacity: 1;
-  color: rgb(39 39 42 / var(--tw-text-opacity));
+  color: rgb(39 39 42 / var(--tw-text-opacity, 1));
 }
 
 h3:where(.dark, .dark *) {
   --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
+  color: rgb(228 228 231 / var(--tw-text-opacity, 1));
 }
 
 a:hover {
@@ -798,18 +906,18 @@ form {
 .note {
   border-left-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(245 158 11 / var(--tw-border-opacity));
+  border-color: rgb(245 158 11 / var(--tw-border-opacity, 1));
   padding: 0.25rem;
   padding-left: 0.75rem;
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
-  color: rgb(82 82 91 / var(--tw-text-opacity));
+  color: rgb(82 82 91 / var(--tw-text-opacity, 1));
 }
 
 .note:where(.dark, .dark *) {
   --tw-text-opacity: 1;
-  color: rgb(161 161 170 / var(--tw-text-opacity));
+  color: rgb(161 161 170 / var(--tw-text-opacity, 1));
 }
 
 .footer {
@@ -821,13 +929,13 @@ form {
 .footer a,
   .content a {
   --tw-text-opacity: 1;
-  color: rgb(180 83 9 / var(--tw-text-opacity));
+  color: rgb(180 83 9 / var(--tw-text-opacity, 1));
 }
 
 .footer a:where(.dark, .dark *),
   .content a:where(.dark, .dark *) {
   --tw-text-opacity: 1;
-  color: rgb(254 243 199 / var(--tw-text-opacity));
+  color: rgb(254 243 199 / var(--tw-text-opacity, 1));
 }
 
 .footer,
@@ -838,17 +946,17 @@ form {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+  background-color: rgb(229 229 229 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(63 63 70 / var(--tw-text-opacity));
+  color: rgb(63 63 70 / var(--tw-text-opacity, 1));
 }
 
 .footer:where(.dark, .dark *),
   .menu:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(38 38 38 / var(--tw-bg-opacity));
+  background-color: rgb(38 38 38 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(212 212 216 / var(--tw-text-opacity));
+  color: rgb(212 212 216 / var(--tw-text-opacity, 1));
 }
 
 .footer,
@@ -922,19 +1030,19 @@ form {
   }
   h1 {
     --tw-border-opacity: 1;
-    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+    border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   }
   h1 {
     --tw-text-opacity: 1;
-    color: rgb(0 0 0 / var(--tw-text-opacity));
+    color: rgb(0 0 0 / var(--tw-text-opacity, 1));
   }
   h1 {
     --tw-border-opacity: 1;
-    border-color: rgb(115 115 115 / var(--tw-border-opacity));
+    border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   }
   h1:where(.dark, .dark *) {
     --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
   }
 }
 
@@ -977,19 +1085,19 @@ form {
     > button {
       a {
         --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
       }
       a:hover {
         --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
       }
       a:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
       }
       a:hover:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
       }
       a {
         text-align: center;
@@ -1015,12 +1123,12 @@ form {
 
 .content {
   --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
 }
 
 .content:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
 }
 
 .inner-form {
@@ -1044,80 +1152,80 @@ form {
 
 .inner-form {
   --tw-border-opacity: 1;
-  border-color: rgb(229 229 229 / var(--tw-border-opacity));
+  border-color: rgb(229 229 229 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+  background-color: rgb(229 229 229 / var(--tw-bg-opacity, 1));
 }
 
 .inner-form:hover {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
 }
 
 .inner-form:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(38 38 38 / var(--tw-border-opacity));
+  border-color: rgb(38 38 38 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(38 38 38 / var(--tw-bg-opacity));
+  background-color: rgb(38 38 38 / var(--tw-bg-opacity, 1));
 }
 
 .inner-form:hover:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
 }
 
 .version-notice {
   --tw-border-opacity: 1;
-  border-color: rgb(7 89 133 / var(--tw-border-opacity));
+  border-color: rgb(7 89 133 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(7 89 133 / var(--tw-text-opacity));
+  color: rgb(7 89 133 / var(--tw-text-opacity, 1));
 }
 
 .version-notice:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(56 189 248 / var(--tw-border-opacity));
+  border-color: rgb(56 189 248 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(3 105 161 / var(--tw-text-opacity));
+  color: rgb(3 105 161 / var(--tw-text-opacity, 1));
 }
 
 .notice {
   --tw-border-opacity: 1;
-  border-color: rgb(22 101 52 / var(--tw-border-opacity));
+  border-color: rgb(22 101 52 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(220 252 231 / var(--tw-bg-opacity));
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(22 101 52 / var(--tw-text-opacity));
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1));
 }
 
 .notice:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(74 222 128 / var(--tw-border-opacity));
+  border-color: rgb(74 222 128 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(220 252 231 / var(--tw-bg-opacity));
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(21 128 61 / var(--tw-text-opacity));
+  color: rgb(21 128 61 / var(--tw-text-opacity, 1));
 }
 
 .alert {
   --tw-border-opacity: 1;
-  border-color: rgb(153 27 27 / var(--tw-border-opacity));
+  border-color: rgb(153 27 27 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(153 27 27 / var(--tw-text-opacity));
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
 }
 
 .alert:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+  border-color: rgb(248 113 113 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
-  color: rgb(185 28 28 / var(--tw-text-opacity));
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
 }
 
 .version-notice,
@@ -1157,12 +1265,12 @@ table {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
 }
 
 table:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
 }
 
 table {
@@ -1177,22 +1285,22 @@ table {
   tfoot,
     thead {
     --tw-bg-opacity: 1;
-    background-color: rgb(244 244 245 / var(--tw-bg-opacity));
+    background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
   }
   tfoot,
     thead {
     --tw-text-opacity: 1;
-    color: rgb(63 63 70 / var(--tw-text-opacity));
+    color: rgb(63 63 70 / var(--tw-text-opacity, 1));
   }
   tfoot:where(.dark, .dark *),
     thead:where(.dark, .dark *) {
     --tw-bg-opacity: 1;
-    background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+    background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1));
   }
   tfoot:where(.dark, .dark *),
     thead:where(.dark, .dark *) {
     --tw-text-opacity: 1;
-    color: rgb(212 212 216 / var(--tw-text-opacity));
+    color: rgb(212 212 216 / var(--tw-text-opacity, 1));
   }
   tfoot,
     thead {
@@ -1201,11 +1309,11 @@ table {
     }
     tr {
       --tw-border-opacity: 1;
-      border-color: rgb(115 115 115 / var(--tw-border-opacity));
+      border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
     }
     tr:where(.dark, .dark *) {
       --tw-border-opacity: 1;
-      border-color: rgb(115 115 115 / var(--tw-border-opacity));
+      border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
     }
   }
   td,
@@ -1224,36 +1332,36 @@ table {
   }
   th {
     --tw-text-opacity: 1;
-    color: rgb(63 63 70 / var(--tw-text-opacity));
+    color: rgb(63 63 70 / var(--tw-text-opacity, 1));
   }
   th:where(.dark, .dark *) {
     --tw-text-opacity: 1;
-    color: rgb(212 212 216 / var(--tw-text-opacity));
+    color: rgb(212 212 216 / var(--tw-text-opacity, 1));
   }
   tbody {
     tr:nth-child(odd) {
       --tw-bg-opacity: 1;
-      background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+      background-color: rgb(229 229 229 / var(--tw-bg-opacity, 1));
     }
     tr:nth-child(even) {
       --tw-bg-opacity: 1;
-      background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+      background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
     }
     tr:hover {
       --tw-bg-opacity: 1;
-      background-color: rgb(254 243 199 / var(--tw-bg-opacity));
+      background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
     }
     tr:nth-child(odd):where(.dark, .dark *) {
       --tw-bg-opacity: 1;
-      background-color: rgb(38 38 38 / var(--tw-bg-opacity));
+      background-color: rgb(38 38 38 / var(--tw-bg-opacity, 1));
     }
     tr:nth-child(even):where(.dark, .dark *) {
       --tw-bg-opacity: 1;
-      background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+      background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
     }
     tr:hover:where(.dark, .dark *) {
       --tw-bg-opacity: 1;
-      background-color: rgb(146 64 14 / var(--tw-bg-opacity));
+      background-color: rgb(146 64 14 / var(--tw-bg-opacity, 1));
     }
   }
 }
@@ -1279,12 +1387,12 @@ table {
   overflow-y: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
   --tw-bg-opacity: 0.8;
 }
 
 .modal:where(.dark, .dark *) {
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
   --tw-bg-opacity: 0.6;
 }
 
@@ -1312,11 +1420,11 @@ table {
   }
   .window {
     --tw-bg-opacity: 1;
-    background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+    background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
   }
   .window:where(.dark, .dark *) {
     --tw-bg-opacity: 1;
-    background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+    background-color: rgb(23 23 23 / var(--tw-bg-opacity, 1));
   }
   .window {
     button.close-modal {
@@ -1341,27 +1449,27 @@ table {
       }
       a {
         --tw-text-opacity: 1;
-        color: rgb(75 85 99 / var(--tw-text-opacity));
+        color: rgb(75 85 99 / var(--tw-text-opacity, 1));
       }
       a:hover {
         --tw-bg-opacity: 1;
-        background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
       }
       a:hover {
         --tw-text-opacity: 1;
-        color: rgb(243 244 246 / var(--tw-text-opacity));
+        color: rgb(243 244 246 / var(--tw-text-opacity, 1));
       }
       a:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(156 163 175 / var(--tw-text-opacity));
+        color: rgb(156 163 175 / var(--tw-text-opacity, 1));
       }
       a:hover:where(.dark, .dark *) {
         --tw-bg-opacity: 1;
-        background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+        background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
       }
       a:hover:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(17 24 39 / var(--tw-text-opacity));
+        color: rgb(17 24 39 / var(--tw-text-opacity, 1));
       }
     }
     .modal-content {
@@ -1389,11 +1497,11 @@ table {
       }
       h3 {
         --tw-text-opacity: 1;
-        color: rgb(24 24 27 / var(--tw-text-opacity));
+        color: rgb(24 24 27 / var(--tw-text-opacity, 1));
       }
       h3:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(244 244 245 / var(--tw-text-opacity));
+        color: rgb(244 244 245 / var(--tw-text-opacity, 1));
       }
       button {
         display: inline-flex;
@@ -1432,78 +1540,78 @@ table {
       }
       button.confirm {
         --tw-bg-opacity: 1;
-        background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+        background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
       }
       button.confirm {
         --tw-text-opacity: 1;
-        color: rgb(255 255 255 / var(--tw-text-opacity));
+        color: rgb(255 255 255 / var(--tw-text-opacity, 1));
       }
       button.confirm:hover {
         --tw-bg-opacity: 1;
-        background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+        background-color: rgb(153 27 27 / var(--tw-bg-opacity, 1));
       }
       button.confirm:focus {
         --tw-ring-opacity: 1;
-        --tw-ring-color: rgb(252 165 165 / var(--tw-ring-opacity));
+        --tw-ring-color: rgb(252 165 165 / var(--tw-ring-opacity, 1));
       }
       button.confirm:where(.dark, .dark *) {
         --tw-bg-opacity: 1;
-        background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+        background-color: rgb(248 113 113 / var(--tw-bg-opacity, 1));
       }
       button.confirm:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(0 0 0 / var(--tw-text-opacity));
+        color: rgb(0 0 0 / var(--tw-text-opacity, 1));
       }
       button.confirm:hover:where(.dark, .dark *) {
         --tw-bg-opacity: 1;
-        background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+        background-color: rgb(254 202 202 / var(--tw-bg-opacity, 1));
       }
       button.confirm:focus:where(.dark, .dark *) {
         --tw-ring-opacity: 1;
-        --tw-ring-color: rgb(185 28 28 / var(--tw-ring-opacity));
+        --tw-ring-color: rgb(185 28 28 / var(--tw-ring-opacity, 1));
       }
       button.cancel {
         border-width: 1px;
       }
       button.cancel {
         --tw-border-opacity: 1;
-        border-color: rgb(229 231 235 / var(--tw-border-opacity));
+        border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
       }
       button.cancel {
         --tw-bg-opacity: 1;
-        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
       }
       button.cancel {
         --tw-text-opacity: 1;
-        color: rgb(17 24 39 / var(--tw-text-opacity));
+        color: rgb(17 24 39 / var(--tw-text-opacity, 1));
       }
       button.cancel:hover {
         --tw-bg-opacity: 1;
-        background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+        background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
       }
       button.cancel:focus {
         --tw-ring-opacity: 1;
-        --tw-ring-color: rgb(165 243 252 / var(--tw-ring-opacity));
+        --tw-ring-color: rgb(165 243 252 / var(--tw-ring-opacity, 1));
       }
       button.cancel:where(.dark, .dark *) {
         --tw-border-opacity: 1;
-        border-color: rgb(31 41 55 / var(--tw-border-opacity));
+        border-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
       }
       button.cancel:where(.dark, .dark *) {
         --tw-bg-opacity: 1;
-        background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+        background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
       }
       button.cancel:where(.dark, .dark *) {
         --tw-text-opacity: 1;
-        color: rgb(243 244 246 / var(--tw-text-opacity));
+        color: rgb(243 244 246 / var(--tw-text-opacity, 1));
       }
       button.cancel:hover:where(.dark, .dark *) {
         --tw-bg-opacity: 1;
-        background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+        background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
       }
       button.cancel:focus:where(.dark, .dark *) {
         --tw-ring-opacity: 1;
-        --tw-ring-color: rgb(21 94 117 / var(--tw-ring-opacity));
+        --tw-ring-color: rgb(21 94 117 / var(--tw-ring-opacity, 1));
       }
     }
   }
@@ -1529,16 +1637,16 @@ table {
 
 .user-pill {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
 }
 
 .user-pill:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
 }
 
 .selectable-pill {
@@ -1561,16 +1669,16 @@ table {
 
 .selectable-pill {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
 }
 
 .selectable-pill:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
 }
 
 .selectable-pill {
@@ -1584,30 +1692,30 @@ table {
 
 .selectable-pill {
   --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+  border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity, 1));
 }
 
 .peer:checked ~ .selectable-pill {
   --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+  border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity, 1));
 }
 
 .selectable-pill:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(185 28 28 / var(--tw-border-opacity));
+  border-color: rgb(185 28 28 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity, 1));
 }
 
 .peer:checked ~ .selectable-pill:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(21 128 61 / var(--tw-border-opacity));
+  border-color: rgb(21 128 61 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(22 101 52 / var(--tw-bg-opacity));
+  background-color: rgb(22 101 52 / var(--tw-bg-opacity, 1));
 }
 
 .workout-item {
@@ -1627,26 +1735,26 @@ table {
 
 .workout-item {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity, 1));
 }
 
 .workout-item:where(.dark, .dark *) {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
   --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity, 1));
 }
 
 .workout-item {
   .meta {
     --tw-text-opacity: 1;
-    color: rgb(82 82 82 / var(--tw-text-opacity));
+    color: rgb(82 82 82 / var(--tw-text-opacity, 1));
   }
   .meta:where(.dark, .dark *) {
     --tw-text-opacity: 1;
-    color: rgb(163 163 163 / var(--tw-text-opacity));
+    color: rgb(163 163 163 / var(--tw-text-opacity, 1));
   }
 }
 
@@ -1661,114 +1769,6 @@ table {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 1000ms;
-}
-
-*, ::before, ::after {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
-}
-
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
 }
 
 .container {
@@ -3067,12 +3067,12 @@ table {
 
 .border-black {
   --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 
 .border-neutral-500 {
   --tw-border-opacity: 1;
-  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+  border-color: rgb(115 115 115 / var(--tw-border-opacity, 1));
 }
 
 .p-1 {
@@ -3134,7 +3134,7 @@ table {
 
 .text-green-500 {
   --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
+  color: rgb(34 197 94 / var(--tw-text-opacity, 1));
 }
 
 .text-green-500\/0 {
@@ -3223,17 +3223,17 @@ table {
 
 .text-neutral-600 {
   --tw-text-opacity: 1;
-  color: rgb(82 82 82 / var(--tw-text-opacity));
+  color: rgb(82 82 82 / var(--tw-text-opacity, 1));
 }
 
 .text-orange-600 {
   --tw-text-opacity: 1;
-  color: rgb(234 88 12 / var(--tw-text-opacity));
+  color: rgb(234 88 12 / var(--tw-text-opacity, 1));
 }
 
 .text-rose-500 {
   --tw-text-opacity: 1;
-  color: rgb(244 63 94 / var(--tw-text-opacity));
+  color: rgb(244 63 94 / var(--tw-text-opacity, 1));
 }
 
 .text-rose-500\/0 {
@@ -3512,7 +3512,7 @@ table {
 
 .dark\:text-neutral-400:where(.dark, .dark *) {
   --tw-text-opacity: 1;
-  color: rgb(163 163 163 / var(--tw-text-opacity));
+  color: rgb(163 163 163 / var(--tw-text-opacity, 1));
 }
 
 @media print {
