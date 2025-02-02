@@ -18,8 +18,10 @@ test:
 cover: test
 	go tool cover -html=coverage.out -o=coverage.html
 
-comparetzpb_gen:
-	go run cmd/comparetzpb/main.go
-
 bench:
 	go test -v -bench=. ./...
+
+
+dep-licenses:
+	go-licenses save ./ --save_path=THIRD_PARTY_LICENSES 
+	build_notice.sh

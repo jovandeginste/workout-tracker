@@ -15,16 +15,18 @@ toolkit.
 > Here are some language or server which built with tzf or it's other language
 > bindings:
 
-| Language or Sever | Link                                                                    | Note              |
-| ----------------- | ----------------------------------------------------------------------- | ----------------- |
-| Go                | [`ringsaturn/tzf`](https://github.com/ringsaturn/tzf)                   |                   |
-| Ruby              | [`HarlemSquirrel/tzf-rb`](https://github.com/HarlemSquirrel/tzf-rb)     |                   |
-| Rust              | [`ringsaturn/tzf-rs`](https://github.com/ringsaturn/tzf-rs)             |                   |
-| Python            | [`ringsaturn/tzfpy`](https://github.com/ringsaturn/tzfpy)               |                   |
-| HTTP API          | [`ringsaturn/tzf-server`](https://github.com/ringsaturn/tzf-server)     | build with tzf    |
-| HTTP API          | [`racemap/rust-tz-service`](https://github.com/racemap/rust-tz-service) | build with tzf-rs |
-| Redis Server      | [`ringsaturn/tzf-server`](https://github.com/ringsaturn/tzf-server)     | build with tzf    |
-| Redis Server      | [`ringsaturn/redizone`](https://github.com/ringsaturn/redizone)         | build with tzf-rs |
+| Language or Sever         | Link                                                                    | Note                |
+| ------------------------- | ----------------------------------------------------------------------- | ------------------- |
+| Go                        | [`ringsaturn/tzf`](https://github.com/ringsaturn/tzf)                   |                     |
+| Ruby                      | [`HarlemSquirrel/tzf-rb`](https://github.com/HarlemSquirrel/tzf-rb)     | build with tzf-rs   |
+| Rust                      | [`ringsaturn/tzf-rs`](https://github.com/ringsaturn/tzf-rs)             |                     |
+| Python                    | [`ringsaturn/tzfpy`](https://github.com/ringsaturn/tzfpy)               | build with tzf-rs   |
+| HTTP API                  | [`ringsaturn/tzf-server`](https://github.com/ringsaturn/tzf-server)     | build with tzf      |
+| HTTP API                  | [`racemap/rust-tz-service`](https://github.com/racemap/rust-tz-service) | build with tzf-rs   |
+| Redis Server              | [`ringsaturn/tzf-server`](https://github.com/ringsaturn/tzf-server)     | build with tzf      |
+| Redis Server              | [`ringsaturn/redizone`](https://github.com/ringsaturn/redizone)         | build with tzf-rs   |
+| JS via Wasm(browser only) | [`ringsaturn/tzf-wasm`](https://github.com/ringsaturn/tzf-wasm)         | build with tzf-rs   |
+| Online                    | [`ringsaturn/tzf-web`](https://github.com/ringsaturn/tzf-web)           | build with tzf-wasm |
 
 ## Quick Start
 
@@ -216,23 +218,21 @@ Here is what has been done to improve performance:
 That's all. There are no black magic tricks inside the tzf package.
 
 The benchmark was conducted using version
-<https://github.com/ringsaturn/tzf/releases/tag/v0.10.0>
+<https://github.com/ringsaturn/tzf/releases/tag/v0.16.0>
 
 ```
 goos: darwin
-goarch: amd64
+goarch: arm64
 pkg: github.com/ringsaturn/tzf
-cpu: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
-BenchmarkDefaultFinder_GetTimezoneName_Random_WorldCities-16              441309              2778 ns/op              1000 ns/p50            10000 ns/p90            19000 ns/p99
-BenchmarkFuzzyFinder_GetTimezoneName_Random_WorldCities-16               1000000              1077 ns/op              1000 ns/p50             2000 ns/p90             2000 ns/p99
-BenchmarkGetTimezoneName-16                                               226834              5190 ns/op              5000 ns/p50             5000 ns/p90            22000 ns/p99
-BenchmarkGetTimezoneNameAtEdge-16                                         211555              5606 ns/op              5000 ns/p50             6000 ns/p90            23000 ns/p99
-BenchmarkGetTimezoneName_Random_WorldCities-16                            163000              7279 ns/op              7000 ns/p50            10000 ns/p90            29000 ns/p99
-BenchmarkFullFinder_GetTimezoneName-16                                    212896              5556 ns/op              5000 ns/p50             6000 ns/p90            22000 ns/p99
-BenchmarkFullFinder_GetTimezoneNameAtEdge-16                              195381              6262 ns/op              6000 ns/p50             7000 ns/p90            23000 ns/p99
-BenchmarkFullFinder_GetTimezoneName_Random_WorldCities-16                 116652              9354 ns/op              8000 ns/p50            15000 ns/p90            31000 ns/p99
+cpu: Apple M3 Max
+BenchmarkDefaultFinder_GetTimezoneName_Random_WorldCities-16    	  823786	      1261 ns/op	      1000 ns/p50	      5000 ns/p90	      8000 ns/p99	       8 B/op	       0 allocs/op
+BenchmarkFuzzyFinder_GetTimezoneName_Random_WorldCities-16      	 2239102	       572.1 ns/op	      1000 ns/p50	      1000 ns/p90	      1000 ns/p99	       8 B/op	       0 allocs/op
+BenchmarkGetTimezoneName-16                                     	  423015	      2852 ns/op	      3000 ns/p50	      3000 ns/p90	      4000 ns/p99	       8 B/op	       0 allocs/op
+BenchmarkGetTimezoneNameAtEdge-16                               	  399050	      3036 ns/op	      3000 ns/p50	      3000 ns/p90	      4000 ns/p99	       8 B/op	       0 allocs/op
+BenchmarkGetTimezoneName_Random_WorldCities-16                  	  288864	      3867 ns/op	      4000 ns/p50	      6000 ns/p90	      8000 ns/p99	       8 B/op	       0 allocs/op
 PASS
-ok      github.com/ringsaturn/tzf       18.321s
+coverage: 65.5% of statements
+ok  	github.com/ringsaturn/tzf	7.995s
 ```
 
 - <https://ringsaturn.github.io/tzf/> displays continuous benchmarking results.
