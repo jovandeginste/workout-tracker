@@ -362,25 +362,27 @@ func link(p *Parser, data []byte, offset int) (int, ast.Node) {
 		linkB := i
 		brace := 0
 
+		var c byte
 		// look for link end: ' " )
 	findlinkend:
 		for i < len(data) {
+			c = data[i]
 			switch {
-			case data[i] == '\\':
+			case c == '\\':
 				i += 2
 
-			case data[i] == '(':
+			case c == '(':
 				brace++
 				i++
 
-			case data[i] == ')':
+			case c == ')':
 				if brace <= 0 {
 					break findlinkend
 				}
 				brace--
 				i++
 
-			case data[i] == '\'' || data[i] == '"':
+			case c == '\'' || c == '"':
 				break findlinkend
 
 			default:
@@ -402,14 +404,15 @@ func link(p *Parser, data []byte, offset int) (int, ast.Node) {
 
 		findtitleend:
 			for i < len(data) {
+				c = data[i]
 				switch {
-				case data[i] == '\\':
+				case c == '\\':
 					i++
 
-				case data[i] == data[titleB-1]: // matching title delimiter
+				case c == data[titleB-1]: // matching title delimiter
 					titleEndCharFound = true
 
-				case titleEndCharFound && data[i] == ')':
+				case titleEndCharFound && c == ')':
 					break findtitleend
 				}
 				i++
@@ -736,7 +739,7 @@ func leftAngle(p *Parser, data []byte, offset int) (int, ast.Node) {
 }
 
 // '\\' backslash escape
-var escapeChars = []byte("\\`*_{}[]()#+-.!:|&<>~^$")
+var EscapeChars = []byte("\\`*_{}[]()#+-.!:|&<>~^$")
 
 func escape(p *Parser, data []byte, offset int) (int, ast.Node) {
 	data = data[offset:]
@@ -753,7 +756,7 @@ func escape(p *Parser, data []byte, offset int) (int, ast.Node) {
 		return 2, &ast.Hardbreak{}
 	}
 
-	if bytes.IndexByte(escapeChars, data[1]) < 0 {
+	if bytes.IndexByte(EscapeChars, data[1]) < 0 {
 		return 0, nil
 	}
 
