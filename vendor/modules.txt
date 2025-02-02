@@ -36,9 +36,10 @@ github.com/davecgh/go-spew/spew
 # github.com/dustin/go-humanize v1.0.1
 ## explicit; go 1.16
 github.com/dustin/go-humanize
-# github.com/fsnotify/fsnotify v1.7.0
+# github.com/fsnotify/fsnotify v1.8.0
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
+github.com/fsnotify/fsnotify/internal
 # github.com/fsouza/slognil v0.4.1
 ## explicit; go 1.22
 github.com/fsouza/slognil
@@ -73,7 +74,7 @@ github.com/go-sql-driver/mysql
 # github.com/golang-jwt/jwt/v5 v5.2.1
 ## explicit; go 1.18
 github.com/golang-jwt/jwt/v5
-# github.com/gomarkdown/markdown v0.0.0-20240730141124-034f12af3bf6
+# github.com/gomarkdown/markdown v0.0.0-20250202022148-4f606c78d442
 ## explicit; go 1.12
 github.com/gomarkdown/markdown
 github.com/gomarkdown/markdown/ast
@@ -107,7 +108,7 @@ github.com/inconshreveable/mousetrap
 ## explicit; go 1.21
 github.com/invopop/ctxi18n
 github.com/invopop/ctxi18n/i18n
-# github.com/invopop/yaml v0.2.0
+# github.com/invopop/yaml v0.3.1
 ## explicit; go 1.14
 github.com/invopop/yaml
 # github.com/jackc/pgpassfile v1.0.0
@@ -116,8 +117,8 @@ github.com/jackc/pgpassfile
 # github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761
 ## explicit; go 1.14
 github.com/jackc/pgservicefile
-# github.com/jackc/pgx/v5 v5.6.0
-## explicit; go 1.20
+# github.com/jackc/pgx/v5 v5.7.2
+## explicit; go 1.21
 github.com/jackc/pgx/v5
 github.com/jackc/pgx/v5/internal/iobufpool
 github.com/jackc/pgx/v5/internal/pgio
@@ -130,7 +131,7 @@ github.com/jackc/pgx/v5/pgproto3
 github.com/jackc/pgx/v5/pgtype
 github.com/jackc/pgx/v5/pgxpool
 github.com/jackc/pgx/v5/stdlib
-# github.com/jackc/puddle/v2 v2.2.1
+# github.com/jackc/puddle/v2 v2.2.2
 ## explicit; go 1.19
 github.com/jackc/puddle/v2
 github.com/jackc/puddle/v2/internal/genstack
@@ -161,16 +162,16 @@ github.com/labstack/gommon/log
 # github.com/lmittmann/tint v1.0.7
 ## explicit; go 1.21
 github.com/lmittmann/tint
-# github.com/magiconair/properties v1.8.7
+# github.com/magiconair/properties v1.8.9
 ## explicit; go 1.19
 github.com/magiconair/properties
-# github.com/mailru/easyjson v0.7.7
-## explicit; go 1.12
+# github.com/mailru/easyjson v0.9.0
+## explicit; go 1.20
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-# github.com/mattn/go-colorable v0.1.13
-## explicit; go 1.15
+# github.com/mattn/go-colorable v0.1.14
+## explicit; go 1.18
 github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
@@ -218,8 +219,8 @@ github.com/paulmach/orb/internal/mercator
 github.com/paulmach/orb/maptile
 github.com/paulmach/orb/planar
 github.com/paulmach/orb/simplify
-# github.com/pelletier/go-toml/v2 v2.2.2
-## explicit; go 1.16
+# github.com/pelletier/go-toml/v2 v2.2.3
+## explicit; go 1.21.0
 github.com/pelletier/go-toml/v2
 github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
@@ -249,17 +250,18 @@ github.com/ringsaturn/tzf-rel-lite
 github.com/rivo/uniseg
 # github.com/rogpeppe/go-internal v1.12.0
 ## explicit; go 1.20
-# github.com/sagikazarmark/locafero v0.6.0
-## explicit; go 1.20
+# github.com/sagikazarmark/locafero v0.7.0
+## explicit; go 1.21
 github.com/sagikazarmark/locafero
 # github.com/sagikazarmark/slog-shim v0.1.0
 ## explicit; go 1.20
 github.com/sagikazarmark/slog-shim
-# github.com/samber/lo v1.47.0
+# github.com/samber/lo v1.49.1
 ## explicit; go 1.18
 github.com/samber/lo
 github.com/samber/lo/internal/constraints
 github.com/samber/lo/internal/rand
+github.com/samber/lo/mutable
 # github.com/samber/slog-echo v1.15.1
 ## explicit; go 1.21
 github.com/samber/slog-echo
@@ -275,18 +277,18 @@ github.com/sourcegraph/conc/panics
 # github.com/spazzymoto/echo-scs-session v1.0.0
 ## explicit; go 1.15
 github.com/spazzymoto/echo-scs-session
-# github.com/spf13/afero v1.11.0
-## explicit; go 1.19
+# github.com/spf13/afero v1.12.0
+## explicit; go 1.21
 github.com/spf13/afero
 github.com/spf13/afero/internal/common
 github.com/spf13/afero/mem
-# github.com/spf13/cast v1.7.0
+# github.com/spf13/cast v1.7.1
 ## explicit; go 1.19
 github.com/spf13/cast
 # github.com/spf13/cobra v1.8.1
 ## explicit; go 1.15
 github.com/spf13/cobra
-# github.com/spf13/pflag v1.0.5
+# github.com/spf13/pflag v1.0.6
 ## explicit; go 1.12
 github.com/spf13/pflag
 # github.com/spf13/viper v1.19.0
@@ -336,7 +338,7 @@ github.com/valyala/fasttemplate
 # github.com/westphae/geomag v1.0.2
 ## explicit; go 1.13
 github.com/westphae/geomag/pkg/egm96
-# go.mongodb.org/mongo-driver v1.14.0
+# go.mongodb.org/mongo-driver v1.17.2
 ## explicit; go 1.18
 go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/bson/bsoncodec
@@ -345,14 +347,14 @@ go.mongodb.org/mongo-driver/bson/bsonrw
 go.mongodb.org/mongo-driver/bson/bsontype
 go.mongodb.org/mongo-driver/bson/primitive
 go.mongodb.org/mongo-driver/x/bsonx/bsoncore
-# go.opentelemetry.io/otel v1.29.0
-## explicit; go 1.21
+# go.opentelemetry.io/otel v1.34.0
+## explicit; go 1.22.0
 go.opentelemetry.io/otel/attribute
 go.opentelemetry.io/otel/codes
 go.opentelemetry.io/otel/internal
 go.opentelemetry.io/otel/internal/attribute
-# go.opentelemetry.io/otel/trace v1.29.0
-## explicit; go 1.21
+# go.opentelemetry.io/otel/trace v1.34.0
+## explicit; go 1.22.0
 go.opentelemetry.io/otel/trace
 go.opentelemetry.io/otel/trace/embedded
 # go.uber.org/multierr v1.11.0
@@ -365,15 +367,15 @@ golang.org/x/crypto/acme/autocert
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/pbkdf2
-# golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
-## explicit; go 1.20
+# golang.org/x/exp v0.0.0-20250128182459-e0ece0dbea4c
+## explicit; go 1.22.0
 golang.org/x/exp/constraints
 golang.org/x/exp/maps
 golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal
 golang.org/x/exp/slog/internal/buffer
-# golang.org/x/net v0.33.0
+# golang.org/x/net v0.34.0
 ## explicit; go 1.18
 golang.org/x/net/html
 golang.org/x/net/html/atom
@@ -422,16 +424,15 @@ golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 golang.org/x/text/width
-# golang.org/x/time v0.8.0
+# golang.org/x/time v0.9.0
 ## explicit; go 1.18
 golang.org/x/time/rate
-# golang.org/x/tools v0.24.0
-## explicit; go 1.19
+# golang.org/x/tools v0.29.0
+## explicit; go 1.22.0
 golang.org/x/tools/go/ast/astutil
 golang.org/x/tools/go/buildutil
 golang.org/x/tools/go/internal/cgo
 golang.org/x/tools/go/loader
-golang.org/x/tools/internal/versions
 # google.golang.org/protobuf v1.36.4
 ## explicit; go 1.21
 google.golang.org/protobuf/encoding/prototext
@@ -482,8 +483,8 @@ gorm.io/gorm/logger
 gorm.io/gorm/migrator
 gorm.io/gorm/schema
 gorm.io/gorm/utils
-# modernc.org/libc v1.56.0
-## explicit; go 1.20
+# modernc.org/libc v1.61.11
+## explicit; go 1.21
 modernc.org/libc
 modernc.org/libc/errno
 modernc.org/libc/fcntl
@@ -510,12 +511,12 @@ modernc.org/libc/utime
 modernc.org/libc/uuid
 modernc.org/libc/uuid/uuid
 modernc.org/libc/wctype
-# modernc.org/mathutil v1.6.0
-## explicit; go 1.18
+# modernc.org/mathutil v1.7.1
+## explicit; go 1.21
 modernc.org/mathutil
-# modernc.org/memory v1.8.0
-## explicit; go 1.18
+# modernc.org/memory v1.8.2
+## explicit; go 1.21
 modernc.org/memory
-# modernc.org/sqlite v1.31.1
-## explicit; go 1.20
+# modernc.org/sqlite v1.34.5
+## explicit; go 1.21
 modernc.org/sqlite/lib
