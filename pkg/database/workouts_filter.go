@@ -59,7 +59,7 @@ func (wf *WorkoutFilters) setTypeFilter() {
 }
 
 func (wf *WorkoutFilters) setSinceFilter() {
-	if wf.Since == "" || wf.Since == "all" {
+	if wf.Since == "" || wf.Since == "forever" {
 		return
 	}
 
