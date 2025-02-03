@@ -7,3 +7,4 @@ workout-tracker.yaml
 coverage.out
 /assets/dist/
 .aider*
+*_templ.txt
