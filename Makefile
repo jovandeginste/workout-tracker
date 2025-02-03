@@ -8,6 +8,8 @@ WT_DEBUG_OUTPUT_FILE ?= tmp/wt-debug
 
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
+TEMPL_PROXY_PORT=8090
+TEMPL_APP_PORT=8080
 
 .PHONY: all clean test build screenshots meta install-dev-deps install-deps
 
@@ -26,7 +28,15 @@ clean:
 	rm -rf ./tmp/ ./node_modules/ ./assets/dist/
 
 dev:
+	$(MAKE) templ-watch & sleep 1
 	air
+
+templ-watch:
+	templ generate --watch \
+			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
+			--proxyport="$(TEMPL_PROXY_PORT)" \
+			--proxybind="localhost" \
+			--cmd "./tmp/workout-tracker"
 
 build: build-dist build-server build-docker screenshots
 meta: swagger screenshots changelog
@@ -36,7 +46,7 @@ build-cli: build-tw build-templates
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
-build-server: build-tw build-templates
+build-server: build-tw
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
@@ -57,7 +67,7 @@ swagger:
 		--generalInfo api_handlers.go
 
 build-tw:
-	npx tailwindcss -i ./main.css -o ./assets/output.css
+	npx tailwindcss -i ./main.css -o ./assets/output.css --minify
 
 clean-dist:
 	rm -rf ./assets/dist/
@@ -83,6 +93,8 @@ build-dist: clean-dist
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
+notify-templ-proxy:
+	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 build-templates:
 	templ generate
