@@ -150,11 +150,7 @@ func (w *Workout) Repetitions() int {
 }
 
 func (w *Workout) Duration() time.Duration {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDuration
+	return w.TotalDuration()
 }
 
 func (w *Workout) FullAddress() string {
@@ -329,7 +325,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		User:   u,
 		UserID: u.ID,
 		Dirty:  true,
-		Name:   gpxName(gpxContent),
+		Name:   gpxContent.Name,
 		Data:   data,
 		Notes:  notes,
 		Type:   workoutType,
@@ -534,14 +530,11 @@ func (w *Workout) setData(data *MapData) {
 		data.Details.MapDataID = w.Data.Details.MapDataID
 	}
 
+	data.UpdateAddress()
+	data.UpdateExtraMetrics()
+	data.correctNaN()
+
 	w.Data = data
-
-	if !w.Data.Center.IsZero() {
-		w.Data.Address = w.Data.Center.Address()
-	}
-
-	w.Data.UpdateExtraMetrics()
-	w.Data.UpdateAddress()
 }
 
 func (w *Workout) UpdateAverages() {

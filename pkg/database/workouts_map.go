@@ -105,6 +105,7 @@ type MapPoint struct {
 	ExtraMetrics  ExtraMetrics  // Extra metrics at this point
 	Lat           float64       // The latitude of the point
 	Lng           float64       // The longitude of the point
+	Elevation     float64       // The elevation of the point
 	Distance      float64       // The distance from the previous point
 	TotalDistance float64       // The total distance of the workout up to this point
 	Duration      time.Duration // The duration from the previous point
@@ -149,6 +150,10 @@ func (m *MapData) UpdateExtraMetrics() {
 }
 
 func (m *MapData) UpdateAddress() {
+	if m.Address == nil && !m.Center.IsZero() {
+		m.Address = m.Center.Address()
+	}
+
 	if m.Address == nil && m.hasAddressString() {
 		return
 	}
@@ -212,7 +217,13 @@ func (m *MapPoint) DistanceTo(m2 *MapPoint) float64 {
 		return math.Inf(1)
 	}
 
-	return gpx.HaversineDistance(m.Lat, m.Lng, m2.Lat, m2.Lng)
+	return m.AsGPXPoint().Distance2D(m2.AsGPXPoint())
+}
+
+func (m *MapPoint) AsGPXPoint() *gpx.Point {
+	ele := gpx.NewNullableFloat64(m.Elevation)
+
+	return &gpx.Point{Latitude: m.Lat, Longitude: m.Lng, Elevation: *ele}
 }
 
 // center returns the center point (lat, lng) of gpx points
@@ -307,18 +318,6 @@ func pointHasDistance(p gpx.GPXPoint) bool {
 	return true
 }
 
-func gpxName(gpxContent *gpx.GPX) string {
-	if gpxContent.Name != "" {
-		return gpxContent.Name
-	}
-
-	if len(gpxContent.Tracks) == 0 {
-		return "(no name)"
-	}
-
-	return gpxContent.Tracks[0].Name
-}
-
 // Determines the date to use for the workout
 func gpxDate(gpxContent *gpx.GPX) *time.Time {
 	// Use the first track's first segment's timestamp if it exists
@@ -339,7 +338,7 @@ func gpxDate(gpxContent *gpx.GPX) *time.Time {
 }
 
 func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
-	return gpx.HaversineDistance(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude)
+	return p2.Distance3D(&p1)
 }
 
 func createMapData(gpxContent *gpx.GPX) *MapData {
@@ -381,7 +380,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 
 	data := &MapData{
 		Creator:             gpxContent.Creator,
-		Name:                gpxName(gpxContent),
+		Name:                gpxContent.Name,
 		Center:              mapCenter,
 		TotalDistance:       totalDistance,
 		TotalDuration:       totalDuration,
@@ -395,8 +394,8 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		TotalDown:           downhill,
 	}
 
-	data.UpdateExtraMetrics()
 	data.UpdateAddress()
+	data.UpdateExtraMetrics()
 	data.correctNaN()
 
 	return data
@@ -451,10 +450,10 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 			t = pt.TimeDiff(&prevPoint)
 
 			prevPoint = pt
-		}
 
-		totalDist += dist
-		totalTime += t
+			totalDist += dist
+			totalTime += t
+		}
 
 		extraMetrics := ExtraMetrics{}
 		extraMetrics.Set("elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
@@ -463,6 +462,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		data.Details.Points = append(data.Details.Points, MapPoint{
 			Lat:           pt.Point.Latitude,
 			Lng:           pt.Point.Longitude,
+			Elevation:     pt.Elevation.Value(),
 			Time:          pt.Timestamp,
 			Distance:      dist,
 			TotalDistance: totalDist,
