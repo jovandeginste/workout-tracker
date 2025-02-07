@@ -16,6 +16,7 @@ func (c *cli) rootCmd() *cobra.Command {
 	cmd.AddCommand(c.versionCmd())
 	cmd.AddCommand(c.configCmd())
 	cmd.AddCommand(c.workoutsCmd())
+	cmd.AddCommand(c.filesCmd())
 
 	return cmd
 }
