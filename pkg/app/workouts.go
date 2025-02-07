@@ -147,6 +147,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Data.Address, &a)
 
 	w.Data.UpdateAddress()
+	w.Data.UpdateExtraMetrics()
 }
 
 func (a *App) addWorkout(c echo.Context) error {

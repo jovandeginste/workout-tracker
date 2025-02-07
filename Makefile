@@ -27,16 +27,39 @@ clean:
 	rm -fv ./assets/output.css ./workout-tracker
 	rm -rf ./tmp/ ./node_modules/ ./assets/dist/
 
-dev:
-	$(MAKE) templ-watch & sleep 1
-	air
 
-templ-watch:
+watch/templ:
 	templ generate --watch \
+			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
 			--proxybind="localhost" \
-			--cmd "./tmp/workout-tracker"
+
+watch/server:
+	air \
+		--build.bin                "$(WT_OUTPUT_FILE)" \
+		--build.cmd                "make build-server notify-proxy" \
+		--build.delay              1000 \
+		--build.exclude_dir        "docs,testdata,tmp,vendor" \
+		--build.exclude_file       "main.css,screenshots.js" \
+		--build.exclude_regex      "_test.go" \
+		--build.exclude_unchanged  false \
+		--build.include_ext        "css,go,html,js,json,yaml" \
+		--build.stop_on_error      true \
+		--screen.clear_on_rebuild  false 
+
+watch/tailwind:
+	npx tailwindcss -i ./main.css -o ./assets/output.css --minify --watch
+
+notify-proxy:
+	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
+
+dev: 
+	$(MAKE) watch/templ &
+	$(MAKE) watch/server &
+	$(MAKE) watch/tailwind &
+	sleep infinity
+
 
 build: build-dist build-server build-docker screenshots
 meta: swagger screenshots changelog
@@ -46,7 +69,7 @@ build-cli: build-tw build-templates
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
-build-server: build-tw
+build-server:
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
@@ -92,9 +115,6 @@ build-dist: clean-dist
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
-
-notify-templ-proxy:
-	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 build-templates:
 	templ generate

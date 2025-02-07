@@ -23,15 +23,16 @@ func Parse(filename string, content []byte) (*gpx.GPX, error) {
 		return nil, err
 	}
 
-	if c.Name != "" {
-		return c, nil
+	switch {
+	case c.Name != "":
+		// We have a name
+	case len(c.Tracks) > 0 && c.Tracks[0].Name != "":
+		// Copy the name of the first track
+		c.Name = c.Tracks[0].Name
+	default:
+		// Use the filename
+		c.Name = basename
 	}
-
-	if len(c.Tracks) > 0 && c.Tracks[0].Name != "" {
-		return c, nil
-	}
-
-	c.Name = basename
 
 	return c, nil
 }

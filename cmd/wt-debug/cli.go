@@ -33,6 +33,10 @@ func newCLI() (*cli, error) {
 		return nil, err
 	}
 
+	if err := a.ConfigureGeocoder(); err != nil {
+		return nil, err
+	}
+
 	c := &cli{
 		app: a,
 	}
