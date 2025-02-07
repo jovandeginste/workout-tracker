@@ -39,7 +39,10 @@ func TestRouteSegment_FindMatches(t *testing.T) {
 	workouts := []*Workout{w1, w2}
 	matches := rs.FindMatches(workouts)
 
-	assert.Len(t, matches, 1)
+	if !assert.Len(t, matches, 1) {
+		return
+	}
+
 	assert.Len(t, matches[0].Workout.Data.Details.Points, 158)
 }
 
@@ -63,7 +66,6 @@ func TestRouteSegment_StartingPoints_Match(t *testing.T) {
 
 	sp := rs.StartingPoints(w.Data.Details.Points)
 	assert.NotEmpty(t, sp)
-	assert.Greater(t, len(sp), 0)
 
 	for _, p := range sp {
 		assert.Less(t, rs.Points[0].DistanceTo(&w.Data.Details.Points[p]), MaxDeltaMeter)
@@ -79,7 +81,6 @@ func TestRouteSegment_StartingPoints_MatchSegment(t *testing.T) {
 
 	sp := rs.StartingPoints(w.Data.Details.Points)
 	assert.NotEmpty(t, sp)
-	assert.Greater(t, len(sp), 0)
 
 	{
 		last, ok := rs.MatchSegment(w, 3, true)
@@ -102,7 +103,10 @@ func TestRouteSegment_Match(t *testing.T) {
 	assert.NoError(t, err)
 
 	rsm := rs.Match(w)
-	assert.NotNil(t, rsm)
+	if !assert.NotNil(t, rsm) {
+		return
+	}
+
 	assert.Greater(t, rsm.Distance, 900.0)
 	assert.True(t, rsm.MatchesDistance(rs.TotalDistance))
 }

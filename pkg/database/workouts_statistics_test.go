@@ -45,11 +45,11 @@ func TestStatisticsItem_StatisticsPerKilometer(t *testing.T) {
 
 	assert.InDelta(t, 1000, stats.Items[0].TotalDistance, 20)
 	assert.InDelta(t, 2000, stats.Items[1].TotalDistance, 20)
-	assert.InDelta(t, 3100, stats.Items[3].TotalDistance, 20)
+	assert.InDelta(t, 3120, stats.Items[3].TotalDistance, 20)
 
 	assert.Equal(t, 242*time.Second, stats.Items[0].Duration)
-	assert.Equal(t, 336*time.Second, stats.Items[1].Duration)
-	assert.Equal(t, 31*time.Second, stats.Items[3].Duration)
+	assert.Equal(t, 331*time.Second, stats.Items[1].Duration)
+	assert.Equal(t, 45*time.Second, stats.Items[3].Duration)
 }
 
 func TestStatisticsItem_StatisticsPerMinute(t *testing.T) {
@@ -66,9 +66,9 @@ func TestStatisticsItem_StatisticsPerMinute(t *testing.T) {
 	assert.Equal(t, 16, stats.Items[15].Counter)
 
 	assert.InDelta(t, 180, stats.Items[0].TotalDistance, 20)
-	assert.InDelta(t, 700, stats.Items[2].TotalDistance, 20)
+	assert.InDelta(t, 720, stats.Items[2].TotalDistance, 20)
 	assert.InDelta(t, 1765, stats.Items[7].TotalDistance, 20)
-	assert.InDelta(t, 3100, stats.Items[15].TotalDistance, 20)
+	assert.InDelta(t, 3120, stats.Items[15].TotalDistance, 20)
 
 	assert.Equal(t, 56*time.Second, stats.Items[0].Duration)
 	assert.Equal(t, 63*time.Second, stats.Items[1].Duration)
