@@ -17,6 +17,33 @@ definitions:
       url:
         type: string
     type: object
+  app.ManualWorkout:
+    properties:
+      date:
+        type: string
+      distance:
+        type: number
+      duration_hours:
+        type: integer
+      duration_minutes:
+        type: integer
+      duration_seconds:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      repetitions:
+        type: integer
+      timezone:
+        type: string
+      type:
+        $ref: '#/definitions/database.WorkoutType'
+      weight:
+        type: number
+    type: object
   database.BreakdownItem:
     properties:
       counter:
@@ -338,6 +365,9 @@ definitions:
       duration:
         description: The duration from the previous point
         type: integer
+      elevation:
+        description: The elevation of the point
+        type: number
       extraMetrics:
         allOf:
         - $ref: '#/definitions/database.ExtraMetrics'
@@ -485,9 +515,6 @@ definitions:
         type: integer
       lastID:
         description: The index of the first and last point of the route
-        type: integer
-      points:
-        description: The total number of points of the route segment for this workout
         type: integer
       routeSegment:
         $ref: '#/definitions/database.RouteSegment'
@@ -782,7 +809,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.Workout'
               type: object
         "400":
@@ -815,7 +842,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.WorkoutRecord'
               type: object
         "400":
@@ -851,7 +878,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.Statistics'
               type: object
         "400":
@@ -883,7 +910,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.Bucket'
               type: object
         "400":
@@ -910,7 +937,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.User'
               type: object
         "400":
@@ -937,7 +964,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   items:
                     $ref: '#/definitions/database.Workout'
                   type: array
@@ -955,6 +982,40 @@ paths:
           schema:
             $ref: '#/definitions/app.APIResponse'
       summary: List all workouts of the current user
+  /workouts/:
+    post:
+      parameters:
+      - description: Workout data
+        in: body
+        name: workout
+        required: true
+        schema:
+          $ref: '#/definitions/app.ManualWorkout'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/app.ManualWorkout'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: Create a new workout
   /workouts/{id}:
     get:
       parameters:
@@ -976,7 +1037,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.Workout'
               type: object
         "400":
@@ -1017,7 +1078,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   $ref: '#/definitions/database.WorkoutBreakdown'
               type: object
         "400":
@@ -1053,7 +1114,7 @@ paths:
             allOf:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
-                result:
+                results:
                   items:
                     $ref: '#/definitions/app.Event'
                   type: array

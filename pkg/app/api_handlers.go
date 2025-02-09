@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"regexp"
@@ -90,6 +91,7 @@ func (a *App) apiRoutes(e *echo.Group) {
 
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
+	apiGroup.POST("/workouts", a.apiWorkoutAddHandler).Name = "api-workout-add"
 	apiGroup.GET("/workouts/:id", a.apiWorkoutHandler).Name = "api-workout"
 	apiGroup.GET("/workouts/:id/breakdown", a.apiWorkoutBreakdownHandler).Name = "api-workout-breakdown"
 	apiGroup.GET("/workouts/coordinates", a.apiCoordinates).Name = "api-workouts-coordinates"
@@ -120,7 +122,7 @@ func (a *App) ValidateAPIKeyMiddleware(key string, c echo.Context) (bool, error)
 // apiWhoamiHandler shows current user's information
 // @Summary      Show the information of the owner of the API key
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.User}
+// @Success      200  {object}  APIResponse{results=database.User}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -132,7 +134,7 @@ func (a *App) apiWhoamiHandler(c echo.Context) error {
 // apiWorkoutsHandler lists current user's workouts
 // @Summary      List all workouts of the current user
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=[]database.Workout}
+// @Success      200  {object}  APIResponse{results=[]database.Workout}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -153,7 +155,7 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 // apiCenters returns the center of all workouts of the current user
 // @Summary      List the centers of all workouts of the current user
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=geojson.FeatureCollection}
+// @Success      200  {object}  APIResponse{results=geojson.FeatureCollection}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -195,7 +197,7 @@ func (a *App) apiCenters(c echo.Context) error {
 // apiCoordinates returns all coordinates of all workouts of the current user
 // @Summary      List all coordinates of all workouts of the current user
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=geojson.FeatureCollection}
+// @Success      200  {object}  APIResponse{results=geojson.FeatureCollection}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -233,7 +235,7 @@ func (a *App) apiCoordinates(c echo.Context) error {
 // @Summary      List all records of the current user for the specified workout type
 // @Param        type   query      string  true  "Workout type"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.WorkoutRecord}
+// @Success      200  {object}  APIResponse{results=database.WorkoutRecord}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -261,7 +263,7 @@ func (a *App) apiRecordsHandler(c echo.Context) error {
 // @Summary      List all totals of the current user for the specified workout type
 // @Param        type   query      string  false  "Workout type"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.Bucket}
+// @Success      200  {object}  APIResponse{results=database.Bucket}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -290,7 +292,7 @@ func (a *App) apiTotalsHandler(c echo.Context) error {
 // @Param        since   query      string  false  "Start of time range"
 // @Param        per     query      string  false  "Bucket size"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.Statistics}
+// @Success      200  {object}  APIResponse{results=database.Statistics}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -320,7 +322,7 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 // @Param        unit    query      string  false  "Unit"
 // @Param        count   query      int     false  "Count"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.WorkoutBreakdown}
+// @Success      200  {object}  APIResponse{results=database.WorkoutBreakdown}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -357,12 +359,45 @@ func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
+// apiWorkoutAddHandler creates a new workout
+// @Summary      Create a new workout
+// @Param        workout body      ManualWorkout     true "Workout data"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=ManualWorkout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/ [post]
+func (a *App) apiWorkoutAddHandler(c echo.Context) error {
+	resp := APIResponse{}
+
+	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
+	if err := json.NewDecoder(c.Request().Body).Decode(d); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	workout := &database.Workout{}
+	resp.Results = workout
+
+	d.Update(workout)
+
+	workout.User = a.getCurrentUser(c)
+	workout.UserID = a.getCurrentUser(c).ID
+	workout.Data.Creator = "api"
+
+	if err := workout.Save(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	return c.JSON(http.StatusOK, resp)
+}
+
 // apiWorkoutHandler returns all information about a workout
 // @Summary      Get all information about a workout
 // @Param        id      path       int     true  "Workout ID"
 // @Param        details query      bool    false "Include details"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.Workout}
+// @Success      200  {object}  APIResponse{results=database.Workout}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -401,7 +436,7 @@ func (a *App) apiWorkoutHandler(c echo.Context) error {
 // @Param        name query    string false "Name of the imported workout"
 // @Param        type query    string false "Type of the imported workout"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=database.Workout}
+// @Success      200  {object}  APIResponse{results=database.Workout}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
@@ -438,7 +473,7 @@ type Event struct {
 // @Param        start query    string false "Start date of the calendar view"
 // @Param        end query    string false "End date of the calendar view"
 // @Produce      json
-// @Success      200  {object}  APIResponse{result=[]Event}
+// @Success      200  {object}  APIResponse{results=[]Event}
 // @Failure      400  {object}  APIResponse
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse

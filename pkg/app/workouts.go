@@ -33,18 +33,18 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 }
 
 type ManualWorkout struct {
-	Name            *string               `form:"name"`
-	Date            *string               `form:"date"`
-	Timezone        *string               `form:"timezone"`
-	Location        *string               `form:"location"`
-	DurationHours   *int                  `form:"duration_hours"`
-	DurationMinutes *int                  `form:"duration_minutes"`
-	DurationSeconds *int                  `form:"duration_seconds"`
-	Distance        *float64              `form:"distance"`
-	Repetitions     *int                  `form:"repetitions"`
-	Weight          *float64              `form:"weight"`
-	Notes           *string               `form:"notes"`
-	Type            *database.WorkoutType `form:"type"`
+	Name            *string               `form:"name" json:"name"`
+	Date            *string               `form:"date" json:"date"`
+	Timezone        *string               `form:"timezone" json:"timezone"`
+	Location        *string               `form:"location" json:"location"`
+	DurationHours   *int                  `form:"duration_hours" json:"duration_hours"`
+	DurationMinutes *int                  `form:"duration_minutes" json:"duration_minutes"`
+	DurationSeconds *int                  `form:"duration_seconds" json:"duration_seconds"`
+	Distance        *float64              `form:"distance" json:"distance"`
+	Repetitions     *int                  `form:"repetitions" json:"repetitions"`
+	Weight          *float64              `form:"weight" json:"weight"`
+	Notes           *string               `form:"notes" json:"notes"`
+	Type            *database.WorkoutType `form:"type" json:"type"`
 
 	units *database.UserPreferredUnits
 }
@@ -138,13 +138,15 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
 	setIfNotNil(&w.Data.TotalWeight, m.Weight)
 
-	a, err := geocoder.Find(*m.Location)
-	if err != nil {
-		w.Data.Address = nil
-		return
-	}
+	if w.Data.Address == nil && m.Location != nil {
+		a, err := geocoder.Find(*m.Location)
+		if err != nil {
+			w.Data.Address = nil
+			return
+		}
 
-	setIfNotNil(&w.Data.Address, &a)
+		w.Data.Address = a
+	}
 
 	w.Data.UpdateAddress()
 	w.Data.UpdateExtraMetrics()

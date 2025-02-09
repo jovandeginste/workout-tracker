@@ -59,7 +59,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.Workout"
                                         }
                                     }
@@ -114,7 +114,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.WorkoutRecord"
                                         }
                                     }
@@ -174,7 +174,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.Statistics"
                                         }
                                     }
@@ -228,7 +228,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.Bucket"
                                         }
                                     }
@@ -274,7 +274,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.User"
                                         }
                                     }
@@ -320,11 +320,68 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/definitions/database.Workout"
                                             }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workouts/": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create a new workout",
+                "parameters": [
+                    {
+                        "description": "Workout data",
+                        "name": "workout",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.ManualWorkout"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {
+                                            "$ref": "#/definitions/app.ManualWorkout"
                                         }
                                     }
                                 }
@@ -383,7 +440,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/definitions/app.Event"
@@ -447,7 +504,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.Workout"
                                         }
                                     }
@@ -514,7 +571,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "result": {
+                                        "results": {
                                             "$ref": "#/definitions/database.WorkoutBreakdown"
                                         }
                                     }
@@ -568,6 +625,47 @@ const docTemplate = `{
                 },
                 "url": {
                     "type": "string"
+                }
+            }
+        },
+        "app.ManualWorkout": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "number"
+                },
+                "duration_hours": {
+                    "type": "integer"
+                },
+                "duration_minutes": {
+                    "type": "integer"
+                },
+                "duration_seconds": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "repetitions": {
+                    "type": "integer"
+                },
+                "timezone": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/database.WorkoutType"
+                },
+                "weight": {
+                    "type": "number"
                 }
             }
         },
@@ -1034,6 +1132,10 @@ const docTemplate = `{
                     "description": "The duration from the previous point",
                     "type": "integer"
                 },
+                "elevation": {
+                    "description": "The elevation of the point",
+                    "type": "number"
+                },
                 "extraMetrics": {
                     "description": "Extra metrics at this point",
                     "allOf": [
@@ -1249,10 +1351,6 @@ const docTemplate = `{
                 },
                 "lastID": {
                     "description": "The index of the first and last point of the route",
-                    "type": "integer"
-                },
-                "points": {
-                    "description": "The total number of points of the route segment for this workout",
                     "type": "integer"
                 },
                 "routeSegment": {
