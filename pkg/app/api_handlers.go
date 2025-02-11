@@ -615,9 +615,29 @@ func (m *Measurement) Time() time.Time {
 	return d
 }
 
+func (m *Measurement) ToHeight() *uint64 {
+	if m.Height == nil || *m.Height == 0 {
+		return nil
+	}
+
+	d := m.units.HeightToDatabase(*m.Height)
+
+	return &d
+}
+
+func (m *Measurement) ToWeight() *float64 {
+	if m.Weight == nil || *m.Weight == 0 {
+		return nil
+	}
+
+	d := m.units.WeightToDatabase(*m.Weight)
+
+	return &d
+}
+
 func (m *Measurement) Update(measurement *database.Measurement) {
-	setIfNotNil(&measurement.Weight, m.Weight)
-	setIfNotNil(&measurement.Height, m.Height)
+	setIfNotNil(&measurement.Weight, m.ToWeight())
+	setIfNotNil(&measurement.Height, m.ToHeight())
 	setIfNotNil(&measurement.Steps, m.Steps)
 }
 

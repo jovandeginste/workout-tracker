@@ -21,6 +21,7 @@ templ Daily(u *database.User) {
 }
 
 templ Measurements(u *database.User) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
 	if ms, err := u.GetLatestMeasurements(10); err == nil && len(ms) > 0 {
 		<table>
 			<thead>
@@ -51,12 +52,11 @@ templ Measurements(u *database.User) {
 							{ m.DateString() }
 						</td>
 						<td>
-							{ helpers.A2S(m.Height) }
-							{ m.User.PreferredUnits().Height() }
+							{ helpers.HumanHeight(ctx, m.Height) }
 						</td>
 						<td>
-							{ helpers.A2S(m.Weight) }
-							{ m.User.PreferredUnits().Weight() }
+							{ helpers.HumanWeight(ctx, m.Weight) }
+							{ currentUser.PreferredUnits().Weight() }
 						</td>
 						<td>
 							{ helpers.A2S(m.Steps) }
@@ -88,6 +88,7 @@ templ latestMeasurementForm(u *database.User) {
 }
 
 templ measurementForm(m *database.Measurement) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "daily-update")) }>
 		<table>
 			<tr>
@@ -111,14 +112,7 @@ templ measurementForm(m *database.Measurement) {
 					{ i18n.T(ctx, "Height") }
 				</th>
 				<td>
-					<input
-						type="number"
-						name="height"
-						id="height"
-						value={ helpers.A2S(m.Height) }
-						required
-					/>
-					{ m.User.PreferredUnits().Height() }
+					@dailyHeight(currentUser, m)
 				</td>
 			</tr>
 			<tr>
@@ -128,13 +122,13 @@ templ measurementForm(m *database.Measurement) {
 				</th>
 				<td>
 					<input
-						type="number"
+						type="text"
 						name="weight"
 						id="weight"
-						value={ helpers.A2S(m.Weight) }
+						value={ helpers.HumanWeight(ctx, m.Weight) }
 						required
 					/>
-					{ m.User.PreferredUnits().Weight() }
+					{ currentUser.PreferredUnits().Weight() }
 				</td>
 			</tr>
 			<tr>
@@ -160,4 +154,53 @@ templ measurementForm(m *database.Measurement) {
 			</tr>
 		</table>
 	</form>
+}
+
+templ dailyHeight(u *database.User, m *database.Measurement) {
+	if u.PreferredUnits().Height() == "in" {
+		@dailyHeightFtIn(m)
+	} else {
+		@dailyHeightCm(m)
+	}
+}
+
+templ dailyHeightFtIn(m *database.Measurement) {
+	<input
+		type="hidden"
+		name="height"
+		id="height"
+		value={ helpers.HumanHeightSingle(ctx, m.Height) }
+		readonly="readonly"
+		required
+	/>
+	<input size="2" type="number" name="ft" id="ft" value="0" onchange="updateHeight();"/> ft
+	<input size="2" type="number" name="in" id="in" value="0" onchange="updateHeight();"/> in
+	<script>
+    function updateHeight() {
+      var ft = document.getElementById("ft");
+      var inch = document.getElementById("in");
+      var height = document.getElementById("height");
+
+      height.value  = (parseInt(ft.value) * 12) + parseInt(inch.value);
+    }
+    function readHeight() {
+      var ft = document.getElementById("ft");
+      var inch = document.getElementById("in");
+      var height = document.getElementById("height");
+      ft.value = Math.floor(height.value / 12);
+      inch.value = height.value % 12;
+    }
+    readHeight();
+  </script>
+}
+
+templ dailyHeightCm(m *database.Measurement) {
+	<input
+		type="number"
+		name="height"
+		id="height"
+		value={ helpers.HumanHeightSingle(ctx, m.Height) }
+		required
+	/>
+	cm
 }

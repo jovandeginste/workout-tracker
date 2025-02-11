@@ -67,9 +67,9 @@ func EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits
 			}
 		case w.Type.IsWeight():
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(w.Weight()))
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanWeight(ctx, w.Weight()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 17, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 17, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -82,7 +82,7 @@ func EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(preferredUnits.Weight())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 17, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 17, Col: 69}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -339,9 +339,9 @@ func Details(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var17 string
-			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(w.Weight()))
+			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanWeight(ctx, w.Weight()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 90, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 90, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
@@ -892,9 +892,9 @@ func FullWorkoutDetails(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var46 string
-			templ_7745c5c3_Var46, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(w.Weight()))
+			templ_7745c5c3_Var46, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanWeight(ctx, w.Weight()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 222, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 222, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var46))
 			if templ_7745c5c3_Err != nil {

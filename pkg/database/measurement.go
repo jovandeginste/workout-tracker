@@ -9,7 +9,6 @@ import (
 
 type Measurement struct {
 	Model
-	User   *User          `json:"-" gorm:"foreignKey:UserID"`                                       // The user who owns the workout
 	Date   datatypes.Date `form:"date" json:"date" gorm:"not null;index;uniqueIndex:idx_user_date"` // The date of the measurement
 	Weight float64        `form:"weight" json:"weight"`                                             // The weight of the user, in kilograms
 	Height uint64         `form:"height" json:"height"`                                             // The height of the user, in centimeter
@@ -19,7 +18,6 @@ type Measurement struct {
 
 func (u *User) NewMeasurement(d time.Time) *Measurement {
 	return &Measurement{
-		User:   u,
 		UserID: u.ID,
 		Date:   datatypes.Date(d.UTC()),
 	}

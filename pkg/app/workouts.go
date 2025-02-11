@@ -80,6 +80,16 @@ func (m *ManualWorkout) ToDate() *time.Time {
 	return &d
 }
 
+func (m *ManualWorkout) ToWeight() *float64 {
+	if m.Weight == nil || *m.Weight == 0 {
+		return nil
+	}
+
+	d := m.units.WeightToDatabase(*m.Weight)
+
+	return &d
+}
+
 func (m *ManualWorkout) ToDistance() *float64 {
 	if m.Distance == nil || *m.Distance == 0 {
 		return nil
@@ -136,7 +146,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
-	setIfNotNil(&w.Data.TotalWeight, m.Weight)
+	setIfNotNil(&w.Data.TotalWeight, m.ToWeight())
 
 	if w.Data.Address == nil && m.Location != nil {
 		a, err := geocoder.Find(*m.Location)

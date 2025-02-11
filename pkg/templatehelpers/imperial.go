@@ -9,7 +9,28 @@ const (
 	MilesPerKM   = 0.621371192
 	FeetPerMeter = 3.2808399
 	MeterPerMile = 1609.344
+	PoundsPerKG  = 2.20462262
+	CmPerInch    = 2.54
+	InchPerFoot  = 12
 )
+
+func HumanHeightInch(d uint64) string {
+	in := float64(d) / CmPerInch
+
+	return fmt.Sprintf("%.0f", in)
+}
+
+func HumanHeightFeetInch(d uint64) string {
+	h := float64(d) / CmPerInch
+	ft := math.Floor(h / InchPerFoot)
+	in := math.Mod(h, InchPerFoot)
+
+	return fmt.Sprintf("%.0f ft %.0f in", ft, in)
+}
+
+func HumanWeightPounds(d float64) string {
+	return fmt.Sprintf("%.2f", PoundsPerKG*d)
+}
 
 func HumanDistanceMile(d float64) string {
 	return fmt.Sprintf("%.2f", MilesPerKM*d/MeterPerKM)

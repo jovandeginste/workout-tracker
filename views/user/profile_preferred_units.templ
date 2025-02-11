@@ -16,7 +16,10 @@ templ profilePreferredUnits() {
 			<tbody>
 				<tr>
 					<th>
-						<label for="speed">{ i18n.T(ctx, "Speed") }</label>
+						<label for="speed">
+							@helpers.IconFor("speed")
+							{ i18n.T(ctx, "Speed") }
+						</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="speed" name="speed">
@@ -31,7 +34,10 @@ templ profilePreferredUnits() {
 				</tr>
 				<tr>
 					<th>
-						<label for="distance">{ i18n.T(ctx, "Distance") }</label>
+						<label for="distance">
+							@helpers.IconFor("distance")
+							{ i18n.T(ctx, "Distance") }
+						</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="distance" name="distance">
@@ -46,7 +52,10 @@ templ profilePreferredUnits() {
 				</tr>
 				<tr>
 					<th>
-						<label for="elevation">{ i18n.T(ctx, "Elevation") }</label>
+						<label for="elevation">
+							@helpers.IconFor("elevation")
+							{ i18n.T(ctx, "Elevation") }
+						</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="elevation" name="elevation">
@@ -61,7 +70,10 @@ templ profilePreferredUnits() {
 				</tr>
 				<tr>
 					<th>
-						<label for="weight">{ i18n.T(ctx, "Weight") }</label>
+						<label for="weight">
+							@helpers.IconFor("weight")
+							{ i18n.T(ctx, "Weight") }
+						</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="weight" name="weight">
@@ -70,6 +82,24 @@ templ profilePreferredUnits() {
 							</option>
 							<option value="kg" selected?={ pu.Weight() == "kg" }>
 								{ i18n.T(ctx, "kilograms") }
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="height">
+							@helpers.IconFor("height")
+							{ i18n.T(ctx, "Height") }
+						</label>
+					</th>
+					<td>
+						<select class="input-ellipsis" id="height" name="height">
+							<option value="in" selected?={ pu.Height() == "in" }>
+								{ i18n.T(ctx, "inch") }
+							</option>
+							<option value="cm" selected?={ pu.Height() == "cm" }>
+								{ i18n.T(ctx, "centimeter") }
 							</option>
 						</select>
 					</td>

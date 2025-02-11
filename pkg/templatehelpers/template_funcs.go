@@ -30,6 +30,33 @@ func HumanElevationFor(unit string) func(float64) string {
 	}
 }
 
+func HumanHeightSingleFor(unit string) func(uint64) string {
+	switch unit {
+	case "in":
+		return HumanHeightInch
+	default:
+		return HumanHeightCMNoSuffix
+	}
+}
+
+func HumanHeightFor(unit string) func(uint64) string {
+	switch unit {
+	case "in":
+		return HumanHeightFeetInch
+	default:
+		return HumanHeightCM
+	}
+}
+
+func HumanWeightFor(unit string) func(float64) string {
+	switch unit {
+	case "lbs":
+		return HumanWeightPounds
+	default:
+		return HumanWeightKG
+	}
+}
+
 func HumanDistanceFor(unit string) func(float64) string {
 	switch unit {
 	case "mi":
