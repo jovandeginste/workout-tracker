@@ -358,13 +358,15 @@ templ FullWorkoutDetails(w *database.Workout) {
 						{ i18n.T(ctx, "Est calories burned") }
 						<a
 							href="#"
-							title={ i18n.T(ctx, "Estimated based on the activity, assuming 70 kg") }
+							title={ i18n.T(ctx, "Estimated based on the activity") }
 						>
 							@helpers.IconFor("info")
 						</a>
 					</th>
 					<td class="whitespace-nowrap font-mono">
 						{ helpers.HumanCalories (w.CaloriesBurned() ) }
+						({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
+						{ currentUser.PreferredUnits().Weight() })
 					</td>
 				</tr>
 			}

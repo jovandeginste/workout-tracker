@@ -466,9 +466,9 @@ func (a *App) apiImportHandler(c echo.Context) error {
 }
 
 type Event struct {
-	Title string     `json:"title"`
-	Start *time.Time `json:"start"`
-	URL   string     `json:"url"`
+	Title string    `json:"title"`
+	Start time.Time `json:"start"`
+	URL   string    `json:"url"`
 }
 
 // apiCalendar returns the calendar events of all workouts of the current user

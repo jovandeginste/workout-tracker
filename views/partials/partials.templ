@@ -12,7 +12,7 @@ templ leafletClasses() {
 	<span class="leaflet-popup-content-wrapper leaflet-popup-tip"></span>
 }
 
-templ SnippetDate(date *time.Time) {
+templ SnippetDate(date time.Time) {
 	if helpers.CurrentUser(ctx).ShowFullDate() {
 		<abbr title={ helpers.RelativeDate(ctx, date) }>{ helpers.LocalDate(ctx, date) }</abbr>
 	} else {

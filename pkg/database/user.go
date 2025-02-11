@@ -292,15 +292,15 @@ func (u *User) GetMeasurementForDate(date time.Time) (*Measurement, error) {
 	return m, nil
 }
 
-func (u *User) GetLatestMeasurementForDate(date time.Time) (*Measurement, error) {
-	var m *Measurement
+func (u *User) GetLatestMeasurementForDate(date time.Time) (Measurement, error) {
+	var m Measurement
 
 	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date <= ?", datatypes.Date(date)).Order("date DESC").First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return u.NewMeasurement(date), nil
+			return *u.NewMeasurement(date), nil
 		}
 
-		return nil, err
+		return *u.NewMeasurement(date), err
 	}
 
 	return m, nil
@@ -332,7 +332,7 @@ func (u *User) GetCurrentMeasurement() (*Measurement, error) {
 	return m, nil
 }
 
-func (u *User) GetLatestMeasurement() (*Measurement, error) {
+func (u *User) GetLatestMeasurement() (Measurement, error) {
 	return u.GetLatestMeasurementForDate(time.Now())
 }
 
@@ -422,4 +422,13 @@ func AddRouteSegment(db *gorm.DB, notes string, filename string, content []byte)
 	}
 
 	return rs, nil
+}
+
+func (u *User) WeightAt(d time.Time) float64 {
+	m, err := u.GetLatestMeasurementForDate(d)
+	if err != nil {
+		return 70.0 // assume 70 kg if we don't have a measurement
+	}
+
+	return m.Weight
 }

@@ -96,6 +96,6 @@ func ToLanguageInformation(code language.Tag) LanguageInformation {
 	return l
 }
 
-func RelativeDate(ctx context.Context, t *time.Time) string {
-	return timeago.New(*t).WithLocale(Language(ctx)).Format()
+func RelativeDate(ctx context.Context, t time.Time) string {
+	return timeago.New(t).WithLocale(Language(ctx)).Format()
 }

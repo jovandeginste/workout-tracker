@@ -37,7 +37,7 @@ templ details(s *database.RouteSegment) {
 				</td>
 				<th>{ i18n.T(ctx, "Created") }</th>
 				<td>
-					@partials.SnippetDate(&s.CreatedAt)
+					@partials.SnippetDate(s.CreatedAt)
 				</td>
 			</tr>
 			<tr>
@@ -46,7 +46,7 @@ templ details(s *database.RouteSegment) {
 				</td>
 				<th>{ i18n.T(ctx, "Updated") }</th>
 				<td>
-					@partials.SnippetDate(&s.UpdatedAt)
+					@partials.SnippetDate(s.UpdatedAt)
 				</td>
 			</tr>
 			<tr>

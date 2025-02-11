@@ -149,8 +149,7 @@ ru:
   Profile updated: Профиль обновлен
   The user '%s' has been deleted: Пользователь '%s' удален.
   "(Re)generate publicly shareable link": Сгенерировать общедоступную ссылку
-  Estimated based on the activity, assuming 70 kg: Оценка основана на виде активности,
-    предполагаемый вес 70 кг
+  Estimated based on the activity: Оценка основана на виде активности
   Username (email): Имя пользователя (email)
   Streets: OSM Carto
   Aerial: Esri World Imagery

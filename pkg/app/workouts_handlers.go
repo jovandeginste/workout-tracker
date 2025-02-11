@@ -94,9 +94,8 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 		w.Type = database.WorkoutType(c.FormValue("type"))
 	}
 
-	if w.Date == nil {
-		t := time.Now()
-		w.Date = &t
+	if w.Date.IsZero() {
+		w.Date = time.Now()
 	}
 
 	if w.Name == "" {

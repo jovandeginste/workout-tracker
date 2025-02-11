@@ -179,7 +179,7 @@ func details(s *database.RouteSegment) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = partials.SnippetDate(&s.CreatedAt).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.SnippetDate(s.CreatedAt).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -208,7 +208,7 @@ func details(s *database.RouteSegment) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = partials.SnippetDate(&s.UpdatedAt).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.SnippetDate(s.UpdatedAt).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -139,7 +139,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 
 	setIfNotNil(&w.Name, m.Name)
 	setIfNotNil(&w.Notes, m.Notes)
-	setIfNotNil(&w.Date, &dDate)
+	setIfNotNil(&w.Date, dDate)
 	setIfNotNil(&w.Type, m.Type)
 
 	setIfNotNil(&w.Data.AddressString, m.Location)
