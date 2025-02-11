@@ -63,6 +63,16 @@ templ Measurements(u *database.User) {
 						</td>
 						<td>
 							<a
+								class="button action"
+								data-date={ m.DateString() }
+								data-height={ helpers.HumanHeightSingle(ctx, m.Height) }
+								data-weight={ helpers.HumanWeight(ctx, m.Weight) }
+								data-steps={ helpers.A2S(m.Steps) }
+								onclick="editDaily(this);"
+							>
+								@helpers.IconFor("edit")
+							</a>
+							<a
 								class="button dangerous"
 								hx-delete={ helpers.RouteFor(ctx, "daily-delete", m.DateString()) }
 								hx-confirm={ i18n.T(ctx, "Are you sure?") }
@@ -173,25 +183,9 @@ templ dailyHeightFtIn(m *database.Measurement) {
 		readonly="readonly"
 		required
 	/>
-	<input size="2" type="number" name="ft" id="ft" value="0" onchange="updateHeight();"/> ft
-	<input size="2" type="number" name="in" id="in" value="0" onchange="updateHeight();"/> in
-	<script>
-    function updateHeight() {
-      var ft = document.getElementById("ft");
-      var inch = document.getElementById("in");
-      var height = document.getElementById("height");
-
-      height.value  = (parseInt(ft.value) * 12) + parseInt(inch.value);
-    }
-    function readHeight() {
-      var ft = document.getElementById("ft");
-      var inch = document.getElementById("in");
-      var height = document.getElementById("height");
-      ft.value = Math.floor(height.value / 12);
-      inch.value = height.value % 12;
-    }
-    readHeight();
-  </script>
+	<input size="2" type="number" name="ft" id="ft" value="0" onchange="updateDailyHeight();"/> ft
+	<input size="2" type="number" name="in" id="in" value="0" onchange="updateDailyHeight();"/> in
+	<script>readDailyHeight();</script>
 }
 
 templ dailyHeightCm(m *database.Measurement) {
