@@ -7,38 +7,69 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Daily(u *database.User) {
+func counts() []int {
+	return []int{5, 10, 20, 50, 100}
+}
+
+templ Daily(u *database.User, count int) {
 	@partials.Page(partials.NewPageOptions()) {
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("scale")
-				{ i18n.T(ctx, "Latest measurements:") }
+				{ i18n.T(ctx, "Update measurement") }
 			</h3>
 			@latestMeasurementForm(u)
-			@Measurements(u)
+		</div>
+		<div class="inner-form">
+			<span class="float-right">
+				<select
+					id="count"
+					name="count"
+					hx-get="#"
+					hx-params="count"
+					hx-target="body"
+					hx-push-url="true"
+				>
+					for _, n := range counts() {
+						<option
+							value={ helpers.A2S(n) }
+							selected?={ count == n }
+						>{ helpers.A2S(n) }</option>
+					}
+					<option
+						value="-1"
+						selected?={ count  == -1 }
+					>{ i18n.T(ctx, "All") }</option>
+				</select>
+			</span>
+			<h3>
+				@helpers.IconFor("scale")
+				{ i18n.T(ctx, "Latest measurements") }
+			</h3>
+			@Measurements(u, count)
 		</div>
 	}
 }
 
-templ Measurements(u *database.User) {
+templ Measurements(u *database.User, n int) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
-	if ms, err := u.GetLatestMeasurements(-1); err == nil && len(ms) > 0 {
+	if ms, err := u.GetLatestMeasurements(n); err == nil && len(ms) > 0 {
 		<table>
 			<thead>
 				<tr>
-					<th>
+					<th class="w-1/5">
 						@helpers.IconFor("date")
 						{ i18n.T(ctx, "Date") }
 					</th>
-					<th>
+					<th class="w-1/5">
 						@helpers.IconFor("height")
 						{ i18n.T(ctx, "Height") }
 					</th>
-					<th>
+					<th class="w-1/5">
 						@helpers.IconFor("scale")
 						{ i18n.T(ctx, "Weight") }
 					</th>
-					<th>
+					<th class="w-1/5">
 						@helpers.IconFor("steps")
 						{ i18n.T(ctx, "Steps") }
 					</th>
