@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"strconv"
 	"time"
 
@@ -19,8 +20,7 @@ import (
 )
 
 const (
-	fitbitConfig = "fitbit.json"
-	redirectURI  = "http://localhost:8080/link"
+	redirectURI = "http://localhost:8080/link"
 )
 
 var (
@@ -65,37 +65,64 @@ func (cfg *config) setDefaults() {
 	cfg.waitForAuth = make(chan bool, 1)
 }
 
+func configFile() (string, error) {
+	dir, err := os.UserConfigDir()
+	if err != nil {
+		return "", err
+	}
+
+	p := path.Join(dir, "workout-tracker")
+	if _, err := os.Stat(p); errors.Is(err, os.ErrNotExist) {
+		if err := os.MkdirAll(p, 0700); err != nil {
+			return "", err
+		}
+	}
+
+	c := path.Join(p, "fitbit.json")
+	return c, nil
+}
+
 func (cfg *config) loadConfig() error {
 	cfg.setDefaults()
 
-	if _, err := os.Stat(fitbitConfig); errors.Is(err, os.ErrNotExist) {
+	f, err := configFile()
+	if err != nil {
+		return err
+	}
+
+	if _, err := os.Stat(f); errors.Is(err, os.ErrNotExist) {
 		return nil
 	}
 
-	file, err := os.Open(fitbitConfig)
+	file, err := os.Open(f)
 	if err != nil {
-		return fmt.Errorf("could not open '%s': %w", fitbitConfig, err)
+		return fmt.Errorf("could not open '%s': %w", f, err)
 	}
 
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&cfg); err != nil {
-		return fmt.Errorf("could not parse '%s': %w", fitbitConfig, err)
+		return fmt.Errorf("could not parse '%s': %w", f, err)
 	}
 
 	return nil
 }
 
 func (cfg *config) saveConfig() error {
-	file, err := os.Create(fitbitConfig)
+	f, err := configFile()
 	if err != nil {
-		return fmt.Errorf("could not create '%s': %w", fitbitConfig, err)
+		return err
+	}
+
+	file, err := os.Create(f)
+	if err != nil {
+		return fmt.Errorf("could not create '%s': %w", f, err)
 	}
 
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
 	if err := encoder.Encode(cfg); err != nil {
-		return fmt.Errorf("could not encode '%s': %w", fitbitConfig, err)
+		return fmt.Errorf("could not encode '%s': %w", f, err)
 	}
 
 	return nil
@@ -136,6 +163,8 @@ func main() {
 	log.Print("Fetching Fitbit information...")
 
 	fmt.Println("Information for:", profile.FullName)
+	fmt.Printf("Weight: %.2f %s\n", profile.Weight, weightUnit(profile.WeightUnit))
+	fmt.Printf("Height: %.2f %s\n", profile.Height, heightUnit(profile.HeightUnit))
 
 	end := time.Now()
 	start := end.AddDate(0, 0, -7)
@@ -234,5 +263,23 @@ func linkFunc(w http.ResponseWriter, req *http.Request) {
 
 	if _, err := io.WriteString(w, "You should close this site."); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func weightUnit(u string) string {
+	switch u {
+	case "METRIC":
+		return "kg"
+	default:
+		return "lb"
+	}
+}
+
+func heightUnit(u string) string {
+	switch u {
+	case "METRIC":
+		return "cm"
+	default:
+		return "in"
 	}
 }
