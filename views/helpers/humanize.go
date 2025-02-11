@@ -35,10 +35,10 @@ func HumanWeight(ctx context.Context, d float64) string {
 	return templatehelpers.HumanWeightFor(CurrentUser(ctx).PreferredUnits().Weight())(d)
 }
 
-func HumanHeight(ctx context.Context, d uint64) string {
+func HumanHeight(ctx context.Context, d float64) string {
 	return templatehelpers.HumanHeightFor(CurrentUser(ctx).PreferredUnits().Height())(d)
 }
 
-func HumanHeightSingle(ctx context.Context, d uint64) string {
+func HumanHeightSingle(ctx context.Context, d float64) string {
 	return templatehelpers.HumanHeightSingleFor(CurrentUser(ctx).PreferredUnits().Height())(d)
 }

@@ -11,8 +11,8 @@ type Measurement struct {
 	Model
 	Date   datatypes.Date `form:"date" json:"date" gorm:"not null;index;uniqueIndex:idx_user_date"` // The date of the measurement
 	Weight float64        `form:"weight" json:"weight"`                                             // The weight of the user, in kilograms
-	Height uint64         `form:"height" json:"height"`                                             // The height of the user, in centimeter
-	Steps  uint64         `form:"steps" json:"steps"`                                               // The number of steps taken
+	Height float64        `form:"height" json:"height"`                                             // The height of the user, in centimeter
+	Steps  float64        `form:"steps" json:"steps"`                                               // The number of steps taken
 	UserID uint64         `gorm:"not null;index;uniqueIndex:idx_user_date"`                         // The ID of the user who owns the workout
 }
 

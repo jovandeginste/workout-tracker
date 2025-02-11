@@ -424,11 +424,38 @@ func AddRouteSegment(db *gorm.DB, notes string, filename string, content []byte)
 	return rs, nil
 }
 
-func (u *User) WeightAt(d time.Time) float64 {
-	m, err := u.GetLatestMeasurementForDate(d)
-	if err != nil {
-		return 70.0 // assume 70 kg if we don't have a measurement
+func (u *User) HeightAt(d time.Time) float64 {
+	w := u.measurementAt("height", d)
+	if w == 0 {
+		return 165
 	}
 
-	return m.Weight
+	return w
+}
+
+func (u *User) WeightAt(d time.Time) float64 {
+	w := u.measurementAt("weight", d)
+	if w == 0 {
+		return 70
+	}
+
+	return w
+}
+
+func (u *User) measurementAt(key string, d time.Time) float64 {
+	var w float64
+
+	q := u.db.
+		Model(&Measurement{}).
+		Where(&Measurement{UserID: u.ID}).
+		Where("date <= ?", datatypes.Date(d)).
+		Where("? > ?", key, 0).
+		Order("date DESC").
+		Pluck(key, &w)
+
+	if err := q.Error; err != nil {
+		return 0
+	}
+
+	return w
 }

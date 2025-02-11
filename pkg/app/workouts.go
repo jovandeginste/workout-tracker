@@ -9,6 +9,7 @@ import (
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/labstack/echo/v4"
 )
 
@@ -85,7 +86,7 @@ func (m *ManualWorkout) ToWeight() *float64 {
 		return nil
 	}
 
-	d := m.units.WeightToDatabase(*m.Weight)
+	d := templatehelpers.WeightToDatabase(*m.Weight, m.units.Weight())
 
 	return &d
 }
@@ -95,7 +96,7 @@ func (m *ManualWorkout) ToDistance() *float64 {
 		return nil
 	}
 
-	d := m.units.DistanceToDatabase(*m.Distance)
+	d := templatehelpers.DistanceToDatabase(*m.Distance, m.units.Distance())
 
 	return &d
 }

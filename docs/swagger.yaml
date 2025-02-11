@@ -47,13 +47,23 @@ definitions:
   app.Measurement:
     properties:
       date:
+        description: The date of the measurement
         type: string
       height:
-        type: integer
-      steps:
-        type: integer
-      weight:
+        description: The height of the user, in centimeter
         type: number
+      height_unit:
+        description: The unit of the height (or the user's preferred unit)
+        type: string
+      steps:
+        description: The number of steps taken
+        type: number
+      weight:
+        description: The weight of the user, in kilograms
+        type: number
+      weight_unit:
+        description: The unit of the weight (or the user's preferred unit)
+        type: string
     type: object
   database.BreakdownItem:
     properties:
@@ -408,12 +418,12 @@ definitions:
         type: string
       height:
         description: The height of the user, in centimeter
-        type: integer
+        type: number
       id:
         type: integer
       steps:
         description: The number of steps taken
-        type: integer
+        type: number
       updatedAt:
         type: string
       userID:
@@ -617,6 +627,9 @@ definitions:
         type: string
       elevation:
         description: The user's preferred elevation unit
+        type: string
+      height:
+        description: The user's preferred height unit
         type: string
       speed:
         description: The user's preferred speed unit

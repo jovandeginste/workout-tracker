@@ -93,6 +93,7 @@ var iconMap = map[string]string{
 	"attention":     "icon-[fa6-solid--circle-exclamation]",
 	"check":         "icon-[fa6-solid--square-check]",
 	"totals":        "icon-[fa6-solid--calculator]",
+	"missing":       "icon-[material-symbols--block]",
 
 	// Brand Icons
 	"github": "icon-[octicon--mark-github-16]",

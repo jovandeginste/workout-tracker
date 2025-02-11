@@ -14,14 +14,14 @@ const (
 	InchPerFoot  = 12
 )
 
-func HumanHeightInch(d uint64) string {
-	in := float64(d) / CmPerInch
+func HumanHeightInch(d float64) string {
+	in := d / CmPerInch
 
 	return fmt.Sprintf("%.0f", in)
 }
 
-func HumanHeightFeetInch(d uint64) string {
-	h := float64(d) / CmPerInch
+func HumanHeightFeetInch(d float64) string {
+	h := d / CmPerInch
 	ft := math.Floor(h / InchPerFoot)
 	in := math.Mod(h, InchPerFoot)
 

@@ -22,7 +22,7 @@ templ Daily(u *database.User) {
 
 templ Measurements(u *database.User) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
-	if ms, err := u.GetLatestMeasurements(10); err == nil && len(ms) > 0 {
+	if ms, err := u.GetLatestMeasurements(-1); err == nil && len(ms) > 0 {
 		<table>
 			<thead>
 				<tr>
@@ -52,14 +52,14 @@ templ Measurements(u *database.User) {
 							{ m.DateString() }
 						</td>
 						<td>
-							{ helpers.HumanHeight(ctx, m.Height) }
+							@showIfAvailable(m.Height, helpers.HumanHeight(ctx, m.Height))
 						</td>
 						<td>
-							{ helpers.HumanWeight(ctx, m.Weight) }
-							{ currentUser.PreferredUnits().Weight() }
+							{{ w := helpers.HumanWeight(ctx, m.Weight) + " " + currentUser.PreferredUnits().Weight() }}
+							@showIfAvailable(m.Weight, w)
 						</td>
 						<td>
-							{ helpers.A2S(m.Steps) }
+							@showIfAvailable(m.Steps, helpers.A2S(m.Steps))
 						</td>
 						<td>
 							<a
@@ -197,4 +197,14 @@ templ dailyHeightCm(m *database.Measurement) {
 		required
 	/>
 	cm
+}
+
+templ showIfAvailable(v float64, s string) {
+	if v > 0 {
+		{ s }
+	} else {
+		<span class="text-red-600 dark:text-red-400">
+			@helpers.IconFor("missing")
+		</span>
+	}
 }
