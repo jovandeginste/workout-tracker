@@ -2,10 +2,11 @@
 en:
   Your settings: Your settings
   "Latest measurements:": "Latest measurements:"
+  Measurements: Measurements
   Steps: Steps
   forever: forever
   Heatmap: Heatmap
-  "(Re)generate publicly shareable link": "(Re)generate publicly shareable link"
+  "(Re)generate publicly shareable link": (Re)generate publicly shareable link
   1 month: 1 month
   1 year: 1 year
   10 years: 10 years
@@ -27,9 +28,7 @@ en:
   Admin: Admin
   Aerial: Aerial
   All: All
-  All workouts will be refreshed in the coming minutes.:
-    All workouts will be refreshed
-    in the coming minutes.
+  All workouts will be refreshed in the coming minutes: All workouts will be refreshed in the coming minutes.
   Application settings: Application settings
   Are you sure you want to delete this %s?: Are you sure you want to delete this %s?
   Auto import directory: Auto import directory
@@ -60,22 +59,18 @@ en:
   Duration: Duration
   Elevation: Elevation
   Enable API access: Enable API access
-  "Encountered %d problems while adding workouts: %s":
-    "Encountered %d problems while
-    adding workouts: %s"
+  "Encountered %d problems while adding workouts: %s": "Encountered %d problems while adding workouts: %s"
   End: End
   Equipment: Equipment
-  Est. calories burned: Est. calories burned
-  Estimated based on the activity, assuming 70 kg:
-    Estimated based on the activity,
-    assuming 70 kg
+  Est calories burned: Est. calories burned
+  Estimated based on the activity, assuming 70 kg: Estimated based on the activity, assuming 70 kg
   Extra metrics: Extra metrics
   File: File
   Filter: Filter
   Heading: Heading
   Heart rate: Heart rate
-  "I completed a workout: %s.": "I completed a workout: %s."
-  It took me %s to go %s. I averaged %s.: It took me %s to go %s. I averaged %s.
+  "I completed a workout: %s": "I completed a workout: %s."
+  It took me %s to go %s I averaged %s: It took me %s to go %s. I averaged %s.
   Language: Language
   Last: Last
   Leave blank to keep current password: Leave blank to keep current password
@@ -98,9 +93,7 @@ en:
   Please help translate via Weblate: Please help translate via Weblate
   Preferred units: Preferred units
   Profile updated: Profile updated
-  Publicly shareable link was copied to clipboard:
-    Publicly shareable link was copied
-    to clipboard
+  Publicly shareable link was copied to clipboard: Publicly shareable link was copied to clipboard
   Recent activity: Recent activity
   Records for %s: Records for %s
   Refresh all your workouts: Refresh all your workouts
@@ -119,11 +112,11 @@ en:
   Statistics: Statistics
   Streets: Streets
   Tempo: Tempo
-  The user '%s' has been deleted.: The user '%s' has been deleted.
-  The user '%s' has been updated.: The user '%s' has been updated.
-  The workout '%s' has been deleted.: The workout '%s' has been deleted.
-  The workout '%s' has been refreshed.: The workout '%s' has been refreshed.
-  The workout '%s' has been updated.: The workout '%s' has been updated.
+  The user '%s' has been deleted: The user '%s' has been deleted.
+  The user '%s' has been updated: The user '%s' has been updated.
+  The workout '%s' has been deleted: The workout '%s' has been deleted.
+  The workout '%s' has been refreshed: The workout '%s' has been refreshed.
+  The workout '%s' has been updated: The workout '%s' has been updated.
   "These settings may be overwritten by:": "These settings may be overwritten by:"
   Time: Time
   Time paused: Time paused
@@ -153,9 +146,7 @@ en:
   Workout: Workout
   Workout type: Workout type
   Workouts: Workouts
-  Your account has been created, but needs to be activated.:
-    Your account has been
-    created, but needs to be activated.
+  Your account has been created, but needs to be activated: Your account has been created, but needs to be activated.
   Your profile: Your profile
   Your progress per %s for the past %s: Your progress per %s for the past %s
   copy to clipboard: copy to clipboard
@@ -214,4 +205,12 @@ en:
   kayaking: kayaking
   Filter workouts: Filter workouts
   Resources: Resources
+  "The equipment '%s' has been deleted": The equipment '%s' has been deleted.
+  "The equipment '%s' has been updated": The equipment '%s' has been updated.
   "You can find inspiration here:": "You can find inspiration here:"
+  "The workout '%s' will be refreshed soon": The workout '%s' will be refreshed soon...
+  "The workout '%s' has been created": The workout '%s' has been created.
+  "The route segment '%s' has been created - we search for matches in the background": "The route segment '%s' has been created - we search for matches in the background."
+  "Added %d new route segment(s): %s - we search for matches in the background": "Added %d new route segment(s): %s - we search for matches in the background."
+  "The route segment '%s' has been updated": "The route segment '%s' has been updated."
+  "Start searching in the background for matching workouts for route segment '%s'": "Start searching in the background for matching workouts for route segment '%s'."

@@ -14,7 +14,7 @@ nl:
   Add workouts: Workouts toevoegen
   'Added %d new workout(s): %s': "%d nieuwe workout(s) toegevoegd: %s"
   Admin: Beheerder
-  All workouts will be refreshed in the coming minutes.: Alle workouts worden vernieuwd
+  All workouts will be refreshed in the coming minutes: Alle workouts worden vernieuwd
     in de komende minuten.
   Application settings: Applicatie-instellingen
   Are you sure you want to delete this %s?: Weet je zeker dat je deze %s wilt verwijderen?
@@ -47,8 +47,8 @@ nl:
   File: Bestand
   Heading: Koers
   Heart rate: Hartslag
-  'I completed a workout: %s.': 'Ik heb een workout voltooid: %s.'
-  It took me %s to go %s. I averaged %s.: Het duurde %s om %s te bereiken. Ik haalde
+  'I completed a workout: %s': 'Ik heb een workout voltooid: %s.'
+  It took me %s to go %s I averaged %s: Het duurde %s om %s te bereiken. Ik haalde
     gemiddeld %s.
   Language: Taal
   Leave blank to keep current password: Laat leeg om het huidige wachtwoord te behouden
@@ -81,11 +81,11 @@ nl:
   Speed: Snelheid
   Statistics: Statistieken
   Tempo: Tempo
-  The user '%s' has been deleted.: De gebruiker '%s' is verwijderd.
-  The user '%s' has been updated.: De gebruiker '%s' is bijgewerkt.
-  The workout '%s' has been deleted.: De workout '%s' is verwijderd.
-  The workout '%s' has been refreshed.: De workout '%s' is vernieuwd.
-  The workout '%s' has been updated.: De workout '%s' is bijgewerkt.
+  The user '%s' has been deleted: De gebruiker '%s' is verwijderd.
+  The user '%s' has been updated: De gebruiker '%s' is bijgewerkt.
+  The workout '%s' has been deleted: De workout '%s' is verwijderd.
+  The workout '%s' has been refreshed: De workout '%s' is vernieuwd.
+  The workout '%s' has been updated: De workout '%s' is bijgewerkt.
   'These settings may be overwritten by:': 'Deze instellingen kunnen worden overschreven
     door:'
   Time: Tijd
@@ -112,7 +112,7 @@ nl:
   Welcome!: Welkom!
   Workout type: Type workout
   Workouts: Workouts
-  Your account has been created, but needs to be activated.: Jouw account is aangemaakt,
+  Your account has been created, but needs to be activated: Jouw account is aangemaakt,
     maar moet nog worden geactiveerd.
   Your profile: Jouw profiel
   Your progress per %s for the past %s: Jouw vooruitgang per %s voor de afgelopen
@@ -179,7 +179,7 @@ nl:
   Average per minute: Gemiddelde per minuut
   Estimated based on the activity, assuming 70 kg: Geschat op basis van de activiteit,
     uitgaande van een gewicht van 70 kg
-  Est. calories burned: Geschat verbruik calorieën
+  Est calories burned: Geschat verbruik calorieën
   Aerial: Lucht
   Street: Straat
   Show map in full width: Toon de kaart in volle breedte
