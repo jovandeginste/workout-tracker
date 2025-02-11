@@ -94,9 +94,8 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 		w.Type = database.WorkoutType(c.FormValue("type"))
 	}
 
-	if w.Date == nil {
-		t := time.Now()
-		w.Date = &t
+	if w.Date.IsZero() {
+		w.Date = time.Now()
 	}
 
 	if w.Name == "" {
@@ -116,7 +115,7 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been deleted.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been deleted", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -176,7 +175,7 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' will be refreshed soon...", workout.Name)
+	a.addNotice(c, "The workout '%s' will be refreshed soon", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -236,7 +235,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	a.addNotice(c, "The route segment '%s' has been created - we search for matches in the background.", rs.Name)
+	a.addNotice(c, "The route segment '%s' has been created - we search for matches in the background", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }

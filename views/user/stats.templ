@@ -42,14 +42,14 @@ templ StatisticTile(icon string, name string, value string, unit string) {
 }
 
 templ StatsRecordDurationDate(workout *database.DurationRecord) {
-	@StatsRecordDate(workout.ID, &workout.Date)
+	@StatsRecordDate(workout.ID, workout.Date)
 }
 
 templ StatsRecordDistanceDate(workout *database.Float64Record) {
-	@StatsRecordDate(workout.ID, &workout.Date)
+	@StatsRecordDate(workout.ID, workout.Date)
 }
 
-templ StatsRecordDate(id uint64, date *time.Time) {
+templ StatsRecordDate(id uint64, date time.Time) {
 	<span class="hidden xl:inline">
 		<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", id)) }>
 			{ helpers.LocalDate(ctx, date ) }

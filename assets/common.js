@@ -91,3 +91,33 @@ function geoJson2heat(geojson, intensity) {
     ];
   });
 }
+
+function editDaily(obj) {
+  var date = obj.getAttribute("data-date");
+  var height = obj.getAttribute("data-height");
+  var weight = obj.getAttribute("data-weight");
+  var steps = obj.getAttribute("data-steps");
+
+  document.getElementById("date").value = date;
+  document.getElementById("height").value = height;
+  document.getElementById("weight").value = weight;
+  document.getElementById("steps").value = steps;
+
+  readDailyHeight();
+}
+
+function updateDailyHeight() {
+  var ft = document.getElementById("ft");
+  var inch = document.getElementById("in");
+  var height = document.getElementById("height");
+
+  height.value = parseInt(ft.value) * 12 + parseInt(inch.value);
+}
+
+function readDailyHeight() {
+  var ft = document.getElementById("ft");
+  var inch = document.getElementById("in");
+  var height = document.getElementById("height");
+  ft.value = Math.floor(height.value / 12);
+  inch.value = height.value % 12;
+}

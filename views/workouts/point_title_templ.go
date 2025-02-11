@@ -44,7 +44,7 @@ func DummyWorkoutPointTitle() templ.Component {
 func PointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
 	t := []string{
 		"<ul><li><b>" + i18n.T(ctx, "Time") + ":</b> ",
-		helpers.LocalTime(ctx, &p.Time).Format("15:04"),
+		helpers.LocalTime(ctx, p.Time).Format("15:04"),
 		"</li><li><b>" + i18n.T(ctx, "Distance") + ":</b> ",
 		helpers.HumanDistance(ctx, p.TotalDistance) + " " + preferredUnits.Distance(),
 		"</li><li><b>" + i18n.T(ctx, "Duration") + ":</b> ",

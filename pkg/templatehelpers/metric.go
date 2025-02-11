@@ -3,9 +3,22 @@ package templatehelpers
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const MeterPerKM = 1000
+
+func HumanHeightCMNoSuffix(d uint64) string {
+	return strconv.FormatUint(d, 10)
+}
+
+func HumanHeightCM(d uint64) string {
+	return fmt.Sprintf("%d cm", d)
+}
+
+func HumanWeightKG(d float64) string {
+	return fmt.Sprintf("%.2f", d)
+}
 
 func HumanDistanceKM(d float64) string {
 	return fmt.Sprintf("%.2f", d/MeterPerKM)

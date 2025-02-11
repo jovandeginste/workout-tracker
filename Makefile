@@ -49,7 +49,7 @@ watch/server:
 		--screen.clear_on_rebuild  false 
 
 watch/tailwind:
-	npx tailwindcss -i ./main.css -o ./assets/output.css --minify --watch
+	npx tailwindcss -i ./main.css -o ./assets/output.css --minify --watch=always
 
 notify-proxy:
 	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)

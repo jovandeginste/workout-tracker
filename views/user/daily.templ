@@ -1,0 +1,200 @@
+package user
+
+import (
+	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+)
+
+templ Daily(u *database.User) {
+	@partials.Page(partials.NewPageOptions()) {
+		<div class="inner-form">
+			<h3>
+				@helpers.IconFor("scale")
+				{ i18n.T(ctx, "Latest measurements:") }
+			</h3>
+			@latestMeasurementForm(u)
+			@Measurements(u)
+		</div>
+	}
+}
+
+templ Measurements(u *database.User) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	if ms, err := u.GetLatestMeasurements(10); err == nil && len(ms) > 0 {
+		<table>
+			<thead>
+				<tr>
+					<th>
+						@helpers.IconFor("date")
+						{ i18n.T(ctx, "Date") }
+					</th>
+					<th>
+						@helpers.IconFor("height")
+						{ i18n.T(ctx, "Height") }
+					</th>
+					<th>
+						@helpers.IconFor("scale")
+						{ i18n.T(ctx, "Weight") }
+					</th>
+					<th>
+						@helpers.IconFor("steps")
+						{ i18n.T(ctx, "Steps") }
+					</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, m := range ms {
+					<tr>
+						<td>
+							{ m.DateString() }
+						</td>
+						<td>
+							{ helpers.HumanHeight(ctx, m.Height) }
+						</td>
+						<td>
+							{ helpers.HumanWeight(ctx, m.Weight) }
+							{ currentUser.PreferredUnits().Weight() }
+						</td>
+						<td>
+							{ helpers.A2S(m.Steps) }
+						</td>
+						<td>
+							<a
+								class="button action"
+								data-date={ m.DateString() }
+								data-height={ helpers.HumanHeightSingle(ctx, m.Height) }
+								data-weight={ helpers.HumanWeight(ctx, m.Weight) }
+								data-steps={ helpers.A2S(m.Steps) }
+								onclick="editDaily(this);"
+							>
+								@helpers.IconFor("edit")
+							</a>
+							<a
+								class="button dangerous"
+								hx-delete={ helpers.RouteFor(ctx, "daily-delete", m.DateString()) }
+								hx-confirm={ i18n.T(ctx, "Are you sure?") }
+							>
+								@helpers.IconFor("delete")
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	} else {
+		{ i18n.T(ctx, "No measurements found") }
+	}
+}
+
+templ latestMeasurementForm(u *database.User) {
+	if l,err := u.GetCurrentMeasurement(); err == nil {
+		@measurementForm(l)
+	} else {
+		{ i18n.T(ctx, "No measurements found") }
+	}
+}
+
+templ measurementForm(m *database.Measurement) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "daily-update")) }>
+		<table>
+			<tr>
+				<th class="w-1/2">
+					@helpers.IconFor("date")
+					{ i18n.T(ctx, "Date") }
+				</th>
+				<td>
+					<input
+						type="date"
+						name="date"
+						id="date"
+						value={ m.DateString() }
+						required
+					/>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("height")
+					{ i18n.T(ctx, "Height") }
+				</th>
+				<td>
+					@dailyHeight(currentUser, m)
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("scale")
+					{ i18n.T(ctx, "Weight") }
+				</th>
+				<td>
+					<input
+						type="text"
+						name="weight"
+						id="weight"
+						value={ helpers.HumanWeight(ctx, m.Weight) }
+						required
+					/>
+					{ currentUser.PreferredUnits().Weight() }
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("steps")
+					{ i18n.T(ctx, "Steps") }
+				</th>
+				<td>
+					<input
+						type="number"
+						name="steps"
+						id="steps"
+						value={ helpers.A2S(m.Steps) }
+						required
+					/>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" value="Submit">{ i18n.T(ctx, "Update") }</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+}
+
+templ dailyHeight(u *database.User, m *database.Measurement) {
+	if u.PreferredUnits().Height() == "in" {
+		@dailyHeightFtIn(m)
+	} else {
+		@dailyHeightCm(m)
+	}
+}
+
+templ dailyHeightFtIn(m *database.Measurement) {
+	<input
+		type="hidden"
+		name="height"
+		id="height"
+		value={ helpers.HumanHeightSingle(ctx, m.Height) }
+		readonly="readonly"
+		required
+	/>
+	<input size="2" type="number" name="ft" id="ft" value="0" onchange="updateDailyHeight();"/> ft
+	<input size="2" type="number" name="in" id="in" value="0" onchange="updateDailyHeight();"/> in
+	<script>readDailyHeight();</script>
+}
+
+templ dailyHeightCm(m *database.Measurement) {
+	<input
+		type="number"
+		name="height"
+		id="height"
+		value={ helpers.HumanHeightSingle(ctx, m.Height) }
+		required
+	/>
+	cm
+}

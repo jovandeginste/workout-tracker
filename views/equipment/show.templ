@@ -65,7 +65,7 @@ templ Show(e *database.Equipment) {
 								</td>
 								<th>{ i18n.T(ctx, "Created") }</th>
 								<td>
-									@partials.SnippetDate(&e.CreatedAt)
+									@partials.SnippetDate(e.CreatedAt)
 								</td>
 							</tr>
 							<tr>

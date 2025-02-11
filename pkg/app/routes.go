@@ -119,6 +119,9 @@ func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 	secureGroup.Use(a.ValidateUserMiddleware)
 
 	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
+	secureGroup.GET("/daily", a.dailyHandler).Name = "daily"
+	secureGroup.POST("/daily", a.dailyUpdateHandler).Name = "daily-update"
+	secureGroup.DELETE("/daily/:date", a.dailyDeleteHandler).Name = "daily-delete"
 	secureGroup.GET("/statistics", a.statisticsHandler).Name = "statistics"
 	secureGroup.GET("/heatmap", a.heatmapHandler).Name = "heatmap"
 	secureGroup.POST("/lookup-address", a.lookupAddressHandler).Name = "lookup-address"

@@ -9,7 +9,7 @@ it:
   Add workouts: Aggiungi allenamenti
   'Added %d new workout(s): %s': 'Aggiunti %d nuovo/i allenamento/i: %s'
   Admin: Amministratore
-  All workouts will be refreshed in the coming minutes.: Tutti gli allenamenti verranno
+  All workouts will be refreshed in the coming minutes: Tutti gli allenamenti verranno
     aggiornati nei prossimi minuti.
   Application settings: Impostazioni dell'applicazione
   Are you sure you want to delete this %s?: Sei sicuro di voler eliminare questo %s?
@@ -40,8 +40,8 @@ it:
     l''aggiunta degli allenamenti: %s'
   Equipment: Attrezzatura
   Heart rate: Frequenza cardiaca
-  'I completed a workout: %s.': 'Ho completato un allenamento: %s.'
-  It took me %s to go %s. I averaged %s.: Mi ci è voluto %s per andare %s. Ho mantenuto
+  'I completed a workout: %s': 'Ho completato un allenamento: %s.'
+  It took me %s to go %s I averaged %s: Mi ci è voluto %s per andare %s. Ho mantenuto
     una media di %s.
   Language: Lingua
   Leave blank to keep current password: Lascia vuoto per mantenere la password attuale
@@ -71,11 +71,11 @@ it:
   Speed: Velocità
   Statistics: Statistiche
   Tempo: Tempo
-  The user '%s' has been deleted.: L'utente '%s' è stato eliminato.
-  The user '%s' has been updated.: L'utente '%s' è stato aggiornato.
-  The workout '%s' has been deleted.: L'allenamento '%s' è stato eliminato.
-  The workout '%s' has been refreshed.: L'allenamento '%s' è stato aggiornato.
-  The workout '%s' has been updated.: L'allenamento '%s' è stato aggiornato.
+  The user '%s' has been deleted: L'utente '%s' è stato eliminato.
+  The user '%s' has been updated: L'utente '%s' è stato aggiornato.
+  The workout '%s' has been deleted: L'allenamento '%s' è stato eliminato.
+  The workout '%s' has been refreshed: L'allenamento '%s' è stato aggiornato.
+  The workout '%s' has been updated: L'allenamento '%s' è stato aggiornato.
   'These settings may be overwritten by:': 'Queste impostazioni possono essere sovrascritte
     da:'
   Time: Tempo
@@ -101,7 +101,7 @@ it:
   Welcome!: Benvenuto!
   Workout type: Tipo di allenamento
   Workouts: Allenamenti
-  Your account has been created, but needs to be activated.: Il tuo account è stato
+  Your account has been created, but needs to be activated: Il tuo account è stato
     creato, ma deve essere attivato.
   Your profile: Il tuo profilo
   copy to clipboard: copia negli appunti

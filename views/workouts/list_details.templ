@@ -43,7 +43,7 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsWeight() {
 			<div class="font-mono" title={ i18n.T(ctx, "Weight") }>
 				@helpers.IconFor("weight")
-				{ helpers.A2S(w.Weight()) }
+				{ helpers.HumanWeight(ctx, w.Weight()) }
 				{ preferredUnits.Weight() }
 			</div>
 		}

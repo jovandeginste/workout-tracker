@@ -24,7 +24,7 @@ fi:
   Admin: Ylläpitäjä
   Aerial: Ilmakuva
   All: Kaikki
-  All workouts will be refreshed in the coming minutes.: Kaikki harjoitukset päivitetään tulevien minuuttien aikana.
+  All workouts will be refreshed in the coming minutes: Kaikki harjoitukset päivitetään tulevien minuuttien aikana.
   Application settings: Sovelluksen asetukset
   Are you sure you want to delete this %s?: "Haluatko varmasti poistaa tämän: %s?"
   Auto import directory: Automaattinen tuontihakemisto
@@ -58,14 +58,14 @@ fi:
   "Encountered %d problems while adding workouts: %s": "Kohdattiin %d ongelmaa harjoitusten lisäämisessä: %s"
   End: Loppu
   Equipment: Välineet
-  Est. calories burned: Arv. kulutetut kalorit
-  Estimated based on the activity, assuming 70 kg: Arvioitu aktiviteetin perusteella, olettaen 70 kg paino
+  Est calories burned: Arv. kulutetut kalorit
+  Estimated based on the activity: Arvioitu aktiviteetin perusteella
   Extra metrics: Lisämittarit
   File: Tiedosto
   Filter: Suodata
   Heart rate: Syke
-  "I completed a workout: %s.": "Suoritin harjoituksen: %s."
-  It took me %s to go %s. I averaged %s.: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.
+  "I completed a workout: %s": "Suoritin harjoituksen: %s."
+  It took me %s to go %s I averaged %s: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.
   Language: Kieli
   Last: Viimeinen
   Leave blank to keep current password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
@@ -139,7 +139,7 @@ fi:
   Workout: Harjoitus
   Workout type: Harjoitustyyppi
   Workouts: Harjoitukset
-  Your account has been created, but needs to be activated.: Tilisi on luotu, mutta se täytyy aktivoida.
+  Your account has been created, but needs to be activated: Tilisi on luotu, mutta se täytyy aktivoida.
   Your profile: Profiilisi
   Your progress per %s for the past %s: Edistymisesi per %s viimeisten %s aikana
   copy to clipboard: kopioi leikepöydälle

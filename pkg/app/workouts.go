@@ -80,6 +80,16 @@ func (m *ManualWorkout) ToDate() *time.Time {
 	return &d
 }
 
+func (m *ManualWorkout) ToWeight() *float64 {
+	if m.Weight == nil || *m.Weight == 0 {
+		return nil
+	}
+
+	d := m.units.WeightToDatabase(*m.Weight)
+
+	return &d
+}
+
 func (m *ManualWorkout) ToDistance() *float64 {
 	if m.Distance == nil || *m.Distance == 0 {
 		return nil
@@ -129,14 +139,14 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 
 	setIfNotNil(&w.Name, m.Name)
 	setIfNotNil(&w.Notes, m.Notes)
-	setIfNotNil(&w.Date, &dDate)
+	setIfNotNil(&w.Date, dDate)
 	setIfNotNil(&w.Type, m.Type)
 
 	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
-	setIfNotNil(&w.Data.TotalWeight, m.Weight)
+	setIfNotNil(&w.Data.TotalWeight, m.ToWeight())
 
 	if w.Data.Address == nil && m.Location != nil {
 		a, err := geocoder.Find(*m.Location)
@@ -190,7 +200,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", workout.ID), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been created.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been created", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -229,7 +239,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been updated.", workout.Name)
+	a.addNotice(c, "The workout '%s' has been updated", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }

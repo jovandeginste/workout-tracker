@@ -95,7 +95,7 @@ func (a *App) userRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-profile"), err)
 	}
 
-	a.addNotice(c, "All workouts will be refreshed in the coming minutes.")
+	a.addNotice(c, "All workouts will be refreshed in the coming minutes")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }

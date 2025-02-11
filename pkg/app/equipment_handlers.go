@@ -81,7 +81,7 @@ func (a *App) equipmentDeleteHandler(c echo.Context) error {
 		return a.renderError(c, http.StatusInternalServerError, err, "equipment-show", c.Param("id"))
 	}
 
-	a.addNotice(c, "The equipment '%s' has been deleted.", e.Name)
+	a.addNotice(c, "The equipment '%s' has been deleted", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
@@ -103,7 +103,7 @@ func (a *App) equipmentUpdateHandler(c echo.Context) error {
 		return a.renderError(c, http.StatusInternalServerError, err, "equipment-edit", c.Param("id"))
 	}
 
-	a.addNotice(c, "The equipment '%s' has been updated.", e.Name)
+	a.addNotice(c, "The equipment '%s' has been updated", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment-show", c.Param("id")))
 }

@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-func LocalDate(ctx context.Context, t *time.Time) string {
+func LocalDate(ctx context.Context, t time.Time) string {
 	return t.In(timezone(ctx)).Format(timeFormat)
 }
 
-func LocalTime(ctx context.Context, t *time.Time) time.Time {
+func LocalTime(ctx context.Context, t time.Time) time.Time {
 	return t.In(timezone(ctx))
 }
 
@@ -21,7 +21,7 @@ func timezone(ctx context.Context) *time.Location {
 	return CurrentUser(ctx).Timezone()
 }
 
-func InTimezone(t *time.Time, tz string) time.Time {
+func InTimezone(t time.Time, tz string) time.Time {
 	tzLoc, err := time.LoadLocation(tz)
 	if err != nil {
 		tzLoc = time.UTC

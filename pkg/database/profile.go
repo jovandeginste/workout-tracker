@@ -31,6 +31,7 @@ type UserPreferredUnits struct {
 	DistanceRaw  string `form:"distance" json:"distance"`   // The user's preferred distance unit
 	ElevationRaw string `form:"elevation" json:"elevation"` // The user's preferred elevation unit
 	WeightRaw    string `form:"weight" json:"weight"`       // The user's preferred weight unit
+	HeightRaw    string `form:"height" json:"height"`       // The user's preferred height unit
 }
 
 func (u UserPreferredUnits) Tempo() string {
@@ -39,6 +40,15 @@ func (u UserPreferredUnits) Tempo() string {
 
 func (u UserPreferredUnits) HeartRate() string {
 	return "bpm"
+}
+
+func (u UserPreferredUnits) Height() string {
+	switch u.HeightRaw {
+	case "in":
+		return "in"
+	default:
+		return "cm"
+	}
 }
 
 func (u UserPreferredUnits) Cadence() string {
@@ -69,6 +79,24 @@ func (u UserPreferredUnits) Distance() string {
 		return "mi"
 	default:
 		return "km"
+	}
+}
+
+func (u UserPreferredUnits) HeightToDatabase(d uint64) uint64 {
+	switch u.Height() {
+	case "in":
+		return uint64(float64(d) * templatehelpers.CmPerInch)
+	default:
+		return d
+	}
+}
+
+func (u UserPreferredUnits) WeightToDatabase(d float64) float64 {
+	switch u.Weight() {
+	case "lbs":
+		return d / templatehelpers.PoundsPerKG
+	default:
+		return d
 	}
 }
 

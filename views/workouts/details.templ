@@ -14,7 +14,7 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 		case w.Type.IsDistance():
 			{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
 		case w.Type.IsWeight():
-			{ helpers.A2S(w.Weight()) } { preferredUnits.Weight() }
+			{ helpers.HumanWeight(ctx, w.Weight()) } { preferredUnits.Weight() }
 		case w.Type.IsRepetition():
 			{ helpers.A2S(w.Repetitions()) }
 		default:
@@ -87,7 +87,7 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("weight")
 					</td>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.A2S(w.Weight()) }
+						{ helpers.HumanWeight(ctx, w.Weight()) }
 						{ currentUser.PreferredUnits().Weight() }
 					</td>
 				</tr>
@@ -219,7 +219,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "Weight") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.A2S(w.Weight()) }
+						{ helpers.HumanWeight(ctx, w.Weight()) }
 						{ currentUser.PreferredUnits().Weight() }
 					</td>
 				</tr>
@@ -355,16 +355,18 @@ templ FullWorkoutDetails(w *database.Workout) {
 						@helpers.IconFor("calories")
 					</td>
 					<th>
-						{ i18n.T(ctx, "Est. calories burned") }
+						{ i18n.T(ctx, "Est calories burned") }
 						<a
 							href="#"
-							title={ i18n.T(ctx, "Estimated based on the activity, assuming 70 kg") }
+							title={ i18n.T(ctx, "Estimated based on the activity") }
 						>
 							@helpers.IconFor("info")
 						</a>
 					</th>
 					<td class="whitespace-nowrap font-mono">
 						{ helpers.HumanCalories (w.CaloriesBurned() ) }
+						({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
+						{ currentUser.PreferredUnits().Weight() })
 					</td>
 				</tr>
 			}

@@ -11,6 +11,7 @@ import (
 	"github.com/invopop/ctxi18n"
 	"github.com/invopop/ctxi18n/i18n"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -37,13 +38,14 @@ type User struct {
 
 	LastVersion string `gorm:"last_version"` // Which version of the app the user has last seen and acknowledged
 
-	Password  string      `form:"-"        gorm:"type:varchar(128);not null"`            // The user's password as bcrypt hash
-	Salt      string      `form:"-"        gorm:"type:varchar(16);not null"`             // The salt used to hash the user's password
-	Username  string      `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"` // The user's username
-	Name      string      `form:"name"     gorm:"type:varchar(64);not null"`             // The user's name
-	APIKey    string      `gorm:"type:varchar(32)"`                                      // The user's API key
-	Workouts  []Workout   `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's workouts
-	Equipment []Equipment `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's equipment
+	Password     string        `form:"-"        gorm:"type:varchar(128);not null"`            // The user's password as bcrypt hash
+	Salt         string        `form:"-"        gorm:"type:varchar(16);not null"`             // The salt used to hash the user's password
+	Username     string        `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"` // The user's username
+	Name         string        `form:"name"     gorm:"type:varchar(64);not null"`             // The user's name
+	APIKey       string        `gorm:"type:varchar(32)"`                                      // The user's API key
+	Workouts     []Workout     `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's workouts
+	Equipment    []Equipment   `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's equipment
+	Measurements []Measurement `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's measurements
 
 	Profile Profile `gorm:"constraint:OnDelete:CASCADE"` // The user's profile settings
 
@@ -276,6 +278,64 @@ func (u *User) Delete(db *gorm.DB) error {
 	return db.Select(clause.Associations).Delete(u).Error
 }
 
+func (u *User) GetMeasurementForDate(date time.Time) (*Measurement, error) {
+	var m *Measurement
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date = ?", datatypes.Date(date.UTC())).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return u.NewMeasurement(date), nil
+		}
+
+		return nil, err
+	}
+
+	return m, nil
+}
+
+func (u *User) GetLatestMeasurementForDate(date time.Time) (Measurement, error) {
+	var m Measurement
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date <= ?", datatypes.Date(date)).Order("date DESC").First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return *u.NewMeasurement(date), nil
+		}
+
+		return *u.NewMeasurement(date), err
+	}
+
+	return m, nil
+}
+
+func (u *User) GetLatestMeasurements(c int) ([]*Measurement, error) {
+	var m []*Measurement
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Order("date DESC").Limit(c).Find(&m).Error; err != nil {
+		return nil, err
+	}
+
+	return m, nil
+}
+
+func (u *User) GetCurrentMeasurement() (*Measurement, error) {
+	var m *Measurement
+
+	d := time.Now().UTC()
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date = ?", datatypes.Date(d)).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return u.NewMeasurement(d), nil
+		}
+
+		return nil, err
+	}
+
+	return m, nil
+}
+
+func (u *User) GetLatestMeasurement() (Measurement, error) {
+	return u.GetLatestMeasurementForDate(time.Now())
+}
+
 func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 	var w *Workout
 
@@ -362,4 +422,13 @@ func AddRouteSegment(db *gorm.DB, notes string, filename string, content []byte)
 	}
 
 	return rs, nil
+}
+
+func (u *User) WeightAt(d time.Time) float64 {
+	m, err := u.GetLatestMeasurementForDate(d)
+	if err != nil {
+		return 70.0 // assume 70 kg if we don't have a measurement
+	}
+
+	return m.Weight
 }

@@ -19,15 +19,27 @@ templ Header() {
 						</a>
 					</div>
 					<div>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
+							@helpers.IconFor("workout")
+							<span class="autohide">{ i18n.T(ctx, "Workouts") }</span>
+						</a>
+					</div>
+					<div>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "daily")) }>
+							@helpers.IconFor("scale")
+							<span class="autohide">{ i18n.T(ctx, "Measurements") }</span>
+						</a>
+					</div>
+					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "statistics")) }>
 							@helpers.IconFor("statistics")
 							<span class="autohide">{ i18n.T(ctx, "Statistics") }</span>
 						</a>
 					</div>
 					<div>
-						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
-							@helpers.IconFor("workout")
-							<span class="autohide">{ i18n.T(ctx, "Workouts") }</span>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "heatmap")) }>
+							@helpers.IconFor("heatmap")
+							<span class="autohide">{ i18n.T(ctx, "Heatmap") }</span>
 						</a>
 					</div>
 					<div>
@@ -40,12 +52,6 @@ templ Header() {
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment")) }>
 							@helpers.IconFor("equipment")
 							<span class="autohide">{ i18n.T(ctx, "Equipment") }</span>
-						</a>
-					</div>
-					<div>
-						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "heatmap")) }>
-							@helpers.IconFor("heatmap")
-							<span class="autohide">{ i18n.T(ctx, "Heatmap") }</span>
 						</a>
 					</div>
 				</div>

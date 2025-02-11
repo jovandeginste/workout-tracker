@@ -26,7 +26,7 @@ var ErrInvalidData = errors.New("could not convert data to a GPX structure")
 
 type Workout struct {
 	Model
-	Date                *time.Time           `gorm:"not null;uniqueIndex:idx_start_user"`                                // The timestamp the workout was recorded
+	Date                time.Time            `gorm:"not null;uniqueIndex:idx_start_user"`                                // The timestamp the workout was recorded
 	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"`                                              // UUID to publicly share a workout - this UUID can be rotated
 	User                *User                `gorm:"foreignKey:UserID"`                                                  // The user who owns the workout
 	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"` // The map data associated with the workout
@@ -48,12 +48,16 @@ type GPXData struct {
 	WorkoutID uint64 `gorm:"not null;uniqueIndex"` // The ID of the workout
 }
 
-func (w *Workout) GetDate() time.Time {
-	if w.Date == nil {
-		return time.Now()
+func (w *Workout) AfterFind(tx *gorm.DB) error {
+	if w.User != nil {
+		w.User.db = tx
 	}
 
-	return *w.Date
+	return nil
+}
+
+func (w *Workout) GetDate() time.Time {
+	return w.Date
 }
 
 func (w *Workout) Filename() string {
@@ -309,7 +313,9 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		return nil, err
 	}
 
+	d := gpxDate(gpxContent)
 	data := gpxAsMapData(gpxContent)
+
 	if filename == "" {
 		filename = data.Name + ".gpx"
 	}
@@ -329,7 +335,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		Data:   data,
 		Notes:  notes,
 		Type:   workoutType,
-		Date:   gpxDate(gpxContent),
+		Date:   *d,
 		GPX: &GPXData{
 			Content:  content,
 			Checksum: h.Sum(nil),
@@ -603,7 +609,7 @@ func (w *Workout) CaloriesBurned() float64 {
 		return 0
 	}
 
-	weight := 70.0 // assume weight is 70 kg for now
+	weight := w.User.WeightAt(w.Date)
 	// Calories burned = weight * time * intensity (MET)
 	cb := weight * w.Duration().Hours() * w.MET()
 

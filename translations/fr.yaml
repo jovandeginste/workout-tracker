@@ -9,7 +9,7 @@ fr:
   Add workouts: Ajouter des entraînements
   'Added %d new workout(s): %s': 'Ajout de %d nouveau(x) entraînement(s) : %s'
   Admin: Admin
-  All workouts will be refreshed in the coming minutes.: Toutes les séances d'entraînement
+  All workouts will be refreshed in the coming minutes: Toutes les séances d'entraînement
     seront actualisées dans les prochaines minutes.
   Application settings: Paramètres de l'application
   Are you sure you want to delete this %s?: Voulez-vous vraiment supprimer ce %s ?
@@ -39,8 +39,8 @@ fr:
   Equipment: Équipement
   File: Fichier
   Heart rate: Rythme cardiaque
-  'I completed a workout: %s.': 'J''ai terminé une séance d''entraînement : %s.'
-  It took me %s to go %s. I averaged %s.: Il m'a fallu %s pour aller %s. J'ai fait
+  'I completed a workout: %s': 'J''ai terminé une séance d''entraînement : %s.'
+  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait
     la moyenne de %s.
   Language: Langue
   Leave blank to keep current password: Laissez le champ vide pour conserver le mot
@@ -69,11 +69,11 @@ fr:
   Speed: Vitesse
   Statistics: Statistiques
   Tempo: Allure
-  The user '%s' has been deleted.: L'utilisateur '%s' a été supprimé.
-  The user '%s' has been updated.: L'utilisateur '%s' a été mis à jour.
-  The workout '%s' has been deleted.: L'entraînement '%s' a été supprimé.
-  The workout '%s' has been refreshed.: L'entraînement '%s' a été rafraîchi.
-  The workout '%s' has been updated.: L'entraînement '%s' a été mis à jour.
+  The user '%s' has been deleted: L'utilisateur '%s' a été supprimé.
+  The user '%s' has been updated: L'utilisateur '%s' a été mis à jour.
+  The workout '%s' has been deleted: L'entraînement '%s' a été supprimé.
+  The workout '%s' has been refreshed: L'entraînement '%s' a été rafraîchi.
+  The workout '%s' has been updated: L'entraînement '%s' a été mis à jour.
   'These settings may be overwritten by:': 'Ces paramètres peuvent être remplacés
     par :'
   Time: Temps
@@ -95,7 +95,7 @@ fr:
   Username (email): Nom d'utilisateur (courriel)
   Welcome!: Bienvenue !
   Workouts: Entraînements
-  Your account has been created, but needs to be activated.: Votre compte a été créé,
+  Your account has been created, but needs to be activated: Votre compte a été créé,
     mais doit être activé.
   Your profile: Votre profil
   copy to clipboard: copier dans le Presse-papiers
@@ -130,8 +130,7 @@ fr:
   walking: marche
   workout: entraînement
   workouts: entraînements
-  Estimated based on the activity, assuming 70 kg: Estimé en fonction de l'activité,
-    en supposant un poids de 70 kg
+  Estimated based on the activity: Estimé en fonction de l'activité
   Matches: Correspondance
   Start: Début
   Use a file: Utiliser un fichier
@@ -169,7 +168,7 @@ fr:
   Average per minute: Moyenne par minute
   weight lifting: haltérophilie
   Aerial: Aérien
-  Est. calories burned: Est. calories brulées
+  Est calories burned: Est. calories brulées
   Show map in full width: Afficher la carte en grand format
   Street: Rue
   Update route segment: Mettre à jour les segments

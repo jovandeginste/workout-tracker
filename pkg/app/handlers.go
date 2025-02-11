@@ -3,6 +3,7 @@ package app
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -10,6 +11,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 var ErrUserNotFound = errors.New("user not found")
@@ -43,6 +45,64 @@ func (a *App) statisticsHandler(c echo.Context) error {
 	}
 
 	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per))
+}
+
+func (a *App) dailyDeleteHandler(c echo.Context) error {
+	a.setContext(c)
+
+	u := a.getCurrentUser(c)
+	d := c.Param("date")
+
+	t, err := time.Parse("2006-01-02", d)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	m, err := u.GetMeasurementForDate(t)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	if err := m.Delete(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("daily"))
+		return c.String(http.StatusFound, "ok")
+	}
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("daily"))
+}
+
+func (a *App) dailyUpdateHandler(c echo.Context) error {
+	a.setContext(c)
+
+	d := &Measurement{units: a.getCurrentUser(c).PreferredUnits()}
+	if err := c.Bind(d); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	m, err := a.getCurrentUser(c).GetMeasurementForDate(d.Time())
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	d.Update(m)
+
+	if err := m.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+	}
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("daily"))
+}
+
+func (a *App) dailyHandler(c echo.Context) error {
+	a.setContext(c)
+
+	u := a.getCurrentUser(c)
+
+	return Render(c, http.StatusOK, user.Daily(u))
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
