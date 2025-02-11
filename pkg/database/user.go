@@ -11,6 +11,7 @@ import (
 	"github.com/invopop/ctxi18n"
 	"github.com/invopop/ctxi18n/i18n"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -277,10 +278,28 @@ func (u *User) Delete(db *gorm.DB) error {
 	return db.Select(clause.Associations).Delete(u).Error
 }
 
+func (u *User) GetMeasurementForDate(date time.Time) (*Measurement, error) {
+	var m *Measurement
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date = ?", datatypes.Date(date.UTC())).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return u.NewMeasurement(date), nil
+		}
+
+		return nil, err
+	}
+
+	return m, nil
+}
+
 func (u *User) GetLatestMeasurementForDate(date time.Time) (*Measurement, error) {
 	var m *Measurement
 
-	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date <= ?", date).Order("date DESC").First(&m).Error; err != nil {
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date <= ?", datatypes.Date(date)).Order("date DESC").First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return u.NewMeasurement(date), nil
+		}
+
 		return nil, err
 	}
 
@@ -291,6 +310,22 @@ func (u *User) GetLatestMeasurements(c int) ([]*Measurement, error) {
 	var m []*Measurement
 
 	if err := u.db.Where(&Measurement{UserID: u.ID}).Order("date DESC").Limit(c).Find(&m).Error; err != nil {
+		return nil, err
+	}
+
+	return m, nil
+}
+
+func (u *User) GetCurrentMeasurement() (*Measurement, error) {
+	var m *Measurement
+
+	d := time.Now().UTC()
+
+	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date = ?", datatypes.Date(d)).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return u.NewMeasurement(d), nil
+		}
+
 		return nil, err
 	}
 

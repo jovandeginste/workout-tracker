@@ -303,6 +303,10 @@ github.com/spf13/viper/internal/encoding/json
 github.com/spf13/viper/internal/encoding/toml
 github.com/spf13/viper/internal/encoding/yaml
 github.com/spf13/viper/internal/features
+# github.com/stackus/hxgo v0.3.0
+## explicit; go 1.21
+github.com/stackus/hxgo
+github.com/stackus/hxgo/hxecho
 # github.com/stretchr/testify v1.10.0
 ## explicit; go 1.17
 github.com/stretchr/testify/assert
@@ -468,6 +472,9 @@ gopkg.in/ini.v1
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
+# gorm.io/datatypes v1.2.5
+## explicit; go 1.19
+gorm.io/datatypes
 # gorm.io/driver/mysql v1.5.7
 ## explicit; go 1.14
 gorm.io/driver/mysql

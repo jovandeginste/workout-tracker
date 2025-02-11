@@ -90,6 +90,8 @@ func (a *App) apiRoutes(e *echo.Group) {
 	}))
 
 	apiGroup.GET("/whoami", a.apiWhoamiHandler).Name = "api-whoami"
+	apiGroup.GET("/daily", a.apiDailyHandler).Name = "api-daily"
+	apiGroup.POST("/daily", a.apiDailyUpdateHandler).Name = "api-daily-update"
 	apiGroup.GET("/workouts", a.apiWorkoutsHandler).Name = "api-workouts"
 	apiGroup.POST("/workouts", a.apiWorkoutAddHandler).Name = "api-workout-add"
 	apiGroup.GET("/workouts/:id", a.apiWorkoutHandler).Name = "api-workout"
@@ -361,6 +363,7 @@ func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 
 // apiWorkoutAddHandler creates a new workout
 // @Summary      Create a new workout
+// @Accept       json
 // @Param        workout body      ManualWorkout     true "Workout data"
 // @Produce      json
 // @Success      200  {object}  APIResponse{results=ManualWorkout}
@@ -553,4 +556,103 @@ func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geoj
 	d = htmlConcatenizer.ReplaceAllString(d, "")
 
 	f.Properties["details"] = d
+}
+
+// apiDailyHandler returns the daily measurements for the user
+// @Summary      List the daily measurements of the current user
+// @Param        limit query    int false "Number of measurements to return; default 50; -1 is no limit"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=[]database.Measurement}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /daily [get]
+func (a *App) apiDailyHandler(c echo.Context) error {
+	a.setContext(c)
+
+	resp := APIResponse{}
+	u := a.getCurrentUser(c)
+
+	limit := 50
+
+	if l := c.QueryParam("limit"); l != "" {
+		if nl, err := strconv.Atoi(l); err == nil {
+			limit = nl
+		} else {
+			return a.renderAPIError(c, resp, err)
+		}
+	}
+
+	m, err := u.GetLatestMeasurements(limit)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = m
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+type Measurement struct {
+	Date   *string  `form:"date" json:"date"`
+	Weight *float64 `form:"weight" json:"weight"`
+	Height *uint64  `form:"height" json:"height"`
+	Steps  *uint64  `form:"steps" json:"steps"`
+
+	units *database.UserPreferredUnits
+}
+
+func (m *Measurement) Time() time.Time {
+	if m.Date == nil {
+		return time.Now()
+	}
+
+	d, err := time.Parse("2006-01-02", *m.Date)
+	if err != nil {
+		return time.Now()
+	}
+
+	return d
+}
+
+func (m *Measurement) Update(measurement *database.Measurement) {
+	setIfNotNil(&measurement.Weight, m.Weight)
+	setIfNotNil(&measurement.Height, m.Height)
+	setIfNotNil(&measurement.Steps, m.Steps)
+}
+
+// apiDailyUpdateHandler updates the daily measurement for the user
+// @Summary      Update the daily measurement of the current user
+// @Accept       json
+// @Param        measurement body      Measurement     true "Measurement data"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=database.Measurement}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /daily [post]
+func (a *App) apiDailyUpdateHandler(c echo.Context) error {
+	a.setContext(c)
+
+	resp := APIResponse{}
+
+	d := &Measurement{units: a.getCurrentUser(c).PreferredUnits()}
+	if err := json.NewDecoder(c.Request().Body).Decode(d); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	m, err := a.getCurrentUser(c).GetMeasurementForDate(d.Time())
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	d.Update(m)
+
+	if err := m.Save(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = m
+
+	return c.JSON(http.StatusOK, resp)
 }

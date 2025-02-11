@@ -214,3 +214,7 @@ en:
   "Added %d new route segment(s): %s - we search for matches in the background": "Added %d new route segment(s): %s - we search for matches in the background."
   "The route segment '%s' has been updated": "The route segment '%s' has been updated."
   "Start searching in the background for matching workouts for route segment '%s'": "Start searching in the background for matching workouts for route segment '%s'."
+  No measurements found: No measurements found
+  Update: Update
+  Height: Height
+  Are you sure?: Are you sure?

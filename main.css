@@ -58,17 +58,6 @@
     @apply hover:brightness-125 hover:contrast-125;
     @apply focus:brightness-125 focus:contrast-125;
   }
-  button.edit,
-  button.share {
-    @apply border-amber-400;
-    @apply bg-amber-300;
-    @apply dark:bg-amber-500;
-  }
-  button.dangerous {
-    @apply border-rose-600;
-    @apply bg-rose-500;
-    @apply dark:bg-rose-700;
-  }
   button {
     @apply border-green-600;
     @apply text-white bg-green-500;
@@ -77,6 +66,30 @@
     @apply rounded-xl mx-2 px-6 py-2 border font-bold;
     @apply hover:brightness-125 hover:contrast-125;
     @apply focus:brightness-125 focus:contrast-125;
+  }
+
+  a.button {
+    @apply rounded-xl m-2 py-1 pr-1 pl-3 border font-bold;
+    @apply hover:brightness-125 hover:contrast-125;
+    @apply focus:brightness-125 focus:contrast-125;
+    @apply cursor-pointer;
+
+    @apply border-green-600;
+    @apply text-white bg-green-500;
+    @apply dark:text-white dark:bg-green-700;
+  }
+  button.edit,
+  button.share,
+  a.action {
+    @apply border-amber-400;
+    @apply bg-amber-300;
+    @apply dark:bg-amber-500;
+  }
+  button.dangerous,
+  a.dangerous {
+    @apply border-rose-600;
+    @apply bg-rose-500;
+    @apply dark:bg-rose-700;
   }
 
   h2 {

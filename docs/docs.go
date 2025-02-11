@@ -21,6 +21,121 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/daily": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List the daily measurements of the current user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of measurements to return; default 50; -1 is no limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/database.Measurement"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update the daily measurement of the current user",
+                "parameters": [
+                    {
+                        "description": "Measurement data",
+                        "name": "measurement",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.Measurement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {
+                                            "$ref": "#/definitions/database.Measurement"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/import/{program}": {
             "post": {
                 "produces": [
@@ -354,6 +469,9 @@ const docTemplate = `{
         },
         "/workouts/": {
             "post": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -663,6 +781,23 @@ const docTemplate = `{
                 },
                 "type": {
                     "$ref": "#/definitions/database.WorkoutType"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            }
+        },
+        "app.Measurement": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "steps": {
+                    "type": "integer"
                 },
                 "weight": {
                     "type": "number"
@@ -1163,6 +1298,40 @@ const docTemplate = `{
                 "totalDuration": {
                     "description": "The total duration of the workout up to this point",
                     "type": "integer"
+                }
+            }
+        },
+        "database.Measurement": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "date": {
+                    "description": "The date of the measurement",
+                    "type": "string"
+                },
+                "height": {
+                    "description": "The height of the user, in centimeter",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "steps": {
+                    "description": "The number of steps taken",
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userID": {
+                    "description": "The ID of the user who owns the workout",
+                    "type": "integer"
+                },
+                "weight": {
+                    "description": "The weight of the user, in kilograms",
+                    "type": "number"
                 }
             }
         },

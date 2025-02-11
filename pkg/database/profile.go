@@ -41,6 +41,10 @@ func (u UserPreferredUnits) HeartRate() string {
 	return "bpm"
 }
 
+func (u UserPreferredUnits) Height() string {
+	return "cm"
+}
+
 func (u UserPreferredUnits) Cadence() string {
 	return "spm"
 }

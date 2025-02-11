@@ -14,6 +14,7 @@ templ Daily(u *database.User) {
 				@helpers.IconFor("scale")
 				{ i18n.T(ctx, "Latest measurements:") }
 			</h3>
+			@latestMeasurementForm(u)
 			@Measurements(u)
 		</div>
 	}
@@ -21,33 +22,118 @@ templ Daily(u *database.User) {
 
 templ Measurements(u *database.User) {
 	if ms, err := u.GetLatestMeasurements(10); err == nil && len(ms) > 0 {
-		for _, m := range ms {
-			@measurement(m)
-		}
+		<table>
+			<thead>
+				<tr>
+					<th>
+						@helpers.IconFor("date")
+						{ i18n.T(ctx, "Date") }
+					</th>
+					<th>
+						@helpers.IconFor("height")
+						{ i18n.T(ctx, "Height") }
+					</th>
+					<th>
+						@helpers.IconFor("scale")
+						{ i18n.T(ctx, "Weight") }
+					</th>
+					<th>
+						@helpers.IconFor("steps")
+						{ i18n.T(ctx, "Steps") }
+					</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, m := range ms {
+					<tr>
+						<td>
+							{ m.DateString() }
+						</td>
+						<td>
+							{ helpers.A2S(m.Height) }
+							{ m.User.PreferredUnits().Height() }
+						</td>
+						<td>
+							{ helpers.A2S(m.Weight) }
+							{ m.User.PreferredUnits().Weight() }
+						</td>
+						<td>
+							{ helpers.A2S(m.Steps) }
+						</td>
+						<td>
+							<a
+								class="button dangerous"
+								hx-delete={ helpers.RouteFor(ctx, "daily-delete", m.DateString()) }
+								hx-confirm={ i18n.T(ctx, "Are you sure?") }
+							>
+								@helpers.IconFor("delete")
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	} else {
 		{ i18n.T(ctx, "No measurements found") }
 	}
 }
 
-templ measurement(m *database.Measurement) {
-	<table>
-		<tbody>
+templ latestMeasurementForm(u *database.User) {
+	if l,err := u.GetCurrentMeasurement(); err == nil {
+		@measurementForm(l)
+	} else {
+		{ i18n.T(ctx, "No measurements found") }
+	}
+}
+
+templ measurementForm(m *database.Measurement) {
+	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "daily-update")) }>
+		<table>
 			<tr>
-				<th>
+				<th class="w-1/2">
 					@helpers.IconFor("date")
 					{ i18n.T(ctx, "Date") }
 				</th>
 				<td>
-					@partials.SnippetDate(m.Date)
+					<input
+						type="date"
+						name="date"
+						id="date"
+						value={ m.DateString() }
+						required
+					/>
 				</td>
 			</tr>
 			<tr>
 				<th>
-					@helpers.IconFor("weight")
+					@helpers.IconFor("height")
+					{ i18n.T(ctx, "Height") }
+				</th>
+				<td>
+					<input
+						type="number"
+						name="height"
+						id="height"
+						value={ helpers.A2S(m.Height) }
+						required
+					/>
+					{ m.User.PreferredUnits().Height() }
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("scale")
 					{ i18n.T(ctx, "Weight") }
 				</th>
 				<td>
-					{ helpers.A2S(m.Weight) }
+					<input
+						type="number"
+						name="weight"
+						id="weight"
+						value={ helpers.A2S(m.Weight) }
+						required
+					/>
 					{ m.User.PreferredUnits().Weight() }
 				</td>
 			</tr>
@@ -57,9 +143,21 @@ templ measurement(m *database.Measurement) {
 					{ i18n.T(ctx, "Steps") }
 				</th>
 				<td>
-					{ helpers.A2S(m.Steps) }
+					<input
+						type="number"
+						name="steps"
+						id="steps"
+						value={ helpers.A2S(m.Steps) }
+						required
+					/>
 				</td>
 			</tr>
-		</tbody>
-	</table>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" value="Submit">{ i18n.T(ctx, "Update") }</button>
+				</td>
+			</tr>
+		</table>
+	</form>
 }
