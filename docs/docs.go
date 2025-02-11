@@ -791,16 +791,28 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "date": {
+                    "description": "The date of the measurement",
                     "type": "string"
                 },
                 "height": {
-                    "type": "integer"
+                    "description": "The height of the user, in centimeter",
+                    "type": "number"
+                },
+                "height_unit": {
+                    "description": "The unit of the height (or the user's preferred unit)",
+                    "type": "string"
                 },
                 "steps": {
-                    "type": "integer"
+                    "description": "The number of steps taken",
+                    "type": "number"
                 },
                 "weight": {
+                    "description": "The weight of the user, in kilograms",
                     "type": "number"
+                },
+                "weight_unit": {
+                    "description": "The unit of the weight (or the user's preferred unit)",
+                    "type": "string"
                 }
             }
         },
@@ -1313,14 +1325,14 @@ const docTemplate = `{
                 },
                 "height": {
                     "description": "The height of the user, in centimeter",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "steps": {
                     "description": "The number of steps taken",
-                    "type": "integer"
+                    "type": "number"
                 },
                 "updatedAt": {
                     "type": "string"
@@ -1617,6 +1629,10 @@ const docTemplate = `{
                 },
                 "elevation": {
                     "description": "The user's preferred elevation unit",
+                    "type": "string"
+                },
+                "height": {
+                    "description": "The user's preferred height unit",
                     "type": "string"
                 },
                 "speed": {

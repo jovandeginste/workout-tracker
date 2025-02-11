@@ -3,6 +3,7 @@ package app
 import (
 	"errors"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/a-h/templ"
@@ -102,7 +103,16 @@ func (a *App) dailyHandler(c echo.Context) error {
 
 	u := a.getCurrentUser(c)
 
-	return Render(c, http.StatusOK, user.Daily(u))
+	count := 20
+	if cs := c.QueryParam("count"); cs != "" {
+		if ci, err := strconv.Atoi(cs); err == nil {
+			count = ci
+		} else {
+			return a.redirectWithError(c, a.echo.Reverse("daily"), err)
+		}
+	}
+
+	return Render(c, http.StatusOK, user.Daily(u, count))
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {

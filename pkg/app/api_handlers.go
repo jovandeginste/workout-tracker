@@ -593,54 +593,6 @@ func (a *App) apiDailyHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-type Measurement struct {
-	Date   *string  `form:"date" json:"date"`
-	Weight *float64 `form:"weight" json:"weight"`
-	Height *uint64  `form:"height" json:"height"`
-	Steps  *uint64  `form:"steps" json:"steps"`
-
-	units *database.UserPreferredUnits
-}
-
-func (m *Measurement) Time() time.Time {
-	if m.Date == nil {
-		return time.Now()
-	}
-
-	d, err := time.Parse("2006-01-02", *m.Date)
-	if err != nil {
-		return time.Now()
-	}
-
-	return d
-}
-
-func (m *Measurement) ToHeight() *uint64 {
-	if m.Height == nil || *m.Height == 0 {
-		return nil
-	}
-
-	d := m.units.HeightToDatabase(*m.Height)
-
-	return &d
-}
-
-func (m *Measurement) ToWeight() *float64 {
-	if m.Weight == nil || *m.Weight == 0 {
-		return nil
-	}
-
-	d := m.units.WeightToDatabase(*m.Weight)
-
-	return &d
-}
-
-func (m *Measurement) Update(measurement *database.Measurement) {
-	setIfNotNil(&measurement.Weight, m.ToWeight())
-	setIfNotNil(&measurement.Height, m.ToHeight())
-	setIfNotNil(&measurement.Steps, m.Steps)
-}
-
 // apiDailyUpdateHandler updates the daily measurement for the user
 // @Summary      Update the daily measurement of the current user
 // @Accept       json

@@ -30,7 +30,7 @@ func HumanElevationFor(unit string) func(float64) string {
 	}
 }
 
-func HumanHeightSingleFor(unit string) func(uint64) string {
+func HumanHeightSingleFor(unit string) func(float64) string {
 	switch unit {
 	case "in":
 		return HumanHeightInch
@@ -39,7 +39,7 @@ func HumanHeightSingleFor(unit string) func(uint64) string {
 	}
 }
 
-func HumanHeightFor(unit string) func(uint64) string {
+func HumanHeightFor(unit string) func(float64) string {
 	switch unit {
 	case "in":
 		return HumanHeightFeetInch
@@ -81,5 +81,34 @@ func HumanTempoFor(unit string) func(float64) string {
 		return HumanTempoMile
 	default:
 		return HumanTempoKM
+	}
+}
+
+func HeightToDatabase(v float64, unit string) float64 {
+	switch unit {
+	case "in":
+		return v * CmPerInch
+	default:
+		return v
+	}
+}
+
+func WeightToDatabase(v float64, unit string) float64 {
+	switch unit {
+	case "lbs":
+		return v / PoundsPerKG
+	default:
+		return v
+	}
+}
+
+func DistanceToDatabase(v float64, unit string) float64 {
+	switch unit {
+	case "mi":
+		return v * MeterPerMile
+	case "m":
+		return v
+	default:
+		return v * MeterPerKM
 	}
 }
