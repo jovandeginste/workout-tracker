@@ -319,6 +319,10 @@
   .vanish {
     @apply transition-all duration-1000 max-h-0 py-0 my-0 border-0 opacity-0;
   }
+
+  .input-ellipsis {
+    @apply text-ellipsis overflow-hidden w-full max-w-max whitespace-nowrap;
+  }
 }
 
 @tailwind components;

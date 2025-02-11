@@ -45,6 +45,14 @@ func (a *App) statisticsHandler(c echo.Context) error {
 	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per))
 }
 
+func (a *App) dailyHandler(c echo.Context) error {
+	a.setContext(c)
+
+	u := a.getCurrentUser(c)
+
+	return Render(c, http.StatusOK, user.Daily(u))
+}
+
 func (a *App) dashboardHandler(c echo.Context) error {
 	a.setContext(c)
 

@@ -19,7 +19,7 @@ templ profilePreferredUnits() {
 						<label for="speed">{ i18n.T(ctx, "Speed") }</label>
 					</th>
 					<td>
-						<select id="speed" name="speed">
+						<select class="input-ellipsis" id="speed" name="speed">
 							<option value="kph" selected?={ pu.Speed() == "kph" }>
 								{ i18n.T(ctx, "kilometers per hour") }
 							</option>
@@ -34,7 +34,7 @@ templ profilePreferredUnits() {
 						<label for="distance">{ i18n.T(ctx, "Distance") }</label>
 					</th>
 					<td>
-						<select id="distance" name="distance">
+						<select class="input-ellipsis" id="distance" name="distance">
 							<option value="km" selected?={ pu.Distance() == "km" }>
 								{ i18n.T(ctx, "kilometers") }
 							</option>
@@ -49,7 +49,7 @@ templ profilePreferredUnits() {
 						<label for="elevation">{ i18n.T(ctx, "Elevation") }</label>
 					</th>
 					<td>
-						<select id="elevation" name="elevation">
+						<select class="input-ellipsis" id="elevation" name="elevation">
 							<option value="m" selected?={ pu.Elevation() == "m" }>
 								{ i18n.T(ctx, "meters") }
 							</option>
@@ -64,7 +64,7 @@ templ profilePreferredUnits() {
 						<label for="weight">{ i18n.T(ctx, "Weight") }</label>
 					</th>
 					<td>
-						<select id="weight" name="weight">
+						<select class="input-ellipsis" id="weight" name="weight">
 							<option value="lbs" selected?={ pu.Weight() == "lbs" }>
 								{ i18n.T(ctx, "pounds") }
 							</option>
@@ -86,7 +86,7 @@ templ profilePreferredUnits() {
 }
 
 templ profileTotalsShow(uwt *database.WorkoutType) {
-	<select id="totals_show" name="totals_show">
+	<select class="input-ellipsis" id="totals_show" name="totals_show">
 		<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
 		for _, wt := range helpers.WorkoutTypes() {
 			if wt.IsDistance() {
@@ -99,7 +99,7 @@ templ profileTotalsShow(uwt *database.WorkoutType) {
 }
 
 templ profileTimezone(utz string) {
-	<select id="timezone" name="timezone">
+	<select class="input-ellipsis" id="timezone" name="timezone">
 		<option></option>
 		for _, tz := range helpers.Timezones() {
 			<option value={ tz.Name } selected?={ tz.Name == utz }>
@@ -110,7 +110,7 @@ templ profileTimezone(utz string) {
 }
 
 templ profileLanguage(ulang string) {
-	<select id="language" name="language">
+	<select class="input-ellipsis" id="language" name="language">
 		<option value="browser" selected?={ ulang == "browser" }>
 			🌐 Browser language
 		</option>

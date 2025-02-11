@@ -1,0 +1,65 @@
+package user
+
+import (
+	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+)
+
+templ Daily(u *database.User) {
+	@partials.Page(partials.NewPageOptions()) {
+		<div class="inner-form">
+			<h3>
+				@helpers.IconFor("scale")
+				{ i18n.T(ctx, "Latest measurements:") }
+			</h3>
+			@Measurements(u)
+		</div>
+	}
+}
+
+templ Measurements(u *database.User) {
+	if ms, err := u.GetLatestMeasurements(10); err == nil && len(ms) > 0 {
+		for _, m := range ms {
+			@measurement(m)
+		}
+	} else {
+		{ i18n.T(ctx, "No measurements found") }
+	}
+}
+
+templ measurement(m *database.Measurement) {
+	<table>
+		<tbody>
+			<tr>
+				<th>
+					@helpers.IconFor("date")
+					{ i18n.T(ctx, "Date") }
+				</th>
+				<td>
+					@partials.SnippetDate(m.Date)
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("weight")
+					{ i18n.T(ctx, "Weight") }
+				</th>
+				<td>
+					{ helpers.A2S(m.Weight) }
+					{ m.User.PreferredUnits().Weight() }
+				</td>
+			</tr>
+			<tr>
+				<th>
+					@helpers.IconFor("steps")
+					{ i18n.T(ctx, "Steps") }
+				</th>
+				<td>
+					{ helpers.A2S(m.Steps) }
+				</td>
+			</tr>
+		</tbody>
+	</table>
+}
