@@ -1,6 +1,122 @@
-## What's Changed
+## What's Changed in v2.1.0
 
-- Upgrade go.mod to v2
+- Improve the measurement conversions and interface, by @jovandeginste, in
+  [#428](https://github.com/jovandeginste/workout-tracker/pull/428)
+  - Add parameter to choose number of measurements to show, by @jovandeginste
+  - Improve the measurement conversions and interface, by @jovandeginste
+- chore(deps): bump golangci/golangci-lint-action from 6.2.0 to 6.3.2 in the all
+  group, by @jovandeginste, in
+  [#426](https://github.com/jovandeginste/workout-tracker/pull/426)
+  - chore(deps): bump golangci/golangci-lint-action in the all group, by
+    @dependabot[bot]
+- Add daily measurements, by @jovandeginste, in
+  [#427](https://github.com/jovandeginste/workout-tracker/pull/427)
+  - Calculate burned calories based on last recorded weight, by @jovandeginste
+  - Add quick-edit button for daily measurements, by @jovandeginste
+  - Add/fix unit conversions for height and weight, by @jovandeginste
+  - Add forms and API to manage daily measurements, by @jovandeginste
+  - Fix(build): Update TailwindCSS watch mode, by @jovandeginste
+  - Remove dots from translation keys, by @jovandeginste
+  - Move daily measurements to separate page, by @jovandeginste
+- feat(api): Add endpoint to create manual workouts, by @jovandeginste, in
+  [#425](https://github.com/jovandeginste/workout-tracker/pull/425)
+- Bug fixes and debugging tools, by @jovandeginste, in
+  [#424](https://github.com/jovandeginste/workout-tracker/pull/424)
+  - Update the tests to reflect the improved distance calculations, by
+    @jovandeginste
+  - feat(database): Improve workout data handling and address calculation, by
+    @jovandeginste
+  - feat(cli): Add commands to parse and calculate workout files, by
+    @jovandeginste
+  - Finish live development environment, by @jovandeginste
+- Ignore templ watch files, by @jovandeginste, in
+  [#423](https://github.com/jovandeginste/workout-tracker/pull/423)
+  - Update all dependencies, by @jovandeginste
+  - Ignore templ watch files, by @jovandeginste
+- Development improvements, by @jovandeginste, in
+  [#422](https://github.com/jovandeginste/workout-tracker/pull/422)
+  - feat(templ): Use live reloading in templ, by @jovandeginste
+  - feat(css): Minimize generated css, by @jovandeginste
+- fix(filter): Update the unscoped value for the `since` filter, by
+  @jovandeginste, in
+  [#420](https://github.com/jovandeginste/workout-tracker/pull/420)
+  - chore(tailwind): Rebuilt css with new Tailwind version, by @jovandeginste
+  - fix(filter): Update the unscoped value for the `since` filter, by
+    @jovandeginste
+- Bump all dependencies, by @jovandeginste, in
+  [#419](https://github.com/jovandeginste/workout-tracker/pull/419)
+- chore(deps): bump actions/setup-go from 5.2.0 to 5.3.0 in the all group, by
+  @jovandeginste, in
+  [#416](https://github.com/jovandeginste/workout-tracker/pull/416)
+  - chore(deps): bump actions/setup-go from 5.2.0 to 5.3.0 in the all group, by
+    @dependabot[bot]
+- chore(deps): bump the all group with 5 updates, by @jovandeginste, in
+  [#418](https://github.com/jovandeginste/workout-tracker/pull/418)
+  - chore(deps): bump the all group with 5 updates, by @dependabot[bot]
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#414](https://github.com/jovandeginste/workout-tracker/pull/414)
+  - Translated using Weblate (German), by @Atalanttore
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#413](https://github.com/jovandeginste/workout-tracker/pull/413)
+  - Translated using Weblate (German), by @Atalanttore
+- fix(app): Fix redirect URLs after workout creation, by @jovandeginste, in
+  [#415](https://github.com/jovandeginste/workout-tracker/pull/415)
+- feat(import): Implement export and import CLI commands, by @jovandeginste, in
+  [#410](https://github.com/jovandeginste/workout-tracker/pull/410)
+- fix(database): Handle zero duration in workout average speed calculation, by
+  @jovandeginste, in
+  [#409](https://github.com/jovandeginste/workout-tracker/pull/409)
+- chore(deps): bump golangci/golangci-lint-action from 6.1.1 to 6.2.0 in the all
+  group, by @jovandeginste, in
+  [#408](https://github.com/jovandeginste/workout-tracker/pull/408)
+  - chore(deps): bump golangci/golangci-lint-action in the all group, by
+    @dependabot[bot]
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.0.3...v2.1.0
+
+## What's Changed in v2.0.3
+
+- Add generic diagnose command, by @jovandeginste, in
+  [#407](https://github.com/jovandeginste/workout-tracker/pull/407)
+  - Change all uints to uint64, by @jovandeginste
+  - Add generic diagnose command, by @jovandeginste
+- Add a debugger tool, by @jovandeginste, in
+  [#405](https://github.com/jovandeginste/workout-tracker/pull/405)
+- feat(database): Improve statistics query, by @jovandeginste, in
+  [#404](https://github.com/jovandeginste/workout-tracker/pull/404)
+- Refactor(build): Rename binary and restructure project, by @jovandeginste, in
+  [#403](https://github.com/jovandeginste/workout-tracker/pull/403)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#400](https://github.com/jovandeginste/workout-tracker/pull/400)
+  - Translated using Weblate (German)
+- Finnish translations, by @jovandeginste, in
+  [#398](https://github.com/jovandeginste/workout-tracker/pull/398)
+  - Sort languages automatically, by @jovandeginste
+  - Fix yaml syntax, by @jovandeginste
+  - Create fi.yaml, by @tphakala
+- Add route segment tests, by @jovandeginste, in
+  [#397](https://github.com/jovandeginste/workout-tracker/pull/397)
+- Add resources for route segments, by @jovandeginste, in
+  [#396](https://github.com/jovandeginste/workout-tracker/pull/396)
+- Update readme, by @jovandeginste, in
+  [#395](https://github.com/jovandeginste/workout-tracker/pull/395)
+  - Update screenshots, by @jovandeginste
+  - Update the README, by @jovandeginste
+
+## New Contributors
+
+- @tphakala made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.0.2...v2.0.3
+
+## What's Changed in v2.0.2
+
+- Implement simple query caching, by @jovandeginste, in
+  [#394](https://github.com/jovandeginste/workout-tracker/pull/394)
+- Upgrade go.mod to v2, by @jovandeginste, in
+  [#393](https://github.com/jovandeginste/workout-tracker/pull/393)
 - Fix(gpx): Handle GPX files without track names, by @jovandeginste, in
   [#391](https://github.com/jovandeginste/workout-tracker/pull/391)
 - refactor(converters): Improve name detection, by @jovandeginste, in
@@ -11,6 +127,9 @@
 - Refactor(template): Remove duplicate footer from statistics page, by
   @jovandeginste, in
   [#386](https://github.com/jovandeginste/workout-tracker/pull/386)
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.0.1...v2.0.2
 
 ## What's Changed in v2.0.1
 
