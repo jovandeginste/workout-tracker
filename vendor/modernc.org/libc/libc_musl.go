@@ -157,6 +157,7 @@ func init() {
 
 	Xprogram_invocation_name = mustCString(nm)
 	Xprogram_invocation_short_name = mustCString(filepath.Base(nm))
+	X__libc.Fpage_size = Tsize_t(os.Getpagesize())
 }
 
 // RawMem64 represents the biggest uint64 array the runtime can handle.
