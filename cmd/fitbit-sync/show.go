@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -11,14 +12,16 @@ import (
 )
 
 func (fs *fitbitSync) showProfile() {
+	log.Print("Fetching Fitbit information...")
+
 	fmt.Println("Information for:", fs.profile.FullName)
 	fmt.Printf("Weight: %.2f %s\n", fs.profile.Weight, weightUnit(fs.profile.WeightUnit))
 	fmt.Printf("Height: %.2f %s\n", fs.profile.Height, heightUnit(fs.profile.HeightUnit))
 }
 
-func (fs *fitbitSync) showActivities() error {
+func (fs *fitbitSync) showActivities(days int) error {
 	end := time.Now()
-	start := end.AddDate(0, 0, -7)
+	start := end.AddDate(0, 0, -days)
 
 	t := table.New(os.Stdout)
 	t.SetHeaders("Date", "Steps", "Distance", "Sedentary", "Light", "Fair", "Very")
@@ -27,6 +30,10 @@ func (fs *fitbitSync) showActivities() error {
 		act, err := fs.getDailyActivitySummary(d)
 		if err != nil {
 			return err
+		}
+
+		for _, a := range act.Activities {
+			fmt.Printf("%+v\n", a)
 		}
 
 		t.AddRow(

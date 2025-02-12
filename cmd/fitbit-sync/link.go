@@ -82,7 +82,7 @@ func (fs *fitbitSync) linkFunc(w http.ResponseWriter, req *http.Request) {
 	fs.cfg.FitbitConfig.UserID = linkResp.UserID
 	fs.cfg.Token = linkResp.Token
 
-	if err := fs.cfg.saveConfig(); err != nil {
+	if err := fs.saveConfig(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

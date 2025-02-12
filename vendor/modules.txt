@@ -397,6 +397,7 @@ golang.org/x/net/http2
 golang.org/x/net/http2/h2c
 golang.org/x/net/http2/hpack
 golang.org/x/net/idna
+golang.org/x/net/publicsuffix
 # golang.org/x/oauth2 v0.25.0
 ## explicit; go 1.18
 golang.org/x/oauth2
@@ -540,3 +541,6 @@ modernc.org/memory
 # modernc.org/sqlite v1.34.5
 ## explicit; go 1.21
 modernc.org/sqlite/lib
+# resty.dev/v3 v3.0.0-beta.1
+## explicit; go 1.21
+resty.dev/v3

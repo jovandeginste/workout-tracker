@@ -13,7 +13,8 @@ import (
 )
 
 type config struct {
-	WorkoutURL   string
+	WorkoutConfig WorkoutConfig
+
 	FitbitConfig struct {
 		ClientID     string
 		ClientSecret string
@@ -26,32 +27,23 @@ func (fs *fitbitSync) setDefaults() {
 	fs.waitForAuth = make(chan bool, 1)
 }
 
-func configFile() (string, error) {
-	dir, err := os.UserConfigDir()
-	if err != nil {
-		return "", err
-	}
-
-	p := path.Join(dir, "workout-tracker")
+func (fs *fitbitSync) ConfigFile() string {
+	p := fs.configDir
 	if _, err := os.Stat(p); errors.Is(err, os.ErrNotExist) {
 		if err := os.MkdirAll(p, 0o700); err != nil {
-			return "", err
+			log.Fatal(err)
 		}
 	}
 
-	c := path.Join(p, "fitbit.json")
+	c := path.Join(p, fs.configFile)
 
-	return c, nil
+	return c
 }
 
 func (fs *fitbitSync) loadConfig() error {
 	fs.setDefaults()
 
-	f, err := configFile()
-	if err != nil {
-		return err
-	}
-
+	f := fs.ConfigFile()
 	if _, err := os.Stat(f); errors.Is(err, os.ErrNotExist) {
 		return nil
 	}
@@ -69,11 +61,8 @@ func (fs *fitbitSync) loadConfig() error {
 	return nil
 }
 
-func (cfg *config) saveConfig() error {
-	f, err := configFile()
-	if err != nil {
-		return err
-	}
+func (fs *fitbitSync) saveConfig() error {
+	f := fs.ConfigFile()
 
 	file, err := os.Create(f)
 	if err != nil {
@@ -83,7 +72,7 @@ func (cfg *config) saveConfig() error {
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
-	if err := encoder.Encode(cfg); err != nil {
+	if err := encoder.Encode(fs.cfg); err != nil {
 		return fmt.Errorf("could not encode '%s': %w", f, err)
 	}
 
@@ -135,5 +124,5 @@ func (fs *fitbitSync) updateTokenFunc(oldToken, newToken *fitbit.Token) error {
 
 	fs.cfg.Token = newToken
 
-	return fs.cfg.saveConfig()
+	return fs.saveConfig()
 }

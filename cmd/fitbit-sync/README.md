@@ -80,3 +80,54 @@ fitbit-sync link --client-id CLIENT_ID --client-secret CLIENT_SECRET --user-id U
 The application will create a configuration file with the above information and
 store it in the default user configuration directory (eg. on Linux:
 `$HOME/.config/workout-tracker/fitbit.json`).
+
+## Showing your recent daily activity Summary
+
+If the initialization of the application was successful, you should be able to
+see the recent activity summary. Use the `show` sub-command:
+
+```bash
+fitbit-sync show
+```
+
+This should print some personal details (such as your name on Fitbit) and a
+table with recent daily activity summaries:
+
+```text
+2025/02/12 12:56:59 Fetching Fitbit information...
+Information for: Jo VDG
+Weight: 68.00 kg
+Height: 175.00 cm
+Fitbit information:
+┌────────────┬───────┬──────────┬───────────┬─────────┬────────┬────────┐
+│    Date    │ Steps │ Distance │ Sedentary │  Light  │  Fair  │  Very  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-05 │ 10865 │ 18 km    │ 1272 min  │ 79 min  │ 17 min │ 72 min │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-06 │ 4144  │ 6.1 km   │ 1242 min  │ 182 min │ 8 min  │ 8 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-07 │ 3641  │ 5.7 km   │ 1300 min  │ 140 min │ 0 min  │ 0 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-08 │ 7612  │ 11 km    │ 1049 min  │ 379 min │ 7 min  │ 5 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-09 │ 5187  │ 7.6 km   │ 1248 min  │ 182 min │ 9 min  │ 1 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-10 │ 1835  │ 2.7 km   │ 1372 min  │ 55 min  │ 9 min  │ 4 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-11 │ 2653  │ 3.9 km   │ 1315 min  │ 110 min │ 9 min  │ 6 min  │
+├────────────┼───────┼──────────┼───────────┼─────────┼────────┼────────┤
+│ 2025-02-12 │ 565   │ 0.76 km  │ 741 min   │ 36 min  │ 0 min  │ 0 min  │
+└────────────┴───────┴──────────┴───────────┴─────────┴────────┴────────┘
+```
+
+## Syncing your activities to your Workout Tracker
+
+The final step is to sync these daily activities to your Workout Tracker. You
+need the URL of your Workout Tracker installation and your API key.
+
+```bash
+fitbit-sync sync --url URL --ikey API_KEY
+```
+
+If you want the application to store these parameters in the configuration file,
+add the `--persist` flag.
