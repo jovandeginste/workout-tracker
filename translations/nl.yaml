@@ -177,7 +177,8 @@ nl:
   Workout: Workout
   refresh in progress: bezig met verversen
   Average per minute: Gemiddelde per minuut
-  Estimated based on the activity: Geschat op basis van de activiteit en je laatst gekende gewicht
+  Estimated based on the activity: Geschat op basis van de activiteit en je laatst
+    gekende gewicht
   Est calories burned: Geschat verbruik calorieën
   Aerial: Lucht
   Street: Straat
@@ -208,3 +209,29 @@ nl:
   descending: aflopend
   kayaking: kajakken
   Filter workouts: Filter workouts
+  Resources: Hulpmiddelen
+  "You can find inspiration here:": 'Hier kun je inspiratie opdoen:'
+  Your settings: Uw instellingen
+  Measurements: Metingen
+  Steps: Stappen
+  forever: voor altijd
+  "The equipment '%s' has been deleted": Het materiaal '%s' werd verwijderd.
+  "The equipment '%s' has been updated": Het materiaal '%s' werd aangepast.
+  "The workout '%s' will be refreshed soon": De workout '%s' wordt binnenkort ververst...
+  "The workout '%s' has been created": De workout '%s' werd gemaakt.
+  "The route segment '%s' has been created - we search for matches in the background": Het
+    route segment '%s' werd aangemaakt - we zoeken op de achtergrond naar matches.
+  "Added %d new route segment(s): %s - we search for matches in the background": '%d
+    nieuw(e) route segment(en) werden toegevoegd: %s - we zoeken op de achtergrond
+    naar matches.'
+  "The route segment '%s' has been updated": Het route segment '%s' werd aangepast.
+  No measurements found: Geen metingen gevonden
+  Update: Aanpassen
+  Height: Grootte
+  Are you sure?: Bent u zeker?
+  inch: duim
+  centimeter: centimeter
+  Update measurement: Meting aanpassen
+  Latest measurements: Laatste metingen
+  "Start searching in the background for matching workouts for route segment '%s'": Zoek
+    op de achtergrond naar workouts met matches voor route segment '%s'.
