@@ -38,15 +38,14 @@ COPY --from=frontend /app/assets/dist ./assets/dist
 ENV CGO_ENABLED=0
 RUN go build \
   -ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
-  -o /workout-tracker ./cmd/workout-tracker/
+  -o /commands/ ./cmd/...
 
 FROM alpine:latest
 
 RUN apk add --no-cache tzdata
-VOLUME /data /imports
-WORKDIR /app
-COPY --from=backend /workout-tracker ./workout-tracker
+COPY --from=backend /commands/* /app/
 
+VOLUME /data /imports
 WORKDIR /data
 ENTRYPOINT ["/app/workout-tracker"]
 EXPOSE 8080
