@@ -5,6 +5,7 @@
 package proto
 
 import (
+	"fmt"
 	"math"
 	"reflect"
 	"strconv"
@@ -222,6 +223,23 @@ func (v Value) String() string {
 		return basetype.StringInvalid
 	}
 	return unsafe.String((*byte)(v.ptr), v.num)
+}
+
+var _ fmt.Formatter = (*Value)(nil)
+
+// Format controls how Value is formatted when using fmt. It overrides the String method, as the String method
+// is used to return string value, rather than the Value formatted as a string.
+func (v Value) Format(p fmt.State, verb rune) {
+	switch {
+	case v.typ == TypeInvalid:
+		fmt.Fprintf(p, "<invalid proto.Value>")
+	case verb != 'v':
+		fmt.Fprintf(p, fmt.FormatString(p, verb), v.Any())
+	case p.Flag('#'):
+		fmt.Fprintf(p, "%#v", v.Any())
+	default:
+		fmt.Fprintf(p, "%v", v.Any())
+	}
 }
 
 // SliceBool returns Value as []typedef.Bool, if it's not a valid []typedef.Bool value, it returns nil.

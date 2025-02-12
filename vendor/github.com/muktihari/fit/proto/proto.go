@@ -157,6 +157,26 @@ type Field struct {
 	IsExpandedField bool
 }
 
+var _ fmt.Formatter = (*Field)(nil)
+
+// Format controls how Field is formatted when using fmt. Instead of only printing
+// FieldBase's pointer, it also include the value, making it easier to debug.
+func (f Field) Format(p fmt.State, verb rune) {
+	switch {
+	case verb != 'v':
+		fmt.Fprintf(p, "%%!%c(%T=%v)", verb, f, f)
+	case p.Flag('+'):
+		fmt.Fprintf(p, "{FieldBase:(%p)(%+v) Value:%+v IsExpandedField:%t}",
+			f.FieldBase, f.FieldBase, f.Value, f.IsExpandedField)
+	case p.Flag('#'):
+		fmt.Fprintf(p, "{FieldBase:(%p)(%#v), Value:%#v, IsExpandedField:%t}",
+			f.FieldBase, f.FieldBase, f.Value, f.IsExpandedField)
+	default: // %v
+		fmt.Fprintf(p, "{(%p)(%v) %v %t}",
+			f.FieldBase, f.FieldBase, f.Value, f.IsExpandedField)
+	}
+}
+
 // WithValue returns a Field containing v value.
 func (f Field) WithValue(v any) Field {
 	f.Value = Any(v)
