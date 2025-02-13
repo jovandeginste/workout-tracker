@@ -120,7 +120,7 @@ func (a *Activity) UnmarshalJSON(b []byte) error {
 	a.DetailsLink = raw.DetailsLink
 	a.Calories = raw.Calories
 	a.StartDateTime = startDateTime
-	a.Duration = time.Duration(raw.Distance * 1000 * 1000) // convert milliseconds to nanoseconds.
+	a.Duration = time.Duration(raw.Duration * 1000 * 1000) // convert milliseconds to nanoseconds.
 	a.Distance = raw.Distance
 	a.Steps = raw.Steps
 	a.HasActiveZoneMinutes = raw.HasActiveZoneMinutes

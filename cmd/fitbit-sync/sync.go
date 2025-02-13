@@ -21,6 +21,7 @@ func (fs *fitbitSync) initRESTClient() {
 func (fs *fitbitSync) syncActivities(days int) {
 	fs.initRESTClient()
 
+	units := fs.fitbitClient.GetUnit()
 	end := time.Now()
 	endDate := end.Format("2006-01-02")
 	start := end.AddDate(0, 0, -days)
@@ -40,14 +41,14 @@ func (fs *fitbitSync) syncActivities(days int) {
 
 		final := date == endDate
 
-		mw := fs.buildMeasurement(date, final, act)
+		mw := fs.buildMeasurement(date, final, units, act)
 		if err := fs.postMeasurement(mw); err != nil {
 			log.Printf("could not post measurement: %v", err)
 		}
 	}
 }
 
-func (fs *fitbitSync) buildMeasurement(date string, final bool, act *fitbit.DailyActivitySummary) *app.Measurement {
+func (fs *fitbitSync) buildMeasurement(date string, final bool, units *fitbit.Unit, act *fitbit.DailyActivitySummary) *app.Measurement {
 	mw := &app.Measurement{
 		Date: date,
 	}
@@ -61,9 +62,9 @@ func (fs *fitbitSync) buildMeasurement(date string, final bool, act *fitbit.Dail
 	}
 
 	mw.Height = fs.profile.Height
-	mw.HeightUnit = heightUnit(fs.profile.HeightUnit)
+	mw.HeightUnit = units.Height
 	mw.Weight = fs.profile.Weight
-	mw.WeightUnit = weightUnit(fs.profile.WeightUnit)
+	mw.WeightUnit = units.Weight
 
 	return mw
 }
