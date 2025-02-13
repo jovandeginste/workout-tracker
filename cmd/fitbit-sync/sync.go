@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/anyappinc/fitbit"
@@ -33,10 +36,22 @@ func (fs *fitbitSync) syncActivities(days int) {
 		act, err := fs.getDailyActivitySummary(d)
 		if err != nil {
 			log.Printf("could not get daily activity summary: %v", err)
+			continue
 		}
 
 		if act == nil {
 			continue
+		}
+
+		for _, a := range act.Activities {
+			if !a.HasStartTime {
+				continue
+			}
+
+			if err := fs.uploadActivity(a); err != nil {
+				log.Printf("could not sync activity TCX: %v", err)
+				continue
+			}
 		}
 
 		final := date == endDate
@@ -79,6 +94,35 @@ func (fs *fitbitSync) postMeasurement(m *app.Measurement) error {
 
 	if !res.IsSuccess() {
 		return errors.New(res.Status())
+	}
+
+	return nil
+}
+
+func (fs *fitbitSync) uploadActivity(a fitbit.Activity) error {
+	tcx, err := fs.getActivityTCX(a)
+	if err != nil {
+		return err
+	}
+
+	name := fmt.Sprintf("%d.tcx", a.LogID)
+
+	res, err := fs.restClient.R().
+		SetBody(tcx).
+		SetQueryParam("name", name).
+		Post("/import/generic")
+	if err != nil {
+		return err
+	}
+
+	var response app.APIResponse
+
+	if err := json.Unmarshal(res.Bytes(), &response); err != nil {
+		return err
+	}
+
+	if !res.IsSuccess() {
+		return errors.New(res.Status() + ": " + strings.Join(response.Errors, ","))
 	}
 
 	return nil

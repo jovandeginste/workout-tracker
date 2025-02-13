@@ -84,7 +84,7 @@ func (fs *fitbitSync) initClient() {
 		fs.cfg.FitbitConfig.ClientID,
 		fs.cfg.FitbitConfig.ClientSecret,
 		fitbit.ServerApplication,
-		&fitbit.Scope{Activity: true, Weight: true, Profile: true, Heartrate: true},
+		&fitbit.Scope{Activity: true, Weight: true, Profile: true, Heartrate: true, Location: true},
 	)
 	fs.fitbitClient.SetUpdateTokenFunc(fs.updateTokenFunc)
 	fs.fitbitClient.EnableDebugMode()

@@ -59,7 +59,7 @@ func (fs *fitbitSync) showActivities(days int) error {
 		summaries.AddRow(
 			d.Format("2006-01-02"),
 			strconv.FormatInt(act.Summary.Steps, 10),
-			strconv.FormatFloat(sum(act.Summary.Distances), 'g', 2, 64)+" "+units.Distance,
+			strconv.FormatFloat(findTotal(act.Summary.Distances), 'g', 2, 64)+" "+units.Distance,
 			strconv.FormatInt(act.Summary.SedentaryMinutes, 10)+" min",
 			strconv.FormatInt(act.Summary.LightlyActiveMinutes, 10)+" min",
 			strconv.FormatInt(act.Summary.FairlyActiveMinutes, 10)+" min",
@@ -77,12 +77,12 @@ func (fs *fitbitSync) showActivities(days int) error {
 	return nil
 }
 
-func sum(s []fitbit.Distance) float64 {
-	var sum float64
-
+func findTotal(s []fitbit.Distance) float64 {
 	for _, v := range s {
-		sum += v.Distance
+		if v.Activity == "total" {
+			return v.Distance
+		}
 	}
 
-	return sum
+	return 9
 }

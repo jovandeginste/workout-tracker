@@ -85,6 +85,7 @@ github.com/fsnotify/fsnotify v1.8.0 h1:dAwr6QBTBZIkG8roQaJjGof0pp0EeF+tNV7YBP3F/
 github.com/fsnotify/fsnotify v1.8.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
 github.com/fsouza/slognil v0.4.1 h1:fMSnRtFZgAkM7r2IuviVMj50fKgT7agXSu0JiQsM2xU=
 github.com/fsouza/slognil v0.4.1/go.mod h1:uaLfvwv/vp6xUVeUEQiJ4n3L6qsGc8b/U+PANzm5Sts=
+github.com/galeone/tcx v1.0.0/go.mod h1:cHrVurc4epPGjwvJt8kDkQgp4hEUhk0UiWPSN6/dykI=
 github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884 h1:aiujMvmLqdGvZftIoDSYmTPtSVPDXC9csDpZJQ8EEkQ=
 github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884/go.mod h1:cHrVurc4epPGjwvJt8kDkQgp4hEUhk0UiWPSN6/dykI=
 github.com/glebarez/go-sqlite v1.22.0 h1:uAcMJhaA6r3LHMTFgP0SifzgXg46yJkgxqyuyec+ruQ=
@@ -248,6 +249,8 @@ github.com/jovandeginste/fitbit v0.0.3 h1:lpcQY7jySSRom7oTE7K6IeX6n/bxQebEE2NDhX
 github.com/jovandeginste/fitbit v0.0.3/go.mod h1:GEs6hK/2Kqjg8VPf30j++3AsmIH8FytcnQlP6kfduII=
 github.com/jovandeginste/fitbit v0.0.4-0.20250213074802-01806236873e h1:voZpd5UHkmTdnfBCDfhkjtX/D/vM7NDEWlFaWTgb7tw=
 github.com/jovandeginste/fitbit v0.0.4-0.20250213074802-01806236873e/go.mod h1:GEs6hK/2Kqjg8VPf30j++3AsmIH8FytcnQlP6kfduII=
+github.com/jovandeginste/fitbit v0.0.4-0.20250213152756-feb45617b002 h1:kMALp2LMtvMWUin2qMMPh0X/h7BKEbYl3eVjdg2E0no=
+github.com/jovandeginste/fitbit v0.0.4-0.20250213152756-feb45617b002/go.mod h1:/jNTx4kK0igJh7QNv0gaCUY8QK6B0zBPm0TdMTWricE=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
