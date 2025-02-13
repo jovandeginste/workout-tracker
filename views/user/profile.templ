@@ -36,7 +36,7 @@ templ Profile(u *database.User) {
 templ userActions() {
 	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
 		<label for="refresh">{ i18n.T(ctx, "Refresh all your workouts") }</label>
-		<button type="submit">
+		<button id="refresh" type="submit">
 			<a>
 				@helpers.IconFor("refresh")
 			</a>
@@ -217,7 +217,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<td></td>
 					<td>
-						<button type="submit">{ i18n.T(ctx, "Update profile") }</button>
+						<button id="update-profile" type="submit">{ i18n.T(ctx, "Update profile") }</button>
 					</td>
 				</tr>
 			</tbody>

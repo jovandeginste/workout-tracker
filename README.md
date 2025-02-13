@@ -19,7 +19,18 @@ Self-hosted, everything included.
 Chat with the community
 [on Matrix](https://matrix.to/#/#workout-tracker:matrix.org)
 
-Heavily inspired by [FitTrackee](https://github.com/SamR1/FitTrackee) :heart:.
+## Features
+
+- upload workout records (gpx, tcx or fit files)
+  - manually, or automatically via API (eg. Fitotrack)
+- keep track of personal daily stats (weight, step count, ...)
+  - manually, or via API and sync (eg. [Fitbit](./cmd/fitbit-sync/))
+- create manual workout records (weight lifting, push-ups, swimming, ...)
+- create route segments to keep track of your progress
+  - this application will try to detect matches of your workouts
+- keep track of equipment you are using
+- check your progress through statistics
+- see your "heatmap": where have you been (a lot)?
 
 ## :heart: Donate your workout files :heart:
 
@@ -136,10 +147,6 @@ Login / registration form
 - new users have to be activated by an admin
 - registration can be disabled
 
-#### Multilingual
-
-![](docs/login-nl.png)
-
 ### Dashboard
 
 ![](docs/dashboard.png)
@@ -198,9 +205,24 @@ Details of a workout, with:
 - Graphs showing monthly aggregated statistics.
 - Pick different time range or bucket size.
 
+### Heatmap: where have you been?
+
+![](docs/heatmap.png)
+
+- Pan and zoom through over the map
+
+### Daily measurements
+
+![](docs/daily_overview.png)
+
+- Keep track of your daily stats, like weight and steps.
+- Used to calculate estimated calories burned during a workout.
+
 ### Basic multi-language support
 
-![](docs/i18n.gif)
+![](docs/login-nl.png)
+
+![](docs/profile.gif)
 
 - Switch between (supported) languages
   - Please help translate via
@@ -268,13 +290,52 @@ password in a production environment.
 The API is documented using
 [swagger](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jovandeginste/workout-tracker/master/docs/swagger.yaml).
 You must enable API access for your user, and copy the API key. You can use the
-API key as a query parameter (`api-key=${API_KEY}`) or as a header
+API key as a query parameter (`?api-key=${API_KEY}`) or as a header
 (`Authorization: Bearer ${API_KEY}`).
 
 You can configure some tools to automatically upload files to Workout Tracker,
 using the `POST /api/v1/import/$program` API endpoint.
 
-### Generic upload
+### Daily measurements
+
+You can set or update a daily measurement record:
+
+```bash
+curl -sSL -H "Authorization: bearer your-api-key" \
+  http://localhost:8080/api/v1/daily \
+  --data @- <<EOF
+{
+  "date": "2025-01-13",
+  "weight": 70,
+  "weight_unit": "kg",
+  "height": 178,
+  "height_unit": "cm"
+}
+EOF
+```
+
+### Workouts
+
+#### Manual creation
+
+You can create a workout manually:
+
+```bash
+curl -sSL -H "Authorization: bearer your-api-key" \
+  http://localhost:8080/api/v1/workouts \
+  --data @- <<EOF
+{
+  "name": "Workout name",
+  "date": "2025-02-03T10:26",
+  "duration_hours": 1,
+  "duration_minutes": 10,
+  "distance": 13,
+  "type": "running"
+}
+EOF
+```
+
+#### Generic upload of a file
 
 The generic upload endpoint takes the recording as body. Prepend the path with
 `@` to tell `curl` to read the data from a file:
@@ -285,14 +346,7 @@ curl -sSL -H "Authorization: bearer your-api-key" \
   --data @path/to/recorded.gpx
 ```
 
-or
-
-```bash
-curl -sSL http://localhost:8080/api/v1/import/generic?api-key=your-api-key \
-  --data @path/to/recorded.gpx
-```
-
-### FitoTrack
+#### FitoTrack automatic GPX export
 
 Read
 [their documentation](https://codeberg.org/jannis/FitoTrack/wiki/Auto-Export)
