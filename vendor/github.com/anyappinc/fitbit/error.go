@@ -76,6 +76,7 @@ type (
 	rawErrorResponse struct {
 		Success bool                     `json:"success"`
 		Errors  []map[string]interface{} `json:"errors"`
+		Error   map[string]interface{}   `json:"error"`
 	}
 
 	// ErrorResponse represents an error response from Fitbit APIs.
@@ -87,18 +88,20 @@ type (
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (e *ErrorResponse) UnmarshalJSON(b []byte) error {
-	raw := rawErrorResponse{
-		Success: true,
-		Errors:  nil,
-	}
+	raw := rawErrorResponse{Success: true}
 	if err := json.Unmarshal(b, &raw); err != nil {
 		return err
 	}
 	e.Success = raw.Success
+
+	if raw.Error != nil {
+		raw.Errors = append(raw.Errors, raw.Error)
+	}
 	if len(raw.Errors) == 0 {
 		return nil
 	}
 
+	e.Success = false
 	e.Errors = make([]Error, len(raw.Errors))
 	for i := range raw.Errors {
 		_err, err := extractError(raw.Errors[i])

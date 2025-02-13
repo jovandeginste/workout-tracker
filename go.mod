@@ -4,7 +4,7 @@ go 1.23
 
 toolchain go1.23.4
 
-replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213152756-feb45617b002
+replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
 	github.com/a-h/templ v0.3.833
