@@ -160,12 +160,12 @@ func (c *Client) GetDailyActivitySummary(ctx context.Context, userID string, dat
 // Scope.Location is required.
 //
 // Web API Reference: https://dev.fitbit.com/build/reference/web-api/activity/get-activity-tcx/
-func (c *Client) GetActivityTCX(ctx context.Context, userID string, activityID int64, token *Token) ([]byte, *RateLimit, []byte, error) {
+func (c *Client) GetActivityTCX(ctx context.Context, userID string, activityID int64, token *Token) ([]byte, *RateLimit, error) {
 	endpoint := c.getEndpoint("GetActivityTCX", userID, activityID)
 	b, rateLimit, err := c.getRequest(ctx, token, endpoint)
 	if err != nil {
-		return nil, nil, b, err
+		return nil, nil, err
 	}
 
-	return b, rateLimit, b, nil
+	return b, rateLimit, nil
 }
