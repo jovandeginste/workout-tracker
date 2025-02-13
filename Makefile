@@ -141,10 +141,13 @@ test-go:
 	go test -short -count 1 -mod vendor -covermode=atomic ./...
 	golangci-lint run --allow-parallel-runners
 
-screenshots: generate-screenshots screenshots-theme screenshots-responsive
+screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n
 
 generate-screenshots:
 	K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js
+
+screenshots-i18n:
+	magick convert -delay 400 docs/profile-*.png docs/profile.gif
 
 screenshots-theme:
 	mkdir -p tmp/
