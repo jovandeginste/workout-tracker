@@ -17,7 +17,7 @@ github.com/alexedwards/scs/gormstore
 ## explicit; go 1.12
 github.com/alexedwards/scs/v2
 github.com/alexedwards/scs/v2/memstore
-# github.com/anyappinc/fitbit v0.0.3
+# github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213152756-feb45617b002
 ## explicit; go 1.15
 github.com/anyappinc/fitbit
 github.com/anyappinc/fitbit/logger

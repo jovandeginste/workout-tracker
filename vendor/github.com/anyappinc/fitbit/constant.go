@@ -9,12 +9,11 @@ const (
 	LowercaseAlphabetLetters = "abcdefghijklmnopqrstuvwxyz" // LowercaseAlphabetLetters is a set of lower case alphabetic characters
 )
 
-var (
-	apiEndpoints = map[string]string{
-		"GetDailyActivitySummary": "/1/user/%s/activities/date/%s.json",
-		"IntrospectToken":         "/1.1/oauth2/introspect",
-		"RevokeToken":             "/oauth2/revoke",
-		"GetWater":                "/1/user/%s/foods/log/water/date/%s.json",
-		"GetProfile":              "/1/user/%s/profile.json",
-	}
-)
+var apiEndpoints = map[string]string{
+	"GetDailyActivitySummary": "/1/user/%s/activities/date/%s.json",
+	"IntrospectToken":         "/1.1/oauth2/introspect",
+	"RevokeToken":             "/oauth2/revoke",
+	"GetWater":                "/1/user/%s/foods/log/water/date/%s.json",
+	"GetProfile":              "/1/user/%s/profile.json",
+	"GetActivityTCX":          "/1/user/%s/activities/%d.tcx",
+}

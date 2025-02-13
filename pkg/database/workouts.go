@@ -22,7 +22,10 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-var ErrInvalidData = errors.New("could not convert data to a GPX structure")
+var (
+	ErrInvalidData          = errors.New("could not convert data to a GPX structure")
+	ErrWorkoutAlreadyExists = errors.New("user already has workout with exact start time")
+)
 
 type Workout struct {
 	Model
@@ -471,6 +474,15 @@ func (w *Workout) Delete(db *gorm.DB) error {
 }
 
 func (w *Workout) Create(db *gorm.DB) error {
+	err := w.create(db)
+	if errors.Is(err, gorm.ErrDuplicatedKey) {
+		return ErrWorkoutAlreadyExists
+	}
+
+	return err
+}
+
+func (w *Workout) create(db *gorm.DB) error {
 	if w.Data == nil {
 		return ErrInvalidData
 	}
@@ -479,6 +491,15 @@ func (w *Workout) Create(db *gorm.DB) error {
 }
 
 func (w *Workout) Save(db *gorm.DB) error {
+	err := w.save(db)
+	if errors.Is(err, gorm.ErrDuplicatedKey) {
+		return ErrWorkoutAlreadyExists
+	}
+
+	return err
+}
+
+func (w *Workout) save(db *gorm.DB) error {
 	if w.Data == nil {
 		return ErrInvalidData
 	}

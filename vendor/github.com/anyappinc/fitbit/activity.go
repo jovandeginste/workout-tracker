@@ -120,7 +120,7 @@ func (a *Activity) UnmarshalJSON(b []byte) error {
 	a.DetailsLink = raw.DetailsLink
 	a.Calories = raw.Calories
 	a.StartDateTime = startDateTime
-	a.Duration = time.Duration(raw.Distance * 1000 * 1000) // convert milliseconds to nanoseconds.
+	a.Duration = time.Duration(raw.Duration * 1000 * 1000) // convert milliseconds to nanoseconds.
 	a.Distance = raw.Distance
 	a.Steps = raw.Steps
 	a.HasActiveZoneMinutes = raw.HasActiveZoneMinutes
@@ -151,4 +151,21 @@ func (c *Client) GetDailyActivitySummary(ctx context.Context, userID string, dat
 		return nil, rateLimit, b, err
 	}
 	return &dailyActivitySummary, rateLimit, b, nil
+}
+
+// GetActivityTCX retrieves the details of a user's location and heart rate data during a logged exercise activity.
+//
+// Scope.Activity is required.
+//
+// Scope.Location is required.
+//
+// Web API Reference: https://dev.fitbit.com/build/reference/web-api/activity/get-activity-tcx/
+func (c *Client) GetActivityTCX(ctx context.Context, userID string, activityID int64, token *Token) ([]byte, *RateLimit, []byte, error) {
+	endpoint := c.getEndpoint("GetActivityTCX", userID, activityID)
+	b, rateLimit, err := c.getRequest(ctx, token, endpoint)
+	if err != nil {
+		return nil, nil, b, err
+	}
+
+	return b, rateLimit, b, nil
 }
