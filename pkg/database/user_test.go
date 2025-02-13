@@ -220,7 +220,7 @@ func TestDatabaseUserCreateDoubleUsername(t *testing.T) {
 
 	err := defaultUser().Create(db)
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "UNIQUE constraint failed")
+	assert.ErrorIs(t, err, gorm.ErrDuplicatedKey)
 
 	users, err := GetUsers(db)
 	require.NoError(t, err)
