@@ -1,18 +1,18 @@
 de:
-  Your settings: Your Ihre Einstellungen
+  Your settings: Deine Einstellungen
   API key updated: API-Schlüssel aktualisiert
   Actions: Aktionen
   Active: Aktiv
-  Add a workout: Neues Training hinzufügen
+  Add a workout: Training hinzufügen
   Add equipment: Ausrüstung hinzufügen
   Add workout: Training hinzufügen
   Add workouts: Trainings hinzufügen
-  'Added %d new workout(s): %s': 'Neue(s) %d Training(s) hinzugefügt: %s'
+  'Added %d new workout(s): %s': '%d neue(s) Training(s) hinzugefügt: %s'
   Admin: Administrator
-  All workouts will be refreshed in the coming minutes: Alle Trainings werden in
-    den nächsten Minuten aktualisiert.
+  All workouts will be refreshed in the coming minutes: Alle Trainings werden in den
+    nächsten Minuten aktualisiert.
   Application settings: Anwendungseinstellungen
-  Are you sure you want to delete this %s?: Möchten Sie dieses %s wirklich löschen?
+  Are you sure you want to delete this %s?: Möchtest du dieses %s wirklich löschen?
   Auto import directory: Verzeichnis für automatischen Import
   Auto-detect: Automatisch erkennen
   Average speed: Durchschnittsgeschwindigkeit
@@ -39,8 +39,8 @@ de:
   File: Datei
   Heart rate: Herzfrequenz
   'I completed a workout: %s': Ich habe das Training %s absolviert.
-  It took me %s to go %s I averaged %s: Es hat mich %s gekostet, um %s zu gehen.
-    Ich habe im Durchschnitt %s.
+  It took me %s to go %s I averaged %s: Es hat mich %s gekostet, um %s zu gehen. Ich
+    habe im Durchschnitt %s.
   Language: Sprache
   Leave blank to keep current password: Leer lassen, um das aktuelle Passwort beizubehalten
   Location: Standort
@@ -57,10 +57,10 @@ de:
   Other users: Andere Benutzer
   Password: Passwort
   Preferred units: Bevorzugte Einheiten
-  Profile updated: Profil wurde aktualisiert
+  Profile updated: Profil aktualisiert
   Recent activity: Kürzliche Aktivität
   Records for %s: Aufzeichnungen für %s
-  Refresh all your workouts: Alle Trainingseinheiten aktualisieren
+  Refresh all your workouts: Alle deine Trainingseinheiten aktualisieren
   Register: Registrieren
   Repetitions: Wiederholungen
   Show full date by default: Standardmäßig das vollständige Datum anzeigen
@@ -70,10 +70,10 @@ de:
   Statistics: Statistik
   Tempo: Tempo
   The user '%s' has been deleted: Der Benutzer '%s' wurde gelöscht.
-  The user '%s' has been updated: Der Benutzer '%s' wurde aktualisiert.
+  The user '%s' has been updated: Der Benutzer ‚%s‘ wurde aktualisiert.
   The workout '%s' has been deleted: Das Training '%s' wurde gelöscht.
-  The workout '%s' has been refreshed: Das Training '%s' wurde aktualisiert.
-  The workout '%s' has been updated: Das Training '%s' wurde aktualisiert.
+  The workout '%s' has been refreshed: Das Training ‚%s‘ wurde aktualisiert.
+  The workout '%s' has been updated: Das Training ‚%s‘ wurde aktualisiert.
   'These settings may be overwritten by:': 'Diese Einstellungen können überschrieben
     werden durch:'
   Time: Zeit
@@ -99,8 +99,8 @@ de:
   Welcome!: Herzlich willkommen!
   Workout type: Trainingsart
   Workouts: Trainings
-  Your account has been created, but needs to be activated: Ihr Konto wurde bereits
-    erstellt, muss aber noch aktiviert werden.
+  Your account has been created, but needs to be activated: Dein Konto wurde erstellt,
+    muss aber noch aktiviert werden.
   Your profile: Dein Profil
   copy to clipboard: In die Zwischenablage kopieren
   cycling: Radfahren
@@ -154,21 +154,22 @@ de:
   2 years: 2 Jahre
   5 years: 5 Jahre
   Average per minute: Durchschnitt pro Minute
-  Create route segment: Streckensegment erstellen
+  Create route segment: Streckenabschnitt erstellen
   Est calories burned: Geschätzter Kalorienverbrauch
-  Estimated based on the activity: Anhand der Aktivität für 70 kg geschätzt
+  Estimated based on the activity: Geschätzt auf der Grundlage der Aktivität und deines
+    zuletzt gemessenen Gewichts
   Matches: Treffer
   Matching route segments: Übereinstimmende Streckenabschnitte
   Route segments: Streckenabschnitte
-  Add route segment: Streckensegment hinzufügen
+  Add route segment: Streckenabschnitt hinzufügen
   Per: pro
   Dashboard: Dashboard
   push-ups: Liegestütze
-  "(Re)generate publicly shareable link": "(Re)generiere öffentlich teilbaren Link"
+  "(Re)generate publicly shareable link": "Öffentlich teilbaren Link (neu) generieren"
   Aerial: Luftbild
   Bidirectional: Bidirektional
   Circular: Rundtour
-  Copy publicly shareable link: Kopiere öffentlich teilbaren Link
+  Copy publicly shareable link: Öffentlich teilbaren Link kopieren
   Publicly shareable link was copied to clipboard: Öffentlich teilbarer Link wurde
     in die Zwischenablage kopiert
   Show map in full width: Karte in voller Breite anzeigen
@@ -210,3 +211,25 @@ de:
   descending: absteigend
   ascending: aufsteigend
   forever: für immer
+  "The workout '%s' has been created": Das Training ‚%s‘ wurde erstellt.
+  "The route segment '%s' has been updated": Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
+  Latest measurements: Letzte Messungen
+  Update measurement: Messung aktualisieren
+  Measurements: Messungen
+  "The equipment '%s' has been deleted": Die Ausrüstung ‚%s‘ wurde gelöscht.
+  "The equipment '%s' has been updated": Die Ausrüstung ‚%s‘ wurde aktualisiert.
+  "The workout '%s' will be refreshed soon": Das Training ‚%s‘ wird bald aktualisiert...
+  No measurements found: Keine Messungen gefunden
+  Height: Höhe
+  Are you sure?: Bist du sicher?
+  inch: Zoll
+  "Added %d new route segment(s): %s - we search for matches in the background": '%d
+    neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen im Hintergrund nach
+    Übereinstimmungen.'
+  "Start searching in the background for matching workouts for route segment '%s'": Beginnt
+    im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt
+    ‚%s‘.
+  centimeter: Zentimeter
+  Steps: Schritte
+  "The route segment '%s' has been created - we search for matches in the background": Der
+    Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
