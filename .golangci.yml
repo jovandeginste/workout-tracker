@@ -61,9 +61,6 @@ linters-settings:
         strict: true
   lll:
     line-length: 200
-  nakedret:
-    command: nakedret
-    pattern: ^(?P<path>.*?\\.go):(?P<line>\\d+)\\s*(?P<message>.*)$
 
   revive:
     rules:

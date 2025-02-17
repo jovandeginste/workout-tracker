@@ -211,25 +211,25 @@ de:
   descending: absteigend
   ascending: aufsteigend
   forever: für immer
-  "The workout '%s' has been created": Das Training ‚%s‘ wurde erstellt.
-  "The route segment '%s' has been updated": Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
-  Latest measurements: Letzte Messungen
-  Update measurement: Messung aktualisieren
-  Measurements: Messungen
-  "The equipment '%s' has been deleted": Die Ausrüstung ‚%s‘ wurde gelöscht.
-  "The equipment '%s' has been updated": Die Ausrüstung ‚%s‘ wurde aktualisiert.
-  "The workout '%s' will be refreshed soon": Das Training ‚%s‘ wird bald aktualisiert...
-  No measurements found: Keine Messungen gefunden
-  Height: Höhe
+  Steps: Schritte
   Are you sure?: Bist du sicher?
+  centimeter: Zentimeter
   inch: Zoll
+  Latest measurements: Letzte Messungen
+  Measurements: Messungen
+  Update measurement: Messung aktualisieren
+  "The equipment '%s' has been deleted": Die Ausrüstung ‚%s‘ wurde gelöscht.
+  "The workout '%s' has been created": Das Training ‚%s‘ wurde erstellt.
+  "The workout '%s' will be refreshed soon": Das Training ‚%s‘ wird bald aktualisiert...
+  "The route segment '%s' has been created - we search for matches in the background": Der
+    Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
   "Added %d new route segment(s): %s - we search for matches in the background": '%d
     neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen im Hintergrund nach
     Übereinstimmungen.'
+  Height: Höhe
+  No measurements found: Keine Messungen gefunden
+  "The route segment '%s' has been updated": Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
   "Start searching in the background for matching workouts for route segment '%s'": Beginnt
     im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt
     ‚%s‘.
-  centimeter: Zentimeter
-  Steps: Schritte
-  "The route segment '%s' has been created - we search for matches in the background": Der
-    Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
+  "The equipment '%s' has been updated": Die Ausrüstung ‚%s‘ wurde aktualisiert.
