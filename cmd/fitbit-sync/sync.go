@@ -43,14 +43,16 @@ func (fs *fitbitSync) syncActivities(days int) {
 			continue
 		}
 
-		for _, a := range act.Activities {
-			if !a.HasStartTime {
-				continue
-			}
+		if fs.WorkoutConfig.syncActivities {
+			for _, a := range act.Activities {
+				if !a.HasStartTime {
+					continue
+				}
 
-			if err := fs.uploadActivity(a); err != nil {
-				log.Printf("could not sync activity TCX: %v", err)
-				continue
+				if err := fs.uploadActivity(a); err != nil {
+					log.Printf("could not sync activity TCX: %v", err)
+					continue
+				}
 			}
 		}
 
@@ -68,18 +70,25 @@ func (fs *fitbitSync) buildMeasurement(date string, final bool, units *fitbit.Un
 		Date: date,
 	}
 
-	if act.Summary != nil {
-		mw.Steps = float64(act.Summary.Steps)
+	if fs.WorkoutConfig.syncSteps {
+		if act.Summary != nil {
+			mw.Steps = float64(act.Summary.Steps)
+		}
 	}
 
 	if !final {
 		return mw
 	}
 
-	mw.Height = fs.profile.Height
-	mw.HeightUnit = units.Height
-	mw.Weight = fs.profile.Weight
-	mw.WeightUnit = units.Weight
+	if fs.WorkoutConfig.syncHeight {
+		mw.Height = fs.profile.Height
+		mw.HeightUnit = units.Height
+	}
+
+	if fs.WorkoutConfig.syncWeight {
+		mw.Weight = fs.profile.Weight
+		mw.WeightUnit = units.Weight
+	}
 
 	return mw
 }
