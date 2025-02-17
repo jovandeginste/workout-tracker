@@ -121,6 +121,11 @@ func (fs *fitbitSync) syncCmd() *cobra.Command {
 	cmd.Flags().IntVarP(&days, "days", "d", 7, "Number of days to show")
 	cmd.Flags().StringVarP(&fs.WorkoutConfig.URL, "url", "u", "", "Workout Tracker root URL")
 	cmd.Flags().StringVarP(&fs.WorkoutConfig.APIKey, "key", "k", "", "Workout Tracker API key")
+	cmd.Flags().BoolVar(&fs.WorkoutConfig.syncWeight, "weight", true, "Sync weight from Fitbit")
+	cmd.Flags().BoolVar(&fs.WorkoutConfig.syncHeight, "height", true, "Sync height from Fitbit")
+	cmd.Flags().BoolVar(&fs.WorkoutConfig.syncSteps, "steps", true, "Sync steps from Fitbit")
+	cmd.Flags().BoolVar(&fs.WorkoutConfig.syncActivities, "activities", true, "Sync activities from Fitbit")
+
 	cmd.Flags().BoolVarP(&fs.WorkoutConfig.persist, "persist", "p", false, "Persist Workout Tracker configuration")
 
 	return cmd

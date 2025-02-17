@@ -13,7 +13,11 @@ import (
 
 type WorkoutConfig struct {
 	URL, APIKey string
-	persist     bool
+
+	syncWeight, syncHeight    bool
+	syncSteps, syncActivities bool
+
+	persist bool
 }
 
 func (c *WorkoutConfig) CopyFrom(o *WorkoutConfig) {
