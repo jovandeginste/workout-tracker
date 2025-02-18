@@ -1,4 +1,3 @@
----
 fi:
   Heatmap: Lämpökartta
   "(Re)generate publicly shareable link": "Luo (uudelleen) julkinen jakolinkki"
@@ -24,7 +23,8 @@ fi:
   Admin: Ylläpitäjä
   Aerial: Ilmakuva
   All: Kaikki
-  All workouts will be refreshed in the coming minutes: Kaikki harjoitukset päivitetään tulevien minuuttien aikana.
+  All workouts will be refreshed in the coming minutes: Kaikki harjoitukset virkistetään
+    tulevien minuuttien aikana.
   Application settings: Sovelluksen asetukset
   Are you sure you want to delete this %s?: "Haluatko varmasti poistaa tämän: %s?"
   Auto import directory: Automaattinen tuontihakemisto
@@ -55,7 +55,8 @@ fi:
   Duration: Kesto
   Elevation: Korkeus
   Enable API access: Ota API-käyttö käyttöön
-  "Encountered %d problems while adding workouts: %s": "Kohdattiin %d ongelmaa harjoitusten lisäämisessä: %s"
+  "Encountered %d problems while adding workouts: %s": "Kohdattiin %d ongelmaa harjoitusten
+    lisäämisessä: %s"
   End: Loppu
   Equipment: Välineet
   Est calories burned: Arv. kulutetut kalorit
@@ -65,7 +66,8 @@ fi:
   Filter: Suodata
   Heart rate: Syke
   "I completed a workout: %s": "Suoritin harjoituksen: %s."
-  It took me %s to go %s I averaged %s: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.
+  It took me %s to go %s I averaged %s: Minulla kesti %s kulkea %s. Keskiarvoni oli
+    %s.
   Language: Kieli
   Last: Viimeinen
   Leave blank to keep current password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
@@ -88,10 +90,11 @@ fi:
   Please help translate via Weblate: Auta kääntämisessä Weblaten kautta
   Preferred units: Ensisijaiset yksiköt
   Profile updated: Profiili päivitetty
-  Publicly shareable link was copied to clipboard: Julkinen jakolinkki kopioitiin leikepöydälle
+  Publicly shareable link was copied to clipboard: Julkinen jakolinkki kopioitiin
+    leikepöydälle
   Recent activity: Viimeaikainen toiminta
   Records for %s: Tulokset käyttäjälle %s
-  Refresh all your workouts: Päivitä kaikki harjoituksesi
+  Refresh all your workouts: Virkistä kaikki harjoituksesi
   Register: Rekisteröidy
   Repetitions: Toistot
   Reset changes: Palauta muutokset
@@ -139,7 +142,8 @@ fi:
   Workout: Harjoitus
   Workout type: Harjoitustyyppi
   Workouts: Harjoitukset
-  Your account has been created, but needs to be activated: Tilisi on luotu, mutta se täytyy aktivoida.
+  Your account has been created, but needs to be activated: Tilisi on luotu, mutta
+    se täytyy aktivoida.
   Your profile: Profiilisi
   Your progress per %s for the past %s: Edistymisesi per %s viimeisten %s aikana
   copy to clipboard: kopioi leikepöydälle
@@ -170,8 +174,8 @@ fi:
   no equipment: ei välineitä
   pounds: paunat
   push-ups: punnerrukset
-  refresh: päivitä
-  refresh in progress: päivitys käynnissä
+  refresh: virkistä
+  refresh in progress: virkistys meneillään
   route segment: reittiosuus
   running: juoksu
   sailboat: purjehdus
@@ -192,3 +196,5 @@ fi:
   Filter workouts: Suodata harjoituksia
   Resources: Resurssit
   "You can find inspiration here:": "Täältä löydät inspiraatiota:"
+  The workout '%s' has been refreshed: Harjoitus '%s' on virkistetty.
+  "The workout '%s' will be refreshed soon": Harjoitus '%s' virkistetään pian...
