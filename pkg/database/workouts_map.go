@@ -177,7 +177,7 @@ func (m *MapData) addressString() string {
 
 	r := ""
 	if m.Address.CountryCode != "" {
-		r += templatehelpers.CountryCodeToFlag(m.Address.CountryCode) + " "
+		r += templatehelpers.CountryToFlag(m.Address.CountryCode) + " "
 	}
 
 	switch {

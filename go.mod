@@ -12,6 +12,7 @@ require (
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/anyappinc/fitbit v0.0.3
 	github.com/aquasecurity/table v1.8.0
+	github.com/biter777/countries v1.7.5
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.4
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
@@ -24,7 +25,6 @@ require (
 	github.com/google/go-querystring v1.1.0
 	github.com/google/uuid v1.6.0
 	github.com/invopop/ctxi18n v0.9.0
-	github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
 	github.com/labstack/echo-jwt/v4 v4.3.0
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/labstack/gommon v0.4.2

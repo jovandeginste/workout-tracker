@@ -28,6 +28,9 @@ github.com/aquasecurity/table
 ## explicit
 github.com/aymerick/douceur/css
 github.com/aymerick/douceur/parser
+# github.com/biter777/countries v1.7.5
+## explicit; go 1.13
+github.com/biter777/countries
 # github.com/cat-dealer/go-rand/v2 v2.0.0
 ## explicit; go 1.14
 github.com/cat-dealer/go-rand/v2
@@ -141,7 +144,6 @@ github.com/jackc/puddle/v2
 github.com/jackc/puddle/v2/internal/genstack
 # github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
 ## explicit; go 1.12
-github.com/jayco/go-emoji-flag
 # github.com/jinzhu/inflection v1.0.0
 ## explicit
 github.com/jinzhu/inflection
