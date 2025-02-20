@@ -1,4 +1,3 @@
----
 fr:
   API key updated: Clé API mise à jour
   Actions: Actions
@@ -40,8 +39,8 @@ fr:
   File: Fichier
   Heart rate: Rythme cardiaque
   'I completed a workout: %s': 'J''ai terminé une séance d''entraînement : %s.'
-  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait
-    la moyenne de %s.
+  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait la
+    moyenne de %s.
   Language: Langue
   Leave blank to keep current password: Laissez le champ vide pour conserver le mot
     de passe actuel
@@ -181,3 +180,51 @@ fr:
   no equipment: sans équipement
   refresh in progress: Actualisation en cours
   route segment: segment
+  Latest measurements: ''
+  forever: ''
+  Measurements: ''
+  Update measurement: ''
+  15 days: ''
+  All: ''
+  3 months: ''
+  "(Re)generate publicly shareable link": ''
+  Sort by: ''
+  centimeter: ''
+  Matching route segments: ''
+  Steps: ''
+  Heatmap: ''
+  "You can find inspiration here:": ''
+  Resources: ''
+  Filter: ''
+  Heading: ''
+  Last: ''
+  Publicly shareable link was copied to clipboard: ''
+  Streets: ''
+  1 month: ''
+  Copy publicly shareable link: ''
+  Browser / System: ''
+  Calories: ''
+  Accuracy: ''
+  Dark: ''
+  Theme: ''
+  Light: ''
+  descending: ''
+  ascending: ''
+  kayaking: ''
+  Total weight: ''
+  Filter workouts: ''
+  Your settings: ''
+  "Start searching in the background for matching workouts for route segment '%s'": ''
+  "The route segment '%s' has been updated": ''
+  "The route segment '%s' has been created - we search for matches in the background": ''
+  "Added %d new route segment(s): %s - we search for matches in the background": ''
+  "The workout '%s' will be refreshed soon": ''
+  "The workout '%s' has been created": ''
+  Update: ''
+  "The equipment '%s' has been updated": ''
+  e-cycling: ''
+  "The equipment '%s' has been deleted": ''
+  Are you sure?: ''
+  No measurements found: ''
+  Height: ''
+  inch: ''
