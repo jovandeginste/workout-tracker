@@ -345,6 +345,8 @@ func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
 		return nil, err
 	}
 
+	w.User = u
+
 	return w, nil
 }
 
@@ -357,6 +359,10 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 
 	if err := db.Preload("Data").Where(&Workout{UserID: u.ID}).Order("date DESC").Find(&w).Error; err != nil {
 		return nil, err
+	}
+
+	for _, wo := range w {
+		wo.User = u
 	}
 
 	return w, nil
@@ -398,6 +404,10 @@ func (u *User) GetAllEquipment(db *gorm.DB) ([]*Equipment, error) {
 		return nil, err
 	}
 
+	for _, e := range w {
+		e.User = *u
+	}
+
 	return w, nil
 }
 
@@ -407,6 +417,8 @@ func (u *User) GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
 	if err := db.Where(&Equipment{UserID: u.ID}).First(&w, id).Error; err != nil {
 		return nil, err
 	}
+
+	w.User = *u
 
 	return w, nil
 }
