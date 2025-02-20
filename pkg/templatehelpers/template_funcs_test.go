@@ -12,9 +12,14 @@ func TestNumericDuration(t *testing.T) {
 	assert.InDelta(t, 3600, NumericDuration(time.Hour), 0)
 }
 
+func TestToLanguageInformation(t *testing.T) {
+	assert.Equal(t, "🇺🇸", LanguageToFlag("en-GB"))
+	assert.Equal(t, "🇨🇳", LanguageToFlag("zh-Hans"))
+}
+
 func TestCountryCodeToFlag(t *testing.T) {
-	assert.Equal(t, "🇺🇦", CountryCodeToFlag("UA"))
-	assert.Equal(t, "🇧🇪", CountryCodeToFlag("BE"))
+	assert.Equal(t, "🇺🇦", CountryToFlag("UA"))
+	assert.Equal(t, "🇧🇪", CountryToFlag("BE"))
 }
 
 func TestHumanDistanceKM(t *testing.T) {

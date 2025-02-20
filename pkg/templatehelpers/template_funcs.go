@@ -2,9 +2,10 @@ package templatehelpers
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
-	emojiflag "github.com/jayco/go-emoji-flag"
+	"github.com/biter777/countries"
 )
 
 const InvalidValue = "N/A"
@@ -17,8 +18,30 @@ func NumericDuration(d time.Duration) float64 {
 	return d.Seconds()
 }
 
-func CountryCodeToFlag(cc string) string {
-	return emojiflag.GetFlag(cc)
+func LanguageToFlag(code string) string {
+	if strings.Contains(code, "-") {
+		code = strings.Split(code, "-")[0]
+	}
+
+	if strings.Contains(code, "_") {
+		code = strings.Split(code, "_")[0]
+	}
+
+	switch code {
+	case "zh":
+		code = "cn"
+	case "en":
+		code = "us"
+	case "fa":
+		code = "ir"
+	}
+
+	return CountryToFlag(code)
+}
+
+func CountryToFlag(cc string) string {
+	ccc := countries.ByName(cc)
+	return ccc.Emoji()
 }
 
 func HumanElevationFor(unit string) func(float64) string {

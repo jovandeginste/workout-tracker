@@ -5,11 +5,10 @@ import (
 	"context"
 	"fmt"
 	"slices"
-	"strings"
 	"time"
 
 	"github.com/invopop/ctxi18n/i18n"
-	emojiflag "github.com/jayco/go-emoji-flag"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/sersh88/timeago"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
@@ -30,6 +29,7 @@ var (
 		language.Norwegian,
 		language.Persian,
 		language.Russian,
+		language.SimplifiedChinese,
 	}
 )
 
@@ -71,18 +71,11 @@ func sortLanguages() {
 }
 
 func ToLanguageInformation(code language.Tag) LanguageInformation {
-	cc := code.String()
-	if strings.Contains(cc, "-") {
-		cc = strings.Split(cc, "-")[1]
-	}
-
-	if cc == "en" {
-		cc = "us"
-	}
+	f := templatehelpers.LanguageToFlag(code.String())
 
 	l := LanguageInformation{
 		Code: code.String(),
-		Flag: emojiflag.GetFlag(cc),
+		Flag: f,
 	}
 
 	if l.Flag == "" {
