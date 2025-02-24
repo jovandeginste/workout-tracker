@@ -24,10 +24,10 @@ export default async function () {
   });
 
   try {
-    await page.goto("http://localhost:8080/user/signin?lang=nl");
+    await page.goto("http://localhost:8180/user/signin?lang=nl");
     await page.screenshot({ path: "docs/login-nl.png", fullPage: true });
 
-    await page.goto("http://localhost:8080/user/signin?lang=en");
+    await page.goto("http://localhost:8180/user/signin?lang=en");
     await page.screenshot({ path: "docs/login.png", fullPage: true });
 
     await page.locator("#signin #username").type("jo@dwarfy.be");
@@ -40,28 +40,28 @@ export default async function () {
     await page.screenshot({ path: "docs/dashboard.png" });
 
     await Promise.all([
-      page.goto("http://localhost:8080/user/profile"),
+      page.goto("http://localhost:8180/user/profile"),
       page.locator("#language").selectOption("nl"),
       page.click("button#update-profile"),
     ]);
     await page.screenshot({ path: "docs/profile-nl.png" });
 
     await Promise.all([
-      page.goto("http://localhost:8080/user/profile"),
+      page.goto("http://localhost:8180/user/profile"),
       page.locator("#language").selectOption("de"),
       page.click("button#update-profile"),
     ]);
     await page.screenshot({ path: "docs/profile-de.png" });
 
     await Promise.all([
-      page.goto("http://localhost:8080/user/profile"),
+      page.goto("http://localhost:8180/user/profile"),
       page.locator("#language").selectOption("fa"),
       page.click("button#update-profile"),
     ]);
     await page.screenshot({ path: "docs/profile-fa.png" });
 
     await Promise.all([
-      page.goto("http://localhost:8080/user/profile"),
+      page.goto("http://localhost:8180/user/profile"),
       page.locator("#language").selectOption("en"),
       page.click("button#update-profile"),
     ]);
@@ -70,29 +70,29 @@ export default async function () {
     await page.setViewportSize({
       height: 800,
     });
-    await page.goto("http://localhost:8080/workouts");
+    await page.goto("http://localhost:8180/workouts");
     await page.screenshot({ path: "docs/workout_overview.png" });
 
-    await page.goto("http://localhost:8080/daily?count=5");
+    await page.goto("http://localhost:8180/daily?count=5");
     await page.screenshot({ path: "docs/daily_overview.png" });
 
     await page.setViewportSize({
       height: 400,
     });
-    await page.goto("http://localhost:8080/heatmap");
-    sleep(2);
+    await page.goto("http://localhost:8180/heatmap");
+    sleep(3);
     await page.screenshot({ path: "docs/heatmap.png", fullPage: true });
 
-    await page.goto("http://localhost:8080/statistics");
+    await page.goto("http://localhost:8180/statistics");
     await page.screenshot({ path: "docs/statistics.png", fullPage: true });
 
-    await page.goto("http://localhost:8080/workouts/249");
+    await page.goto("http://localhost:8180/workouts/249");
     await page.screenshot({
       path: "docs/single_workout-dark.png",
       fullPage: true,
     });
 
-    await page.goto("http://localhost:8080/workouts/add");
+    await page.goto("http://localhost:8180/workouts/add");
     await page.screenshot({ path: "docs/upload_workouts.png", fullPage: true });
 
     const options = page.locator("#manual #type");
@@ -108,7 +108,7 @@ export default async function () {
     await page.emulateMedia({
       colorScheme: "light",
     });
-    await page.goto("http://localhost:8080/workouts/249");
+    await page.goto("http://localhost:8180/workouts/249");
     await page.screenshot({
       path: "docs/single_workout-light.png",
       fullPage: true,
@@ -123,13 +123,13 @@ export default async function () {
       colorScheme: "dark",
     });
 
-    await page.goto("http://localhost:8080/");
+    await page.goto("http://localhost:8180/");
     await page.screenshot({ path: "docs/dashboard-responsive.png" });
 
-    await page.goto("http://localhost:8080/workouts/249");
+    await page.goto("http://localhost:8180/workouts/249");
     await page.screenshot({ path: "docs/single_workout-responsive.png" });
 
-    await page.goto("http://localhost:8080/statistics");
+    await page.goto("http://localhost:8180/statistics");
     await page.screenshot({ path: "docs/statistics-responsive.png" });
   } finally {
     await page.close();
