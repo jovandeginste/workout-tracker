@@ -144,7 +144,8 @@ test-go:
 screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n
 
 generate-screenshots: build-server
-	$(WT_OUTPUT_FILE) & \
+	export WT_BIND=[::]:8180 WT_DSN=screenshots.db; \
+			$(WT_OUTPUT_FILE) & \
 			export SERVER_PID=$$!; \
 			sleep 1; \
 			K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js; \
