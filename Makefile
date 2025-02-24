@@ -143,8 +143,12 @@ test-go:
 
 screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n
 
-generate-screenshots:
-	K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js
+generate-screenshots: build-server
+	$(WT_OUTPUT_FILE) & \
+			export SERVER_PID=$$!; \
+			sleep 1; \
+			K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js; \
+			kill $${SERVER_PID}
 
 screenshots-i18n:
 	magick convert -delay 400 docs/profile-*.png docs/profile.gif
