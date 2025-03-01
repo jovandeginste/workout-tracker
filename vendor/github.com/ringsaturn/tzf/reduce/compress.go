@@ -3,7 +3,7 @@ package reduce
 import (
 	"fmt"
 
-	"github.com/ringsaturn/tzf/pb"
+	pb "github.com/ringsaturn/tzf/gen/go/tzf/v1"
 	"github.com/twpayne/go-polyline"
 )
 
@@ -28,7 +28,7 @@ func DecompressedPolylineBytesToPoints(input []byte) []*pb.Point {
 
 func CompressWithPolyline(input *pb.Timezones) *pb.CompressedTimezones {
 	output := &pb.CompressedTimezones{
-		Method:  pb.CompressMethod_Polyline,
+		Method:  pb.CompressMethod_COMPRESS_METHOD_POLYLINE,
 		Version: input.Version,
 	}
 	for _, timezone := range input.Timezones {
@@ -54,7 +54,7 @@ func CompressWithPolyline(input *pb.Timezones) *pb.CompressedTimezones {
 
 func Compress(input *pb.Timezones, method pb.CompressMethod) (*pb.CompressedTimezones, error) {
 	switch method {
-	case pb.CompressMethod_Polyline:
+	case pb.CompressMethod_COMPRESS_METHOD_POLYLINE:
 		return CompressWithPolyline(input), nil
 	default:
 		return nil, fmt.Errorf("tzf/reduce: unknown method %v", method)
@@ -88,7 +88,7 @@ func DecompressWithPolyline(input *pb.CompressedTimezones) *pb.Timezones {
 
 func Decompress(input *pb.CompressedTimezones) (*pb.Timezones, error) {
 	switch input.Method {
-	case pb.CompressMethod_Polyline:
+	case pb.CompressMethod_COMPRESS_METHOD_POLYLINE:
 		return DecompressWithPolyline(input), nil
 	default:
 		return nil, fmt.Errorf("tzf/reduce: unknown method %v", input.Method)

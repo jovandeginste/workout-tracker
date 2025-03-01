@@ -1,8 +1,7 @@
 module github.com/jovandeginste/workout-tracker/v2
 
 go 1.23
-
-toolchain go1.23.4
+toolchain go1.24.0
 
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
@@ -16,7 +15,7 @@ require (
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.4
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
-	github.com/fsouza/slognil v0.4.1
+	github.com/fsouza/slognil v0.4.2
 	github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 	github.com/glebarez/sqlite v1.11.0
 	github.com/go-gorm/caches/v4 v4.0.5
@@ -34,19 +33,19 @@ require (
 	github.com/muktihari/fit v0.24.5
 	github.com/orandin/slog-gorm v1.4.0
 	github.com/paulmach/orb v0.11.1
-	github.com/ringsaturn/tzf v0.16.1
+	github.com/ringsaturn/tzf v0.17.2
 	github.com/samber/slog-echo v1.15.1
 	github.com/sersh88/timeago v1.0.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spazzymoto/echo-scs-session v1.0.0
-	github.com/spf13/cobra v1.8.1
+	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.19.0
 	github.com/stackus/hxgo v0.3.0
 	github.com/stretchr/testify v1.10.0
 	github.com/swaggo/swag v1.16.4
 	github.com/tkrajina/gpxgo v1.4.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.33.0
+	golang.org/x/crypto v0.35.0
 	golang.org/x/text v0.22.0
 	gorm.io/datatypes v1.2.5
 	gorm.io/driver/mysql v1.5.7

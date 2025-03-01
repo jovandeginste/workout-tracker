@@ -47,8 +47,8 @@ github.com/dustin/go-humanize
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
 github.com/fsnotify/fsnotify/internal
-# github.com/fsouza/slognil v0.4.1
-## explicit; go 1.22
+# github.com/fsouza/slognil v0.4.2
+## explicit; go 1.23
 github.com/fsouza/slognil
 # github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 ## explicit; go 1.19
@@ -142,8 +142,6 @@ github.com/jackc/pgx/v5/stdlib
 ## explicit; go 1.19
 github.com/jackc/puddle/v2
 github.com/jackc/puddle/v2/internal/genstack
-# github.com/jayco/go-emoji-flag v0.0.0-20190810054606-01604da018da
-## explicit; go 1.12
 # github.com/jinzhu/inflection v1.0.0
 ## explicit
 github.com/jinzhu/inflection
@@ -242,11 +240,12 @@ github.com/pmezard/go-difflib/difflib
 # github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
 ## explicit; go 1.12
 github.com/remyoudompheng/bigfft
-# github.com/ringsaturn/tzf v0.16.1
-## explicit; go 1.23
+# github.com/ringsaturn/tzf v0.17.2
+## explicit; go 1.24
 github.com/ringsaturn/tzf
 github.com/ringsaturn/tzf/convert
-github.com/ringsaturn/tzf/pb
+github.com/ringsaturn/tzf/gen/go/tzf/v1
+github.com/ringsaturn/tzf/internal/maps
 github.com/ringsaturn/tzf/reduce
 # github.com/ringsaturn/tzf-rel-lite v0.0.2025-a
 ## explicit; go 1.23
@@ -294,7 +293,7 @@ github.com/spf13/afero/mem
 # github.com/spf13/cast v1.7.1
 ## explicit; go 1.19
 github.com/spf13/cast
-# github.com/spf13/cobra v1.8.1
+# github.com/spf13/cobra v1.9.1
 ## explicit; go 1.15
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.6
@@ -373,8 +372,8 @@ go.opentelemetry.io/otel/trace/embedded
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.33.0
-## explicit; go 1.20
+# golang.org/x/crypto v0.35.0
+## explicit; go 1.23.0
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
 golang.org/x/crypto/bcrypt
@@ -383,7 +382,6 @@ golang.org/x/crypto/pbkdf2
 # golang.org/x/exp v0.0.0-20250210185358-939b2ce775ac
 ## explicit; go 1.22.0
 golang.org/x/exp/constraints
-golang.org/x/exp/maps
 golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal

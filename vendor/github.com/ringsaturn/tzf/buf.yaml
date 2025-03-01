@@ -1,0 +1,14 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
+version: v2
+lint:
+  use:
+    - STANDARD
+  ignore:
+    - PACKAGE_DIRECTORY_MATCH
+breaking:
+  use:
+    - FILE
+
+modules:
+  - path: pb
+    name: buf.build/ringsaturn/tzf

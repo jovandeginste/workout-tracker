@@ -11,10 +11,6 @@ mongo-driver
 License: Apache
       "Licensor" shall mean the copyright owner or entity authorized by
 
-exp
-License: MIT
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
 mapstructure
 License: MIT
 Copyright (c) 2013 Mitchell Hashimoto
@@ -38,3 +34,7 @@ Copyright (c) 2021 Josh Baker
 tzf
 License: MIT
 Copyright (c) 2022 ringsaturn
+
+maps
+License: MIT
+Copyright 2009 The Go Authors.
