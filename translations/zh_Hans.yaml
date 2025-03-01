@@ -111,7 +111,7 @@ zh-Hans:
   Total down: 总下降
   Total duration: 总时长
   Total repetitions: 总重复次数
-  Total up: 总上升
+  Total up: 总爬升
   Totals: 总计
   Totals to show on dashboard: 在仪表板上显示的总计
   Type: 类型
@@ -129,7 +129,7 @@ zh-Hans:
   Workouts: 锻炼记录
   Your account has been created, but needs to be activated: 您的账号已创建，但需要激活。
   Your profile: 您的个人资料
-  Your progress per %s for the past %s: 您每 %s 取得的进度于过去 %s 中
+  Your progress per %s for the past %s: 过去%s中您每%s取得的进展
   copy to clipboard: 复制到剪贴板
   create route segment: 创建路线片段
   cycling: 骑行
@@ -167,7 +167,7 @@ zh-Hans:
   snowboarding: 单板滑雪
   swimming: 游泳
   the configuration file: 配置文件
-  up: 上
+  up: 爬升
   user: 用户
   walking: 步行
   weight lifting: 举重
@@ -177,7 +177,7 @@ zh-Hans:
   Measurements: 测量
   Steps: 步数
   forever: 永久
-  Heatmap: 热图
+  Heatmap: 热力图
   Dashboard for %s: '%s 的仪表板'
   Date: 日期
   Refresh all your workouts: 刷新您所有的锻炼
