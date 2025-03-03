@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -37,6 +38,7 @@ func (a *App) bgLoop() {
 	defer func() {
 		if r := recover(); r != nil {
 			l.Error(fmt.Sprintf("Panic in bgLoop: %#v", r))
+			fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
 		}
 	}()
 
@@ -148,9 +150,9 @@ func (a *App) importFile(logger *slog.Logger, u *database.User, path string) err
 		return err
 	}
 
-	w, err := u.AddWorkout(a.db, database.WorkoutTypeAutoDetect, "", path, dat)
-	if err != nil {
-		return err
+	w, addErr := u.AddWorkout(a.db, database.WorkoutTypeAutoDetect, "", path, dat)
+	if len(addErr) > 0 {
+		return addErr[0]
 	}
 
 	if w == nil {

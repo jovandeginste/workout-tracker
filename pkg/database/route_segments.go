@@ -124,9 +124,10 @@ func (rs *RouteSegment) UpdateFromContent() error {
 		return err
 	}
 
-	gpxContent.SimplifyTracks(MaxDeltaMeter / 2)
+	gpxContent.GPX.SimplifyTracks(MaxDeltaMeter / 2)
 
-	data := gpxAsMapData(gpxContent)
+	data := gpxAsMapData(gpxContent.GPX)
+
 	if !data.Center.IsZero() {
 		data.Address = data.Center.Address()
 

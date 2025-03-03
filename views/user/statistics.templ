@@ -87,7 +87,10 @@ templ Statistics(u *database.User, since, per string) {
 			</div>
 		</div>
 		{{ currentUser := helpers.CurrentUser(ctx) }}
-		{{ stats, _ := currentUser.GetStatisticsFor(since, per) }}
+		{{ stats, err := currentUser.GetStatisticsFor(since, per) }}
+		if err != nil {
+			<pre>{ err.Error() }</pre>
+		}
 		@templ.JSONScript("stats", stats)
 		@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(currentUser.PreferredUnits()))
 		<script>

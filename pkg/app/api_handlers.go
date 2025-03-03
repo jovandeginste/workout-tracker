@@ -30,8 +30,10 @@ type APIResponse struct {
 	Errors  []string `json:"errors"`
 }
 
-func (ar *APIResponse) AddError(err error) {
-	ar.Errors = append(ar.Errors, err.Error())
+func (ar *APIResponse) AddError(err ...error) {
+	for _, e := range err {
+		ar.Errors = append(ar.Errors, e.Error())
+	}
 }
 
 // @title Workout Tracker
@@ -456,8 +458,8 @@ func (a *App) apiImportHandler(c echo.Context) error {
 	}
 
 	w, addErr := a.getCurrentUser(c).AddWorkout(a.db, database.WorkoutType(file.Type), file.Notes, file.Filename, file.Content)
-	if addErr != nil {
-		return a.renderAPIError(c, resp, addErr)
+	if len(addErr) > 0 {
+		return a.renderAPIError(c, resp, addErr...)
 	}
 
 	resp.Results = w
@@ -536,8 +538,8 @@ func (a *App) apiCalendar(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (a *App) renderAPIError(c echo.Context, resp APIResponse, err error) error {
-	resp.AddError(err)
+func (a *App) renderAPIError(c echo.Context, resp APIResponse, err ...error) error {
+	resp.AddError(err...)
 
 	return c.JSON(http.StatusBadRequest, resp)
 }

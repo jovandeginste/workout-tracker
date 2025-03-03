@@ -54,7 +54,7 @@ var iconMap = map[string]string{
 	"golfing":        "icon-[fa6-solid--golf-ball-tee]",
 	"kayaking":       "icon-[fa6-solid--sailboat]",
 	"hiking":         "icon-[fa6-solid--person-hiking]",
-	"push-ups":       "icon-[fa6-solid--dumbbell]",
+	"push-ups":       "icon-[hugeicons--push-up-bar]",
 	"weight lifting": "icon-[fa6-solid--dumbbell]",
 
 	// Page Icons

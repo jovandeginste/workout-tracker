@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
@@ -62,25 +63,12 @@ type MapData struct {
 	Address *geo.Address    `gorm:"serializer:json"`                               // The address of the workout
 	Details *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"` // The details of the workout
 
-	Workout             *Workout      `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
-	Creator             string        // The tool that created this workout
-	Name                string        // The name of the workout
-	AddressString       string        // The generic location of the workout
-	Center              MapCenter     `gorm:"serializer:json"`      // The center of the workout (in coordinates)
-	WorkoutID           uint64        `gorm:"not null;uniqueIndex"` // The workout this data belongs to
-	TotalDistance       float64       // The total distance of the workout
-	TotalDuration       time.Duration // The total duration of the workout
-	MaxSpeed            float64       // The maximum speed of the workout
-	AverageSpeed        float64       // The average speed of the workout
-	AverageSpeedNoPause float64       // The average speed of the workout without pausing
-	PauseDuration       time.Duration // The total pause duration of the workout
-	MinElevation        float64       // The minimum elevation of the workout
-	MaxElevation        float64       // The maximum elevation of the workout
-	TotalUp             float64       // The total distance up of the workout
-	TotalDown           float64       // The total distance down of the workout
-	TotalRepetitions    int           // The number of repetitions of the workout
-	TotalWeight         float64       // The weight of the workout
-	ExtraMetrics        []string      `gorm:"serializer:json"` // Extra metrcis available
+	Workout       *Workout  `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
+	Creator       string    // The tool that created this workout
+	AddressString string    // The generic location of the workout
+	Center        MapCenter `gorm:"serializer:json"`      // The center of the workout (in coordinates)
+	WorkoutID     uint64    `gorm:"not null;uniqueIndex"` // The workout this data belongs to
+	converters.WorkoutData
 }
 
 type MapDataDetails struct {
@@ -293,6 +281,10 @@ func (m *MapCenter) Address() *geo.Address {
 
 // allGPXPoints returns the first track segment's points
 func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
+	if gpxContent == nil {
+		return nil
+	}
+
 	var points []gpx.GPXPoint
 
 	for _, track := range gpxContent.Tracks {
@@ -379,19 +371,20 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	mapCenter := center(gpxContent)
 
 	data := &MapData{
-		Creator:             gpxContent.Creator,
-		Name:                gpxContent.Name,
-		Center:              mapCenter,
-		TotalDistance:       totalDistance,
-		TotalDuration:       totalDuration,
-		MaxSpeed:            maxSpeed,
-		AverageSpeed:        totalDistance / totalDuration.Seconds(),
-		AverageSpeedNoPause: totalDistance / (totalDuration - pauseDuration).Seconds(),
-		PauseDuration:       pauseDuration,
-		MinElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
-		MaxElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
-		TotalUp:             uphill,
-		TotalDown:           downhill,
+		Creator: gpxContent.Creator,
+		Center:  mapCenter,
+		WorkoutData: converters.WorkoutData{
+			TotalDistance:       totalDistance,
+			TotalDuration:       totalDuration,
+			MaxSpeed:            maxSpeed,
+			AverageSpeed:        totalDistance / totalDuration.Seconds(),
+			AverageSpeedNoPause: totalDistance / (totalDuration - pauseDuration).Seconds(),
+			PauseDuration:       pauseDuration,
+			MinElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
+			MaxElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
+			TotalUp:             uphill,
+			TotalDown:           downhill,
+		},
 	}
 
 	data.UpdateAddress()

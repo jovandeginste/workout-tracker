@@ -9,10 +9,10 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
-func ParseTCX(tcxFile []byte) (*gpx.GPX, error) {
+func ParseTCX(content []byte) (*gpx.GPX, error) {
 	var t tcx.TCXDB
 
-	if err := xml.Unmarshal(tcxFile, &t); err != nil {
+	if err := xml.Unmarshal(content, &t); err != nil {
 		return nil, err
 	}
 

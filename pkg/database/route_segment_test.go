@@ -28,15 +28,21 @@ func TestRouteSegment_FindMatches(t *testing.T) {
 
 	w1, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "match.gpx", []byte(track))
 	assert.NoError(t, err)
-	assert.True(t, w1.Type.IsLocation())
-	assert.True(t, w1.HasTracks())
+	assert.Len(t, w1, 1)
+
+	w1_1 := w1[0]
+	assert.True(t, w1_1.Type.IsLocation())
+	assert.True(t, w1_1.HasTracks())
 
 	w2, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "nomatch.gpx", []byte(GpxSample1))
 	assert.NoError(t, err)
-	assert.True(t, w2.Type.IsLocation())
-	assert.True(t, w2.HasTracks())
+	assert.Len(t, w2, 1)
 
-	workouts := []*Workout{w1, w2}
+	w2_1 := w2[0]
+	assert.True(t, w2_1.Type.IsLocation())
+	assert.True(t, w2_1.HasTracks())
+
+	workouts := []*Workout{w1_1, w2_1}
 	matches := rs.FindMatches(workouts)
 
 	if !assert.Len(t, matches, 1) {
@@ -52,8 +58,10 @@ func TestRouteSegment_StartingPoints_NoMatch(t *testing.T) {
 
 	w, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "nomatch.gpx", []byte(GpxSample1))
 	assert.NoError(t, err)
+	assert.Len(t, w, 1)
 
-	sp := rs.StartingPoints(w.Data.Details.Points)
+	w1 := w[0]
+	sp := rs.StartingPoints(w1.Data.Details.Points)
 	assert.Empty(t, sp)
 }
 
@@ -63,12 +71,14 @@ func TestRouteSegment_StartingPoints_Match(t *testing.T) {
 
 	w, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "match.gpx", []byte(track))
 	assert.NoError(t, err)
+	assert.Len(t, w, 1)
 
-	sp := rs.StartingPoints(w.Data.Details.Points)
+	w1 := w[0]
+	sp := rs.StartingPoints(w1.Data.Details.Points)
 	assert.NotEmpty(t, sp)
 
 	for _, p := range sp {
-		assert.Less(t, rs.Points[0].DistanceTo(&w.Data.Details.Points[p]), MaxDeltaMeter)
+		assert.Less(t, rs.Points[0].DistanceTo(&w1.Data.Details.Points[p]), MaxDeltaMeter)
 	}
 }
 
@@ -78,18 +88,20 @@ func TestRouteSegment_StartingPoints_MatchSegment(t *testing.T) {
 
 	w, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "match.gpx", []byte(track))
 	assert.NoError(t, err)
+	assert.Len(t, w, 1)
 
-	sp := rs.StartingPoints(w.Data.Details.Points)
+	w1 := w[0]
+	sp := rs.StartingPoints(w1.Data.Details.Points)
 	assert.NotEmpty(t, sp)
 
 	{
-		last, ok := rs.MatchSegment(w, 3, true)
+		last, ok := rs.MatchSegment(w1, 3, true)
 		assert.Zero(t, last)
 		assert.False(t, ok)
 	}
 
 	{
-		last, ok := rs.MatchSegment(w, 4, true)
+		last, ok := rs.MatchSegment(w1, 4, true)
 		assert.NotZero(t, last)
 		assert.True(t, ok)
 	}
@@ -101,8 +113,10 @@ func TestRouteSegment_Match(t *testing.T) {
 
 	w, err := NewWorkout(AnonymousUser(), WorkoutTypeAutoDetect, "", "match.gpx", []byte(track))
 	assert.NoError(t, err)
+	assert.Len(t, w, 1)
 
-	rsm := rs.Match(w)
+	w1 := w[0]
+	rsm := rs.Match(w1)
 	if !assert.NotNil(t, rsm) {
 		return
 	}

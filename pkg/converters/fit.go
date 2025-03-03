@@ -13,9 +13,9 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
-func ParseFit(fitFile []byte) (*gpx.GPX, error) {
+func ParseFit(content []byte) (*gpx.GPX, error) {
 	// Decode the FIT file data
-	dec := decoder.New(bytes.NewReader(fitFile))
+	dec := decoder.New(bytes.NewReader(content))
 
 	f, err := dec.Decode()
 	if err != nil {
