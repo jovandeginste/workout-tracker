@@ -10,9 +10,11 @@ import (
 
 var ErrUnsupportedFile = errors.New("unsupported file")
 
-type parserFunc func(content []byte) (*gpx.GPX, error)
+type (
+	parserFunc func(content []byte) (*gpx.GPX, error)
+)
 
-func Parse(filename string, content []byte) (*gpx.GPX, error) {
+func Parse(filename string, content []byte) (*Workout, error) {
 	c, err := ParseCollection(filename, content)
 	if err != nil {
 		return nil, err
@@ -27,10 +29,10 @@ func Parse(filename string, content []byte) (*gpx.GPX, error) {
 	return g, nil
 }
 
-func ParseCollection(filename string, content []byte) ([]*gpx.GPX, error) {
+func ParseCollection(filename string, content []byte) ([]*Workout, error) {
 	if filename == "" {
 		// Assume GPX when filename is empty
-		return parseSingle(ParseGPX, content)
+		return parseSingle(ParseGPX, "gpx", content)
 	}
 
 	basename := path.Base(filename)
@@ -41,38 +43,22 @@ func ParseCollection(filename string, content []byte) ([]*gpx.GPX, error) {
 	}
 
 	for _, g := range c {
-		fixName(g, basename)
+		g.FixName(basename)
 	}
 
 	return c, nil
 }
 
-func fixName(g *gpx.GPX, basename string) {
-	if g.Name != "" {
-		// We have a name
-		return
-	}
-
-	if len(g.Tracks) > 0 && g.Tracks[0].Name != "" {
-		// Copy the name of the first track
-		g.Name = g.Tracks[0].Name
-		return
-	}
-
-	// Use the filename
-	g.Name = basename
-}
-
-func parseContent(filename string, content []byte) ([]*gpx.GPX, error) {
+func parseContent(filename string, content []byte) ([]*Workout, error) {
 	suffix := path.Ext(filename)
 
 	switch suffix {
 	case ".gpx":
-		return parseSingle(ParseGPX, content)
+		return parseSingle(ParseGPX, "gpx", content)
 	case ".fit":
-		return parseSingle(ParseFit, content)
+		return parseSingle(ParseFit, "fit", content)
 	case ".tcx":
-		return parseSingle(ParseTCX, content)
+		return parseSingle(ParseTCX, "tcx", content)
 	case ".ftb":
 		return ParseFTB(content)
 	default:
@@ -80,7 +66,7 @@ func parseContent(filename string, content []byte) ([]*gpx.GPX, error) {
 	}
 }
 
-func parseSingle(f parserFunc, content []byte) ([]*gpx.GPX, error) {
+func parseSingle(f parserFunc, t string, content []byte) ([]*Workout, error) {
 	g, err := f(content)
 	if err != nil {
 		return nil, err
@@ -90,5 +76,11 @@ func parseSingle(f parserFunc, content []byte) ([]*gpx.GPX, error) {
 		return nil, nil
 	}
 
-	return []*gpx.GPX{g}, nil
+	w := &Workout{
+		GPX:      g,
+		FileType: t,
+		Content:  content,
+	}
+
+	return []*Workout{w}, nil
 }

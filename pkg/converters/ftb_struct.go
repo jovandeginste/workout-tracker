@@ -1,86 +1,66 @@
 package converters
 
-type FTBStruct struct {
-	FitoTrack struct {
-		IndoorSamples struct {
-			IndoorSamples []struct {
-				AbsoluteTime      string `json:"absoluteTime"`
-				HeartRate         string `json:"heartRate"`
-				ID                string `json:"id"`
-				IntervalTriggered string `json:"intervalTriggered"`
-				RelativeTime      string `json:"relativeTime"`
-				AbsoluteEndTime   string `json:"absoluteEndTime"`
-				Frequency         string `json:"frequency"`
-				Intensity         string `json:"intensity"`
-				Repetitions       string `json:"repetitions"`
-				WorkoutID         string `json:"workoutId"`
-			} `json:"indoorSamples"`
-		} `json:"indoorSamples"`
-		IndoorWorkouts struct {
-			IndoorWorkouts []struct {
-				AvgHeartRate      string `json:"avgHeartRate"`
-				Calorie           string `json:"calorie"`
-				Comment           string `json:"comment"`
-				Duration          string `json:"duration"`
-				Edited            string `json:"edited"`
-				End               string `json:"end"`
-				ID                string `json:"id"`
-				IntervalSetUsedID string `json:"intervalSetUsedId"`
-				MaxHeartRate      string `json:"maxHeartRate"`
-				PauseDuration     string `json:"pauseDuration"`
-				Start             string `json:"start"`
-				AvgFrequency      string `json:"avgFrequency"`
-				AvgIntensity      string `json:"avgIntensity"`
-				MaxFrequency      string `json:"maxFrequency"`
-				MaxIntensity      string `json:"maxIntensity"`
-				Repetitions       string `json:"repetitions"`
-				ExportFileName    string `json:"exportFileName"`
-				WorkoutType       string `json:"workoutType"`
-			} `json:"indoorWorkouts"`
-		} `json:"indoorWorkouts"`
-		IntervalSets any `json:"intervalSets"`
-		Samples      struct {
-			Samples []struct {
-				AbsoluteTime      string `json:"absoluteTime"`
-				HeartRate         string `json:"heartRate"`
-				ID                string `json:"id"`
-				IntervalTriggered string `json:"intervalTriggered"`
-				RelativeTime      string `json:"relativeTime"`
-				Elevation         string `json:"elevation"`
-				ElevationMSL      string `json:"elevationMSL"`
-				Lat               string `json:"lat"`
-				Lon               string `json:"lon"`
-				Pressure          string `json:"pressure"`
-				Speed             string `json:"speed"`
-				WorkoutID         string `json:"workoutId"`
-			} `json:"samples"`
-		} `json:"samples"`
-		Version      string `json:"version"`
-		WorkoutTypes any    `json:"workoutTypes"`
-		Workouts     struct {
-			Workouts []struct {
-				AvgHeartRate      string `json:"avgHeartRate"`
-				Calorie           string `json:"calorie"`
-				Comment           string `json:"comment"`
-				Duration          string `json:"duration"`
-				Edited            string `json:"edited"`
-				End               string `json:"end"`
-				ID                string `json:"id"`
-				IntervalSetUsedID string `json:"intervalSetUsedId"`
-				MaxHeartRate      string `json:"maxHeartRate"`
-				PauseDuration     string `json:"pauseDuration"`
-				Start             string `json:"start"`
-				Ascent            string `json:"ascent"`
-				AvgPace           string `json:"avgPace"`
-				AvgSpeed          string `json:"avgSpeed"`
-				Descent           string `json:"descent"`
-				Length            string `json:"length"`
-				MaxElevationMSL   string `json:"maxElevationMSL"`
-				MinElevationMSL   string `json:"minElevationMSL"`
-				TopSpeed          string `json:"topSpeed"`
-				ExportFileName    string `json:"exportFileName"`
-				WorkoutType       string `json:"workoutType"`
-			} `json:"workouts"`
-		} `json:"workouts"`
-	} `json:"fito-track"`
+import "time"
+
+type (
+	FitoTrackBackup struct {
+		Version string `xml:"version"`
+
+		IndoorWorkouts indoorWorkouts `xml:"indoorWorkouts"`
+		Workouts       workouts       `xml:"workouts"`
+
+		// IntervalSets any `xml:"intervalSets"`
+		// WorkoutTypes any `xml:"workoutTypes"`
+	}
+
+	indoorWorkouts struct {
+		IndoorWorkouts []indoorWorkout `xml:"indoorWorkouts"`
+	}
+	indoorWorkout struct {
+		AvgFrequency float64 `xml:"avgFrequency"`
+		AvgIntensity float64 `xml:"avgIntensity"`
+		MaxFrequency float64 `xml:"maxFrequency"`
+		MaxIntensity float64 `xml:"maxIntensity"`
+		Repetitions  int     `xml:"repetitions"`
+		workoutCommon
+	}
+
+	workouts struct {
+		Workouts []workout `xml:"workouts"`
+	}
+	workout struct {
+		Ascent          string  `xml:"ascent"`
+		AvgPace         float64 `xml:"avgPace"`
+		AvgSpeed        float64 `xml:"avgSpeed"`
+		Descent         float64 `xml:"descent"`
+		Length          int64   `xml:"length"`
+		MaxElevationMSL float64 `xml:"maxElevationMSL"`
+		MinElevationMSL float64 `xml:"minElevationMSL"`
+		TopSpeed        float64 `xml:"topSpeed"`
+		workoutCommon
+	}
+
+	workoutCommon struct {
+		AvgHeartRate      float64 `xml:"avgHeartRate"`
+		Calorie           float64 `xml:"calorie"`
+		Comment           string  `xml:"comment"`
+		Duration          int64   `xml:"duration"`
+		Edited            string  `xml:"edited"`
+		End               int64   `xml:"end"`
+		ID                string  `xml:"id"`
+		IntervalSetUsedID string  `xml:"intervalSetUsedId"`
+		MaxHeartRate      float64 `xml:"maxHeartRate"`
+		Start             int64   `xml:"start"`
+		PauseDuration     int64   `xml:"pauseDuration"`
+		ExportFileName    string  `xml:"exportFileName"`
+		WorkoutType       string  `xml:"workoutType"`
+	}
+)
+
+func (iw *indoorWorkout) StartTime() time.Time {
+	return time.Unix(iw.Start/1000, 1000000*(iw.Start%1000))
+}
+
+func (iw *indoorWorkout) EndTime() time.Time {
+	return time.Unix(iw.End/1000, 1000000*(iw.End%1000))
 }
