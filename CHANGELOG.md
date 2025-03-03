@@ -1,5 +1,112 @@
+## What's Changed
+
+- feat(workouts): Allow uploading zip and ftb files, by @jovandeginste, in
+  [#462](https://github.com/jovandeginste/workout-tracker/pull/462)
+- fix(lint): Rename function consistent with conventions, by @jovandeginste, in
+  [#461](https://github.com/jovandeginste/workout-tracker/pull/461)
+- feat(zip): Add support for zip files, by @jovandeginste, in
+  [#460](https://github.com/jovandeginste/workout-tracker/pull/460)
+- Add support for FitoTrack backup files, by @jovandeginste, in
+  [#459](https://github.com/jovandeginste/workout-tracker/pull/459)
+  - feat(ftb): Add support for FitoTrack backup file, by @jovandeginste
+  - chore(tests): Add tests for version, by @jovandeginste
+  - feat(collections): Improve file / collection detection, implement FTB, by
+    @jovandeginste
+  - feat(push-ups): Change icon for push-ups, by @jovandeginste
+  - feat(ftb): Add support for FitoTrack backup files, by @jovandeginste
+
+## What's Changed in v2.1.1
+
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#458](https://github.com/jovandeginste/workout-tracker/pull/458)
+  - Translated using Weblate (Chinese (Simplified Han script))
+- chore(deps): bump the all group with 4 updates, by @jovandeginste, in
+  [#457](https://github.com/jovandeginste/workout-tracker/pull/457)
+  - chore(deps): bump the all group with 4 updates, by @dependabot[bot]
+- Generate screenshots from separate database, by @jovandeginste, in
+  [#456](https://github.com/jovandeginste/workout-tracker/pull/456)
+- Update screenshot script to k6 v0.52+, by @jovandeginste, in
+  [#455](https://github.com/jovandeginste/workout-tracker/pull/455)
+- fix(profile): Remove name attribute from api_key input field, by
+  @jovandeginste, in
+  [#454](https://github.com/jovandeginste/workout-tracker/pull/454)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#453](https://github.com/jovandeginste/workout-tracker/pull/453)
+  - Translated using Weblate (Dutch)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#451](https://github.com/jovandeginste/workout-tracker/pull/451)
+  - Translated using Weblate (Chinese (Simplified Han script))
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#450](https://github.com/jovandeginste/workout-tracker/pull/450)
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (German)
+  - Update Crowdin configuration file, by @jovandeginste
+- fix(database): Set User in Workouts and Equipment, by @jovandeginste, in
+  [#449](https://github.com/jovandeginste/workout-tracker/pull/449)
+- Refactor(i18n): Rename Norwegian translation file, by @jovandeginste, in
+  [#447](https://github.com/jovandeginste/workout-tracker/pull/447)
+- fix(translations): Rename the file containing Simplified Chinese tran…, by
+  @jovandeginste, in
+  [#446](https://github.com/jovandeginste/workout-tracker/pull/446)
+  - fix(translations): Rename the file containing Simplified Chinese
+    translations, by @jovandeginste
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#445](https://github.com/jovandeginste/workout-tracker/pull/445)
+  - Added translation using Weblate (Chinese (Simplified Han script))
+- Add Simplified Chinese as a language, by @jovandeginste, in
+  [#444](https://github.com/jovandeginste/workout-tracker/pull/444)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#443](https://github.com/jovandeginste/workout-tracker/pull/443)
+  - Translated using Weblate (Finnish), by @Ricky-Tigg
+- feat(cli): Add granular control over Fitbit data syncing, by @jovandeginste,
+  in [#441](https://github.com/jovandeginste/workout-tracker/pull/441)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#438](https://github.com/jovandeginste/workout-tracker/pull/438)
+  - Merge branch 'master' into weblate, by @jovandeginste
+- chore(deps): bump golangci/golangci-lint-action from 6.3.2 to 6.5.0 in the all
+  group, by @jovandeginste, in
+  [#439](https://github.com/jovandeginste/workout-tracker/pull/439)
+  - chore(deps): bump golangci/golangci-lint-action in the all group, by
+    @dependabot[bot]
+- chore(config): Remove nakedret override configuration, by @jovandeginste, in
+  [#440](https://github.com/jovandeginste/workout-tracker/pull/440)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#437](https://github.com/jovandeginste/workout-tracker/pull/437)
+  - Translated using Weblate (German), by @Atalanttore
+- Update README and screenshots, by @jovandeginste, in
+  [#436](https://github.com/jovandeginste/workout-tracker/pull/436)
+- fix(Fitbit): Improve error handling from the Fitbit API, by @jovandeginste, in
+  [#435](https://github.com/jovandeginste/workout-tracker/pull/435)
+- feat(Fitbit): Sync recent activities from Fitbit, by @jovandeginste, in
+  [#434](https://github.com/jovandeginste/workout-tracker/pull/434)
+  - feat(database): Improve error returned to user, by @jovandeginste
+  - feat(Fitbit): Sync recent activities from Fitbit, by @jovandeginste
+  - Use Fitbit units, print activities, by @jovandeginste
+- Update all dependencies, by @jovandeginste, in
+  [#433](https://github.com/jovandeginste/workout-tracker/pull/433)
+- fix(build): Improve Docker build process, by @jovandeginste, in
+  [#432](https://github.com/jovandeginste/workout-tracker/pull/432)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#431](https://github.com/jovandeginste/workout-tracker/pull/431)
+  - Translated using Weblate (Dutch)
+- Fitbit sync cli, by @jovandeginste, in
+  [#429](https://github.com/jovandeginste/workout-tracker/pull/429)
+  - Implement the sync and update the README, by @jovandeginste
+  - Restructure the code, by @jovandeginste
+  - Add more information, by @jovandeginste
+  - Add support for Fitbit activities, by @jovandeginste
+
+## New Contributors
+
+- @Ricky-Tigg made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.1.0...v2.1.1
+
 ## What's Changed in v2.1.0
 
+- Update changelog, by @jovandeginste, in
+  [#430](https://github.com/jovandeginste/workout-tracker/pull/430)
 - Improve the measurement conversions and interface, by @jovandeginste, in
   [#428](https://github.com/jovandeginste/workout-tracker/pull/428)
   - Add parameter to choose number of measurements to show, by @jovandeginste
