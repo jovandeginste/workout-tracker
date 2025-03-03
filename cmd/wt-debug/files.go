@@ -63,20 +63,22 @@ func (c *cli) workoutsCalculateCmd() *cobra.Command {
 				return err
 			}
 
-			workout, err := database.NewWorkout(database.AnonymousUser(), database.WorkoutTypeAutoDetect, "", filename, content)
+			workouts, err := database.NewWorkout(database.AnonymousUser(), database.WorkoutTypeAutoDetect, "", filename, content)
 			if err != nil {
 				return err
 			}
 
-			fmt.Println("Parsing was successful!")
-			fmt.Printf("- name: %s\n", workout.Name)
-			fmt.Printf("- center: (%.5f, %.5f): %s\n", workout.Data.Center.Lat, workout.Data.Center.Lng, workout.Data.AddressString)
-			fmt.Printf("- total distance: %.0fm (%s %s)\n", workout.TotalDistance(), dstF(workout.TotalDistance()), dst)
-			fmt.Printf("- total duration: %.0fs (%s)\n", workout.TotalDuration().Seconds(), workout.TotalDuration().String())
+			for _, workout := range workouts {
+				fmt.Println("Parsing was successful!")
+				fmt.Printf("- name: %s\n", workout.Name)
+				fmt.Printf("- center: (%.5f, %.5f): %s\n", workout.Data.Center.Lat, workout.Data.Center.Lng, workout.Data.AddressString)
+				fmt.Printf("- total distance: %.0fm (%s %s)\n", workout.TotalDistance(), dstF(workout.TotalDistance()), dst)
+				fmt.Printf("- total duration: %.0fs (%s)\n", workout.TotalDuration().Seconds(), workout.TotalDuration().String())
 
-			p := workout.Data.Details.Points
-			lp := p[len(p)-1]
-			fmt.Printf("- last point total distance: %.2fm (%s %s)\n", lp.TotalDistance, dstF(lp.TotalDistance), dst)
+				p := workout.Data.Details.Points
+				lp := p[len(p)-1]
+				fmt.Printf("- last point total distance: %.2fm (%s %s)\n", lp.TotalDistance, dstF(lp.TotalDistance), dst)
+			}
 
 			return nil
 		},

@@ -304,52 +304,58 @@ func (d *GPXData) Save(db *gorm.DB) error {
 	return db.Save(d).Error
 }
 
-func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
+func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) ([]*Workout, error) {
 	if u == nil {
 		return nil, ErrNoUser
 	}
 
 	filename = filepath.Base(filename)
 
-	gpxContent, err := converters.Parse(filename, content)
+	gpxContent, err := converters.ParseCollection(filename, content)
 	if err != nil {
 		return nil, err
 	}
 
-	d := gpxDate(gpxContent)
-	data := gpxAsMapData(gpxContent)
+	workouts := make([]*Workout, len(gpxContent))
 
-	if filename == "" {
-		filename = data.Name + ".gpx"
+	for i, g := range gpxContent {
+		d := gpxDate(g)
+		data := gpxAsMapData(g)
+
+		if filename == "" {
+			filename = data.Name + ".gpx"
+		}
+
+		h := sha256.New()
+		h.Write(content)
+
+		if workoutType == WorkoutTypeAutoDetect {
+			workoutType = autoDetectWorkoutType(data, g)
+		}
+
+		w := &Workout{
+			User:   u,
+			UserID: u.ID,
+			Dirty:  true,
+			Name:   g.Name,
+			Data:   data,
+			Notes:  notes,
+			Type:   workoutType,
+			Date:   *d,
+			GPX: &GPXData{
+				Content:  content,
+				Checksum: h.Sum(nil),
+				Filename: filename,
+			},
+		}
+
+		w.UpdateAverages()
+		w.UpdateExtraMetrics()
+
+		workouts[i] = w
 	}
 
-	h := sha256.New()
-	h.Write(content)
-
-	if workoutType == WorkoutTypeAutoDetect {
-		workoutType = autoDetectWorkoutType(data, gpxContent)
-	}
-
-	w := Workout{
-		User:   u,
-		UserID: u.ID,
-		Dirty:  true,
-		Name:   gpxContent.Name,
-		Data:   data,
-		Notes:  notes,
-		Type:   workoutType,
-		Date:   *d,
-		GPX: &GPXData{
-			Content:  content,
-			Checksum: h.Sum(nil),
-			Filename: filename,
-		},
-	}
-
-	w.UpdateAverages()
-	w.UpdateExtraMetrics()
-
-	return &w, nil
+	return workouts, nil
 }
 
 func workoutTypeFromGpxTrackType(gpxType string) (WorkoutType, bool) {

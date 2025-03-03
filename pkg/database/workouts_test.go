@@ -27,8 +27,9 @@ func defaultWorkout(t *testing.T) *Workout {
 	)
 
 	require.NoError(t, err)
+	assert.Len(t, w, 1)
 
-	return w
+	return w[0]
 }
 
 func TestWorkout_ParseWithType(t *testing.T) {
@@ -47,7 +48,8 @@ func TestWorkout_ParseWithType(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.NotNil(t, w)
-	assert.Equal(t, WorkoutTypeWalking, w.Type)
+	assert.Len(t, w, 1)
+	assert.Equal(t, WorkoutTypeWalking, w[0].Type)
 }
 
 func TestWorkout_Parse(t *testing.T) {

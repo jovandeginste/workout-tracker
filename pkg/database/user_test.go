@@ -304,15 +304,16 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 		f1,
 	)
 	require.NoError(t, err)
-	assert.NotNil(t, w2)
+	assert.Len(t, w2, 1)
+	w2_1 := w2[0]
 
 	workouts, err = u.GetWorkouts(db)
 	require.NoError(t, err)
 	assert.Len(t, workouts, 1)
 
-	assert.True(t, w2.HasElevation())
-	assert.True(t, w2.HasHeartRate())
+	assert.True(t, w2_1.HasElevation())
+	assert.True(t, w2_1.HasHeartRate())
 
-	w2.Type = WorkoutTypeWalking
-	require.NoError(t, w2.Save(db))
+	w2_1.Type = WorkoutTypeWalking
+	require.NoError(t, w2_1.Save(db))
 }

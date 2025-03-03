@@ -368,33 +368,35 @@ func (u *User) GetWorkouts(db *gorm.DB) ([]*Workout, error) {
 	return w, nil
 }
 
-func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, filename string, content []byte) (*Workout, error) {
+func (u *User) AddWorkout(db *gorm.DB, workoutType WorkoutType, notes string, filename string, content []byte) ([]*Workout, error) {
 	if u == nil {
 		return nil, ErrNoUser
 	}
 
-	w, err := NewWorkout(u, workoutType, notes, filename, content)
+	ws, err := NewWorkout(u, workoutType, notes, filename, content)
 	if err != nil {
 		return nil, fmt.Errorf("%w: %s", ErrInvalidData, err)
 	}
 
-	if err := w.Create(db); err != nil {
-		return nil, err
-	}
+	for _, w := range ws {
+		if err := w.Create(db); err != nil {
+			return nil, err
+		}
 
-	var equipment []*Equipment
+		var equipment []*Equipment
 
-	for i, e := range u.Equipment {
-		if e.ValidFor(&w.Type) {
-			equipment = append(equipment, &u.Equipment[i])
+		for i, e := range u.Equipment {
+			if e.ValidFor(&w.Type) {
+				equipment = append(equipment, &u.Equipment[i])
+			}
+		}
+
+		if err := db.Model(&w).Association("Equipment").Replace(equipment); err != nil {
+			return nil, err
 		}
 	}
 
-	if err := db.Model(&w).Association("Equipment").Replace(equipment); err != nil {
-		return nil, err
-	}
-
-	return w, nil
+	return ws, nil
 }
 
 func (u *User) GetAllEquipment(db *gorm.DB) ([]*Equipment, error) {

@@ -266,13 +266,15 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 		notes := c.FormValue("notes")
 		workoutType := database.WorkoutType(c.FormValue("type"))
 
-		w, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, file.Filename, content)
+		ws, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, file.Filename, content)
 		if addErr != nil {
 			errMsg = append(errMsg, addErr.Error())
 			continue
 		}
 
-		msg = append(msg, w.Name)
+		for _, w := range ws {
+			msg = append(msg, w.Name)
+		}
 	}
 
 	if len(errMsg) > 0 {
