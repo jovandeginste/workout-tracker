@@ -1,15 +1,9 @@
-PROTO_FILES=$(shell find pb -name *.proto)
-
 fmt:
-	find pb/ -iname *.proto | xargs clang-format -i --style=Google
 	go fmt ./...
 
 .PHONY:pb
 pb:
-	protoc  --proto_path=. \
-			--doc_out=. --doc_opt=html,pb.html,source_relative \
-			--go_out=paths=source_relative:. \
-			$(PROTO_FILES)
+	buf generate
 
 test:
 	golangci-lint run ./...
@@ -20,7 +14,6 @@ cover: test
 
 bench:
 	go test -v -bench=. ./...
-
 
 dep-licenses:
 	go-licenses save ./ --save_path=THIRD_PARTY_LICENSES 

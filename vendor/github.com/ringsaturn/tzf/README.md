@@ -20,6 +20,7 @@ toolkit.
 | Go                        | [`ringsaturn/tzf`](https://github.com/ringsaturn/tzf)                   |                     |
 | Ruby                      | [`HarlemSquirrel/tzf-rb`](https://github.com/HarlemSquirrel/tzf-rb)     | build with tzf-rs   |
 | Rust                      | [`ringsaturn/tzf-rs`](https://github.com/ringsaturn/tzf-rs)             |                     |
+| Swift                     | [`ringsaturn/tzf-swift`](https://github.com/ringsaturn/tzf-swift)       |                     |
 | Python                    | [`ringsaturn/tzfpy`](https://github.com/ringsaturn/tzfpy)               | build with tzf-rs   |
 | HTTP API                  | [`ringsaturn/tzf-server`](https://github.com/ringsaturn/tzf-server)     | build with tzf      |
 | HTTP API                  | [`racemap/rust-tz-service`](https://github.com/racemap/rust-tz-service) | build with tzf-rs   |
@@ -69,7 +70,7 @@ import (
 
 	"github.com/ringsaturn/tzf"
 	tzfrel "github.com/ringsaturn/tzf-rel"
-	"github.com/ringsaturn/tzf/pb"
+	pb "github.com/ringsaturn/tzf/gen/go/tzf/v1"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -135,6 +136,14 @@ longitude values to get the timezone name:
 tzf -lng 116.3883 -lat 39.9289
 ```
 
+Alternatively if you want to look up multiple coordinates efficiently you can
+specify the ordering and pipe them to the tzf command one pair of coordinates
+per line:
+
+```bash
+echo -e "116.3883 39.9289\n116.3883, 39.9289" | tzf -stdin-order lng-lat
+```
+
 ## Data
 
 You can download the original data from
@@ -181,18 +190,18 @@ border areas.
 You can observe points with different outcomes on this [page][points_not_equal].
 
 If a slightly longer initialization time is tolerable, the
-[compressed dataset (~5MB)][compressd-link] derived from the lightweight dataset
-will be **more suitable for binary distribution.**
+[compressed dataset (~5MB)][compressed-link] derived from the lightweight
+dataset will be **more suitable for binary distribution.**
 
 The [pre-indexed dataset (~1.78MB)][preindex-link] consists of multiple tiles.
 It is used within the `DefaultFinder`, which is built on `FuzzyFinder`, to
 reduce execution times of the raycasting algorithm.
 
 [pb_html]: https://ringsaturn.github.io/tzf/pb.html
-[full-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.pb
-[lite-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.pb
-[preindex-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.preindex.pb
-[compressd-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.compress.pb
+[full-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.bin
+[lite-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.bin
+[preindex-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.preindex.bin
+[compressed-link]: https://github.com/ringsaturn/tzf-rel/blob/main/combined-with-oceans.reduce.compress.bin
 [points_not_equal]: https://geojson.io/#id=gist:ringsaturn/2d958e7f0a279a7411c04907f255955a
 
 I have written an article about the history of tzf, its Rust port, and its Rust

@@ -1,11 +1,12 @@
 package tzf
 
 import (
+	"slices"
+
 	"github.com/paulmach/orb"
 	"github.com/paulmach/orb/maptile"
-	"github.com/ringsaturn/tzf/pb"
-	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
+	pb "github.com/ringsaturn/tzf/gen/go/tzf/v1"
+	"github.com/ringsaturn/tzf/internal/maps"
 )
 
 // FuzzyFinder use a tile map to store timezone name. Data are made by
