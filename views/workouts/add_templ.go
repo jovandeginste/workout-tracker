@@ -99,7 +99,7 @@ func Add() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</label></td><td><input type=\"file\" id=\"file\" name=\"file\" accept=\".gpx, .fit, .tcx\" multiple></td></tr><tr><td><label for=\"type\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</label></td><td><input type=\"file\" id=\"file\" name=\"file\" accept=\".gpx, .fit, .tcx, .zip, .ftb\" multiple></td></tr><tr><td><label for=\"type\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
