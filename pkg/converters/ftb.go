@@ -21,7 +21,7 @@ func ParseFTB(content []byte) ([]*Workout, error) {
 			continue
 		}
 
-		gpx, err := readFtbXmlFile(zipFile)
+		gpx, err := readFtbXMLFile(zipFile)
 		if err != nil {
 			return nil, err
 		}
@@ -32,7 +32,7 @@ func ParseFTB(content []byte) ([]*Workout, error) {
 	return result, nil
 }
 
-func readFtbXmlFile(zf *zip.File) ([]*Workout, error) {
+func readFtbXMLFile(zf *zip.File) ([]*Workout, error) {
 	c, err := readFileFromZip(zf)
 	if err != nil {
 		return nil, err
