@@ -17,12 +17,16 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 		@StatsRecordsTotal(user)
 		<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
 			<div>
-				{{ recs, _ := user.GetAllRecords() }}
-				for _, r := range recs {
-					if r.WorkoutType.IsDistance() && r.Active {
-						<div class="inner-form">
-							@StatsRecordsDistance(r)
-						</div>
+				{{ recs, err := user.GetAllRecords() }}
+				if err != nil {
+					<pre>{ err.Error() }</pre>
+				} else {
+					for _, r := range recs {
+						if r.WorkoutType.IsDistance() && r.Active {
+							<div class="inner-form">
+								@StatsRecordsDistance(r)
+							</div>
+						}
 					}
 				}
 			</div>

@@ -34,14 +34,25 @@ func (c *cli) workoutsParseCmd() *cobra.Command {
 				return err
 			}
 
-			gpx, err := converters.Parse(filename, content)
+			wo, err := converters.ParseCollection(filename, content)
 			if err != nil {
 				return err
 			}
 
 			fmt.Println("Parsing was successful!")
-			fmt.Printf("- name: %s\n", gpx.Name)
-			fmt.Printf("- number of tracks: %d\n", len(gpx.Tracks))
+
+			for _, f := range wo {
+				fmt.Printf("- name: %s\n", f.Data.Name)
+
+				if f.IsGPXBAsed() {
+					fmt.Printf("  number of tracks: %d\n", len(f.GPX.Tracks))
+					continue
+				}
+
+				fmt.Printf("  repetitions: %d\n", f.Data.TotalRepetitions)
+				fmt.Printf("  duration: %s\n", f.Data.TotalDuration)
+				fmt.Printf("  start: %s\n", f.Data.Start)
+			}
 
 			return nil
 		},

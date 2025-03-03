@@ -9,14 +9,18 @@ import (
 )
 
 templ StatsRecordsTotal(user *database.User) {
-	{{ totals, _ := user.GetDefaultTotals() }}
-	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<div class="md:flex md:flex-wrap">
-		@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.String()), helpers.A2S(totals.Workouts), "")
-		@StatisticTile("distance", i18n.T(ctx, "distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
-		@StatisticTile("up", i18n.T(ctx, "up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
-		@StatisticTile("duration", i18n.T(ctx, "duration"), helpers.HumanDuration(totals.Duration), "")
-	</div>
+	{{ totals, err := user.GetDefaultTotals() }}
+	if err != nil {
+		<pre>{ err.Error() }</pre>
+	} else {
+		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
+		<div class="md:flex md:flex-wrap">
+			@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.String()), helpers.A2S(totals.Workouts), "")
+			@StatisticTile("distance", i18n.T(ctx, "distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
+			@StatisticTile("up", i18n.T(ctx, "up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
+			@StatisticTile("duration", i18n.T(ctx, "duration"), helpers.HumanDuration(totals.Duration), "")
+		</div>
+	}
 }
 
 templ StatisticTile(icon string, name string, value string, unit string) {

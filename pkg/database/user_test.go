@@ -22,13 +22,7 @@ func defaultUser() *User {
 }
 
 func dummyMapData() *MapData {
-	return dummyMapDataWithName("dummy map data")
-}
-
-func dummyMapDataWithName(name string) *MapData {
-	return &MapData{
-		Name: name,
-	}
+	return &MapData{Creator: "tester"}
 }
 
 func createMemoryDB(t *testing.T) *gorm.DB {
@@ -279,14 +273,15 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 	require.NoError(t, err)
 	assert.Empty(t, workouts)
 
-	w1, err := u.AddWorkout(
+	w1, addErr := u.AddWorkout(
 		db,
 		WorkoutTypeAutoDetect,
 		"some notes",
 		"file.gpx",
 		[]byte("invalid content"),
 	)
-	require.ErrorIs(t, err, ErrInvalidData)
+	require.NotEmpty(t, addErr)
+	require.ErrorIs(t, addErr[0], ErrInvalidData)
 	assert.Nil(t, w1)
 
 	workouts, err = u.GetWorkouts(db)
@@ -296,14 +291,14 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)
 
-	w2, err := u.AddWorkout(
+	w2, addErr := u.AddWorkout(
 		db,
 		WorkoutTypeAutoDetect,
 		"some notes",
 		"file.gpx",
 		f1,
 	)
-	require.NoError(t, err)
+	require.Empty(t, addErr)
 	assert.Len(t, w2, 1)
 	w2_1 := w2[0]
 

@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"path/filepath"
 	"slices"
 	"sort"
@@ -319,36 +320,37 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	workouts := make([]*Workout, len(gpxContent))
 
 	for i, g := range gpxContent {
-		d := gpxDate(g)
-		data := gpxAsMapData(g)
-
-		if filename == "" {
-			filename = data.Name + ".gpx"
+		data := &MapData{
+			WorkoutData: g.Data,
 		}
 
-		h := sha256.New()
-		h.Write(content)
+		d := &g.Data.Start
+
+		if g.IsGPXBAsed() {
+			d = gpxDate(g.GPX)
+			data = gpxAsMapData(g.GPX)
+		}
 
 		if workoutType == WorkoutTypeAutoDetect {
-			workoutType = autoDetectWorkoutType(data, g)
+			workoutType = autoDetectWorkoutType(data, g.GPX)
 		}
 
 		w := &Workout{
 			User:   u,
 			UserID: u.ID,
 			Dirty:  true,
-			Name:   g.Name,
+			Name:   g.Data.Name,
 			Data:   data,
 			Notes:  notes,
 			Type:   workoutType,
 			Date:   *d,
-			GPX: &GPXData{
-				Content:  content,
-				Checksum: h.Sum(nil),
-				Filename: filename,
-			},
 		}
 
+		if filename == "" {
+			filename = g.Filename()
+		}
+
+		w.setContent(filename, g.Content)
 		w.UpdateAverages()
 		w.UpdateExtraMetrics()
 
@@ -358,7 +360,22 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	return workouts, nil
 }
 
-func workoutTypeFromGpxTrackType(gpxType string) (WorkoutType, bool) {
+func (w *Workout) setContent(filename string, content []byte) {
+	if content == nil {
+		return
+	}
+
+	h := sha256.New()
+	h.Write(content)
+
+	w.GPX = &GPXData{
+		Content:  content,
+		Checksum: h.Sum(nil),
+		Filename: filename,
+	}
+}
+
+func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 	switch strings.ToLower(gpxType) {
 	case "running", "run":
 		return WorkoutTypeRunning, true
@@ -378,17 +395,27 @@ func workoutTypeFromGpxTrackType(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypeGolfing, true
 	case "hiking":
 		return WorkoutTypeHiking, true
+	case "push-ups":
+		return WorkoutTypePushups, true
 	default:
 		return WorkoutTypeAutoDetect, false
 	}
 }
 
 func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
+	if gpxContent == nil {
+		if workoutType, ok := workoutTypeFromData(data.Type); ok {
+			return workoutType
+		}
+
+		return WorkoutTypeAutoDetect
+	}
+
 	// If the GPX file mentions a workout type (for the first track), use it
 	if len(gpxContent.Tracks) > 0 {
 		firstTrack := &gpxContent.Tracks[0]
 
-		if workoutType, ok := workoutTypeFromGpxTrackType(firstTrack.Type); ok {
+		if workoutType, ok := workoutTypeFromData(firstTrack.Type); ok {
 			return workoutType
 		}
 	}
@@ -482,7 +509,7 @@ func (w *Workout) Delete(db *gorm.DB) error {
 func (w *Workout) Create(db *gorm.DB) error {
 	err := w.create(db)
 	if errors.Is(err, gorm.ErrDuplicatedKey) {
-		return ErrWorkoutAlreadyExists
+		return fmt.Errorf("%w: user_id=%d, date=%s", ErrWorkoutAlreadyExists, w.UserID, w.Date)
 	}
 
 	return err
@@ -539,7 +566,12 @@ func (w *Workout) AsGPX() (*gpx.GPX, error) {
 		return nil, errors.New("workout has no GPX")
 	}
 
-	return converters.Parse(w.GPX.Filename, w.GPX.Content)
+	wo, err := converters.Parse(w.GPX.Filename, w.GPX.Content)
+	if err != nil {
+		return nil, err
+	}
+
+	return wo.GPX, nil
 }
 
 func (w *Workout) setData(data *MapData) {
@@ -571,6 +603,10 @@ func (w *Workout) setData(data *MapData) {
 }
 
 func (w *Workout) UpdateAverages() {
+	if w.Data == nil {
+		return
+	}
+
 	if w.Data.TotalDuration == 0 {
 		w.Data.AverageSpeed = 0
 	} else {

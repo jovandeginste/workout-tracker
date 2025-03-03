@@ -92,7 +92,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
-			"type as workout_type",
+			"workouts.type as workout_type",
 			"sum(total_duration) as duration",
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
@@ -145,12 +145,12 @@ func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
 
 	err := u.db.
 		Table("workouts").
-		Select("type").
+		Select("workouts.type").
 		Where("user_id = ?", u.ID).
-		Group("type").
+		Group("workouts.type").
 		Order("count(*) DESC").
 		Limit(1).
-		Pluck("type", &r).Error
+		Pluck("workouts.type", &r).Error
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +189,7 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
-			"max(type) as workout_type",
+			"max(workouts.type) as workout_type",
 			"sum(total_duration) as duration",
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
@@ -197,7 +197,7 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where("type = ?", t).
+		Where("workouts.type = ?", t).
 		Scan(r).Error
 	if err != nil {
 		return nil, err
@@ -247,7 +247,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 			Table("workouts").
 			Joins("join map_data on workouts.id = map_data.workout_id").
 			Where("user_id = ?", u.ID).
-			Where("type = ?", t).
+			Where("workouts.type = ?", t).
 			Select("workouts.id as id", v+" as value", "workouts.date as date").
 			Order(v + " DESC").
 			Group("workouts.id").
@@ -262,7 +262,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		Table("workouts").
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).
-		Where("type = ?", t).
+		Where("workouts.type = ?", t).
 		Select("workouts.id as id", "max(total_duration) as value", "workouts.date as date").
 		Order("max(total_duration) DESC").
 		Group("workouts.id").

@@ -267,8 +267,10 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 		workoutType := database.WorkoutType(c.FormValue("type"))
 
 		ws, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, file.Filename, content)
-		if addErr != nil {
-			errMsg = append(errMsg, addErr.Error())
+		if len(addErr) > 0 {
+			for _, e := range addErr {
+				errMsg = append(errMsg, e.Error())
+			}
 			continue
 		}
 
