@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"bytes"
 	"encoding/xml"
-	"io"
 	"time"
 )
 
@@ -22,7 +21,7 @@ func ParseFTB(content []byte) ([]*Workout, error) {
 			continue
 		}
 
-		gpx, err := readZipFile(zipFile)
+		gpx, err := readFtbXmlFile(zipFile)
 		if err != nil {
 			return nil, err
 		}
@@ -33,20 +32,14 @@ func ParseFTB(content []byte) ([]*Workout, error) {
 	return result, nil
 }
 
-func readZipFile(zf *zip.File) ([]*Workout, error) {
-	f, err := zf.Open()
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	d, err := io.ReadAll(f)
+func readFtbXmlFile(zf *zip.File) ([]*Workout, error) {
+	c, err := readFileFromZip(zf)
 	if err != nil {
 		return nil, err
 	}
 
 	data := &FitoTrackBackup{}
-	if err := xml.Unmarshal(d, &data); err != nil {
+	if err := xml.Unmarshal(c, &data); err != nil {
 		return nil, err
 	}
 

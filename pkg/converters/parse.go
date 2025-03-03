@@ -59,6 +59,8 @@ func parseContent(filename string, content []byte) ([]*Workout, error) {
 		return parseSingle(ParseFit, "fit", content)
 	case ".tcx":
 		return parseSingle(ParseTCX, "tcx", content)
+	case ".zip":
+		return ParseZip(content)
 	case ".ftb":
 		return ParseFTB(content)
 	default:
