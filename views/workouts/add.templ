@@ -60,8 +60,29 @@ templ Add() {
 											type="text"
 											id="notes"
 											name="notes"
-											rows="10"
+											rows="4"
 										></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>{ i18n.T(ctx, "Resources") }</label>
+									</td>
+									<td>
+										<div>
+											<ul>
+												{ i18n.T(ctx, "You can edit your GPX files before uploading them here:") }
+												<li>{ i18n.T(ctx, "split files with multiple tracks") }</li>
+												<li>{ i18n.T(ctx, "convert from not-yet-supported file format") }</li>
+												<li>{ i18n.T(ctx, "remove the beginning or the ending of a workout") }</li>
+											</ul>
+											<ul>
+												{ i18n.T(ctx, "Try one of these sites:") }
+												<li><a target="_blank" href="https://gpx.studio/">gpx.studio — the online GPX file editor</a></li>
+												<li><a target="_blank" href="https://kml2gpx.com/">Kml2gpx.com: convert kml to gpx online</a></li>
+												<li><a target="_blank" href="https://www.fitfileviewer.com/">FIT File Viewer</a></li>
+											</ul>
+										</div>
 									</td>
 								</tr>
 							</tbody>
