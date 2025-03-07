@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"math"
 	"time"
 
 	"github.com/glebarez/sqlite"
@@ -81,6 +82,15 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 func preMigrationActions(db *gorm.DB) error {
 	if !db.Migrator().HasTable(&MapData{}) {
 		return nil
+	}
+
+	for _, k := range []string{"average_speed", "average_speed_no_pause"} {
+		q := db.
+			Model(&MapData{}).Where(k+" in ?", []float64{math.Inf(1), math.Inf(-1), math.NaN()}).
+			Update(k, 0)
+		if q.Error != nil {
+			return q.Error
+		}
 	}
 
 	q := db.
