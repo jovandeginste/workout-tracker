@@ -5,15 +5,15 @@ package partials
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import (
-	"html"
-	"time"
+import "github.com/a-h/templ"
+import templruntime "github.com/a-h/templ/runtime"
 
-	"github.com/a-h/templ"
-	templruntime "github.com/a-h/templ/runtime"
+import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"html"
+	"time"
 )
 
 func leafletClasses() templ.Component {

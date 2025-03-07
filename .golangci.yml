@@ -27,7 +27,7 @@ linters:
     - revive # Metalinter; drop-in replacement for golint.
     - staticcheck
     - stylecheck # Replacement for golint
-    - tenv # Detects using os.Setenv instead of t.Setenv.
+    - usetesting 
     - thelper # Detects test helpers without t.Helper().
     - tparallel # Detects inappropriate usage of t.Parallel().
     - typecheck
