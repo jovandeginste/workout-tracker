@@ -178,7 +178,7 @@ fr:
   no equipment: sans équipement
   refresh in progress: Actualisation en cours
   route segment: segment
-alerts:
-  workouts_added: "%d problèmes rencontrés lors de l'ajout d'entraînements : %s"
-notices:
-  workouts_added: 'Ajout de %d nouveau(x) entraînement(s) : %s'
+  alerts:
+    workouts_added: "%d problèmes rencontrés lors de l'ajout d'entraînements : %s"
+  notices:
+    workouts_added: 'Ajout de %d nouveau(x) entraînement(s) : %s'
