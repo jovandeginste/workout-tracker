@@ -238,7 +238,7 @@ nl:
   convert from not-yet-supported file format: zet om van nog niet ondersteunde formaten
   split files with multiple tracks: splits bestanden met meerdere trajecten
   alerts:
-    something_wrong: 'Er ging iets mis: %s'
+    something_wrong: 'Er ging iets mis: %{message}'
     workouts_added: 'Problemen bij het toevoegen van %d workouts: %s'
   notices:
     workouts_added: "%d nieuwe workout(s) toegevoegd: %s"

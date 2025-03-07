@@ -224,7 +224,7 @@ en:
   remove the beginning or the ending of a workout: remove the beginning or the ending of a workout
   "Try one of these sites:": "Try one of these sites:"
   alerts:
-    something_wrong: "Something went wrong: %s"
+    something_wrong: "Something went wrong: %{message}"
     workouts_added: "Encountered %d problems while adding workouts: %s"
     route_segments_added: "Encountered %d problems while adding route segment: %s"
   notices:
