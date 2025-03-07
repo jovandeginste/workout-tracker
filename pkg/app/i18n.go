@@ -55,7 +55,7 @@ func (a *App) i18n(ctx echo.Context, message string, vars ...any) string {
 		return t.T(message, vars...)
 	}
 
-	return fmt.Sprintf(message, vars...)
+	return fmt.Sprintf("%s: %v", message, vars)
 }
 
 func (a *App) translatorFromContext(ctx echo.Context) *i18n.Locale {
