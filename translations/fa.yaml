@@ -24,7 +24,6 @@ fa:
   Add equipment: اضافه کردن تجهیزات
   Add workout: افزودن تمرین
   Add workouts: افزودن تمرین‌ها
-  'Added %d new workout(s): %s': "%d تمرین جدید اضافه شد: %s"
   All workouts will be refreshed in the coming minutes: همه تمرین‌ها در دقایق پیش
     رو نوسازی خواهند شد.
   Application settings: تنظیمات برنامه
@@ -60,8 +59,7 @@ fa:
   Distance: مسافت
   Duration: بازه زمانی
   Elevation: ارتفاع
-  Estimated based on the activity: تخمین زده شده بر اساس فعالیت، با
-    فرض ۷۰ کیلوگرم
+  Estimated based on the activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
   Enable API access: فعال سازی دسترسی API
   Language: زبان
   Location: مکان
@@ -140,3 +138,5 @@ fa:
   show/hide: نمایش/پنهان
   skiing: اسکی
   snowboarding: اسنوبُردسواری
+notices:
+  workouts_added: "%d تمرین جدید اضافه شد: %s"

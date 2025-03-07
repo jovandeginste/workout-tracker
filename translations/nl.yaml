@@ -1,3 +1,4 @@
+---
 nl:
   1 year: 1 jaar
   10 years: 10 jaar
@@ -185,7 +186,7 @@ nl:
   3 months: 3 maand
   Filter: Filter
   Sort by: Sorteer op
-  "(Re)generate publicly shareable link": (Her)genereer publieke koppeling
+  "(Re)generate publicly shareable link": "(Her)genereer publieke koppeling"
   All: Alles
   1 month: 1 maand
   e-cycling: e-fietsen
@@ -207,18 +208,18 @@ nl:
   kayaking: kajakken
   Filter workouts: Filter workouts
   Resources: Hulpmiddelen
-  "You can find inspiration here:": 'Hier kun je inspiratie opdoen:'
+  'You can find inspiration here:': 'Hier kun je inspiratie opdoen:'
   Your settings: Uw instellingen
   Measurements: Metingen
   Steps: Stappen
   forever: voor altijd
-  "The equipment '%s' has been deleted": Het materiaal '%s' werd verwijderd.
-  "The equipment '%s' has been updated": Het materiaal '%s' werd aangepast.
-  "The workout '%s' will be refreshed soon": De workout '%s' wordt binnenkort ververst...
-  "The workout '%s' has been created": De workout '%s' werd gemaakt.
-  "The route segment '%s' has been created - we search for matches in the background": Het
+  The equipment '%s' has been deleted: Het materiaal '%s' werd verwijderd.
+  The equipment '%s' has been updated: Het materiaal '%s' werd aangepast.
+  The workout '%s' will be refreshed soon: De workout '%s' wordt binnenkort ververst...
+  The workout '%s' has been created: De workout '%s' werd gemaakt.
+  The route segment '%s' has been created - we search for matches in the background: Het
     route segment '%s' werd aangemaakt - we zoeken op de achtergrond naar matches.
-  "The route segment '%s' has been updated": Het route segment '%s' werd aangepast.
+  The route segment '%s' has been updated: Het route segment '%s' werd aangepast.
   No measurements found: Geen metingen gevonden
   Update: Aanpassen
   Height: Grootte
@@ -227,18 +228,19 @@ nl:
   centimeter: centimeter
   Update measurement: Meting aanpassen
   Latest measurements: Laatste metingen
-  "Start searching in the background for matching workouts for route segment '%s'": Zoek
+  Start searching in the background for matching workouts for route segment '%s': Zoek
     op de achtergrond naar workouts met matches voor route segment '%s'.
-  "Try one of these sites:": 'Probeer één van volgende sites:'
-  "You can edit your GPX files before uploading them here:": 'Je kunt je GPX-bestanden
+  'Try one of these sites:': 'Probeer één van volgende sites:'
+  'You can edit your GPX files before uploading them here:': 'Je kunt je GPX-bestanden
     aanpassen voor je ze hier uploadt:'
   remove the beginning or the ending of a workout: verwijder het begin of het einde
     van een workout
   convert from not-yet-supported file format: zet om van nog niet ondersteunde formaten
   split files with multiple tracks: splits bestanden met meerdere trajecten
   alerts:
-    something_wrong: "Er ging iets mis: %s"
+    something_wrong: 'Er ging iets mis: %s'
     workouts_added: 'Problemen bij het toevoegen van %d workouts: %s'
   notices:
     workouts_added: "%d nieuwe workout(s) toegevoegd: %s"
-    route_segments_added: '%d nieuw(e) route segment(en) werden toegevoegd: %s - we zoeken op de achtergrond naar matches.'
+    route_segments_added: "%d nieuw(e) route segment(en) werden toegevoegd: %s - we
+      zoeken op de achtergrond naar matches."
