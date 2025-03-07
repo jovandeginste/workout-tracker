@@ -5,17 +5,17 @@ package workouts
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
+import "github.com/a-h/templ"
+import templruntime "github.com/a-h/templ/runtime"
+
 import (
 	"context"
-	"slices"
-	"sort"
-	"strings"
-
-	"github.com/a-h/templ"
-	templruntime "github.com/a-h/templ/runtime"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"slices"
+	"sort"
+	"strings"
 )
 
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {
@@ -33,7 +33,6 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 		helpers.HumanSpeed(ctx, w.AverageSpeed())+" "+preferredUnits.Speed(),
 	)
 }
-
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
 		"workout",
