@@ -3,7 +3,6 @@ package helpers
 import (
 	"cmp"
 	"context"
-	"fmt"
 	"slices"
 	"time"
 
@@ -33,12 +32,12 @@ var (
 	}
 )
 
-func THas(ctx context.Context, key string, args ...any) string {
+func THas(ctx context.Context, key string) string {
 	if i18n.Has(ctx, key) {
-		return i18n.T(ctx, key, args...)
+		return i18n.T(ctx, key)
 	}
 
-	return fmt.Sprintf(key, args...)
+	return key
 }
 
 type LanguageInformation struct {
