@@ -235,3 +235,10 @@ nl:
   Latest measurements: Laatste metingen
   "Start searching in the background for matching workouts for route segment '%s'": Zoek
     op de achtergrond naar workouts met matches voor route segment '%s'.
+  "Try one of these sites:": 'Probeer één van volgende sites:'
+  "You can edit your GPX files before uploading them here:": 'Je kunt je GPX-bestanden
+    aanpassen voor je ze hier uploadt:'
+  remove the beginning or the ending of a workout: verwijder het begin of het einde
+    van een workout
+  convert from not-yet-supported file format: zet om van nog niet ondersteunde formaten
+  split files with multiple tracks: splits bestanden met meerdere trajecten
