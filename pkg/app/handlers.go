@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
@@ -19,7 +20,7 @@ var ErrUserNotFound = errors.New("user not found")
 
 func (a *App) redirectWithError(c echo.Context, target string, err error) error {
 	if err != nil {
-		a.addError(c, "alerts.something_wrong", err.Error())
+		a.addError(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
 	}
 
 	return c.Redirect(http.StatusFound, target)
@@ -154,7 +155,7 @@ func (a *App) lookupAddressHandler(c echo.Context) error {
 
 	results, err := geocoder.Search(q)
 	if err != nil {
-		a.addError(c, "alerts.something_wrong", err.Error())
+		a.addError(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
 	}
 
 	return Render(c, http.StatusOK, partials.AddressResults(results))
