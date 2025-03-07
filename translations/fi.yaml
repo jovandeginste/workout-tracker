@@ -196,7 +196,7 @@ fi:
   'You can find inspiration here:': 'Täältä löydät inspiraatiota:'
   The workout '%s' has been refreshed: Harjoitus '%s' on virkistetty.
   The workout '%s' will be refreshed soon: Harjoitus '%s' virkistetään pian...
-alerts:
-  workouts_added: 'Kohdattiin %d ongelmaa harjoitusten lisäämisessä: %s'
-notices:
-  workouts_added: 'Lisätty %d uutta harjoitusta: %s'
+  alerts:
+    workouts_added: 'Kohdattiin %d ongelmaa harjoitusten lisäämisessä: %s'
+  notices:
+    workouts_added: 'Lisätty %d uutta harjoitusta: %s'

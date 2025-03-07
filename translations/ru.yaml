@@ -171,5 +171,5 @@ ru:
   Per: в
   Since: За прошедшие
   Your progress per %s for the past %s: Ваш прогресс в %s за прошедшие %s
-notices:
-  workouts_added: 'Добавлена %d новая тренировка: %s'
+  notices:
+    workouts_added: 'Добавлена %d новая тренировка: %s'

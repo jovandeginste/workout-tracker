@@ -225,8 +225,8 @@ zh-Hans:
   'You can edit your GPX files before uploading them here:': 您可以在上传前编辑 GPX 文件：
   split files with multiple tracks: 分割包含多个轨迹的文件
   convert from not-yet-supported file format: 从未支持的文件格式转换
-alerts:
-  workouts_added: 添加锻炼时遇到 %d 个问题：%s
-notices:
-  workouts_added: 添加了 %d 份新锻炼：%s
-  route_segments_added: 添加了 %d 个新路线片段：%s - 我们在后台搜索匹配项。
+  alerts:
+    workouts_added: 添加锻炼时遇到 %d 个问题：%s
+  notices:
+    workouts_added: 添加了 %d 份新锻炼：%s
+    route_segments_added: 添加了 %d 个新路线片段：%s - 我们在后台搜索匹配项。

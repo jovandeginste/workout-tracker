@@ -138,5 +138,5 @@ fa:
   show/hide: نمایش/پنهان
   skiing: اسکی
   snowboarding: اسنوبُردسواری
-notices:
-  workouts_added: "%d تمرین جدید اضافه شد: %s"
+  notices:
+    workouts_added: "%d تمرین جدید اضافه شد: %s"

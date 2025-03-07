@@ -135,8 +135,8 @@ it:
   walking: Camminata
   workout: Allenamento
   workouts: allenamenti
-alerts:
-  workouts_added: 'Riscontrati %d problemi durante l''aggiunta degli allenamenti:
-    %s'
-notices:
-  workouts_added: 'Aggiunti %d nuovo/i allenamento/i: %s'
+  alerts:
+    workouts_added: 'Riscontrati %d problemi durante l''aggiunta degli allenamenti:
+      %s'
+  notices:
+    workouts_added: 'Aggiunti %d nuovo/i allenamento/i: %s'
