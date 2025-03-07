@@ -5,19 +5,35 @@ import (
 )
 
 func (a *App) addError(c echo.Context, msg string, vars ...any) {
-	switch msges := c.Get("errors").(type) {
+	var v []string
+
+	e := a.i18n(c, msg, vars...)
+	c.Logger().Error(e)
+
+	switch msges := a.sessionManager.Get(c.Request().Context(), "errors").(type) {
 	case []string:
-		c.Set("errors", append(msges, a.i18n(c, msg, vars...)))
+		v = msges
+		v = append(v, e)
 	default:
-		c.Set("errors", []string{a.i18n(c, msg, vars...)})
+		v = []string{e}
 	}
+
+	a.sessionManager.Put(c.Request().Context(), "errors", v)
 }
 
 func (a *App) addNotice(c echo.Context, msg string, vars ...any) {
-	switch msges := c.Get("notices").(type) {
+	var v []string
+
+	e := a.i18n(c, msg, vars...)
+	c.Logger().Error(e)
+
+	switch msges := a.sessionManager.Get(c.Request().Context(), "notices").(type) {
 	case []string:
-		c.Set("notices", append(msges, a.i18n(c, msg, vars...)))
+		v = msges
+		v = append(v, e)
 	default:
-		c.Set("notices", []string{a.i18n(c, msg, vars...)})
+		v = []string{e}
 	}
+
+	a.sessionManager.Put(c.Request().Context(), "notices", v)
 }

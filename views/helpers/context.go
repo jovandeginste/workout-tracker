@@ -3,6 +3,7 @@ package helpers
 import (
 	"context"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/invopop/ctxi18n"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -19,6 +20,15 @@ func AppConfig(ctx context.Context) *database.Config {
 	}
 }
 
+func SessionManager(ctx context.Context) *scs.SessionManager {
+	switch v := ctx.Value("sessionManager").(type) {
+	case *scs.SessionManager:
+		return v
+	default:
+		return nil
+	}
+}
+
 func Version(ctx context.Context) *appversion.Version {
 	switch v := ctx.Value("version").(type) {
 	case *appversion.Version:
@@ -29,7 +39,7 @@ func Version(ctx context.Context) *appversion.Version {
 }
 
 func Notices(ctx context.Context) []string {
-	switch v := ctx.Value("notices").(type) {
+	switch v := SessionManager(ctx).Pop(ctx, "notices").(type) {
 	case string:
 		if v == "" {
 			return nil
@@ -44,7 +54,7 @@ func Notices(ctx context.Context) []string {
 }
 
 func Errors(ctx context.Context) []string {
-	switch v := ctx.Value("errors").(type) {
+	switch v := SessionManager(ctx).Pop(ctx, "errors").(type) {
 	case string:
 		if v == "" {
 			return nil
