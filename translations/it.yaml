@@ -7,7 +7,6 @@ it:
   Add equipment: Aggiungi attrezzatura
   Add workout: Aggiungi allenamento
   Add workouts: Aggiungi allenamenti
-  'Added %d new workout(s): %s': 'Aggiunti %d nuovo/i allenamento/i: %s'
   Admin: Amministratore
   All workouts will be refreshed in the coming minutes: Tutti gli allenamenti verranno
     aggiornati nei prossimi minuti.
@@ -36,8 +35,6 @@ it:
   Duration: Durata
   Elevation: Elevazione
   Enable API access: Abilita l'accesso API
-  'Encountered %d problems while adding workouts: %s': 'Riscontrati %d problemi durante
-    l''aggiunta degli allenamenti: %s'
   Equipment: Attrezzatura
   Heart rate: Frequenza cardiaca
   'I completed a workout: %s': 'Ho completato un allenamento: %s.'
@@ -138,3 +135,8 @@ it:
   walking: Camminata
   workout: Allenamento
   workouts: allenamenti
+alerts:
+  workouts_added: 'Riscontrati %d problemi durante l''aggiunta degli allenamenti:
+    %s'
+notices:
+  workouts_added: 'Aggiunti %d nuovo/i allenamento/i: %s'

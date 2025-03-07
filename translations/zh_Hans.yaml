@@ -1,10 +1,11 @@
+---
 zh-Hans:
   Welcome!: 欢迎！
   Your settings: 您的设置
   6 months: 6 月
   3 months: 3 月
   Update measurement: 更新测量
-  "(Re)generate publicly shareable link": （重新）生成可公开分享的链接
+  "(Re)generate publicly shareable link": "（重新）生成可公开分享的链接"
   15 days: 15 天
   1 year: 1 年
   10 years: 10 年
@@ -20,7 +21,6 @@ zh-Hans:
   Add route segment: 添加路线段
   Add workout: 添加锻炼
   Add workouts: 添加锻炼
-  "Added %d new workout(s): %s": 添加了 %d 份新锻炼：%s
   Admin: 管理员
   All: 全部
   All workouts will be refreshed in the coming minutes: 所有锻炼将在接下来的几分钟内刷新。
@@ -53,7 +53,6 @@ zh-Hans:
   Duration: 持续时间
   Elevation: 海拔
   Enable API access: 启用 API 访问
-  "Encountered %d problems while adding workouts: %s": 添加锻炼时遇到 %d 个问题：%s
   End: 结束
   Equipment: 设备
   Est calories burned: 估计消耗卡路里
@@ -63,7 +62,7 @@ zh-Hans:
   File: 文件
   Filter: 筛选
   Heading: 标题
-  "I completed a workout: %s": 我完成了一次锻炼：%s。
+  'I completed a workout: %s': 我完成了一次锻炼：%s。
   It took me %s to go %s I averaged %s: 我用 %s 去 %s，平均速度为 %s。
   Language: 语言
   Last: 最后
@@ -89,7 +88,7 @@ zh-Hans:
   Profile updated: 个人资料已更新
   Publicly shareable link was copied to clipboard: 可公开分享的链接已复制到剪贴板
   Recent activity: 最近活动
-  Records for %s: '%s 的记录'
+  Records for %s: "%s 的记录"
   Since: 自
   Sort by: 排序依据
   Source: 来源
@@ -103,7 +102,7 @@ zh-Hans:
   The workout '%s' has been deleted: 锻炼 '%s' 已被删除。
   The workout '%s' has been refreshed: 锻炼 '%s' 已被刷新。
   The workout '%s' has been updated: 锻炼 '%s' 已被更新。
-  "These settings may be overwritten by:": 这些设置可能会被以下内容覆盖：
+  'These settings may be overwritten by:': 这些设置可能会被以下内容覆盖：
   Time: 时间
   Time paused: 时间暂停
   Time zone: 时区
@@ -178,7 +177,7 @@ zh-Hans:
   Steps: 步数
   forever: 永久
   Heatmap: 热力图
-  Dashboard for %s: '%s 的仪表板'
+  Dashboard for %s: "%s 的仪表板"
   Date: 日期
   Refresh all your workouts: 刷新您所有的锻炼
   Register: 注册
@@ -205,17 +204,15 @@ zh-Hans:
   kayaking: 皮划艇
   Filter workouts: 筛选锻炼
   Resources: 资源
-  "The equipment '%s' has been deleted": 设备 '%s' 已删除。
-  "The equipment '%s' has been updated": 设备 '%s' 已更新。
-  "You can find inspiration here:": 您可以在此找到灵感：
-  "The workout '%s' will be refreshed soon": 锻炼 '%s' 将很快刷新...
-  "The workout '%s' has been created": 锻炼 '%s' 已创建。
-  "The route segment '%s' has been created - we search for matches in the background": 路线片段
+  The equipment '%s' has been deleted: 设备 '%s' 已删除。
+  The equipment '%s' has been updated: 设备 '%s' 已更新。
+  'You can find inspiration here:': 您可以在此找到灵感：
+  The workout '%s' will be refreshed soon: 锻炼 '%s' 将很快刷新...
+  The workout '%s' has been created: 锻炼 '%s' 已创建。
+  The route segment '%s' has been created - we search for matches in the background: 路线片段
     '%s' 已创建 - 我们在后台搜索匹配项。
-  "Added %d new route segment(s): %s - we search for matches in the background": 添加了
-    %d 个新路线片段：%s - 我们在后台搜索匹配项。
-  "The route segment '%s' has been updated": 路线片段 '%s' 已更新。
-  "Start searching in the background for matching workouts for route segment '%s'": 开始在后台搜索与路线片段
+  The route segment '%s' has been updated: 路线片段 '%s' 已更新。
+  Start searching in the background for matching workouts for route segment '%s': 开始在后台搜索与路线片段
     '%s' 匹配的锻炼。
   No measurements found: 未找到测量结果
   Update: 更新
@@ -224,7 +221,12 @@ zh-Hans:
   inch: 英寸
   centimeter: 厘米
   remove the beginning or the ending of a workout: 移除锻炼的开始或结束部分
-  "Try one of these sites:": 试试这些网站：
-  "You can edit your GPX files before uploading them here:": 您可以在上传前编辑 GPX 文件：
+  'Try one of these sites:': 试试这些网站：
+  'You can edit your GPX files before uploading them here:': 您可以在上传前编辑 GPX 文件：
   split files with multiple tracks: 分割包含多个轨迹的文件
   convert from not-yet-supported file format: 从未支持的文件格式转换
+alerts:
+  workouts_added: 添加锻炼时遇到 %d 个问题：%s
+notices:
+  workouts_added: 添加了 %d 份新锻炼：%s
+  route_segments_added: 添加了 %d 个新路线片段：%s - 我们在后台搜索匹配项。

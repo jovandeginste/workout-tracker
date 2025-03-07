@@ -7,7 +7,6 @@ fr:
   Add equipment: Ajouter des équipements
   Add workout: Ajouter un entraînement
   Add workouts: Ajouter des entraînements
-  'Added %d new workout(s): %s': 'Ajout de %d nouveau(x) entraînement(s) : %s'
   Admin: Admin
   All workouts will be refreshed in the coming minutes: Toutes les séances d'entraînement
     seront actualisées dans les prochaines minutes.
@@ -34,14 +33,12 @@ fr:
   Duration: Durée
   Elevation: Dénivelé positif
   Enable API access: Activer l'accès à l'API
-  'Encountered %d problems while adding workouts: %s': "%d problèmes rencontrés lors
-    de l'ajout d'entraînements : %s"
   Equipment: Équipement
   File: Fichier
   Heart rate: Rythme cardiaque
   'I completed a workout: %s': 'J''ai terminé une séance d''entraînement : %s.'
-  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait
-    la moyenne de %s.
+  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait la
+    moyenne de %s.
   Language: Langue
   Leave blank to keep current password: Laissez le champ vide pour conserver le mot
     de passe actuel
@@ -181,3 +178,7 @@ fr:
   no equipment: sans équipement
   refresh in progress: Actualisation en cours
   route segment: segment
+alerts:
+  workouts_added: "%d problèmes rencontrés lors de l'ajout d'entraînements : %s"
+notices:
+  workouts_added: 'Ajout de %d nouveau(x) entraînement(s) : %s'

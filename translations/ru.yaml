@@ -120,7 +120,6 @@ ru:
   refresh in progress: обновление в процессе
   Dashboard: Панель управления
   Manage user '%s': Управление пользователем '%s'
-  'Added %d new workout(s): %s': 'Добавлена %d новая тренировка: %s'
   weight lifting: силовая
   duration: продолжительность
   Total duration: Общая продолжительность
@@ -172,3 +171,5 @@ ru:
   Per: в
   Since: За прошедшие
   Your progress per %s for the past %s: Ваш прогресс в %s за прошедшие %s
+notices:
+  workouts_added: 'Добавлена %d новая тренировка: %s'

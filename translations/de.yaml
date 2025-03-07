@@ -1,3 +1,4 @@
+---
 de:
   Your settings: Deine Einstellungen
   API key updated: API-Schlüssel aktualisiert
@@ -7,7 +8,6 @@ de:
   Add equipment: Ausrüstung hinzufügen
   Add workout: Training hinzufügen
   Add workouts: Trainings hinzufügen
-  'Added %d new workout(s): %s': '%d neue(s) Training(s) hinzugefügt: %s'
   Admin: Administrator
   All workouts will be refreshed in the coming minutes: Alle Trainings werden in den
     nächsten Minuten aktualisiert.
@@ -33,8 +33,6 @@ de:
   Duration: Dauer
   Elevation: Höhe
   Enable API access: API-Zugriff aktivieren
-  'Encountered %d problems while adding workouts: %s': Beim Hinzufügen vom Training
-    %s sind folgende Probleme aufgetreten %d
   Equipment: Ausrüstung
   File: Datei
   Heart rate: Herzfrequenz
@@ -165,7 +163,7 @@ de:
   Per: pro
   Dashboard: Dashboard
   push-ups: Liegestütze
-  "(Re)generate publicly shareable link": "Öffentlich teilbaren Link (neu) generieren"
+  "(Re)generate publicly shareable link": Öffentlich teilbaren Link (neu) generieren
   Aerial: Luftbild
   Bidirectional: Bidirektional
   Circular: Rundtour
@@ -197,7 +195,7 @@ de:
   1 month: 1 Monat
   Sort by: Sortieren nach
   Resources: Ressourcen
-  "You can find inspiration here:": 'Hier kannst du Inspirationen finden:'
+  'You can find inspiration here:': 'Hier kannst du Inspirationen finden:'
   Heatmap: Heatmap
   Accuracy: Genauigkeit
   Theme: Modus
@@ -218,19 +216,23 @@ de:
   Latest measurements: Letzte Messungen
   Measurements: Messungen
   Update measurement: Messung aktualisieren
-  "The equipment '%s' has been deleted": Die Ausrüstung ‚%s‘ wurde gelöscht.
-  "The workout '%s' has been created": Das Training ‚%s‘ wurde erstellt.
-  "The workout '%s' will be refreshed soon": Das Training ‚%s‘ wird bald aktualisiert...
-  "The route segment '%s' has been created - we search for matches in the background": Der
+  The equipment '%s' has been deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
+  The workout '%s' has been created: Das Training ‚%s‘ wurde erstellt.
+  The workout '%s' will be refreshed soon: Das Training ‚%s‘ wird bald aktualisiert...
+  The route segment '%s' has been created - we search for matches in the background: Der
     Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
-  "Added %d new route segment(s): %s - we search for matches in the background": '%d
-    neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen im Hintergrund nach
-    Übereinstimmungen.'
   Height: Höhe
   No measurements found: Keine Messungen gefunden
-  "The route segment '%s' has been updated": Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
-  "Start searching in the background for matching workouts for route segment '%s'": Beginnt
+  The route segment '%s' has been updated: Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
+  Start searching in the background for matching workouts for route segment '%s': Beginnt
     im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt
     ‚%s‘.
-  "The equipment '%s' has been updated": Die Ausrüstung ‚%s‘ wurde aktualisiert.
+  The equipment '%s' has been updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
   Update: Aktualisieren
+alerts:
+  workouts_added: Beim Hinzufügen vom Training %s sind folgende Probleme aufgetreten
+    %d
+notices:
+  workouts_added: "%d neue(s) Training(s) hinzugefügt: %s"
+  route_segments_added: "%d neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen
+    im Hintergrund nach Übereinstimmungen."

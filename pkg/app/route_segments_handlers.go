@@ -72,11 +72,11 @@ func (a *App) addRouteSegment(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addError(c, "Encountered %d problems while adding route segment: %s", len(errMsg), strings.Join(errMsg, "; "))
+		a.addError(c, "alerts.route_segments_added", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.addNotice(c, "Added %d new route segment(s): %s - we search for matches in the background", len(msg), strings.Join(msg, "; "))
+		a.addNotice(c, "notices.route_segments_added", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
