@@ -11,6 +11,8 @@ THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT=8090
 TEMPL_APP_PORT=8080
 
+GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
+
 .PHONY: all clean test build screenshots meta install-dev-deps install-deps
 
 all: clean install-deps test build
@@ -119,11 +121,14 @@ watch-tw:
 build-templates:
 	templ generate
 
+test-packages:
+	$(GO_TEST) ./pkg/...
+
 test-templates:
-	go test ./views/...
+	$(GO_TEST) ./views/...
 
 test-commands:
-	go test ./cmd/...
+	$(GO_TEST) ./cmd/...
 
 format-templates:
 	find . -type f -name '*.templ' -exec templ fmt -v {} \;
@@ -131,14 +136,13 @@ format-templates:
 serve:
 	$(WT_OUTPUT_FILE)
 
-test: test-go test-assets test-templates test-commands
+test: test-go test-assets
 
 test-assets:
 	prettier --check .
 
 
-test-go:
-	go test -short -count 1 -mod vendor -covermode=atomic ./...
+test-go: test-commands test-templates test-packages
 	golangci-lint run --allow-parallel-runners
 
 screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n

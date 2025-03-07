@@ -16,6 +16,7 @@ func (a *App) setContext(ctx echo.Context) {
 	ctx.Set("version", &a.Version)
 	ctx.Set("config", &a.Config)
 	ctx.Set("echo", a.echo)
+	ctx.Set("sessionManager", a.sessionManager)
 
 	lctx, _ := ctxi18n.WithLocale(ctx.Request().Context(), langFromContextString(ctx))
 	if lctx == nil {

@@ -105,7 +105,7 @@ func TestRoute_NoUserRedirect(t *testing.T) {
 		h := s(a.dashboardHandler)
 
 		require.NoError(t, h(c))
-		assert.NotEmpty(t, c.Get("errors"))
+		assert.NotEmpty(t, a.sessionManager.Get(c.Request().Context(), "errors"))
 		assert.Equal(t, http.StatusFound, rec.Code)
 	})
 }
