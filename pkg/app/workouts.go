@@ -280,11 +280,11 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addError(c, "Encountered %d problems while adding workouts: %s", len(errMsg), strings.Join(errMsg, "; "))
+		a.addError(c, "alerts.workouts_added", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.addNotice(c, "Added %d new workout(s): %s", len(msg), strings.Join(msg, "; "))
+		a.addNotice(c, "notices.workouts_added", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))

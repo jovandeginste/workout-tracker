@@ -12,7 +12,6 @@ nl:
   Add equipment: Voeg materiaal toe
   Add workout: Workout toevoegen
   Add workouts: Workouts toevoegen
-  'Added %d new workout(s): %s': "%d nieuwe workout(s) toegevoegd: %s"
   Admin: Beheerder
   All workouts will be refreshed in the coming minutes: Alle workouts worden vernieuwd
     in de komende minuten.
@@ -40,8 +39,6 @@ nl:
   Duration: Duur
   Elevation: Hoogte
   Enable API access: API toegang inschakelen
-  'Encountered %d problems while adding workouts: %s': 'Problemen bij het toevoegen
-    van %d workouts: %s'
   Equipment: Materiaal
   Extra metrics: Extra informatie
   File: Bestand
@@ -221,9 +218,6 @@ nl:
   "The workout '%s' has been created": De workout '%s' werd gemaakt.
   "The route segment '%s' has been created - we search for matches in the background": Het
     route segment '%s' werd aangemaakt - we zoeken op de achtergrond naar matches.
-  "Added %d new route segment(s): %s - we search for matches in the background": '%d
-    nieuw(e) route segment(en) werden toegevoegd: %s - we zoeken op de achtergrond
-    naar matches.'
   "The route segment '%s' has been updated": Het route segment '%s' werd aangepast.
   No measurements found: Geen metingen gevonden
   Update: Aanpassen
@@ -242,3 +236,9 @@ nl:
     van een workout
   convert from not-yet-supported file format: zet om van nog niet ondersteunde formaten
   split files with multiple tracks: splits bestanden met meerdere trajecten
+  alerts:
+    something_wrong: "Er ging iets mis: %s"
+    workouts_added: 'Problemen bij het toevoegen van %d workouts: %s'
+  notices:
+    workouts_added: "%d nieuwe workout(s) toegevoegd: %s"
+    route_segments_added: '%d nieuw(e) route segment(en) werden toegevoegd: %s - we zoeken op de achtergrond naar matches.'

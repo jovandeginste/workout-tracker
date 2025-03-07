@@ -120,9 +120,10 @@ func (a *App) equipmentEditHandler(c echo.Context) error {
 }
 
 func (a *App) renderError(c echo.Context, statusCode int, err error, route string, params ...any) error {
-	a.addError(c, err.Error())
+	a.addError(c, "alerts.something_wrong", err.Error())
 	if len(params) > 0 {
 		return c.Redirect(statusCode, a.echo.Reverse(route, params...))
 	}
+
 	return c.Redirect(statusCode, a.echo.Reverse(route))
 }

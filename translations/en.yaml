@@ -25,7 +25,6 @@ en:
   Add route segment: Add route segment
   Add workout: Add workout
   Add workouts: Add workouts
-  "Added %d new workout(s): %s": "Added %d new workout(s): %s"
   Admin: Admin
   Aerial: Aerial
   All: All
@@ -60,7 +59,6 @@ en:
   Duration: Duration
   Elevation: Elevation
   Enable API access: Enable API access
-  "Encountered %d problems while adding workouts: %s": "Encountered %d problems while adding workouts: %s"
   End: End
   Equipment: Equipment
   Est calories burned: Est. calories burned
@@ -212,7 +210,6 @@ en:
   "The workout '%s' will be refreshed soon": The workout '%s' will be refreshed soon...
   "The workout '%s' has been created": The workout '%s' has been created.
   "The route segment '%s' has been created - we search for matches in the background": "The route segment '%s' has been created - we search for matches in the background."
-  "Added %d new route segment(s): %s - we search for matches in the background": "Added %d new route segment(s): %s - we search for matches in the background."
   "The route segment '%s' has been updated": "The route segment '%s' has been updated."
   "Start searching in the background for matching workouts for route segment '%s'": "Start searching in the background for matching workouts for route segment '%s'."
   No measurements found: No measurements found
@@ -226,3 +223,10 @@ en:
   convert from not-yet-supported file format: convert from not-yet-supported file format
   remove the beginning or the ending of a workout: remove the beginning or the ending of a workout
   "Try one of these sites:": "Try one of these sites:"
+  alerts:
+    something_wrong: "Something went wrong: %s"
+    workouts_added: "Encountered %d problems while adding workouts: %s"
+    route_segments_added: "Encountered %d problems while adding route segment: %s"
+  notices:
+    workouts_added: "Added %d new workout(s): %s"
+    route_segments_added: "Added %d new route segment(s): %s - we search for matches in the background"

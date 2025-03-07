@@ -8,7 +8,7 @@ func (a *App) addError(c echo.Context, msg string, vars ...any) {
 	var v []string
 
 	e := a.i18n(c, msg, vars...)
-	c.Logger().Error(e)
+	c.Logger().Errorf("%s: %v", msg, vars)
 
 	switch msges := a.sessionManager.Get(c.Request().Context(), "errors").(type) {
 	case []string:
@@ -25,7 +25,6 @@ func (a *App) addNotice(c echo.Context, msg string, vars ...any) {
 	var v []string
 
 	e := a.i18n(c, msg, vars...)
-	c.Logger().Error(e)
 
 	switch msges := a.sessionManager.Get(c.Request().Context(), "notices").(type) {
 	case []string:

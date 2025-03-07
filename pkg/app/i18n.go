@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/invopop/ctxi18n"
@@ -49,7 +50,12 @@ func langFromContext(ctx echo.Context) []any {
 }
 
 func (a *App) i18n(ctx echo.Context, message string, vars ...any) string {
-	return a.translatorFromContext(ctx).T(message, vars...)
+	t := a.translatorFromContext(ctx)
+	if t.Has(message) {
+		return t.T(message, vars...)
+	}
+
+	return fmt.Sprintf(message, vars...)
 }
 
 func (a *App) translatorFromContext(ctx echo.Context) *i18n.Locale {
