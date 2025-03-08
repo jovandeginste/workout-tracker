@@ -18,7 +18,7 @@ func TestTranslateWorkoutTypes(t *testing.T) {
 		t.Run(
 			"translation of "+w.String(),
 			func(t *testing.T) {
-				assert.True(t, tr.Has(w.String()))
+				assert.True(t, tr.Has(w.StringT()))
 			},
 		)
 	}

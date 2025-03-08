@@ -7,10 +7,8 @@ ru:
   Weight: Вес
   Welcome!: Добро пожаловать!
   Your profile: Ваш профиль
-  snowboarding: сноуборд
   workouts: тренировки
   workout: тренировка
-  walking: ходьба
   Average tempo: Средний темп
   Average speed: Средняя скорость
   Cancel: Отмена
@@ -67,19 +65,13 @@ ru:
   Create a new account: Создать новый аккаунт
   Equipment: Снаряжение
   Add equipment: Добавить снаряжение
-  running: бег
-  hiking: хайкинг
   equipment: снаряжение
   environment variables: переменные окружения
   edit: редактировать
   Update equipment: Обновить снаряжение
   download: скачать
-  skiing: лыжи
-  swimming: плавание
-  cycling: велосипед
   kilometers per hour: километры в час
   miles per hour: мили в час
-  e-cycling: электровелосипед
   kilometers: километры
   pounds: фунты
   miles: мили
@@ -111,16 +103,13 @@ ru:
   refresh in progress: обновление в процессе
   Dashboard: Панель управления
   Manage user '%s': Управление пользователем '%s'
-  weight lifting: силовая
   duration: продолжительность
   Total duration: Общая продолжительность
   Total up: Набор высоты
   Circular: Круговой
   Total down: Потеря высоты
   user: пользователь
-  golfing: гольф
   show/hide: показать/скрыть
-  push-ups: отжимания
   how to use: как использовать
   generate a new API key: сгенерировать новый API-ключ
   copy to clipboard: скопировать в буфер обмена
@@ -176,3 +165,15 @@ ru:
     day_7: 7 дней
     day: день
     month: месяц
+  sports:
+    snowboarding: сноуборд
+    walking: ходьба
+    running: бег
+    hiking: хайкинг
+    skiing: лыжи
+    swimming: плавание
+    cycling: велосипед
+    e-cycling: электровелосипед
+    weight lifting: силовая
+    golfing: гольф
+    push-ups: отжимания

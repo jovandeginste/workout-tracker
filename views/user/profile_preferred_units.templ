@@ -121,7 +121,7 @@ templ profileTotalsShow(uwt *database.WorkoutType) {
 		for _, wt := range helpers.WorkoutTypes() {
 			if wt.IsDistance() {
 				<option value={ wt.String() } selected?={ wt.String() == uwt.String() }>
-					{ i18n.T(ctx, wt.String()) }
+					{ i18n.T(ctx, wt.StringT()) }
 				</option>
 			}
 		}

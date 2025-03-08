@@ -119,7 +119,7 @@ templ Show(e *database.Equipment) {
 							for _, w := range e.Workouts {
 								<tr>
 									<td class="text-center">
-										<div title={ i18n.T(ctx, w.Type.String()) }>
+										<div title={ i18n.T(ctx, w.Type.StringT()) }>
 											@helpers.IconFor(w.Type.String())
 										</div>
 									</td>

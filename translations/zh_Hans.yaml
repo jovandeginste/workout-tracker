@@ -121,19 +121,16 @@ zh-Hans:
   Your progress per %s for the past %s: 过去%s中您每%s取得的进展
   copy to clipboard: 复制到剪贴板
   create route segment: 创建路线段
-  cycling: 骑行
   delete: 删除
   distance: 距离
   download: 下载
   duration: 持续时间
-  e-cycling: 电子骑行
   edit: 编辑
   environment variables: 环境变量
   find matches: 查找匹配项
   generate a new API key: 生成新的 API 密钥
   equipment: 设备
   feet: 英尺
-  golfing: 高尔夫
   how to use: 如何使用
   kilograms: 千克
   kilometers: 公里
@@ -143,23 +140,15 @@ zh-Hans:
   miles per hour: 英里每小时
   no equipment: 无设备
   pounds: 磅
-  push-ups: 俯卧撑
   refresh: 刷新
   refresh in progress: 刷新进行中
   route segment: 路线段
-  running: 跑步
   sailboat: 帆船
   show/hide: 显示/隐藏
-  skiing: 滑雪
-  snowboarding: 单板滑雪
-  swimming: 游泳
   the configuration file: 配置文件
   up: 爬升
   user: 用户
-  walking: 步行
-  weight lifting: 举重
   Browser / System: 浏览器/系统
-  hiking: 徒步
   Latest measurements: 最新测量
   Measurements: 测量
   Steps: 步数
@@ -188,7 +177,6 @@ zh-Hans:
   ascending: 升序
   descending: 降序
   Total weight: 总重量
-  kayaking: 皮划艇
   Filter workouts: 筛选锻炼
   Resources: 资源
   The equipment '%s' has been deleted: 设备 '%s' 已删除。
@@ -240,3 +228,16 @@ zh-Hans:
     day: 天
     month: 月
     forever: 永久
+  sports:
+    cycling: 骑行
+    e-cycling: 电子骑行
+    golfing: 高尔夫
+    push-ups: 俯卧撑
+    running: 跑步
+    skiing: 滑雪
+    snowboarding: 单板滑雪
+    swimming: 游泳
+    walking: 步行
+    weight lifting: 举重
+    hiking: 徒步
+    kayaking: 皮划艇

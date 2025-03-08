@@ -136,7 +136,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		if _, ok := r.Buckets[result.WorkoutType]; !ok {
 			r.Buckets[result.WorkoutType] = Buckets{
 				WorkoutType:      result.WorkoutType,
-				LocalWorkoutType: u.I18n(result.WorkoutType.String()),
+				LocalWorkoutType: u.I18n(result.WorkoutType.StringT()),
 				Buckets:          map[string]Bucket{},
 			}
 		}

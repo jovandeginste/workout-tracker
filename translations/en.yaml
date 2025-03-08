@@ -144,20 +144,16 @@ en:
   Your progress per %s for the past %s: Your progress per %s for the past %s
   copy to clipboard: copy to clipboard
   create route segment: create route segment
-  cycling: cycling
   delete: delete
   distance: distance
   download: download
   duration: duration
-  e-cycling: e-cycling
   edit: edit
   environment variables: environment variables
   equipment: equipment
   feet: feet
   find matches: find matches
   generate a new API key: generate a new API key
-  golfing: golfing
-  hiking: hiking
   how to use: how to use
   kilograms: kilograms
   kilometers: kilometers
@@ -167,21 +163,14 @@ en:
   miles per hour: miles per hour
   no equipment: no equipment
   pounds: pounds
-  push-ups: push-ups
   refresh: refresh
   refresh in progress: refresh in progress
   route segment: route segment
-  running: running
   sailboat: sailboat
   show/hide: show/hide
-  skiing: skiing
-  snowboarding: snowboarding
-  swimming: swimming
   the configuration file: the configuration file
   up: up
   user: user
-  walking: walking
-  weight lifting: weight lifting
   workout: workout
   workouts: workouts
   Accuracy: Accuracy
@@ -193,7 +182,6 @@ en:
   ascending: ascending
   descending: descending
   Total weight: Total weight
-  kayaking: kayaking
   Filter workouts: Filter workouts
   Resources: Resources
   The equipment '%s' has been deleted: The equipment '%s' has been deleted.
@@ -249,3 +237,16 @@ en:
     forever: forever
     day: day
     month: month
+  sports:
+    cycling: cycling
+    e-cycling: e-cycling
+    golfing: golfing
+    hiking: hiking
+    push-ups: push-ups
+    running: running
+    skiing: skiing
+    snowboarding: snowboarding
+    swimming: swimming
+    walking: walking
+    weight lifting: weight lifting
+    kayaking: kayaking

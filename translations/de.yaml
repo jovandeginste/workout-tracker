@@ -101,7 +101,6 @@ de:
     muss aber noch aktiviert werden.
   Your profile: Dein Profil
   copy to clipboard: In die Zwischenablage kopieren
-  cycling: Radfahren
   delete: löschen
   distance: Entfernung
   download: herunterladen
@@ -111,8 +110,6 @@ de:
   equipment: Ausrüstung
   feet: Fuß
   generate a new API key: Neuen API-Schlüssel generieren
-  golfing: Golfen
-  hiking: Wandern
   how to use: Hilfe
   kilograms: Kilogramm
   kilometers: Kilometer
@@ -122,21 +119,15 @@ de:
   miles per hour: Meilen pro Stunde
   pounds: pfund
   refresh: aktualisieren
-  running: Laufen
   sailboat: Segelschiff
   show/hide: Anzeigen/Verbergen
-  skiing: Skifahren
-  snowboarding: Snowboarden
-  swimming: Schwimmen
   the configuration file: Konfigurationsdatei
   up: Höhenmeter
   user: Benutzer
-  walking: Gehen
   workout: Training
   workouts: Trainings
   Update equipment: Ausrüstung aktualisieren
   no equipment: keine Ausrüstung
-  weight lifting: Gewichtheben
   Description: Beschreibung
   Details: Details
   Reset changes: Änderungen zurücksetzen
@@ -154,7 +145,6 @@ de:
   Add route segment: Streckenabschnitt hinzufügen
   Per: pro
   Dashboard: Dashboard
-  push-ups: Liegestütze
   "(Re)generate publicly shareable link": Öffentlich teilbaren Link (neu) generieren
   Aerial: Luftbild
   Bidirectional: Bidirektional
@@ -167,7 +157,6 @@ de:
   Streets: Straßen
   Workout: Training
   create route segment: Streckenabschnitt erstellen
-  e-cycling: E-Biken
   find matches: Übereinstimmungen finden
   refresh in progress: Aktualisierung läuft
   User: Benutzer
@@ -191,7 +180,6 @@ de:
   Dark: Dunkel
   Browser / System: Browser / System
   Total weight: Gesamtgewicht
-  kayaking: Kayaking
   Filter workouts: Trainings filtern
   Calories: Kalorien
   descending: absteigend
@@ -245,3 +233,16 @@ de:
     month_3: 3 Monate
     month_1: 1 Monat
     forever: für immer
+  sports:
+    cycling: Radfahren
+    golfing: Golfen
+    hiking: Wandern
+    running: Laufen
+    skiing: Skifahren
+    snowboarding: Snowboarden
+    swimming: Schwimmen
+    walking: Gehen
+    weight lifting: Gewichtheben
+    push-ups: Liegestütze
+    e-cycling: E-Biken
+    kayaking: Kayaking

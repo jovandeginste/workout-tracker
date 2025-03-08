@@ -109,7 +109,6 @@ nl:
   Your progress per %s for the past %s: Jouw vooruitgang per %s voor de afgelopen
     %s
   copy to clipboard: kopieer naar klembord
-  cycling: fietsen
   delete: verwijder
   distance: afstand
   download: downloaden
@@ -119,8 +118,6 @@ nl:
   equipment: materiaal
   feet: voet
   generate a new API key: maak een nieuwe API-sleutel
-  golfing: golfen
-  hiking: trekken
   how to use: hoe te gebruiken
   kilograms: kilogram
   kilometers: kilometer
@@ -130,19 +127,12 @@ nl:
   miles per hour: mijl per uur
   no equipment: geen materiaal
   pounds: pond
-  push-ups: push-ups
   refresh: ververs
-  running: lopen
   sailboat: zeilen
   show/hide: toon/verberg
-  skiing: skiën
-  snowboarding: snowboarden
-  swimming: zwemmen
   the configuration file: het configuratiebestand
   up: omhoog
   user: gebruiker
-  walking: wandelen
-  weight lifting: gewichtheffen
   workout: workout
   workouts: workouts
   Reset changes: Wijzigingen ongedaan maken
@@ -176,7 +166,6 @@ nl:
   Sort by: Sorteer op
   "(Re)generate publicly shareable link": "(Her)genereer publieke koppeling"
   All: Alles
-  e-cycling: e-fietsen
   Copy publicly shareable link: Kopieer publieke koppeling
   Last: Laatste
   Publicly shareable link was copied to clipboard: Publieke koppeling is naar het
@@ -192,7 +181,6 @@ nl:
   Total weight: Totaal gewicht
   ascending: oplopend
   descending: aflopend
-  kayaking: kajakken
   Filter workouts: Filter workouts
   Resources: Hulpmiddelen
   'You can find inspiration here:': 'Hier kun je inspiratie opdoen:'
@@ -254,3 +242,16 @@ nl:
     month_3: 3 maand
     month_1: 1 maand
     forever: voor altijd
+  sports:
+    cycling: fietsen
+    golfing: golfen
+    hiking: trekken
+    push-ups: push-ups
+    running: lopen
+    skiing: skiën
+    snowboarding: snowboarden
+    swimming: zwemmen
+    walking: wandelen
+    weight lifting: gewichtheffen
+    e-cycling: e-fietsen
+    kayaking: kajakken
