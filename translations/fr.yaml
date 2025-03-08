@@ -179,6 +179,10 @@ fr:
   refresh in progress: Actualisation en cours
   route segment: segment
   alerts:
-    workouts_added: "%d problèmes rencontrés lors de l'ajout d'entraînements : %s"
+    workouts_added:
+      one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
+      other: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
   notices:
-    workouts_added: 'Ajout de %d nouveau(x) entraînement(s) : %s'
+    workouts_added:
+      one: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
+      other: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'

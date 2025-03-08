@@ -165,8 +165,6 @@ func (a *App) apiWorkoutsHandler(c echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
 func (a *App) apiCenters(c echo.Context) error {
-	a.setContext(c)
-
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 	u := a.getCurrentUser(c)
@@ -484,8 +482,6 @@ type Event struct {
 // @Failure      500  {object}  APIResponse
 // @Router       /workouts/coordinates [get]
 func (a *App) apiCalendar(c echo.Context) error {
-	a.setContext(c)
-
 	resp := APIResponse{}
 	events := []Event{}
 
@@ -570,8 +566,6 @@ func (a *App) fillGeoJSONProperties(c echo.Context, w *database.Workout, f *geoj
 // @Failure      500  {object}  APIResponse
 // @Router       /daily [get]
 func (a *App) apiDailyHandler(c echo.Context) error {
-	a.setContext(c)
-
 	resp := APIResponse{}
 	u := a.getCurrentUser(c)
 
@@ -606,8 +600,6 @@ func (a *App) apiDailyHandler(c echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /daily [post]
 func (a *App) apiDailyUpdateHandler(c echo.Context) error {
-	a.setContext(c)
-
 	resp := APIResponse{}
 
 	d := &Measurement{units: a.getCurrentUser(c).PreferredUnits()}

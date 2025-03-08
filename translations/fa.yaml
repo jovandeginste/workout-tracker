@@ -139,4 +139,6 @@ fa:
   skiing: اسکی
   snowboarding: اسنوبُردسواری
   notices:
-    workouts_added: "%d تمرین جدید اضافه شد: %s"
+    workouts_added:
+      one: "%{count} تمرین جدید اضافه شد: %{list}"
+      other: "%{count} تمرین جدید اضافه شد: %{list}"

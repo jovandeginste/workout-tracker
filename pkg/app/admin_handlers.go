@@ -27,8 +27,6 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) adminRootHandler(c echo.Context) error {
-	a.setContext(c)
-
 	users, err := database.GetUsers(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
@@ -38,8 +36,6 @@ func (a *App) adminRootHandler(c echo.Context) error {
 }
 
 func (a *App) adminUserEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	user, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, "/admin", err)
@@ -73,7 +69,7 @@ func (a *App) adminUserUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The user '%s' has been updated", u.Name)
+	a.addNoticeT(c, "The user '%s' has been updated", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-show", c.Param("id")))
 }
@@ -88,7 +84,7 @@ func (a *App) adminUserDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The user '%s' has been deleted", u.Name)
+	a.addNoticeT(c, "The user '%s' has been deleted", u.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }
@@ -108,7 +104,7 @@ func (a *App) adminConfigUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
 	}
 
-	a.addNotice(c, "Config updated")
+	a.addNoticeT(c, "Config updated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }

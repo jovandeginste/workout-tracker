@@ -48,6 +48,7 @@ func TestRoute_UserRender(t *testing.T) {
 		rec := httptest.NewRecorder()
 
 		c := contextValue{e.NewContext(req, rec)}
+		a.setContext(c)
 		c.Set("user_info", defaultUser(a.db))
 
 		s := session.LoadAndSave(a.sessionManager)
@@ -78,6 +79,7 @@ func TestRoute_UserRenderLang(t *testing.T) {
 			req.Header.Set("Accept-Language", lang)
 
 			c := contextValue{e.NewContext(req, rec)}
+			a.setContext(c)
 			c.Set("user_info", defaultUser(a.db))
 
 			s := session.LoadAndSave(a.sessionManager)
@@ -101,6 +103,7 @@ func TestRoute_NoUserRedirect(t *testing.T) {
 		rec := httptest.NewRecorder()
 
 		c := contextValue{e.NewContext(req, rec)}
+		a.setContext(c)
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.dashboardHandler)
 
@@ -120,6 +123,7 @@ func TestRoute_NoUserAccessLogin(t *testing.T) {
 		rec := httptest.NewRecorder()
 
 		c := contextValue{e.NewContext(req, rec)}
+		a.setContext(c)
 
 		s := session.LoadAndSave(a.sessionManager)
 		h := s(a.userLoginHandler)
@@ -149,6 +153,7 @@ func TestRoute_NoUserAccessLoginLang(t *testing.T) {
 			req.Header.Set("Accept-Language", lang)
 
 			c := contextValue{e.NewContext(req, rec)}
+			a.setContext(c)
 
 			s := session.LoadAndSave(a.sessionManager)
 			h := s(a.userLoginHandler)

@@ -27,8 +27,6 @@ func (a *App) addRoutesSegments(e *echo.Group) {
 }
 
 func (a *App) routeSegmentsHandler(c echo.Context) error {
-	a.setContext(c)
-
 	s, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
@@ -38,7 +36,6 @@ func (a *App) routeSegmentsHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsAddHandler(c echo.Context) error {
-	a.setContext(c)
 	return Render(c, http.StatusOK, route_segments.Add())
 }
 
@@ -72,19 +69,17 @@ func (a *App) addRouteSegment(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addError(c, "alerts.route_segments_added", len(errMsg), strings.Join(errMsg, "; "))
+		a.addErrorT(c, "alerts.route_segments_added", len(errMsg), strings.Join(errMsg, "; "))
 	}
 
 	if len(msg) > 0 {
-		a.addNotice(c, "notices.route_segments_added", len(msg), strings.Join(msg, "; "))
+		a.addNoticeT(c, "notices.route_segments_added", len(msg), strings.Join(msg, "; "))
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
 }
 
 func (a *App) routeSegmentsShowHandler(c echo.Context) error {
-	a.setContext(c)
-
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
@@ -107,8 +102,6 @@ func (a *App) routeSegmentsDownloadHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
@@ -131,7 +124,7 @@ func (a *App) routeSegmentsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been refreshed", rs.Name)
+	a.addNoticeT(c, "The workout '%s' has been refreshed", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -146,7 +139,7 @@ func (a *App) routeSegmentsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been deleted", rs.Name)
+	a.addNoticeT(c, "The workout '%s' has been deleted", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
 }
@@ -167,7 +160,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The route segment '%s' has been updated", rs.Name)
+	a.addNoticeT(c, "The route segment '%s' has been updated", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -188,7 +181,7 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "Start searching in the background for matching workouts for route segment '%s'", rs.Name)
+	a.addNoticeT(c, "Start searching in the background for matching workouts for route segment '%s'", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }

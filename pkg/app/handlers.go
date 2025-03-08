@@ -20,15 +20,13 @@ var ErrUserNotFound = errors.New("user not found")
 
 func (a *App) redirectWithError(c echo.Context, target string, err error) error {
 	if err != nil {
-		a.addError(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
+		a.addErrorT(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
 	}
 
 	return c.Redirect(http.StatusFound, target)
 }
 
 func (a *App) statisticsHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
@@ -50,8 +48,6 @@ func (a *App) statisticsHandler(c echo.Context) error {
 }
 
 func (a *App) dailyDeleteHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 	d := c.Param("date")
 
@@ -78,8 +74,6 @@ func (a *App) dailyDeleteHandler(c echo.Context) error {
 }
 
 func (a *App) dailyUpdateHandler(c echo.Context) error {
-	a.setContext(c)
-
 	d := &Measurement{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("daily"), err)
@@ -100,8 +94,6 @@ func (a *App) dailyUpdateHandler(c echo.Context) error {
 }
 
 func (a *App) dailyHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 
 	count := 20
@@ -117,8 +109,6 @@ func (a *App) dailyHandler(c echo.Context) error {
 }
 
 func (a *App) dashboardHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
@@ -143,27 +133,21 @@ func (a *App) dashboardHandler(c echo.Context) error {
 }
 
 func (a *App) userLoginHandler(c echo.Context) error {
-	a.setContext(c)
-
 	return Render(c, http.StatusOK, user.Login())
 }
 
 func (a *App) lookupAddressHandler(c echo.Context) error {
-	a.setContext(c)
-
 	q := c.FormValue("location")
 
 	results, err := geocoder.Search(q)
 	if err != nil {
-		a.addError(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
+		a.addErrorT(c, "alerts.something_wrong", i18n.M{"message": err.Error()})
 	}
 
 	return Render(c, http.StatusOK, partials.AddressResults(results))
 }
 
 func (a *App) heatmapHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)

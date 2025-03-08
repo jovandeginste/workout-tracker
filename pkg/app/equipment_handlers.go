@@ -38,8 +38,6 @@ func (a *App) addEquipment(c echo.Context) error {
 }
 
 func (a *App) equipmentHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 
 	e, err := u.GetAllEquipment(a.db)
@@ -51,8 +49,6 @@ func (a *App) equipmentHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
-	a.setContext(c)
-
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
@@ -67,7 +63,6 @@ func (a *App) equipmentShowHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentAddHandler(c echo.Context) error {
-	a.setContext(c)
 	return Render(c, http.StatusOK, equipment.Add())
 }
 
@@ -81,7 +76,7 @@ func (a *App) equipmentDeleteHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The equipment '%s' has been deleted", e.Name)
+	a.addNoticeT(c, "The equipment '%s' has been deleted", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
@@ -103,14 +98,12 @@ func (a *App) equipmentUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The equipment '%s' has been updated", e.Name)
+	a.addNoticeT(c, "The equipment '%s' has been updated", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment-show", c.Param("id")))
 }
 
 func (a *App) equipmentEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	e, err := a.getEquipment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)

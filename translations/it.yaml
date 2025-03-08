@@ -136,7 +136,10 @@ it:
   workout: Allenamento
   workouts: allenamenti
   alerts:
-    workouts_added: 'Riscontrati %d problemi durante l''aggiunta degli allenamenti:
-      %s'
+    workouts_added:
+      one: "Riscontrati %{count} problemi durante l'aggiunta degli allenamenti: %{list}"
+      other: "Riscontrati %{count} problemi durante l'aggiunta degli allenamenti: %{list}"
   notices:
-    workouts_added: 'Aggiunti %d nuovo/i allenamento/i: %s'
+    workouts_added:
+      one: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
+      other: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'

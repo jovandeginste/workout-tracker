@@ -172,4 +172,6 @@ ru:
   Since: За прошедшие
   Your progress per %s for the past %s: Ваш прогресс в %s за прошедшие %s
   notices:
-    workouts_added: 'Добавлена %d новая тренировка: %s'
+    workouts_added:
+      one: 'Добавлена %{count} новая тренировка: %{list}'
+      other: 'Добавлена %{count} новая тренировка: %{list}'
