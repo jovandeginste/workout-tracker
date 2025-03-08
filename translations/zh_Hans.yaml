@@ -1,4 +1,3 @@
----
 zh-Hans:
   Welcome!: 欢迎！
   Your settings: 您的设置
@@ -130,7 +129,7 @@ zh-Hans:
   Your profile: 您的个人资料
   Your progress per %s for the past %s: 过去%s中您每%s取得的进展
   copy to clipboard: 复制到剪贴板
-  create route segment: 创建路线片段
+  create route segment: 创建路线段
   cycling: 骑行
   day: 天
   delete: 删除
@@ -158,7 +157,7 @@ zh-Hans:
   push-ups: 俯卧撑
   refresh: 刷新
   refresh in progress: 刷新进行中
-  route segment: 路线片段
+  route segment: 路线段
   running: 跑步
   sailboat: 帆船
   show/hide: 显示/隐藏
@@ -209,10 +208,10 @@ zh-Hans:
   'You can find inspiration here:': 您可以在此找到灵感：
   The workout '%s' will be refreshed soon: 锻炼 '%s' 将很快刷新…
   The workout '%s' has been created: 锻炼 '%s' 已创建。
-  The route segment '%s' has been created - we search for matches in the background: 路线片段
+  The route segment '%s' has been created - we search for matches in the background: 路线段
     '%s' 已创建 - 我们在后台搜索匹配项。
-  The route segment '%s' has been updated: 路线片段 '%s' 已更新。
-  Start searching in the background for matching workouts for route segment '%s': 开始在后台搜索与路线片段
+  The route segment '%s' has been updated: 路线段 '%s' 已更新。
+  Start searching in the background for matching workouts for route segment '%s': 开始在后台搜索与路线段
     '%s' 匹配的锻炼。
   No measurements found: 未找到测量结果
   Update: 更新
@@ -229,10 +228,14 @@ zh-Hans:
     workouts_added:
       one: 添加锻炼时遇到 %{count} 个问题：%{list}
       other: 添加锻炼时遇到 %{count} 个问题：%{list}
+    something_wrong: 出了些问题：%{message}
+    route_segments_added:
+      one: 添加路线段时遇到 %{count} 个问题：%{list}
+      other: ''
   notices:
     workouts_added:
       one: 添加了 %{count} 份新锻炼：%{list}
       other: 添加了 %{count} 份新锻炼：%{list}
     route_segments_added:
-      one: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
-      other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
+      one: 添加了 %{count} 个新路线段：%{list} - 我们在后台搜索匹配项
+      other: ''
