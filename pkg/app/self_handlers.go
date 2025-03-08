@@ -19,8 +19,6 @@ func (a *App) addRoutesSelf(e *echo.Group) {
 }
 
 func (a *App) userProfileHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 
 	return Render(c, http.StatusOK, user.Profile(u))
@@ -101,7 +99,6 @@ func (a *App) userRefreshHandler(c echo.Context) error {
 }
 
 func (a *App) userUpdateVersion(c echo.Context) error {
-	a.setContext(c)
 	u := a.getCurrentUser(c)
 
 	u.LastVersion = a.Version.Sha

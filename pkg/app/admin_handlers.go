@@ -27,8 +27,6 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 }
 
 func (a *App) adminRootHandler(c echo.Context) error {
-	a.setContext(c)
-
 	users, err := database.GetUsers(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
@@ -38,8 +36,6 @@ func (a *App) adminRootHandler(c echo.Context) error {
 }
 
 func (a *App) adminUserEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	user, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, "/admin", err)

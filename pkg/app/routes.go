@@ -51,6 +51,12 @@ func (a *App) ConfigureWebserver() error {
 
 	e.Use(session.LoadAndSave(a.sessionManager))
 	e.Use(a.ContextValueMiddleware)
+	e.Use(func(handlerFunc echo.HandlerFunc) echo.HandlerFunc {
+		return func(context echo.Context) error {
+			a.setContext(context)
+			return handlerFunc(context)
+		}
+	})
 
 	publicGroup := e.Group("")
 

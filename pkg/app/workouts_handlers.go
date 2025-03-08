@@ -32,8 +32,6 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 }
 
 func (a *App) workoutsHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u := a.getCurrentUser(c)
 	if u.IsAnonymous() {
 		return a.redirectWithError(c, a.echo.Reverse("user-signout"), ErrUserNotFound)
@@ -53,8 +51,6 @@ func (a *App) workoutsHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsShowHandler(c echo.Context) error {
-	a.setContext(c)
-
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
@@ -69,13 +65,10 @@ func (a *App) workoutsShowHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsAddHandler(c echo.Context) error {
-	a.setContext(c)
 	return Render(c, http.StatusOK, workouts.Add())
 }
 
 func (a *App) workoutsFormHandler(c echo.Context) error {
-	a.setContext(c)
-
 	w := &database.Workout{}
 
 	if c.FormValue("id") != "" {
@@ -121,8 +114,6 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 }
 
 func (a *App) workoutShowShared(c echo.Context) error {
-	a.setContext(c)
-
 	u, err := uuid.Parse(c.Param("uuid"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
@@ -198,8 +189,6 @@ func (a *App) workoutsDownloadHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
@@ -241,8 +230,6 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 }
 
 func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
-	a.setContext(c)
-
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)

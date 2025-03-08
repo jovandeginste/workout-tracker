@@ -19,8 +19,6 @@ func (a *App) addRoutesUsers(e *echo.Group) {
 
 // userSigninHandler will be executed after SignInForm submission.
 func (a *App) userSigninHandler(c echo.Context) error {
-	a.setContext(c)
-
 	// Initiate a new User struct.
 	u := new(database.User)
 
@@ -50,7 +48,6 @@ func (a *App) userSigninHandler(c echo.Context) error {
 
 // userSignoutHandler will log a user out
 func (a *App) userSignoutHandler(c echo.Context) error {
-	a.setContext(c)
 	a.clearTokenCookie(c)
 
 	if err := a.sessionManager.Destroy(c.Request().Context()); err != nil {
@@ -62,8 +59,6 @@ func (a *App) userSignoutHandler(c echo.Context) error {
 
 // userRegisterHandler will be executed after registration submission.
 func (a *App) userRegisterHandler(c echo.Context) error {
-	a.setContext(c)
-
 	if a.Config.RegistrationDisabled {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), errors.New("registration is disabled"))
 	}
@@ -94,8 +89,6 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 }
 
 func (a *App) userShowHandler(c echo.Context) error {
-	a.setContext(c)
-
 	u, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)

@@ -27,8 +27,6 @@ func (a *App) addRoutesSegments(e *echo.Group) {
 }
 
 func (a *App) routeSegmentsHandler(c echo.Context) error {
-	a.setContext(c)
-
 	s, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("dashboard"), err)
@@ -38,7 +36,6 @@ func (a *App) routeSegmentsHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsAddHandler(c echo.Context) error {
-	a.setContext(c)
 	return Render(c, http.StatusOK, route_segments.Add())
 }
 
@@ -83,8 +80,6 @@ func (a *App) addRouteSegment(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsShowHandler(c echo.Context) error {
-	a.setContext(c)
-
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
@@ -107,8 +102,6 @@ func (a *App) routeSegmentsDownloadHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentsEditHandler(c echo.Context) error {
-	a.setContext(c)
-
 	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
