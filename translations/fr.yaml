@@ -134,17 +134,11 @@ fr:
   Bidirectional: Bidirectionnel
   create route segment: Créer un segment
   Please help translate via Weblate: S'il vous plaît, aidez-nous à traduire via Weblate
-  month: mois
   push-ups: pompes
   Since: Depuis
   Weight: Poids
   Per: Par
-  6 months: 6 mois
-  7 days: 7 jours
   Update equipment: Mettre à jour l'équipement
-  10 years: 10 ans
-  2 years: 2 ans
-  5 years: 5 ans
   Details: Détails
   kilograms: Kilogrammes
   Total repetitions: Répétitions totales
@@ -154,12 +148,10 @@ fr:
   Extra metrics: Mesures supplémentaires
   Create route segment: Créer un segment
   Route segments: Segment
-  1 year: 1 an
   Manual: Manuel
   Repetitions: Répétitions
   Reset changes: Annuler les changements
   Description: Description
-  day: jour
   pounds: livres
   Cadence: Cadence
   Average per minute: Moyenne par minute
@@ -186,3 +178,12 @@ fr:
     workouts_added:
       one: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
       other: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
+  misc:
+    month: mois
+    month_6: 6 mois
+    day_7: 7 jours
+    years_10: 10 ans
+    years_2: 2 ans
+    years_5: 5 ans
+    years_1: 1 an
+    day: jour

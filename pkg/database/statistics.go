@@ -3,6 +3,7 @@ package database
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -61,15 +62,23 @@ func GetDateLimitExpression(sqlDialect string) string {
 }
 
 func (sc *StatConfig) GetSince() string {
-	if sc.Since == "" {
-		return "1 year"
+	s := sc.Since
+	if s == "" {
+		s = "misc.years_1"
 	}
 
-	return sc.Since
+	s = strings.TrimPrefix(s, "misc.")
+	// split s at _, first part is time unit, second part is number of units
+	splitSince := strings.Split(s, "_")
+
+	t := splitSince[0]
+	u := splitSince[1]
+
+	return u + " " + t
 }
 
 func (u *User) GetDefaultStatistics() (*Statistics, error) {
-	return u.GetStatisticsFor("1 year", "month")
+	return u.GetStatisticsFor("misc.years_1", "misc.month")
 }
 
 func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
