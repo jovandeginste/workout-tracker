@@ -246,5 +246,6 @@ nl:
     workouts_added:
       one: "%{count} nieuwe workout(s) toegevoegd: %{list}"
       other: "%{count} nieuwe workout(s) toegevoegd: %{list}"
-    route_segments_added: "%d nieuw(e) route segment(en) werden toegevoegd: %s - we
-      zoeken op de achtergrond naar matches."
+    route_segments_added:
+      one: "%{count} nieuw(e) route segment(en) werden toegevoegd: %{list} - we zoeken op de achtergrond naar matches."
+      other: "%{count} nieuw(e) route segment(en) werden toegevoegd: %{list} - we zoeken op de achtergrond naar matches."

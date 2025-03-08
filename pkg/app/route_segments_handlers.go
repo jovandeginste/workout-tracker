@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/route_segments"
 	"github.com/labstack/echo/v4"
@@ -69,11 +70,11 @@ func (a *App) addRouteSegment(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addErrorT(c, "alerts.route_segments_added", len(errMsg), strings.Join(errMsg, "; "))
+		a.addErrorN(c, "alerts.route_segments_added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
 	}
 
 	if len(msg) > 0 {
-		a.addNoticeT(c, "notices.route_segments_added", len(msg), strings.Join(msg, "; "))
+		a.addNoticeN(c, "notices.route_segments_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
