@@ -1,4 +1,3 @@
----
 nl:
   1 year: 1 jaar
   10 years: 10 jaar
@@ -240,12 +239,17 @@ nl:
   alerts:
     something_wrong: 'Er ging iets mis: %{message}'
     workouts_added:
-      one: '%{count} problemen bij het toevoegen van workouts: %{list}'
+      one: '1 probleem bij het toevoegen van workouts: %{list}'
       other: '%{count} problemen bij het toevoegen van workouts: %{list}'
+    route_segments_added:
+      one: 'Een probleem tijdens het toevoegen van route segmenten: %{list}'
+      other: '%{count} problemen tijdens het toevoegen van route segmenten: %{list}'
   notices:
     workouts_added:
-      one: "%{count} nieuwe workout(s) toegevoegd: %{list}"
-      other: "%{count} nieuwe workout(s) toegevoegd: %{list}"
+      one: '1 nieuwe workout toegevoegd: %{list}'
+      other: '%{count} nieuwe workouts toegevoegd: %{list}'
     route_segments_added:
-      one: "%{count} nieuw(e) route segment(en) werden toegevoegd: %{list} - we zoeken op de achtergrond naar matches."
-      other: "%{count} nieuw(e) route segment(en) werden toegevoegd: %{list} - we zoeken op de achtergrond naar matches."
+      one: '1 nieuw route segment werden toegevoegd: %{list} - we zoeken op de achtergrond
+        naar matches'
+      other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
+        op de achtergrond naar matches'
