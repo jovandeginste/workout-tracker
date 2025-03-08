@@ -1,17 +1,8 @@
 zh-Hans:
   Welcome!: 欢迎！
   Your settings: 您的设置
-  6 months: 6 月
-  3 months: 3 月
   Update measurement: 更新测量
   "(Re)generate publicly shareable link": "（重新）生成可公开分享的链接"
-  15 days: 15 天
-  1 year: 1 年
-  10 years: 10 年
-  2 years: 2 年
-  1 month: 1 月
-  5 years: 5 年
-  7 days: 7 天
   API key updated: API 密钥已更新
   Actions: 操作
   Active: 活跃
@@ -131,7 +122,6 @@ zh-Hans:
   copy to clipboard: 复制到剪贴板
   create route segment: 创建路线段
   cycling: 骑行
-  day: 天
   delete: 删除
   distance: 距离
   download: 下载
@@ -151,7 +141,6 @@ zh-Hans:
   meters: 米
   miles: 英里
   miles per hour: 英里每小时
-  month: 月
   no equipment: 无设备
   pounds: 磅
   push-ups: 俯卧撑
@@ -174,7 +163,6 @@ zh-Hans:
   Latest measurements: 最新测量
   Measurements: 测量
   Steps: 步数
-  forever: 永久
   Heatmap: 热力图
   Dashboard for %s: "%s 的仪表板"
   Date: 日期
@@ -237,5 +225,18 @@ zh-Hans:
       one: 添加了 %{count} 份新锻炼：%{list}
       other: 添加了 %{count} 份新锻炼：%{list}
     route_segments_added:
-      one: 添加了 %{count} 个新路线段：%{list} - 我们在后台搜索匹配项
-      other: ''
+      one: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
+      other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
+  misc:
+    month_6: 6 月
+    month_3: 3 月
+    day_15: 15 天
+    years_1: 1 年
+    years_10: 10 年
+    years_2: 2 年
+    month_1: 1 月
+    years_5: 5 年
+    day_7: 7 天
+    day: 天
+    month: 月
+    forever: 永久

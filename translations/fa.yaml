@@ -13,12 +13,6 @@ fa:
   Notes: یادداشت‌ها
   Disable account registration: غیرفعال‌سازی عضویت حساب کاربری
   Leave blank to keep current password: برای حفظ رمز عبور فعلی خالی رهایش کنید
-  1 year: ۱ سال
-  10 years: ۱۰ سال
-  2 years: ۲ سال
-  5 years: ۵ سال
-  6 months: ۶ ماه
-  7 days: ۷ روز
   Active: فعال
   Add a workout: اضافه کردن یک تمرین
   Add equipment: اضافه کردن تجهیزات
@@ -110,7 +104,6 @@ fa:
   Your profile: نمایه شما
   copy to clipboard: کپی به کلیپ‌برد
   cycling: دوچرخه سواری
-  day: روز
   delete: حذف
   distance: مسافت
   download: دریافت
@@ -125,7 +118,6 @@ fa:
   meters: متر
   miles: مایل
   miles per hour: مایل در ساعت
-  month: ماه
   generate a new API key: ساخت یک کلید API جدید
   refresh in progress: در حال نوسازی
   sailboat: قایقرانی بادبانی
@@ -142,3 +134,12 @@ fa:
     workouts_added:
       one: "%{count} تمرین جدید اضافه شد: %{list}"
       other: "%{count} تمرین جدید اضافه شد: %{list}"
+  misc:
+    years_1: ۱ سال
+    years_10: ۱۰ سال
+    years_2: ۲ سال
+    years_5: ۵ سال
+    month_6: ۶ ماه
+    day_7: ۷ روز
+    day: روز
+    month: ماه

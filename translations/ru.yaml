@@ -12,15 +12,9 @@ ru:
   workout: тренировка
   walking: ходьба
   Average tempo: Средний темп
-  1 year: 1 год
-  2 years: 2 года
-  10 years: 10 лет
-  5 years: 5 лет
-  6 months: 6 месяцев
   Average speed: Средняя скорость
   Cancel: Отмена
   Continue: Продолжить
-  7 days: 7 дней
   Cadence: Каденс
   Date: Дата
   Description: Описание
@@ -33,7 +27,6 @@ ru:
   Total distance: Общее расстояние
   Distance: Расстояние
   Duration: Продолжительность
-  day: день
   delete: удалить
   Extra metrics: Дополнительные метрики
   File: Файл
@@ -66,7 +59,6 @@ ru:
   Workouts: Тренировки
   Workout type: Тип тренировки
   the configuration file: файл конфигурации
-  month: месяц
   Create route segment: Создать участок маршрута
   Created: Создано
   Add route segment: Добавить участок маршрута
@@ -174,19 +166,13 @@ ru:
     workouts_added:
       one: 'Добавлена %{count} новая тренировка: %{list}'
       few: 'Добавлена %{count} новая тренировка: %{list}'
-      many: ''
-  15 days: 15 дней
-  1 month: 1 месяц
-  3 months: 3 месяца
-  Theme: Тема
-  Light: Светлая
-  Calories: Калории
-  Accuracy: Точность
-  Resources: Ресурсы
-  All: Все
-  Dark: Темная
-  Total weight: Общий вес
-  Measurements: Измерения
-  Steps: Шаги
-  forever: навсегда
-  Are you sure?: Вы уверены?
+      other: 'Добавлена %{count} новая тренировка: %{list}'
+  misc:
+    years_1: 1 год
+    years_2: 2 года
+    years_10: 10 лет
+    years_5: 5 лет
+    month_6: 6 месяцев
+    day_7: 7 дней
+    day: день
+    month: месяц

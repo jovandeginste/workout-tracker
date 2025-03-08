@@ -1,10 +1,4 @@
 nl:
-  1 year: 1 jaar
-  10 years: 10 jaar
-  2 years: 2 jaar
-  5 years: 5 jaar
-  6 months: 6 maand
-  7 days: 7 dagen
   API key updated: API-sleutel bijgewerkt
   Actions: Acties
   Active: Actief
@@ -116,7 +110,6 @@ nl:
     %s
   copy to clipboard: kopieer naar klembord
   cycling: fietsen
-  day: dag
   delete: verwijder
   distance: afstand
   download: downloaden
@@ -135,7 +128,6 @@ nl:
   meters: meter
   miles: mijl
   miles per hour: mijl per uur
-  month: maand
   no equipment: geen materiaal
   pounds: pond
   push-ups: push-ups
@@ -180,14 +172,10 @@ nl:
   Aerial: Lucht
   Street: Straat
   Show map in full width: Toon de kaart in volle breedte
-  1 day: 1 dag
-  15 days: 15 dagen
-  3 months: 3 maand
   Filter: Filter
   Sort by: Sorteer op
   "(Re)generate publicly shareable link": "(Her)genereer publieke koppeling"
   All: Alles
-  1 month: 1 maand
   e-cycling: e-fietsen
   Copy publicly shareable link: Kopieer publieke koppeling
   Last: Laatste
@@ -211,7 +199,6 @@ nl:
   Your settings: Uw instellingen
   Measurements: Metingen
   Steps: Stappen
-  forever: voor altijd
   The equipment '%s' has been deleted: Het materiaal '%s' werd verwijderd.
   The equipment '%s' has been updated: Het materiaal '%s' werd aangepast.
   The workout '%s' will be refreshed soon: De workout '%s' wordt binnenkort ververst…
@@ -253,3 +240,17 @@ nl:
         naar matches'
       other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
         op de achtergrond naar matches'
+  misc:
+    years_1: 1 jaar
+    years_10: 10 jaar
+    years_2: 2 jaar
+    years_5: 5 jaar
+    month_6: 6 maand
+    day_7: 7 dagen
+    day: dag
+    month: maand
+    day_1: 1 dag
+    day_15: 15 dagen
+    month_3: 3 maand
+    month_1: 1 maand
+    forever: voor altijd
