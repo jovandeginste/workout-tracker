@@ -233,4 +233,6 @@ zh-Hans:
     workouts_added:
       one: 添加了 %{count} 份新锻炼：%{list}
       other: 添加了 %{count} 份新锻炼：%{list}
-    route_segments_added: 添加了 %d 个新路线片段：%s - 我们在后台搜索匹配项。
+    route_segments_added:
+      one: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
+      other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。

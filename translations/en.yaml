@@ -228,9 +228,13 @@ en:
     workouts_added:
       one: "Encountered 1 problem while adding workouts: %{list}"
       other: "Encountered %{count} problems while adding workouts: %{list}"
-    route_segments_added: "Encountered %d problems while adding route segment: %s"
+    route_segments_added:
+      one: "Encountered 1 problem while adding route segment: %{list}"
+      other: "Encountered %{count} problems while adding route segment: %{list}"
   notices:
     workouts_added:
       one: "Added a new workout: %{list}"
       other: "Added %{count} new workouts: %{list}"
-    route_segments_added: "Added %d new route segment(s): %s - we search for matches in the background"
+    route_segments_added:
+      one: "Added 1 new route segment: %{list} - we search for matches in the background"
+      other: "Added %{count} new route segments: %{list} - we search for matches in the background"

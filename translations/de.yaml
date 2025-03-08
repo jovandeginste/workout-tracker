@@ -237,5 +237,6 @@ de:
     workouts_added:
       one: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
       other: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
-    route_segments_added: "%d neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen
-      im Hintergrund nach Übereinstimmungen."
+    route_segments_added:
+      one: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen."
+      other: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen."
