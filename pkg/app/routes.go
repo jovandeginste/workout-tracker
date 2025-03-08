@@ -8,6 +8,7 @@ import (
 
 	"github.com/alexedwards/scs/gormstore"
 	"github.com/alexedwards/scs/v2"
+	"github.com/invopop/ctxi18n"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -105,6 +106,11 @@ func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if err := a.setUserFromContext(ctx); err != nil {
 			a.logger.Warn("error validating user", "error", err.Error())
 			return ctx.Redirect(http.StatusFound, a.echo.Reverse("user-signout"))
+		}
+
+		lctx, _ := ctxi18n.WithLocale(ctx.Request().Context(), langFromContextString(ctx))
+		if lctx != nil {
+			ctx.SetRequest(ctx.Request().WithContext(lctx))
 		}
 
 		return next(ctx)
