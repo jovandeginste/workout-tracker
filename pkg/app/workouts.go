@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
@@ -201,7 +202,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", workout.ID), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been created", workout.Name)
+	a.addNoticeT(c, "The workout '%s' has been created", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -240,7 +241,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been updated", workout.Name)
+	a.addNoticeT(c, "The workout '%s' has been updated", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -280,11 +281,11 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addError(c, "alerts.workouts_added", len(errMsg), strings.Join(errMsg, "; "))
+		a.addErrorN(c, "alerts.workouts_added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
 	}
 
 	if len(msg) > 0 {
-		a.addNotice(c, "notices.workouts_added", len(msg), strings.Join(msg, "; "))
+		a.addNoticeN(c, "notices.workouts_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))

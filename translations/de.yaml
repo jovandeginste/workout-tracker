@@ -230,9 +230,12 @@ de:
   The equipment '%s' has been updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
   Update: Aktualisieren
   alerts:
-    workouts_added: Beim Hinzufügen vom Training %s sind folgende Probleme aufgetreten
-      %d
+    workouts_added:
+      one: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten %{count}
+      other: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten %{count}
   notices:
-    workouts_added: "%d neue(s) Training(s) hinzugefügt: %s"
+    workouts_added:
+      one: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
+      other: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
     route_segments_added: "%d neue(s) Streckenabschnitt(e) hinzugefügt: %s - wir suchen
       im Hintergrund nach Übereinstimmungen."

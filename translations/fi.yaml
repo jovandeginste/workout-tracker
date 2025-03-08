@@ -197,6 +197,10 @@ fi:
   The workout '%s' has been refreshed: Harjoitus '%s' on virkistetty.
   The workout '%s' will be refreshed soon: Harjoitus '%s' virkistetään pian...
   alerts:
-    workouts_added: 'Kohdattiin %d ongelmaa harjoitusten lisäämisessä: %s'
+    workouts_added:
+      one: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
+      other: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
   notices:
-    workouts_added: 'Lisätty %d uutta harjoitusta: %s'
+    workouts_added:
+      one: 'Lisätty %{count} uutta harjoitusta: %{list}'
+      other: 'Lisätty %{count} uutta harjoitusta: %{list}'

@@ -226,7 +226,11 @@ zh-Hans:
   split files with multiple tracks: 分割包含多个轨迹的文件
   convert from not-yet-supported file format: 从未支持的文件格式转换
   alerts:
-    workouts_added: 添加锻炼时遇到 %d 个问题：%s
+    workouts_added:
+      one: 添加锻炼时遇到 %{count} 个问题：%{list}
+      other: 添加锻炼时遇到 %{count} 个问题：%{list}
   notices:
-    workouts_added: 添加了 %d 份新锻炼：%s
+    workouts_added:
+      one: 添加了 %{count} 份新锻炼：%{list}
+      other: 添加了 %{count} 份新锻炼：%{list}
     route_segments_added: 添加了 %d 个新路线片段：%s - 我们在后台搜索匹配项。

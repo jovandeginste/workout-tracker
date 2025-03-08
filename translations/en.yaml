@@ -225,8 +225,12 @@ en:
   "Try one of these sites:": "Try one of these sites:"
   alerts:
     something_wrong: "Something went wrong: %{message}"
-    workouts_added: "Encountered %d problems while adding workouts: %s"
+    workouts_added:
+      one: "Encountered 1 problem while adding workouts: %{list}"
+      other: "Encountered %{count} problems while adding workouts: %{list}"
     route_segments_added: "Encountered %d problems while adding route segment: %s"
   notices:
-    workouts_added: "Added %d new workout(s): %s"
+    workouts_added:
+      one: "Added a new workout: %{list}"
+      other: "Added %{count} new workouts: %{list}"
     route_segments_added: "Added %d new route segment(s): %s - we search for matches in the background"

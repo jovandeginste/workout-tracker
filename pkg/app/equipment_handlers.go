@@ -81,7 +81,7 @@ func (a *App) equipmentDeleteHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The equipment '%s' has been deleted", e.Name)
+	a.addNoticeT(c, "The equipment '%s' has been deleted", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
@@ -103,7 +103,7 @@ func (a *App) equipmentUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The equipment '%s' has been updated", e.Name)
+	a.addNoticeT(c, "The equipment '%s' has been updated", e.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment-show", c.Param("id")))
 }

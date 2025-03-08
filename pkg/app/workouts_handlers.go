@@ -115,7 +115,7 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' has been deleted", workout.Name)
+	a.addNoticeT(c, "The workout '%s' has been deleted", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -154,7 +154,7 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' now has a shareable link", workout.Name)
+	a.addNoticeT(c, "The workout '%s' now has a shareable link", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -175,7 +175,7 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNotice(c, "The workout '%s' will be refreshed soon", workout.Name)
+	a.addNoticeT(c, "The workout '%s' will be refreshed soon", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -235,7 +235,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	a.addNotice(c, "The route segment '%s' has been created - we search for matches in the background", rs.Name)
+	a.addNoticeT(c, "The route segment '%s' has been created - we search for matches in the background", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }

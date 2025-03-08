@@ -239,8 +239,12 @@ nl:
   split files with multiple tracks: splits bestanden met meerdere trajecten
   alerts:
     something_wrong: 'Er ging iets mis: %{message}'
-    workouts_added: 'Problemen bij het toevoegen van %d workouts: %s'
+    workouts_added:
+      one: '%{count} problemen bij het toevoegen van workouts: %{list}'
+      other: '%{count} problemen bij het toevoegen van workouts: %{list}'
   notices:
-    workouts_added: "%d nieuwe workout(s) toegevoegd: %s"
+    workouts_added:
+      one: "%{count} nieuwe workout(s) toegevoegd: %{list}"
+      other: "%{count} nieuwe workout(s) toegevoegd: %{list}"
     route_segments_added: "%d nieuw(e) route segment(en) werden toegevoegd: %s - we
       zoeken op de achtergrond naar matches."
