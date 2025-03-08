@@ -195,7 +195,7 @@ fi:
   Resources: Resurssit
   'You can find inspiration here:': 'Täältä löydät inspiraatiota:'
   The workout '%s' has been refreshed: Harjoitus '%s' on virkistetty.
-  The workout '%s' will be refreshed soon: Harjoitus '%s' virkistetään pian...
+  The workout '%s' will be refreshed soon: Harjoitus '%s' virkistetään pian…
   alerts:
     workouts_added:
       one: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
