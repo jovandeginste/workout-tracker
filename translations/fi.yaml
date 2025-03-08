@@ -136,20 +136,16 @@ fi:
   Your progress per %s for the past %s: Edistymisesi per %s viimeisten %s aikana
   copy to clipboard: kopioi leikepöydälle
   create route segment: luo reittiosuus
-  cycling: pyöräily
   delete: poista
   distance: matka
   download: lataa
   duration: kesto
-  e-cycling: sähköpyöräily
   edit: muokkaa
   environment variables: ympäristömuuttujat
   equipment: välineet
   feet: jalat
   find matches: etsi vastaavuudet
   generate a new API key: luo uusi API-avain
-  golfing: golf
-  hiking: vaellus
   how to use: käyttöohjeet
   kilograms: kilogrammat
   kilometers: kilometrit
@@ -159,22 +155,14 @@ fi:
   miles per hour: mailia tunnissa
   no equipment: ei välineitä
   pounds: paunat
-  push-ups: punnerrukset
   refresh: virkistä
   refresh in progress: virkistys meneillään
   route segment: reittiosuus
-  running: juoksu
   sailboat: purjehdus
   show/hide: näytä/piilota
-  skiing: hiihto
-  snowboarding: lumilautailu
-  swimming: uinti
-  kayaking: melonta
   the configuration file: asetustiedosto
   up: ylös
   user: käyttäjä
-  walking: kävely
-  weight lifting: painonnosto
   workout: harjoitus
   workouts: harjoitukset
   ascending: nouseva
@@ -205,3 +193,16 @@ fi:
     day_7: 7 päivää
     day: päivä
     month: kuukausi
+  sports:
+    cycling: pyöräily
+    e-cycling: sähköpyöräily
+    golfing: golf
+    hiking: vaellus
+    push-ups: punnerrukset
+    running: juoksu
+    skiing: hiihto
+    snowboarding: lumilautailu
+    swimming: uinti
+    kayaking: melonta
+    walking: kävely
+    weight lifting: painonnosto

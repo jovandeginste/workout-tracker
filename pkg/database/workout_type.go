@@ -127,6 +127,10 @@ func DurationWorkoutTypes() []WorkoutType {
 	})
 }
 
+func (wt WorkoutType) StringT() string {
+	return "sports." + wt.String()
+}
+
 func (wt WorkoutType) String() string {
 	return string(wt)
 }

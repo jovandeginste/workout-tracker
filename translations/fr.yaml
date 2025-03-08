@@ -96,7 +96,6 @@ fr:
     mais doit être activé.
   Your profile: Votre profil
   copy to clipboard: copier dans le Presse-papiers
-  cycling: cyclisme
   delete: supprimer
   distance: distance
   download: télécharger
@@ -106,8 +105,6 @@ fr:
   equipment: équipement
   feet: pieds
   generate a new API key: générer une nouvelle clé API
-  golfing: golf
-  hiking: randonnée
   how to use: mode d'emploi
   kilometers: kilomètres
   kilometers per hour: kilomètres par heure
@@ -115,16 +112,11 @@ fr:
   miles: miles
   miles per hour: miles à l'heure
   refresh: rafraîchir
-  running: course à pieds
   sailboat: voilier
   show/hide: afficher/masquer
-  skiing: ski
-  snowboarding: snowboard
-  swimming: natation
   the configuration file: le fichier de configuration
   up: dénivelé positif
   user: utilisateur
-  walking: marche
   workout: entraînement
   workouts: entraînements
   Estimated based on the activity: Estimé en fonction de l'activité
@@ -134,7 +126,6 @@ fr:
   Bidirectional: Bidirectionnel
   create route segment: Créer un segment
   Please help translate via Weblate: S'il vous plaît, aidez-nous à traduire via Weblate
-  push-ups: pompes
   Since: Depuis
   Weight: Poids
   Per: Par
@@ -155,7 +146,6 @@ fr:
   pounds: livres
   Cadence: Cadence
   Average per minute: Moyenne par minute
-  weight lifting: haltérophilie
   Aerial: Aérien
   Est calories burned: Est. calories brulées
   Show map in full width: Afficher la carte en grand format
@@ -187,3 +177,14 @@ fr:
     years_5: 5 ans
     years_1: 1 an
     day: jour
+  sports:
+    cycling: cyclisme
+    golfing: golf
+    hiking: randonnée
+    running: course à pieds
+    skiing: ski
+    snowboarding: snowboard
+    swimming: natation
+    walking: marche
+    push-ups: pompes
+    weight lifting: haltérophilie

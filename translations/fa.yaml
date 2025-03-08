@@ -37,8 +37,6 @@ fa:
   the configuration file: فایل پیکربندی
   up: بالا
   user: کاربر
-  walking: پیاده‌روی
-  weight lifting: وزنه برداری
   workout: تمرین
   workouts: تمرین‌ها
   Bidirectional: دوسویه
@@ -103,14 +101,12 @@ fa:
     نیاز به فعال‌سازی دارد.
   Your profile: نمایه شما
   copy to clipboard: کپی به کلیپ‌برد
-  cycling: دوچرخه سواری
   delete: حذف
   distance: مسافت
   download: دریافت
   edit: ویرایش
   environment variables: متغیر‌های محیطی
   equipment: تجهیزات
-  golfing: بازی گلف
   how to use: چگونه استفاده کنید
   kilograms: کیلوگرم
   kilometers: کیلومتر
@@ -122,14 +118,9 @@ fa:
   refresh in progress: در حال نوسازی
   sailboat: قایقرانی بادبانی
   no equipment: بدون تجهیزات
-  push-ups: شنای سوئدی
   refresh: نوسازی
-  swimming: شنا
   pounds: پوند
-  running: دویدن
   show/hide: نمایش/پنهان
-  skiing: اسکی
-  snowboarding: اسنوبُردسواری
   notices:
     workouts_added:
       one: "%{count} تمرین جدید اضافه شد: %{list}"
@@ -143,3 +134,13 @@ fa:
     day_7: ۷ روز
     day: روز
     month: ماه
+  sports:
+    walking: پیاده‌روی
+    weight lifting: وزنه برداری
+    cycling: دوچرخه سواری
+    golfing: بازی گلف
+    push-ups: شنای سوئدی
+    swimming: شنا
+    running: دویدن
+    skiing: اسکی
+    snowboarding: اسنوبُردسواری

@@ -37,7 +37,7 @@ templ Edit(w *database.Workout) {
 										>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>

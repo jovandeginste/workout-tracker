@@ -24,7 +24,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 	return i18n.T(
 		ctx,
 		`I completed a workout: %s`,
-		i18n.T(ctx, w.Type.String()),
+		i18n.T(ctx, w.Type.StringT()),
 	) + " " + i18n.T(
 		ctx,
 		`It took me %s to go %s I averaged %s`,
@@ -36,7 +36,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
 		"workout",
-		i18n.T(ctx, w.Type.String()),
+		i18n.T(ctx, w.Type.StringT()),
 	}
 
 	if c := w.City(); c != "" {

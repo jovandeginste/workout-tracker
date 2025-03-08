@@ -102,7 +102,6 @@ it:
     creato, ma deve essere attivato.
   Your profile: Il tuo profilo
   copy to clipboard: copia negli appunti
-  cycling: Ciclismo
   delete: elimina
   distance: distanza
   download: scarica
@@ -112,8 +111,6 @@ it:
   equipment: attrezzatura
   feet: piedi
   generate a new API key: Genera una nuova chiave API
-  golfing: Golf
-  hiking: Escursionismo
   how to use: Come utilizzare
   kilograms: chilogrammi
   kilometers: chilometri
@@ -123,16 +120,11 @@ it:
   miles per hour: miglia all'ora
   pounds: libbre
   refresh: aggiorna
-  running: Corsa
   sailboat: Barca a vela
   show/hide: mostra/nascondi
-  skiing: Sci
-  snowboarding: Snowboard
-  swimming: Nuoto
   the configuration file: Il file di configurazione
   up: Salita
   user: Utente
-  walking: Camminata
   workout: Allenamento
   workouts: allenamenti
   alerts:
@@ -144,3 +136,12 @@ it:
     workouts_added:
       one: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
       other: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
+  sports:
+    cycling: Ciclismo
+    golfing: Golf
+    hiking: Escursionismo
+    running: Corsa
+    skiing: Sci
+    snowboarding: Snowboard
+    swimming: Nuoto
+    walking: Camminata
