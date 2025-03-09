@@ -13,7 +13,7 @@ templ List(equipment []*database.Equipment) {
 		<div class="items-baseline flex flex-wrap">
 			<h2 class="grow justify-start">
 				@helpers.IconFor("equipment")
-				{ i18n.T(ctx, "Equipment") } ({ helpers.A2S(len(equipment)) })
+				{ i18n.T(ctx, "menu.Equipment") } ({ helpers.A2S(len(equipment)) })
 			</h2>
 			<div class="justify-end mr-2">
 				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
@@ -27,7 +27,7 @@ templ List(equipment []*database.Equipment) {
 				<tr>
 					<th>{ i18n.T(ctx, "Name") }</th>
 					<th>{ i18n.T(ctx, "Active") }</th>
-					<th>{ i18n.T(ctx, "Workouts") }</th>
+					<th>{ i18n.T(ctx, "menu.Workouts") }</th>
 					<th></th>
 				</tr>
 			</thead>

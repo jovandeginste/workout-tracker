@@ -33,7 +33,6 @@ zh-Hans:
   Create a new account: 创建新账号
   Create route segment: 创建路线段
   Created: 已创建
-  Dashboard: 仪表板
   Default workout types: 默认锻炼类型
   Description: 描述
   Details: 详细信息
@@ -44,7 +43,6 @@ zh-Hans:
   Elevation: 海拔
   Enable API access: 启用 API 访问
   End: 结束
-  Equipment: 设备
   Est calories burned: 估计消耗卡路里
   Estimated based on the activity: 基于活动的估算，并根据您最后记录的体重
   Heart rate: 心率
@@ -84,7 +82,6 @@ zh-Hans:
   Source: 来源
   Speed: 速度
   Start: 开始
-  Statistics: 统计
   Streets: 街道
   Tempo: 节奏
   The user '%s' has been deleted: 用户 '%s' 已被删除。
@@ -115,7 +112,6 @@ zh-Hans:
   Use a file: 使用文件
   User: 用户
   Workout type: 锻炼类型
-  Workouts: 锻炼记录
   Your account has been created, but needs to be activated: 您的账号已创建，但需要激活。
   Your profile: 您的个人资料
   Your progress per %s for the past %s: 过去%s中您每%s取得的进展
@@ -130,16 +126,8 @@ zh-Hans:
   find matches: 查找匹配项
   generate a new API key: 生成新的 API 密钥
   equipment: 设备
-  feet: 英尺
   how to use: 如何使用
-  kilograms: 千克
-  kilometers: 公里
-  kilometers per hour: 公里每小时
-  meters: 米
-  miles: 英里
-  miles per hour: 英里每小时
   no equipment: 无设备
-  pounds: 磅
   refresh: 刷新
   refresh in progress: 刷新进行中
   route segment: 路线段
@@ -150,16 +138,13 @@ zh-Hans:
   user: 用户
   Browser / System: 浏览器/系统
   Latest measurements: 最新测量
-  Measurements: 测量
   Steps: 步数
-  Heatmap: 热力图
   Dashboard for %s: "%s 的仪表板"
   Date: 日期
   Refresh all your workouts: 刷新您所有的锻炼
   Register: 注册
   Repetitions: 重复次数
   Reset changes: 重置更改
-  Route segments: 路线段
   Show full date by default: 默认显示完整日期
   Show map in full width: 全宽显示地图
   Sign in: 登录
@@ -193,8 +178,6 @@ zh-Hans:
   Update: 更新
   Height: 高度
   Are you sure?: 您确定吗？
-  inch: 英寸
-  centimeter: 厘米
   remove the beginning or the ending of a workout: 移除锻炼的开始或结束部分
   'Try one of these sites:': 试试这些网站：
   'You can edit your GPX files before uploading them here:': 您可以在上传前编辑 GPX 文件：
@@ -241,3 +224,22 @@ zh-Hans:
     weight lifting: 举重
     hiking: 徒步
     kayaking: 皮划艇
+  menu:
+    Dashboard: 仪表板
+    Equipment: 设备
+    Statistics: 统计
+    Workouts: 锻炼记录
+    Measurements: 测量
+    Heatmap: 热力图
+    Route segments: 路线段
+  units:
+    feet: 英尺
+    kilograms: 千克
+    kilometers: 公里
+    meters: 米
+    miles: 英里
+    pounds: 磅
+    inch: 英寸
+    centimeter: 厘米
+    kilometers per hour: 公里每小时
+    miles per hour: 英里每小时

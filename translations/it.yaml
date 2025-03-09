@@ -23,7 +23,6 @@ it:
   Continue: Continua
   Create a new account: Crea un nuovo account
   Created: Creato
-  Dashboard: Cruscotto
   Dashboard for %s: Cruscotto per %s
   Date: Data
   Default workout types: Tipi di allenamento predefiniti
@@ -35,7 +34,6 @@ it:
   Duration: Durata
   Elevation: Elevazione
   Enable API access: Abilita l'accesso API
-  Equipment: Attrezzatura
   Heart rate: Frequenza cardiaca
   'I completed a workout: %s': 'Ho completato un allenamento: %s.'
   It took me %s to go %s I averaged %s: Mi ci è voluto %s per andare %s. Ho mantenuto
@@ -66,7 +64,6 @@ it:
   Sign in: Accedi
   Source: Fonte
   Speed: Velocità
-  Statistics: Statistiche
   Tempo: Tempo
   The user '%s' has been deleted: L'utente '%s' è stato eliminato.
   The user '%s' has been updated: L'utente '%s' è stato aggiornato.
@@ -97,7 +94,6 @@ it:
   Weight: Peso
   Welcome!: Benvenuto!
   Workout type: Tipo di allenamento
-  Workouts: Allenamenti
   Your account has been created, but needs to be activated: Il tuo account è stato
     creato, ma deve essere attivato.
   Your profile: Il tuo profilo
@@ -109,16 +105,8 @@ it:
   edit: modifica
   environment variables: variabili di ambiente
   equipment: attrezzatura
-  feet: piedi
   generate a new API key: Genera una nuova chiave API
   how to use: Come utilizzare
-  kilograms: chilogrammi
-  kilometers: chilometri
-  kilometers per hour: chilometri all'ora
-  meters: metri
-  miles: miglia
-  miles per hour: miglia all'ora
-  pounds: libbre
   refresh: aggiorna
   sailboat: Barca a vela
   show/hide: mostra/nascondi
@@ -145,3 +133,17 @@ it:
     snowboarding: Snowboard
     swimming: Nuoto
     walking: Camminata
+  menu:
+    Dashboard: Cruscotto
+    Equipment: Attrezzatura
+    Statistics: Statistiche
+    Workouts: Allenamenti
+  units:
+    feet: piedi
+    kilograms: chilogrammi
+    kilometers: chilometri
+    meters: metri
+    miles: miglia
+    pounds: libbre
+    kilometers per hour: chilometri all'ora
+    miles per hour: miglia all'ora

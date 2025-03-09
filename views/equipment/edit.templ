@@ -10,7 +10,7 @@ import (
 templ Edit(e *database.Equipment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<div class="gap-4">
-			<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
+			<h2>{ i18n.T(ctx, "menu.Equipment") }: { e.Name }</h2>
 		</div>
 		<div class="sm:flex sm:flex-wrap">
 			<div class="basis-1/2">

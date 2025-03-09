@@ -24,10 +24,10 @@ templ profilePreferredUnits() {
 					<td>
 						<select class="input-ellipsis" id="speed" name="speed">
 							<option value="kph" selected?={ pu.Speed() == "kph" }>
-								{ i18n.T(ctx, "kilometers per hour") }
+								{ i18n.T(ctx, "units.kilometers per hour") }
 							</option>
 							<option value="mph" selected?={ pu.Speed() == "mph" }>
-								{ i18n.T(ctx, "miles per hour") }
+								{ i18n.T(ctx, "units.miles per hour") }
 							</option>
 						</select>
 					</td>
@@ -42,10 +42,10 @@ templ profilePreferredUnits() {
 					<td>
 						<select class="input-ellipsis" id="distance" name="distance">
 							<option value="km" selected?={ pu.Distance() == "km" }>
-								{ i18n.T(ctx, "kilometers") }
+								{ i18n.T(ctx, "units.kilometers") }
 							</option>
 							<option value="mi" selected?={ pu.Distance() == "mi" }>
-								{ i18n.T(ctx, "miles") }
+								{ i18n.T(ctx, "units.miles") }
 							</option>
 						</select>
 					</td>
@@ -60,10 +60,10 @@ templ profilePreferredUnits() {
 					<td>
 						<select class="input-ellipsis" id="elevation" name="elevation">
 							<option value="m" selected?={ pu.Elevation() == "m" }>
-								{ i18n.T(ctx, "meters") }
+								{ i18n.T(ctx, "units.meters") }
 							</option>
 							<option value="ft" selected?={ pu.Elevation() == "ft" }>
-								{ i18n.T(ctx, "feet") }
+								{ i18n.T(ctx, "units.feet") }
 							</option>
 						</select>
 					</td>
@@ -78,10 +78,10 @@ templ profilePreferredUnits() {
 					<td>
 						<select class="input-ellipsis" id="weight" name="weight">
 							<option value="lbs" selected?={ pu.Weight() == "lbs" }>
-								{ i18n.T(ctx, "pounds") }
+								{ i18n.T(ctx, "units.pounds") }
 							</option>
 							<option value="kg" selected?={ pu.Weight() == "kg" }>
-								{ i18n.T(ctx, "kilograms") }
+								{ i18n.T(ctx, "units.kilograms") }
 							</option>
 						</select>
 					</td>
@@ -96,10 +96,10 @@ templ profilePreferredUnits() {
 					<td>
 						<select class="input-ellipsis" id="height" name="height">
 							<option value="in" selected?={ pu.Height() == "in" }>
-								{ i18n.T(ctx, "inch") }
+								{ i18n.T(ctx, "units.inch") }
 							</option>
 							<option value="cm" selected?={ pu.Height() == "cm" }>
-								{ i18n.T(ctx, "centimeter") }
+								{ i18n.T(ctx, "units.centimeter") }
 							</option>
 						</select>
 					</td>

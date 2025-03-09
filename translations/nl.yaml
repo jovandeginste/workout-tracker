@@ -21,7 +21,6 @@ nl:
   Continue: Doorgaan
   Create a new account: Maak een nieuwe account
   Created: Aangemaakt
-  Dashboard: Dashboard
   Dashboard for %s: Dashboard voor %s
   Date: Datum
   Default workout types: Standaard soorten workout
@@ -33,7 +32,6 @@ nl:
   Duration: Duur
   Elevation: Hoogte
   Enable API access: API toegang inschakelen
-  Equipment: Materiaal
   Extra metrics: Extra informatie
   File: Bestand
   Heading: Koers
@@ -70,7 +68,6 @@ nl:
   Since: Sinds
   Source: Bron
   Speed: Snelheid
-  Statistics: Statistieken
   Tempo: Tempo
   The user '%s' has been deleted: De gebruiker '%s' is verwijderd.
   The user '%s' has been updated: De gebruiker '%s' is bijgewerkt.
@@ -102,7 +99,6 @@ nl:
   Weight: Gewicht
   Welcome!: Welkom!
   Workout type: Type workout
-  Workouts: Workouts
   Your account has been created, but needs to be activated: Jouw account is aangemaakt,
     maar moet nog worden geactiveerd.
   Your profile: Jouw profiel
@@ -116,17 +112,9 @@ nl:
   edit: bewerk
   environment variables: omgevingsvariabelen
   equipment: materiaal
-  feet: voet
   generate a new API key: maak een nieuwe API-sleutel
   how to use: hoe te gebruiken
-  kilograms: kilogram
-  kilometers: kilometer
-  kilometers per hour: kilometer per uur
-  meters: meter
-  miles: mijl
-  miles per hour: mijl per uur
   no equipment: geen materiaal
-  pounds: pond
   refresh: ververs
   sailboat: zeilen
   show/hide: toon/verberg
@@ -146,7 +134,6 @@ nl:
   Matching route segments: Overeenkomende route segmenten
   Create route segment: Maak een route segment
   End: Einde
-  Route segments: Route segmenten
   User: Gebruiker
   Start: Begin
   Update route segment: Route segment aanpassen
@@ -171,7 +158,6 @@ nl:
   Publicly shareable link was copied to clipboard: Publieke koppeling is naar het
     klembord gekopieerd
   Streets: Straten
-  Heatmap: Hittekaart
   Calories: Calorieën
   Accuracy: Nauwkeurigheid
   Dark: Donker
@@ -185,7 +171,6 @@ nl:
   Resources: Hulpmiddelen
   'You can find inspiration here:': 'Hier kun je inspiratie opdoen:'
   Your settings: Uw instellingen
-  Measurements: Metingen
   Steps: Stappen
   The equipment '%s' has been deleted: Het materiaal '%s' werd verwijderd.
   The equipment '%s' has been updated: Het materiaal '%s' werd aangepast.
@@ -198,8 +183,6 @@ nl:
   Update: Aanpassen
   Height: Grootte
   Are you sure?: Bent u zeker?
-  inch: duim
-  centimeter: centimeter
   Update measurement: Meting aanpassen
   Latest measurements: Laatste metingen
   Start searching in the background for matching workouts for route segment '%s': Zoek
@@ -255,3 +238,22 @@ nl:
     weight lifting: gewichtheffen
     e-cycling: e-fietsen
     kayaking: kajakken
+  menu:
+    Dashboard: Dashboard
+    Equipment: Materiaal
+    Statistics: Statistieken
+    Workouts: Workouts
+    Route segments: Route segmenten
+    Heatmap: Hittekaart
+    Measurements: Metingen
+  units:
+    feet: voet
+    kilograms: kilogram
+    kilometers: kilometer
+    meters: meter
+    miles: mijl
+    pounds: pond
+    inch: duim
+    centimeter: centimeter
+    kilometers per hour: kilometer per uur
+    miles per hour: mijl per uur

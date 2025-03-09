@@ -22,7 +22,6 @@ fr:
   Continue: Continuer
   Create a new account: Créer un nouveau compte
   Created: Créé
-  Dashboard: Tableau de bord
   Dashboard for %s: Tableau de bord pour %s
   Date: Date
   Default workout types: Types d'entraînement par défaut
@@ -33,7 +32,6 @@ fr:
   Duration: Durée
   Elevation: Dénivelé positif
   Enable API access: Activer l'accès à l'API
-  Equipment: Équipement
   File: Fichier
   Heart rate: Rythme cardiaque
   'I completed a workout: %s': 'J''ai terminé une séance d''entraînement : %s.'
@@ -64,7 +62,6 @@ fr:
   Sign in: Connexion
   Source: Source
   Speed: Vitesse
-  Statistics: Statistiques
   Tempo: Allure
   The user '%s' has been deleted: L'utilisateur '%s' a été supprimé.
   The user '%s' has been updated: L'utilisateur '%s' a été mis à jour.
@@ -91,7 +88,6 @@ fr:
   Username: Nom d'utilisateur
   Username (email): Nom d'utilisateur (courriel)
   Welcome!: Bienvenue !
-  Workouts: Entraînements
   Your account has been created, but needs to be activated: Votre compte a été créé,
     mais doit être activé.
   Your profile: Votre profil
@@ -103,14 +99,8 @@ fr:
   edit: éditer
   environment variables: variables d'environnement
   equipment: équipement
-  feet: pieds
   generate a new API key: générer une nouvelle clé API
   how to use: mode d'emploi
-  kilometers: kilomètres
-  kilometers per hour: kilomètres par heure
-  meters: mètres
-  miles: miles
-  miles per hour: miles à l'heure
   refresh: rafraîchir
   sailboat: voilier
   show/hide: afficher/masquer
@@ -131,19 +121,16 @@ fr:
   Per: Par
   Update equipment: Mettre à jour l'équipement
   Details: Détails
-  kilograms: Kilogrammes
   Total repetitions: Répétitions totales
   Add route segment: Ajouter un segment
   Circular: Circulaire
   End: Fin
   Extra metrics: Mesures supplémentaires
   Create route segment: Créer un segment
-  Route segments: Segment
   Manual: Manuel
   Repetitions: Répétitions
   Reset changes: Annuler les changements
   Description: Description
-  pounds: livres
   Cadence: Cadence
   Average per minute: Moyenne par minute
   Aerial: Aérien
@@ -188,3 +175,18 @@ fr:
     walking: marche
     push-ups: pompes
     weight lifting: haltérophilie
+  menu:
+    Dashboard: Tableau de bord
+    Equipment: Équipement
+    Statistics: Statistiques
+    Workouts: Entraînements
+    Route segments: Segment
+  units:
+    feet: pieds
+    kilometers: kilomètres
+    meters: mètres
+    miles: miles
+    kilograms: Kilogrammes
+    pounds: livres
+    kilometers per hour: kilomètres par heure
+    miles per hour: miles à l'heure

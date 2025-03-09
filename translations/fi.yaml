@@ -1,6 +1,5 @@
 ---
 fi:
-  Heatmap: Lämpökartta
   "(Re)generate publicly shareable link": Luo (uudelleen) julkinen jakolinkki
   API key updated: API-avain päivitetty
   Actions: Toiminnot
@@ -33,7 +32,6 @@ fi:
   Create a new account: Luo uusi tili
   Create route segment: Luo reittiosuus
   Created: Luotu
-  Dashboard: Kojelauta
   Dashboard for %s: Kojelauta käyttäjälle %s
   Date: Päivämäärä
   Default workout types: Oletusharjoitustyypit
@@ -46,7 +44,6 @@ fi:
   Elevation: Korkeus
   Enable API access: Ota API-käyttö käyttöön
   End: Loppu
-  Equipment: Välineet
   Est calories burned: Arv. kulutetut kalorit
   Estimated based on the activity: Arvioitu aktiviteetin perusteella
   Extra metrics: Lisämittarit
@@ -86,7 +83,6 @@ fi:
   Register: Rekisteröidy
   Repetitions: Toistot
   Reset changes: Palauta muutokset
-  Route segments: Reittiosuudet
   Show full date by default: Näytä koko päivämäärä oletuksena
   Show map in full width: Näytä kartta täydessä leveydessä
   Sign in: Kirjaudu sisään
@@ -95,7 +91,6 @@ fi:
   Source: Lähde
   Speed: Nopeus
   Start: Aloitus
-  Statistics: Tilastot
   Streets: Kadut
   Tempo: Tahti
   Theme: Teema
@@ -129,7 +124,6 @@ fi:
   Welcome!: Tervetuloa!
   Workout: Harjoitus
   Workout type: Harjoitustyyppi
-  Workouts: Harjoitukset
   Your account has been created, but needs to be activated: Tilisi on luotu, mutta
     se täytyy aktivoida.
   Your profile: Profiilisi
@@ -143,18 +137,10 @@ fi:
   edit: muokkaa
   environment variables: ympäristömuuttujat
   equipment: välineet
-  feet: jalat
   find matches: etsi vastaavuudet
   generate a new API key: luo uusi API-avain
   how to use: käyttöohjeet
-  kilograms: kilogrammat
-  kilometers: kilometrit
-  kilometers per hour: kilometriä tunnissa
-  meters: metrit
-  miles: mailit
-  miles per hour: mailia tunnissa
   no equipment: ei välineitä
-  pounds: paunat
   refresh: virkistä
   refresh in progress: virkistys meneillään
   route segment: reittiosuus
@@ -206,3 +192,19 @@ fi:
     kayaking: melonta
     walking: kävely
     weight lifting: painonnosto
+  menu:
+    Heatmap: Lämpökartta
+    Dashboard: Kojelauta
+    Equipment: Välineet
+    Route segments: Reittiosuudet
+    Statistics: Tilastot
+    Workouts: Harjoitukset
+  units:
+    feet: jalat
+    kilograms: kilogrammat
+    kilometers: kilometrit
+    meters: metrit
+    miles: mailit
+    pounds: paunat
+    kilometers per hour: kilometriä tunnissa
+    miles per hour: mailia tunnissa

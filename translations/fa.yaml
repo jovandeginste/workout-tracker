@@ -5,7 +5,6 @@ fa:
   Average per minute: میانگین هر دقیقه
   Create a new account: ساخت یک حساب جدید
   End: پایان
-  Equipment: تجهیزات
   Logout: خروج
   Manage users: مدیریت کاربر‌ها
   Est calories burned: تخمین کالری سوزانده شده
@@ -75,7 +74,6 @@ fa:
   Source: منبع
   Speed: سرعت
   Start: شروع
-  Statistics: آمارها
   The user '%s' has been deleted: کاربر '%s' پاک شد.
   The user '%s' has been updated: کاربر '%s' بروزرسانی شد.
   The workout '%s' has been refreshed: تمرین '%s' نوسازی شد.
@@ -96,7 +94,6 @@ fa:
   Welcome!: خوش‌آمدید!
   Workout: تمرین
   Workout type: نوع تمرین
-  Workouts: تمرین‌ها
   Your account has been created, but needs to be activated: حساب شما ساخته شد اما
     نیاز به فعال‌سازی دارد.
   Your profile: نمایه شما
@@ -108,18 +105,11 @@ fa:
   environment variables: متغیر‌های محیطی
   equipment: تجهیزات
   how to use: چگونه استفاده کنید
-  kilograms: کیلوگرم
-  kilometers: کیلومتر
-  kilometers per hour: کیلومتر در ساعت
-  meters: متر
-  miles: مایل
-  miles per hour: مایل در ساعت
   generate a new API key: ساخت یک کلید API جدید
   refresh in progress: در حال نوسازی
   sailboat: قایقرانی بادبانی
   no equipment: بدون تجهیزات
   refresh: نوسازی
-  pounds: پوند
   show/hide: نمایش/پنهان
   notices:
     workouts_added:
@@ -144,3 +134,15 @@ fa:
     running: دویدن
     skiing: اسکی
     snowboarding: اسنوبُردسواری
+  menu:
+    Equipment: تجهیزات
+    Statistics: آمارها
+    Workouts: تمرین‌ها
+  units:
+    kilograms: کیلوگرم
+    kilometers: کیلومتر
+    meters: متر
+    miles: مایل
+    pounds: پوند
+    kilometers per hour: کیلومتر در ساعت
+    miles per hour: مایل در ساعت

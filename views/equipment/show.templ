@@ -18,7 +18,7 @@ templ Show(e *database.Equipment) {
 					@actions(e)
 				</span>
 			}
-			<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
+			<h2>{ i18n.T(ctx, "menu.Equipment") }: { e.Name }</h2>
 		</div>
 		<div class="lg:flex lg:flex-wrap">
 			<div class="basis-1/2">
@@ -105,7 +105,7 @@ templ Show(e *database.Equipment) {
 				<div class="inner-form">
 					<h3 class="grow justify-start">
 						@helpers.IconFor("workout")
-						{ i18n.T(ctx, "Workouts") }
+						{ i18n.T(ctx, "menu.Workouts") }
 					</h3>
 					<table class="workout-info">
 						<thead>

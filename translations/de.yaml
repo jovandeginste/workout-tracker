@@ -33,7 +33,6 @@ de:
   Duration: Dauer
   Elevation: Höhe
   Enable API access: API-Zugriff aktivieren
-  Equipment: Ausrüstung
   File: Datei
   Heart rate: Herzfrequenz
   'I completed a workout: %s': Ich habe das Training %s absolviert.
@@ -65,7 +64,6 @@ de:
   Sign in: Anmelden
   Source: Quelle
   Speed: Geschwindigkeit
-  Statistics: Statistik
   Tempo: Tempo
   The user '%s' has been deleted: Der Benutzer '%s' wurde gelöscht.
   The user '%s' has been updated: Der Benutzer ‚%s‘ wurde aktualisiert.
@@ -96,7 +94,6 @@ de:
   Weight: Gewicht
   Welcome!: Herzlich willkommen!
   Workout type: Trainingsart
-  Workouts: Trainings
   Your account has been created, but needs to be activated: Dein Konto wurde erstellt,
     muss aber noch aktiviert werden.
   Your profile: Dein Profil
@@ -108,16 +105,8 @@ de:
   edit: bearbeiten
   environment variables: Umgebungsvariablen
   equipment: Ausrüstung
-  feet: Fuß
   generate a new API key: Neuen API-Schlüssel generieren
   how to use: Hilfe
-  kilograms: Kilogramm
-  kilometers: Kilometer
-  kilometers per hour: Kilometer pro Stunde
-  meters: Meter
-  miles: Meilen
-  miles per hour: Meilen pro Stunde
-  pounds: pfund
   refresh: aktualisieren
   sailboat: Segelschiff
   show/hide: Anzeigen/Verbergen
@@ -141,10 +130,8 @@ de:
     zuletzt gemessenen Gewichts
   Matches: Treffer
   Matching route segments: Übereinstimmende Streckenabschnitte
-  Route segments: Streckenabschnitte
   Add route segment: Streckenabschnitt hinzufügen
   Per: pro
-  Dashboard: Dashboard
   "(Re)generate publicly shareable link": Öffentlich teilbaren Link (neu) generieren
   Aerial: Luftbild
   Bidirectional: Bidirektional
@@ -173,7 +160,6 @@ de:
   Sort by: Sortieren nach
   Resources: Ressourcen
   'You can find inspiration here:': 'Hier kannst du Inspirationen finden:'
-  Heatmap: Heatmap
   Accuracy: Genauigkeit
   Theme: Modus
   Light: Hell
@@ -186,10 +172,7 @@ de:
   ascending: aufsteigend
   Steps: Schritte
   Are you sure?: Bist du sicher?
-  centimeter: Zentimeter
-  inch: Zoll
   Latest measurements: Letzte Messungen
-  Measurements: Messungen
   Update measurement: Messung aktualisieren
   The equipment '%s' has been deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
   The workout '%s' has been created: Das Training ‚%s‘ wurde erstellt.
@@ -246,3 +229,22 @@ de:
     push-ups: Liegestütze
     e-cycling: E-Biken
     kayaking: Kayaking
+  menu:
+    Equipment: Ausrüstung
+    Statistics: Statistik
+    Workouts: Trainings
+    Route segments: Streckenabschnitte
+    Dashboard: Dashboard
+    Heatmap: Heatmap
+    Measurements: Messungen
+  units:
+    feet: Fuß
+    kilograms: Kilogramm
+    kilometers: Kilometer
+    meters: Meter
+    miles: Meilen
+    pounds: pfund
+    centimeter: Zentimeter
+    inch: Zoll
+    kilometers per hour: Kilometer pro Stunde
+    miles per hour: Meilen pro Stunde

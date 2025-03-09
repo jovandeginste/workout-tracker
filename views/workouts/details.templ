@@ -374,7 +374,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 				<td>
 					@helpers.IconFor("equipment")
 				</td>
-				<td>{ i18n.T(ctx, "Equipment") }</td>
+				<td>{ i18n.T(ctx, "menu.Equipment") }</td>
 				<td>
 					if len(w.Equipment) > 0 {
 						for _, e := range w.Equipment {

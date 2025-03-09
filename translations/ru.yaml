@@ -36,7 +36,6 @@ ru:
   Password: Пароль
   Source: Источник
   Speed: Скорость
-  Statistics: Статистика
   Add a workout: Добавить тренировку
   Add workout: Добавить тренировку
   Add workouts: Добавить тренировки
@@ -54,7 +53,6 @@ ru:
   Update user: Обновить пользователя
   Workout: Тренировка
   Update workout: Обновить тренировку
-  Workouts: Тренировки
   Workout type: Тип тренировки
   the configuration file: файл конфигурации
   Create route segment: Создать участок маршрута
@@ -63,26 +61,16 @@ ru:
   Average tempo (no pause): Средний темп (без остановок)
   Average speed (no pause): Средняя скорость (без остановок)
   Create a new account: Создать новый аккаунт
-  Equipment: Снаряжение
   Add equipment: Добавить снаряжение
   equipment: снаряжение
   environment variables: переменные окружения
   edit: редактировать
   Update equipment: Обновить снаряжение
   download: скачать
-  kilometers per hour: километры в час
-  miles per hour: мили в час
-  kilometers: километры
-  pounds: фунты
-  miles: мили
-  feet: футы
-  meters: метры
-  kilograms: килограммы
   Actions: Действия
   Preferred units: Единицы измерения
   Update preferred units: Обновить единицы измерения
   Active: Активное
-  Route segments: Участки маршрута
   create route segment: создать участок маршрута
   Update route segment: Обновить участок маршрута
   route segment: участок маршрута
@@ -101,7 +89,6 @@ ru:
     через:'
   Disable account registration: Отключить регистрацию
   refresh in progress: обновление в процессе
-  Dashboard: Панель управления
   Manage user '%s': Управление пользователем '%s'
   duration: продолжительность
   Total duration: Общая продолжительность
@@ -177,3 +164,18 @@ ru:
     weight lifting: силовая
     golfing: гольф
     push-ups: отжимания
+  menu:
+    Statistics: Статистика
+    Workouts: Тренировки
+    Equipment: Снаряжение
+    Route segments: Участки маршрута
+    Dashboard: Панель управления
+  units:
+    kilometers: километры
+    pounds: фунты
+    miles: мили
+    feet: футы
+    meters: метры
+    kilograms: килограммы
+    kilometers per hour: километры в час
+    miles per hour: мили в час
