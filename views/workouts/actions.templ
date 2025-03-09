@@ -103,7 +103,7 @@ templ Actions(w *database.Workout) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "workout")) }</h3>
+				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "misc.workout")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-delete", w.ID)) }>
 						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>

@@ -73,9 +73,6 @@ de:
   Total up: Aufstieg (gesamt)
   Totals: Gesamt
   Type: Art
-  Update settings: Einstellungen speichern
-  Update user: Benutzer aktualisieren
-  Update workout: Training aktualisieren
   Use a file: Eine Datei verwenden
   Username: Benutzername
   Username (email): Benutzername (E-Mail)
@@ -91,7 +88,6 @@ de:
   duration: Dauer
   edit: bearbeiten
   environment variables: Umgebungsvariablen
-  equipment: Ausrüstung
   how to use: Hilfe
   refresh: aktualisieren
   sailboat: Segelschiff
@@ -118,9 +114,8 @@ de:
       Light: Hell
       Dark: Dunkel
       Browser / System: Browser / System
-  workout: Training
+    update: Benutzer aktualisieren
   workouts: Trainings
-  Update equipment: Ausrüstung aktualisieren
   no equipment: keine Ausrüstung
   Description: Beschreibung
   Details: Details
@@ -153,11 +148,9 @@ de:
   refresh in progress: Aktualisierung läuft
   User: Benutzer
   Updated: Aktualisiert
-  route segment: Streckenabschnitt
   Heading: Kurs
   Your progress per %s for the past %s: Dein Fortschritt pro %s für die vergangenen
     %s
-  Update route segment: Streckenabschnitt aktualisieren
   End: Ende
   Last: Letzte
   Filter: Filter
@@ -217,6 +210,9 @@ de:
     month_3: 3 Monate
     month_1: 1 Monat
     forever: für immer
+    equipment: Ausrüstung
+    workout: Training
+    route segment: Streckenabschnitt
   sports:
     cycling: Radfahren
     golfing: Golfen
@@ -249,3 +245,11 @@ de:
     inch: Zoll
     kilometers per hour: Kilometer pro Stunde
     miles per hour: Meilen pro Stunde
+  settings:
+    update: Einstellungen speichern
+  workout:
+    update: Training aktualisieren
+  equipment:
+    update: Ausrüstung aktualisieren
+  route segment:
+    update: Streckenabschnitt aktualisieren

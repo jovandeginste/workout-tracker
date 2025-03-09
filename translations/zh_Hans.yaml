@@ -93,11 +93,6 @@ zh-Hans:
   Total up: 总爬升
   Totals: 总计
   Type: 类型
-  Update equipment: 更新设备
-  Update user: 更新用户
-  Update workout: 更新锻炼
-  Update route segment: 更新路线段
-  Update settings: 更新设置
   Updated: 已更新
   Use a file: 使用文件
   User: 用户
@@ -113,7 +108,6 @@ zh-Hans:
   edit: 编辑
   environment variables: 环境变量
   find matches: 查找匹配项
-  equipment: 设备
   how to use: 如何使用
   no equipment: 无设备
   refresh: 刷新
@@ -143,6 +137,7 @@ zh-Hans:
       Theme: 主题
       Light: 浅色
       Dark: 深色
+    update: 更新用户
   Latest measurements: 最新测量
   Steps: 步数
   Dashboard for %s: "%s 的仪表板"
@@ -156,7 +151,6 @@ zh-Hans:
   Username (email): 用户名（邮箱）
   Weight: 体重
   Workout: 锻炼
-  workout: 锻炼
   workouts: 锻炼记录
   Accuracy: 精确度
   Calories: 卡路里
@@ -212,6 +206,9 @@ zh-Hans:
     day: 天
     month: 月
     forever: 永久
+    equipment: 设备
+    route segment: 路线片段
+    workout: 锻炼
   sports:
     cycling: 骑行
     e-cycling: 电子骑行
@@ -244,3 +241,11 @@ zh-Hans:
     centimeter: 厘米
     kilometers per hour: 公里每小时
     miles per hour: 英里每小时
+  equipment:
+    update: 更新设备
+  workout:
+    update: 更新锻炼
+  route segment:
+    update: 更新路线段
+  settings:
+    update: 更新设置

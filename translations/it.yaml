@@ -73,9 +73,6 @@ it:
   Total up: Salita totale
   Totals: Totali
   Type: Tipo
-  Update settings: Aggiorna impostazioni
-  Update user: Aggiorna utente
-  Update workout: Aggiorna allenamento
   Use a file: Usa un file
   Username: Nome utente
   Username (email): Nome utente (email)
@@ -91,7 +88,6 @@ it:
   duration: durata
   edit: modifica
   environment variables: variabili di ambiente
-  equipment: attrezzatura
   how to use: Come utilizzare
   refresh: aggiorna
   sailboat: Barca a vela
@@ -114,7 +110,7 @@ it:
       copy to clipboard: copia negli appunti
       generate a new API key: Genera una nuova chiave API
       show/hide: mostra/nascondi
-  workout: Allenamento
+    update: Aggiorna utente
   workouts: allenamenti
   alerts:
     workouts_added:
@@ -148,3 +144,10 @@ it:
     pounds: libbre
     kilometers per hour: chilometri all'ora
     miles per hour: miglia all'ora
+  settings:
+    update: Aggiorna impostazioni
+  workout:
+    update: Aggiorna allenamento
+  misc:
+    equipment: attrezzatura
+    workout: Allenamento

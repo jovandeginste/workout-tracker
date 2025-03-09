@@ -70,9 +70,6 @@ fr:
   Total up: Dénivelé positif total
   Totals: Totaux
   Type: Type
-  Update settings: Mettre à jour les paramètres
-  Update user: Mettre à jour l'utilisateur
-  Update workout: Mettre à jour l'entraînement
   Username: Nom d'utilisateur
   Username (email): Nom d'utilisateur (courriel)
   Welcome!: Bienvenue !
@@ -85,7 +82,6 @@ fr:
   duration: durée
   edit: éditer
   environment variables: variables d'environnement
-  equipment: équipement
   how to use: mode d'emploi
   refresh: rafraîchir
   sailboat: voilier
@@ -108,7 +104,7 @@ fr:
       copy to clipboard: copier dans le Presse-papiers
       generate a new API key: générer une nouvelle clé API
       show/hide: afficher/masquer
-  workout: entraînement
+    update: Mettre à jour l'utilisateur
   workouts: entraînements
   Estimated based on the activity: Estimé en fonction de l'activité
   Matches: Correspondance
@@ -120,7 +116,6 @@ fr:
   Since: Depuis
   Weight: Poids
   Per: Par
-  Update equipment: Mettre à jour l'équipement
   Details: Détails
   Total repetitions: Répétitions totales
   Add route segment: Ajouter un segment
@@ -138,7 +133,6 @@ fr:
   Est calories burned: Est. calories brulées
   Show map in full width: Afficher la carte en grand format
   Street: Rue
-  Update route segment: Mettre à jour les segments
   Updated: Mis à jour
   User: Utilisateur
   Workout: Entrainement
@@ -147,7 +141,6 @@ fr:
   find matches: Chercher des correspondances
   no equipment: sans équipement
   refresh in progress: Actualisation en cours
-  route segment: segment
   alerts:
     workouts_added:
       one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
@@ -165,6 +158,9 @@ fr:
     years_5: 5 ans
     years_1: 1 an
     day: jour
+    equipment: équipement
+    workout: entraînement
+    route segment: segment
   sports:
     cycling: cyclisme
     golfing: golf
@@ -191,3 +187,11 @@ fr:
     pounds: livres
     kilometers per hour: kilomètres par heure
     miles per hour: miles à l'heure
+  settings:
+    update: Mettre à jour les paramètres
+  workout:
+    update: Mettre à jour l'entraînement
+  equipment:
+    update: Mettre à jour l'équipement
+  route segment:
+    update: Mettre à jour les segments

@@ -96,11 +96,6 @@ fi:
   Total weight: Kokonaispaino
   Totals: Yhteensä
   Type: Tyyppi
-  Update equipment: Päivitä välineet
-  Update route segment: Päivitä reittiosuus
-  Update settings: Päivitä asetukset
-  Update user: Päivitä käyttäjä
-  Update workout: Päivitä harjoitus
   Updated: Päivitetty
   Use a file: Käytä tiedostoa
   User: Käyttäjä
@@ -121,13 +116,11 @@ fi:
   duration: kesto
   edit: muokkaa
   environment variables: ympäristömuuttujat
-  equipment: välineet
   find matches: etsi vastaavuudet
   how to use: käyttöohjeet
   no equipment: ei välineitä
   refresh: virkistä
   refresh in progress: virkistys meneillään
-  route segment: reittiosuus
   sailboat: purjehdus
   the configuration file: asetustiedosto
   up: ylös
@@ -150,7 +143,7 @@ fi:
       copy to clipboard: kopioi leikepöydälle
       generate a new API key: luo uusi API-avain
       show/hide: näytä/piilota
-  workout: harjoitus
+    update: Päivitä käyttäjä
   workouts: harjoitukset
   ascending: nouseva
   descending: laskeva
@@ -180,6 +173,9 @@ fi:
     day_7: 7 päivää
     day: päivä
     month: kuukausi
+    equipment: välineet
+    route segment: reittiosuus
+    workout: harjoitus
   sports:
     cycling: pyöräily
     e-cycling: sähköpyöräily
@@ -209,3 +205,11 @@ fi:
     pounds: paunat
     kilometers per hour: kilometriä tunnissa
     miles per hour: mailia tunnissa
+  equipment:
+    update: Päivitä välineet
+  route segment:
+    update: Päivitä reittiosuus
+  settings:
+    update: Päivitä asetukset
+  workout:
+    update: Päivitä harjoitus

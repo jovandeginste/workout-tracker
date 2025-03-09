@@ -105,11 +105,6 @@ en:
   Total up: Total up
   Totals: Totals
   Type: Type
-  Update equipment: Update equipment
-  Update route segment: Update route segment
-  Update settings: Update settings
-  Update user: Update user
-  Update workout: Update workout
   Updated: Updated
   Use a file: Use a file
   User: User
@@ -130,13 +125,11 @@ en:
   duration: duration
   edit: edit
   environment variables: environment variables
-  equipment: equipment
   find matches: find matches
   how to use: how to use
   no equipment: no equipment
   refresh: refresh
   refresh in progress: refresh in progress
-  route segment: route segment
   sailboat: sailboat
   the configuration file: the configuration file
   up: up
@@ -161,7 +154,7 @@ en:
       Light: Light
       Dark: Dark
       Browser / System: Browser / System
-  workout: workout
+    update: Update user
   workouts: workouts
   Accuracy: Accuracy
   Calories: Calories
@@ -221,6 +214,9 @@ en:
     forever: forever
     day: day
     month: month
+    equipment: equipment
+    route segment: route segment
+    workout: workout
   sports:
     cycling: cycling
     e-cycling: e-cycling
@@ -253,3 +249,11 @@ en:
     centimeter: centimeter
     kilometers per hour: kilometers per hour
     miles per hour: miles per hour
+  equipment:
+    update: Update equipment
+  route segment:
+    update: Update route segment
+  settings:
+    update: Update settings
+  workout:
+    update: Update workout

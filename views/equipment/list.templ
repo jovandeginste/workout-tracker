@@ -88,7 +88,7 @@ templ actions(e *database.Equipment) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "equipment")) }</h3>
+				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "misc.equipment")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-delete", e.ID)) }>
 						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>

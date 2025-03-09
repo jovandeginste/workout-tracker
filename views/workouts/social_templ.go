@@ -35,7 +35,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 }
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
-		"workout",
+		"misc.workout",
 		i18n.T(ctx, w.Type.StringT()),
 	}
 

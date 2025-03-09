@@ -28,7 +28,6 @@ fa:
   Heart rate: ضربان قلب
   'I completed a workout: %s': 'من یک تمرین را تمام کردم: %s.'
   The workout '%s' has been deleted: تمرین '%s' حذف شد.
-  Update workout: بروزرسانی تمیرین
   Updated: بروزرسانی شد
   Use a file: استفاده از یک فایل
   the configuration file: فایل پیکربندی
@@ -48,7 +47,7 @@ fa:
       copy to clipboard: کپی به کلیپ‌برد
       generate a new API key: ساخت یک کلید API جدید
       show/hide: نمایش/پنهان
-  workout: تمرین
+    update: بروزرسانی کاربر
   workouts: تمرین‌ها
   Bidirectional: دوسویه
   Cancel: لغو
@@ -89,9 +88,6 @@ fa:
   Time: زمان
   Total distance: مسافت کل
   Type: نوع
-  Update equipment: بروزرسانی تجهیزات
-  Update settings: بروزرسانی تنظیمات
-  Update user: بروزرسانی کاربر
   User: کاربر
   Username: نام کاربری
   Username (email): نام کاربری (ایمیل)
@@ -107,7 +103,6 @@ fa:
   download: دریافت
   edit: ویرایش
   environment variables: متغیر‌های محیطی
-  equipment: تجهیزات
   how to use: چگونه استفاده کنید
   refresh in progress: در حال نوسازی
   sailboat: قایقرانی بادبانی
@@ -126,6 +121,8 @@ fa:
     day_7: ۷ روز
     day: روز
     month: ماه
+    workout: تمرین
+    equipment: تجهیزات
   sports:
     walking: پیاده‌روی
     weight lifting: وزنه برداری
@@ -148,3 +145,9 @@ fa:
     pounds: پوند
     kilometers per hour: کیلومتر در ساعت
     miles per hour: مایل در ساعت
+  workout:
+    update: بروزرسانی تمیرین
+  equipment:
+    update: بروزرسانی تجهیزات
+  settings:
+    update: بروزرسانی تنظیمات

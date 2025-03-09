@@ -79,10 +79,6 @@ nl:
   Total up: Totaal omhoog
   Totals: Totalen
   Type: Type
-  Update equipment: Materiaal bijwerken
-  Update settings: Instellingen bijwerken
-  Update user: Gebruiker bijwerken
-  Update workout: Workout bijwerken
   Use a file: Gebruik een bestand
   Username: Gebruikersnaam
   Username (email): Gebruikersnaam (e-mailadres)
@@ -100,7 +96,6 @@ nl:
   duration: duur
   edit: bewerk
   environment variables: omgevingsvariabelen
-  equipment: materiaal
   how to use: hoe te gebruiken
   no equipment: geen materiaal
   refresh: ververs
@@ -129,12 +124,11 @@ nl:
       Light: Licht
       Theme: Thema
       Your settings: Uw instellingen
-  workout: workout
+    update: Gebruiker bijwerken
   workouts: workouts
   Reset changes: Wijzigingen ongedaan maken
   Add route segment: Voeg een route segment toe
   Circular: Rondtoer
-  route segment: route segment
   Add a route segment: Voeg een route segment toe
   Bidirectional: Bidirectioneel
   Matches: Overeenkomsten
@@ -143,7 +137,6 @@ nl:
   End: Einde
   User: Gebruiker
   Start: Begin
-  Update route segment: Route segment aanpassen
   find matches: overeenkomsten zoeken
   Updated: Geüpdate
   create route segment: maak route segment
@@ -227,6 +220,9 @@ nl:
     month_3: 3 maand
     month_1: 1 maand
     forever: voor altijd
+    equipment: materiaal
+    workout: workout
+    route segment: route segment
   sports:
     cycling: fietsen
     golfing: golfen
@@ -259,3 +255,11 @@ nl:
     centimeter: centimeter
     kilometers per hour: kilometer per uur
     miles per hour: mijl per uur
+  equipment:
+    update: Materiaal bijwerken
+  settings:
+    update: Instellingen bijwerken
+  workout:
+    update: Workout bijwerken
+  route segment:
+    update: Route segment aanpassen

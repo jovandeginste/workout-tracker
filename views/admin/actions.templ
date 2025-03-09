@@ -42,7 +42,7 @@ templ actions(u *database.User) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "user")) }</h3>
+				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "misc.user")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-delete", u.ID)) }>
 						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>

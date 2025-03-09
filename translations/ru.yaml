@@ -8,7 +8,6 @@ ru:
   Welcome!: Добро пожаловать!
   Your profile: Ваш профиль
   workouts: тренировки
-  workout: тренировка
   Average tempo: Средний темп
   Average speed: Средняя скорость
   Cancel: Отмена
@@ -46,10 +45,7 @@ ru:
   Start: Начало
   Sign in: Войти
   Tempo: Темп
-  Update settings: Обновить настройки
-  Update user: Обновить пользователя
   Workout: Тренировка
-  Update workout: Обновить тренировку
   Workout type: Тип тренировки
   the configuration file: файл конфигурации
   Create route segment: Создать участок маршрута
@@ -59,16 +55,12 @@ ru:
   Average speed (no pause): Средняя скорость (без остановок)
   Create a new account: Создать новый аккаунт
   Add equipment: Добавить снаряжение
-  equipment: снаряжение
   environment variables: переменные окружения
   edit: редактировать
-  Update equipment: Обновить снаряжение
   download: скачать
   Actions: Действия
   Active: Активное
   create route segment: создать участок маршрута
-  Update route segment: Обновить участок маршрута
-  route segment: участок маршрута
   Manual: Вручную
   Min elevation: Минимальная высота
   no equipment: нет снаряжения
@@ -103,6 +95,7 @@ ru:
       Enable API access: Включить доступ к API
       Refresh all your workouts: Обновить все ваши тренировки
       Auto import directory: Каталог автоматического импорта
+    update: Обновить пользователя
   how to use: как использовать
   The workout '%s' has been updated: Тренировка '%s' обновлена.
   Copy publicly shareable link: Копировать общедоступную ссылку
@@ -153,6 +146,9 @@ ru:
     day_7: 7 дней
     day: день
     month: месяц
+    workout: тренировка
+    equipment: снаряжение
+    route segment: участок маршрута
   sports:
     snowboarding: сноуборд
     walking: ходьба
@@ -180,3 +176,11 @@ ru:
     kilograms: килограммы
     kilometers per hour: километры в час
     miles per hour: мили в час
+  settings:
+    update: Обновить настройки
+  workout:
+    update: Обновить тренировку
+  equipment:
+    update: Обновить снаряжение
+  route segment:
+    update: Обновить участок маршрута
