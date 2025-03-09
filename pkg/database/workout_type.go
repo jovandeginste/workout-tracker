@@ -1,6 +1,7 @@
 package database
 
 import (
+	"maps"
 	"slices"
 )
 
@@ -63,9 +64,7 @@ func WorkoutTypes() []WorkoutType {
 		return workoutTypes
 	}
 
-	for k := range workoutTypeConfigs {
-		workoutTypes = append(workoutTypes, k)
-	}
+	workoutTypes = slices.Collect(maps.Keys(workoutTypeConfigs))
 
 	slices.Sort(workoutTypes)
 
