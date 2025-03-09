@@ -1,6 +1,5 @@
 zh-Hans:
   Welcome!: 欢迎！
-  Your settings: 您的设置
   Update measurement: 更新测量
   "(Re)generate publicly shareable link": "（重新）生成可公开分享的链接"
   API key updated: API 密钥已更新
@@ -16,7 +15,6 @@ zh-Hans:
   All workouts will be refreshed in the coming minutes: 所有锻炼将在接下来的几分钟内刷新。
   Application settings: 应用程序设置
   Are you sure you want to delete this %s?: 您确定要删除这个 %s 吗？
-  Auto import directory: 自动导入目录
   Auto-detect: 自动检测
   Average per minute: 每分钟平均
   Average speed: 平均速度
@@ -37,11 +35,9 @@ zh-Hans:
   Description: 描述
   Details: 详细信息
   Disable account registration: 禁用账号注册
-  Disable social sharing buttons: 禁用社交分享按钮
   Distance: 距离
   Duration: 持续时间
   Elevation: 海拔
-  Enable API access: 启用 API 访问
   End: 结束
   Est calories burned: 估计消耗卡路里
   Estimated based on the activity: 基于活动的估算，并根据您最后记录的体重
@@ -52,7 +48,6 @@ zh-Hans:
   Heading: 标题
   'I completed a workout: %s': 我完成了一次锻炼：%s。
   It took me %s to go %s I averaged %s: 我用 %s 去 %s，平均速度为 %s。
-  Language: 语言
   Last: 最后
   Leave blank to keep current password: 留空以保持当前密码
   Location: 位置
@@ -72,7 +67,6 @@ zh-Hans:
   Notes: 备注
   Other users: 其他用户
   Please help translate via Weblate: 请通过 Weblate 帮助翻译
-  Preferred units: 首选单位
   Profile updated: 个人资料已更新
   Publicly shareable link was copied to clipboard: 可公开分享的链接已复制到剪贴板
   Recent activity: 最近活动
@@ -92,18 +86,14 @@ zh-Hans:
   'These settings may be overwritten by:': 这些设置可能会被以下内容覆盖：
   Time: 时间
   Time paused: 时间暂停
-  Time zone: 时区
   Total distance: 总距离
   Total down: 总下降
   Total duration: 总时长
   Total repetitions: 总重复次数
   Total up: 总爬升
   Totals: 总计
-  Totals to show on dashboard: 在仪表板上显示的总计
   Type: 类型
   Update equipment: 更新设备
-  Update preferred units: 更新首选单位
-  Update profile: 更新个人资料
   Update user: 更新用户
   Update workout: 更新锻炼
   Update route segment: 更新路线段
@@ -115,7 +105,6 @@ zh-Hans:
   Your account has been created, but needs to be activated: 您的账号已创建，但需要激活。
   Your profile: 您的个人资料
   Your progress per %s for the past %s: 过去%s中您每%s取得的进展
-  copy to clipboard: 复制到剪贴板
   create route segment: 创建路线段
   delete: 删除
   distance: 距离
@@ -124,7 +113,6 @@ zh-Hans:
   edit: 编辑
   environment variables: 环境变量
   find matches: 查找匹配项
-  generate a new API key: 生成新的 API 密钥
   equipment: 设备
   how to use: 如何使用
   no equipment: 无设备
@@ -132,20 +120,36 @@ zh-Hans:
   refresh in progress: 刷新进行中
   route segment: 路线段
   sailboat: 帆船
-  show/hide: 显示/隐藏
   the configuration file: 配置文件
   up: 爬升
-  user: 用户
-  Browser / System: 浏览器/系统
+  user:
+    profile:
+      Your settings: 您的设置
+      Auto import directory: 自动导入目录
+      Disable social sharing buttons: 禁用社交分享按钮
+      Enable API access: 启用 API 访问
+      Language: 语言
+      Preferred units: 首选单位
+      Time zone: 时区
+      Totals to show on dashboard: 在仪表板上显示的总计
+      Update preferred units: 更新首选单位
+      Update profile: 更新个人资料
+      copy to clipboard: 复制到剪贴板
+      generate a new API key: 生成新的 API 密钥
+      show/hide: 显示/隐藏
+      Browser / System: 浏览器/系统
+      Refresh all your workouts: 刷新您所有的锻炼
+      Show full date by default: 默认显示完整日期
+      Theme: 主题
+      Light: 浅色
+      Dark: 深色
   Latest measurements: 最新测量
   Steps: 步数
   Dashboard for %s: "%s 的仪表板"
   Date: 日期
-  Refresh all your workouts: 刷新您所有的锻炼
   Register: 注册
   Repetitions: 重复次数
   Reset changes: 重置更改
-  Show full date by default: 默认显示完整日期
   Show map in full width: 全宽显示地图
   Sign in: 登录
   Username: 用户名
@@ -156,9 +160,6 @@ zh-Hans:
   workouts: 锻炼记录
   Accuracy: 精确度
   Calories: 卡路里
-  Theme: 主题
-  Light: 浅色
-  Dark: 深色
   ascending: 升序
   descending: 降序
   Total weight: 总重量

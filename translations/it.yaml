@@ -12,7 +12,6 @@ it:
     aggiornati nei prossimi minuti.
   Application settings: Impostazioni dell'applicazione
   Are you sure you want to delete this %s?: Sei sicuro di voler eliminare questo %s?
-  Auto import directory: Directory di importazione automatica
   Auto-detect: Rilevamento automatico
   Average speed: Velocità media
   Average speed (no pause): Velocità media (senza pausa)
@@ -28,17 +27,13 @@ it:
   Default workout types: Tipi di allenamento predefiniti
   Description: Descrizione
   Disable account registration: Disabilita la registrazione dell'account
-  Disable social sharing buttons: Disabilita i pulsanti di condivisione sui social
-    media
   Distance: Distanza
   Duration: Durata
   Elevation: Elevazione
-  Enable API access: Abilita l'accesso API
   Heart rate: Frequenza cardiaca
   'I completed a workout: %s': 'Ho completato un allenamento: %s.'
   It took me %s to go %s I averaged %s: Mi ci è voluto %s per andare %s. Ho mantenuto
     una media di %s.
-  Language: Lingua
   Leave blank to keep current password: Lascia vuoto per mantenere la password attuale
   Location: Posizione
   Logout: Esci
@@ -53,14 +48,11 @@ it:
   Notes: Note
   Other users: Altri utenti
   Password: Password
-  Preferred units: Unità preferite
   Profile updated: Profilo aggiornato
   Recent activity: Attività recente
   Records for %s: Registri per %s
-  Refresh all your workouts: Aggiorna tutti i tuoi allenamenti
   Register: Registrati
   Repetitions: Ripetizioni
-  Show full date by default: Mostra data completa per default
   Sign in: Accedi
   Source: Fonte
   Speed: Velocità
@@ -74,17 +66,13 @@ it:
     da:'
   Time: Tempo
   Time paused: Tempo in pausa
-  Time zone: Fuso orario
   Total distance: Distanza totale
   Total down: Discesa totale
   Total duration: Durata totale
   Total repetitions: Ripetizioni totali
   Total up: Salita totale
   Totals: Totali
-  Totals to show on dashboard: Totali da mostrare sul cruscotto
   Type: Tipo
-  Update preferred units: Aggiorna unità preferite
-  Update profile: Aggiorna profilo
   Update settings: Aggiorna impostazioni
   Update user: Aggiorna utente
   Update workout: Aggiorna allenamento
@@ -97,7 +85,6 @@ it:
   Your account has been created, but needs to be activated: Il tuo account è stato
     creato, ma deve essere attivato.
   Your profile: Il tuo profilo
-  copy to clipboard: copia negli appunti
   delete: elimina
   distance: distanza
   download: scarica
@@ -105,14 +92,28 @@ it:
   edit: modifica
   environment variables: variabili di ambiente
   equipment: attrezzatura
-  generate a new API key: Genera una nuova chiave API
   how to use: Come utilizzare
   refresh: aggiorna
   sailboat: Barca a vela
-  show/hide: mostra/nascondi
   the configuration file: Il file di configurazione
   up: Salita
-  user: Utente
+  user:
+    profile:
+      Auto import directory: Directory di importazione automatica
+      Disable social sharing buttons: Disabilita i pulsanti di condivisione sui social
+        media
+      Enable API access: Abilita l'accesso API
+      Language: Lingua
+      Preferred units: Unità preferite
+      Refresh all your workouts: Aggiorna tutti i tuoi allenamenti
+      Show full date by default: Mostra data completa per default
+      Time zone: Fuso orario
+      Totals to show on dashboard: Totali da mostrare sul cruscotto
+      Update preferred units: Aggiorna unità preferite
+      Update profile: Aggiorna profilo
+      copy to clipboard: copia negli appunti
+      generate a new API key: Genera una nuova chiave API
+      show/hide: mostra/nascondi
   workout: Allenamento
   workouts: allenamenti
   alerts:

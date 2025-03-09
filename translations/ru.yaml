@@ -19,7 +19,6 @@ ru:
   Time: Время
   Details: Подробности
   End: Конец
-  Time zone: Часовой пояс
   Type: Тип
   distance: расстояние
   Total distance: Общее расстояние
@@ -29,7 +28,6 @@ ru:
   Extra metrics: Дополнительные метрики
   File: Файл
   Notes: Заметки
-  Language: Язык
   Logout: Выход
   Name: Название
   Max speed: Максимальная скорость
@@ -48,7 +46,6 @@ ru:
   Start: Начало
   Sign in: Войти
   Tempo: Темп
-  Update profile: Обновить профиль
   Update settings: Обновить настройки
   Update user: Обновить пользователя
   Workout: Тренировка
@@ -68,8 +65,6 @@ ru:
   Update equipment: Обновить снаряжение
   download: скачать
   Actions: Действия
-  Preferred units: Единицы измерения
-  Update preferred units: Обновить единицы измерения
   Active: Активное
   create route segment: создать участок маршрута
   Update route segment: Обновить участок маршрута
@@ -80,10 +75,8 @@ ru:
   Time paused: Время остановок
   Heart rate: ЧСС
   Recent activity: Недавняя активность
-  Disable social sharing buttons: Отключить кнопки социальных сетей
   refresh: обновить
   Manage: Управление
-  Show full date by default: Показывать полную дату по умолчанию
   Manage users: Управление пользователями
   'These settings may be overwritten by:': 'Эти параметры могут быть переопределены
     через:'
@@ -95,17 +88,26 @@ ru:
   Total up: Набор высоты
   Circular: Круговой
   Total down: Потеря высоты
-  user: пользователь
-  show/hide: показать/скрыть
+  user:
+    profile:
+      Time zone: Часовой пояс
+      Language: Язык
+      Update profile: Обновить профиль
+      Preferred units: Единицы измерения
+      Update preferred units: Обновить единицы измерения
+      Disable social sharing buttons: Отключить кнопки социальных сетей
+      Show full date by default: Показывать полную дату по умолчанию
+      show/hide: показать/скрыть
+      generate a new API key: сгенерировать новый API-ключ
+      copy to clipboard: скопировать в буфер обмена
+      Enable API access: Включить доступ к API
+      Refresh all your workouts: Обновить все ваши тренировки
+      Auto import directory: Каталог автоматического импорта
   how to use: как использовать
-  generate a new API key: сгенерировать новый API-ключ
-  copy to clipboard: скопировать в буфер обмена
   The workout '%s' has been updated: Тренировка '%s' обновлена.
   Copy publicly shareable link: Копировать общедоступную ссылку
   Default workout types: Типы тренировок по умолчанию
-  Enable API access: Включить доступ к API
   Location: Местоположение
-  Refresh all your workouts: Обновить все ваши тренировки
   The user '%s' has been updated: Пользователь '%s' обновлен.
   Register: Зарегистрироваться
   Show map in full width: Показать карту в полную ширину
@@ -122,7 +124,6 @@ ru:
   All workouts will be refreshed in the coming minutes: Все тренировки будут обновлены
     в ближайшие минуты.
   Dashboard for %s: Панель управления для %s
-  Auto import directory: Каталог автоматического импорта
   Publicly shareable link was copied to clipboard: Общедоступная ссылка скопирована
     в буфер обмена
   Username: Имя пользователя

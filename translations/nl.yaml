@@ -27,11 +27,9 @@ nl:
   Description: Omschrijving
   Details: Details
   Disable account registration: Registratie van nieuw accounts uitschakelen
-  Disable social sharing buttons: Knoppen uitschakelen om te delen via sociale netwerken
   Distance: Afstand
   Duration: Duur
   Elevation: Hoogte
-  Enable API access: API toegang inschakelen
   Extra metrics: Extra informatie
   File: Bestand
   Heading: Koers
@@ -39,7 +37,6 @@ nl:
   'I completed a workout: %s': 'Ik heb een workout voltooid: %s.'
   It took me %s to go %s I averaged %s: Het duurde %s om %s te bereiken. Ik haalde
     gemiddeld %s.
-  Language: Taal
   Leave blank to keep current password: Laat leeg om het huidige wachtwoord te behouden
   Location: Locatie
   Logout: Afmelden
@@ -56,14 +53,11 @@ nl:
   Password: Wachtwoord
   Per: Per
   Please help translate via Weblate: Help deze toepassing vertalen op Weblate
-  Preferred units: Voorkeurseenheden
   Profile updated: Profiel bijgewerkt
   Recent activity: Recente activiteit
   Records for %s: Records voor %s
-  Refresh all your workouts: Vernieuw al jouw workouts
   Register: Registreren
   Repetitions: Herhalingen
-  Show full date by default: Toon volledige datum
   Sign in: Aanmelden
   Since: Sinds
   Source: Bron
@@ -78,18 +72,14 @@ nl:
     door:'
   Time: Tijd
   Time paused: Tijd gepauzeerd
-  Time zone: Tijdzone
   Total distance: Totale afstand
   Total down: Totaal omlaag
   Total duration: Totale duur
   Total repetitions: Totaal aantal
   Total up: Totaal omhoog
   Totals: Totalen
-  Totals to show on dashboard: Totale waardes om op het dashboard weer te geven
   Type: Type
   Update equipment: Materiaal bijwerken
-  Update preferred units: Voorkeurseenheden bijwerken
-  Update profile: Profiel bijwerken
   Update settings: Instellingen bijwerken
   Update user: Gebruiker bijwerken
   Update workout: Workout bijwerken
@@ -104,7 +94,6 @@ nl:
   Your profile: Jouw profiel
   Your progress per %s for the past %s: Jouw vooruitgang per %s voor de afgelopen
     %s
-  copy to clipboard: kopieer naar klembord
   delete: verwijder
   distance: afstand
   download: downloaden
@@ -112,19 +101,37 @@ nl:
   edit: bewerk
   environment variables: omgevingsvariabelen
   equipment: materiaal
-  generate a new API key: maak een nieuwe API-sleutel
   how to use: hoe te gebruiken
   no equipment: geen materiaal
   refresh: ververs
   sailboat: zeilen
-  show/hide: toon/verberg
   the configuration file: het configuratiebestand
   up: omhoog
-  user: gebruiker
+  user:
+    profile:
+      Disable social sharing buttons: Knoppen uitschakelen om te delen via sociale
+        netwerken
+      Enable API access: API toegang inschakelen
+      Language: Taal
+      Preferred units: Voorkeurseenheden
+      Refresh all your workouts: Vernieuw al jouw workouts
+      Show full date by default: Toon volledige datum
+      Time zone: Tijdzone
+      Totals to show on dashboard: Totale waardes om op het dashboard weer te geven
+      Update preferred units: Voorkeurseenheden bijwerken
+      Update profile: Profiel bijwerken
+      copy to clipboard: kopieer naar klembord
+      generate a new API key: maak een nieuwe API-sleutel
+      show/hide: toon/verberg
+      Auto import directory: Map om automatisch te importeren
+      Dark: Donker
+      Browser / System: Browser / Systeem
+      Light: Licht
+      Theme: Thema
+      Your settings: Uw instellingen
   workout: workout
   workouts: workouts
   Reset changes: Wijzigingen ongedaan maken
-  Auto import directory: Map om automatisch te importeren
   Add route segment: Voeg een route segment toe
   Circular: Rondtoer
   route segment: route segment
@@ -160,17 +167,12 @@ nl:
   Streets: Straten
   Calories: Calorieën
   Accuracy: Nauwkeurigheid
-  Dark: Donker
-  Browser / System: Browser / Systeem
-  Light: Licht
-  Theme: Thema
   Total weight: Totaal gewicht
   ascending: oplopend
   descending: aflopend
   Filter workouts: Filter workouts
   Resources: Hulpmiddelen
   'You can find inspiration here:': 'Hier kun je inspiratie opdoen:'
-  Your settings: Uw instellingen
   Steps: Stappen
   The equipment '%s' has been deleted: Het materiaal '%s' werd verwijderd.
   The equipment '%s' has been updated: Het materiaal '%s' werd aangepast.

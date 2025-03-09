@@ -1,6 +1,5 @@
 ---
 en:
-  Your settings: Your settings
   Latest measurements: Latest measurements
   Update measurement: Update measurement
   Steps: Steps
@@ -20,7 +19,6 @@ en:
     in the coming minutes.
   Application settings: Application settings
   Are you sure you want to delete this %s?: Are you sure you want to delete this %s?
-  Auto import directory: Auto import directory
   Auto-detect: Auto-detect
   Average per minute: Average per minute
   Average speed: Average speed
@@ -42,11 +40,9 @@ en:
   Description: Description
   Details: Details
   Disable account registration: Disable account registration
-  Disable social sharing buttons: Disable social sharing buttons
   Distance: Distance
   Duration: Duration
   Elevation: Elevation
-  Enable API access: Enable API access
   End: End
   Est calories burned: Est. calories burned
   Estimated based on the activity: Estimated based on the activity and your last recorded
@@ -58,7 +54,6 @@ en:
   Heart rate: Heart rate
   'I completed a workout: %s': 'I completed a workout: %s.'
   It took me %s to go %s I averaged %s: It took me %s to go %s. I averaged %s.
-  Language: Language
   Last: Last
   Leave blank to keep current password: Leave blank to keep current password
   Location: Location
@@ -78,17 +73,14 @@ en:
   Password: Password
   Per: Per
   Please help translate via Weblate: Please help translate via Weblate
-  Preferred units: Preferred units
   Profile updated: Profile updated
   Publicly shareable link was copied to clipboard: Publicly shareable link was copied
     to clipboard
   Recent activity: Recent activity
   Records for %s: Records for %s
-  Refresh all your workouts: Refresh all your workouts
   Register: Register
   Repetitions: Repetitions
   Reset changes: Reset changes
-  Show full date by default: Show full date by default
   Show map in full width: Show map in full width
   Sign in: Sign in
   Since: Since
@@ -106,18 +98,14 @@ en:
   'These settings may be overwritten by:': 'These settings may be overwritten by:'
   Time: Time
   Time paused: Time paused
-  Time zone: Time zone
   Total distance: Total distance
   Total down: Total down
   Total duration: Total duration
   Total repetitions: Total repetitions
   Total up: Total up
   Totals: Totals
-  Totals to show on dashboard: Totals to show on dashboard
   Type: Type
   Update equipment: Update equipment
-  Update preferred units: Update preferred units
-  Update profile: Update profile
   Update route segment: Update route segment
   Update settings: Update settings
   Update user: Update user
@@ -135,7 +123,6 @@ en:
     created, but needs to be activated.
   Your profile: Your profile
   Your progress per %s for the past %s: Your progress per %s for the past %s
-  copy to clipboard: copy to clipboard
   create route segment: create route segment
   delete: delete
   distance: distance
@@ -145,25 +132,39 @@ en:
   environment variables: environment variables
   equipment: equipment
   find matches: find matches
-  generate a new API key: generate a new API key
   how to use: how to use
   no equipment: no equipment
   refresh: refresh
   refresh in progress: refresh in progress
   route segment: route segment
   sailboat: sailboat
-  show/hide: show/hide
   the configuration file: the configuration file
   up: up
-  user: user
+  user:
+    profile:
+      Your settings: Your settings
+      Auto import directory: Auto import directory
+      Disable social sharing buttons: Disable social sharing buttons
+      Enable API access: Enable API access
+      Language: Language
+      Preferred units: Preferred units
+      Refresh all your workouts: Refresh all your workouts
+      Show full date by default: Show full date by default
+      Time zone: Time zone
+      Totals to show on dashboard: Totals to show on dashboard
+      Update preferred units: Update preferred units
+      Update profile: Update profile
+      copy to clipboard: copy to clipboard
+      generate a new API key: generate a new API key
+      show/hide: show/hide
+      Theme: Theme
+      Light: Light
+      Dark: Dark
+      Browser / System: Browser / System
   workout: workout
   workouts: workouts
   Accuracy: Accuracy
   Calories: Calories
-  Theme: Theme
-  Light: Light
-  Dark: Dark
-  Browser / System: Browser / System
   ascending: ascending
   descending: descending
   Total weight: Total weight
