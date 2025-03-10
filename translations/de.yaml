@@ -101,7 +101,6 @@ de:
     muss aber noch aktiviert werden.
   Your profile: Dein Profil
   copy to clipboard: In die Zwischenablage kopieren
-  cycling: Radfahren
   delete: löschen
   distance: Entfernung
   download: herunterladen
@@ -111,8 +110,6 @@ de:
   equipment: Ausrüstung
   feet: Fuß
   generate a new API key: Neuen API-Schlüssel generieren
-  golfing: Golfen
-  hiking: Wandern
   how to use: Hilfe
   kilograms: Kilogramm
   kilometers: Kilometer
@@ -122,35 +119,21 @@ de:
   miles per hour: Meilen pro Stunde
   pounds: pfund
   refresh: aktualisieren
-  running: Laufen
   sailboat: Segelschiff
   show/hide: Anzeigen/Verbergen
-  skiing: Skifahren
-  snowboarding: Snowboarden
-  swimming: Schwimmen
   the configuration file: Konfigurationsdatei
   up: Höhenmeter
   user: Benutzer
-  walking: Gehen
   workout: Training
   workouts: Trainings
-  7 days: 7 Tage
-  6 months: 6 Monate
-  day: Tag
   Update equipment: Ausrüstung aktualisieren
   no equipment: keine Ausrüstung
-  weight lifting: Gewichtheben
   Description: Beschreibung
-  1 year: 1 Jahr
   Details: Details
   Reset changes: Änderungen zurücksetzen
-  month: Monat
   Since: Seit
   Please help translate via Weblate: Hilf bei der Übersetzung mit Weblate
   Extra metrics: Zusätzliche Metriken
-  10 years: 10 Jahre
-  2 years: 2 Jahre
-  5 years: 5 Jahre
   Average per minute: Durchschnitt pro Minute
   Create route segment: Streckenabschnitt erstellen
   Est calories burned: Geschätzter Kalorienverbrauch
@@ -162,7 +145,6 @@ de:
   Add route segment: Streckenabschnitt hinzufügen
   Per: pro
   Dashboard: Dashboard
-  push-ups: Liegestütze
   "(Re)generate publicly shareable link": Öffentlich teilbaren Link (neu) generieren
   Aerial: Luftbild
   Bidirectional: Bidirektional
@@ -175,7 +157,6 @@ de:
   Streets: Straßen
   Workout: Training
   create route segment: Streckenabschnitt erstellen
-  e-cycling: E-Biken
   find matches: Übereinstimmungen finden
   refresh in progress: Aktualisierung läuft
   User: Benutzer
@@ -189,10 +170,6 @@ de:
   Last: Letzte
   Filter: Filter
   All: Alle
-  1 day: 1 Tag
-  15 days: 15 Tage
-  3 months: 3 Monate
-  1 month: 1 Monat
   Sort by: Sortieren nach
   Resources: Ressourcen
   'You can find inspiration here:': 'Hier kannst du Inspirationen finden:'
@@ -203,12 +180,10 @@ de:
   Dark: Dunkel
   Browser / System: Browser / System
   Total weight: Gesamtgewicht
-  kayaking: Kayaking
   Filter workouts: Trainings filtern
   Calories: Kalorien
   descending: absteigend
   ascending: aufsteigend
-  forever: für immer
   Steps: Schritte
   Are you sure?: Bist du sicher?
   centimeter: Zentimeter
@@ -231,12 +206,43 @@ de:
   Update: Aktualisieren
   alerts:
     workouts_added:
-      one: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten %{count}
-      other: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten %{count}
+      one: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten
+        %{count}
+      other: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten
+        %{count}
   notices:
     workouts_added:
       one: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
       other: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
     route_segments_added:
-      one: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen."
-      other: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen."
+      one: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
+        im Hintergrund nach Übereinstimmungen."
+      other: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
+        im Hintergrund nach Übereinstimmungen."
+  misc:
+    day_7: 7 Tage
+    month_6: 6 Monate
+    day: Tag
+    years_1: 1 Jahr
+    month: Monat
+    years_10: 10 Jahre
+    years_2: 2 Jahre
+    years_5: 5 Jahre
+    day_1: 1 Tag
+    day_15: 15 Tage
+    month_3: 3 Monate
+    month_1: 1 Monat
+    forever: für immer
+  sports:
+    cycling: Radfahren
+    golfing: Golfen
+    hiking: Wandern
+    running: Laufen
+    skiing: Skifahren
+    snowboarding: Snowboarden
+    swimming: Schwimmen
+    walking: Gehen
+    weight lifting: Gewichtheben
+    push-ups: Liegestütze
+    e-cycling: E-Biken
+    kayaking: Kayaking

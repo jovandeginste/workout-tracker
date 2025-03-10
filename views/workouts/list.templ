@@ -33,7 +33,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 							value={ wt.String() }
 							selected?={ wt.String() == filters.Type.String() }
 						>
-							{ i18n.T(ctx, wt.String()) }
+							{ i18n.T(ctx, wt.StringT()) }
 						</option>
 					}
 				</select>
@@ -77,7 +77,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 				for _, w := range workouts {
 					<tr>
 						<td class="text-center">
-							<div title={ i18n.T(ctx, w.Type.String()) }>
+							<div title={ i18n.T(ctx, w.Type.StringT()) }>
 								@helpers.IconFor(w.Type.String())
 							</div>
 						</td>

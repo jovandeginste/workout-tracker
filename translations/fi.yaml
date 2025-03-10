@@ -2,16 +2,6 @@
 fi:
   Heatmap: Lämpökartta
   "(Re)generate publicly shareable link": Luo (uudelleen) julkinen jakolinkki
-  1 day: 1 päivä
-  1 month: 1 kuukausi
-  1 year: 1 vuosi
-  10 years: 10 vuotta
-  15 days: 15 päivää
-  2 years: 2 vuotta
-  3 months: 3 kuukautta
-  5 years: 5 vuotta
-  6 months: 6 kuukautta
-  7 days: 7 päivää
   API key updated: API-avain päivitetty
   Actions: Toiminnot
   Active: Aktiivinen
@@ -146,21 +136,16 @@ fi:
   Your progress per %s for the past %s: Edistymisesi per %s viimeisten %s aikana
   copy to clipboard: kopioi leikepöydälle
   create route segment: luo reittiosuus
-  cycling: pyöräily
-  day: päivä
   delete: poista
   distance: matka
   download: lataa
   duration: kesto
-  e-cycling: sähköpyöräily
   edit: muokkaa
   environment variables: ympäristömuuttujat
   equipment: välineet
   feet: jalat
   find matches: etsi vastaavuudet
   generate a new API key: luo uusi API-avain
-  golfing: golf
-  hiking: vaellus
   how to use: käyttöohjeet
   kilograms: kilogrammat
   kilometers: kilometrit
@@ -168,25 +153,16 @@ fi:
   meters: metrit
   miles: mailit
   miles per hour: mailia tunnissa
-  month: kuukausi
   no equipment: ei välineitä
   pounds: paunat
-  push-ups: punnerrukset
   refresh: virkistä
   refresh in progress: virkistys meneillään
   route segment: reittiosuus
-  running: juoksu
   sailboat: purjehdus
   show/hide: näytä/piilota
-  skiing: hiihto
-  snowboarding: lumilautailu
-  swimming: uinti
-  kayaking: melonta
   the configuration file: asetustiedosto
   up: ylös
   user: käyttäjä
-  walking: kävely
-  weight lifting: painonnosto
   workout: harjoitus
   workouts: harjoitukset
   ascending: nouseva
@@ -204,3 +180,29 @@ fi:
     workouts_added:
       one: 'Lisätty %{count} uutta harjoitusta: %{list}'
       other: 'Lisätty %{count} uutta harjoitusta: %{list}'
+  misc:
+    day_1: 1 päivä
+    month_1: 1 kuukausi
+    years_1: 1 vuosi
+    years_10: 10 vuotta
+    day_15: 15 päivää
+    years_2: 2 vuotta
+    month_3: 3 kuukautta
+    years_5: 5 vuotta
+    month_6: 6 kuukautta
+    day_7: 7 päivää
+    day: päivä
+    month: kuukausi
+  sports:
+    cycling: pyöräily
+    e-cycling: sähköpyöräily
+    golfing: golf
+    hiking: vaellus
+    push-ups: punnerrukset
+    running: juoksu
+    skiing: hiihto
+    snowboarding: lumilautailu
+    swimming: uinti
+    kayaking: melonta
+    walking: kävely
+    weight lifting: painonnosto

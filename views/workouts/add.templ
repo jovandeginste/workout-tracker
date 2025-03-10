@@ -45,7 +45,7 @@ templ Add() {
 											<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>
@@ -119,7 +119,7 @@ templ Add() {
 											<option value="select" selected>Select...</option>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>

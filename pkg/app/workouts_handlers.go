@@ -92,7 +92,7 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 	}
 
 	if w.Name == "" {
-		w.Name = w.Type.String() + " - " + w.Date.Format(time.RFC3339)
+		w.Name = a.i18nT(c, w.Type.StringT()) + " - " + w.Date.Format(time.RFC3339)
 	}
 
 	return Render(c, http.StatusOK, workouts.Form(w))

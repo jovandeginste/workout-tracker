@@ -2,18 +2,18 @@ package helpers
 
 func StatisticSinceOptions() []string {
 	return []string{
-		"7 days",
-		"1 month", "3 months", "6 months",
-		"1 year", "2 years", "5 years", "10 years",
-		"forever",
+		"misc.day_7",
+		"misc.month_1", "misc.month_3", "misc.month_6",
+		"misc.years_1", "misc.years_2", "misc.years_5", "misc.years_10",
+		"misc.forever",
 	}
 }
 
 func StatisticPerOptions() []string {
 	return []string{
-		"day",
-		"7 days",
-		"15 days",
-		"month",
+		"misc.day",
+		"misc.day_7",
+		"misc.day_15",
+		"misc.month",
 	}
 }
