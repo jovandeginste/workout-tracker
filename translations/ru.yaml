@@ -1,4 +1,3 @@
----
 ru:
   tempo: темп
   segment: участок
@@ -174,4 +173,20 @@ ru:
   notices:
     workouts_added:
       one: 'Добавлена %{count} новая тренировка: %{list}'
-      other: 'Добавлена %{count} новая тренировка: %{list}'
+      few: 'Добавлена %{count} новая тренировка: %{list}'
+      many: ''
+  15 days: 15 дней
+  1 month: 1 месяц
+  3 months: 3 месяца
+  Theme: Тема
+  Light: Светлая
+  Calories: Калории
+  Accuracy: Точность
+  Resources: Ресурсы
+  All: Все
+  Dark: Темная
+  Total weight: Общий вес
+  Measurements: Измерения
+  Steps: Шаги
+  forever: навсегда
+  Are you sure?: Вы уверены?
