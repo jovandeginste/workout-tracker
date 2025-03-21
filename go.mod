@@ -20,7 +20,7 @@ require (
 	github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 	github.com/glebarez/sqlite v1.11.0
 	github.com/go-gorm/caches/v4 v4.0.5
-	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/gomarkdown/markdown v0.0.0-20250207164621-7a1f277a159e
 	github.com/google/go-querystring v1.1.0
 	github.com/google/uuid v1.6.0
