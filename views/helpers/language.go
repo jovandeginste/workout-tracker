@@ -27,6 +27,7 @@ var (
 		language.Italian,
 		language.Norwegian,
 		language.Persian,
+		language.Polish,
 		language.Russian,
 		language.SimplifiedChinese,
 	}
