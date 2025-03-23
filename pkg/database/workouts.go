@@ -47,7 +47,7 @@ type Workout struct {
 type GPXData struct {
 	Model
 	Filename  string // The filename of the file
-	Content   []byte `gorm:"type:text"`            // The file content
+	Content   []byte `gorm:"type:bytes"`           // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
 	WorkoutID uint64 `gorm:"not null;uniqueIndex"` // The ID of the workout
 }
