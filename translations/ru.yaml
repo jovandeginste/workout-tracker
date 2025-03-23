@@ -1,4 +1,3 @@
----
 ru:
   tempo: темп
   segment: участок
@@ -6,7 +5,7 @@ ru:
     workouts_added:
       one: 'Добавлена %{count} новая тренировка: %{list}'
       few: 'Добавлена %{count} новая тренировка: %{list}'
-      other: 'Добавлена %{count} новая тренировка: %{list}'
+      many: 'Добавлена %{count} новая тренировка: %{list}'
   misc:
     years_1: 1 год
     years_2: 2 года
@@ -19,6 +18,10 @@ ru:
     workout: тренировка
     equipment: снаряжение
     route_segment: участок маршрута
+    forever: всегда
+    month_1: 1 месяц
+    day_15: 15 дней
+    month_3: 3 месяца
   sports:
     snowboarding: сноуборд
     walking: ходьба
