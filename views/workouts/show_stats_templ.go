@@ -57,14 +57,14 @@ func ShowStats(stats database.WorkoutBreakdown) templ.Component {
 		}
 
 		translations := map[string]string{
-			"distance":     i18n.T(ctx, "Distance"),
-			"duration":     i18n.T(ctx, "Duration"),
-			"calories":     i18n.T(ctx, "Calories"),
-			"heartrate":    i18n.T(ctx, "Heart rate"),
-			"speed":        i18n.T(ctx, "Speed"),
-			"elevation":    i18n.T(ctx, "Elevation"),
-			"cadence":      i18n.T(ctx, "Cadence"),
-			"averagespeed": i18n.T(ctx, "Average speed"),
+			"distance":     i18n.T(ctx, "translation.Distance"),
+			"duration":     i18n.T(ctx, "translation.Duration"),
+			"calories":     i18n.T(ctx, "translation.Calories"),
+			"heartrate":    i18n.T(ctx, "translation.Heart_rate"),
+			"speed":        i18n.T(ctx, "translation.Speed"),
+			"elevation":    i18n.T(ctx, "translation.Elevation"),
+			"cadence":      i18n.T(ctx, "translation.Cadence"),
+			"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(pu)).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

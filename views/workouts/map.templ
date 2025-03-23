@@ -30,10 +30,10 @@ templ Map(w *database.Workout) {
 		MinElevation:  w.MinElevation(),
 		MaxElevation:  w.MaxElevation(),
 		MaxSpeed:      w.MaxSpeed(),
-		SpeedName:     i18n.T(ctx, "Average speed"),
-		ElevationName: i18n.T(ctx, "Elevation"),
-		StreetsName:   i18n.T(ctx, "Streets"),
-		AerialName:    i18n.T(ctx, "Aerial"),
+		SpeedName:     i18n.T(ctx, "translation.Average_speed"),
+		ElevationName: i18n.T(ctx, "translation.Elevation"),
+		StreetsName:   i18n.T(ctx, "translation.Streets"),
+		AerialName:    i18n.T(ctx, "translation.Aerial"),
 	}
 		}}
 		@templ.JSONScript("map-config", mapConfig)
@@ -80,7 +80,7 @@ templ Map(w *database.Workout) {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title={ i18n.T(ctx, "Show map in full width") } onclick="fullMap()">
+			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap()">
 				@helpers.IconFor("expand")
 			</a>
 		</div>

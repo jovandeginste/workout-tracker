@@ -57,9 +57,9 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Heatmap"))
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "menu.Heatmap"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 14, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -77,11 +77,11 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "translation.Streets")).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "translation.Aerial")).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

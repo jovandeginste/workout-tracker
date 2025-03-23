@@ -23,7 +23,7 @@ templ Edit(w *database.Workout) {
 							<thead>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "Workout type") }</label>
+										<label for="type">{ i18n.T(ctx, "translation.Workout_type") }</label>
 									</td>
 									<td>
 										<input type="hidden" name="id" value={ helpers.A2S(w.ID) }/>
@@ -37,7 +37,7 @@ templ Edit(w *database.Workout) {
 										>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>
@@ -54,9 +54,9 @@ templ Edit(w *database.Workout) {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "Update workout") }</button>
+										<button type="submit">{ i18n.T(ctx, "workout.update") }</button>
 										<button type="reset" class="edit">
-											{ i18n.T(ctx, "Reset changes") }
+											{ i18n.T(ctx, "translation.Reset_changes") }
 										</button>
 										<button
 											type="button"
@@ -64,7 +64,7 @@ templ Edit(w *database.Workout) {
 											onclick="document.location=this.getAttribute('data-url')"
 											data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
 										>
-											{ i18n.T(ctx, "Cancel") }
+											{ i18n.T(ctx, "translation.Cancel") }
 										</button>
 									</td>
 								</tr>

@@ -92,7 +92,7 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 	}
 
 	if w.Name == "" {
-		w.Name = w.Type.String() + " - " + w.Date.Format(time.RFC3339)
+		w.Name = a.i18nT(c, w.Type.StringT()) + " - " + w.Date.Format(time.RFC3339)
 	}
 
 	return Render(c, http.StatusOK, workouts.Form(w))
@@ -108,7 +108,7 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' has been deleted", workout.Name)
+	a.addNoticeT(c, "translation.The_workout_s_has_been_deleted", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -166,7 +166,7 @@ func (a *App) workoutsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' will be refreshed soon", workout.Name)
+	a.addNoticeT(c, "translation.The_workout_s_will_be_refreshed_soon", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
@@ -224,7 +224,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
 
-	a.addNoticeT(c, "The route segment '%s' has been created - we search for matches in the background", rs.Name)
+	a.addNoticeT(c, "translation.The_route_segment_s_has_been_created_we_search_for_matches_in_the_background", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", rs.ID))
 }

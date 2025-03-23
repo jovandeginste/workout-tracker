@@ -1210,6 +1210,14 @@ const docTemplate = `{
                     "description": "The total pause duration of the workout",
                     "type": "integer"
                 },
+                "start": {
+                    "description": "The start time of the workout",
+                    "type": "string"
+                },
+                "stop": {
+                    "description": "The stop time of the workout",
+                    "type": "string"
+                },
                 "totalDistance": {
                     "description": "The total distance of the workout",
                     "type": "number"
@@ -1233,6 +1241,10 @@ const docTemplate = `{
                 "totalWeight": {
                     "description": "The weight of the workout",
                     "type": "number"
+                },
+                "type": {
+                    "description": "The type of the workout",
+                    "type": "string"
                 },
                 "updatedAt": {
                     "type": "string"
@@ -1823,7 +1835,7 @@ const docTemplate = `{
                 "golfing",
                 "hiking",
                 "push-ups",
-                "weight lifting"
+                "weight-lifting"
             ],
             "x-enum-varnames": [
                 "WorkoutTypeAutoDetect",

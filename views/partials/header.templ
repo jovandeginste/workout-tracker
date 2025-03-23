@@ -15,43 +15,43 @@ templ Header() {
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "dashboard")) }>
 							@helpers.IconFor("dashboard")
-							<span class="autohide">{ i18n.T(ctx, "Dashboard") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Dashboard") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
 							@helpers.IconFor("workout")
-							<span class="autohide">{ i18n.T(ctx, "Workouts") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Workouts") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "daily")) }>
 							@helpers.IconFor("scale")
-							<span class="autohide">{ i18n.T(ctx, "Measurements") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Measurements") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "statistics")) }>
 							@helpers.IconFor("statistics")
-							<span class="autohide">{ i18n.T(ctx, "Statistics") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Statistics") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "heatmap")) }>
 							@helpers.IconFor("heatmap")
-							<span class="autohide">{ i18n.T(ctx, "Heatmap") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Heatmap") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segments")) }>
 							@helpers.IconFor("route-segment")
-							<span class="autohide">{ i18n.T(ctx, "Route segments") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.route_segments") }</span>
 						</a>
 					</div>
 					<div>
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment")) }>
 							@helpers.IconFor("equipment")
-							<span class="autohide">{ i18n.T(ctx, "Equipment") }</span>
+							<span class="autohide">{ i18n.T(ctx, "menu.Equipment") }</span>
 						</a>
 					</div>
 				</div>
@@ -60,7 +60,7 @@ templ Header() {
 						<div>
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "admin")) }>
 								@helpers.IconFor("admin")
-								<span class="autohide">{ i18n.T(ctx, "Manage") }</span>
+								<span class="autohide">{ i18n.T(ctx, "translation.Manage") }</span>
 							</a>
 						</div>
 					}
@@ -73,7 +73,7 @@ templ Header() {
 					<div class="-mr-5">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-signout")) }>
 							@helpers.IconFor("user-signout")
-							<span class="autohide">{ i18n.T(ctx, "Logout") }</span>
+							<span class="autohide">{ i18n.T(ctx, "translation.Logout") }</span>
 						</a>
 					</div>
 				</div>

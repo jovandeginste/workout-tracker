@@ -10,7 +10,7 @@ templ Add() {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("equipment-add")
-			{ i18n.T(ctx, "Add equipment") }
+			{ i18n.T(ctx, "translation.Add_equipment") }
 		</h2>
 		<div class="inner-form">
 			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-create")) }>
@@ -18,7 +18,7 @@ templ Add() {
 					<tbody>
 						<tr>
 							<td>
-								<label for="name">{ i18n.T(ctx, "Name") }</label>
+								<label for="name">{ i18n.T(ctx, "translation.Name") }</label>
 							</td>
 							<td>
 								<input type="text" id="name" name="name"/>
@@ -26,7 +26,7 @@ templ Add() {
 						</tr>
 						<tr>
 							<td>
-								<label for="description">{ i18n.T(ctx, "Description") }</label>
+								<label for="description">{ i18n.T(ctx, "translation.Description") }</label>
 							</td>
 							<td>
 								<textarea
@@ -39,7 +39,7 @@ templ Add() {
 						</tr>
 						<tr>
 							<td>
-								<label for="active">{ i18n.T(ctx, "Active") }</label>
+								<label for="active">{ i18n.T(ctx, "translation.Active") }</label>
 							</td>
 							<td>
 								<input
@@ -54,7 +54,7 @@ templ Add() {
 						<tr>
 							<td></td>
 							<td>
-								<button type="submit">{ i18n.T(ctx, "Add equipment") }</button>
+								<button type="submit">{ i18n.T(ctx, "translation.Add_equipment") }</button>
 							</td>
 						</tr>
 					</tbody>

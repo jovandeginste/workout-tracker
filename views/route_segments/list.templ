@@ -12,20 +12,20 @@ templ List(segments []*database.RouteSegment) {
 		<div class="items-baseline flex flex-wrap">
 			<h2 class="grow justify-start">
 				@helpers.IconFor("route-segment")
-				{ i18n.T(ctx, "Route segments") } ({ helpers.A2S(len(segments)) })
+				{ i18n.T(ctx, "menu.route_segments") } ({ helpers.A2S(len(segments)) })
 			</h2>
 			<div class="justify-end mr-2">
 				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-add")) }>
 					@helpers.IconFor("add")
-					<span>{ i18n.T(ctx, "Add route segment") }</span>
+					<span>{ i18n.T(ctx, "translation.Add_route_segment") }</span>
 				</a>
 			</div>
 		</div>
 		<table class="route-segment-info">
 			<thead>
 				<tr>
-					<th>{ i18n.T(ctx, "Name") }</th>
-					<th class="hidden xl:table-cell">{ i18n.T(ctx, "Details") }</th>
+					<th>{ i18n.T(ctx, "translation.Name") }</th>
+					<th class="hidden xl:table-cell">{ i18n.T(ctx, "translation.Details") }</th>
 					<th class="hidden lg:table-cell"></th>
 				</tr>
 			</thead>
@@ -42,7 +42,7 @@ templ List(segments []*database.RouteSegment) {
 						</th>
 						<td class="hidden lg:table-cell">
 							if s.Dirty {
-								<span title={ i18n.T(ctx, "refresh in progress") }>
+								<span title={ i18n.T(ctx, "translation.refresh_in_progress") }>
 									@helpers.IconFor("refresh")
 								</span>
 							}

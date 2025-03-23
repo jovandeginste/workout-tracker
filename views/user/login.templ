@@ -13,7 +13,7 @@ templ Login() {
 				<div class="inner-form">
 					<h2>
 						@helpers.IconFor("welcome")
-						{ i18n.T(ctx, "Welcome!") }
+						{ i18n.T(ctx, "translation.Welcome") }
 					</h2>
 				</div>
 			</div>
@@ -21,7 +21,7 @@ templ Login() {
 				<div class="inner-form">
 					<h3>
 						@helpers.IconFor("user-signin")
-						{ i18n.T(ctx, "Sign in") }
+						{ i18n.T(ctx, "translation.Sign_in") }
 					</h3>
 					<form
 						id="signin"
@@ -32,7 +32,7 @@ templ Login() {
 							<tbody>
 								<tr>
 									<td>
-										<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
+										<label for="username">{ i18n.T(ctx, "translation.Username_email") }</label>
 									</td>
 									<td>
 										<input type="text" id="username" name="username"/>
@@ -40,7 +40,7 @@ templ Login() {
 								</tr>
 								<tr>
 									<td>
-										<label for="password">{ i18n.T(ctx, "Password") }</label>
+										<label for="password">{ i18n.T(ctx, "translation.Password") }</label>
 									</td>
 									<td>
 										<input type="password" id="password" name="password"/>
@@ -50,7 +50,7 @@ templ Login() {
 									<td></td>
 									<td>
 										<button id="signin" type="submit">
-											{ i18n.T(ctx, "Sign in") }
+											{ i18n.T(ctx, "translation.Sign_in") }
 										</button>
 									</td>
 								</tr>
@@ -62,7 +62,7 @@ templ Login() {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("user-register")
-							{ i18n.T(ctx, "Create a new account") }
+							{ i18n.T(ctx, "translation.Create_a_new_account") }
 						</h3>
 						<form
 							id="register"
@@ -73,7 +73,7 @@ templ Login() {
 								<tbody>
 									<tr>
 										<td>
-											<label for="username">{ i18n.T(ctx, "Username (email)") }</label>
+											<label for="username">{ i18n.T(ctx, "translation.Username_email") }</label>
 										</td>
 										<td>
 											<input type="text" id="username" name="username"/>
@@ -81,7 +81,7 @@ templ Login() {
 									</tr>
 									<tr>
 										<td>
-											<label for="name">{ i18n.T(ctx, "Name") }</label>
+											<label for="name">{ i18n.T(ctx, "translation.Name") }</label>
 										</td>
 										<td>
 											<input type="text" id="name" name="name"/>
@@ -89,7 +89,7 @@ templ Login() {
 									</tr>
 									<tr>
 										<td>
-											<label for="password">{ i18n.T(ctx, "Password") }</label>
+											<label for="password">{ i18n.T(ctx, "translation.Password") }</label>
 										</td>
 										<td>
 											<input type="password" id="password" name="password"/>
@@ -99,7 +99,7 @@ templ Login() {
 										<td></td>
 										<td>
 											<button id="register" type="submit">
-												{ i18n.T(ctx, "Register") }
+												{ i18n.T(ctx, "translation.Register") }
 											</button>
 										</td>
 									</tr>

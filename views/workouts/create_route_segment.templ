@@ -72,7 +72,7 @@ templ CreateRouteSegment(w *database.Workout) {
 					<table>
 						<tbody>
 							<tr>
-								<td><label for="name">{ i18n.T(ctx, "Name") }</label></td>
+								<td><label for="name">{ i18n.T(ctx, "translation.Name") }</label></td>
 								<td>
 									<input
 										type="text"
@@ -83,7 +83,7 @@ templ CreateRouteSegment(w *database.Workout) {
 								</td>
 							</tr>
 							<tr>
-								<td><label for="start">{ i18n.T(ctx, "Start") }</label></td>
+								<td><label for="start">{ i18n.T(ctx, "translation.Start") }</label></td>
 								<td>
 									<input
 										class="w-96"
@@ -99,7 +99,7 @@ templ CreateRouteSegment(w *database.Workout) {
 								</td>
 							</tr>
 							<tr>
-								<td><label for="end">{ i18n.T(ctx, "End") }</label></td>
+								<td><label for="end">{ i18n.T(ctx, "translation.End") }</label></td>
 								<td>
 									<input
 										class="w-96"
@@ -115,7 +115,7 @@ templ CreateRouteSegment(w *database.Workout) {
 								</td>
 							</tr>
 							<tr>
-								<td><label for="distance">{ i18n.T(ctx, "Distance") }</label></td>
+								<td><label for="distance">{ i18n.T(ctx, "translation.Distance") }</label></td>
 								<td>
 									<span id="distance-show"></span>
 								</td>
@@ -126,7 +126,7 @@ templ CreateRouteSegment(w *database.Workout) {
 								<td></td>
 								<td>
 									<button type="submit">
-										{ i18n.T(ctx, "Create route segment") }
+										{ i18n.T(ctx, "translation.Create_route_segment") }
 									</button>
 								</td>
 							</tr>

@@ -10,7 +10,7 @@ import (
 templ Edit(e *database.Equipment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<div class="gap-4">
-			<h2>{ i18n.T(ctx, "Equipment") }: { e.Name }</h2>
+			<h2>{ i18n.T(ctx, "menu.Equipment") }: { e.Name }</h2>
 		</div>
 		<div class="sm:flex sm:flex-wrap">
 			<div class="basis-1/2">
@@ -20,7 +20,7 @@ templ Edit(e *database.Equipment) {
 							<tbody>
 								<tr>
 									<td>
-										<label for="name">{ i18n.T(ctx, "Name") }</label>
+										<label for="name">{ i18n.T(ctx, "translation.Name") }</label>
 									</td>
 									<td>
 										<input id="name" name="name" value={ e.Name }/>
@@ -28,7 +28,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<th>
-										<label for="description">{ i18n.T(ctx, "Description") }</label>
+										<label for="description">{ i18n.T(ctx, "translation.Description") }</label>
 									</th>
 									<td>
 										<textarea
@@ -43,7 +43,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<td>
-										<label for="active">{ i18n.T(ctx, "Active") }</label>
+										<label for="active">{ i18n.T(ctx, "translation.Active") }</label>
 									</td>
 									<td>
 										<input
@@ -57,7 +57,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<td>
-										<label>{ i18n.T(ctx, "Default workout types") }</label>
+										<label>{ i18n.T(ctx, "translation.Default_workout_types") }</label>
 									</td>
 									<td>
 										for _, wt := range helpers.WorkoutTypes() {
@@ -75,7 +75,7 @@ templ Edit(e *database.Equipment) {
 													class="selectable-pill"
 													for="default_for_{{ .String }}"
 												>
-													{ helpers.THas(ctx, wt.String()) }
+													{ helpers.THas(ctx, wt.StringT()) }
 												</span>
 											</label>
 										}
@@ -87,7 +87,7 @@ templ Edit(e *database.Equipment) {
 									<td></td>
 									<td>
 										<button type="submit">
-											{ i18n.T(ctx, "Update equipment") }
+											{ i18n.T(ctx, "equipment.update") }
 										</button>
 									</td>
 								</tr>

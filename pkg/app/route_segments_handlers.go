@@ -125,7 +125,7 @@ func (a *App) routeSegmentsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' has been refreshed", rs.Name)
+	a.addNoticeT(c, "translation.The_workout_s_has_been_refreshed", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -140,7 +140,7 @@ func (a *App) routeSegmentsDeleteHandler(c echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' has been deleted", rs.Name)
+	a.addNoticeT(c, "translation.The_workout_s_has_been_deleted", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
 }
@@ -161,7 +161,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-edit", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The route segment '%s' has been updated", rs.Name)
+	a.addNoticeT(c, "translation.The_route_segment_s_has_been_updated", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }
@@ -182,7 +182,7 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "Start searching in the background for matching workouts for route segment '%s'", rs.Name)
+	a.addNoticeT(c, "translation.Start_searching_in_the_background_for_matching_workouts_for_route_segment_s", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
 }

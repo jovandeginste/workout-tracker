@@ -20,7 +20,7 @@ templ Show(w *database.Workout) {
 					if w.Dirty {
 						<span class="dirty">
 							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "refresh in progress") }
+							{ i18n.T(ctx, "translation.refresh_in_progress") }
 						</span>
 					}
 					@Actions(w)
@@ -61,7 +61,7 @@ templ Show(w *database.Workout) {
 				<div class="basis-1/2 2xl:basis-1/3 inner-form">
 					<h3>
 						@helpers.IconFor("note")
-						{ i18n.T(ctx, "Matching route segments") }
+						{ i18n.T(ctx, "translation.Matching_route_segments") }
 					</h3>
 					<div class="print:w-full overflow-y-auto">
 						@RouteSegments(w.RouteSegmentMatches)
@@ -74,7 +74,7 @@ templ Show(w *database.Workout) {
 				<div class="inner-form">
 					<h3>
 						@helpers.IconFor("note")
-						{ i18n.T(ctx, "Notes") }
+						{ i18n.T(ctx, "translation.Notes") }
 					</h3>
 					<div>
 						@templ.Raw(w.MarkdownNotes())
@@ -87,12 +87,12 @@ templ Show(w *database.Workout) {
 				<h3>
 					<span>
 						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "Average speed") }
+						{ i18n.T(ctx, "translation.Average_speed") }
 					</span>
 					/
 					<span>
 						@helpers.IconFor("elevation")
-						{ i18n.T(ctx, "Elevation") }
+						{ i18n.T(ctx, "translation.Elevation") }
 					</span>
 				</h3>
 				if stats, err := w.StatisticsPer(1, "min"); err == nil {

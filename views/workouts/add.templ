@@ -10,12 +10,12 @@ templ Add() {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("workout-add")
-			{ i18n.T(ctx, "Add a workout") }
+			{ i18n.T(ctx, "translation.Add_a_workout") }
 		</h2>
 		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "Use a file") }</h3>
+					<h3>{ i18n.T(ctx, "translation.Use_a_file") }</h3>
 					<form
 						id="upload"
 						method="post"
@@ -25,7 +25,7 @@ templ Add() {
 						<table class="sm:table-fixed">
 							<tbody>
 								<tr>
-									<td><label for="file">{ i18n.T(ctx, "File") }</label></td>
+									<td><label for="file">{ i18n.T(ctx, "translation.File") }</label></td>
 									<td>
 										<input
 											type="file"
@@ -38,14 +38,14 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "Type") }</label>
+										<label for="type">{ i18n.T(ctx, "translation.Type") }</label>
 									</td>
 									<td>
 										<select id="type" name="type">
-											<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
+											<option value="auto">{ i18n.T(ctx, "translation.Autodetect") }</option>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>
@@ -53,7 +53,7 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="notes">{ i18n.T(ctx, "Notes") }</label>
+										<label for="notes">{ i18n.T(ctx, "translation.Notes") }</label>
 									</td>
 									<td>
 										<textarea
@@ -66,18 +66,18 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label>{ i18n.T(ctx, "Resources") }</label>
+										<label>{ i18n.T(ctx, "translation.Resources") }</label>
 									</td>
 									<td>
 										<div>
 											<ul>
-												{ i18n.T(ctx, "You can edit your GPX files before uploading them here:") }
-												<li>{ i18n.T(ctx, "split files with multiple tracks") }</li>
-												<li>{ i18n.T(ctx, "convert from not-yet-supported file format") }</li>
-												<li>{ i18n.T(ctx, "remove the beginning or the ending of a workout") }</li>
+												{ i18n.T(ctx, "translation.You_can_edit_your_GPX_files_before_uploading_them_here") }
+												<li>{ i18n.T(ctx, "misc.split_files_with_multiple_tracks") }</li>
+												<li>{ i18n.T(ctx, "misc.convert_from_not_yet_supported_file_format") }</li>
+												<li>{ i18n.T(ctx, "misc.remove_the_beginning_or_the_ending_of_a_workout") }</li>
 											</ul>
 											<ul>
-												{ i18n.T(ctx, "Try one of these sites:") }
+												{ i18n.T(ctx, "translation.Try_one_of_these_sites") }
 												<li><a target="_blank" href="https://gpx.studio/">gpx.studio — the online GPX file editor</a></li>
 												<li><a target="_blank" href="https://kml2gpx.com/">Kml2gpx.com: convert kml to gpx online</a></li>
 												<li><a target="_blank" href="https://www.fitfileviewer.com/">FIT File Viewer</a></li>
@@ -90,7 +90,7 @@ templ Add() {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
+										<button type="submit">{ i18n.T(ctx, "translation.Add_workouts") }</button>
 									</td>
 								</tr>
 							</tfoot>
@@ -100,13 +100,13 @@ templ Add() {
 			</div>
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "Manual") }</h3>
+					<h3>{ i18n.T(ctx, "translation.Manual") }</h3>
 					<form id="manual" method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
 						<table class="sm:table-auto">
 							<thead>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "Workout type") }</label>
+										<label for="type">{ i18n.T(ctx, "translation.Workout_type") }</label>
 									</td>
 									<td>
 										<select
@@ -119,7 +119,7 @@ templ Add() {
 											<option value="select" selected>Select...</option>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.String()) }
+													{ i18n.T(ctx, wt.StringT()) }
 												</option>
 											}
 										</select>
@@ -136,7 +136,7 @@ templ Add() {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "Add workouts") }</button>
+										<button type="submit">{ i18n.T(ctx, "translation.Add_workouts") }</button>
 									</td>
 								</tr>
 							</tfoot>

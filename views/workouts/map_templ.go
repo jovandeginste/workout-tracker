@@ -70,10 +70,10 @@ func Map(w *database.Workout) templ.Component {
 			MinElevation:  w.MinElevation(),
 			MaxElevation:  w.MaxElevation(),
 			MaxSpeed:      w.MaxSpeed(),
-			SpeedName:     i18n.T(ctx, "Average speed"),
-			ElevationName: i18n.T(ctx, "Elevation"),
-			StreetsName:   i18n.T(ctx, "Streets"),
-			AerialName:    i18n.T(ctx, "Aerial"),
+			SpeedName:     i18n.T(ctx, "translation.Average_speed"),
+			ElevationName: i18n.T(ctx, "translation.Elevation"),
+			StreetsName:   i18n.T(ctx, "translation.Streets"),
+			AerialName:    i18n.T(ctx, "translation.Aerial"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("map-config", mapConfig).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -117,9 +117,9 @@ func Map(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "Show map in full width"))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Show_map_in_full_width"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 83, Col: 60}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 83, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

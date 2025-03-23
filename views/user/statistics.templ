@@ -11,30 +11,30 @@ templ Statistics(u *database.User, since, per string) {
 	@partials.Page(partials.NewPageOptions().WithCharts()) {
 		<h2>
 			@helpers.IconFor("statistics")
-			{ i18n.T(ctx, "Your progress per %s for the past %s", i18n.T(ctx, per), i18n.T(ctx, since)) }
+			{ i18n.T(ctx, "translation.Your_progress_per_s_for_the_past_s", i18n.T(ctx, per), i18n.T(ctx, since)) }
 		</h2>
 		<div class="content">
 			<form class="inner-form">
-				<label for="since">{ i18n.T(ctx, "Since") }</label>
+				<label for="since">{ i18n.T(ctx, "translation.Since") }</label>
 				<select id="since" name="since">
 					for _, o := range helpers.StatisticSinceOptions() {
 						<option value={ o } selected?={ o == since }>{ i18n.T(ctx, o) }</option>
 					}
 				</select>
-				<label for="per">{ i18n.T(ctx, "Per") }</label>
+				<label for="per">{ i18n.T(ctx, "translation.Per") }</label>
 				<select id="per" name="per">
 					for _, o := range helpers.StatisticPerOptions() {
 						<option value={ o } selected?={ o == per }>{ i18n.T(ctx, o) }</option>
 					}
 				</select>
-				<button type="submit" value="Submit">{ i18n.T(ctx, "refresh") }</button>
+				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
 			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
 				<div>
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("workout")
-							{ i18n.T(ctx, "Workouts") }
+							{ i18n.T(ctx, "menu.Workouts") }
 						</h3>
 						<div id="workouts-per-time"></div>
 					</div>
@@ -43,7 +43,7 @@ templ Statistics(u *database.User, since, per string) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("duration")
-							{ i18n.T(ctx, "Duration") }
+							{ i18n.T(ctx, "translation.Duration") }
 						</h3>
 						<div id="duration-per-time"></div>
 					</div>
@@ -52,7 +52,7 @@ templ Statistics(u *database.User, since, per string) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("distance")
-							{ i18n.T(ctx, "Distance") }
+							{ i18n.T(ctx, "translation.Distance") }
 						</h3>
 						<div id="distance-per-time"></div>
 					</div>
@@ -61,7 +61,7 @@ templ Statistics(u *database.User, since, per string) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("speed")
-							{ i18n.T(ctx, "Average speed") }
+							{ i18n.T(ctx, "translation.Average_speed") }
 						</h3>
 						<div id="average-speed-per-time"></div>
 					</div>
@@ -70,7 +70,7 @@ templ Statistics(u *database.User, since, per string) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("speed")
-							{ i18n.T(ctx, "Average speed (no pause)") }
+							{ i18n.T(ctx, "translation.Average_speed_no_pause") }
 						</h3>
 						<div id="average-speed-no-pause-per-time"></div>
 					</div>
@@ -79,7 +79,7 @@ templ Statistics(u *database.User, since, per string) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("max-speed")
-							{ i18n.T(ctx, "Max speed") }
+							{ i18n.T(ctx, "translation.Max_speed") }
 						</h3>
 						<div id="max-speed-per-time"></div>
 					</div>

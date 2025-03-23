@@ -22,7 +22,7 @@ const (
 	WorkoutTypeGolfing       WorkoutType = "golfing"
 	WorkoutTypeHiking        WorkoutType = "hiking"
 	WorkoutTypePushups       WorkoutType = "push-ups"
-	WorkoutTypeWeightLifting WorkoutType = "weight lifting"
+	WorkoutTypeWeightLifting WorkoutType = "weight-lifting"
 
 	WorkoutTypeClassLocation   = "location"
 	WorkoutTypeClassDistance   = "distance"
@@ -124,6 +124,10 @@ func DurationWorkoutTypes() []WorkoutType {
 	return getOrSetByClass(WorkoutTypeClassDuration, func(c WorkoutTypeConfiguration) bool {
 		return true // All workout types store duration
 	})
+}
+
+func (wt WorkoutType) StringT() string {
+	return "sports." + wt.String()
 }
 
 func (wt WorkoutType) String() string {

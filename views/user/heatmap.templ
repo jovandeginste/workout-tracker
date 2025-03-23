@@ -11,7 +11,7 @@ templ Heatmap(workouts []*database.Workout) {
 	@partials.Page(partials.NewPageOptions().WithHeatMaps()) {
 		<h2>
 			@helpers.IconFor(`heatmap`)
-			{ i18n.T(ctx, "Heatmap") }
+			{ i18n.T(ctx, "menu.Heatmap") }
 		</h2>
 		<div id="map-container" class="small-size pagebreak">
 			<div
@@ -20,8 +20,8 @@ templ Heatmap(workouts []*database.Workout) {
 			>
 				@templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates"))
 				@templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers"))
-				@templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets"))
-				@templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial"))
+				@templ.JSONScript("i18n-streets", i18n.T(ctx, "translation.Streets"))
+				@templ.JSONScript("i18n-aerial", i18n.T(ctx, "translation.Aerial"))
 				<script>
             var map = L.map("map", {
               fadeAnimation: false,

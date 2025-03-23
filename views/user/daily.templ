@@ -16,7 +16,7 @@ templ Daily(u *database.User, count int) {
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("scale")
-				{ i18n.T(ctx, "Update measurement") }
+				{ i18n.T(ctx, "translation.Update_measurement") }
 			</h3>
 			@latestMeasurementForm(u)
 		</div>
@@ -39,12 +39,12 @@ templ Daily(u *database.User, count int) {
 					<option
 						value="-1"
 						selected?={ count  == -1 }
-					>{ i18n.T(ctx, "All") }</option>
+					>{ i18n.T(ctx, "translation.All") }</option>
 				</select>
 			</span>
 			<h3>
 				@helpers.IconFor("scale")
-				{ i18n.T(ctx, "Latest measurements") }
+				{ i18n.T(ctx, "translation.Latest_measurements") }
 			</h3>
 			@Measurements(u, count)
 		</div>
@@ -59,19 +59,19 @@ templ Measurements(u *database.User, n int) {
 				<tr>
 					<th class="w-1/5">
 						@helpers.IconFor("date")
-						{ i18n.T(ctx, "Date") }
+						{ i18n.T(ctx, "translation.Date") }
 					</th>
 					<th class="w-1/5">
 						@helpers.IconFor("height")
-						{ i18n.T(ctx, "Height") }
+						{ i18n.T(ctx, "translation.Height") }
 					</th>
 					<th class="w-1/5">
 						@helpers.IconFor("scale")
-						{ i18n.T(ctx, "Weight") }
+						{ i18n.T(ctx, "translation.Weight") }
 					</th>
 					<th class="w-1/5">
 						@helpers.IconFor("steps")
-						{ i18n.T(ctx, "Steps") }
+						{ i18n.T(ctx, "translation.Steps") }
 					</th>
 					<th>&nbsp;</th>
 				</tr>
@@ -106,7 +106,7 @@ templ Measurements(u *database.User, n int) {
 							<a
 								class="button dangerous"
 								hx-delete={ helpers.RouteFor(ctx, "daily-delete", m.DateString()) }
-								hx-confirm={ i18n.T(ctx, "Are you sure?") }
+								hx-confirm={ i18n.T(ctx, "translation.Are_you_sure") }
 							>
 								@helpers.IconFor("delete")
 							</a>
@@ -116,7 +116,7 @@ templ Measurements(u *database.User, n int) {
 			</tbody>
 		</table>
 	} else {
-		{ i18n.T(ctx, "No measurements found") }
+		{ i18n.T(ctx, "translation.No_measurements_found") }
 	}
 }
 
@@ -124,7 +124,7 @@ templ latestMeasurementForm(u *database.User) {
 	if l,err := u.GetCurrentMeasurement(); err == nil {
 		@measurementForm(l)
 	} else {
-		{ i18n.T(ctx, "No measurements found") }
+		{ i18n.T(ctx, "translation.No_measurements_found") }
 	}
 }
 
@@ -135,7 +135,7 @@ templ measurementForm(m *database.Measurement) {
 			<tr>
 				<th class="w-1/2">
 					@helpers.IconFor("date")
-					{ i18n.T(ctx, "Date") }
+					{ i18n.T(ctx, "translation.Date") }
 				</th>
 				<td>
 					<input
@@ -150,7 +150,7 @@ templ measurementForm(m *database.Measurement) {
 			<tr>
 				<th>
 					@helpers.IconFor("height")
-					{ i18n.T(ctx, "Height") }
+					{ i18n.T(ctx, "translation.Height") }
 				</th>
 				<td>
 					@dailyHeight(currentUser, m)
@@ -159,7 +159,7 @@ templ measurementForm(m *database.Measurement) {
 			<tr>
 				<th>
 					@helpers.IconFor("scale")
-					{ i18n.T(ctx, "Weight") }
+					{ i18n.T(ctx, "translation.Weight") }
 				</th>
 				<td>
 					<input
@@ -175,7 +175,7 @@ templ measurementForm(m *database.Measurement) {
 			<tr>
 				<th>
 					@helpers.IconFor("steps")
-					{ i18n.T(ctx, "Steps") }
+					{ i18n.T(ctx, "translation.Steps") }
 				</th>
 				<td>
 					<input
@@ -190,7 +190,7 @@ templ measurementForm(m *database.Measurement) {
 			<tr>
 				<th></th>
 				<td>
-					<button type="submit" value="Submit">{ i18n.T(ctx, "Update") }</button>
+					<button type="submit" value="Submit">{ i18n.T(ctx, "translation.Update") }</button>
 				</td>
 			</tr>
 		</table>
