@@ -45,7 +45,7 @@ type RouteSegment struct {
 
 	Points []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
 
-	Content             []byte               `gorm:"type:text"`            // The file content
+	Content             []byte               `gorm:"type:bytes"`           // The file content
 	Checksum            []byte               `gorm:"not null;uniqueIndex"` // The checksum of the content
 	RouteSegmentMatches []*RouteSegmentMatch // The matches of the route segment
 	Center              MapCenter            `gorm:"serializer:json"` // The center of the workout (in coordinates)
