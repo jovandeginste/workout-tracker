@@ -1,14 +1,14 @@
----
 it:
   alerts:
     workouts_added:
-      one: 'Riscontrati %{count} problemi durante l''aggiunta degli allenamenti: %{list}'
-      other: 'Riscontrati %{count} problemi durante l''aggiunta degli allenamenti:
-        %{list}'
+      one: "Riscontrati %{count} problemi durante l'aggiunta degli allenamenti: %{list}"
+      many: "Riscontrati %{count} problemi durante l'aggiunta degli allenamenti: %{list}"
+      other: ''
   notices:
     workouts_added:
       one: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
-      other: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
+      many: 'Aggiunti %{count} nuovo/i allenamento/i: %{list}'
+      other: ''
   sports:
     cycling: Ciclismo
     golfing: Golf
@@ -134,8 +134,8 @@ it:
   user:
     profile:
       auto_import_directory: Directory di importazione automatica
-      disable_social_sharing_buttons: Disabilita i pulsanti di condivisione sui
-        social media
+      disable_social_sharing_buttons: Disabilita i pulsanti di condivisione sui social
+        media
       enable_api_access: Abilita l'accesso API
       Language: Lingua
       preferred_units: Unità preferite
