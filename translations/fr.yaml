@@ -1,14 +1,15 @@
----
 fr:
   Street: Rue
   alerts:
     workouts_added:
       one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
-      other: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
+      many: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
+      other: ''
   notices:
     workouts_added:
       one: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
-      other: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
+      many: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
+      other: ''
   misc:
     month: mois
     month_6: 6 mois
@@ -177,8 +178,8 @@ fr:
   user:
     profile:
       auto_import_directory: Importation de répertoire automatique
-      disable_social_sharing_buttons: Désactiver les boutons de partage sur les
-        réseaux sociaux
+      disable_social_sharing_buttons: Désactiver les boutons de partage sur les réseaux
+        sociaux
       enable_api_access: Activer l'accès à l'API
       Language: Langue
       preferred_units: Unités préférées
