@@ -1,4 +1,3 @@
----
 nl:
   Add a route_segment: Voeg een route segment toe
   Street: Straat
@@ -6,19 +5,19 @@ nl:
     something_wrong: 'Er ging iets mis: %{message}'
     workouts_added:
       one: '1 probleem bij het toevoegen van workouts: %{list}'
-      other: "%{count} problemen bij het toevoegen van workouts: %{list}"
+      other: '%{count} problemen bij het toevoegen van workouts: %{list}'
     route_segments_added:
       one: 'Een probleem tijdens het toevoegen van route segmenten: %{list}'
-      other: "%{count} problemen tijdens het toevoegen van route segmenten: %{list}"
+      other: '%{count} problemen tijdens het toevoegen van route segmenten: %{list}'
   notices:
     workouts_added:
       one: '1 nieuwe workout toegevoegd: %{list}'
-      other: "%{count} nieuwe workouts toegevoegd: %{list}"
+      other: '%{count} nieuwe workouts toegevoegd: %{list}'
     route_segments_added:
       one: '1 nieuw route segment werden toegevoegd: %{list} - we zoeken op de achtergrond
         naar matches'
-      other: "%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
-        op de achtergrond naar matches"
+      other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
+        op de achtergrond naar matches'
   misc:
     years_1: 1 jaar
     years_10: 10 jaar
@@ -251,7 +250,7 @@ nl:
       update_preferred_units: Voorkeurseenheden bijwerken
       update_profile: Profiel bijwerken
       copy_to_clipboard: kopieer naar klembord
-      generate_a_new_api_key: maak een nieuwe API-sleutel
+      generate_a_new_api_key: Maak een nieuwe API-sleutel
       show_hide: toon/verberg
       auto_import_directory: Map om automatisch te importeren
       Dark: Donker

@@ -1,9 +1,8 @@
----
 fa:
   notices:
     workouts_added:
-      one: "%{count} تمرین جدید اضافه شد: %{list}"
-      other: "%{count} تمرین جدید اضافه شد: %{list}"
+      one: '%{count} تمرین جدید اضافه شد: %{list}'
+      other: '%{count} تمرین جدید اضافه شد: %{list}'
   misc:
     years_1: ۱ سال
     years_10: ۱۰ سال

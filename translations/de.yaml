@@ -1,4 +1,3 @@
----
 de:
   alerts:
     workouts_added:
@@ -8,13 +7,13 @@ de:
         %{count}
   notices:
     workouts_added:
-      one: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
-      other: "%{count} neue(s) Training(s) hinzugefügt: %{list}"
+      one: '%{count} neue(s) Training(s) hinzugefügt: %{list}'
+      other: '%{count} neue(s) Training(s) hinzugefügt: %{list}'
     route_segments_added:
-      one: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
-        im Hintergrund nach Übereinstimmungen."
-      other: "%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
-        im Hintergrund nach Übereinstimmungen."
+      one: '%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
+        im Hintergrund nach Übereinstimmungen.'
+      other: '%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
+        im Hintergrund nach Übereinstimmungen.'
   misc:
     day_7: 7 Tage
     month_6: 6 Monate
@@ -238,8 +237,7 @@ de:
       refresh_all_your_workouts: Alle deine Trainingseinheiten aktualisieren
       show_full_date_by_default: Standardmäßig das vollständige Datum anzeigen
       time_zone: Zeitzone
-      totals_to_show_on_dashboard: Zusammenfassung aller Werte auf dem Dashboard
-        anzeigen
+      totals_to_show_on_dashboard: Zusammenfassung aller Werte auf dem Dashboard anzeigen
       update_preferred_units: Bevorzugte Einheiten speichern
       update_profile: Profil aktualisieren
       copy_to_clipboard: In die Zwischenablage kopieren
