@@ -1,1 +1,24 @@
-{}
+misc:
+  month_3: 3 miesiące
+  years_1: 1 rok
+  years_10: 10 lat
+  years_2: 2 lata
+  month_6: 6 miesięcy
+  day_7: 7 dni
+  month: miesiąc
+  day: dzień
+  workout: trening
+  month_1: 1 miesiąc
+  day_15: 15 dni
+  years_5: 5 lat
+sports:
+  swimming: pływanie
+menu:
+  Workouts: Treningi
+translation:
+  Username: Nazwa użytkownika
+  Username_email: Nazwa użytkownika (email)
+  Workout: Trening
+  download: pobierz
+alerts:
+  something_wrong: 'Coś poszło nie tak: %{message}'
