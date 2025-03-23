@@ -83,7 +83,7 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
 	}
 
-	a.addNoticeT(c, "Your account has been created, but needs to be activated")
+	a.addNoticeT(c, "translation.Your_account_has_been_created_but_needs_to_be_activated")
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-login"))
 }

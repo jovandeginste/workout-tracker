@@ -69,10 +69,10 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			CenterLng:     s.Center.Lng,
 			MinElevation:  s.MinElevation,
 			MaxElevation:  s.MaxElevation,
-			SpeedName:     i18n.T(ctx, "Average speed"),
-			ElevationName: i18n.T(ctx, "Elevation"),
-			StreetsName:   i18n.T(ctx, "Streets"),
-			AerialName:    i18n.T(ctx, "Aerial"),
+			SpeedName:     i18n.T(ctx, "translation.Average_speed"),
+			ElevationName: i18n.T(ctx, "translation.Elevation"),
+			StreetsName:   i18n.T(ctx, "translation.Streets"),
+			AerialName:    i18n.T(ctx, "translation.Aerial"),
 		}
 		templ_7745c5c3_Err = templ.JSONScript("map-config", mapConfig).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

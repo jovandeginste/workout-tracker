@@ -20,7 +20,7 @@ templ Edit(e *database.Equipment) {
 							<tbody>
 								<tr>
 									<td>
-										<label for="name">{ i18n.T(ctx, "Name") }</label>
+										<label for="name">{ i18n.T(ctx, "translation.Name") }</label>
 									</td>
 									<td>
 										<input id="name" name="name" value={ e.Name }/>
@@ -28,7 +28,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<th>
-										<label for="description">{ i18n.T(ctx, "Description") }</label>
+										<label for="description">{ i18n.T(ctx, "translation.Description") }</label>
 									</th>
 									<td>
 										<textarea
@@ -43,7 +43,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<td>
-										<label for="active">{ i18n.T(ctx, "Active") }</label>
+										<label for="active">{ i18n.T(ctx, "translation.Active") }</label>
 									</td>
 									<td>
 										<input
@@ -57,7 +57,7 @@ templ Edit(e *database.Equipment) {
 								</tr>
 								<tr>
 									<td>
-										<label>{ i18n.T(ctx, "Default workout types") }</label>
+										<label>{ i18n.T(ctx, "translation.Default_workout_types") }</label>
 									</td>
 									<td>
 										for _, wt := range helpers.WorkoutTypes() {

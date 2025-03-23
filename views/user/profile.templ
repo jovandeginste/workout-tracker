@@ -12,21 +12,21 @@ templ Profile(u *database.User) {
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("user-profile")
-				{ i18n.T(ctx, "user.profile.Your settings") }
+				{ i18n.T(ctx, "user.profile.your_settings") }
 			</h3>
 			@userSettings(u)
 		</div>
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("units")
-				{ i18n.T(ctx, "user.profile.Preferred units") }
+				{ i18n.T(ctx, "user.profile.preferred_units") }
 			</h3>
 			@profilePreferredUnits()
 		</div>
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("actions")
-				{ i18n.T(ctx, "Actions") }
+				{ i18n.T(ctx, "translation.Actions") }
 			</h3>
 			@userActions()
 		</div>
@@ -35,7 +35,7 @@ templ Profile(u *database.User) {
 
 templ userActions() {
 	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
-		<label for="refresh">{ i18n.T(ctx, "user.profile.Refresh all your workouts") }</label>
+		<label for="refresh">{ i18n.T(ctx, "user.profile.refresh_all_your_workouts") }</label>
 		<button id="refresh" type="submit">
 			<a>
 				@helpers.IconFor("refresh")
@@ -51,9 +51,9 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th class="w-1/2 xl:w-1/3 2xl:w-1/4">
 						<label for="api_active">
-							{ i18n.T(ctx, "user.profile.Enable API access") }
+							{ i18n.T(ctx, "user.profile.enable_api_access") }
 							<a
-								title={ i18n.T(ctx, "how to use") }
+								title={ i18n.T(ctx, "translation.how_to_use") }
 								target="_blank"
 								href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
 							>
@@ -87,21 +87,21 @@ templ userSettings(u *database.User) {
 									<button
 										type="button"
 										class="edit"
-										title={ i18n.T(ctx, "user.profile.show/hide") }
+										title={ i18n.T(ctx, "user.profile.show_hide") }
 										onclick="toggleTextPassword(this, 'api_key');"
 									>
 										@helpers.IconFor("show")
 									</button>
 									<button
 										type="button"
-										title={ i18n.T(ctx, "user.profile.copy to clipboard") }
+										title={ i18n.T(ctx, "user.profile.copy_to_clipboard") }
 										onclick="copyToClipboard('api_key');"
 									>
 										@helpers.IconFor("copy")
 									</button>
 									<button
 										class="dangerous"
-										title={ i18n.T(ctx, "user.profile.generate a new API key") }
+										title={ i18n.T(ctx, "user.profile.generate_a_new_api_key") }
 									>
 										@helpers.IconFor("refresh")
 									</button>
@@ -113,7 +113,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="totals_show">
-							{ i18n.T(ctx, "user.profile.Totals to show on dashboard") }
+							{ i18n.T(ctx, "user.profile.totals_to_show_on_dashboard") }
 						</label>
 					</th>
 					<td>
@@ -122,7 +122,7 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
-						<label for="timezone">{ i18n.T(ctx, "user.profile.Time zone") }</label>
+						<label for="timezone">{ i18n.T(ctx, "user.profile.time_zone") }</label>
 					</th>
 					<td>
 						@profileTimezone(u.Profile.Timezone)
@@ -135,7 +135,7 @@ templ userSettings(u *database.User) {
 							<a
 								href="https://hosted.weblate.org/projects/workout-tracker/"
 								target="_blank"
-								title={ i18n.T(ctx, "Please help translate via Weblate") }
+								title={ i18n.T(ctx, "translation.Please_help_translate_via_Weblate") }
 							>
 								@helpers.IconFor("translate")
 							</a>
@@ -158,7 +158,7 @@ templ userSettings(u *database.User) {
 								{ i18n.T(ctx, "user.profile.Dark") }
 							</option>
 							<option value="browser" selected?={ u.Profile.Theme == "browser" }>
-								{ i18n.T(ctx, "user.profile.Browser / System") }
+								{ i18n.T(ctx, "user.profile.Browser_System") }
 							</option>
 						</select>
 					</td>
@@ -166,7 +166,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="auto_import_directory">
-							{ i18n.T(ctx, "user.profile.Auto import directory") }
+							{ i18n.T(ctx, "user.profile.auto_import_directory") }
 						</label>
 					</th>
 					<td>
@@ -184,7 +184,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="prefer_full_date">
-							{ i18n.T(ctx, "user.profile.Show full date by default") }
+							{ i18n.T(ctx, "user.profile.show_full_date_by_default") }
 						</label>
 					</th>
 					<td>
@@ -200,7 +200,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="socials_disabled">
-							{ i18n.T(ctx, "user.profile.Disable social sharing buttons") }
+							{ i18n.T(ctx, "user.profile.disable_social_sharing_buttons") }
 						</label>
 					</th>
 					<td>
@@ -216,7 +216,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<td></td>
 					<td>
-						<button id="update-profile" type="submit">{ i18n.T(ctx, "user.profile.Update profile") }</button>
+						<button id="update-profile" type="submit">{ i18n.T(ctx, "user.profile.update_profile") }</button>
 					</td>
 				</tr>
 			</tbody>

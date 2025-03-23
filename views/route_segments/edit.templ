@@ -25,7 +25,7 @@ templ Edit(s *database.RouteSegment) {
 						<table>
 							<tbody id="route-segment-form">
 								<tr>
-									<td><label for="name">{ i18n.T(ctx, "Name") }</label></td>
+									<td><label for="name">{ i18n.T(ctx, "translation.Name") }</label></td>
 									<td>
 										<input
 											type="text"
@@ -39,7 +39,7 @@ templ Edit(s *database.RouteSegment) {
 								</tr>
 								<tr>
 									<td>
-										<label for="name">{ i18n.T(ctx, "Bidirectional") }</label>
+										<label for="name">{ i18n.T(ctx, "translation.Bidirectional") }</label>
 									</td>
 									<td>
 										<input
@@ -51,7 +51,7 @@ templ Edit(s *database.RouteSegment) {
 									</td>
 								</tr>
 								<tr>
-									<td><label for="name">{ i18n.T(ctx, "Circular") }</label></td>
+									<td><label for="name">{ i18n.T(ctx, "translation.Circular") }</label></td>
 									<td>
 										<input
 											type="checkbox"
@@ -63,7 +63,7 @@ templ Edit(s *database.RouteSegment) {
 								</tr>
 								<tr>
 									<td>
-										<label for="notes">{ i18n.T(ctx, "Notes") }</label>
+										<label for="notes">{ i18n.T(ctx, "translation.Notes") }</label>
 									</td>
 									<td>
 										<textarea
@@ -86,7 +86,7 @@ templ Edit(s *database.RouteSegment) {
 											{ i18n.T(ctx, "route segment.update") }
 										</button>
 										<button type="reset" class="edit">
-											{ i18n.T(ctx, "Reset changes") }
+											{ i18n.T(ctx, "translation.Reset_changes") }
 										</button>
 										<button
 											type="button"
@@ -94,7 +94,7 @@ templ Edit(s *database.RouteSegment) {
 											onclick="document.location=this.getAttribute('data-url')"
 											data-url={ helpers.RouteFor(ctx, "route-segment-show", s.ID) }
 										>
-											{ i18n.T(ctx, "Cancel") }
+											{ i18n.T(ctx, "translation.Cancel") }
 										</button>
 									</td>
 								</tr>

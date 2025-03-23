@@ -16,9 +16,9 @@ templ StatsRecordsTotal(user *database.User) {
 		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 		<div class="md:flex md:flex-wrap">
 			@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.StringT()), helpers.A2S(totals.Workouts), "")
-			@StatisticTile("distance", i18n.T(ctx, "distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
-			@StatisticTile("up", i18n.T(ctx, "up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
-			@StatisticTile("duration", i18n.T(ctx, "duration"), helpers.HumanDuration(totals.Duration), "")
+			@StatisticTile("distance", i18n.T(ctx, "translation.distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
+			@StatisticTile("up", i18n.T(ctx, "translation.up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
+			@StatisticTile("duration", i18n.T(ctx, "translation.duration"), helpers.HumanDuration(totals.Duration), "")
 		</div>
 	}
 }
@@ -73,7 +73,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 	<h3>
 		@helpers.IconFor(rec.WorkoutType.String())
-		{ i18n.T(ctx, "Records for %s", i18n.T(ctx, rec.WorkoutType.StringT())) }
+		{ i18n.T(ctx, "translation.Records_for_s", i18n.T(ctx, rec.WorkoutType.StringT())) }
 	</h3>
 	<table class="workout-info table-auto">
 		<tbody>
@@ -81,7 +81,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "Average speed") }
+						{ i18n.T(ctx, "translation.Average_speed") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
@@ -95,7 +95,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "Average speed (no pause)") }
+						{ i18n.T(ctx, "translation.Average_speed_no_pause") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
@@ -109,7 +109,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("max-speed")
-						{ i18n.T(ctx, "Max speed") }
+						{ i18n.T(ctx, "translation.Max_speed") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
@@ -123,7 +123,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("distance")
-						{ i18n.T(ctx, "Total distance") }
+						{ i18n.T(ctx, "translation.Total_distance") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
@@ -137,7 +137,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("up")
-						{ i18n.T(ctx, "Total up") }
+						{ i18n.T(ctx, "translation.Total_up") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">
@@ -151,7 +151,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				<th>
 					<span>
 						@helpers.IconFor("duration")
-						{ i18n.T(ctx, "Total duration") }
+						{ i18n.T(ctx, "translation.Total_duration") }
 					</span>
 				</th>
 				<td class="font-mono whitespace-nowrap">{ helpers.HumanDuration(rec.Duration.Value) }</td>

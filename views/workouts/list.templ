@@ -17,17 +17,17 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 			<div class="justify-end mr-2">
 				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-add")) }>
 					@helpers.IconFor("add")
-					{ i18n.T(ctx, "Add workout") }
+					{ i18n.T(ctx, "translation.Add_workout") }
 				</a>
 			</div>
 		</div>
 		<details class="inner-form" open?={ filters.Active }>
-			<summary class="cursor-pointer">{ i18n.T(ctx, "Filter workouts") }</summary>
+			<summary class="cursor-pointer">{ i18n.T(ctx, "translation.Filter_workouts") }</summary>
 			<form id="filters" method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
 				<input type="hidden" id="active" name="active" value="true"/>
-				<label for="type">{ i18n.T(ctx, "Type") }</label>
+				<label for="type">{ i18n.T(ctx, "translation.Type") }</label>
 				<select id="type" name="type">
-					<option value="">{ i18n.T(ctx, "All") }</option>
+					<option value="">{ i18n.T(ctx, "translation.All") }</option>
 					for _, wt := range helpers.WorkoutTypes() {
 						<option
 							value={ wt.String() }
@@ -37,7 +37,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</option>
 					}
 				</select>
-				<label for="since">{ i18n.T(ctx, "Last") }</label>
+				<label for="since">{ i18n.T(ctx, "translation.Last") }</label>
 				<select id="since" name="since">
 					for _, opt := range helpers.FilterOptions() {
 						<option value={ opt } selected?={ opt ==  filters.Since }>
@@ -45,7 +45,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</option>
 					}
 				</select>
-				<label for="order_by">{ i18n.T(ctx, "Sort by") }</label>
+				<label for="order_by">{ i18n.T(ctx, "translation.Sort_by") }</label>
 				<select id="order_by" name="order_by">
 					for _, o := range helpers.OrderByOptions() {
 						<option value={ o.Key } selected?={ o.Key ==  filters.OrderBy }>
@@ -60,16 +60,16 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</option>
 					}
 				</select>
-				<button type="submit">{ i18n.T(ctx, "Filter") }</button>
+				<button type="submit">{ i18n.T(ctx, "translation.Filter") }</button>
 			</form>
 		</details>
 		<table class="workout-info">
 			<thead>
 				<tr>
 					<th></th>
-					<th>{ i18n.T(ctx, "Name") }</th>
-					<th>{ i18n.T(ctx, "Date") }</th>
-					<th class="hidden lg:table-cell">{ i18n.T(ctx, "Details") }</th>
+					<th>{ i18n.T(ctx, "translation.Name") }</th>
+					<th>{ i18n.T(ctx, "translation.Date") }</th>
+					<th class="hidden lg:table-cell">{ i18n.T(ctx, "translation.Details") }</th>
 					<th class="hidden sm:table-cell"></th>
 				</tr>
 			</thead>
@@ -94,7 +94,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</th>
 						<td class="hidden sm:table-cell">
 							if w.Dirty {
-								<span title={ i18n.T(ctx, "refresh in progress") }>
+								<span title={ i18n.T(ctx, "translation.refresh_in_progress") }>
 									@helpers.IconFor("refresh")
 								</span>
 							}

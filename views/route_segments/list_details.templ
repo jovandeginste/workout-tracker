@@ -8,11 +8,11 @@ import (
 
 templ listDetails(s *database.RouteSegment) {
 	<div class="route_segment_list_details flex flex-wrap gap-3">
-		<div class="table-cell" title={ i18n.T(ctx, "Location") }>
+		<div class="table-cell" title={ i18n.T(ctx, "translation.Location") }>
 			@helpers.IconFor("location")
 			{ s.Address() }
 		</div>
-		<div class="table-cell" title={ i18n.T(ctx, "Matches") }>
+		<div class="table-cell" title={ i18n.T(ctx, "translation.Matches") }>
 			@helpers.IconFor("totals")
 			{ helpers.A2S(len(s.RouteSegmentMatches)) }
 		</div>

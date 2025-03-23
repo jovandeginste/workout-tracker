@@ -18,15 +18,15 @@ templ List(equipment []*database.Equipment) {
 			<div class="justify-end mr-2">
 				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
 					@helpers.IconFor("add")
-					<span>{ i18n.T(ctx, "Add equipment") }</span>
+					<span>{ i18n.T(ctx, "translation.Add_equipment") }</span>
 				</a>
 			</div>
 		</div>
 		<table class="equipment-info">
 			<thead>
 				<tr>
-					<th>{ i18n.T(ctx, "Name") }</th>
-					<th>{ i18n.T(ctx, "Active") }</th>
+					<th>{ i18n.T(ctx, "translation.Name") }</th>
+					<th>{ i18n.T(ctx, "translation.Active") }</th>
 					<th>{ i18n.T(ctx, "menu.Workouts") }</th>
 					<th></th>
 				</tr>
@@ -55,7 +55,7 @@ templ List(equipment []*database.Equipment) {
 
 templ actions(e *database.Equipment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "edit") }>
+		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
@@ -66,7 +66,7 @@ templ actions(e *database.Equipment) {
 			onclick="openModal('modalConfirmDelete', this)"
 			data-id={ helpers.A2S(e.ID) }
 			class="dangerous"
-			title={ i18n.T(ctx, "delete") }
+			title={ i18n.T(ctx, "translation.delete") }
 		>
 			<a>
 				@helpers.IconFor("delete")
@@ -88,10 +88,10 @@ templ actions(e *database.Equipment) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "misc.equipment")) }</h3>
+				<h3>{ i18n.T(ctx, "translation.Are_you_sure_you_want_to_delete_this_s", i18n.T(ctx, "misc.equipment")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-delete", e.ID)) }>
-						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>
+						<button class="confirm">{ i18n.T(ctx, "translation.Continue") }</button>
 					</form>
 					<form onsubmit="return false">
 						<button
@@ -99,7 +99,7 @@ templ actions(e *database.Equipment) {
 							data-id={ helpers.A2S(e.ID) }
 							class="cancel"
 						>
-							{ i18n.T(ctx, "Cancel") }
+							{ i18n.T(ctx, "translation.Cancel") }
 						</button>
 					</form>
 				</div>

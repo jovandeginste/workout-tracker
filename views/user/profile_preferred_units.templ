@@ -18,16 +18,16 @@ templ profilePreferredUnits() {
 					<th>
 						<label for="speed">
 							@helpers.IconFor("speed")
-							{ i18n.T(ctx, "Speed") }
+							{ i18n.T(ctx, "translation.Speed") }
 						</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="speed" name="speed">
 							<option value="kph" selected?={ pu.Speed() == "kph" }>
-								{ i18n.T(ctx, "units.kilometers per hour") }
+								{ i18n.T(ctx, "units.kilometers_per_hour") }
 							</option>
 							<option value="mph" selected?={ pu.Speed() == "mph" }>
-								{ i18n.T(ctx, "units.miles per hour") }
+								{ i18n.T(ctx, "units.miles_per_hour") }
 							</option>
 						</select>
 					</td>
@@ -36,7 +36,7 @@ templ profilePreferredUnits() {
 					<th>
 						<label for="distance">
 							@helpers.IconFor("distance")
-							{ i18n.T(ctx, "Distance") }
+							{ i18n.T(ctx, "translation.Distance") }
 						</label>
 					</th>
 					<td>
@@ -54,7 +54,7 @@ templ profilePreferredUnits() {
 					<th>
 						<label for="elevation">
 							@helpers.IconFor("elevation")
-							{ i18n.T(ctx, "Elevation") }
+							{ i18n.T(ctx, "translation.Elevation") }
 						</label>
 					</th>
 					<td>
@@ -72,7 +72,7 @@ templ profilePreferredUnits() {
 					<th>
 						<label for="weight">
 							@helpers.IconFor("weight")
-							{ i18n.T(ctx, "Weight") }
+							{ i18n.T(ctx, "translation.Weight") }
 						</label>
 					</th>
 					<td>
@@ -90,7 +90,7 @@ templ profilePreferredUnits() {
 					<th>
 						<label for="height">
 							@helpers.IconFor("height")
-							{ i18n.T(ctx, "Height") }
+							{ i18n.T(ctx, "translation.Height") }
 						</label>
 					</th>
 					<td>
@@ -107,7 +107,7 @@ templ profilePreferredUnits() {
 				<tr>
 					<td></td>
 					<td>
-						<button id="update-preferred-units" type="submit">{ i18n.T(ctx, "user.profile.Update preferred units") }</button>
+						<button id="update-preferred-units" type="submit">{ i18n.T(ctx, "user.profile.update_preferred_units") }</button>
 					</td>
 				</tr>
 			</tbody>
@@ -117,7 +117,7 @@ templ profilePreferredUnits() {
 
 templ profileTotalsShow(uwt *database.WorkoutType) {
 	<select class="input-ellipsis" id="totals_show" name="totals_show">
-		<option value="auto">{ i18n.T(ctx, "Auto-detect") }</option>
+		<option value="auto">{ i18n.T(ctx, "translation.Autodetect") }</option>
 		for _, wt := range helpers.WorkoutTypes() {
 			if wt.IsDistance() {
 				<option value={ wt.String() } selected?={ wt.String() == uwt.String() }>

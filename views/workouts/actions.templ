@@ -10,7 +10,7 @@ import (
 templ Actions(w *database.Workout) {
 	if w.HasFile() {
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get">
-			<button class="download" title={ i18n.T(ctx, "download") }>
+			<button class="download" title={ i18n.T(ctx, "translation.download") }>
 				<a>
 					@helpers.IconFor("download")
 				</a>
@@ -18,7 +18,7 @@ templ Actions(w *database.Workout) {
 		</form>
 	}
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-edit", w.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "edit") }>
+		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
@@ -32,7 +32,7 @@ templ Actions(w *database.Workout) {
 				type="text"
 				name="public_uuid"
 				id="public_uuid"
-				data-notice={ i18n.T(ctx, "Publicly shareable link was copied to clipboard") }
+				data-notice={ i18n.T(ctx, "translation.Publicly_shareable_link_was_copied_to_clipboard") }
 				class="hidden"
 				value={ helpers.RouteFor(ctx, "share", w.PublicUUID) }
 			/>
@@ -42,7 +42,7 @@ templ Actions(w *database.Workout) {
       </script>
 			<button
 				class="share"
-				title={ i18n.T(ctx, "Copy publicly shareable link") }
+				title={ i18n.T(ctx, "translation.Copy_publicly_shareable_link") }
 			>
 				<a>
 					@helpers.IconFor("share")
@@ -53,7 +53,7 @@ templ Actions(w *database.Workout) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-share", w.ID)) } method="post">
 		<button
 			class="share dangerous"
-			title={ i18n.T(ctx, "(Re)generate publicly shareable link") }
+			title={ i18n.T(ctx, "translation.Regenerate_publicly_shareable_link") }
 		>
 			<a>
 				@helpers.IconFor("generate-share")
@@ -62,14 +62,14 @@ templ Actions(w *database.Workout) {
 	</form>
 	if w.HasFile() {
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-refresh", w.ID)) } method="post">
-			<button title={ i18n.T(ctx, "refresh") }>
+			<button title={ i18n.T(ctx, "translation.refresh") }>
 				<a>
 					@helpers.IconFor("refresh")
 				</a>
 			</button>
 		</form>
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID)) } method="get">
-			<button title={ i18n.T(ctx, "create route segment") }>
+			<button title={ i18n.T(ctx, "translation.create_route_segment") }>
 				<a>
 					@helpers.IconFor("route-segment")
 				</a>
@@ -81,7 +81,7 @@ templ Actions(w *database.Workout) {
 			onclick="openModal('modalConfirmDelete', this)"
 			data-id={ helpers.A2S(w.ID) }
 			class="dangerous"
-			title={ i18n.T(ctx, "delete") }
+			title={ i18n.T(ctx, "translation.delete") }
 		>
 			<a>
 				@helpers.IconFor("delete")
@@ -103,10 +103,10 @@ templ Actions(w *database.Workout) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "Are you sure you want to delete this %s?", i18n.T(ctx, "misc.workout")) }</h3>
+				<h3>{ i18n.T(ctx, "translation.Are_you_sure_you_want_to_delete_this_s", i18n.T(ctx, "misc.workout")) }</h3>
 				<div class="flex">
 					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-delete", w.ID)) }>
-						<button class="confirm">{ i18n.T(ctx, "Continue") }</button>
+						<button class="confirm">{ i18n.T(ctx, "translation.Continue") }</button>
 					</form>
 					<form onsubmit="return false">
 						<button
@@ -114,7 +114,7 @@ templ Actions(w *database.Workout) {
 							data-id={ helpers.A2S(w.ID) }
 							class="cancel"
 						>
-							{ i18n.T(ctx, "Cancel") }
+							{ i18n.T(ctx, "translation.Cancel") }
 						</button>
 					</form>
 				</div>

@@ -77,11 +77,11 @@ func Heatmap(workouts []*database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "Streets")).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templ.JSONScript("i18n-streets", i18n.T(ctx, "translation.Streets")).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "Aerial")).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templ.JSONScript("i18n-aerial", i18n.T(ctx, "translation.Aerial")).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

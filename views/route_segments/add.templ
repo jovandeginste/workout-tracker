@@ -10,12 +10,12 @@ templ Add() {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("route-segment-add")
-			{ i18n.T(ctx, "Add route segment") }
+			{ i18n.T(ctx, "translation.Add_route_segment") }
 		</h2>
 		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "Use a file") }</h3>
+					<h3>{ i18n.T(ctx, "translation.Use_a_file") }</h3>
 					<form
 						method="post"
 						action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segments-create")) }
@@ -24,7 +24,7 @@ templ Add() {
 						<table class="sm:table-fixed">
 							<tbody>
 								<tr>
-									<td><label for="file">{ i18n.T(ctx, "File") }</label></td>
+									<td><label for="file">{ i18n.T(ctx, "translation.File") }</label></td>
 									<td>
 										<input
 											type="file"
@@ -37,7 +37,7 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="notes">{ i18n.T(ctx, "Notes") }</label>
+										<label for="notes">{ i18n.T(ctx, "translation.Notes") }</label>
 									</td>
 									<td>
 										<textarea
@@ -54,7 +54,7 @@ templ Add() {
 									<td></td>
 									<td>
 										<button type="submit">
-											{ i18n.T(ctx, "Add route segment") }
+											{ i18n.T(ctx, "translation.Add_route_segment") }
 										</button>
 									</td>
 								</tr>
@@ -65,8 +65,8 @@ templ Add() {
 			</div>
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "Resources") }</h3>
-					<div>{ i18n.T(ctx, "You can find inspiration here:") }</div>
+					<h3>{ i18n.T(ctx, "translation.Resources") }</h3>
+					<div>{ i18n.T(ctx, "translation.You_can_find_inspiration_here") }</div>
 					<ul>
 						<li><a target="_blank" href="https://runnermaps.nl/">RunnerMaps</a></li>
 						<li><a target="_blank" href="https://www.plotaroute.com/">plotaroute.com - Free Route Planner for Outdoor Pursuits</a></li>

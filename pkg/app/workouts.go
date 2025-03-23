@@ -202,7 +202,7 @@ func (a *App) addWorkout(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", workout.ID), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' has been created", workout.Name)
+	a.addNoticeT(c, "translation.The_workout_s_has_been_created", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -241,7 +241,7 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' has been updated", workout.Name)
+	a.addNoticeT(c, "translation.The_workout_s_has_been_updated", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }

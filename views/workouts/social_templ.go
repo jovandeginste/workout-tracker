@@ -23,11 +23,11 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 
 	return i18n.T(
 		ctx,
-		`I completed a workout: %s`,
+		`translation.i_completed_a_workout_s`,
 		i18n.T(ctx, w.Type.StringT()),
 	) + " " + i18n.T(
 		ctx,
-		`It took me %s to go %s I averaged %s`,
+		`translation.it_took_me_s_to_go_s_i_averaged_s`,
 		helpers.HumanDuration(w.TotalDuration()),
 		helpers.HumanDistance(ctx, w.TotalDistance())+" "+preferredUnits.Distance(),
 		helpers.HumanSpeed(ctx, w.AverageSpeed())+" "+preferredUnits.Speed(),
@@ -35,7 +35,7 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 }
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
 	tags := []string{
-		"misc.workout",
+		"workout",
 		i18n.T(ctx, w.Type.StringT()),
 	}
 

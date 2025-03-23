@@ -1,112 +1,5 @@
 ---
 fa:
-  Admin: مدیر
-  Average per minute: میانگین هر دقیقه
-  Create a new account: ساخت یک حساب جدید
-  End: پایان
-  Logout: خروج
-  Manage users: مدیریت کاربر‌ها
-  Est calories burned: تخمین کالری سوزانده شده
-  Manual: دستی
-  Notes: یادداشت‌ها
-  Disable account registration: غیرفعال‌سازی عضویت حساب کاربری
-  Leave blank to keep current password: برای حفظ رمز عبور فعلی خالی رهایش کنید
-  Active: فعال
-  Add a workout: اضافه کردن یک تمرین
-  Add equipment: اضافه کردن تجهیزات
-  Add workout: افزودن تمرین
-  Add workouts: افزودن تمرین‌ها
-  All workouts will be refreshed in the coming minutes: همه تمرین‌ها در دقایق پیش
-    رو نوسازی خواهند شد.
-  Application settings: تنظیمات برنامه
-  Are you sure you want to delete this %s?: اطمینان دارید که می‌خواهید %s را حذف کنید؟
-  Auto-detect: تشخیص خودکار
-  Average speed: میانگین سرعت
-  Average speed (no pause): میانگین سرعت (بدون توقف)
-  API key updated: کلید API بروز شد
-  File: فایل
-  Heart rate: ضربان قلب
-  'I completed a workout: %s': 'من یک تمرین را تمام کردم: %s.'
-  The workout '%s' has been deleted: تمرین '%s' حذف شد.
-  Updated: بروزرسانی شد
-  Use a file: استفاده از یک فایل
-  the configuration file: فایل پیکربندی
-  up: بالا
-  user:
-    profile:
-      Your settings: تنظیمات شما
-      Auto import directory: وارد کردن خودکار پوشه
-      Disable social sharing buttons: غیرفعال‌سازی دکمه‌های اشتراک گذاری در شبکه‌های
-        اجتماعی
-      Enable API access: فعال سازی دسترسی API
-      Language: زبان
-      Refresh all your workouts: نوسازی همه تمرین‌هایتان
-      Show full date by default: نمایش تاریخ کامل به صورت پیشفرض
-      Time zone: منطقه زمانی
-      Update profile: بروزرسانی نمایه
-      copy to clipboard: کپی به کلیپ‌برد
-      generate a new API key: ساخت یک کلید API جدید
-      show/hide: نمایش/پنهان
-    update: بروزرسانی کاربر
-  workouts: تمرین‌ها
-  Bidirectional: دوسویه
-  Cancel: لغو
-  Continue: ادامه
-  Created: ساخته شده
-  Date: تاریخ
-  Default workout types: نوع تمرین پیشفرض
-  Description: توضیحات
-  Details: جزئیات
-  Distance: مسافت
-  Duration: بازه زمانی
-  Elevation: ارتفاع
-  Estimated based on the activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
-  Location: مکان
-  Manage: مدیریت
-  Manage user '%s': مدیریت کاربر '%s'
-  Max elevation: حداکثر ارتفاع
-  Max speed: حداکثر سرعت
-  Min elevation: حداقل ارتفاع
-  Name: نام
-  Other users: سایر کاربران
-  Password: رمز عبور
-  Please help translate via Weblate: لطفا در ترجمه از طریق Weblate کمک کنید
-  Profile updated: نمایه بروزرسانی شد
-  Recent activity: فعالیت‌های اخیر
-  Register: عضویت
-  Reset changes: بازنشانی تغییرات
-  Sign in: ورود
-  Since: از
-  Source: منبع
-  Speed: سرعت
-  Start: شروع
-  The user '%s' has been deleted: کاربر '%s' پاک شد.
-  The user '%s' has been updated: کاربر '%s' بروزرسانی شد.
-  The workout '%s' has been refreshed: تمرین '%s' نوسازی شد.
-  The workout '%s' has been updated: تمرین'%s' بروزرسانی شد.
-  'These settings may be overwritten by:': 'این تنظیمات ممکن است باز نویسی شوند توسط:'
-  Time: زمان
-  Total distance: مسافت کل
-  Type: نوع
-  User: کاربر
-  Username: نام کاربری
-  Username (email): نام کاربری (ایمیل)
-  Weight: وزن
-  Welcome!: خوش‌آمدید!
-  Workout: تمرین
-  Workout type: نوع تمرین
-  Your account has been created, but needs to be activated: حساب شما ساخته شد اما
-    نیاز به فعال‌سازی دارد.
-  Your profile: نمایه شما
-  delete: حذف
-  distance: مسافت
-  download: دریافت
-  edit: ویرایش
-  environment variables: متغیر‌های محیطی
-  how to use: چگونه استفاده کنید
-  refresh in progress: در حال نوسازی
-  no equipment: بدون تجهیزات
-  refresh: نوسازی
   notices:
     workouts_added:
       one: "%{count} تمرین جدید اضافه شد: %{list}"
@@ -124,7 +17,7 @@ fa:
     equipment: تجهیزات
   sports:
     walking: پیاده‌روی
-    weight lifting: وزنه برداری
+    weight-lifting: وزنه برداری
     cycling: دوچرخه سواری
     golfing: بازی گلف
     push-ups: شنای سوئدی
@@ -142,11 +35,119 @@ fa:
     meters: متر
     miles: مایل
     pounds: پوند
-    kilometers per hour: کیلومتر در ساعت
-    miles per hour: مایل در ساعت
-  workout:
-    update: بروزرسانی تمیرین
-  equipment:
-    update: بروزرسانی تجهیزات
+    kilometers_per_hour: کیلومتر در ساعت
+    miles_per_hour: مایل در ساعت
   settings:
     update: بروزرسانی تنظیمات
+  translation:
+    API_key_updated: کلید API بروز شد
+    Active: فعال
+    Add_a_workout: اضافه کردن یک تمرین
+    Add_equipment: اضافه کردن تجهیزات
+    Add_workout: افزودن تمرین
+    Add_workouts: افزودن تمرین‌ها
+    Admin: مدیر
+    All_workouts_will_be_refreshed_in_the_coming_minutes: همه تمرین‌ها در دقایق پیش
+      رو نوسازی خواهند شد.
+    Application_settings: تنظیمات برنامه
+    Are_you_sure_you_want_to_delete_this_s: اطمینان دارید که می‌خواهید %s را حذف کنید؟
+    Autodetect: تشخیص خودکار
+    Average_per_minute: میانگین هر دقیقه
+    Average_speed: میانگین سرعت
+    Average_speed_no_pause: میانگین سرعت (بدون توقف)
+    Bidirectional: دوسویه
+    Cancel: لغو
+    Continue: ادامه
+    Create_a_new_account: ساخت یک حساب جدید
+    Created: ساخته شده
+    Date: تاریخ
+    Default_workout_types: نوع تمرین پیشفرض
+    Description: توضیحات
+    Details: جزئیات
+    Disable_account_registration: غیرفعال‌سازی عضویت حساب کاربری
+    Distance: مسافت
+    Duration: بازه زمانی
+    Elevation: ارتفاع
+    End: پایان
+    Est_calories_burned: تخمین کالری سوزانده شده
+    Estimated_based_on_the_activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
+    File: فایل
+    Heart_rate: ضربان قلب
+    Leave_blank_to_keep_current_password: برای حفظ رمز عبور فعلی خالی رهایش کنید
+    Location: مکان
+    Logout: خروج
+    Manage: مدیریت
+    Manage_user_s: مدیریت کاربر '%s'
+    Manage_users: مدیریت کاربر‌ها
+    Manual: دستی
+    Max_elevation: حداکثر ارتفاع
+    Max_speed: حداکثر سرعت
+    Min_elevation: حداقل ارتفاع
+    Name: نام
+    Notes: یادداشت‌ها
+    Other_users: سایر کاربران
+    Password: رمز عبور
+    Please_help_translate_via_Weblate: لطفا در ترجمه از طریق Weblate کمک کنید
+    Profile_updated: نمایه بروزرسانی شد
+    Recent_activity: فعالیت‌های اخیر
+    Register: عضویت
+    Reset_changes: بازنشانی تغییرات
+    Sign_in: ورود
+    Since: از
+    Source: منبع
+    Speed: سرعت
+    Start: شروع
+    The_user_s_has_been_deleted: کاربر '%s' پاک شد.
+    The_user_s_has_been_updated: کاربر '%s' بروزرسانی شد.
+    The_workout_s_has_been_deleted: تمرین '%s' حذف شد.
+    The_workout_s_has_been_refreshed: تمرین '%s' نوسازی شد.
+    The_workout_s_has_been_updated: تمرین'%s' بروزرسانی شد.
+    These_settings_may_be_overwritten_by: 'این تنظیمات ممکن است باز نویسی شوند توسط:'
+    Time: زمان
+    Total_distance: مسافت کل
+    Type: نوع
+    Updated: بروزرسانی شد
+    Use_a_file: استفاده از یک فایل
+    User: کاربر
+    Username: نام کاربری
+    Username_email: نام کاربری (ایمیل)
+    Weight: وزن
+    Welcome: خوش‌آمدید!
+    Workout: تمرین
+    Workout_type: نوع تمرین
+    Your_account_has_been_created_but_needs_to_be_activated: حساب شما ساخته شد اما
+      نیاز به فعال‌سازی دارد.
+    Your_profile: نمایه شما
+    delete: حذف
+    distance: مسافت
+    download: دریافت
+    edit: ویرایش
+    environment_variables: متغیر‌های محیطی
+    equipment:
+      update: بروزرسانی تجهیزات
+    how_to_use: چگونه استفاده کنید
+    no_equipment: بدون تجهیزات
+    refresh: نوسازی
+    refresh_in_progress: در حال نوسازی
+    the_configuration_file: فایل پیکربندی
+    up: بالا
+    workouts: تمرین‌ها
+    i_completed_a_workout_s: 'من یک تمرین را تمام کردم: %s.'
+  user:
+    profile:
+      your_settings: تنظیمات شما
+      auto_import_directory: وارد کردن خودکار پوشه
+      disable_social_sharing_buttons: غیرفعال‌سازی دکمه‌های اشتراک گذاری در شبکه‌های
+        اجتماعی
+      enable_api_access: فعال سازی دسترسی API
+      Language: زبان
+      refresh_all_your_workouts: نوسازی همه تمرین‌هایتان
+      show_full_date_by_default: نمایش تاریخ کامل به صورت پیشفرض
+      time_zone: منطقه زمانی
+      update_profile: بروزرسانی نمایه
+      copy_to_clipboard: کپی به کلیپ‌برد
+      generate_a_new_api_key: ساخت یک کلید API جدید
+      show_hide: نمایش/پنهان
+    update: بروزرسانی کاربر
+  workout:
+    update: بروزرسانی تمیرین

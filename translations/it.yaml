@@ -1,116 +1,5 @@
 ---
 it:
-  API key updated: Chiave API aggiornata
-  Actions: Azioni
-  Active: Attivo
-  Add a workout: Aggiungi un allenamento
-  Add equipment: Aggiungi attrezzatura
-  Add workout: Aggiungi allenamento
-  Add workouts: Aggiungi allenamenti
-  Admin: Amministratore
-  All workouts will be refreshed in the coming minutes: Tutti gli allenamenti verranno
-    aggiornati nei prossimi minuti.
-  Application settings: Impostazioni dell'applicazione
-  Are you sure you want to delete this %s?: Sei sicuro di voler eliminare questo %s?
-  Auto-detect: Rilevamento automatico
-  Average speed: Velocità media
-  Average speed (no pause): Velocità media (senza pausa)
-  Average tempo: Tempo medio
-  Average tempo (no pause): Tempo medio (senza pausa)
-  Cadence: Cadenza
-  Cancel: Annulla
-  Continue: Continua
-  Create a new account: Crea un nuovo account
-  Created: Creato
-  Dashboard for %s: Cruscotto per %s
-  Date: Data
-  Default workout types: Tipi di allenamento predefiniti
-  Description: Descrizione
-  Disable account registration: Disabilita la registrazione dell'account
-  Distance: Distanza
-  Duration: Durata
-  Elevation: Elevazione
-  Heart rate: Frequenza cardiaca
-  'I completed a workout: %s': 'Ho completato un allenamento: %s.'
-  It took me %s to go %s I averaged %s: Mi ci è voluto %s per andare %s. Ho mantenuto
-    una media di %s.
-  Leave blank to keep current password: Lascia vuoto per mantenere la password attuale
-  Location: Posizione
-  Logout: Esci
-  Manage: Gestisci
-  Manage user '%s': Gestisci l'utente '%s'
-  Manage users: Gestisci utenti
-  Manual: Manualmente
-  Max elevation: Elevazione massima
-  Max speed: Velocità massima
-  Min elevation: Elevazione minima
-  Name: Nome
-  Notes: Note
-  Other users: Altri utenti
-  Password: Password
-  Profile updated: Profilo aggiornato
-  Recent activity: Attività recente
-  Records for %s: Registri per %s
-  Register: Registrati
-  Repetitions: Ripetizioni
-  Sign in: Accedi
-  Source: Fonte
-  Speed: Velocità
-  Tempo: Tempo
-  The user '%s' has been deleted: L'utente '%s' è stato eliminato.
-  The user '%s' has been updated: L'utente '%s' è stato aggiornato.
-  The workout '%s' has been deleted: L'allenamento '%s' è stato eliminato.
-  The workout '%s' has been refreshed: L'allenamento '%s' è stato aggiornato.
-  The workout '%s' has been updated: L'allenamento '%s' è stato aggiornato.
-  'These settings may be overwritten by:': 'Queste impostazioni possono essere sovrascritte
-    da:'
-  Time: Tempo
-  Time paused: Tempo in pausa
-  Total distance: Distanza totale
-  Total down: Discesa totale
-  Total duration: Durata totale
-  Total repetitions: Ripetizioni totali
-  Total up: Salita totale
-  Totals: Totali
-  Type: Tipo
-  Use a file: Usa un file
-  Username: Nome utente
-  Username (email): Nome utente (email)
-  Weight: Peso
-  Welcome!: Benvenuto!
-  Workout type: Tipo di allenamento
-  Your account has been created, but needs to be activated: Il tuo account è stato
-    creato, ma deve essere attivato.
-  Your profile: Il tuo profilo
-  delete: elimina
-  distance: distanza
-  download: scarica
-  duration: durata
-  edit: modifica
-  environment variables: variabili di ambiente
-  how to use: Come utilizzare
-  refresh: aggiorna
-  the configuration file: Il file di configurazione
-  up: Salita
-  user:
-    profile:
-      Auto import directory: Directory di importazione automatica
-      Disable social sharing buttons: Disabilita i pulsanti di condivisione sui social
-        media
-      Enable API access: Abilita l'accesso API
-      Language: Lingua
-      Preferred units: Unità preferite
-      Refresh all your workouts: Aggiorna tutti i tuoi allenamenti
-      Show full date by default: Mostra data completa per default
-      Time zone: Fuso orario
-      Totals to show on dashboard: Totali da mostrare sul cruscotto
-      Update preferred units: Aggiorna unità preferite
-      Update profile: Aggiorna profilo
-      copy to clipboard: copia negli appunti
-      generate a new API key: Genera una nuova chiave API
-      show/hide: mostra/nascondi
-    update: Aggiorna utente
-  workouts: allenamenti
   alerts:
     workouts_added:
       one: 'Riscontrati %{count} problemi durante l''aggiunta degli allenamenti: %{list}'
@@ -141,12 +30,124 @@ it:
     meters: metri
     miles: miglia
     pounds: libbre
-    kilometers per hour: chilometri all'ora
-    miles per hour: miglia all'ora
+    kilometers_per_hour: chilometri all'ora
+    miles_per_hour: miglia all'ora
   settings:
     update: Aggiorna impostazioni
-  workout:
-    update: Aggiorna allenamento
   misc:
     equipment: attrezzatura
     workout: Allenamento
+  translation:
+    API_key_updated: Chiave API aggiornata
+    Actions: Azioni
+    Active: Attivo
+    Add_a_workout: Aggiungi un allenamento
+    Add_equipment: Aggiungi attrezzatura
+    Add_workout: Aggiungi allenamento
+    Add_workouts: Aggiungi allenamenti
+    Admin: Amministratore
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Tutti gli allenamenti verranno
+      aggiornati nei prossimi minuti.
+    Application_settings: Impostazioni dell'applicazione
+    Are_you_sure_you_want_to_delete_this_s: Sei sicuro di voler eliminare questo %s?
+    Autodetect: Rilevamento automatico
+    Average_speed: Velocità media
+    Average_speed_no_pause: Velocità media (senza pausa)
+    Average_tempo: Tempo medio
+    Average_tempo_no_pause: Tempo medio (senza pausa)
+    Cadence: Cadenza
+    Cancel: Annulla
+    Continue: Continua
+    Create_a_new_account: Crea un nuovo account
+    Created: Creato
+    Dashboard_for_s: Cruscotto per %s
+    Date: Data
+    Default_workout_types: Tipi di allenamento predefiniti
+    Description: Descrizione
+    Disable_account_registration: Disabilita la registrazione dell'account
+    Distance: Distanza
+    Duration: Durata
+    Elevation: Elevazione
+    Heart_rate: Frequenza cardiaca
+    it_took_me_s_to_go_s_i_averaged_s: Mi ci è voluto %s per andare %s. Ho mantenuto
+      una media di %s.
+    Leave_blank_to_keep_current_password: Lascia vuoto per mantenere la password attuale
+    Location: Posizione
+    Logout: Esci
+    Manage: Gestisci
+    Manage_user_s: Gestisci l'utente '%s'
+    Manage_users: Gestisci utenti
+    Manual: Manualmente
+    Max_elevation: Elevazione massima
+    Max_speed: Velocità massima
+    Min_elevation: Elevazione minima
+    Name: Nome
+    Notes: Note
+    Other_users: Altri utenti
+    Password: Password
+    Profile_updated: Profilo aggiornato
+    Recent_activity: Attività recente
+    Records_for_s: Registri per %s
+    Register: Registrati
+    Repetitions: Ripetizioni
+    Sign_in: Accedi
+    Source: Fonte
+    Speed: Velocità
+    Tempo: Tempo
+    The_user_s_has_been_deleted: L'utente '%s' è stato eliminato.
+    The_user_s_has_been_updated: L'utente '%s' è stato aggiornato.
+    The_workout_s_has_been_deleted: L'allenamento '%s' è stato eliminato.
+    The_workout_s_has_been_refreshed: L'allenamento '%s' è stato aggiornato.
+    The_workout_s_has_been_updated: L'allenamento '%s' è stato aggiornato.
+    These_settings_may_be_overwritten_by: 'Queste impostazioni possono essere sovrascritte
+      da:'
+    Time: Tempo
+    Time_paused: Tempo in pausa
+    Total_distance: Distanza totale
+    Total_down: Discesa totale
+    Total_duration: Durata totale
+    Total_repetitions: Ripetizioni totali
+    Total_up: Salita totale
+    Totals: Totali
+    Type: Tipo
+    Use_a_file: Usa un file
+    Username: Nome utente
+    Username_email: Nome utente (email)
+    Weight: Peso
+    Welcome: Benvenuto!
+    Workout_type: Tipo di allenamento
+    Your_account_has_been_created_but_needs_to_be_activated: Il tuo account è stato
+      creato, ma deve essere attivato.
+    Your_profile: Il tuo profilo
+    delete: elimina
+    distance: distanza
+    download: scarica
+    duration: durata
+    edit: modifica
+    environment_variables: variabili di ambiente
+    how_to_use: Come utilizzare
+    refresh: aggiorna
+    the_configuration_file: Il file di configurazione
+    up: Salita
+    workouts: allenamenti
+    i_completed_a_workout_s: 'Ho completato un allenamento: %s.'
+  user:
+    profile:
+      auto_import_directory: Directory di importazione automatica
+      disable_social_sharing_buttons: Disabilita i pulsanti di condivisione sui
+        social media
+      enable_api_access: Abilita l'accesso API
+      Language: Lingua
+      preferred_units: Unità preferite
+      refresh_all_your_workouts: Aggiorna tutti i tuoi allenamenti
+      show_full_date_by_default: Mostra data completa per default
+      time_zone: Fuso orario
+      totals_to_show_on_dashboard: Totali da mostrare sul cruscotto
+      update_preferred_units: Aggiorna unità preferite
+      update_profile: Aggiorna profilo
+      copy_to_clipboard: copia negli appunti
+      generate_a_new_api_key: Genera una nuova chiave API
+      show_hide: mostra/nascondi
+    update: Aggiorna utente
+  workout:
+    update: Aggiorna allenamento

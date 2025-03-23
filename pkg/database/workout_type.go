@@ -22,7 +22,7 @@ const (
 	WorkoutTypeGolfing       WorkoutType = "golfing"
 	WorkoutTypeHiking        WorkoutType = "hiking"
 	WorkoutTypePushups       WorkoutType = "push-ups"
-	WorkoutTypeWeightLifting WorkoutType = "weight lifting"
+	WorkoutTypeWeightLifting WorkoutType = "weight-lifting"
 
 	WorkoutTypeClassLocation   = "location"
 	WorkoutTypeClassDistance   = "distance"

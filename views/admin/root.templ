@@ -11,19 +11,19 @@ templ Root(users []*database.User) {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor(`admin`)
-			{ i18n.T(ctx, "Manage") }
+			{ i18n.T(ctx, "translation.Manage") }
 		</h2>
 		<div class="inner-form">
 			<h3>
-				{ i18n.T(ctx, "Manage users") } ({ helpers.A2S(len(users)) })
+				{ i18n.T(ctx, "translation.Manage_users") } ({ helpers.A2S(len(users)) })
 			</h3>
 			<table>
 				<thead>
 					<tr>
-						<th>{ i18n.T(ctx, "Username") }</th>
-						<th>{ i18n.T(ctx, "Name") }</th>
-						<th>{ i18n.T(ctx, "Active") }</th>
-						<th>{ i18n.T(ctx, "Admin") }</th>
+						<th>{ i18n.T(ctx, "translation.Username") }</th>
+						<th>{ i18n.T(ctx, "translation.Name") }</th>
+						<th>{ i18n.T(ctx, "translation.Active") }</th>
+						<th>{ i18n.T(ctx, "translation.Admin") }</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -52,12 +52,12 @@ templ Root(users []*database.User) {
 		</div>
 		<div class="inner-form">
 			<h3>
-				{ i18n.T(ctx, "Application settings") }
+				{ i18n.T(ctx, "translation.Application_settings") }
 			</h3>
 			<ul class="note">
-				{ i18n.T(ctx, "These settings may be overwritten by:") }
-				<li>{ i18n.T(ctx, "the configuration file") }</li>
-				<li>{ i18n.T(ctx, "environment variables") }</li>
+				{ i18n.T(ctx, "translation.These_settings_may_be_overwritten_by") }
+				<li>{ i18n.T(ctx, "translation.the_configuration_file") }</li>
+				<li>{ i18n.T(ctx, "translation.environment_variables") }</li>
 			</ul>
 			{{ ac := helpers.AppConfig(ctx) }}
 			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-config-update")) }>
@@ -66,7 +66,7 @@ templ Root(users []*database.User) {
 						<tr>
 							<th>
 								<label for="registration_disabled">
-									{ i18n.T(ctx, "Disable account registration") }
+									{ i18n.T(ctx, "translation.Disable_account_registration") }
 								</label>
 							</th>
 							<td>
@@ -82,7 +82,7 @@ templ Root(users []*database.User) {
 						<tr>
 							<th>
 								<label for="socials_disabled">
-									{ i18n.T(ctx, "user.profile.Disable social sharing buttons") }
+									{ i18n.T(ctx, "user.profile.disable_social_sharing_buttons") }
 								</label>
 							</th>
 							<td>

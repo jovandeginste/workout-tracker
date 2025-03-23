@@ -1,145 +1,6 @@
 ---
 fr:
-  API key updated: Clé API mise à jour
-  Actions: Actions
-  Active: Actif
-  Add a workout: Ajouter un entraînement
-  Add equipment: Ajouter des équipements
-  Add workout: Ajouter un entraînement
-  Add workouts: Ajouter des entraînements
-  Admin: Admin
-  All workouts will be refreshed in the coming minutes: Toutes les séances d'entraînement
-    seront actualisées dans les prochaines minutes.
-  Application settings: Paramètres de l'application
-  Are you sure you want to delete this %s?: Voulez-vous vraiment supprimer ce %s ?
-  Auto-detect: Détection automatique
-  Average speed: Vitesse moyenne
-  Average speed (no pause): Vitesse moyenne (sans pause(s))
-  Average tempo: Allure moyenne
-  Average tempo (no pause): Allure moyenne (sans pause(s))
-  Cancel: Annuler
-  Continue: Continuer
-  Create a new account: Créer un nouveau compte
-  Created: Créé
-  Dashboard for %s: Tableau de bord pour %s
-  Date: Date
-  Default workout types: Types d'entraînement par défaut
-  Disable account registration: Désactiver l'enregistrement des nouveaux utilisateurs
-  Distance: Distance
-  Duration: Durée
-  Elevation: Dénivelé positif
-  File: Fichier
-  Heart rate: Rythme cardiaque
-  'I completed a workout: %s': 'J''ai terminé une séance d''entraînement : %s.'
-  It took me %s to go %s I averaged %s: Il m'a fallu %s pour aller %s. J'ai fait la
-    moyenne de %s.
-  Leave blank to keep current password: Laissez le champ vide pour conserver le mot
-    de passe actuel
-  Location: Emplacement
-  Logout: Déconnexion
-  Manage: Gérer
-  Manage user '%s': Gérer l'utilisateur '%s'
-  Manage users: Gérer les utilisateurs
-  Max elevation: Altitude la plus haute
-  Max speed: Vitesse maximale
-  Min elevation: Altitude la plus basse
-  Name: Nom
-  Notes: Notes
-  Other users: Autres utilisateurs
-  Password: Mot de passe
-  Profile updated: Profil mis à jour
-  Recent activity: Activité récente
-  Records for %s: Enregistrements pour %s
-  Register: S'enregistrer
-  Sign in: Connexion
-  Source: Source
-  Speed: Vitesse
-  Tempo: Allure
-  The user '%s' has been deleted: L'utilisateur '%s' a été supprimé.
-  The user '%s' has been updated: L'utilisateur '%s' a été mis à jour.
-  The workout '%s' has been deleted: L'entraînement '%s' a été supprimé.
-  The workout '%s' has been refreshed: L'entraînement '%s' a été rafraîchi.
-  The workout '%s' has been updated: L'entraînement '%s' a été mis à jour.
-  'These settings may be overwritten by:': 'Ces paramètres peuvent être remplacés
-    par :'
-  Time: Temps
-  Time paused: Temps de pause
-  Total distance: Distance totale
-  Total down: Dénivelé négatif total
-  Total duration: Durée totale
-  Total up: Dénivelé positif total
-  Totals: Totaux
-  Type: Type
-  Username: Nom d'utilisateur
-  Username (email): Nom d'utilisateur (courriel)
-  Welcome!: Bienvenue !
-  Your account has been created, but needs to be activated: Votre compte a été créé,
-    mais doit être activé.
-  Your profile: Votre profil
-  delete: supprimer
-  distance: distance
-  download: télécharger
-  duration: durée
-  edit: éditer
-  environment variables: variables d'environnement
-  how to use: mode d'emploi
-  refresh: rafraîchir
-  the configuration file: le fichier de configuration
-  up: dénivelé positif
-  user:
-    profile:
-      Auto import directory: Importation de répertoire automatique
-      Disable social sharing buttons: Désactiver les boutons de partage sur les réseaux
-        sociaux
-      Enable API access: Activer l'accès à l'API
-      Language: Langue
-      Preferred units: Unités préférées
-      Refresh all your workouts: Rafraîchissez toutes vos séances d'entraînement
-      Show full date by default: Afficher la date complète par défaut
-      Time zone: Fuseau horaire
-      Totals to show on dashboard: Totaux à afficher sur le tableau de bord
-      Update preferred units: Mettre à jour les unités préférées
-      Update profile: Mettre à jour le profil
-      copy to clipboard: copier dans le Presse-papiers
-      generate a new API key: générer une nouvelle clé API
-      show/hide: afficher/masquer
-    update: Mettre à jour l'utilisateur
-  workouts: entraînements
-  Estimated based on the activity: Estimé en fonction de l'activité
-  Matches: Correspondance
-  Start: Début
-  Use a file: Utiliser un fichier
-  Bidirectional: Bidirectionnel
-  create route segment: Créer un segment
-  Please help translate via Weblate: S'il vous plaît, aidez-nous à traduire via Weblate
-  Since: Depuis
-  Weight: Poids
-  Per: Par
-  Details: Détails
-  Total repetitions: Répétitions totales
-  Add route segment: Ajouter un segment
-  Circular: Circulaire
-  End: Fin
-  Extra metrics: Mesures supplémentaires
-  Create route segment: Créer un segment
-  Manual: Manuel
-  Repetitions: Répétitions
-  Reset changes: Annuler les changements
-  Description: Description
-  Cadence: Cadence
-  Average per minute: Moyenne par minute
-  Aerial: Aérien
-  Est calories burned: Est. calories brulées
-  Show map in full width: Afficher la carte en grand format
   Street: Rue
-  Updated: Mis à jour
-  User: Utilisateur
-  Workout: Entrainement
-  Workout type: Type d'entrainement
-  Your progress per %s for the past %s: Votre progression pour %s au cours des %s
-  find matches: Chercher des correspondances
-  no equipment: sans équipement
-  refresh in progress: Actualisation en cours
   alerts:
     workouts_added:
       one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
@@ -159,7 +20,7 @@ fr:
     day: jour
     equipment: équipement
     workout: entraînement
-    route segment: segment
+    route_segment: segment
   sports:
     cycling: cyclisme
     golfing: golf
@@ -170,13 +31,13 @@ fr:
     swimming: natation
     walking: marche
     push-ups: pompes
-    weight lifting: haltérophilie
+    weight-lifting: haltérophilie
   menu:
     Dashboard: Tableau de bord
     Equipment: Équipement
     Statistics: Statistiques
     Workouts: Entraînements
-    Route segments: Segment
+    route_segments: Segment
   units:
     feet: pieds
     kilometers: kilomètres
@@ -184,13 +45,154 @@ fr:
     miles: miles
     kilograms: Kilogrammes
     pounds: livres
-    kilometers per hour: kilomètres par heure
-    miles per hour: miles à l'heure
+    kilometers_per_hour: kilomètres par heure
+    miles_per_hour: miles à l'heure
   settings:
     update: Mettre à jour les paramètres
+  translation:
+    API_key_updated: Clé API mise à jour
+    Actions: Actions
+    Active: Actif
+    Add_a_workout: Ajouter un entraînement
+    Add_equipment: Ajouter des équipements
+    Add_route_segment: Ajouter un segment
+    Add_workout: Ajouter un entraînement
+    Add_workouts: Ajouter des entraînements
+    Admin: Admin
+    Aerial: Aérien
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Toutes les séances d'entraînement
+      seront actualisées dans les prochaines minutes.
+    Application_settings: Paramètres de l'application
+    Are_you_sure_you_want_to_delete_this_s: Voulez-vous vraiment supprimer ce %s ?
+    Autodetect: Détection automatique
+    Average_per_minute: Moyenne par minute
+    Average_speed: Vitesse moyenne
+    Average_speed_no_pause: Vitesse moyenne (sans pause(s))
+    Average_tempo: Allure moyenne
+    Average_tempo_no_pause: Allure moyenne (sans pause(s))
+    Bidirectional: Bidirectionnel
+    Cadence: Cadence
+    Cancel: Annuler
+    Circular: Circulaire
+    Continue: Continuer
+    Create_a_new_account: Créer un nouveau compte
+    Create_route_segment: Créer un segment
+    Created: Créé
+    Dashboard_for_s: Tableau de bord pour %s
+    Date: Date
+    Default_workout_types: Types d'entraînement par défaut
+    Description: Description
+    Details: Détails
+    Disable_account_registration: Désactiver l'enregistrement des nouveaux utilisateurs
+    Distance: Distance
+    Duration: Durée
+    Elevation: Dénivelé positif
+    End: Fin
+    Est_calories_burned: Est. calories brulées
+    Estimated_based_on_the_activity: Estimé en fonction de l'activité
+    Extra_metrics: Mesures supplémentaires
+    File: Fichier
+    Heart_rate: Rythme cardiaque
+    it_took_me_s_to_go_s_i_averaged_s: Il m'a fallu %s pour aller %s. J'ai fait la
+      moyenne de %s.
+    Leave_blank_to_keep_current_password: Laissez le champ vide pour conserver le
+      mot de passe actuel
+    Location: Emplacement
+    Logout: Déconnexion
+    Manage: Gérer
+    Manage_user_s: Gérer l'utilisateur '%s'
+    Manage_users: Gérer les utilisateurs
+    Manual: Manuel
+    Matches: Correspondance
+    Max_elevation: Altitude la plus haute
+    Max_speed: Vitesse maximale
+    Min_elevation: Altitude la plus basse
+    Name: Nom
+    Notes: Notes
+    Other_users: Autres utilisateurs
+    Password: Mot de passe
+    Per: Par
+    Please_help_translate_via_Weblate: S'il vous plaît, aidez-nous à traduire via
+      Weblate
+    Profile_updated: Profil mis à jour
+    Recent_activity: Activité récente
+    Records_for_s: Enregistrements pour %s
+    Register: S'enregistrer
+    Repetitions: Répétitions
+    Reset_changes: Annuler les changements
+    Show_map_in_full_width: Afficher la carte en grand format
+    Sign_in: Connexion
+    Since: Depuis
+    Source: Source
+    Speed: Vitesse
+    Start: Début
+    Tempo: Allure
+    The_user_s_has_been_deleted: L'utilisateur '%s' a été supprimé.
+    The_user_s_has_been_updated: L'utilisateur '%s' a été mis à jour.
+    The_workout_s_has_been_deleted: L'entraînement '%s' a été supprimé.
+    The_workout_s_has_been_refreshed: L'entraînement '%s' a été rafraîchi.
+    The_workout_s_has_been_updated: L'entraînement '%s' a été mis à jour.
+    These_settings_may_be_overwritten_by: 'Ces paramètres peuvent être remplacés par
+      :'
+    Time: Temps
+    Time_paused: Temps de pause
+    Total_distance: Distance totale
+    Total_down: Dénivelé négatif total
+    Total_duration: Durée totale
+    Total_repetitions: Répétitions totales
+    Total_up: Dénivelé positif total
+    Totals: Totaux
+    Type: Type
+    Updated: Mis à jour
+    Use_a_file: Utiliser un fichier
+    User: Utilisateur
+    Username: Nom d'utilisateur
+    Username_email: Nom d'utilisateur (courriel)
+    Weight: Poids
+    Welcome: Bienvenue !
+    Workout: Entrainement
+    Workout_type: Type d'entrainement
+    Your_account_has_been_created_but_needs_to_be_activated: Votre compte a été créé,
+      mais doit être activé.
+    Your_profile: Votre profil
+    Your_progress_per_s_for_the_past_s: Votre progression pour %s au cours des %s
+    create_route_segment: Créer un segment
+    delete: supprimer
+    distance: distance
+    download: télécharger
+    duration: durée
+    edit: éditer
+    environment_variables: variables d'environnement
+    equipment:
+      update: Mettre à jour l'équipement
+    find_matches: Chercher des correspondances
+    how_to_use: mode d'emploi
+    no_equipment: sans équipement
+    refresh: rafraîchir
+    refresh_in_progress: Actualisation en cours
+    route_segment:
+      update: Mettre à jour les segments
+    the_configuration_file: le fichier de configuration
+    up: dénivelé positif
+    workouts: entraînements
+    i_completed_a_workout_s: 'J''ai terminé une séance d''entraînement : %s.'
+  user:
+    profile:
+      auto_import_directory: Importation de répertoire automatique
+      disable_social_sharing_buttons: Désactiver les boutons de partage sur les
+        réseaux sociaux
+      enable_api_access: Activer l'accès à l'API
+      Language: Langue
+      preferred_units: Unités préférées
+      refresh_all_your_workouts: Rafraîchissez toutes vos séances d'entraînement
+      show_full_date_by_default: Afficher la date complète par défaut
+      time_zone: Fuseau horaire
+      totals_to_show_on_dashboard: Totaux à afficher sur le tableau de bord
+      update_preferred_units: Mettre à jour les unités préférées
+      update_profile: Mettre à jour le profil
+      copy_to_clipboard: copier dans le Presse-papiers
+      generate_a_new_api_key: générer une nouvelle clé API
+      show_hide: afficher/masquer
+    update: Mettre à jour l'utilisateur
   workout:
     update: Mettre à jour l'entraînement
-  equipment:
-    update: Mettre à jour l'équipement
-  route segment:
-    update: Mettre à jour les segments
