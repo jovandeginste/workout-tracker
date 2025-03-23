@@ -55,7 +55,7 @@ en:
     Heatmap: Heatmap
     Dashboard: Dashboard
     Equipment: Equipment
-    route_segments: route_segments
+    route_segments: Route segments
     Statistics: Statistics
     Workouts: Workouts
   units:
@@ -67,8 +67,8 @@ en:
     pounds: pounds
     inch: inch
     centimeter: centimeter
-    kilometers_per_hour: kilometers_per_hour
-    miles_per_hour: miles_per_hour
+    kilometers_per_hour: kilometers per hour
+    miles_per_hour: miles per hour
   settings:
     update: Update settings
   translation:
@@ -233,25 +233,25 @@ en:
     i_completed_a_workout_s: "I completed a workout: '%s'."
   user:
     profile:
-      your_settings: your_settings
-      auto_import_directory: auto_import_directory
-      disable_social_sharing_buttons: disable_social_sharing_buttons
-      enable_api_access: enable_api_access
+      your_settings: Your settings
+      auto_import_directory: Auto import directory
+      disable_social_sharing_buttons: Disable social sharing buttons
+      enable_api_access: Enable API access
       Language: Language
-      preferred_units: preferred_units
-      refresh_all_your_workouts: refresh_all_your_workouts
-      show_full_date_by_default: show_full_date_by_default
-      time_zone: time_zone
-      totals_to_show_on_dashboard: totals_to_show_on_dashboard
-      update_preferred_units: update_preferred_units
-      update_profile: update_profile
-      copy_to_clipboard: copy_to_clipboard
-      generate_a_new_api_key: generate_a_new_api_key
-      show_hide: show_hide
+      preferred_units: Preferred units
+      refresh_all_your_workouts: Refresh all your workouts
+      show_full_date_by_default: Show full date by default
+      time_zone: Time zone
+      totals_to_show_on_dashboard: Totals to show on dashboard
+      update_preferred_units: Update preferred units
+      update_profile: Update profile
+      copy_to_clipboard: Copy to clipboard
+      generate_a_new_api_key: Generate a new API key
+      show_hide: show/hide
       Theme: Theme
       Light: Light
       Dark: Dark
-      Browser_System: Browser_System
+      Browser_System: Browser / System
     update: Update user
   workout:
     update: Update workout
