@@ -194,8 +194,6 @@ de:
     duration: Dauer
     edit: bearbeiten
     environment_variables: Umgebungsvariablen
-    equipment:
-      update: Ausrüstung aktualisieren
     find_matches: Übereinstimmungen finden
     how_to_use: Hilfe
     no_equipment: keine Ausrüstung
@@ -254,3 +252,5 @@ de:
     update: Benutzer aktualisieren
   workout:
     update: Training aktualisieren
+  equipment:
+    update: Ausrüstung aktualisieren

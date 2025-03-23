@@ -189,8 +189,6 @@ zh-Hans:
     duration: 持续时间
     edit: 编辑
     environment_variables: 环境变量
-    equipment:
-      update: 更新设备
     find_matches: 查找匹配项
     how_to_use: 如何使用
     no_equipment: 无设备
@@ -249,3 +247,5 @@ zh-Hans:
     update: 更新用户
   workout:
     update: 更新锻炼
+  equipment:
+    update: 更新设备

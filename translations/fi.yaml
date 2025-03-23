@@ -171,8 +171,6 @@ fi:
     duration: kesto
     edit: muokkaa
     environment_variables: ympäristömuuttujat
-    equipment:
-      update: Päivitä välineet
     find_matches: etsi vastaavuudet
     how_to_use: käyttöohjeet
     no_equipment: ei välineitä
@@ -182,28 +180,6 @@ fi:
       update: Päivitä reittiosuus
     the_configuration_file: asetustiedosto
     up: ylös
-    user:
-      profile:
-        auto_import_directory: Automaattinen tuontihakemisto
-        disable_social_sharing_buttons: Poista sosiaalisen median jakopainikkeet käytöstä
-        enable_api_access: Ota API-käyttö käyttöön
-        Language: Kieli
-        preferred_units: Ensisijaiset yksiköt
-        refresh_all_your_workouts: Virkistä kaikki harjoituksesi
-        show_full_date_by_default: Näytä koko päivämäärä oletuksena
-        Theme: Teema
-        Light: Vaalea
-        Dark: Tumma
-        Browser_System: Selain / Järjestelmä
-        time_zone: Aikavyöhyke
-        update_preferred_units: Päivitä ensisijaiset yksiköt
-        update_profile: Päivitä profiili
-        copy_to_clipboard: kopioi leikepöydälle
-        generate_a_new_api_key: luo uusi API-avain
-        show_hide: näytä/piilota
-      update: Päivitä käyttäjä
-    workout:
-      update: Päivitä harjoitus
     workouts: harjoitukset
     ascending: nouseva
     descending: laskeva
@@ -213,3 +189,27 @@ fi:
     You_can_find_inspiration_here: 'Täältä löydät inspiraatiota:'
     The_workout_s_will_be_refreshed_soon: Harjoitus '%s' virkistetään pian…
     i_completed_a_workout_s: 'Suoritin harjoituksen: %s.'
+  equipment:
+    update: Päivitä välineet
+  user:
+    profile:
+      auto_import_directory: Automaattinen tuontihakemisto
+      disable_social_sharing_buttons: Poista sosiaalisen median jakopainikkeet käytöstä
+      enable_api_access: Ota API-käyttö käyttöön
+      Language: Kieli
+      preferred_units: Ensisijaiset yksiköt
+      refresh_all_your_workouts: Virkistä kaikki harjoituksesi
+      show_full_date_by_default: Näytä koko päivämäärä oletuksena
+      Theme: Teema
+      Light: Vaalea
+      Dark: Tumma
+      Browser_System: Selain / Järjestelmä
+      time_zone: Aikavyöhyke
+      update_preferred_units: Päivitä ensisijaiset yksiköt
+      update_profile: Päivitä profiili
+      copy_to_clipboard: kopioi leikepöydälle
+      generate_a_new_api_key: luo uusi API-avain
+      show_hide: näytä/piilota
+    update: Päivitä käyttäjä
+  workout:
+    update: Päivitä harjoitus
