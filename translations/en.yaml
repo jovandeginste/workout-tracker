@@ -196,8 +196,6 @@ en:
     duration: duration
     edit: edit
     environment_variables: environment variables
-    equipment:
-      update: Update equipment
     find_matches: find matches
     how_to_use: how to use
     no_equipment: no equipment
@@ -257,3 +255,5 @@ en:
     update: Update user
   workout:
     update: Update workout
+  equipment:
+    update: Update equipment

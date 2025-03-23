@@ -163,8 +163,6 @@ fr:
     duration: durée
     edit: éditer
     environment_variables: variables d'environnement
-    equipment:
-      update: Mettre à jour l'équipement
     find_matches: Chercher des correspondances
     how_to_use: mode d'emploi
     no_equipment: sans équipement
@@ -196,3 +194,5 @@ fr:
     update: Mettre à jour l'utilisateur
   workout:
     update: Mettre à jour l'entraînement
+  equipment:
+    update: Mettre à jour l'équipement

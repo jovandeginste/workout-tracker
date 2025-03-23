@@ -202,8 +202,6 @@ nl:
     duration: duur
     edit: bewerk
     environment_variables: omgevingsvariabelen
-    equipment:
-      update: Materiaal bijwerken
     find_matches: overeenkomsten zoeken
     how_to_use: hoe te gebruiken
     no_equipment: geen materiaal
@@ -264,3 +262,5 @@ nl:
     update: Gebruiker bijwerken
   workout:
     update: Workout bijwerken
+  equipment:
+    update: Materiaal bijwerken

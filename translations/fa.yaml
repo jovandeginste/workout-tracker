@@ -123,8 +123,6 @@ fa:
     download: دریافت
     edit: ویرایش
     environment_variables: متغیر‌های محیطی
-    equipment:
-      update: بروزرسانی تجهیزات
     how_to_use: چگونه استفاده کنید
     no_equipment: بدون تجهیزات
     refresh: نوسازی
@@ -151,3 +149,5 @@ fa:
     update: بروزرسانی کاربر
   workout:
     update: بروزرسانی تمیرین
+  equipment:
+    update: بروزرسانی تجهیزات

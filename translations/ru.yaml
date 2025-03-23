@@ -158,8 +158,6 @@ ru:
     duration: продолжительность
     edit: редактировать
     environment_variables: переменные окружения
-    equipment:
-      update: Обновить снаряжение
     how_to_use: как использовать
     no_equipment: нет снаряжения
     refresh: обновить
@@ -186,3 +184,5 @@ ru:
     update: Обновить пользователя
   workout:
     update: Обновить тренировку
+  equipment:
+    update: Обновить снаряжение
