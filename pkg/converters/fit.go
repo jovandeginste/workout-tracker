@@ -47,6 +47,10 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 			},
 		}
 
+		if math.IsNaN(p.Latitude) || math.IsNaN(p.Longitude) {
+			continue
+		}
+
 		if a := r.EnhancedAltitudeScaled(); !math.IsNaN(a) {
 			p.Elevation = *gpx.NewNullableFloat64(a)
 		}
