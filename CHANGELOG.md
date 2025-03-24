@@ -1,5 +1,99 @@
 ## What's Changed
 
+- feat(i18n): Enable Polish translation
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#488](https://github.com/jovandeginste/workout-tracker/pull/488)
+  - Translated using Weblate (Polish), by @michal-stelmach
+  - Added translation using Weblate (Polish)
+- feat(i18n): add polish language support, by @jovandeginste, in
+  [#490](https://github.com/jovandeginste/workout-tracker/pull/490)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#487](https://github.com/jovandeginste/workout-tracker/pull/487)
+  - Translated using Weblate (Dutch)
+  - Translated using Weblate (Chinese (Simplified Han script)), by @weblate
+  - Translated using Weblate (Finnish), by @weblate
+  - Translated using Weblate (Dutch), by @weblate
+  - Translated using Weblate (Italian), by @weblate
+  - Translated using Weblate (French), by @weblate
+  - Translated using Weblate (Persian), by @weblate
+  - Translated using Weblate (German), by @weblate
+- fix(i18n): Fix translation mishaps..., by @jovandeginste, in
+  [#486](https://github.com/jovandeginste/workout-tracker/pull/486)
+- fix(db): use bytes type for content fields, by @jovandeginste, in
+  [#485](https://github.com/jovandeginste/workout-tracker/pull/485)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#484](https://github.com/jovandeginste/workout-tracker/pull/484)
+  - Translated using Weblate (Russian), by @michal-stelmach
+- fix(fit): skip invalid coordinates, by @jovandeginste, in
+  [#483](https://github.com/jovandeginste/workout-tracker/pull/483)
+- fix(i18n): Fix refactoring error, by @jovandeginste, in
+  [#482](https://github.com/jovandeginste/workout-tracker/pull/482)
+- Refactor translation keys, by @jovandeginste, in
+  [#478](https://github.com/jovandeginste/workout-tracker/pull/478)
+  - Convert all translation strings to keys, by @jovandeginste
+  - refactor(translations): Remove unused sailboat translation, by
+    @jovandeginste
+  - refactor(translations): Refactor main element names, by @jovandeginste
+  - refactor(translations): Refactor user profile content, by @jovandeginste
+  - refactor(translations): Refactor units and menu items, by @jovandeginste
+  - refactor: translations, by @jovandeginste
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#476](https://github.com/jovandeginste/workout-tracker/pull/476)
+  - Translated using Weblate (Russian), by @sikmir
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (Dutch)
+- chore(deps): bump golangci/golangci-lint-action from 6.5.0 to 6.5.1 in the all
+  group, by @jovandeginste, in
+  [#480](https://github.com/jovandeginste/workout-tracker/pull/480)
+  - chore(deps): bump golangci/golangci-lint-action in the all group, by
+    @dependabot[bot]
+- chore(deps): bump github.com/golang-jwt/jwt/v5 from 5.2.1 to 5.2.2 in the
+  go_modules group, by @jovandeginste, in
+  [#481](https://github.com/jovandeginste/workout-tracker/pull/481)
+  - chore(deps): bump github.com/golang-jwt/jwt/v5 in the go_modules group, by
+    @dependabot[bot]
+- chore(test): Check if all workout types are defined in English, by
+  @jovandeginste, in
+  [#479](https://github.com/jovandeginste/workout-tracker/pull/479)
+- fix(i18n): Re-set the user's requested language after authentication, by
+  @jovandeginste, in
+  [#477](https://github.com/jovandeginste/workout-tracker/pull/477)
+- fix(i18n): Correct ellipsis in translations, by @jovandeginste, in
+  [#475](https://github.com/jovandeginste/workout-tracker/pull/475)
+- chore(translations): Refactor more translations to support pluralization, by
+  @jovandeginste, in
+  [#474](https://github.com/jovandeginste/workout-tracker/pull/474)
+- Add more interpolation to translations, by @jovandeginste, in
+  [#473](https://github.com/jovandeginste/workout-tracker/pull/473)
+  - chore(context): Set context in a middleware, by @jovandeginste
+  - Add more interpolation to translations, by @jovandeginste
+- chore(translations): Use variable interpolation, by @jovandeginste, in
+  [#472](https://github.com/jovandeginste/workout-tracker/pull/472)
+- fix(translations): Fix alert / notification indentation, by @jovandeginste, in
+  [#471](https://github.com/jovandeginste/workout-tracker/pull/471)
+- chore(alerts): Restructure alerts and notification translation strings, by
+  @jovandeginste, in
+  [#470](https://github.com/jovandeginste/workout-tracker/pull/470)
+  - Fix default print of error message, by @jovandeginste
+  - Convert other language alerts and notifications, by @jovandeginste
+  - chore(alerts): Restructure alerts and notification translation strings, by
+    @jovandeginste
+- fix(alerts): Store alerts in session manager, by @jovandeginste, in
+  [#469](https://github.com/jovandeginste/workout-tracker/pull/469)
+- chore(deps): Update all dependencies, by @jovandeginste, in
+  [#468](https://github.com/jovandeginste/workout-tracker/pull/468)
+- chore(simplify): Remove unused variables from the function, by @jovandeginste,
+  in [#467](https://github.com/jovandeginste/workout-tracker/pull/467)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#465](https://github.com/jovandeginste/workout-tracker/pull/465)
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (Dutch)
+- fix(json): Sanitize invalid JSON values from database, by @jovandeginste, in
+  [#466](https://github.com/jovandeginste/workout-tracker/pull/466)
+- chore(docs): Add resources to edit GPX files, by @jovandeginste, in
+  [#464](https://github.com/jovandeginste/workout-tracker/pull/464)
+- Update changelog, by @jovandeginste, in
+  [#463](https://github.com/jovandeginste/workout-tracker/pull/463)
 - feat(workouts): Allow uploading zip and ftb files, by @jovandeginste, in
   [#462](https://github.com/jovandeginste/workout-tracker/pull/462)
 - fix(lint): Rename function consistent with conventions, by @jovandeginste, in
@@ -14,6 +108,10 @@
     @jovandeginste
   - feat(push-ups): Change icon for push-ups, by @jovandeginste
   - feat(ftb): Add support for FitoTrack backup files, by @jovandeginste
+
+## New Contributors
+
+- @michal-stelmach made their first contribution
 
 ## What's Changed in v2.1.1
 
