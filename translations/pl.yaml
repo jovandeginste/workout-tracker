@@ -1,0 +1,259 @@
+misc:
+  month_3: 3 miesiące
+  years_1: 1 rok
+  years_10: 10 lat
+  years_2: 2 lata
+  month_6: 6 miesięcy
+  day_7: 7 dni
+  month: miesiąc
+  day: dzień
+  workout: trening
+  month_1: 1 miesiąc
+  day_15: 15 dni
+  years_5: 5 lat
+  equipment: sprzęt
+  route_segment: odcinek trasy
+  forever: zawsze
+  remove_the_beginning_or_the_ending_of_a_workout: usuń początek lub koniec treningu
+  convert_from_not_yet_supported_file_format: przekonwertuj z jeszcze niewspieranego
+    formatu pliku
+  split_files_with_multiple_tracks: dziel pliki z wieloma ścieżkami
+sports:
+  swimming: pływanie
+  running: bieganie
+  cycling: kolarstwo
+  golfing: gra w golfa
+  push-ups: pompki
+  e-cycling: e-cycling
+  hiking: wędrowanie
+  skiing: narciarstwo
+  snowboarding: snowboard
+  kayaking: kajakarstwo
+  weight-lifting: podnoszenie ciężarów
+  walking: chodzenie
+menu:
+  Workouts: Treningi
+  Measurements: Pomiary
+  Heatmap: Mapa cieplna
+  Statistics: Statystyki
+  Equipment: Sprzęt
+  route_segments: Odcinki trasy
+  Dashboard: Kokpit
+translation:
+  Username: Nazwa użytkownika
+  Username_email: Nazwa użytkownika (email)
+  Workout: Trening
+  download: pobierz
+  Heart_rate: Tętno
+  Logout: Wyloguj
+  Show_map_in_full_width: Pokaż mapę na pełną szerokość
+  Accuracy: Dokładność
+  Sign_in: Zaloguj się
+  Admin: Administrator
+  All_workouts_will_be_refreshed_in_the_coming_minutes: Wszystkie treningi zostaną
+    wkrótce odświeżone.
+  Reset_changes: Resetuj zmiany
+  Add_workout: Dodaj trening
+  Add_workouts: Dodaj treningi
+  Add_a_workout: Dodaj trening
+  Steps: Kroki
+  Add_equipment: Dodaj sprzęt
+  Add_route_segment: Dodaj odcinek trasy
+  API_key_updated: Zaktualizowano klucz API
+  Application_settings: Ustawienia aplikacji
+  Active: Aktywny
+  Latest_measurements: Ostatnie pomiary
+  Actions: Akcje
+  Update_measurement: Zaktualizuj pomiary
+  Aerial: Z lotu ptaka
+  All: Wszystko
+  Regenerate_publicly_shareable_link: Wygeneruj (ponownie) link do udostępniania
+  Autodetect: Wykryj automatycznie
+  Average_per_minute: Średnio na minutę
+  Average_speed_no_pause: Średnia szybkość (bez pauz)
+  Cadence: Kadencja
+  Cancel: Anuluj
+  Average_tempo: Średnie tempo
+  Average_tempo_no_pause: Średnie tempo (bez pauz)
+  Bidirectional: Dwukierunkowy
+  Continue: Kontynuuj
+  Create_a_new_account: Utwórz nowe konto
+  Create_route_segment: Utwórz odcinek trasy
+  Circular: Okrężny
+  Copy_publicly_shareable_link: Skopiuj link do udostępniania
+  Created: Utworzono
+  Default_workout_types: Domyślne typy treningu
+  Dashboard_for_s: Kokpit dla %s
+  Description: Opis
+  Details: Szczegóły
+  Distance: Dystans
+  End: Koniec
+  Disable_account_registration: Wyłącz rejestrację kont
+  Duration: Czas trwania
+  Elevation: Wysokość
+  Est_calories_burned: Szacowane spalone kalorii
+  File: Plik
+  Filter: Filtr
+  Name: Nazwa
+  Matches: Dopasowania
+  Manage: Zarządzaj
+  Manage_users: Zarządzaj użytkownikami
+  Notes: Notatki
+  Other_users: Inni użytkownicy
+  Max_speed: Maksymalna szybkość
+  Manage_user_s: Zarządzaj użytkownikiem '%s'
+  Leave_blank_to_keep_current_password: Pozostaw puste, aby zachować obecne hasło
+  Location: Lokalizacja
+  Manual: Podręcznik
+  Max_elevation: Maksymalna wysokość
+  Min_elevation: Minimalna wysokość
+  Extra_metrics: Dodatkowe wskaźniki
+  Heading: Kierunek
+  Per: Według
+  Last: Ostatnie
+  it_took_me_s_to_go_s_i_averaged_s: Zajęło mi to %s aby $s. Średnio $s.
+  Since: Od
+  Profile_updated: Zaktualizowano profil
+  Recent_activity: Ostatnia aktywność
+  Repetitions: Powtórzenia
+  Sort_by: Sortuj według
+  Please_help_translate_via_Weblate: Pomóż w tłumaczeniu na Weblate
+  Records_for_s: Rekordy dla %s
+  Register: Zarejestruj
+  Publicly_shareable_link_was_copied_to_clipboard: Link do udostępniania został skopiowany
+    do schowka
+  Speed: Szybkość
+  Streets: Ulice
+  Source: Źródło
+  The_workout_s_has_been_deleted: Trening '%s' został usunięty.
+  The_user_s_has_been_deleted: Użytkownik '%S' został usunięty.
+  Time: Czas
+  User: Użytkownik
+  Updated: Zaktualizowano
+  Weight: Waga
+  Welcome: Witamy!
+  Total_repetitions: Łącznie powtórzeń
+  Total_duration: Łączny czas trwania
+  Type: Typ
+  Total_up: Łącznie w górę
+  Total_down: Łącznie w dół
+  The_workout_s_has_been_refreshed: Trening '%s' został odświeżony.
+  The_workout_s_has_been_updated: Trening '%s' został zaktualizowany.
+  These_settings_may_be_overwritten_by: 'Te ustawienia mogą zostać nadpisane przez:'
+  Use_a_file: Użyj pliku
+  Total_distance: Łączna odległość
+  Time_paused: Czas pauz
+  Totals: Sumy
+  create_route_segment: utwórz odcinek trasy
+  Your_profile: Twój profil
+  Workout_type: Typ treningu
+  Your_account_has_been_created_but_needs_to_be_activated: Twoje konto zostało utworzone,
+    ale musi zostać aktywowane.
+  Your_progress_per_s_for_the_past_s: Twój postęp według %s w ciągu $s
+  distance: dystans
+  edit: edytuj
+  the_configuration_file: plik konfiguracyjny
+  route_segment:
+    update: Zaktualizuj odcinek trasy
+  delete: usuń
+  environment_variables: zmienne środowiskowe
+  find_matches: znajdź dopasowania
+  duration: czas trwania
+  up: w górę
+  refresh: odśwież
+  refresh_in_progress: odświeżanie w trakcie
+  how_to_use: jak korzystać
+  Calories: Kalorie
+  ascending: rosnąco
+  descending: malejąco
+  workouts: treningi
+  Filter_workouts: Filtruj treningi
+  Total_weight: Łączna masa
+  The_equipment_s_has_been_deleted: Sprzęt '%s' został usunięty.
+  The_equipment_s_has_been_updated: Sprzęt '%s' został zaktualizowany.
+  Resources: Zasoby
+  The_workout_s_will_be_refreshed_soon: Trening '%s' zostanie wkrótce odświeżony…
+  You_can_find_inspiration_here: 'Możesz znaleźć inspirację tutaj:'
+  Are_you_sure: Czy jesteś pewien?
+  Height: Wzrost
+  The_workout_s_has_been_created: Trening '%s' został utworzony.
+  The_route_segment_s_has_been_updated: Odcinek trasy '%s' został zaktualizowany.
+  Try_one_of_these_sites: 'Wypróbuj jedną z tych stron:'
+  i_completed_a_workout_s: "Ukończyłem trening: '%s'."
+  No_measurements_found: Nie znaleziono żadnych pomiarów
+  Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: "Zacznij
+    szukać w tle treningów pasujących do odcinka: '%s'."
+  The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: Odcinek
+    trasy '%s' został utworzony - szukamy dopasowań w tle.
+  The_user_s_has_been_updated: Użytkownik '%S' został zaktualizowany.
+  Matching_route_segments: Pasujące odcinki trasy
+  Date: Data
+  Tempo: Tempo
+  Update: Zaktualizuj
+  Are_you_sure_you_want_to_delete_this_s: Czy jesteś pewien, że chcesz usunąć %s?
+  Estimated_based_on_the_activity: Szacowane na podstawie aktywności i ostatniej zapisanej
+    wagi
+  no_equipment: brak sprzętu
+  Password: Hasło
+  Start: Start
+  You_can_edit_your_GPX_files_before_uploading_them_here: 'Możesz edytować swoje pliki
+    GPX wgrywając je tutaj:'
+  Average_speed: Średnia szybkość
+alerts:
+  something_wrong: 'Coś poszło nie tak: %{message}'
+  workouts_added:
+    one: 'Napotkano 1 problem podczas dodawania treningów: %{list}'
+    few: 'Napotkano %{count} problemy podczas dodawania treningów: %{list}'
+    many: 'Napotkano %{count} problemów podczas dodawania treningów: %{list}'
+  route_segments_added:
+    one: 'Napotkano 1 problem podczas dodawania odcinka trasy: %{list}'
+    few: 'Napotkano %{count} problemy podczas dodawania odcinka trasy: %{list}'
+    many: 'Napotkano %{count} problemów podczas dodawania odcinka trasy: %{list}'
+units:
+  kilograms: kilogramy
+  kilometers_per_hour: kilometry na godzinę
+  feet: stopy
+  meters: metry
+  inch: cal
+  kilometers: kilometry
+  centimeter: centymetr
+  miles: mile
+  miles_per_hour: mile na godzinę
+  pounds: funty
+user:
+  profile:
+    show_full_date_by_default: Domyślnie pokazuj pełną datę
+    time_zone: Strefa czasowa
+    preferred_units: Preferowane jednostki
+    disable_social_sharing_buttons: Wyłącz przyciski udostępniania na social media
+    enable_api_access: Włącz dostęp do API
+    your_settings: Twoje ustawienia
+    auto_import_directory: Automatycznie importuj folder
+    refresh_all_your_workouts: Odśwież wszystkie swoje treningi
+    show_hide: pokaż/ukryj
+    update_profile: Zaktualizuj profil
+    copy_to_clipboard: Skopiuj do schowka
+    Light: Jasny
+    update_preferred_units: Zaktualizuj preferowane jednostki
+    generate_a_new_api_key: Generuj nowy klucz API
+    Theme: Motyw
+    Dark: Ciemny
+    Browser_System: Przeglądarka/System operacyjny
+    Language: Język
+    totals_to_show_on_dashboard: Sumy do pokazania w kokpicie
+  update: Zaktualizuj użytkownika
+notices:
+  workouts_added:
+    one: 'Dodano nowy trening: %{list}'
+    few: 'Dodano %{count} nowe treningi: %{list}'
+    many: 'Dodano %{count} nowych treningów: %{list}'
+  route_segments_added:
+    one: 'Dodano 1 nowy odcinek trasy: %{list} - szukamy dopasowań w tle'
+    few: 'Dodano %{count} nowe odcinki trasy: %{list} - szukamy dopasowań w tle'
+    many: 'Dodano %{count} nowych odcinków trasy: %{list} - szukamy dopasowań w tle'
+settings:
+  update: Zaktualizuj ustawienia
+equipment:
+  update: Zaktualizuj sprzęt
+workout:
+  update: Zaktualizuj trening
