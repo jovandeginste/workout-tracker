@@ -21,6 +21,14 @@ install-dev-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
 	go install github.com/a-h/templ/cmd/templ@latest
+	go install github.com/mdomke/git-semver/v6@latest
+
+release-patch release-minor release-major:
+	$(MAKE) release VERSION=$(shell git-semver -target $(subst release-,,$@))
+
+release:
+	git tag -s -a $(VERSION) -m "Release $(VERSION)"
+	echo "Now run 'git push --tags' and create a new release"
 
 install-deps:
 	npm install
