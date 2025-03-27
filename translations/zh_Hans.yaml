@@ -15,15 +15,15 @@ zh-Hans:
       one: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
       other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
   misc:
-    month_6: 6 月
-    month_3: 3 月
-    day_15: 15 天
-    years_1: 1 年
-    years_10: 10 年
-    years_2: 2 年
-    month_1: 1 月
-    years_5: 5 年
-    day_7: 7 天
+    month_6: 6月
+    month_3: 3月
+    day_15: 15天
+    years_1: 1年
+    years_10: 10年
+    years_2: 2年
+    month_1: 1月
+    years_5: 5年
+    day_7: 7天
     day: 天
     month: 月
     forever: 永久
@@ -180,7 +180,7 @@ zh-Hans:
     Workout_type: 锻炼类型
     Your_account_has_been_created_but_needs_to_be_activated: 您的账号已创建，但需要激活。
     Your_profile: 您的个人资料
-    Your_progress_per_s_for_the_past_s: 过去%s中您每%s取得的进展
+    Your_progress_per_s_for_the_past_s: 您每%s取得的进展在过去的%s中
     create_route_segment: 创建路线段
     delete: 删除
     distance: 距离
