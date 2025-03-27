@@ -1,4 +1,3 @@
----
 pl:
   misc:
     month_3: 3 miesiące
@@ -122,8 +121,8 @@ pl:
     Please_help_translate_via_Weblate: Pomóż w tłumaczeniu na Weblate
     Records_for_s: Rekordy dla %s
     Register: Zarejestruj
-    Publicly_shareable_link_was_copied_to_clipboard: Link do udostępniania został skopiowany
-      do schowka
+    Publicly_shareable_link_was_copied_to_clipboard: Link do udostępniania został
+      skopiowany do schowka
     Speed: Szybkość
     Streets: Ulice
     Source: Źródło
@@ -145,13 +144,13 @@ pl:
     Use_a_file: Użyj pliku
     Total_distance: Łączna odległość
     Time_paused: Czas pauz
-    Totals: Sumy
+    Totals: Łącznie
     create_route_segment: utwórz odcinek trasy
     Your_profile: Twój profil
     Workout_type: Typ treningu
     Your_account_has_been_created_but_needs_to_be_activated: Twoje konto zostało utworzone,
       ale musi zostać aktywowane.
-    Your_progress_per_s_for_the_past_s: Twój postęp według %s w ciągu $s
+    Your_progress_per_s_for_the_past_s: Twój postęp według %s w ciągu %s
     distance: dystans
     edit: edytuj
     the_configuration_file: plik konfiguracyjny
@@ -193,13 +192,13 @@ pl:
     Tempo: Tempo
     Update: Zaktualizuj
     Are_you_sure_you_want_to_delete_this_s: Czy jesteś pewien, że chcesz usunąć %s?
-    Estimated_based_on_the_activity: Szacowane na podstawie aktywności i ostatniej zapisanej
-      wagi
+    Estimated_based_on_the_activity: Szacowane na podstawie aktywności i ostatniej
+      zapisanej wagi
     no_equipment: brak sprzętu
     Password: Hasło
     Start: Start
-    You_can_edit_your_GPX_files_before_uploading_them_here: 'Możesz edytować swoje pliki
-      GPX wgrywając je tutaj:'
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'Możesz edytować swoje
+      pliki GPX wgrywając je tutaj:'
     Average_speed: Średnia szybkość
   alerts:
     something_wrong: 'Coś poszło nie tak: %{message}'
@@ -252,7 +251,8 @@ pl:
     route_segments_added:
       one: 'Dodano 1 nowy odcinek trasy: %{list} - szukamy dopasowań w tle'
       few: 'Dodano %{count} nowe odcinki trasy: %{list} - szukamy dopasowań w tle'
-      many: 'Dodano %{count} nowych odcinków trasy: %{list} - szukamy dopasowań w tle'
+      many: 'Dodano %{count} nowych odcinków trasy: %{list} - szukamy dopasowań w
+        tle'
   settings:
     update: Zaktualizuj ustawienia
   equipment:
