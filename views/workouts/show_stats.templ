@@ -75,18 +75,18 @@ translations := map[string]string{
           formatter: function (val, opts) {
           var p = data[opts.dataPointIndex]
           var el = document.createElement('div');
-          el.setAttribute("data-lat", p.Item.FirstPoint.Lat);
-          el.setAttribute("data-lng", p.Item.FirstPoint.Lng);
+          el.setAttribute("data-lat", p.Item.firstPoint.lat);
+          el.setAttribute("data-lng", p.Item.firstPoint.lng);
           el.setAttribute("data-title", p.Label);
 
           set_marker(el)
-          return val + " " + preferredUnits.Speed;
+          return val + " " + preferredUnits.speed;
           }
         },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.Elevation; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.HeartRate; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.Cadence; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.Distance; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.elevation; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.heartRate; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.cadence; } },
+        { formatter: function (val, opts) { return val + " " + preferredUnits.distance; } },
         { formatter: function (val, opts) { return formatDuration(val); } },
       ],
     },
@@ -101,34 +101,34 @@ translations := map[string]string{
       {
         name: translations.averagespeed,
         type: "line",
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalAverageSpeed })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localAverageSpeed })),
       },
       {
         name: translations.elevation,
         type: "area",
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalElevation })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localElevation })),
       },
       {
         name: translations.heartrate,
         type: "line",
         display: false,
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalHeartRate })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localHeartRate })),
       },
       {
         name: translations.cadence,
         type: "line",
         display: false,
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalCadence })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localCadence })),
       },
       {
         name: translations.distance,
         type: "none",
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.LocalTotalDistance })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localTotalDistance })),
       },
       {
         name: translations.duration,
         type: "none",
-        data: data.map(e => ({ x: e.Item.FirstPoint.Time, y: e.Item.TotalDurationSeconds })),
+        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.totalDurationSeconds })),
       },
     ],
     xaxis: {
@@ -144,14 +144,14 @@ translations := map[string]string{
         min: 0,
         labels: {
           formatter: (val) => {
-            return val + " " + preferredUnits.Speed;
+            return val + " " + preferredUnits.speed;
           },
         },
       },
       {
         labels: {
           formatter: (val) => {
-            return val + " " + preferredUnits.Elevation;
+            return val + " " + preferredUnits.elevation;
           },
         },
         opposite: true,
@@ -159,14 +159,14 @@ translations := map[string]string{
       {
         labels: {
           formatter: (val) => {
-            return val + " " + preferredUnits.HeartRate;
+            return val + " " + preferredUnits.heartRate;
           },
         },
       },
       {
         labels: {
           formatter: (val) => {
-            return val + " " + preferredUnits.Cadence;
+            return val + " " + preferredUnits.cadence;
           },
         },
       },

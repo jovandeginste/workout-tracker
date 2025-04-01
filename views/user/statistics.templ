@@ -120,11 +120,11 @@ templ Statistics(u *database.User, since, per string) {
 
       new ApexCharts(document.querySelector("#workouts-per-time"), {
         ...options,
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets).map(e => ({ x: e.Bucket, y: e.Workouts })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets).map(e => ({ x: e.bucket, y: e.workouts })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
@@ -140,13 +140,13 @@ templ Statistics(u *database.User, since, per string) {
         yaxis: [
           { labels: { formatter: (val) => { return formatDuration(val); } } },
         ],
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets)
-            .filter(e => e.Duration > 0)
-            .map(e => ({ x: e.Bucket, y: e.DurationSeconds })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets)
+            .filter(e => e.duration > 0)
+            .map(e => ({ x: e.bucket, y: e.durationSeconds })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
@@ -156,19 +156,19 @@ templ Statistics(u *database.User, since, per string) {
         tooltip: {
           x: { format: 'MMM \'yy', },
           y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.Distance; } },
+            { formatter: function (val, opts) { return val + " " + preferredUnits.distance; } },
           ],
         },
         yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.Distance; } } },
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.distance; } } },
         ],
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets)
-            .filter(e => e.Distance > 0)
-            .map(e => ({ x: e.Bucket, y: e.LocalDistance })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets)
+            .filter(e => e.distance > 0)
+            .map(e => ({ x: e.bucket, y: e.localDistance })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
@@ -178,19 +178,19 @@ templ Statistics(u *database.User, since, per string) {
         tooltip: {
           x: { format: 'MMM \'yy', },
           y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
           ],
         },
         yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
         ],
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets)
-            .filter(e => e.Distance > 0)
-            .map(e => ({ x: e.Bucket, y: e.LocalAverageSpeed })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets)
+            .filter(e => e.distance > 0)
+            .map(e => ({ x: e.bucket, y: e.localAverageSpeed })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
@@ -200,19 +200,19 @@ templ Statistics(u *database.User, since, per string) {
         tooltip: {
           x: { format: 'MMM \'yy', },
           y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
           ],
         },
         yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
         ],
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets)
-            .filter(e => e.Distance > 0)
-            .map(e => ({ x: e.Bucket, y: e.LocalAverageSpeedNoPause })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets)
+            .filter(e => e.distance > 0)
+            .map(e => ({ x: e.bucket, y: e.localAverageSpeedNoPause })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
@@ -222,19 +222,19 @@ templ Statistics(u *database.User, since, per string) {
         tooltip: {
           x: { format: 'MMM \'yy', },
           y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.Speed; } },
+            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
           ],
         },
         yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.Speed; } } },
+          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
         ],
-        series: Object.entries(stats.Buckets).map(entry => {
+        series: Object.entries(stats.buckets).map(entry => {
           const [key, value] = entry;
           return {
-            name: value.LocalWorkoutType,
-            data: Object.values(value.Buckets)
-            .filter(e => e.Distance > 0)
-            .map(e => ({ x: e.Bucket, y: e.LocalMaxSpeed })),
+            name: value.localWorkoutType,
+            data: Object.values(value.buckets)
+            .filter(e => e.distance > 0)
+            .map(e => ({ x: e.bucket, y: e.localMaxSpeed })),
           };
         }).filter(e => e.data.length > 0),
       }).render();
