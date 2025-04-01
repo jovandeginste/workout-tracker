@@ -13,7 +13,7 @@ type Measurement struct {
 	Weight float64        `form:"weight" json:"weight"`                                             // The weight of the user, in kilograms
 	Height float64        `form:"height" json:"height"`                                             // The height of the user, in centimeter
 	Steps  float64        `form:"steps" json:"steps"`                                               // The number of steps taken
-	UserID uint64         `gorm:"not null;index;uniqueIndex:idx_user_date"`                         // The ID of the user who owns the workout
+	UserID uint64         `gorm:"not null;index;uniqueIndex:idx_user_date" json:"userID"`           // The ID of the user who owns the workout
 }
 
 func (u *User) NewMeasurement(d time.Time) *Measurement {

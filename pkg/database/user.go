@@ -36,21 +36,21 @@ type User struct {
 
 	Model
 
-	LastVersion string `gorm:"last_version"` // Which version of the app the user has last seen and acknowledged
+	LastVersion string `gorm:"last_version" json:"lastVersion"` // Which version of the app the user has last seen and acknowledged
 
-	Password     string        `form:"-"        gorm:"type:varchar(128);not null"`            // The user's password as bcrypt hash
-	Salt         string        `form:"-"        gorm:"type:varchar(16);not null"`             // The salt used to hash the user's password
-	Username     string        `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)"` // The user's username
-	Name         string        `form:"name"     gorm:"type:varchar(64);not null"`             // The user's name
-	APIKey       string        `gorm:"type:varchar(32)"`                                      // The user's API key
-	Workouts     []Workout     `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's workouts
-	Equipment    []Equipment   `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's equipment
-	Measurements []Measurement `gorm:"constraint:OnDelete:CASCADE" json:"-"`                  // The user's measurements
+	Password     string        `form:"-" gorm:"type:varchar(128);not null" json:"password"`                   // The user's password as bcrypt hash
+	Salt         string        `form:"-" gorm:"type:varchar(16);not null" json:"salt"`                        // The salt used to hash the user's password
+	Username     string        `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)" json:"username"` // The user's username
+	Name         string        `form:"name" gorm:"type:varchar(64);not null" json:"name"`                     // The user's name
+	APIKey       string        `gorm:"type:varchar(32)" json:"apiKey"`                                        // The user's API key
+	Workouts     []Workout     `gorm:"constraint:OnDelete:CASCADE" json:"-"`                                  // The user's workouts
+	Equipment    []Equipment   `gorm:"constraint:OnDelete:CASCADE" json:"-"`                                  // The user's equipment
+	Measurements []Measurement `gorm:"constraint:OnDelete:CASCADE" json:"-"`                                  // The user's measurements
 
-	Profile Profile `gorm:"constraint:OnDelete:CASCADE"` // The user's profile settings
+	Profile Profile `gorm:"constraint:OnDelete:CASCADE" json:"profile"` // The user's profile settings
 
-	Active bool `form:"active"` // Whether the user is active
-	Admin  bool `form:"admin"`  // Whether the user is an admin
+	Active bool `form:"active" json:"active"` // Whether the user is active
+	Admin  bool `form:"admin" json:"admin"`   // Whether the user is an admin
 
 	anonymous bool // Whether we have an actual user or not
 }

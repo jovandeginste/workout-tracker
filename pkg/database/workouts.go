@@ -30,26 +30,26 @@ var (
 
 type Workout struct {
 	Model
-	Date                time.Time            `gorm:"not null;uniqueIndex:idx_start_user"`                                // The timestamp the workout was recorded
-	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex"`                                              // UUID to publicly share a workout - this UUID can be rotated
-	User                *User                `gorm:"foreignKey:UserID"`                                                  // The user who owns the workout
-	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"` // The map data associated with the workout
-	GPX                 *GPXData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:",omitempty"` // The file data associated with the workout
-	Name                string               `gorm:"not null"`                                                           // The name of the workout
-	Notes               string               // The notes associated with the workout, in markdown
-	Type                WorkoutType          // The type of the workout
-	Equipment           []Equipment          `json:",omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
-	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"`                             // Which route segments match
-	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user"`                                 // The ID of the user who owns the workout
-	Dirty               bool                 // Whether the workout has been modified and the details should be re-rendered
+	Date                time.Time            `gorm:"not null;uniqueIndex:idx_start_user" json:"date"`                                    // The timestamp the workout was recorded
+	PublicUUID          *uuid.UUID           `gorm:"type:uuid;uniqueIndex" json:"publicUUID"`                                            // UUID to publicly share a workout - this UUID can be rotated
+	User                *User                `gorm:"foreignKey:UserID" json:"user"`                                                      // The user who owns the workout
+	Data                *MapData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:"data,omitempty"`             // The map data associated with the workout
+	GPX                 *GPXData             `gorm:"foreignKey:WorkoutID;constraint:OnDelete:CASCADE" json:"gpx,omitempty"`              // The file data associated with the workout
+	Name                string               `gorm:"not null" json:"name"`                                                               // The name of the workout
+	Notes               string               `json:"notes"`                                                                              // The notes associated with the workout, in markdown
+	Type                WorkoutType          `json:"type"`                                                                               // The type of the workout
+	Equipment           []Equipment          `json:"equipment,omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
+	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:"routeSegmentMatches,omitempty"`                   // Which route segments match
+	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user" json:"userID"`                            // The ID of the user who owns the workout
+	Dirty               bool                 `json:"dirty"`                                                                              // Whether the workout has been modified and the details should be re-rendered
 }
 
 type GPXData struct {
 	Model
-	Filename  string // The filename of the file
-	Content   []byte `gorm:"type:bytes"`           // The file content
-	Checksum  []byte `gorm:"not null;uniqueIndex"` // The checksum of the content
-	WorkoutID uint64 `gorm:"not null;uniqueIndex"` // The ID of the workout
+	Filename  string `json:"filename"`                              // The filename of the file
+	Content   []byte `gorm:"type:bytes" json:"content"`             // The file content
+	Checksum  []byte `gorm:"not null;uniqueIndex" json:"checksum"`  // The checksum of the content
+	WorkoutID uint64 `gorm:"not null;uniqueIndex" json:"workoutID"` // The ID of the workout
 }
 
 func (w *Workout) AfterFind(tx *gorm.DB) error {
