@@ -37,28 +37,28 @@ func (rscp *RoutSegmentCreationParams) Filename() string {
 
 type RouteSegment struct {
 	Model
-	GeoAddress    *geo.Address `gorm:"serializer:json"` // The address of the workout
-	Name          string       `gorm:"not null"`        // The name of the workout
-	Notes         string       // The notes associated with the workout, in markdown
-	AddressString string       // The generic location of the workout
-	Filename      string       // The filename of the file
+	GeoAddress    *geo.Address `gorm:"serializer:json" json:"geoAddress"` // The address of the workout
+	Name          string       `gorm:"not null" json:"name"`              // The name of the workout
+	Notes         string       `json:"notes"`                             // The notes associated with the workout, in markdown
+	AddressString string       `json:"addressString"`                     // The generic location of the workout
+	Filename      string       `json:"filename"`                          // The filename of the file
 
-	Points []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
+	Points []MapPoint `gorm:"serializer:json" json:"points"` // The GPS points of the workout
 
-	Content             []byte               `gorm:"type:bytes"`           // The file content
-	Checksum            []byte               `gorm:"not null;uniqueIndex"` // The checksum of the content
-	RouteSegmentMatches []*RouteSegmentMatch // The matches of the route segment
-	Center              MapCenter            `gorm:"serializer:json"` // The center of the workout (in coordinates)
+	Content             []byte               `gorm:"type:bytes" json:"content"`            // The file content
+	Checksum            []byte               `gorm:"not null;uniqueIndex" json:"checksum"` // The checksum of the content
+	RouteSegmentMatches []*RouteSegmentMatch `json:"routeSegmentMatches"`                  // The matches of the route segment
+	Center              MapCenter            `gorm:"serializer:json" json:"center"`        // The center of the workout (in coordinates)
 
-	TotalDistance float64 // The total distance of the workout
-	MinElevation  float64 // The minimum elevation of the workout
-	MaxElevation  float64 // The maximum elevation of the workout
-	TotalUp       float64 // The total distance up of the workout
-	TotalDown     float64 // The total distance down of the workout
-	Bidirectional bool    // Whether the route segment is bidirectional
-	Circular      bool    // Whether the route segment is circular
+	TotalDistance float64 `json:"totalDistance"` // The total distance of the workout
+	MinElevation  float64 `json:"minElevation"`  // The minimum elevation of the workout
+	MaxElevation  float64 `json:"maxElevation"`  // The maximum elevation of the workout
+	TotalUp       float64 `json:"totalUp"`       // The total distance up of the workout
+	TotalDown     float64 `json:"totalDown"`     // The total distance down of the workout
+	Bidirectional bool    `json:"bidirectional"` // Whether the route segment is bidirectional
+	Circular      bool    `json:"circular"`      // Whether the route segment is circular
 
-	Dirty bool // Whether the route segment should be recalculated
+	Dirty bool `json:"dirty"` // Whether the route segment should be recalculated
 }
 
 func (rs *RouteSegment) HasFile() bool {
