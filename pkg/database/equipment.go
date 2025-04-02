@@ -12,9 +12,9 @@ type Equipment struct {
 	db *gorm.DB
 	Model
 
-	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`                            // The name of the gear
-	Description string        `gorm:"" json:"description" form:"description"`                                  // More information about the equipment
-	DefaultFor  []WorkoutType `gorm:"serializer:json;column:default_for" form:"default_for" json:"defaultFor"` // Which workout types to add this equipment by default
+	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`                             // The name of the gear
+	Description string        `gorm:"" json:"description" form:"description"`                                   // More information about the equipment
+	DefaultFor  []WorkoutType `gorm:"serializer:json;column:default_for" form:"default_for" json:"default_for"` // Which workout types to add this equipment by default
 
 	Workouts []Workout `gorm:"many2many:workout_equipment" json:"workouts"`
 
