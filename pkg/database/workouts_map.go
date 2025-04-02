@@ -60,7 +60,7 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 
 type MapData struct {
 	Model
-	Address *geo.Address    `gorm:"serializer:json" json:"address"`                // The address of the workout
+	Address *geo.Address    `gorm:"serializer:json" json:"address"`                       // The address of the workout
 	Details *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:"details,omitempty"` // The details of the workout
 
 	Workout       *Workout  `gorm:"foreignKey:WorkoutID" json:"-"`         // The user who owns this profile

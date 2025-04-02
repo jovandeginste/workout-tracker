@@ -110,14 +110,14 @@ func preMigrationActions(db *gorm.DB) error {
 	q = db.
 		Where("map_data_id IN (SELECT map_data_id FROM map_data_details as mdd where map_data_details.created_at < mdd.created_at)").
 		Delete(&MapDataDetails{})
+	if q.Error != nil {
+		return q.Error
+	}
 
 	q = db.
 		Model(&Workout{}).
 		Where(&Workout{Type: "weight lifting"}).
 		Update("type", WorkoutTypeWeightLifting)
-	if q.Error != nil {
-		return q.Error
-	}
 
 	return q.Error
 }

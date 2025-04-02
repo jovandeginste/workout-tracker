@@ -23,11 +23,11 @@ type BreakdownItem struct {
 	IsWorst       bool          `json:"isWorst"`       // Whether this item is the worst of the list
 
 	LocalTotalDistance string `json:"localTotalDistance,omitempty"` // Total distance in all items up to and including this item
-	LocalDistance      string `json:"localDistance,omitempty"` // The total distance in the bucket, localized
-	LocalAverageSpeed  string `json:"localAverageSpeed,omitempty"` // The average speed in the bucket, localized
-	LocalElevation     string `json:"localElevation,omitempty"` // The starting elevation in the bucket, localized
-	LocalHeartRate     string `json:"localHeartRate,omitempty"` // The starting heart rate in the bucket, localized
-	LocalCadence       string `json:"localCadence,omitempty"` // The starting cadence in the bucket, localized
+	LocalDistance      string `json:"localDistance,omitempty"`      // The total distance in the bucket, localized
+	LocalAverageSpeed  string `json:"localAverageSpeed,omitempty"`  // The average speed in the bucket, localized
+	LocalElevation     string `json:"localElevation,omitempty"`     // The starting elevation in the bucket, localized
+	LocalHeartRate     string `json:"localHeartRate,omitempty"`     // The starting heart rate in the bucket, localized
+	LocalCadence       string `json:"localCadence,omitempty"`       // The starting cadence in the bucket, localized
 
 	TotalDurationSeconds float64 `json:"totalDurationSeconds,omitempty"` // The total duration in the bucket, in seconds
 }
