@@ -132,7 +132,14 @@ func (a *App) ValidateAPIKeyMiddleware(key string, c echo.Context) (bool, error)
 // @Failure      500  {object}  APIResponse
 // @Router       /whoami [get]
 func (a *App) apiWhoamiHandler(c echo.Context) error {
-	return c.JSON(http.StatusOK, a.getCurrentUser(c))
+	user := a.getCurrentUser(c)
+	return c.JSON(http.StatusOK, struct {
+		database.UserData
+		Profile database.Profile `json:"profile"`
+	}{
+		UserData: user.UserData,
+		Profile:  user.Profile,
+	})
 }
 
 // apiWorkoutsHandler lists current user's workouts

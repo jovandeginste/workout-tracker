@@ -153,10 +153,12 @@ func NewApp(v version.Version) *App {
 
 func (a *App) createAdminUser() error {
 	u := &database.User{
-		Username: "admin",
-		Name:     "Administrator",
-		Active:   true,
-		Admin:    true,
+		UserData: database.UserData{
+			Username: "admin",
+			Name:     "Administrator",
+			Active:   true,
+			Admin:    true,
+		},
 	}
 
 	if err := u.SetPassword("admin"); err != nil {

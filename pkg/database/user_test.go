@@ -15,9 +15,13 @@ func init() { //nolint:gochecknoinits
 
 func defaultUser() *User {
 	return &User{
-		Username: "my-username",
-		Password: "my-password",
-		Name:     "my-name",
+		UserData: UserData{
+			Username: "my-username",
+			Name:     "my-name",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 }
 
@@ -71,9 +75,13 @@ func TestUser_PasswordIsValid(t *testing.T) {
 
 func TestUser_IsNotActive(t *testing.T) {
 	u := User{
-		Username: "my-username",
-		Password: "my-password",
-		Active:   false,
+		UserData: UserData{
+			Username: "my-username",
+			Active:   false,
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 
 	require.NoError(t, u.IsValid())
@@ -82,8 +90,12 @@ func TestUser_IsNotActive(t *testing.T) {
 
 func TestUser_UsernameIsEmail(t *testing.T) {
 	u := User{
-		Username: "my-username@localhost",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "my-username@localhost",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 
 	require.NoError(t, u.IsValid())
@@ -98,9 +110,13 @@ func TestUser_UsernameIsNotValid(t *testing.T) {
 		"invalid-char space",
 	} {
 		u := User{
-			Username: username,
-			Password: "my-password",
-			Name:     "my-name",
+			UserData: UserData{
+				Username: username,
+				Name:     "my-name",
+			},
+			UserSecrets: UserSecrets{
+				Password: "my-password",
+			},
 		}
 
 		require.ErrorIs(t, u.IsValid(), ErrUsernameInvalid)
@@ -110,8 +126,12 @@ func TestUser_UsernameIsNotValid(t *testing.T) {
 
 func TestUser_UsernameIsTooLong(t *testing.T) {
 	u := User{
-		Username: "too-long-too-long-too-long-too-long-too-long-too-long-too-long-too-long",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "too-long-too-long-too-long-too-long-too-long-too-long-too-long-too-long",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 
 	require.ErrorIs(t, u.IsValid(), ErrUsernameInvalidLength)
@@ -120,8 +140,12 @@ func TestUser_UsernameIsTooLong(t *testing.T) {
 
 func TestUser_PasswordNotSet(t *testing.T) {
 	u := User{
-		Username: "username",
-		Password: "",
+		UserData: UserData{
+			Username: "username",
+		},
+		UserSecrets: UserSecrets{
+			Password: "",
+		},
 	}
 
 	require.ErrorIs(t, u.IsValid(), ErrPasswordInvalidLength)
@@ -131,8 +155,12 @@ func TestUser_PasswordNotSet(t *testing.T) {
 func TestUser_BeforeCreateNoPassword(t *testing.T) {
 	db := createMemoryDB(t)
 	u := &User{
-		Username: "username",
-		Password: "",
+		UserData: UserData{
+			Username: "username",
+		},
+		UserSecrets: UserSecrets{
+			Password: "",
+		},
 	}
 
 	require.Error(t, u.Create(db))
@@ -146,9 +174,13 @@ func TestUser_BeforeCreateNoPassword(t *testing.T) {
 func TestDatabaseUserCreate(t *testing.T) {
 	db := createMemoryDB(t)
 	u := &User{
-		Username: "username",
-		Name:     "my-name",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "username",
+			Name:     "my-name",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 
 	require.NoError(t, u.Create(db))
@@ -170,8 +202,12 @@ func TestDatabaseUsers(t *testing.T) {
 	db := createMemoryDB(t)
 
 	u1 := User{
-		Username: "username1",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "username1",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 	require.NoError(t, u1.Create(db))
 
@@ -180,8 +216,12 @@ func TestDatabaseUsers(t *testing.T) {
 	assert.Len(t, users, 1)
 
 	u2 := User{
-		Username: "username2",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "username2",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 	require.NoError(t, u2.Create(db))
 
@@ -241,9 +281,13 @@ func TestDatabaseUserDeleteUser(t *testing.T) {
 func TestDatabaseProfileSave(t *testing.T) {
 	db := createMemoryDB(t)
 	u := &User{
-		Username: "username",
-		Name:     "my-name",
-		Password: "my-password",
+		UserData: UserData{
+			Username: "username",
+			Name:     "my-name",
+		},
+		UserSecrets: UserSecrets{
+			Password: "my-password",
+		},
 	}
 	u.Profile.Language = "en"
 
