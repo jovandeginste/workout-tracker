@@ -15,23 +15,23 @@ type (
 	}
 
 	WorkoutData struct {
-		Name                string        // The name of the workout
-		Type                string        // The type of the workout
-		Start               time.Time     // The start time of the workout
-		Stop                time.Time     // The stop time of the workout
-		TotalDistance       float64       // The total distance of the workout
-		TotalDuration       time.Duration // The total duration of the workout
-		MaxSpeed            float64       // The maximum speed of the workout
-		AverageSpeed        float64       // The average speed of the workout
-		AverageSpeedNoPause float64       // The average speed of the workout without pausing
-		PauseDuration       time.Duration // The total pause duration of the workout
-		MinElevation        float64       // The minimum elevation of the workout
-		MaxElevation        float64       // The maximum elevation of the workout
-		TotalUp             float64       // The total distance up of the workout
-		TotalDown           float64       // The total distance down of the workout
-		TotalRepetitions    int           // The number of repetitions of the workout
-		TotalWeight         float64       // The weight of the workout
-		ExtraMetrics        []string      `gorm:"serializer:json"` // Extra metrcis available
+		Name                string        `json:"name"`                                // The name of the workout
+		Type                string        `json:"type"`                                // The type of the workout
+		Start               time.Time     `json:"start"`                               // The start time of the workout
+		Stop                time.Time     `json:"stop"`                                // The stop time of the workout
+		TotalDistance       float64       `json:"totalDistance"`                       // The total distance of the workout
+		TotalDuration       time.Duration `json:"totalDuration"`                       // The total duration of the workout
+		MaxSpeed            float64       `json:"maxSpeed"`                            // The maximum speed of the workout
+		AverageSpeed        float64       `json:"averageSpeed"`                        // The average speed of the workout
+		AverageSpeedNoPause float64       `json:"averageSpeedNoPause"`                 // The average speed of the workout without pausing
+		PauseDuration       time.Duration `json:"pauseDuration"`                       // The total pause duration of the workout
+		MinElevation        float64       `json:"minElevation"`                        // The minimum elevation of the workout
+		MaxElevation        float64       `json:"maxElevation"`                        // The maximum elevation of the workout
+		TotalUp             float64       `json:"totalUp"`                             // The total distance up of the workout
+		TotalDown           float64       `json:"totalDown"`                           // The total distance down of the workout
+		TotalRepetitions    int           `json:"totalRepetitions"`                    // The number of repetitions of the workout
+		TotalWeight         float64       `json:"totalWeight"`                         // The weight of the workout
+		ExtraMetrics        []string      `gorm:"serializer:json" json:"extraMetrics"` // Extra metrics available
 	}
 )
 
