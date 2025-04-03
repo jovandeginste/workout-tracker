@@ -98,7 +98,10 @@ func ExampleGeocoder() {
 	try(bing.Geocoder(os.Getenv("BING_API_KEY")))
 
 	fmt.Println("Baidu Geocoding API")
-	try(google.Geocoder(os.Getenv("BAIDU_API_KEY")))
+	try(baidu.Geocoder(os.Getenv("BAIDU_API_KEY")))
+
+	fmt.Println("Amap Geocoding API")
+	try(amap.Geocoder(os.Getenv("BAIDU_API_KEY")))
 
 	fmt.Println("Mapbox API")
 	try(mapbox.Geocoder(os.Getenv("MAPBOX_API_KEY")))

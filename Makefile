@@ -191,7 +191,7 @@ go-cover:
 
 update-deps:
 	npm update
-	go get -u -d -t ./...
+	go get -u -t ./...
 	go mod tidy
 	go mod vendor
 
