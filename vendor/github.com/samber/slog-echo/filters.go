@@ -2,6 +2,7 @@ package slogecho
 
 import (
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/labstack/echo/v4"
@@ -11,7 +12,7 @@ type Filter func(ctx echo.Context) bool
 
 // Basic
 func Accept(filter Filter) Filter { return filter }
-func Ignore(filter Filter) Filter { return filter }
+func Ignore(filter Filter) Filter { return func(ctx echo.Context) bool { return !filter(ctx) } }
 
 // Method
 func AcceptMethod(methods ...string) Filter {
@@ -45,25 +46,13 @@ func IgnoreMethod(methods ...string) Filter {
 // Status
 func AcceptStatus(statuses ...int) Filter {
 	return func(c echo.Context) bool {
-		for _, status := range statuses {
-			if status == c.Response().Status {
-				return true
-			}
-		}
-
-		return false
+		return slices.Contains(statuses, c.Response().Status)
 	}
 }
 
 func IgnoreStatus(statuses ...int) Filter {
 	return func(c echo.Context) bool {
-		for _, status := range statuses {
-			if status == c.Response().Status {
-				return false
-			}
-		}
-
-		return true
+		return !slices.Contains(statuses, c.Response().Status)
 	}
 }
 
@@ -110,25 +99,13 @@ func IgnoreStatusLessThanOrEqual(status int) Filter {
 // Path
 func AcceptPath(urls ...string) Filter {
 	return func(c echo.Context) bool {
-		for _, url := range urls {
-			if c.Request().URL.Path == url {
-				return true
-			}
-		}
-
-		return false
+		return slices.Contains(urls, c.Request().URL.Path)
 	}
 }
 
 func IgnorePath(urls ...string) Filter {
 	return func(c echo.Context) bool {
-		for _, url := range urls {
-			if c.Request().URL.Path == url {
-				return false
-			}
-		}
-
-		return true
+		return !slices.Contains(urls, c.Request().URL.Path)
 	}
 }
 
@@ -231,25 +208,13 @@ func IgnorePathMatch(regs ...regexp.Regexp) Filter {
 // Host
 func AcceptHost(hosts ...string) Filter {
 	return func(c echo.Context) bool {
-		for _, host := range hosts {
-			if c.Request().URL.Host == host {
-				return true
-			}
-		}
-
-		return false
+		return slices.Contains(hosts, c.Request().URL.Host)
 	}
 }
 
 func IgnoreHost(hosts ...string) Filter {
 	return func(c echo.Context) bool {
-		for _, host := range hosts {
-			if c.Request().URL.Host == host {
-				return false
-			}
-		}
-
-		return true
+		return !slices.Contains(hosts, c.Request().URL.Host)
 	}
 }
 

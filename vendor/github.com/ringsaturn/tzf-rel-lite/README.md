@@ -38,7 +38,7 @@ unzip timezones-with-oceans.geojson.zip
 
 ```bash
 geojson2tzpb combined-with-oceans.json | xargs reducetzpb | xargs compresstzpb
-preindextzpb combined-with-oceans.reduce.pb
+preindextzpb combined-with-oceans.reduce.bin
 ```
 
 ## References
