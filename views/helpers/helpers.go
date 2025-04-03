@@ -41,24 +41,24 @@ type TranslatedKey struct {
 
 func OrderDirOptions() []TranslatedKey {
 	return []TranslatedKey{
-		{"asc", "ascending"},
-		{"desc", "descending"},
+		{"asc", "translation.ascending"},
+		{"desc", "translation.descending"},
 	}
 }
 
 func OrderByOptions() []TranslatedKey {
 	return []TranslatedKey{
-		{"date", "Date"},
+		{"date", "translation.Date"},
 
-		{"total_distance", "Total distance"},
-		{"total_duration", "Total duration"},
-		{"total_weight", "Total weight"},
-		{"total_repetitions", "Total repetitions"},
-		{"total_up", "Total up"},
-		{"total_down", "Total down"},
+		{"total_distance", "translation.Total_distance"},
+		{"total_duration", "translation.Total_duration"},
+		{"total_weight", "translation.Total_weight"},
+		{"total_repetitions", "translation.Total_repetitions"},
+		{"total_up", "translation.Total_up"},
+		{"total_down", "translation.Total_down"},
 
-		{"average_speed_no_pause", "Average speed"},
-		{"max_speed", "Max speed"},
+		{"average_speed_no_pause", "translation.Average_speed"},
+		{"max_speed", "translation.Max_speed"},
 	}
 }
 
