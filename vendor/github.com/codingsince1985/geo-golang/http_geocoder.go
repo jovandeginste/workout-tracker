@@ -3,6 +3,7 @@ package geo
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"io"
 	"net/http"
@@ -37,10 +38,15 @@ type ResponseParser interface {
 type HTTPGeocoder struct {
 	EndpointBuilder
 	ResponseParserFactory
+	ResponseUnmarshaler
 }
 
-func (g HTTPGeocoder) GeocodeWithContext(ctx context.Context, address string) (*Location, error) {
+func (g HTTPGeocoder) geocodeWithContext(ctx context.Context, address string) (*Location, error) {
 	responseParser := g.ResponseParserFactory()
+	var responseUnmarshaler ResponseUnmarshaler = &JSONUnmarshaler{}
+	if g.ResponseUnmarshaler != nil {
+		responseUnmarshaler = g.ResponseUnmarshaler
+	}
 
 	type geoResp struct {
 		l *Location
@@ -49,7 +55,7 @@ func (g HTTPGeocoder) GeocodeWithContext(ctx context.Context, address string) (*
 	ch := make(chan geoResp, 1)
 
 	go func(ch chan geoResp) {
-		if err := response(ctx, g.GeocodeURL(url.QueryEscape(address)), responseParser); err != nil {
+		if err := response(ctx, g.GeocodeURL(url.QueryEscape(address)), responseUnmarshaler, responseParser); err != nil {
 			ch <- geoResp{
 				l: nil,
 				e: err,
@@ -76,12 +82,16 @@ func (g HTTPGeocoder) Geocode(address string) (*Location, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), DefaultTimeout)
 	defer cancel()
 
-	return g.GeocodeWithContext(ctx, address)
+	return g.geocodeWithContext(ctx, address)
 }
 
 // ReverseGeocode returns address for location
 func (g HTTPGeocoder) ReverseGeocode(lat, lng float64) (*Address, error) {
 	responseParser := g.ResponseParserFactory()
+	var responseUnmarshaler ResponseUnmarshaler = &JSONUnmarshaler{}
+	if g.ResponseUnmarshaler != nil {
+		responseUnmarshaler = g.ResponseUnmarshaler
+	}
 
 	ctx, cancel := context.WithTimeout(context.TODO(), DefaultTimeout)
 	defer cancel()
@@ -93,7 +103,7 @@ func (g HTTPGeocoder) ReverseGeocode(lat, lng float64) (*Address, error) {
 	ch := make(chan revResp, 1)
 
 	go func(ch chan revResp) {
-		if err := response(ctx, g.ReverseGeocodeURL(Location{lat, lng}), responseParser); err != nil {
+		if err := response(ctx, g.ReverseGeocodeURL(Location{lat, lng}), responseUnmarshaler, responseParser); err != nil {
 			ch <- revResp{
 				a: nil,
 				e: err,
@@ -115,8 +125,28 @@ func (g HTTPGeocoder) ReverseGeocode(lat, lng float64) (*Address, error) {
 	}
 }
 
+type ResponseUnmarshaler interface {
+	Unmarshal(data []byte, v any) error
+}
+
+type JSONUnmarshaler struct{}
+
+func (*JSONUnmarshaler) Unmarshal(data []byte, v any) error {
+	body := strings.Trim(string(data), " []")
+	if body == "" {
+		return nil
+	}
+	return json.Unmarshal([]byte(body), v)
+}
+
+type XMLUnmarshaler struct{}
+
+func (*XMLUnmarshaler) Unmarshal(data []byte, v any) error {
+	return xml.Unmarshal(data, v)
+}
+
 // Response gets response from url
-func response(ctx context.Context, url string, obj ResponseParser) error {
+func response(ctx context.Context, url string, unmarshaler ResponseUnmarshaler, obj ResponseParser) error {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return err
@@ -136,12 +166,8 @@ func response(ctx context.Context, url string, obj ResponseParser) error {
 		return err
 	}
 
-	body := strings.Trim(string(data), " []")
-	DebugLogger.Printf("Received response: %s\n", body)
-	if body == "" {
-		return nil
-	}
-	if err := json.Unmarshal([]byte(body), obj); err != nil {
+	DebugLogger.Printf("Received response: %s\n", string(data))
+	if err := unmarshaler.Unmarshal(data, obj); err != nil {
 		ErrLogger.Printf("Error unmarshalling response: %s\n", err.Error())
 		return err
 	}

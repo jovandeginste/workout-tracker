@@ -1,3 +1,4 @@
 *.json
 /target
+combined-with-oceans.bin
 combined-with-oceans.pb

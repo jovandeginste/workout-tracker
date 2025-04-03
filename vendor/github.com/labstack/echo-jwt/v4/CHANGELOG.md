@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.3.1 - 2025-03-22
+
+**Security**
+
+* update JWT dependencies (https://github.com/advisories/GHSA-mh63-6h87-95cp) by @aldas in [#31](https://github.com/labstack/echo-jwt/pull/31)
+
+
 ## v4.3.0 - 2024-12-04
 
 **Enhancements**
