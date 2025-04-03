@@ -60,14 +60,14 @@ func correctAltitude(creator string, lat, long, alt float64) float64 {
 
 type MapData struct {
 	Model
-	Address *geo.Address    `gorm:"serializer:json"`                               // The address of the workout
-	Details *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:",omitempty"` // The details of the workout
+	Address *geo.Address    `gorm:"serializer:json" json:"address"`                       // The address of the workout
+	Details *MapDataDetails `gorm:"constraint:OnDelete:CASCADE" json:"details,omitempty"` // The details of the workout
 
-	Workout       *Workout  `gorm:"foreignKey:WorkoutID" json:"-"` // The user who owns this profile
-	Creator       string    // The tool that created this workout
-	AddressString string    // The generic location of the workout
-	Center        MapCenter `gorm:"serializer:json"`      // The center of the workout (in coordinates)
-	WorkoutID     uint64    `gorm:"not null;uniqueIndex"` // The workout this data belongs to
+	Workout       *Workout  `gorm:"foreignKey:WorkoutID" json:"-"`         // The user who owns this profile
+	Creator       string    `json:"creator"`                               // The tool that created this workout
+	AddressString string    `json:"addressString"`                         // The generic location of the workout
+	Center        MapCenter `gorm:"serializer:json" json:"center"`         // The center of the workout (in coordinates)
+	WorkoutID     uint64    `gorm:"not null;uniqueIndex" json:"workoutID"` // The workout this data belongs to
 	converters.WorkoutData
 }
 
@@ -75,29 +75,29 @@ type MapDataDetails struct {
 	Model
 
 	MapData *MapData   `gorm:"foreignKey:MapDataID" json:"-"`
-	Points  []MapPoint `gorm:"serializer:json"` // The GPS points of the workout
+	Points  []MapPoint `gorm:"serializer:json" json:"points"` // The GPS points of the workout
 
-	MapDataID uint64 `gorm:"not null;uniqueIndex"` // The ID of the map data these details belong to
+	MapDataID uint64 `gorm:"not null;uniqueIndex" json:"mapDataID"` // The ID of the map data these details belong to
 }
 
 // MapCenter is the center of the workout
 type MapCenter struct {
-	TZ  string  // Timezone
-	Lat float64 // Latitude
-	Lng float64 // Longitude
+	TZ  string  `json:"tz"`  // Timezone
+	Lat float64 `json:"lat"` // Latitude
+	Lng float64 `json:"lng"` // Longitude
 }
 
 type MapPoint struct {
-	Time time.Time // The time the point was recorded
+	Time time.Time `json:"time"` // The time the point was recorded
 
-	ExtraMetrics  ExtraMetrics  // Extra metrics at this point
-	Lat           float64       // The latitude of the point
-	Lng           float64       // The longitude of the point
-	Elevation     float64       // The elevation of the point
-	Distance      float64       // The distance from the previous point
-	TotalDistance float64       // The total distance of the workout up to this point
-	Duration      time.Duration // The duration from the previous point
-	TotalDuration time.Duration // The total duration of the workout up to this point
+	ExtraMetrics  ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
+	Lat           float64       `json:"lat"`           // The latitude of the point
+	Lng           float64       `json:"lng"`           // The longitude of the point
+	Elevation     float64       `json:"elevation"`     // The elevation of the point
+	Distance      float64       `json:"distance"`      // The distance from the previous point
+	TotalDistance float64       `json:"totalDistance"` // The total distance of the workout up to this point
+	Duration      time.Duration `json:"duration"`      // The duration from the previous point
+	TotalDuration time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
 }
 
 func (m *MapCenter) ToOrbPoint() *orb.Point {

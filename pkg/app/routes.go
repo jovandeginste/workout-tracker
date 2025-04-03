@@ -165,7 +165,7 @@ func (c contextValue) Set(key string, val any) {
 	// with a copied request that has the updated context value
 	c.SetRequest(
 		c.Request().WithContext(
-			context.WithValue(c.Request().Context(), key, val), //nolint:staticcheck
+			context.WithValue(c.Request().Context(), key, val),
 		),
 	)
 	c.Context.Set(key, val)

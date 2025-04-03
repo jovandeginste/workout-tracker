@@ -27,10 +27,14 @@ func configuredApp(t *testing.T) *App {
 
 func defaultUser(db *gorm.DB) *database.User {
 	u := &database.User{
-		Username: "my-username",
-		Password: "my-password",
-		Name:     "my-name",
-		Active:   true,
+		UserData: database.UserData{
+			Username: "my-username",
+			Name:     "my-name",
+			Active:   true,
+		},
+		UserSecrets: database.UserSecrets{
+			Password: "my-password",
+		},
 	}
 
 	u.SetDB(db)

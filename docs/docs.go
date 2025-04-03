@@ -1539,11 +1539,11 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "firstID": {
-                    "description": "The index of the first and last point of the route",
+                    "description": "The index of the first point of the route",
                     "type": "integer"
                 },
                 "lastID": {
-                    "description": "The index of the first and last point of the route",
+                    "description": "The index of the last point of the route",
                     "type": "integer"
                 },
                 "routeSegment": {
@@ -1585,10 +1585,6 @@ const docTemplate = `{
         "database.User": {
             "type": "object",
             "properties": {
-                "-": {
-                    "description": "The salt used to hash the user's password",
-                    "type": "string"
-                },
                 "active": {
                     "description": "Whether the user is active",
                     "type": "boolean"
@@ -1596,10 +1592,6 @@ const docTemplate = `{
                 "admin": {
                     "description": "Whether the user is an admin",
                     "type": "boolean"
-                },
-                "apikey": {
-                    "description": "The user's API key",
-                    "type": "string"
                 },
                 "createdAt": {
                     "type": "string"

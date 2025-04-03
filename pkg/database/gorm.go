@@ -21,9 +21,9 @@ const thresholdSlowQueries = 100 * time.Millisecond
 var ErrUnsuportedDriver = errors.New("unsupported driver")
 
 type Model struct {
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	ID        uint64 `gorm:"primaryKey"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	ID        uint64    `gorm:"primaryKey" json:"id"`
 }
 
 func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, error) {
@@ -110,14 +110,14 @@ func preMigrationActions(db *gorm.DB) error {
 	q = db.
 		Where("map_data_id IN (SELECT map_data_id FROM map_data_details as mdd where map_data_details.created_at < mdd.created_at)").
 		Delete(&MapDataDetails{})
+	if q.Error != nil {
+		return q.Error
+	}
 
 	q = db.
 		Model(&Workout{}).
 		Where(&Workout{Type: "weight lifting"}).
 		Update("type", WorkoutTypeWeightLifting)
-	if q.Error != nil {
-		return q.Error
-	}
 
 	return q.Error
 }

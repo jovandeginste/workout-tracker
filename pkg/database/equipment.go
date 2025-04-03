@@ -12,24 +12,24 @@ type Equipment struct {
 	db *gorm.DB
 	Model
 
-	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`          // The name of the gear
-	Description string        `gorm:"" json:"description" form:"description"`                // More information about the equipment
-	DefaultFor  []WorkoutType `gorm:"serializer:json;column:default_for" form:"default_for"` // Which workout types to add this equipment by default
+	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`                             // The name of the gear
+	Description string        `gorm:"" json:"description" form:"description"`                                   // More information about the equipment
+	DefaultFor  []WorkoutType `gorm:"serializer:json;column:default_for" form:"default_for" json:"default_for"` // Which workout types to add this equipment by default
 
-	Workouts []Workout `gorm:"many2many:workout_equipment"`
+	Workouts []Workout `gorm:"many2many:workout_equipment" json:"workouts"`
 
-	User User
+	User User `json:"user"`
 
-	UserID uint64 `gorm:"not null;index"`                           // The ID of the user who owns the workout
+	UserID uint64 `gorm:"not null;index" json:"userID"`             // The ID of the user who owns the workout
 	Active bool   `gorm:"default:true" json:"active" form:"active"` // Whether this equipment is active
 }
 
 type WorkoutEquipment struct {
 	Model
-	Workout     Workout
-	Equipment   Equipment
-	WorkoutID   uint64 `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the workout
-	EquipmentID uint64 `gorm:"not null;uniqueIndex:idx_workout_equipment"` // The ID of the equipment
+	Workout     Workout   `json:"workout"`
+	Equipment   Equipment `json:"equipment"`
+	WorkoutID   uint64    `gorm:"not null;uniqueIndex:idx_workout_equipment" json:"workoutID"`   // The ID of the workout
+	EquipmentID uint64    `gorm:"not null;uniqueIndex:idx_workout_equipment" json:"equipmentID"` // The ID of the equipment
 }
 
 func GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
