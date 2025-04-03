@@ -1,6 +1,38 @@
 ## What's Changed
 
-- feat(i18n): Enable Polish translation
+- Bump all dependencies, by @jovandeginste, in
+  [#500](https://github.com/jovandeginste/workout-tracker/pull/500)
+- fix(i18n): rename translation keys to order by options, by @jovandeginste, in
+  [#499](https://github.com/jovandeginste/workout-tracker/pull/499)
+- Align api field names with `swagger.yml`, by @jovandeginste, in
+  [#496](https://github.com/jovandeginste/workout-tracker/pull/496)
+  - Fix tests, by @bastianjoel
+  - fix(docs): Update swagger docs with new field names, by @jovandeginste
+  - fix(api): Export fields with canonical json names, by @jovandeginste
+  - fix(api): Remove sensitive fields from user struct, by @jovandeginste
+  - feat(lint): Update golangci-lint configuration to v2, by @jovandeginste
+  - Update templates, by @bastianjoel
+  - Align api field names with swagger.yml, by @bastianjoel
+- chore(deps): bump the all group with 2 updates, by @jovandeginste, in
+  [#493](https://github.com/jovandeginste/workout-tracker/pull/493)
+  - chore(deps): bump the all group with 2 updates, by @dependabot[bot]
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#495](https://github.com/jovandeginste/workout-tracker/pull/495)
+  - Translated using Weblate (Polish), by @michal-stelmach
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#494](https://github.com/jovandeginste/workout-tracker/pull/494)
+  - Translated using Weblate (Chinese (Simplified Han script))
+
+## New Contributors
+
+- @bastianjoel made their first contribution
+
+## What's Changed in v2.2.0
+
+- feat(release): Add release tooling, by @jovandeginste, in
+  [#492](https://github.com/jovandeginste/workout-tracker/pull/492)
+- feat(i18n): Enable Polish translation, by @jovandeginste, in
+  [#491](https://github.com/jovandeginste/workout-tracker/pull/491)
 - Translations update from Hosted Weblate, by @jovandeginste, in
   [#488](https://github.com/jovandeginste/workout-tracker/pull/488)
   - Translated using Weblate (Polish), by @michal-stelmach
@@ -112,6 +144,9 @@
 ## New Contributors
 
 - @michal-stelmach made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.1.1...v2.2.0
 
 ## What's Changed in v2.1.1
 
