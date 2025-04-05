@@ -12,6 +12,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 func (a *App) addRoutesWorkouts(e *echo.Group) {
@@ -22,6 +23,7 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 	workoutsGroup.POST("/:id", a.workoutsUpdateHandler).Name = "workout-update"
 	workoutsGroup.GET("/:id/download", a.workoutsDownloadHandler).Name = "workout-download"
 	workoutsGroup.GET("/:id/edit", a.workoutsEditHandler).Name = "workout-edit"
+	workoutsGroup.GET("/:id/delete", a.workoutsDeleteConfirmHandler).Name = "workout-delete-confirm"
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
 	workoutsGroup.POST("/:id/share", a.workoutsShareHandler).Name = "workout-share"
@@ -109,6 +111,11 @@ func (a *App) workoutsDeleteHandler(c echo.Context) error { //nolint:dupl
 	}
 
 	a.addNoticeT(c, "translation.The_workout_s_has_been_deleted", workout.Name)
+
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("workouts"))
+		return c.String(http.StatusFound, "ok")
+	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
 }
@@ -241,4 +248,13 @@ func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
 	}
 
 	return Render(c, http.StatusOK, workouts.CreateRouteSegment(w))
+}
+
+func (a *App) workoutsDeleteConfirmHandler(c echo.Context) error {
+	w, err := a.getWorkout(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	return Render(c, http.StatusOK, workouts.DeleteModal(w))
 }

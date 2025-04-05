@@ -164,14 +164,14 @@
     > button,
     > form {
       @apply my-0;
+    }
 
-      > button {
-        @apply rounded-md mx-0 px-2 py-1;
-        a {
-          @apply text-white hover:text-white;
-          @apply dark:text-white dark:hover:text-white;
-          @apply text-center;
-        }
+    button {
+      @apply rounded-md mx-0 px-2 py-1;
+      a {
+        @apply text-white hover:text-white;
+        @apply dark:text-white dark:hover:text-white;
+        @apply text-center;
       }
     }
   }
@@ -259,7 +259,7 @@
   }
 
   .modal {
-    @apply hidden fixed inset-0 overflow-y-auto h-full w-full px-4 z-[3000];
+    @apply fixed inset-0 overflow-y-auto h-full w-full px-4 z-[3000];
     @apply bg-gray-100 bg-opacity-80;
     @apply dark:bg-gray-900 dark:bg-opacity-60;
     .window {
