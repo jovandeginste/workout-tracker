@@ -1,5 +1,24 @@
 ## What's Changed
 
+- Update swagger documentation
+- Replace delete with htmx, by @jovandeginste, in
+  [#504](https://github.com/jovandeginste/workout-tracker/pull/504)
+  - Update list of techs, by @jovandeginste
+  - Remove legacy javascript, by @jovandeginste
+  - Replace equipment delete with htmx, by @jovandeginste
+  - Convert user deletion to htmx, by @jovandeginste
+  - Convert route segment deletion to htmx, by @jovandeginste
+  - Add missing translation, by @jovandeginste
+  - Convert workout delete to htmx, by @jovandeginste
+  - Bump version of templ, by @jovandeginste
+- fix(api): whoami result not wrapped in APIResponse, by @jovandeginste, in
+  [#503](https://github.com/jovandeginste/workout-tracker/pull/503)
+  - fix(api): whoami result not wrapped in APIResponse, by @bastianjoel
+- fix(api) Fix WorkoutData json names, by @jovandeginste, in
+  [#502](https://github.com/jovandeginste/workout-tracker/pull/502)
+  - fix(api) Fix WorkoutData json names, by @bastianjoel
+- Update changelog, by @jovandeginste, in
+  [#501](https://github.com/jovandeginste/workout-tracker/pull/501)
 - Bump all dependencies, by @jovandeginste, in
   [#500](https://github.com/jovandeginste/workout-tracker/pull/500)
 - fix(i18n): rename translation keys to order by options, by @jovandeginste, in

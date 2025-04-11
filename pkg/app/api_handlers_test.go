@@ -49,6 +49,7 @@ func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Contains(t, string(b), u.Username)
+		assert.NotContains(t, string(b), "password")
 	})
 
 	t.Run("with invalid authorization header", func(t *testing.T) {
@@ -91,6 +92,7 @@ func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Contains(t, string(b), u.Username)
+		assert.NotContains(t, string(b), "password")
 	})
 
 	t.Run("with invalid query parameter", func(t *testing.T) {

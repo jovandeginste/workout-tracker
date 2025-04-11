@@ -1181,7 +1181,7 @@ const docTemplate = `{
                     ]
                 },
                 "extraMetrics": {
-                    "description": "Extra metrcis available",
+                    "description": "Extra metrics available",
                     "type": "array",
                     "items": {
                         "type": "string"
