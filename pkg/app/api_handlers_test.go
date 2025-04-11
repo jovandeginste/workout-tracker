@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -20,6 +21,24 @@ func defaultAPIUser(db *gorm.DB) *database.User {
 	u.Profile.Save(db)
 
 	return u
+}
+
+func validateAPIUser(t *testing.T, u *database.User, b []byte) {
+	t.Helper()
+
+	assert.NotContains(t, string(b), "password")
+
+	var resp struct {
+		Results database.User
+	}
+
+	err := json.Unmarshal(b, &resp)
+	require.NoError(t, err)
+
+	assert.Equal(t, u.Username, resp.Results.Username)
+	assert.Empty(t, resp.Results.Password)
+	assert.Empty(t, resp.Results.APIKey)
+	assert.Empty(t, resp.Results.Salt)
 }
 
 func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
@@ -49,7 +68,8 @@ func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Contains(t, string(b), u.Username)
-		assert.NotContains(t, string(b), "password")
+
+		validateAPIUser(t, u, b)
 	})
 
 	t.Run("with invalid authorization header", func(t *testing.T) {
@@ -92,7 +112,8 @@ func TestAPI_WhoAmI(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Contains(t, string(b), u.Username)
-		assert.NotContains(t, string(b), "password")
+
+		validateAPIUser(t, u, b)
 	})
 
 	t.Run("with invalid query parameter", func(t *testing.T) {
