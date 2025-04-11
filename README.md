@@ -425,6 +425,8 @@ database storage is a single SQLite file.
   - [Echo](https://echo.labstack.com/)
   - [Gorm](https://gorm.io)
   - [Spreak](https://github.com/vorlif/spreak)
+  - [templ](https://templ.guide/)
+  - [HTMX](https://htmx.org/)
 - HTML, CSS and JS
   - [Tailwind CSS](https://tailwindcss.com/)
   - [Iconify Design](https://iconify.design/)
@@ -458,5 +460,3 @@ application is tested with GPX files from these sources:
     elevation
   - see https://github.com/tormoder/fit/issues/87
   - https://www.fitfileviewer.com/ gives the same elevation issue
-- see if htmx is worth using
-  - first I need a use case
