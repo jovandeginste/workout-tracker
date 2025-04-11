@@ -11,6 +11,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/route_segments"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 func (a *App) addRoutesSegments(e *echo.Group) {
@@ -21,6 +22,7 @@ func (a *App) addRoutesSegments(e *echo.Group) {
 	routeSegmentsGroup.POST("/:id", a.routeSegmentsUpdateHandler).Name = "route-segment-update"
 	routeSegmentsGroup.GET("/:id/download", a.routeSegmentsDownloadHandler).Name = "route-segment-download"
 	routeSegmentsGroup.GET("/:id/edit", a.routeSegmentsEditHandler).Name = "route-segment-edit"
+	routeSegmentsGroup.GET("/:id/delete", a.routeSegmentsDeleteConfirmHandler).Name = "route-segment-delete-confirm"
 	routeSegmentsGroup.POST("/:id/delete", a.routeSegmentsDeleteHandler).Name = "route-segment-delete"
 	routeSegmentsGroup.POST("/:id/refresh", a.routeSegmentsRefreshHandler).Name = "route-segment-refresh"
 	routeSegmentsGroup.POST("/:id/matches", a.routeSegmentFindMatches).Name = "route-segment-matches"
@@ -142,6 +144,11 @@ func (a *App) routeSegmentsDeleteHandler(c echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "translation.The_workout_s_has_been_deleted", rs.Name)
 
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("route-segments"))
+		return c.String(http.StatusFound, "ok")
+	}
+
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segments"))
 }
 
@@ -185,4 +192,13 @@ func (a *App) routeSegmentFindMatches(c echo.Context) error {
 	a.addNoticeT(c, "translation.Start_searching_in_the_background_for_matching_workouts_for_route_segment_s", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))
+}
+
+func (a *App) routeSegmentsDeleteConfirmHandler(c echo.Context) error {
+	rs, err := a.getRouteSegment(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("route-segments"), err)
+	}
+
+	return Render(c, http.StatusOK, route_segments.DeleteModal(rs))
 }
