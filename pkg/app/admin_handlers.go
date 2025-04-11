@@ -6,6 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/admin"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 func (a *App) adminRoutes(e *echo.Group) *echo.Group {
@@ -18,6 +19,7 @@ func (a *App) adminRoutes(e *echo.Group) *echo.Group {
 	adminUsersGroup := adminGroup.Group("/users")
 	adminUsersGroup.GET("/:id/edit", a.adminUserEditHandler).Name = "admin-user-edit"
 	adminUsersGroup.POST("/:id", a.adminUserUpdateHandler).Name = "admin-user-update"
+	adminUsersGroup.GET("/:id/delete", a.adminUserDeleteConfirmHandler).Name = "admin-user-delete-confirm"
 	adminUsersGroup.POST("/:id/delete", a.adminUserDeleteHandler).Name = "admin-user-delete"
 	adminUsersGroup.GET("/:id", func(c echo.Context) error {
 		return c.Redirect(http.StatusFound, a.echo.Reverse("admin-user-edit", c.Param("id")))
@@ -86,6 +88,11 @@ func (a *App) adminUserDeleteHandler(c echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "translation.The_user_s_has_been_deleted", u.Name)
 
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("admin"))
+		return c.String(http.StatusFound, "ok")
+	}
+
 	return c.Redirect(http.StatusFound, a.echo.Reverse("admin"))
 }
 
@@ -111,4 +118,13 @@ func (a *App) adminConfigUpdateHandler(c echo.Context) error {
 
 func isChecked(value string) bool {
 	return value == "on"
+}
+
+func (a *App) adminUserDeleteConfirmHandler(c echo.Context) error {
+	u, err := a.getUser(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("admin"), err)
+	}
+
+	return Render(c, http.StatusOK, admin.DeleteModal(u))
 }
