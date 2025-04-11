@@ -28,7 +28,8 @@ release-patch release-minor release-major:
 
 release:
 	git tag -s -a $(VERSION) -m "Release $(VERSION)"
-	echo "Now run 'git push --tags' and create a new release"
+	@echo "Now run 'git push --tags' and create a new release"
+	@echo "New release: https://github.com/jovandeginste/workout-tracker/releases/new"
 
 install-deps:
 	npm install
