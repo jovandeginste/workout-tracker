@@ -7,6 +7,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/equipment"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 func (a *App) addRoutesEquipment(e *echo.Group) {
@@ -16,6 +17,7 @@ func (a *App) addRoutesEquipment(e *echo.Group) {
 	equipmentGroup.GET("/:id", a.equipmentShowHandler).Name = "equipment-show"
 	equipmentGroup.POST("/:id", a.equipmentUpdateHandler).Name = "equipment-update"
 	equipmentGroup.GET("/:id/edit", a.equipmentEditHandler).Name = "equipment-edit"
+	equipmentGroup.GET("/:id/delete", a.equipmentDeleteConfirmHandler).Name = "equipment-delete-confirm"
 	equipmentGroup.POST("/:id/delete", a.equipmentDeleteHandler).Name = "equipment-delete"
 	equipmentGroup.GET("/add", a.equipmentAddHandler).Name = "equipment-add"
 }
@@ -78,6 +80,11 @@ func (a *App) equipmentDeleteHandler(c echo.Context) error {
 
 	a.addNoticeT(c, "translation.The_equipment_s_has_been_deleted", e.Name)
 
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("equipment"))
+		return c.String(http.StatusFound, "ok")
+	}
+
 	return c.Redirect(http.StatusFound, a.echo.Reverse("equipment"))
 }
 
@@ -110,4 +117,13 @@ func (a *App) equipmentEditHandler(c echo.Context) error {
 	}
 
 	return Render(c, http.StatusOK, equipment.Edit(e))
+}
+
+func (a *App) equipmentDeleteConfirmHandler(c echo.Context) error {
+	e, err := a.getEquipment(c)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
+	}
+
+	return Render(c, http.StatusOK, equipment.DeleteModal(e))
 }
