@@ -31,9 +31,9 @@ var (
 )
 
 type UserSecrets struct {
-	Password string `form:"-" gorm:"type:varchar(128);not null"` // The user's password as bcrypt hash
-	Salt     string `form:"-" gorm:"type:varchar(16);not null"`  // The salt used to hash the user's password
-	APIKey   string `gorm:"type:varchar(32)"`                    // The user's API key
+	Password string `gorm:"type:varchar(128);not null"` // The user's password as bcrypt hash
+	Salt     string `gorm:"type:varchar(16);not null"`  // The salt used to hash the user's password
+	APIKey   string `gorm:"type:varchar(32)"`           // The user's API key
 }
 
 type UserData struct {
@@ -52,7 +52,7 @@ type User struct {
 	context context.Context
 
 	UserData
-	UserSecrets
+	UserSecrets `swaggerignore:"true"`
 
 	Workouts     []Workout     `gorm:"constraint:OnDelete:CASCADE" json:"-"` // The user's workouts
 	Equipment    []Equipment   `gorm:"constraint:OnDelete:CASCADE" json:"-"` // The user's equipment

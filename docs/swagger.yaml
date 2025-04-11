@@ -316,7 +316,7 @@ definitions:
         - $ref: '#/definitions/database.MapDataDetails'
         description: The details of the workout
       extraMetrics:
-        description: Extra metrcis available
+        description: Extra metrics available
         items:
           type: string
         type: array
