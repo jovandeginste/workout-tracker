@@ -1,7 +1,6 @@
 package equipment
 
 import (
-	"fmt"
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
@@ -61,26 +60,29 @@ templ actions(e *database.Equipment) {
 			</a>
 		</button>
 	</form>
-	<form onsubmit="return false">
-		<button
-			onclick="openModal('modalConfirmDelete', this)"
-			data-id={ helpers.A2S(e.ID) }
-			class="dangerous"
-			title={ i18n.T(ctx, "translation.delete") }
-		>
-			<a>
-				@helpers.IconFor("delete")
-			</a>
-		</button>
-	</form>
-	<div id={ fmt.Sprintf("modalConfirmDelete_%d", e.ID) } class="modal">
+	<button
+		hx-get={ helpers.RouteFor(ctx, "equipment-delete-confirm", e.ID) }
+		hx-target="#modal-container"
+		hx-swap="innerHTML"
+		class="dangerous"
+		title={ i18n.T(ctx, "translation.delete") }
+	>
+		@helpers.IconFor("delete")
+	</button>
+	<div id="modal-container">
+		// Modal content will be loaded here
+	</div>
+}
+
+templ DeleteModal(e *database.Equipment) {
+	<div id="modalConfirmDelete" class="modal">
 		<div class="window">
 			<div class="flex justify-end p-2">
 				<button
-					onclick="closeModal('modalConfirmDelete', this)"
-					data-id={ helpers.A2S(e.ID) }
-					type="button"
 					class="close-modal"
+					hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
+					hx-target="body"
+					hx-swap="innerHTML"
 				>
 					<a>
 						@helpers.IconFor("close")
@@ -88,20 +90,23 @@ templ actions(e *database.Equipment) {
 				</button>
 			</div>
 			<div class="modal-content">
-				<h3>{ i18n.T(ctx, "translation.Are_you_sure_you_want_to_delete_this_s", i18n.T(ctx, "misc.equipment")) }</h3>
+				<h3>
+					{ i18n.T(ctx, "translation.Are_you_sure_you_want_to_delete_this_s", i18n.T(ctx, "misc.equipment")) }
+					<div>
+						{ e.Name }
+					</div>
+				</h3>
 				<div class="flex">
-					<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-delete", e.ID)) }>
-						<button class="confirm">{ i18n.T(ctx, "translation.Continue") }</button>
-					</form>
-					<form onsubmit="return false">
-						<button
-							onclick="closeModal('modalConfirmDelete', this)"
-							data-id={ helpers.A2S(e.ID) }
-							class="cancel"
-						>
-							{ i18n.T(ctx, "translation.Cancel") }
-						</button>
-					</form>
+					<button
+						hx-post={ helpers.RouteFor(ctx, "equipment-delete", e.ID) }
+						class="confirm"
+					>{ i18n.T(ctx, "translation.Continue") }</button>
+					<button
+						hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
+						hx-target="body"
+						hx-swap="innerHTML"
+						class="cancel"
+					>{ i18n.T(ctx, "translation.Cancel") }</button>
 				</div>
 			</div>
 		</div>
