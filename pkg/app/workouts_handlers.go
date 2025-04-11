@@ -152,7 +152,7 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "The workout '%s' now has a shareable link", workout.Name)
+	a.addNoticeT(c, "translation.The_workout_s_now_has_a_shareable_link", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
