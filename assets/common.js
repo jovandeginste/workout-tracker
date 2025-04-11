@@ -1,17 +1,3 @@
-window.openModal = function (modalName, obj) {
-  var name = modalName + "_" + obj.getAttribute("data-id");
-  document.getElementById(name).style.display = "block";
-  document.getElementsByTagName("body")[0].classList.add("overflow-y-hidden");
-};
-
-window.closeModal = function (modalName, obj) {
-  var name = modalName + "_" + obj.getAttribute("data-id");
-  document.getElementById(name).style.display = "none";
-  document
-    .getElementsByTagName("body")[0]
-    .classList.remove("overflow-y-hidden");
-};
-
 // Close all modals when press ESC
 document.onkeydown = function (event) {
   event = event || window.event;
