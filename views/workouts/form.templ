@@ -153,7 +153,7 @@ templ Form(w *database.Workout) {
 	</tr>
 	<tr>
 		<td>
-			<label for="misc.equipment">{ i18n.T(ctx, "menu.Equipment") }</label>
+			<label for="equipment">{ i18n.T(ctx, "menu.Equipment") }</label>
 		</td>
 		<td>
 			for _, e := range currentUser.Equipment {
@@ -162,7 +162,7 @@ templ Form(w *database.Workout) {
 						class="hidden peer"
 						type="checkbox"
 						id={ fmt.Sprintf("equipment_%d", e.ID) }
-						name="misc.equipment"
+						name="equipment"
 						value={ helpers.A2S(e.ID) }
 						checked?={ w.Uses(e) }
 					/>
