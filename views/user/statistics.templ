@@ -18,13 +18,13 @@ templ Statistics(u *database.User, since, per string) {
 				<label for="since">{ i18n.T(ctx, "translation.Since") }</label>
 				<select id="since" name="since">
 					for _, o := range helpers.StatisticSinceOptions() {
-						<option value={ o } selected?={ o == since }>{ i18n.T(ctx, o) }</option>
+						<option value={ o.Key } selected?={ o.Key == since }>{ i18n.T(ctx, o.Translation) }</option>
 					}
 				</select>
 				<label for="per">{ i18n.T(ctx, "translation.Per") }</label>
 				<select id="per" name="per">
 					for _, o := range helpers.StatisticPerOptions() {
-						<option value={ o } selected?={ o == per }>{ i18n.T(ctx, o) }</option>
+						<option value={ o.Key } selected?={ o.Key == per }>{ i18n.T(ctx, o.Translation) }</option>
 					}
 				</select>
 				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
