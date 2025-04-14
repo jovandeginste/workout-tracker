@@ -39,9 +39,9 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 				</select>
 				<label for="since">{ i18n.T(ctx, "translation.Last") }</label>
 				<select id="since" name="since">
-					for _, opt := range helpers.FilterOptions() {
-						<option value={ opt } selected?={ opt ==  filters.Since }>
-							{ i18n.T(ctx, opt) }
+					for _, fo := range helpers.FilterOptions() {
+						<option value={ fo.Key } selected?={ fo.Key ==  filters.Since }>
+							{ i18n.T(ctx, fo.Translation) }
 						</option>
 					}
 				</select>

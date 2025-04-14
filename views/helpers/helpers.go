@@ -30,7 +30,7 @@ func WorkoutTypes() []database.WorkoutType {
 	return database.WorkoutTypes()
 }
 
-func FilterOptions() []string {
+func FilterOptions() []TranslatedKey {
 	return StatisticSinceOptions()
 }
 
