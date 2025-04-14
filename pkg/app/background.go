@@ -52,7 +52,7 @@ func (a *App) bgLoop() {
 }
 
 func (a *App) autoImports(l *slog.Logger) {
-	var uID []int
+	var uID []uint64
 
 	q := a.db.Model(&database.User{}).Pluck("ID", &uID)
 	if err := q.Error; err != nil {
@@ -66,7 +66,7 @@ func (a *App) autoImports(l *slog.Logger) {
 	}
 }
 
-func (a *App) autoImportForUser(l *slog.Logger, userID int) error {
+func (a *App) autoImportForUser(l *slog.Logger, userID uint64) error {
 	u, err := database.GetUserByID(a.db, userID)
 	if err != nil {
 		return err

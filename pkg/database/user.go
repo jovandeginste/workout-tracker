@@ -153,7 +153,7 @@ func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
 	return &u, nil
 }
 
-func GetUserByID(db *gorm.DB, userID int) (*User, error) {
+func GetUserByID(db *gorm.DB, userID uint64) (*User, error) {
 	var u User
 
 	if err := currentUserQuery(db).First(&u, userID).Error; err != nil {
@@ -344,7 +344,7 @@ func (u *User) GetLatestMeasurement() (Measurement, error) {
 	return u.GetLatestMeasurementForDate(time.Now())
 }
 
-func (u *User) GetWorkout(db *gorm.DB, id int) (*Workout, error) {
+func (u *User) GetWorkout(db *gorm.DB, id uint64) (*Workout, error) {
 	var w *Workout
 
 	db = db.Preload("Data").Preload("Data.Details").Preload("GPX").Preload("Equipment")
@@ -423,7 +423,7 @@ func (u *User) GetAllEquipment(db *gorm.DB) ([]*Equipment, error) {
 	return w, nil
 }
 
-func (u *User) GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
+func (u *User) GetEquipment(db *gorm.DB, id uint64) (*Equipment, error) {
 	var w *Equipment
 
 	if err := db.Where(&Equipment{UserID: u.ID}).First(&w, id).Error; err != nil {

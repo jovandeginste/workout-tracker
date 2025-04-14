@@ -193,7 +193,7 @@ func TestDatabaseUserCreate(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "my-name", u.Name)
 
-	u, err = GetUserByID(db, int(u.ID))
+	u, err = GetUserByID(db, u.ID)
 	require.NoError(t, err)
 	assert.Equal(t, "my-name", u.Name)
 }

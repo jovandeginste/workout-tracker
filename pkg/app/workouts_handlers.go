@@ -74,7 +74,7 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 	w := &database.Workout{}
 
 	if c.FormValue("id") != "" {
-		id, err := strconv.Atoi(c.FormValue("id"))
+		id, err := strconv.ParseUint(c.FormValue("id"), 10, 32)
 		if err != nil {
 			return Render(c, http.StatusOK, workouts.Form(w))
 		}
@@ -135,7 +135,7 @@ func (a *App) workoutShowShared(c echo.Context) error {
 }
 
 func (a *App) workoutsShareHandler(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
@@ -158,7 +158,7 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}

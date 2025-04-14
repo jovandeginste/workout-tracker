@@ -342,7 +342,7 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -418,7 +418,7 @@ func (a *App) apiWorkoutAddHandler(c echo.Context) error {
 func (a *App) apiWorkoutHandler(c echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
