@@ -51,7 +51,7 @@ func (a *App) equipmentHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}

@@ -174,7 +174,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentFindMatches(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}

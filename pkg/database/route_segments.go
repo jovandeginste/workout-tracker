@@ -146,7 +146,7 @@ func (rs *RouteSegment) UpdateFromContent() error {
 	return nil
 }
 
-func GetRouteSegment(db *gorm.DB, id int) (*RouteSegment, error) {
+func GetRouteSegment(db *gorm.DB, id uint64) (*RouteSegment, error) {
 	var rs RouteSegment
 
 	if err := db.Preload("RouteSegmentMatches.Workout.User").First(&rs, id).Error; err != nil {

@@ -79,7 +79,7 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 }
 
 func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
 }
 
 func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 }
 
 func (a *App) getEquipment(c echo.Context) (*database.Equipment, error) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return nil, err
 	}

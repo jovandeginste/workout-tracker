@@ -32,7 +32,7 @@ type WorkoutEquipment struct {
 	EquipmentID uint64    `gorm:"not null;uniqueIndex:idx_workout_equipment" json:"equipmentID"` // The ID of the equipment
 }
 
-func GetEquipment(db *gorm.DB, id int) (*Equipment, error) {
+func GetEquipment(db *gorm.DB, id uint64) (*Equipment, error) {
 	var e Equipment
 
 	if err := db.Preload("User").Preload("Workouts").Preload("Workouts.Data").First(&e, id).Error; err != nil {
