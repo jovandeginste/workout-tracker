@@ -8,7 +8,7 @@ import (
 )
 
 func (a *App) getUser(c echo.Context) (*database.User, error) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		return nil, err
 	}
