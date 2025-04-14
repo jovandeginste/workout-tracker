@@ -222,6 +222,7 @@ zh-Hans:
     You_can_edit_your_GPX_files_before_uploading_them_here: 您可以在上传前编辑 GPX 文件：
     Try_one_of_these_sites: 试试这些网站：
     i_completed_a_workout_s: 我完成了一次锻炼：%s。
+    The_workout_s_now_has_a_shareable_link: 锻炼 '%s' 现有可分享的链接
   user:
     profile:
       your_settings: 您的设置
