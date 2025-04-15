@@ -1,19 +1,22 @@
 de:
   alerts:
     workouts_added:
-      one: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten
-        %{count}
-      other: Beim Hinzufügen vom Training %{list} sind folgende Probleme aufgetreten
-        %{count}
+      one: 'Beim Hinzufügen des Trainings ist ein Problem aufgetreten: %{list}'
+      other: 'Beim Hinzufügen des Trainings sind %{count} Probleme aufgetreten: %{list}'
+    route_segments_added:
+      one: 'Beim Hinzufügen des Streckenabschnittes ist ein Problem aufgetreten: %{list}'
+      other: 'Beim Hinzufügen des Streckenabschnittes sind %{count} Probleme aufgetreten:
+        %{list}'
+    something_wrong: 'Etwas ging schief: %{message}'
   notices:
     workouts_added:
-      one: '%{count} neue(s) Training(s) hinzugefügt: %{list}'
-      other: '%{count} neue(s) Training(s) hinzugefügt: %{list}'
+      one: 'Ein neues Training hinzugefügt: %{list}'
+      other: '%{count} neue Trainings hinzugefügt: %{list}'
     route_segments_added:
-      one: '%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
-        im Hintergrund nach Übereinstimmungen.'
-      other: '%{count} neue(s) Streckenabschnitt(e) hinzugefügt: %{list} - wir suchen
-        im Hintergrund nach Übereinstimmungen.'
+      one: 'Ein neuer Streckenabschnitt hinzugefügt: %{list} - wir suchen im Hintergrund
+        nach Übereinstimmungen'
+      other: '%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im
+        Hintergrund nach Übereinstimmungen'
   misc:
     day_7: 7 Tage
     month_6: 6 Monate
@@ -31,6 +34,11 @@ de:
     equipment: Ausrüstung
     workout: Training
     route_segment: Streckenabschnitt
+    remove_the_beginning_or_the_ending_of_a_workout: den Anfang oder das Ende eines
+      Trainings entfernen
+    split_files_with_multiple_tracks: Dateien mit mehreren Pfaden aufteilen
+    convert_from_not_yet_supported_file_format: aus einem bisher nicht unterstützten
+      Dateiformat konvertieren
   sports:
     cycling: Radfahren
     golfing: Golfen
@@ -73,7 +81,7 @@ de:
     API_key_updated: API-Schlüssel aktualisiert
     Actions: Aktionen
     Active: Aktiv
-    Add_a_workout: Training hinzufügen
+    Add_a_workout: Ein Training hinzufügen
     Add_equipment: Ausrüstung hinzufügen
     Add_route_segment: Streckenabschnitt hinzufügen
     Add_workout: Training hinzufügen
@@ -159,8 +167,8 @@ de:
     The_user_s_has_been_deleted: Der Benutzer '%s' wurde gelöscht.
     The_user_s_has_been_updated: Der Benutzer ‚%s‘ wurde aktualisiert.
     The_workout_s_has_been_deleted: Das Training '%s' wurde gelöscht.
-    The_workout_s_has_been_refreshed: Das Training ‚%s‘ wurde aktualisiert.
-    The_workout_s_has_been_updated: Das Training ‚%s‘ wurde aktualisiert.
+    The_workout_s_has_been_refreshed: Das Training '%s' wurde aktualisiert.
+    The_workout_s_has_been_updated: Das Training '%s' wurde aktualisiert.
     These_settings_may_be_overwritten_by: 'Diese Einstellungen können überschrieben
       werden durch:'
     Time: Zeit
@@ -226,11 +234,16 @@ de:
     Height: Höhe
     Are_you_sure: Bist du sicher?
     i_completed_a_workout_s: Ich habe das Training %s absolviert.
+    The_workout_s_now_has_a_shareable_link: Das Training '%s' hat nun einen teilbaren
+      Link
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'Du kannst deine GPX-Dateien
+      bearbeiten, bevor du sie hier hochlädst:'
+    Try_one_of_these_sites: 'Probiere eine dieser Seiten:'
   user:
     profile:
       your_settings: Deine Einstellungen
       auto_import_directory: Verzeichnis für automatischen Import
-      disable_social_sharing_buttons: Buttons für soziale Netzwerke deaktivieren
+      disable_social_sharing_buttons: Schaltflächen für soziale Netzwerke deaktivieren
       enable_api_access: API-Zugriff aktivieren
       Language: Sprache
       preferred_units: Bevorzugte Einheiten
@@ -238,7 +251,7 @@ de:
       show_full_date_by_default: Standardmäßig das vollständige Datum anzeigen
       time_zone: Zeitzone
       totals_to_show_on_dashboard: Zusammenfassung aller Werte auf dem Dashboard anzeigen
-      update_preferred_units: Bevorzugte Einheiten speichern
+      update_preferred_units: Bevorzugte Einheiten aktualisieren
       update_profile: Profil aktualisieren
       copy_to_clipboard: In die Zwischenablage kopieren
       generate_a_new_api_key: Neuen API-Schlüssel generieren
@@ -246,7 +259,7 @@ de:
       Theme: Modus
       Light: Hell
       Dark: Dunkel
-      Browser_System: Browser_System
+      Browser_System: Browser / System
     update: Benutzer aktualisieren
   workout:
     update: Training aktualisieren
