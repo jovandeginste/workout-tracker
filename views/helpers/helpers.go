@@ -39,6 +39,16 @@ type TranslatedKey struct {
 	Translation string
 }
 
+func FindTranslationForKey(tks []TranslatedKey, key string) string {
+	for _, tk := range tks {
+		if tk.Key == key {
+			return tk.Translation
+		}
+	}
+
+	return ""
+}
+
 func OrderDirOptions() []TranslatedKey {
 	return []TranslatedKey{
 		{"asc", "translation.ascending"},

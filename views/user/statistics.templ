@@ -11,7 +11,7 @@ templ Statistics(u *database.User, since, per string) {
 	@partials.Page(partials.NewPageOptions().WithCharts()) {
 		<h2>
 			@helpers.IconFor("statistics")
-			{ i18n.T(ctx, "translation.Your_progress_per_s_for_the_past_s", i18n.T(ctx, per), i18n.T(ctx, since)) }
+			{ i18n.T(ctx, "translation.Your_progress_per_s_for_the_past_s", i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticPerOptions(), per)), i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticSinceOptions(), since))) }
 		</h2>
 		<div class="content">
 			<form class="inner-form">
