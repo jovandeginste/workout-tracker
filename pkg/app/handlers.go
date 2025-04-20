@@ -36,8 +36,8 @@ func (a *App) statisticsHandler(c echo.Context) error {
 		Since string `query:"since"`
 		Per   string `query:"per"`
 	}{
-		Since: "misc.years_1",
-		Per:   "misc.month",
+		Since: "1 year",
+		Per:   "month",
 	}
 
 	if err := c.Bind(&statisticsParams); err != nil {
