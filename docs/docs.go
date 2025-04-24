@@ -1827,7 +1827,8 @@ const docTemplate = `{
                 "golfing",
                 "hiking",
                 "push-ups",
-                "weight-lifting"
+                "weight-lifting",
+                "rowing"
             ],
             "x-enum-varnames": [
                 "WorkoutTypeAutoDetect",
@@ -1842,7 +1843,8 @@ const docTemplate = `{
                 "WorkoutTypeGolfing",
                 "WorkoutTypeHiking",
                 "WorkoutTypePushups",
-                "WorkoutTypeWeightLifting"
+                "WorkoutTypeWeightLifting",
+                "WorkoutTypeRowing"
             ]
         },
         "geo.Address": {
