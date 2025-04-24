@@ -753,6 +753,7 @@ definitions:
     - hiking
     - push-ups
     - weight-lifting
+    - rowing
     type: string
     x-enum-varnames:
     - WorkoutTypeAutoDetect
@@ -768,6 +769,7 @@ definitions:
     - WorkoutTypeHiking
     - WorkoutTypePushups
     - WorkoutTypeWeightLifting
+    - WorkoutTypeRowing
   geo.Address:
     properties:
       city:

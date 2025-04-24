@@ -56,6 +56,7 @@ var iconMap = map[string]string{
 	"hiking":         "icon-[fa6-solid--person-hiking]",
 	"push-ups":       "icon-[hugeicons--push-up-bar]",
 	"weight-lifting": "icon-[fa6-solid--dumbbell]",
+	"rowing":         "icon-[material-symbols--rowing]",
 
 	// Page Icons
 	"dashboard":         "icon-[fa6-solid--chart-line]",

@@ -397,6 +397,8 @@ func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypeHiking, true
 	case "push-ups":
 		return WorkoutTypePushups, true
+	case "rowing":
+		return WorkoutTypeRowing, true
 	default:
 		return WorkoutTypeAutoDetect, false
 	}

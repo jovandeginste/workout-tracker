@@ -1820,7 +1820,8 @@
                 "golfing",
                 "hiking",
                 "push-ups",
-                "weight-lifting"
+                "weight-lifting",
+                "rowing"
             ],
             "x-enum-varnames": [
                 "WorkoutTypeAutoDetect",
@@ -1835,7 +1836,8 @@
                 "WorkoutTypeGolfing",
                 "WorkoutTypeHiking",
                 "WorkoutTypePushups",
-                "WorkoutTypeWeightLifting"
+                "WorkoutTypeWeightLifting",
+                "WorkoutTypeRowing"
             ]
         },
         "geo.Address": {
