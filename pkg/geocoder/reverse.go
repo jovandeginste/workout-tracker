@@ -39,8 +39,8 @@ type Query struct {
 	Lon    float64 `url:"lon"`
 }
 
-type result struct {
-	Address     address  `json:"address"`
+type Result struct {
+	Address     Address  `json:"address"`
 	Licence     string   `json:"licence"`
 	OsmType     string   `json:"osm_type"`
 	Lat         string   `json:"lat"`
@@ -57,7 +57,7 @@ type result struct {
 	Importance  float64  `json:"importance"`
 }
 
-type address struct {
+type Address struct {
 	HouseNumber   string `json:"house_number"`
 	Road          string `json:"road"`
 	Pedestrian    string `json:"pedestrian"`
@@ -117,7 +117,7 @@ func SetClient(l *slog.Logger, ua string) {
 	}
 }
 
-func search(a string) ([]result, error) {
+func search(a string) ([]Result, error) {
 	if c == nil {
 		return nil, ErrClientNotSet
 	}
@@ -153,12 +153,16 @@ func search(a string) ([]result, error) {
 
 	defer res.Body.Close()
 
-	r := []result{}
+	r := []Result{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		return nil, err
 	}
 
 	return r, nil
+}
+
+func SearchLocations(a string) ([]Result, error) {
+	return search(a)
 }
 
 func Find(a string) (*geo.Address, error) {
@@ -216,7 +220,7 @@ func Reverse(q Query) (*geo.Address, error) {
 
 	defer res.Body.Close()
 
-	r := result{}
+	r := Result{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		return nil, err
 	}
@@ -224,7 +228,7 @@ func Reverse(q Query) (*geo.Address, error) {
 	return r.ToAddress(), nil
 }
 
-func (r result) ToAddress() *geo.Address {
+func (r Result) ToAddress() *geo.Address {
 	return &geo.Address{
 		FormattedAddress: r.DisplayName,
 		HouseNumber:      r.Address.HouseNumber,
@@ -238,13 +242,13 @@ func (r result) ToAddress() *geo.Address {
 	}
 }
 
-func (a address) Locality() string {
+func (a Address) Locality() string {
 	return cmp.Or(
 		a.City, a.Town, a.Village, a.Hamlet,
 	)
 }
 
-func (a address) Street() string {
+func (a Address) Street() string {
 	return cmp.Or(
 		a.Road, a.Pedestrian, a.Path, a.Cycleway, a.Footway, a.Highway,
 	)
