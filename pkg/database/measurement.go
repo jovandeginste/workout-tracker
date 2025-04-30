@@ -19,7 +19,7 @@ type Measurement struct {
 func (u *User) NewMeasurement(d time.Time) *Measurement {
 	return &Measurement{
 		UserID: u.ID,
-		Date:   datatypes.Date(d.UTC()),
+		Date:   datatypes.Date(d),
 	}
 }
 
