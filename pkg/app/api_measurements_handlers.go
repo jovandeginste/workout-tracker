@@ -31,6 +31,16 @@ func (m *Measurement) Time() time.Time {
 	return d
 }
 
+func (m *Measurement) ToSteps() *float64 {
+	if m.Steps == 0 {
+		return nil
+	}
+
+	d := m.Steps
+
+	return &d
+}
+
 func (m *Measurement) ToHeight() *float64 {
 	if m.Height == 0 {
 		return nil
@@ -62,5 +72,5 @@ func (m *Measurement) ToWeight() *float64 {
 func (m *Measurement) Update(measurement *database.Measurement) {
 	setIfNotNil(&measurement.Weight, m.ToWeight())
 	setIfNotNil(&measurement.Height, m.ToHeight())
-	setIfNotNil(&measurement.Steps, &m.Steps)
+	setIfNotNil(&measurement.Steps, m.ToSteps())
 }
