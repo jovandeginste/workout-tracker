@@ -327,7 +327,7 @@ func (u *User) GetLatestMeasurements(c int) ([]*Measurement, error) {
 func (u *User) GetCurrentMeasurement() (*Measurement, error) {
 	var m *Measurement
 
-	d := time.Now().UTC()
+	d := time.Now().In(u.Timezone())
 
 	if err := u.db.Where(&Measurement{UserID: u.ID}).Where("date = ?", datatypes.Date(d)).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
