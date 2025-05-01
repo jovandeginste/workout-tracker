@@ -9,7 +9,7 @@ require (
 	github.com/alexedwards/scs/gormstore v0.0.0-20250212122300-421ef1d8611c
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/anyappinc/fitbit v0.0.3
-	github.com/aquasecurity/table v1.8.0
+	github.com/aquasecurity/table v1.9.0
 	github.com/biter777/countries v1.7.5
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.5
@@ -49,7 +49,7 @@ require (
 	gorm.io/datatypes v1.2.5
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.11
-	gorm.io/gorm v1.25.12
+	gorm.io/gorm v1.26.0
 	resty.dev/v3 v3.0.0-beta.2
 )
 
