@@ -24,6 +24,7 @@ import (
 var (
 	defaultSseMaxBufSize = 1 << 15 // 32kb
 	defaultEventName     = "message"
+	defaultHTTPMethod    = MethodGet
 
 	headerID    = []byte("id:")
 	headerData  = []byte("data:")
@@ -63,7 +64,9 @@ type (
 	EventSource struct {
 		lock             *sync.RWMutex
 		url              string
+		method           string
 		header           http.Header
+		body             io.Reader
 		lastEventID      string
 		retryCount       int
 		retryWaitTime    time.Duration
@@ -126,6 +129,14 @@ func (es *EventSource) SetURL(url string) *EventSource {
 	return es
 }
 
+// SetMethod method sets a [EventSource] connection HTTP method in the instance
+//
+//	es.SetMethod("POST"), or es.SetMethod(resty.MethodPost)
+func (es *EventSource) SetMethod(method string) *EventSource {
+	es.method = method
+	return es
+}
+
 // SetHeader method sets a header and its value to the [EventSource] instance.
 // It overwrites the header value if the key already exists. These headers will be sent in
 // the request while establishing a connection to the event source
@@ -136,6 +147,15 @@ func (es *EventSource) SetHeader(header, value string) *EventSource {
 	es.lock.Lock()
 	defer es.lock.Unlock()
 	es.header.Set(header, value)
+	return es
+}
+
+// SetBody method sets body value to the [EventSource] instance
+//
+// Example:
+// es.SetBody(bytes.NewReader([]byte(`{"test":"put_data"}`)))
+func (es *EventSource) SetBody(body io.Reader) *EventSource {
+	es.body = body
 	return es
 }
 
@@ -343,8 +363,15 @@ func (es *EventSource) Get() error {
 	if isStringEmpty(es.url) {
 		return fmt.Errorf("resty:sse: event source URL is required")
 	}
-	if _, found := es.onEvent[defaultEventName]; !found {
-		return fmt.Errorf("resty:sse: OnMessage function is required")
+
+	if isStringEmpty(es.method) {
+		// It is up to the user to choose which http method to use, depending on the specific code implementation. No restrictions are imposed here.
+		// Ensure compatibility, use GET as default http method
+		es.method = defaultHTTPMethod
+	}
+
+	if len(es.onEvent) == 0 {
+		return fmt.Errorf("resty:sse: At least one OnMessage/AddEventListener func is required")
 	}
 
 	// reset to begin
@@ -401,7 +428,7 @@ func (es *EventSource) triggerOnError(err error) {
 }
 
 func (es *EventSource) createRequest() (*http.Request, error) {
-	req, err := http.NewRequest(MethodGet, es.url, nil)
+	req, err := http.NewRequest(es.method, es.url, es.body)
 	if err != nil {
 		return nil, err
 	}
@@ -507,45 +534,54 @@ func (es *EventSource) listenStream(res *http.Response) error {
 			return nil
 		}
 
-		e, err := readEvent(scanner)
-		if err != nil {
-			if err == io.EOF {
-				return err
-			}
-			es.triggerOnError(err)
+		if err := es.processEvent(scanner); err != nil {
 			return err
 		}
+	}
+}
 
-		ed, err := parseEvent(e)
-		if err != nil {
-			es.triggerOnError(err)
-			continue // parsing errors, just continue
+func (es *EventSource) processEvent(scanner *bufio.Scanner) error {
+	e, err := readEvent(scanner)
+	if err != nil {
+		if err == io.EOF {
+			return err
 		}
+		es.triggerOnError(err)
+		return err
+	}
 
-		if len(ed.ID) > 0 {
+	ed, err := parseEvent(e)
+	if err != nil {
+		es.triggerOnError(err)
+		return nil // parsing errors, will not return error.
+	}
+	defer putRawEvent(ed)
+
+	if len(ed.ID) > 0 {
+		es.lock.Lock()
+		es.lastEventID = string(ed.ID)
+		es.lock.Unlock()
+	}
+
+	if len(ed.Retry) > 0 {
+		if retry, err := strconv.Atoi(string(ed.Retry)); err == nil {
 			es.lock.Lock()
-			es.lastEventID = string(ed.ID)
+			es.serverSentRetry = time.Millisecond * time.Duration(retry)
 			es.lock.Unlock()
-		}
-
-		if len(ed.Retry) > 0 {
-			if retry, err := strconv.Atoi(string(ed.Retry)); err == nil {
-				es.lock.Lock()
-				es.serverSentRetry = time.Second * time.Duration(retry)
-				es.lock.Unlock()
-			} else {
-				es.triggerOnError(err)
-			}
-		}
-
-		if len(ed.Data) > 0 {
-			es.handleCallback(&Event{
-				ID:   string(ed.ID),
-				Name: string(ed.Event),
-				Data: string(ed.Data),
-			})
+		} else {
+			es.triggerOnError(err)
 		}
 	}
+
+	if len(ed.Data) > 0 {
+		es.handleCallback(&Event{
+			ID:   string(ed.ID),
+			Name: string(ed.Event),
+			Data: string(ed.Data),
+		})
+	}
+
+	return nil
 }
 
 func (es *EventSource) handleCallback(e *Event) {
@@ -606,7 +642,7 @@ func parseEventFunc(msg []byte) (*rawEvent, error) {
 		return nil, errors.New("resty:sse: event message was empty")
 	}
 
-	e := new(rawEvent)
+	e := newRawEvent()
 
 	// Split the line by "\n"
 	for _, line := range bytes.FieldsFunc(msg, func(r rune) bool { return r == '\n' }) {
@@ -642,4 +678,19 @@ func trimHeader(size int, data []byte) []byte {
 	data = bytes.TrimSpace(data)
 	data = bytes.TrimSuffix(data, []byte("\n"))
 	return data
+}
+
+var rawEventPool = &sync.Pool{New: func() any { return new(rawEvent) }}
+
+func newRawEvent() *rawEvent {
+	e := rawEventPool.Get().(*rawEvent)
+	e.ID = e.ID[:0]
+	e.Data = e.Data[:0]
+	e.Event = e.Event[:0]
+	e.Retry = e.Retry[:0]
+	return e
+}
+
+func putRawEvent(e *rawEvent) {
+	rawEventPool.Put(e)
 }

@@ -5,11 +5,11 @@ go 1.24.1
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
-	github.com/a-h/templ v0.3.857
-	github.com/alexedwards/scs/gormstore v0.0.0-20250212122300-421ef1d8611c
+	github.com/a-h/templ v0.3.865
+	github.com/alexedwards/scs/gormstore v0.0.0-20250417082927-ab20b3feb5e9
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/anyappinc/fitbit v0.0.3
-	github.com/aquasecurity/table v1.9.0
+	github.com/aquasecurity/table v1.10.0
 	github.com/biter777/countries v1.7.5
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.5
@@ -44,13 +44,13 @@ require (
 	github.com/swaggo/swag v1.16.4
 	github.com/tkrajina/gpxgo v1.4.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.37.0
-	golang.org/x/text v0.24.0
+	golang.org/x/crypto v0.38.0
+	golang.org/x/text v0.25.0
 	gorm.io/datatypes v1.2.5
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.11
-	gorm.io/gorm v1.26.0
-	resty.dev/v3 v3.0.0-beta.2
+	gorm.io/gorm v1.26.1
+	resty.dev/v3 v3.0.0-beta.3
 )
 
 require (
@@ -89,10 +89,10 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/sagikazarmark/locafero v0.9.0 // indirect
-	github.com/samber/lo v1.49.1 // indirect
+	github.com/samber/lo v1.50.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.14.0 // indirect
-	github.com/spf13/cast v1.7.1 // indirect
+	github.com/spf13/cast v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/tidwall/geoindex v1.7.0 // indirect
@@ -105,18 +105,18 @@ require (
 	go.opentelemetry.io/otel v1.35.0 // indirect
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
-	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/oauth2 v0.29.0 // indirect
-	golang.org/x/sync v0.13.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/term v0.31.0 // indirect
+	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 // indirect
+	golang.org/x/net v0.40.0 // indirect
+	golang.org/x/oauth2 v0.30.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/term v0.32.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
-	golang.org/x/tools v0.32.0 // indirect
+	golang.org/x/tools v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	modernc.org/libc v1.62.1 // indirect
+	modernc.org/libc v1.65.3 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
-	modernc.org/memory v1.9.1 // indirect
+	modernc.org/memory v1.10.0 // indirect
 	modernc.org/sqlite v1.37.0 // indirect
 )
