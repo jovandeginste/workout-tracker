@@ -934,3 +934,8 @@ func (t *Table) Render() {
 	t.formatData()
 	t.renderRows()
 }
+
+// IsEmpty returns if the table has no data
+func (t *Table) IsEmpty() bool {
+	return len(t.data) == 0
+}

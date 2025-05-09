@@ -21,7 +21,7 @@ github.com/alexedwards/scs/v2/memstore
 ## explicit; go 1.15
 github.com/anyappinc/fitbit
 github.com/anyappinc/fitbit/logger
-# github.com/aquasecurity/table v1.8.0
+# github.com/aquasecurity/table v1.9.0
 ## explicit; go 1.18
 github.com/aquasecurity/table
 # github.com/aymerick/douceur v0.2.0
@@ -473,11 +473,13 @@ gorm.io/driver/mysql
 # gorm.io/driver/postgres v1.5.11
 ## explicit; go 1.19
 gorm.io/driver/postgres
-# gorm.io/gorm v1.25.12
+# gorm.io/gorm v1.26.0
 ## explicit; go 1.18
 gorm.io/gorm
 gorm.io/gorm/callbacks
 gorm.io/gorm/clause
+gorm.io/gorm/internal/lru
+gorm.io/gorm/internal/stmt_store
 gorm.io/gorm/logger
 gorm.io/gorm/migrator
 gorm.io/gorm/schema
