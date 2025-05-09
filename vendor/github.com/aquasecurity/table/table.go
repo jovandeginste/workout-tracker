@@ -816,7 +816,8 @@ func (t *Table) getColspan(header bool, footer bool, row int, col int) int {
 func (t *Table) renderLineAbove(row iRow, prev iRow) {
 
 	// don't draw top border if disabled
-	if (row.first && !t.borders.Top) || (!prev.header && !t.rowLines && !row.first) {
+	if (row.first && !t.borders.Top) ||
+		(!prev.header && !row.footer && !t.rowLines && !row.first) {
 		return
 	}
 
@@ -938,4 +939,9 @@ func (t *Table) Render() {
 // IsEmpty returns if the table has no data
 func (t *Table) IsEmpty() bool {
 	return len(t.data) == 0
+}
+
+// RowCount returns the number of rows in the table.
+func (t *Table) RowCount() int {
+	return len(t.data)
 }

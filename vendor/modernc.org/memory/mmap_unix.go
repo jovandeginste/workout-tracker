@@ -14,7 +14,7 @@ import (
 	"unsafe"
 )
 
-const pageSizeLog = 20
+const pageSizeLog = 16
 
 var (
 	osPageMask = osPageSize - 1

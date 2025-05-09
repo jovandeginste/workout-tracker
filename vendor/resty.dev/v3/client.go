@@ -1952,7 +1952,7 @@ func (c *Client) SetPathParams(params map[string]string) *Client {
 //	client.SetRawPathParam("path", "groups/developers")
 //
 //	Result:
-//		URL - /v1/users/{userId}/details
+//		URL - /v1/users/{path}/details
 //		Composed URL - /v1/users/groups/developers/details
 //
 // It replaces the value of the key while composing the request URL.
@@ -2193,7 +2193,11 @@ func (c *Client) Clone(ctx context.Context) *Client {
 	cc.formData = cloneURLValues(c.formData)
 	cc.header = c.header.Clone()
 	cc.pathParams = maps.Clone(c.pathParams)
-	cc.credentials = c.credentials.Clone()
+
+	if c.credentials != nil {
+		cc.credentials = c.credentials.Clone()
+	}
+
 	cc.contentTypeEncoders = maps.Clone(c.contentTypeEncoders)
 	cc.contentTypeDecoders = maps.Clone(c.contentTypeDecoders)
 	cc.contentDecompressers = maps.Clone(c.contentDecompressers)
