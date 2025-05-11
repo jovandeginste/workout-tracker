@@ -1821,7 +1821,8 @@
                 "hiking",
                 "push-ups",
                 "weight-lifting",
-                "rowing"
+                "rowing",
+                "other"
             ],
             "x-enum-varnames": [
                 "WorkoutTypeAutoDetect",
@@ -1837,7 +1838,8 @@
                 "WorkoutTypeHiking",
                 "WorkoutTypePushups",
                 "WorkoutTypeWeightLifting",
-                "WorkoutTypeRowing"
+                "WorkoutTypeRowing",
+                "WorkoutTypeOther"
             ]
         },
         "geo.Address": {
