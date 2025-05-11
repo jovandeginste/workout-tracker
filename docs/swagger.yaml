@@ -754,6 +754,7 @@ definitions:
     - push-ups
     - weight-lifting
     - rowing
+    - other
     type: string
     x-enum-varnames:
     - WorkoutTypeAutoDetect
@@ -770,6 +771,7 @@ definitions:
     - WorkoutTypePushups
     - WorkoutTypeWeightLifting
     - WorkoutTypeRowing
+    - WorkoutTypeOther
   geo.Address:
     properties:
       city:

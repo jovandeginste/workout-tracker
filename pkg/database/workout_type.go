@@ -24,6 +24,7 @@ const (
 	WorkoutTypePushups       WorkoutType = "push-ups"
 	WorkoutTypeWeightLifting WorkoutType = "weight-lifting"
 	WorkoutTypeRowing        WorkoutType = "rowing"
+	WorkoutTypeOther         WorkoutType = "other"
 
 	WorkoutTypeClassLocation   = "location"
 	WorkoutTypeClassDistance   = "distance"
@@ -54,6 +55,8 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 
 	WorkoutTypePushups:       {Location: false, Distance: false, Repetition: true, Weight: false},
 	WorkoutTypeWeightLifting: {Location: false, Distance: false, Repetition: true, Weight: true},
+
+	WorkoutTypeOther:        {Location: true, Distance: true, Repetition: true, Weight: true},
 }
 
 var (
