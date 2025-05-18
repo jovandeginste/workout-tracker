@@ -6,7 +6,7 @@ zh-Hans:
     something_wrong: 出了些问题：%{message}
     route_segments_added:
       one: 添加路线段时遇到 %{count} 个问题：%{list}
-      other: ''
+      other:
   notices:
     workouts_added:
       one: 添加了 %{count} 份新锻炼：%{list}
@@ -45,7 +45,9 @@ zh-Hans:
     walking: 步行
     weight-lifting: 举重
     hiking: 徒步
-    kayaking: 皮划艇
+    kayaking: 皮艇
+    other: 其它
+    rowing: 划船
   menu:
     Dashboard: 仪表板
     Equipment: 设备
