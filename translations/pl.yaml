@@ -32,6 +32,8 @@ pl:
     kayaking: kajakarstwo
     weight-lifting: podnoszenie ciężarów
     walking: chodzenie
+    other: inne
+    rowing: wioślarstwo
   menu:
     Workouts: Treningi
     Measurements: Pomiary
@@ -200,6 +202,7 @@ pl:
     You_can_edit_your_GPX_files_before_uploading_them_here: 'Możesz edytować swoje
       pliki GPX wgrywając je tutaj:'
     Average_speed: Średnia szybkość
+    The_workout_s_now_has_a_shareable_link: Trening '%s' ma teraz udostępniony link
   alerts:
     something_wrong: 'Coś poszło nie tak: %{message}'
     workouts_added:
@@ -259,3 +262,5 @@ pl:
     update: Zaktualizuj sprzęt
   workout:
     update: Zaktualizuj trening
+  route_segment:
+    update: Zaktualizuj odcinek trasy
