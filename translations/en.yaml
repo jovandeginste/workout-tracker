@@ -258,5 +258,7 @@ en:
     update: Update user
   workout:
     update: Update workout
+  route_segment:
+    update: Update route segment
   equipment:
     update: Update equipment
