@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"path"
+	"strings"
 
 	"github.com/tkrajina/gpxgo/gpx"
 )
@@ -50,7 +51,7 @@ func ParseCollection(filename string, content []byte) ([]*Workout, error) {
 }
 
 func parseContent(filename string, content []byte) ([]*Workout, error) {
-	suffix := path.Ext(filename)
+	suffix := strings.ToLower(path.Ext(filename))
 
 	switch suffix {
 	case ".gpx":
