@@ -3,7 +3,9 @@ package helpers
 import (
 	"context"
 	"fmt"
+	"strings"
 
+	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 )
 
@@ -107,4 +109,8 @@ func A2S(v any) string {
 	default:
 		return fmt.Sprintf("%v", e)
 	}
+}
+
+func SupportedFileTypes() string {
+	return strings.Join(converters.SupportedFileTypes, ", ")
 }

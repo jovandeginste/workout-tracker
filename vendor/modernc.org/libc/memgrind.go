@@ -271,6 +271,10 @@ func UsableSize(p uintptr) types.Size_t {
 	return types.Size_t(memory.UintptrUsableSize(p))
 }
 
+func Xmalloc_usable_size(tls *TLS, p uintptr) (r Tsize_t) {
+	return UsableSize(p)
+}
+
 type MemAllocatorStat struct {
 	Allocs int
 	Bytes  int

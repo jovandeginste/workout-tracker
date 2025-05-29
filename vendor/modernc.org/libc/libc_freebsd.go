@@ -69,6 +69,8 @@ func X__runes_for_locale(t *TLS, l locale_t, p uintptr) uintptr {
 	panic(todo(""))
 }
 
+type Tsize_t = types.Size_t
+
 type syscallErrno = unix.Errno
 
 type file uintptr
@@ -2241,7 +2243,7 @@ func X__isfinite(tls *TLS, d float64) int32 {
 }
 
 func X__signbit(tls *TLS, x float64) (r int32) {
-	return int32(math.Float64bits(x)>>63)
+	return int32(math.Float64bits(x) >> 63)
 }
 
 func X__builtin_ctz(t *TLS, n uint32) int32 {

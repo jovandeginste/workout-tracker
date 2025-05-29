@@ -43,6 +43,8 @@ var X_iob [stdio.X_IOB_ENTRIES]stdio.FILE
 var Xin6addr_any [16]byte
 var Xtimezone long // extern long timezone;
 
+type Tsize_t = types.Size_t
+
 var (
 	iobMap     = map[uintptr]int32{} // &_iob[fd] -> fd
 	wenvValid  bool
@@ -7125,22 +7127,49 @@ func Xsscanf(t *TLS, str, format, va uintptr) int32 {
 	return r
 }
 
+var _toint4 = Float64FromInt32(1) / Float64FromFloat64(2.220446049250313e-16)
+
 func Xrint(tls *TLS, x float64) float64 {
 	if __ccgo_strace {
 		trc("tls=%v x=%v, (%v:)", tls, x, origin(2))
 	}
-	switch {
-	case x == 0: // also +0 and -0
-		return 0
-	case math.IsInf(x, 0), math.IsNaN(x):
-		return x
-	case x >= math.MinInt64 && x <= math.MaxInt64 && float64(int64(x)) == x:
-		return x
-	case x >= 0:
-		return math.Floor(x + 0.5)
-	default:
-		return math.Ceil(x - 0.5)
+	bp := tls.Alloc(16)
+	defer tls.Free(16)
+	var e, s int32
+	var y Tdouble_t
+	var v1 float64
+	var _ /* u at bp+0 */ struct {
+		Fi [0]Tuint64_t
+		Ff float64
 	}
+	_, _, _, _ = e, s, y, v1
+	*(*struct {
+		Fi [0]Tuint64_t
+		Ff float64
+	})(unsafe.Pointer(bp)) = struct {
+		Fi [0]Tuint64_t
+		Ff float64
+	}{}
+	*(*float64)(unsafe.Pointer(bp)) = x
+	e = Int32FromUint64(*(*Tuint64_t)(unsafe.Pointer(bp)) >> int32(52) & uint64(0x7ff))
+	s = Int32FromUint64(*(*Tuint64_t)(unsafe.Pointer(bp)) >> int32(63))
+	if e >= Int32FromInt32(0x3ff)+Int32FromInt32(52) {
+		return x
+	}
+	if s != 0 {
+		y = x - _toint4 + _toint4
+	} else {
+		y = x + _toint4 - _toint4
+	}
+	if y == Float64FromInt32(0) {
+		if s != 0 {
+			v1 = -Float64FromFloat64(0)
+		} else {
+			v1 = Float64FromInt32(0)
+		}
+		return v1
+	}
+	return y
 }
 
 // FILE *fdopen(int fd, const char *mode);

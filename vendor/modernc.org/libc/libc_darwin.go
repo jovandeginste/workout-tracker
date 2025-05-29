@@ -53,6 +53,8 @@ const (
 // 	in6_addr_any in.In6_addr
 // )
 
+type Tsize_t = types.Size_t
+
 type (
 	syscallErrno = unix.Errno
 	long         = types.User_long_t
