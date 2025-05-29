@@ -23,7 +23,7 @@ const UnknownLocation = "(unknown location)"
 
 var correctAltitudeCreators = []string{
 	"garmin", "Garmin", "Garmin Connect",
-	"Apple Watch",
+	"Apple Watch", "Open GPX Tracker for iOS",
 	"StravaGPX iPhone", "StravaGPX",
 	"Workout Tracker",
 }
