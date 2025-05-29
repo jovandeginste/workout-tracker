@@ -7,8 +7,11 @@ import (
 	"os"
 	"path/filepath"
 	"runtime/debug"
+	"slices"
+	"strings"
 	"time"
 
+	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"gorm.io/gorm"
 )
@@ -174,13 +177,7 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 		return false
 	}
 
-	for _, e := range []string{".gpx", ".fit", ".tcx"} {
-		if filepath.Ext(p) == e {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(converters.SupportedFileTypes, strings.ToLower(filepath.Ext(p)))
 }
 
 // For the given set of route segments, re-match against all workouts, marking the segments as clean after matching.

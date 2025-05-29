@@ -31,7 +31,7 @@ templ Add() {
 											type="file"
 											id="file"
 											name="file"
-											accept=".gpx, .fit, .tcx, .zip, .ftb"
+											accept={ helpers.SupportedFileTypes() }
 											multiple
 										/>
 									</td>

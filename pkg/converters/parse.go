@@ -9,7 +9,10 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
-var ErrUnsupportedFile = errors.New("unsupported file")
+var (
+	ErrUnsupportedFile = errors.New("unsupported file")
+	SupportedFileTypes = []string{".fit", ".ftb", ".gpx", ".tcx", ".zip"}
+)
 
 type (
 	parserFunc func(content []byte) (*gpx.GPX, error)
