@@ -34,12 +34,15 @@ ru:
     weight-lifting: силовая
     golfing: гольф
     push-ups: отжимания
+    rowing: гребля
+    kayaking: каякинг
   menu:
     Statistics: Статистика
     Workouts: Тренировки
     Equipment: Снаряжение
     route_segments: Участки маршрута
     Dashboard: Панель управления
+    Measurements: Измерения
   units:
     kilometers: километры
     pounds: фунты
@@ -169,6 +172,15 @@ ru:
       update: Обновить участок маршрута
     the_configuration_file: файл конфигурации
     workouts: тренировки
+    Accuracy: Точность
+    Calories: Калории
+    Resources: Ресурсы
+    Latest_measurements: Последние измерения
+    Steps: Шаги
+    Are_you_sure: Вы уверены?
+    All: Все
+    Total_weight: Общий вес
+    Try_one_of_these_sites: 'Попробуйте один из этих сайтов:'
   user:
     profile:
       time_zone: Часовой пояс
@@ -179,11 +191,15 @@ ru:
       disable_social_sharing_buttons: Отключить кнопки социальных сетей
       show_full_date_by_default: Показывать полную дату по умолчанию
       show_hide: показать/скрыть
-      generate_a_new_api_key: сгенерировать новый API-ключ
-      copy_to_clipboard: скопировать в буфер обмена
+      generate_a_new_api_key: Cгенерировать новый API-ключ
+      copy_to_clipboard: Cкопировать в буфер обмена
       enable_api_access: Включить доступ к API
       refresh_all_your_workouts: Обновить все ваши тренировки
       auto_import_directory: Каталог автоматического импорта
+      Theme: Тема
+      your_settings: Настройки
+      Light: Светлая
+      Dark: Темная
     update: Обновить пользователя
   workout:
     update: Обновить тренировку
