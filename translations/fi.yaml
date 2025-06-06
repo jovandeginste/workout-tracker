@@ -43,6 +43,7 @@ fi:
     route_segments: Reittiosuudet
     Statistics: Tilastot
     Workouts: Harjoitukset
+    Measurements: Mittaukset
   units:
     feet: jalat
     kilograms: kilogrammat
@@ -188,6 +189,8 @@ fi:
     You_can_find_inspiration_here: 'Täältä löydät inspiraatiota:'
     The_workout_s_will_be_refreshed_soon: Harjoitus '%s' virkistetään pian…
     i_completed_a_workout_s: 'Suoritin harjoituksen: %s.'
+    Are_you_sure: Oletko varma?
+    Accuracy: Tarkkuus
   equipment:
     update: Päivitä välineet
   user:
@@ -206,8 +209,8 @@ fi:
       time_zone: Aikavyöhyke
       update_preferred_units: Päivitä ensisijaiset yksiköt
       update_profile: Päivitä profiili
-      copy_to_clipboard: kopioi leikepöydälle
-      generate_a_new_api_key: luo uusi API-avain
+      copy_to_clipboard: Kopioi leikepöydälle
+      generate_a_new_api_key: Luo uusi API-avain
       show_hide: näytä/piilota
     update: Päivitä käyttäjä
   workout:
