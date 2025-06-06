@@ -18,6 +18,14 @@ See user documentation at https://templ.guide
 
 ## Tasks
 
+### version-set
+
+Set the version of templ to the current version.
+
+```sh
+version set --template="0.3.%d"
+```
+
 ### build
 
 Build a local version.
@@ -107,6 +115,8 @@ go tool cover -func coverage.out | grep total
 ```
 
 ### test-cover-watch
+
+interactive: true
 
 ```sh
 gotestsum --watch -- -coverprofile=coverage.out

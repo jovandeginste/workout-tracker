@@ -5,7 +5,7 @@ go 1.24.1
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
-	github.com/a-h/templ v0.3.865
+	github.com/a-h/templ v0.3.887
 	github.com/alexedwards/scs/gormstore v0.0.0-20250417082927-ab20b3feb5e9
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/anyappinc/fitbit v0.0.3
