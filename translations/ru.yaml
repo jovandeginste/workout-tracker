@@ -4,8 +4,8 @@ ru:
   notices:
     workouts_added:
       one: 'Добавлена %{count} новая тренировка: %{list}'
-      few: 'Добавлена %{count} новая тренировка: %{list}'
-      many: 'Добавлена %{count} новая тренировка: %{list}'
+      few: 'Добавлены %{count} новые тренировки: %{list}'
+      many: 'Добавлено %{count} новых тренировок: %{list}'
   misc:
     years_1: 1 год
     years_2: 2 года
@@ -22,6 +22,7 @@ ru:
     month_1: 1 месяц
     day_15: 15 дней
     month_3: 3 месяца
+    split_files_with_multiple_tracks: разделить файлы с несколькими путями
   sports:
     snowboarding: сноуборд
     walking: ходьба
@@ -92,7 +93,7 @@ ru:
     Disable_account_registration: Отключить регистрацию
     Distance: Расстояние
     Duration: Продолжительность
-    Elevation: Высота
+    Elevation: Подъём
     End: Конец
     Est_calories_burned: Сожжено калорий
     Estimated_based_on_the_activity: Оценка основана на виде активности
@@ -181,6 +182,13 @@ ru:
     All: Все
     Total_weight: Общий вес
     Try_one_of_these_sites: 'Попробуйте один из этих сайтов:'
+    Sort_by: Сортировать по
+    Total_repetitions: Всего повторений
+    Repetitions: Повторения
+    Reset_changes: Сбросить изменения
+    Totals: Всего
+    Update: Обновить
+    Height: Высота
   user:
     profile:
       time_zone: Часовой пояс
@@ -195,13 +203,26 @@ ru:
       copy_to_clipboard: Cкопировать в буфер обмена
       enable_api_access: Включить доступ к API
       refresh_all_your_workouts: Обновить все ваши тренировки
-      auto_import_directory: Каталог автоматического импорта
+      auto_import_directory: Папка автоматического импорта
       Theme: Тема
       your_settings: Настройки
       Light: Светлая
       Dark: Темная
+      Browser_System: Обозреватель / ОС
     update: Обновить пользователя
   workout:
     update: Обновить тренировку
   equipment:
     update: Обновить снаряжение
+  alerts:
+    workouts_added:
+      one: 'Возникла %{count} проблема в процессе добавления занятий: %{list}'
+      few: 'Возникло %{count} проблемы в процессе добавления занятий: %{list}'
+      many: 'Возникло %{count} проблем в процессе добавления занятий: %{list}'
+    something_wrong: 'Что-то пошло не так: %{message}'
+    route_segments_added:
+      one: 'Возникла %{count} проблема в процессе добавления отрывка трассы: %{list}'
+      few: 'Возникло %{count} проблемы в процессе добавления отрывка трассы: %{list}'
+      many: 'Возникло %{count} проблем в процессе добавления отрывка трассы: %{list}'
+  route_segment:
+    update: Обновить участок маршрута
