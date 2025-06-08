@@ -30,7 +30,7 @@ globalThis.fullMap = function fullMap() {
 
   map.invalidateSize(true);
   return false;
-}
+};
 
 globalThis.makeMap = function makeMap(params) {
   document.addEventListener("DOMContentLoaded", () => {
@@ -188,7 +188,7 @@ globalThis.makeMap = function makeMap(params) {
 
     map.fitBounds(group.getBounds(), { animate: false });
   });
-}
+};
 
 globalThis.set_marker = function set_marker(obj) {
   var lat = obj.getAttribute("data-lat");
@@ -205,12 +205,12 @@ globalThis.set_marker = function set_marker(obj) {
 
   // Adding popup to the marker
   hoverMarker.openTooltip();
-}
+};
 
 globalThis.clear_marker = function clear_marker() {
   if (!hoverMarker) return;
   hoverMarker.closeTooltip();
-}
+};
 
 // Determine color for a value; value from 0 to 1
 // Linearly interpolate between blue and green
@@ -223,4 +223,4 @@ globalThis.getColor = function getColor(value) {
     Math.floor(value * (highColor[i] - lowColor[i]) + lowColor[i]),
   );
   return `rgb(${color.join(",")})`;
-}
+};

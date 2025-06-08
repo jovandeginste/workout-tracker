@@ -65,7 +65,7 @@ globalThis.editMap = function editMap(params) {
 
     map.fitBounds(group.getBounds(), { animate: false });
   });
-}
+};
 globalThis.updateStart = function updateStart() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
@@ -80,7 +80,7 @@ globalThis.updateStart = function updateStart() {
   }
 
   updateInfo();
-}
+};
 globalThis.updateEnd = function updateEnd() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
@@ -95,18 +95,18 @@ globalThis.updateEnd = function updateEnd() {
   }
 
   updateInfo();
-}
+};
 
 globalThis.updateAll = function updateAll() {
   updateStart();
   updateEnd();
   updateInfo();
-}
+};
 
 globalThis.updateInfo = function updateInfo() {
   updateDistance();
   updateLines();
-}
+};
 
 globalThis.updateDistance = function updateDistance() {
   start = Number(document.getElementById("start").value);
@@ -114,7 +114,7 @@ globalThis.updateDistance = function updateDistance() {
 
   d = points[end - 1].distance - points[start].distance;
   document.getElementById("distance-show").textContent = d.toFixed(2) + " m";
-}
+};
 
 globalThis.updateLines = function updateLines() {
   start = Number(document.getElementById("start").value);
@@ -136,4 +136,4 @@ globalThis.updateLines = function updateLines() {
         pt.line.setStyle({ color: "#00FF00" });
     }
   });
-}
+};

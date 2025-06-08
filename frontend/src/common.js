@@ -39,7 +39,7 @@ globalThis.toggleTextPassword = function toggleTextPassword(el, id) {
     el.classList.add("icon-eye");
     x.type = "password";
   }
-}
+};
 
 globalThis.copyToClipboard = function copyToClipboard(id) {
   // Get the text field
@@ -56,7 +56,7 @@ globalThis.copyToClipboard = function copyToClipboard(id) {
   if (noticeText != null) {
     showMessage("notice", noticeText);
   }
-}
+};
 
 globalThis.showMessage = function showMessage(cls, message) {
   var al = document.getElementById("alerts");
@@ -66,7 +66,7 @@ globalThis.showMessage = function showMessage(cls, message) {
   msg.innerText = message;
 
   al.appendChild(msg);
-}
+};
 
 globalThis.geoJson2heat = function geoJson2heat(geojson, intensity) {
   return geojson.features.map(function (feature) {
@@ -76,7 +76,7 @@ globalThis.geoJson2heat = function geoJson2heat(geojson, intensity) {
       intensity,
     ];
   });
-}
+};
 
 globalThis.editDaily = function editDaily(obj) {
   var date = obj.getAttribute("data-date");
@@ -90,7 +90,7 @@ globalThis.editDaily = function editDaily(obj) {
   document.getElementById("steps").value = steps;
 
   readDailyHeight();
-}
+};
 
 globalThis.updateDailyHeight = function updateDailyHeight() {
   var ft = document.getElementById("ft");
@@ -98,7 +98,7 @@ globalThis.updateDailyHeight = function updateDailyHeight() {
   var height = document.getElementById("height");
 
   height.value = parseInt(ft.value) * 12 + parseInt(inch.value);
-}
+};
 
 globalThis.readDailyHeight = function readDailyHeight() {
   var ft = document.getElementById("ft");
@@ -106,4 +106,4 @@ globalThis.readDailyHeight = function readDailyHeight() {
   var height = document.getElementById("height");
   ft.value = Math.floor(height.value / 12);
   inch.value = height.value % 12;
-}
+};
