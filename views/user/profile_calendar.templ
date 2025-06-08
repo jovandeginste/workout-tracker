@@ -6,40 +6,6 @@ import (
 )
 
 templ ProfileCalendar(workouts []*database.Workout) {
-	<div class="inner-form min-h-[450px]" id="calendar"></div>
-	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/fullcalendar.min.js" }></script>
-	@templ.JSONScript("api-workouts-calendar-route", helpers.RouteFor(ctx, "api-workouts-calendar"))
-	<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var calendarEl = document.getElementById("calendar");
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      initialView: "dayGridMonth",
-      locale: Intl.DateTimeFormat().resolvedOptions().locale,
-      firstDay: 1,
-      aspectRatio: 2,
-      eventContent: function(arg) {
-        let eventSpan = document.createElement("div")
-
-        eventSpan.innerHTML = arg.event.title
-        eventSpan.classList.add(
-          "px-2", "overflow-hidden",
-        )
-
-        return { domNodes: [ eventSpan ] }
-      },
-      events: {
-        url: JSON.parse(document.getElementById('api-workouts-calendar-route').textContent),
-        display: "display",
-        failure: function() {
-          console.log('there was an error while fetching events!');
-        }, 
-        success: function(response) {
-          return response.results;
-        }
-      },
-    });
-    calendar.render();
-  });
-</script>
+	<profile-calendar class="inner-form min-h-[450px]" api-workouts-calendar-route={ helpers.RouteFor(ctx, "api-workouts-calendar") }></profile-calendar>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.js" }></script>
 }

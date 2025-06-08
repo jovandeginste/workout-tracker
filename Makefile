@@ -114,7 +114,6 @@ clean-dist:
 
 build-dist: clean-dist
 	mkdir -p ./assets/dist/images
-	cp -v ./frontend/node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
 	cp -v ./frontend/node_modules/leaflet/dist/leaflet.css ./assets/dist/
 	cp -v ./frontend/node_modules/leaflet/dist/images/* ./assets/dist/images/
 	cp -v ./frontend/node_modules/leaflet/dist/leaflet.js ./assets/dist/
