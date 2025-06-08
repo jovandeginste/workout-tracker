@@ -22,7 +22,7 @@ interface Parameters {
 let hoverMarker;
 let map;
 
-function fullMap() {
+globalThis.fullMap = function fullMap() {
   d = document.getElementById("map-container");
 
   d.classList.toggle("small-size");
@@ -32,7 +32,7 @@ function fullMap() {
   return false;
 }
 
-function makeMap(params) {
+globalThis.makeMap = function makeMap(params) {
   document.addEventListener("DOMContentLoaded", () => {
     // Create map
     map = L.map(params.elementID, {
@@ -190,7 +190,7 @@ function makeMap(params) {
   });
 }
 
-function set_marker(obj) {
+globalThis.set_marker = function set_marker(obj) {
   var lat = obj.getAttribute("data-lat");
   var lng = obj.getAttribute("data-lng");
   var title = obj.getAttribute("data-title");
@@ -207,14 +207,14 @@ function set_marker(obj) {
   hoverMarker.openTooltip();
 }
 
-function clear_marker() {
+globalThis.clear_marker = function clear_marker() {
   if (!hoverMarker) return;
   hoverMarker.closeTooltip();
 }
 
 // Determine color for a value; value from 0 to 1
 // Linearly interpolate between blue and green
-function getColor(value) {
+globalThis.getColor = function getColor(value) {
   value = Math.max(0, Math.min(1, value)); // Clamp to 0...1
 
   const lowColor = [50, 50, 255];

@@ -21,8 +21,9 @@ import (
 )
 
 type App struct {
-	Assets       fs.FS
-	Translations fs.FS
+	Assets         fs.FS
+	Translations   fs.FS
+	AssetDir       string
 
 	echo           *echo.Echo
 	logger         *slog.Logger

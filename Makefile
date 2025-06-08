@@ -10,6 +10,7 @@ THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT=8090
 TEMPL_APP_PORT=8080
+TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
 
@@ -20,7 +21,7 @@ all: clean install-deps test build
 install-dev-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
-	go install github.com/a-h/templ/cmd/templ@latest
+	go install github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
 	go install github.com/mdomke/git-semver/v6@latest
 
 release-patch release-minor release-major:
@@ -32,7 +33,7 @@ release:
 	@echo "New release: https://github.com/jovandeginste/workout-tracker/releases/new"
 
 install-deps:
-	npm install
+	cd frontend && npm install
 
 clean:
 	rm -fv ./assets/output.css ./workout-tracker
@@ -51,11 +52,10 @@ watch/server:
 		--build.bin                "$(WT_OUTPUT_FILE)" \
 		--build.cmd                "make build-server notify-proxy" \
 		--build.delay              1000 \
-		--build.exclude_dir        "docs,testdata,tmp,vendor" \
-		--build.exclude_file       "main.css,screenshots.js" \
+		--build.exclude_dir        "assets,docs,frontend,testdata,tmp,vendor" \
 		--build.exclude_regex      "_test.go" \
 		--build.exclude_unchanged  false \
-		--build.include_ext        "css,go,html,js,json,yaml" \
+		--build.include_ext        "go,html,json,yaml" \
 		--build.stop_on_error      true \
 		--screen.clear_on_rebuild  false 
 
@@ -65,17 +65,23 @@ watch/tailwind:
 notify-proxy:
 	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
+dev-backend:
+	$(MAKE) watch/templ &
+	$(MAKE) watch/server
+
 dev: 
 	$(MAKE) watch/templ &
 	$(MAKE) watch/server &
 	$(MAKE) watch/tailwind &
 	sleep infinity
 
+dev-docker:
+	docker compose -f docker-compose.dev.yaml up --build
 
 build: build-dist build-server build-docker screenshots
 meta: swagger screenshots changelog
 
-build-cli: build-tw build-templates
+build-cli: build-frontend build-templates
 	go build \
 		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 		-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
@@ -100,29 +106,28 @@ swagger:
 		--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 		--generalInfo api_handlers.go
 
-build-tw:
-	npx tailwindcss -i ./main.css -o ./assets/output.css --minify
+build-frontend:
+	cd frontend && npm run build
 
 clean-dist:
 	rm -rf ./assets/dist/
 
 build-dist: clean-dist
 	mkdir -p ./assets/dist/images
-	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
-	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/
-	cp -v ./node_modules/leaflet/dist/images/* ./assets/dist/images/
-	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
-	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
-	cp -v ./node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
-	cp -v ./node_modules/simpleheat/simpleheat.js ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
-	
+	cp -v ./frontend/node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
+	cp -v ./frontend/node_modules/leaflet/dist/leaflet.css ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet/dist/images/* ./assets/dist/images/
+	cp -v ./frontend/node_modules/leaflet/dist/leaflet.js ./assets/dist/
+	cp -v ./frontend/node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
+	cp -v ./frontend/node_modules/shareon/dist/shareon.min.css ./assets/dist/
+	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
+	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
+	cp -v ./frontend/node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
+	cp -v ./frontend/node_modules/simpleheat/simpleheat.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
 
 watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch

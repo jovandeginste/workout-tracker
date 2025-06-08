@@ -5,6 +5,8 @@ node_modules/
 workout-tracker.yaml
 /workout-tracker
 coverage.out
-/assets/dist/
+/assets/*
+!/assets/dumbbell.png
+!/assets/*.go
 .aider*
 *_templ.txt
