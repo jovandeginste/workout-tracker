@@ -18,6 +18,7 @@ var (
 
 	languagesSorted = false
 	languages       = []language.Tag{
+		language.BrazilianPortuguese,
 		language.Dutch,
 		language.English,
 		language.Finnish,
@@ -30,6 +31,7 @@ var (
 		language.Polish,
 		language.Russian,
 		language.SimplifiedChinese,
+		language.Turkish,
 	}
 )
 
