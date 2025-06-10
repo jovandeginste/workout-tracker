@@ -1,4 +1,4 @@
-FROM node:alpine AS frontend
+FROM node:22-alpine AS frontend
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY assets ./assets
 
 RUN make build-dist build-tw
 
-FROM golang:alpine AS backend
+FROM golang:1.24.1-alpine AS backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
