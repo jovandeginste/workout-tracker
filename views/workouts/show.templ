@@ -77,7 +77,7 @@ templ Show(w *database.Workout) {
 						{ i18n.T(ctx, "translation.Notes") }
 					</h3>
 					<div>
-						@templ.Raw(w.MarkdownNotes())
+						@templ.Raw(helpers.MarkdownToHTML(w.Notes))
 					</div>
 				</div>
 			}

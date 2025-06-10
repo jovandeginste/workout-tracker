@@ -127,6 +127,10 @@ en:
     Filter: Filter
     Heading: Heading
     Heart_rate: Heart rate
+    HelpTranslating: |
+      We'd love your help translating!
+
+      Please help translate [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
     it_took_me_s_to_go_s_i_averaged_s: It took me %s to go %s. I averaged %s.
     Last: Last
     Leave_blank_to_keep_current_password: Leave blank to keep current password
