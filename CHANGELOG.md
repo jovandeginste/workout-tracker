@@ -1,6 +1,109 @@
 ## What's Changed
 
-- Update swagger documentation
+- docs(readme): Add reference to Runtastic/Adidas Running import tool
+- fix(database): Prevent pre-migration error on missing columns, by
+  @jovandeginste, in
+  [#550](https://github.com/jovandeginste/workout-tracker/pull/550)
+- refactor(views): Move markdown rendering to helper, by @jovandeginste, in
+  [#549](https://github.com/jovandeginste/workout-tracker/pull/549)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#546](https://github.com/jovandeginste/workout-tracker/pull/546)
+  - Translated using Weblate (Russian), by @yurtpage
+- feat(i18n): Add support for Brazilian Portuguese and Turkish languages, by
+  @jovandeginste, in
+  [#548](https://github.com/jovandeginste/workout-tracker/pull/548)
+- chore(deps): bump github.com/a-h/templ from 0.3.865 to 0.3.887 in the all
+  group, by @jovandeginste, in
+  [#543](https://github.com/jovandeginste/workout-tracker/pull/543)
+  - chore(deps): bump github.com/a-h/templ in the all group, by @dependabot[bot]
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#545](https://github.com/jovandeginste/workout-tracker/pull/545)
+  - Translated using Weblate (Finnish), by @sikmir
+  - Translated using Weblate (Russian), by @sikmir
+- feat(workouts): Add Open GPX Tracker for iOS to trusted altitude sources, by
+  @jovandeginste, in
+  [#541](https://github.com/jovandeginste/workout-tracker/pull/541)
+- Small fixes, by @jovandeginste, in
+  [#540](https://github.com/jovandeginste/workout-tracker/pull/540)
+  - Add variable containing list of supported file types, by @jovandeginste
+  - Update dependencies, by @jovandeginste
+  - Rebuild after tooling upgrade, by @jovandeginste
+- Check the lowercase file extension, by @jovandeginste, in
+  [#538](https://github.com/jovandeginste/workout-tracker/pull/538)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#535](https://github.com/jovandeginste/workout-tracker/pull/535)
+  - Translated using Weblate (Polish), by @michal-stelmach
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#533](https://github.com/jovandeginste/workout-tracker/pull/533)
+  - Translated using Weblate (Chinese (Simplified Han script))
+- fix(translation): Fix translation of update button for route route_segments,
+  by @jovandeginste, in
+  [#534](https://github.com/jovandeginste/workout-tracker/pull/534)
+- chore(deps): bump actions/setup-go from 5.4.0 to 5.5.0 in the all group, by
+  @jovandeginste, in
+  [#530](https://github.com/jovandeginste/workout-tracker/pull/530)
+  - chore(deps): bump actions/setup-go from 5.4.0 to 5.5.0 in the all group, by
+    @dependabot[bot]
+- Add workout type other, by @jovandeginste, in
+  [#529](https://github.com/jovandeginste/workout-tracker/pull/529)
+  - style: Format workout type configuration map, by @jovandeginste
+  - Add workout type other
+- Bump all dependencies, by @jovandeginste, in
+  [#528](https://github.com/jovandeginste/workout-tracker/pull/528)
+- chore(deps): bump golangci/golangci-lint-action from 7.0.0 to 8.0.0 in the all
+  group, by @jovandeginste, in
+  [#527](https://github.com/jovandeginste/workout-tracker/pull/527)
+  - chore(deps): bump golangci/golangci-lint-action in the all group, by
+    @dependabot[bot]
+- chore(deps): bump the all group with 2 updates, by @jovandeginste, in
+  [#525](https://github.com/jovandeginste/workout-tracker/pull/525)
+  - chore(deps): bump the all group with 2 updates, by @dependabot[bot]
+- fix(measurement): ensure correct measurement timezone handling, by
+  @jovandeginste, in
+  [#524](https://github.com/jovandeginste/workout-tracker/pull/524)
+- fix(steps): Only update steps if they are not zero, by @jovandeginste, in
+  [#523](https://github.com/jovandeginste/workout-tracker/pull/523)
+- feat: expose SearchLocations function, by @jovandeginste, in
+  [#520](https://github.com/jovandeginste/workout-tracker/pull/520)
+- Add rowing as a workout type, by @jovandeginste, in
+  [#519](https://github.com/jovandeginste/workout-tracker/pull/519)
+- fix(statistics): translate statistics page, by @jovandeginste, in
+  [#517](https://github.com/jovandeginste/workout-tracker/pull/517)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#513](https://github.com/jovandeginste/workout-tracker/pull/513)
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (German)
+
+## New Contributors
+
+- @yurtpage made their first contribution
+
+## What's Changed in v2.2.2
+
+- fix(uint64): Match the bit size of the uint64 IDs, by @jovandeginste, in
+  [#512](https://github.com/jovandeginste/workout-tracker/pull/512)
+- fix(filters): Fix the different filters with translation keys, by
+  @jovandeginste, in
+  [#511](https://github.com/jovandeginste/workout-tracker/pull/511)
+- Fix workout equipment not saved, by @jovandeginste, in
+  [#509](https://github.com/jovandeginste/workout-tracker/pull/509)
+  - fix(model): Undo json tags for base database model, by @jovandeginste
+  - chore(type): Use uint64 for the ids, by @jovandeginste
+  - Fix workout equipment not saved, by @bastianjoel
+- Test user returned from API contains no sensitive information, by
+  @jovandeginste, in
+  [#506](https://github.com/jovandeginste/workout-tracker/pull/506)
+  - Print new release url, by @jovandeginste
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.2.1...v2.2.2
+
+## What's Changed in v2.2.1
+
+- Update swagger, by @jovandeginste, in
+  [#505](https://github.com/jovandeginste/workout-tracker/pull/505)
+  - Update all dependencies, by @jovandeginste
+  - Hide user secrets in swagger docs, by @jovandeginste
 - Replace delete with htmx, by @jovandeginste, in
   [#504](https://github.com/jovandeginste/workout-tracker/pull/504)
   - Update list of techs, by @jovandeginste
@@ -45,6 +148,9 @@
 ## New Contributors
 
 - @bastianjoel made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.2.0...v2.2.1
 
 ## What's Changed in v2.2.0
 
