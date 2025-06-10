@@ -446,6 +446,8 @@ application is tested with GPX files from these sources:
 - Garmin Connect (export to GPX)
 - FitoTrack (automatic export to GPX)
 - Workoutdoors (export to GPX)
+- Runtastic / Adidas Running using
+  [this tool](https://github.com/Griffsano/RuntasticConverter)
 
 ## TODO
 
