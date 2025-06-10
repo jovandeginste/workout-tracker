@@ -5,8 +5,12 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 const timeFormat = "2006-01-02 15:04"
@@ -113,4 +117,13 @@ func A2S(v any) string {
 
 func SupportedFileTypes() string {
 	return strings.Join(converters.SupportedFileTypes, ", ")
+}
+
+func MarkdownToHTML(s string) string {
+	s = strings.ReplaceAll(s, "\\n", "\n")
+	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(s))
+	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
+	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
+
+	return string(safeHTML)
 }

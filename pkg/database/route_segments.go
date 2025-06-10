@@ -7,11 +7,7 @@ import (
 	"strings"
 
 	"github.com/codingsince1985/geo-golang"
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
-	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -194,14 +190,6 @@ func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	}
 
 	return rs, nil
-}
-
-func (rs *RouteSegment) MarkdownNotes() string {
-	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(rs.Notes))
-	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
-	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
-
-	return string(safeHTML)
 }
 
 func (rs *RouteSegment) Address() string {
