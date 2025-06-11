@@ -1,1 +1,76 @@
-pt-BR: {}
+pt-BR:
+  sports:
+    push-ups: flexões
+    running: corrida
+    cycling: ciclismo
+    e-cycling: e-ciclismo
+    golfing: golfe
+    hiking: trilha
+    skiing: esqui
+  translation:
+    All: Todos(as)
+    Update_measurement: Atualizar medição
+    Add_equipment: Adicionar equipamento
+    Latest_measurements: Últimas medições
+    Admin: Administrador
+    Aerial: Aéreo
+    Created: Criado
+    The_workout_s_now_has_a_shareable_link: O exercício '%s' agora tem um link compartilhável
+    Average_per_minute: Média por minuto
+    Steps: Passos
+    Regenerate_publicly_shareable_link: (Re)gerar link compartilhável publicamente
+    API_key_updated: Chave API atualizada
+    Actions: Ações
+    Active: Ativo
+    Add_a_workout: Adicionar um exercício
+    Add_route_segment: Adicionar rota de segmento
+    Add_workout: Adicionar exercício
+    Add_workouts: Adicionar exercícios
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Todos os treinos serão atualizados
+      nos próximos minutos.
+    Application_settings: Preferências da aplicação
+    Are_you_sure_you_want_to_delete_this_s: Tem certeza de que deseja excluir este
+      %s?
+    Autodetect: Auto-detectar
+    Average_speed: Velocidade média
+    Average_speed_no_pause: Velocidade média (sem pausa)
+    Average_tempo: Ritmo médio
+    Average_tempo_no_pause: Ritmo médio (sem pausa)
+    Bidirectional: Bidirecional
+    Cadence: Cadência
+    Cancel: Cancelar
+    Circular: Circular
+    Continue: Continuar
+    Copy_publicly_shareable_link: Copiar link compartilhável publicamente
+    Create_a_new_account: Criar uma nova conta
+    Create_route_segment: Criar segmento de rota
+    Dashboard_for_s: Painel para %s
+  alerts:
+    route_segments_added:
+      one: 'Encontrados 1 problema ao adicionar segmento de rota: %{list}'
+      other: 'Encontrados %{count} problemas ao adicionar segmento de rota: %{list}'
+    workouts_added:
+      one: 'Encontrado 1 problema ao adicionar exercícios: %{list}'
+      other: 'Encontrados %{count} problemas ao adicionar exercícios: %{list}'
+  misc:
+    month: mês
+    route_segment: segmento de rota
+    workout: exercício
+    convert_from_not_yet_supported_file_format: converter de formato de arquivo não
+      suportado ainda
+    day: dia
+    equipment: equipamento
+    split_files_with_multiple_tracks: dividir arquivos com múltiplas faixas
+    remove_the_beginning_or_the_ending_of_a_workout: remover o início ou o fim de
+      um treino
+  units:
+    miles_per_hour: milhas por hora
+    kilometers_per_hour: quilômetros por hora
+    inch: polegada
+    centimeter: centímetro
+  settings:
+    update: Atualizar preferências
+  notices:
+    workouts_added:
+      one: 'Adicionado um novo exercício: %{list}'
+      other: 'Adicionados %{count} novos exercícios: %{list}'
