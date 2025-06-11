@@ -1,1 +1,91 @@
-tr: {}
+tr:
+  translation:
+    Name: Ad
+    All: Tümü
+    Continue: Devam et
+    Created: Oluşturuldu
+    File: Dosya
+    Time_paused: Zaman duraklatıldı
+    User: Kullanıcı
+    edit: düzenle
+    refresh: yenile
+    Admin: Yönetici
+    Duration: Süre
+    Time: Zaman
+    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız oluşturuldu,
+      ancak etkinleştirilmesi gerekiyor.
+    Calories: Kalori
+    ascending: artan
+    Notes: Notlar
+    Password: Parola
+    Profile_updated: Profil güncellendi
+    Register: Kayıt ol
+    Totals: Toplam
+    Type: Tür
+    Username: Kullanıcı adı
+    Username_email: Kullanıcı adı (e-posta)
+    Weight: Ağırlık
+    Welcome: Hoş geldin!
+    delete: sil
+    download: indir
+    duration: süre
+    distance: mesafe
+    descending: azalan
+    Resources: Kaynaklar
+    Update: Güncelleme
+    up: tırmanma
+    Speed: Hız
+    Updated: Güncellendi
+    Details: Ayrıntılar
+    Location: Konum
+    Source: Kaynak
+    Distance: Mesafe
+    Accuracy: Doğruluk
+    Cancel: İptal
+    Filter: Süzgeç
+    Date: Tarih
+  user:
+    profile:
+      Light: Aydınlık
+      Language: Dil
+      show_hide: göster/gizle
+      time_zone: Zaman dilimi
+      Dark: Karanlık
+      preferred_units: Tercih edilen birimler
+  misc:
+    years_5: 5 yıl
+    years_1: 1 yıl
+    day_15: 15 gün
+    years_10: 10 yıl
+    years_2: 2 yıl
+    month_3: 3 ay
+    month_1: 1 ay
+    month_6: 6 ay
+    day_7: 7 gün
+    day: gün
+    month: ay
+    route_segment: rota bölümü
+  notices:
+    workouts_added:
+      one: 'Yeni bir antrenman eklendi: %{list}'
+      other: 'Yeni %{count} antrenman eklendi: %{list}'
+  alerts:
+    route_segments_added:
+      one: 'Rota bölümü eklerken bir sorunla karşılaşıldı: %{list}'
+      other: 'Rota bölümü eklerken %{count} sorunla karşılaşıldı: %{list}'
+    workouts_added:
+      one: 'Egzersiz eklerken bir sorunla karşılaşıldı: %{list}'
+      other: 'Egzersiz eklerken %{count} sorunla karşılaşıldı: %{list}'
+  menu:
+    Heatmap: Isı haritası
+    Statistics: Sayımlama
+    route_segments: Rota bölümleri
+  units:
+    centimeter: santimetre
+    kilometers: kilometre
+    inch: inç
+    kilograms: kilogram
+    meters: metre
+    miles: mil
+  settings:
+    update: Güncelleme ayarları
