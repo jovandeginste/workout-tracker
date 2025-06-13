@@ -12,8 +12,8 @@ tr:
     Admin: Yönetici
     Duration: Süre
     Time: Zaman
-    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız oluşturuldu,
-      ancak etkinleştirilmesi gerekiyor.
+    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız 
+      oluşturuldu, ancak etkinleştirilmesi gerekiyor.
     Calories: Kalori
     ascending: artan
     Notes: Notlar
@@ -44,6 +44,26 @@ tr:
     Cancel: İptal
     Filter: Süzgeç
     Date: Tarih
+    Application_settings: Uygulama ayarları
+    Average_speed_no_pause: Ortalama hız (duraklamasız)
+    Default_workout_types: Varsayılan çalışma türleri
+    Steps: Adım
+    Add_equipment: Ekipman ekle
+    Add_route_segment: Rota bölümü ekle
+    Add_workout: Çalışma ekle
+    Add_a_workout: Bir çalışma ekle
+    Add_workouts: Çalışmalar ekle
+    Average_per_minute: Dakikalık ortalama
+    Average_speed: Ortalama hız
+    Average_tempo: Ortalama tempo
+    Average_tempo_no_pause: Ortalama tempo (duraklamasız)
+    Create_a_new_account: Yeni hesap oluştur
+    Create_route_segment: Rota bölümü oluştur
+    Dashboard_for_s: '%s için gösterge'
+    Workout: Çalışma
+    Workout_type: Çalışma türü
+    create_route_segment: rota bölümü oluştur
+    workouts: çalışmalar
   user:
     profile:
       Light: Aydınlık
@@ -65,10 +85,19 @@ tr:
     day: gün
     month: ay
     route_segment: rota bölümü
+    remove_the_beginning_or_the_ending_of_a_workout: çalışma başlangıcı veya 
+      sonunu kaldır
+    workout: çalışma
+    equipment: ekipman
+    split_files_with_multiple_tracks: dosyaları birden çok parçaya böl
   notices:
     workouts_added:
       one: 'Yeni bir antrenman eklendi: %{list}'
       other: 'Yeni %{count} antrenman eklendi: %{list}'
+    route_segments_added:
+      one: 'Bir yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri arıyoruz'
+      other: '%{count} yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri
+        arıyoruz'
   alerts:
     route_segments_added:
       one: 'Rota bölümü eklerken bir sorunla karşılaşıldı: %{list}'
@@ -76,10 +105,14 @@ tr:
     workouts_added:
       one: 'Egzersiz eklerken bir sorunla karşılaşıldı: %{list}'
       other: 'Egzersiz eklerken %{count} sorunla karşılaşıldı: %{list}'
+    something_wrong: 'Bir şeyler ters gitti: %{message}'
   menu:
     Heatmap: Isı haritası
     Statistics: Sayımlama
     route_segments: Rota bölümleri
+    Dashboard: Gösterge
+    Equipment: Ekipman
+    Workouts: Çalışmalar
   units:
     centimeter: santimetre
     kilometers: kilometre
@@ -89,3 +122,11 @@ tr:
     miles: mil
   settings:
     update: Güncelleme ayarları
+  sports:
+    golfing: golf oynamak
+    hiking: doğa yürüyüşü
+    running: koşu
+    swimming: yüzme
+    walking: yürüme
+    weight-lifting: ağırlık kaldırma
+    other: diğerleri
