@@ -22,6 +22,7 @@ import (
 
 type App struct {
 	Assets       fs.FS
+	AssetDir     string
 	Translations fs.FS
 
 	echo           *echo.Echo

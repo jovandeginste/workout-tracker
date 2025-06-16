@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	appassets "github.com/jovandeginste/workout-tracker/v2/assets"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/app"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/version"
@@ -25,6 +27,11 @@ func main() {
 	})
 	a.Assets = appassets.FS()
 	a.Translations = apptranslations.FS()
+
+	appEnv := os.Getenv("APP_ENV")
+	if appEnv == "development" {
+		a.AssetDir = "assets"
+	}
 
 	if err := a.Configure(); err != nil {
 		panic(err)
