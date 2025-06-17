@@ -4,12 +4,26 @@ fr:
     workouts_added:
       one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
       many: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
-      other: ''
+      other:
+    route_segments_added:
+      one: "Un problème est survenu durant l'ajout d'un segment d'itinéraire: %{list}"
+      many: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire:
+        %{list}"
+      other: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire:
+        %{list}"
+    something_wrong: "Quelque chose s'est mal passé: %{message}"
   notices:
     workouts_added:
       one: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
       many: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
-      other: ''
+      other:
+    route_segments_added:
+      one: "Ajout d'un nouveau segment d'itinéraire: %{list} - nous recherchons des
+        correspondances en arrière-plan"
+      many: "Ajout de %{count} nouveaux segments d'itinéraire: %{list} - nous recherchons
+        des correspondances en arrière-plan"
+      other: "Ajout de %{count} nouveaux segments d'itinéraire: %{list} - nous recherchons
+        des correspondances en arrière-plan"
   misc:
     month: mois
     month_6: 6 mois
@@ -22,6 +36,15 @@ fr:
     equipment: équipement
     workout: entraînement
     route_segment: segment
+    month_1: Un mois
+    day_15: 15 jours
+    convert_from_not_yet_supported_file_format: convertir à partir d'un format 
+      de fichier non encore pris en charge
+    remove_the_beginning_or_the_ending_of_a_workout: supprimer le début et la 
+      fin d'un entraînement
+    forever: pour toujours
+    split_files_with_multiple_tracks: découpe de fichiers avec plusieurs pistes
+    month_3: 3 mois
   sports:
     cycling: cyclisme
     golfing: golf
@@ -33,12 +56,18 @@ fr:
     walking: marche
     push-ups: pompes
     weight-lifting: haltérophilie
+    other: autre
+    e-cycling: vélo électrique
+    kayaking: kayak
+    rowing: aviron
   menu:
     Dashboard: Tableau de bord
     Equipment: Équipement
     Statistics: Statistiques
     Workouts: Entraînements
-    route_segments: Segment
+    route_segments: Segment d'itinéraire
+    Heatmap: Carte thermique
+    Measurements: Mesures
   units:
     feet: pieds
     kilometers: kilomètres
@@ -48,6 +77,8 @@ fr:
     pounds: livres
     kilometers_per_hour: kilomètres par heure
     miles_per_hour: miles à l'heure
+    inch: pouce
+    centimeter: centimètre
   settings:
     update: Mettre à jour les paramètres
   translation:
@@ -61,10 +92,11 @@ fr:
     Add_workouts: Ajouter des entraînements
     Admin: Admin
     Aerial: Aérien
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Toutes les séances d'entraînement
-      seront actualisées dans les prochaines minutes.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Toutes les séances 
+      d'entraînement seront actualisées dans les prochaines minutes.
     Application_settings: Paramètres de l'application
-    Are_you_sure_you_want_to_delete_this_s: Voulez-vous vraiment supprimer ce %s ?
+    Are_you_sure_you_want_to_delete_this_s: Voulez-vous vraiment supprimer ce 
+      %s ?
     Autodetect: Détection automatique
     Average_per_minute: Moyenne par minute
     Average_speed: Vitesse moyenne
@@ -84,7 +116,8 @@ fr:
     Default_workout_types: Types d'entraînement par défaut
     Description: Description
     Details: Détails
-    Disable_account_registration: Désactiver l'enregistrement des nouveaux utilisateurs
+    Disable_account_registration: Désactiver l'enregistrement des nouveaux 
+      utilisateurs
     Distance: Distance
     Duration: Durée
     Elevation: Dénivelé positif
@@ -94,10 +127,10 @@ fr:
     Extra_metrics: Mesures supplémentaires
     File: Fichier
     Heart_rate: Rythme cardiaque
-    it_took_me_s_to_go_s_i_averaged_s: Il m'a fallu %s pour aller %s. J'ai fait la
-      moyenne de %s.
-    Leave_blank_to_keep_current_password: Laissez le champ vide pour conserver le
-      mot de passe actuel
+    it_took_me_s_to_go_s_i_averaged_s: Il m'a fallu %s pour aller %s. J'ai fait 
+      la moyenne de %s.
+    Leave_blank_to_keep_current_password: Laissez le champ vide pour conserver 
+      le mot de passe actuel
     Location: Emplacement
     Logout: Déconnexion
     Manage: Gérer
@@ -113,8 +146,8 @@ fr:
     Other_users: Autres utilisateurs
     Password: Mot de passe
     Per: Par
-    Please_help_translate_via_Weblate: S'il vous plaît, aidez-nous à traduire via
-      Weblate
+    Please_help_translate_via_Weblate: S'il vous plaît, aidez-nous à traduire 
+      via Weblate
     Profile_updated: Profil mis à jour
     Recent_activity: Activité récente
     Records_for_s: Enregistrements pour %s
@@ -153,10 +186,11 @@ fr:
     Welcome: Bienvenue !
     Workout: Entrainement
     Workout_type: Type d'entrainement
-    Your_account_has_been_created_but_needs_to_be_activated: Votre compte a été créé,
-      mais doit être activé.
+    Your_account_has_been_created_but_needs_to_be_activated: Votre compte a été 
+      créé, mais doit être activé.
     Your_profile: Votre profil
-    Your_progress_per_s_for_the_past_s: Votre progression pour %s au cours des %s
+    Your_progress_per_s_for_the_past_s: Votre progression pour %s au cours des 
+      %s
     create_route_segment: Créer un segment
     delete: supprimer
     distance: distance
@@ -175,11 +209,57 @@ fr:
     up: dénivelé positif
     workouts: entraînements
     i_completed_a_workout_s: 'J''ai terminé une séance d''entraînement : %s.'
+    Accuracy: Précison
+    Resources: Ressources
+    The_equipment_s_has_been_deleted: L'équipement '%s' a été supprimé.
+    The_equipment_s_has_been_updated: L'équipement '%s' a été mis à jour.
+    You_can_find_inspiration_here: 'Vous pouvez trouver des inspirations ici :'
+    Try_one_of_these_sites: 'Essayez l’un de ces sites :'
+    Calories: Calories
+    The_workout_s_will_be_refreshed_soon: L'entraînement '%s' sera bientôt 
+      actualisé…
+    No_measurements_found: Pas de mesures trouvées
+    Filter: Filtres
+    Total_weight: Poid total
+    Update: Mise à jour
+    descending: descendant
+    Matching_route_segments: Segments d'itinéraire correspondants
+    ascending: ascendant
+    Filter_workouts: Filtrer entraînements
+    The_workout_s_has_been_created: L'entraînement '%s' a été créé.
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
+      Le segment d'itinéraire '%s' a été créé - nous recherchons des 
+      correspondances en arrière-plan.
+    HelpTranslating: "Nous serions ravis de votre aide pour la traduction !\n\nVeuillez
+      nous aider à traduire [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)\n"
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'Vous pouvez modifier
+      vos fichiers GPX avant de les téléverser ici :'
+    Publicly_shareable_link_was_copied_to_clipboard: Le lien partageable 
+      publiquement a été copié dans le presse-papiers
+    All: Tous
+    Heading: En-tête
+    Steps: Pas
+    Regenerate_publicly_shareable_link: (Re)générer lien public partageable
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
+      Commencez à rechercher en arrière-plan les entraînements correspondants 
+      pour le segment d'itinéraire '%s'.
+    Latest_measurements: Dernières mesures
+    Update_measurement: Mesures mises à jour
+    The_workout_s_now_has_a_shareable_link: L'entraînement '%s' dispose 
+      désormais d'un lien partageable
+    Copy_publicly_shareable_link: Copier le lien public partageable
+    Last: Dernier
+    Sort_by: Trier par
+    Streets: Rues
+    The_route_segment_s_has_been_updated: Le segment d'itinéraire '%s' a été mis
+      à jour.
+    Height: Hauteur
+    Are_you_sure: Êtes vous sûr ?
   user:
     profile:
       auto_import_directory: Importation de répertoire automatique
-      disable_social_sharing_buttons: Désactiver les boutons de partage sur les réseaux
-        sociaux
+      disable_social_sharing_buttons: Désactiver les boutons de partage sur les 
+        réseaux sociaux
       enable_api_access: Activer l'accès à l'API
       Language: Langue
       preferred_units: Unités préférées
@@ -192,8 +272,15 @@ fr:
       copy_to_clipboard: copier dans le Presse-papiers
       generate_a_new_api_key: générer une nouvelle clé API
       show_hide: afficher/masquer
+      Theme: Thème
+      Light: Clair
+      Dark: Sombre
+      Browser_System: Navigateur / Système
+      your_settings: Vos paramètres
     update: Mettre à jour l'utilisateur
   workout:
     update: Mettre à jour l'entraînement
   equipment:
     update: Mettre à jour l'équipement
+  route_segment:
+    update: Mettre à jour un segment d'itinéraire
