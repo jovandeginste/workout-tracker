@@ -64,6 +64,30 @@ tr:
     Workout_type: Çalışma türü
     create_route_segment: rota bölümü oluştur
     workouts: çalışmalar
+    Active: Etkin
+    API_key_updated: API anahtarı güncellendi
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Tüm egzersizler 
+      sonraki dakikalarda yenilenecektir.
+    Are_you_sure_you_want_to_delete_this_s: Bu %s'yi silmek istediğinden emin 
+      misin?
+    Description: Tanım
+    Last: Son
+    Logout: Oturumu kapat
+    Manage: Yönet
+    Leave_blank_to_keep_current_password: Mevcut parolayı kullanmak için boş 
+      bırakın
+    Matches: Eşleşmeler
+    Reset_changes: Değişiklikleri sıfırla
+    Show_map_in_full_width: Haritayı tam genişlikte göster
+    Sign_in: Oturum aç
+    Start: Başla
+    find_matches: eşleşmeleri bul
+    how_to_use: nasıl kullanılır
+    the_configuration_file: yapılandırma dosyası
+    Total_weight: Toplam ağırlık
+    Filter_workouts: Çalışmaları süz
+    The_workout_s_has_been_created: "'%s' çalışması oluşturuldu."
+    Sort_by: Sırala
   user:
     profile:
       Light: Aydınlık
@@ -130,3 +154,5 @@ tr:
     walking: yürüme
     weight-lifting: ağırlık kaldırma
     other: diğerleri
+    cycling: bisiklete binmek
+    e-cycling: e-bisiklet
