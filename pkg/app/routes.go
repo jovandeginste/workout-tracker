@@ -63,7 +63,11 @@ func (a *App) ConfigureWebserver() error {
 
 	a.apiRoutes(publicGroup)
 
-	publicGroup.StaticFS("/assets", a.Assets)
+	if a.AssetDir != "" {
+		publicGroup.Static("/assets", a.AssetDir)
+	} else {
+		publicGroup.StaticFS("/assets", a.Assets)
+	}
 
 	publicGroup.GET("/assets", func(c echo.Context) error {
 		return c.Redirect(http.StatusFound, a.echo.Reverse("dashboard"))
