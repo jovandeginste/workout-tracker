@@ -2,8 +2,8 @@ fr:
   Street: Rue
   alerts:
     workouts_added:
-      one: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
-      many: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
+      one: "Un problème rencontré lors de l'ajout d'entraînements : %{list}"
+      many: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
       other:
     route_segments_added:
       one: "Un problème est survenu durant l'ajout d'un segment d'itinéraire: %{list}"
@@ -14,8 +14,8 @@ fr:
     something_wrong: "Quelque chose s'est mal passé: %{message}"
   notices:
     workouts_added:
-      one: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
-      many: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
+      one: "Ajout d'un nouvel entraînement : %{list}"
+      many: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
       other:
     route_segments_added:
       one: "Ajout d'un nouveau segment d'itinéraire: %{list} - nous recherchons des
@@ -49,7 +49,7 @@ fr:
     cycling: cyclisme
     golfing: golf
     hiking: randonnée
-    running: course à pieds
+    running: course à pied
     skiing: ski
     snowboarding: snowboard
     swimming: natation
@@ -73,7 +73,7 @@ fr:
     kilometers: kilomètres
     meters: mètres
     miles: miles
-    kilograms: Kilogrammes
+    kilograms: kilogrammes
     pounds: livres
     kilometers_per_hour: kilomètres par heure
     miles_per_hour: miles à l'heure
@@ -253,7 +253,7 @@ fr:
     Streets: Rues
     The_route_segment_s_has_been_updated: Le segment d'itinéraire '%s' a été mis
       à jour.
-    Height: Hauteur
+    Height: Taille
     Are_you_sure: Êtes vous sûr ?
   user:
     profile:
