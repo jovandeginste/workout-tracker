@@ -12,7 +12,7 @@ document.onkeydown = function (event) {
   }
 };
 
-const formatDuration = (s) => {
+globalThis.formatDuration = (s) => {
   if (s < 0) s = -s;
   const time = {
     d: Math.floor(s / 86_400),
@@ -26,7 +26,7 @@ const formatDuration = (s) => {
     .join(" ");
 };
 
-function toggleTextPassword(el, id) {
+globalThis.toggleTextPassword = function toggleTextPassword(el, id) {
   var x = document.getElementById(id);
 
   if (x.type === "password") {
@@ -39,9 +39,9 @@ function toggleTextPassword(el, id) {
     el.classList.add("icon-eye");
     x.type = "password";
   }
-}
+};
 
-function copyToClipboard(id) {
+globalThis.copyToClipboard = function copyToClipboard(id) {
   // Get the text field
   var copyText = document.getElementById(id);
 
@@ -56,9 +56,9 @@ function copyToClipboard(id) {
   if (noticeText != null) {
     showMessage("notice", noticeText);
   }
-}
+};
 
-function showMessage(cls, message) {
+globalThis.showMessage = function showMessage(cls, message) {
   var al = document.getElementById("alerts");
 
   var msg = document.createElement("div");
@@ -66,9 +66,9 @@ function showMessage(cls, message) {
   msg.innerText = message;
 
   al.appendChild(msg);
-}
+};
 
-function geoJson2heat(geojson, intensity) {
+globalThis.geoJson2heat = function geoJson2heat(geojson, intensity) {
   return geojson.features.map(function (feature) {
     return [
       parseFloat(feature.geometry.coordinates[1]),
@@ -76,9 +76,9 @@ function geoJson2heat(geojson, intensity) {
       intensity,
     ];
   });
-}
+};
 
-function editDaily(obj) {
+globalThis.editDaily = function editDaily(obj) {
   var date = obj.getAttribute("data-date");
   var height = obj.getAttribute("data-height");
   var weight = obj.getAttribute("data-weight");
@@ -90,20 +90,20 @@ function editDaily(obj) {
   document.getElementById("steps").value = steps;
 
   readDailyHeight();
-}
+};
 
-function updateDailyHeight() {
+globalThis.updateDailyHeight = function updateDailyHeight() {
   var ft = document.getElementById("ft");
   var inch = document.getElementById("in");
   var height = document.getElementById("height");
 
   height.value = parseInt(ft.value) * 12 + parseInt(inch.value);
-}
+};
 
-function readDailyHeight() {
+globalThis.readDailyHeight = function readDailyHeight() {
   var ft = document.getElementById("ft");
   var inch = document.getElementById("in");
   var height = document.getElementById("height");
   ft.value = Math.floor(height.value / 12);
   inch.value = height.value % 12;
-}
+};
