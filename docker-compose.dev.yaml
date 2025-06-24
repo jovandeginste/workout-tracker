@@ -9,6 +9,7 @@ services:
       - ./views:/app/views
       - ./frontend/src:/app/frontend/src
     tty: true
+
   workout-tracker:
     build:
       context: .
@@ -17,21 +18,46 @@ services:
     container_name: wt-app-dev
     restart: unless-stopped
     ports:
-      # Host Port:Container Port
       - 8080:8080
     volumes:
-      # Mount local directory for sqlite database
-      - db-data:/data
       - asset-volume:/app/assets
       - ./cmd:/app/cmd
       - ./pkg:/app/pkg
       - ./vendor:/app/vendor
       - ./views:/app/views
       - ./translations:/app/translations
+    networks:
+      - workout-tracker
     environment:
       - APP_ENV=development
-      - WT_DSN=/data/workout-tracker.db
       - WT_JWT_ENCRYPTION_KEY=dev-secret-key
+    env_file:
+      - postgres.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: wt-db
+    restart: unless-stopped
+    shm_size: 128mb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - workout-tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - postgres.env
+
 volumes:
   asset-volume:
   db-data:
+
+networks:
+  workout-tracker:
+    external: false
