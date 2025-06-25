@@ -10,6 +10,7 @@ THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT=8090
 TEMPL_APP_PORT=8080
+TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
 
@@ -20,7 +21,7 @@ all: clean install-deps test build
 install-dev-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/air-verse/air@latest
-	go install github.com/a-h/templ/cmd/templ@latest
+	go install github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
 	go install github.com/mdomke/git-semver/v6@latest
 
 release-patch release-minor release-major:
