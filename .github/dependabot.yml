@@ -21,3 +21,9 @@ updates:
       all:
         patterns:
           - "*"
+
+  # Maintain image versions for docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
