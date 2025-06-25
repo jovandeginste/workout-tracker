@@ -453,7 +453,6 @@ application is tested with GPX files from these sources:
 
 - write tests!!!!!
 - add support for authentication through a reverse proxy
-- make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
   - added support for MySQL, but untested so far
   - added support for Postgres by @icewind1991

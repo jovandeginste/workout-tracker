@@ -49,14 +49,13 @@ watch/templ:
 
 watch/server:
 	air \
-		--build.bin                "$(WT_OUTPUT_FILE)" \
+		--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
 		--build.cmd                "make build-server notify-proxy" \
 		--build.delay              1000 \
-		--build.exclude_dir        "docs,testdata,tmp,vendor" \
-		--build.exclude_file       "main.css,screenshots.js" \
+		--build.exclude_dir        "assets,docs,testdata,tmp,vendor" \
 		--build.exclude_regex      "_test.go" \
 		--build.exclude_unchanged  false \
-		--build.include_ext        "css,go,html,js,json,yaml" \
+		--build.include_ext        "go,html,json,yaml" \
 		--build.stop_on_error      true \
 		--screen.clear_on_rebuild  false 
 
