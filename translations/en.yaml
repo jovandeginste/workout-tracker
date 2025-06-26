@@ -94,6 +94,7 @@ en:
     Application_settings: Application settings
     Are_you_sure_you_want_to_delete_this_s: Are you sure you want to delete this %s?
     The_workout_s_now_has_a_shareable_link: The workout '%s' now has a shareable link
+    The_shareable_link_is_deleted_for_the_workout_s: The shareable link is deleted for the workout '%s'
     Autodetect: Auto-detect
     Average_per_minute: Average per minute
     Average_speed: Average speed

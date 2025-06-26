@@ -27,6 +27,7 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 	workoutsGroup.POST("/:id/delete", a.workoutsDeleteHandler).Name = "workout-delete"
 	workoutsGroup.POST("/:id/refresh", a.workoutsRefreshHandler).Name = "workout-refresh"
 	workoutsGroup.POST("/:id/share", a.workoutsShareHandler).Name = "workout-share"
+	workoutsGroup.DELETE("/:id/share", a.workoutsShareDeleteHandler).Name = "workout-share-delete"
 	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
 	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
@@ -153,6 +154,28 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 	}
 
 	a.addNoticeT(c, "translation.The_workout_s_now_has_a_shareable_link", workout.Name)
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
+}
+
+func (a *App) workoutsShareDeleteHandler(c echo.Context) error {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	workout.PublicUUID = nil
+
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	a.addNoticeT(c, "translation.The_shareable_link_is_deleted_for_the_workout_s", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
