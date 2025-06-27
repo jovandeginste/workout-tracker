@@ -1,3 +1,6 @@
+export GOBIN := $(shell pwd)/tmp/bin
+export PATH := $(GOBIN):$(PATH)
+
 GIT_REF ?= $(shell git symbolic-ref HEAD)
 GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch
@@ -41,7 +44,8 @@ clean:
 
 
 watch/templ:
-	templ generate --watch \
+	templ \
+			generate --watch \
 			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
@@ -63,7 +67,8 @@ watch/tailwind:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --minify --watch=always
 
 notify-proxy:
-	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
+	templ \
+			generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 dev: 
 	$(MAKE) watch/templ &
@@ -128,7 +133,8 @@ watch-tw:
 	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
 build-templates:
-	templ generate
+	templ \
+			generate
 
 test-packages:
 	$(GO_TEST) ./pkg/...
