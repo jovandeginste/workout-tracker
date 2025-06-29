@@ -318,7 +318,9 @@ func gpxDate(gpxContent *gpx.GPX) *time.Time {
 	if len(gpxContent.Tracks) > 0 {
 		if t := gpxContent.Tracks[0]; len(t.Segments) > 0 {
 			if s := t.Segments[0]; len(s.Points) > 0 {
-				return &s.Points[0].Timestamp
+				if !s.Points[0].Timestamp.IsZero() {
+					return &s.Points[0].Timestamp
+				}
 			}
 		}
 	}
@@ -464,6 +466,8 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 			ExtraMetrics:  extraMetrics,
 		})
 	}
+
+	data.correctNaN()
 
 	return data
 }

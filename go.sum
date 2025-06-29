@@ -243,6 +243,8 @@ github.com/josharian/intern v1.0.0 h1:vlS4z54oSdjm0bgjRigI+G1HpF+tI+9rE5LLzOg8Hm
 github.com/josharian/intern v1.0.0/go.mod h1:5DoeVV0s6jJacbCEi61lwdGj/aVlrQvzHFFd8Hwg//Y=
 github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84 h1:VAPYoqkqXXmyH2dW8b0ZsMm3LTb66wwpIeAgln7D6PM=
 github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84/go.mod h1:GEs6hK/2Kqjg8VPf30j++3AsmIH8FytcnQlP6kfduII=
+github.com/jovandeginste/gpxgo v1.4.1-0.20250629150855-db85929d31f6 h1:RQY3NFjYmkILBkudjoH0aaNPHoO8aqEruAKYKthwmlI=
+github.com/jovandeginste/gpxgo v1.4.1-0.20250629150855-db85929d31f6/go.mod h1:BXSMfUAvKiEhMEXAFM2NvNsbjsSvp394mOvdcNjettg=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
@@ -403,8 +405,6 @@ github.com/tidwall/rtree v1.3.1/go.mod h1:S+JSsqPTI8LfWA4xHBo5eXzie8WJLVFeppAutS
 github.com/tidwall/rtree v1.10.0 h1:+EcI8fboEaW1L3/9oW/6AMoQ8HiEIHyR7bQOGnmz4Mg=
 github.com/tidwall/rtree v1.10.0/go.mod h1:iDJQ9NBRtbfKkzZu02za+mIlaP+bjYPnunbSNidpbCQ=
 github.com/tidwall/sjson v1.2.4/go.mod h1:098SZ494YoMWPmMO6ct4dcFnqxwj9r/gF0Etp19pSNM=
-github.com/tkrajina/gpxgo v1.4.0 h1:cSD5uSwy3VZuNFieTEZLyRnuIwhonQEkGPkPGW4XNag=
-github.com/tkrajina/gpxgo v1.4.0/go.mod h1:BXSMfUAvKiEhMEXAFM2NvNsbjsSvp394mOvdcNjettg=
 github.com/twpayne/go-polyline v1.1.1 h1:/tSF1BR7rN4HWj4XKqvRUNrCiYVMCvywxTFVofvDV0w=
 github.com/twpayne/go-polyline v1.1.1/go.mod h1:ybd9IWWivW/rlXPXuuckeKUyF3yrIim+iqA7kSl4NFY=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=

@@ -120,3 +120,5 @@ require (
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.38.0 // indirect
 )
+
+replace github.com/tkrajina/gpxgo v1.4.0 => github.com/jovandeginste/gpxgo v1.4.1-0.20250629150855-db85929d31f6

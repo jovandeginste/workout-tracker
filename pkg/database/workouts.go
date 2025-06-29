@@ -620,7 +620,6 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	}
 
 	w.setData(gpxAsMapData(gpxContent))
-
 	if err := w.Data.Save(db); err != nil {
 		return err
 	}
@@ -629,6 +628,8 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
+	w.UpdateAverages()
+	w.UpdateExtraMetrics()
 	w.Dirty = false
 
 	return w.Save(db)
