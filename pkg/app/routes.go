@@ -31,6 +31,9 @@ func newEcho(logger *slog.Logger) *echo.Echo {
 	e.Use(middleware.CORS())
 	e.Use(middleware.Gzip())
 	e.Pre(middleware.RemoveTrailingSlash())
+	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+		Getter: middleware.MethodFromHeader(echo.HeaderXHTTPMethodOverride),
+	}))
 
 	return e
 }

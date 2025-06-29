@@ -156,14 +156,20 @@
     h1 {
       @apply text-xl md:text-3xl border-b-2 md:border-b-0 mb-3 md:mb-0 pb-3 md:pb-0;
       @apply text-black border-neutral-500;
-      @apply dark:text-white border-neutral-500;
+      @apply dark:text-white dark:border-neutral-500;
     }
   }
   .actions {
     @apply gap-3 float-right items-baseline flex print:hidden;
-    > button,
-    > form {
+    button,
+    form {
       @apply my-0;
+    }
+
+    .share-actions {
+      @apply gap-3 float-right items-baseline flex print:hidden border rounded-md pl-2 p-1;
+      @apply border-neutral-500;
+      @apply dark:border-neutral-500;
     }
 
     button {
