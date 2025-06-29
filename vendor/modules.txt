@@ -318,7 +318,7 @@ github.com/tidwall/geojson/geometry
 # github.com/tidwall/rtree v1.10.0
 ## explicit; go 1.18
 github.com/tidwall/rtree
-# github.com/tkrajina/gpxgo v1.4.0
+# github.com/tkrajina/gpxgo v1.4.0 => github.com/jovandeginste/gpxgo v1.4.1-0.20250629150855-db85929d31f6
 ## explicit; go 1.16
 github.com/tkrajina/gpxgo/gpx
 # github.com/twpayne/go-polyline v1.1.1

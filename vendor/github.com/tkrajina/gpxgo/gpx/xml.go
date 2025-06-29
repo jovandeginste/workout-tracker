@@ -18,12 +18,13 @@ import (
 )
 
 const formattingTimelayout = "2006-01-02T15:04:05Z"
+const formattingTimeLayoutWithMillis = "2006-01-02T15:04:05.000Z"
 
 // parsingTimelayouts defines a list of possible time formats
 var parsingTimelayouts = []string{
-	"2006-01-02T15:04:05.000Z",
+	formattingTimeLayoutWithMillis,
 	formattingTimelayout,
-	"2006-01-02T15:04:05+00:00",
+	"2006-01-02T15:04:05-07:00",
 	"2006-01-02T15:04:05",
 	"2006-01-02 15:04:05Z",
 	"2006-01-02 15:04:05",
@@ -141,6 +142,9 @@ func formatGPXTime(time *time.Time) string {
 		// Invalid date:
 		return ""
 	}
+	if time.Nanosecond() > 0 {
+		return time.Format(formattingTimeLayoutWithMillis)
+	}
 	return time.Format(formattingTimelayout)
 }
 
@@ -161,6 +165,11 @@ func ParseBytes(buf []byte) (*GPX, error) {
 	return Parse(bytes.NewReader(buf))
 }
 
+// ParseDecoder parses a gpx from a predefined decoder.
+//
+// That way the decoder can have parameters you need, for example `decoder.Strict = false`
+//
+// `initialBytes` are used to "guess" the gpx version. It can be nil, but in that case the parses will assume the GPX version is 1.1
 func ParseDecoder(decoder *xml.Decoder, initialBytes []byte) (*GPX, error) {
 	version, err := guessGPXVersion(initialBytes)
 	if err != nil {
