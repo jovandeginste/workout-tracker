@@ -67,8 +67,8 @@ ru:
     Add_workouts: Добавить тренировки
     Admin: Админ
     Aerial: Esri World Imagery
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут обновлены
-      в ближайшие минуты.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут 
+      обновлены в ближайшие минуты.
     Application_settings: Настройки
     Are_you_sure_you_want_to_delete_this_s: Вы уверены, что хотите удалить %s?
     Autodetect: Автоопределение
@@ -101,8 +101,8 @@ ru:
     File: Файл
     Heading: Направление
     Heart_rate: ЧСС
-    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить текущий
-      пароль
+    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить 
+      текущий пароль
     Location: Местоположение
     Logout: Выход
     Manage: Управление
@@ -117,10 +117,11 @@ ru:
     Other_users: Другие пользователи
     Password: Пароль
     Per: в
-    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на Weblate
+    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на 
+      Weblate
     Profile_updated: Профиль обновлен
-    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка скопирована
-      в буфер обмена
+    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка 
+      скопирована в буфер обмена
     Recent_activity: Недавняя активность
     Register: Зарегистрироваться
     Show_map_in_full_width: Показать карту в полную ширину
@@ -154,8 +155,8 @@ ru:
     Welcome: Добро пожаловать!
     Workout: Тренировка
     Workout_type: Тип тренировки
-    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан, но
-      его необходимо активировать.
+    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан,
+      но его необходимо активировать.
     Your_profile: Ваш профиль
     Your_progress_per_s_for_the_past_s: Ваш прогресс в %s за прошедшие %s
     create_route_segment: создать участок маршрута
