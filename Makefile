@@ -17,6 +17,8 @@ TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
 
+BRANCH_NAME_DEPS ?= update-deps
+
 .PHONY: all clean test build screenshots meta install-dev-deps install-deps
 
 all: clean install-deps test build
@@ -205,10 +207,19 @@ go-cover:
 	rm -vf coverage.out
 
 update-deps:
+	# Check no changes
+	@if [[ "$$(git status --porcelain | wc -l)" -gt 0 ]]; then echo "There are changes; please commit or stash them first"; exit 1; fi
+	# Check if branch exists locally or remotely
+	@if git show-ref --verify --quiet refs/heads/$(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists locally. Aborting."; exit 1; fi
+	@if git ls-remote --exit-code --heads origin $(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists remotely. Aborting."; exit 1; fi
+	git switch --create $(BRANCH_NAME_DEPS)
 	npm update
 	go get -u -t ./...
 	go mod tidy
 	go mod vendor
+	git add .
+	git commit -m "build(deps): Update Go and frontend dependencies"
+	git push origin $(BRANCH_NAME_DEPS)
 
 changelog:
 	git cliff -o CHANGELOG.md
