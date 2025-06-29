@@ -467,5 +467,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		})
 	}
 
+	data.correctNaN()
+
 	return data
 }
