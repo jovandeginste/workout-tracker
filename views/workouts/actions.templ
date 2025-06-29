@@ -48,28 +48,26 @@ templ Actions(w *database.Workout) {
 				</a>
 			</button>
 		</form>
-
-       	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-share-delete", w.ID)) } method="delete">
-      		<button
-     			class="share"
-     			title={ i18n.T(ctx, "translation.Delete_publicly_shareable_link") }
-      		>
-     			<a>
-        				@helpers.IconFor("generate-share")
-     			</a>
-      		</button>
-       	</form>
-	}
-	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-share", w.ID)) } method="post">
 		<button
+			hx-post={ helpers.RouteFor(ctx, "workout-share-delete", w.ID) }
+			hx-target="body"
+			hx-headers='{"X-HTTP-Method-Override": "DELETE"}'
+			hx-swap="innerHTML"
 			class="share dangerous"
-			title={ i18n.T(ctx, "translation.Regenerate_publicly_shareable_link") }
+			title={ i18n.T(ctx, "translation.Delete_publicly_shareable_link") }
 		>
-			<a>
-				@helpers.IconFor("generate-share")
-			</a>
+			@helpers.IconFor("delete")
 		</button>
-	</form>
+	}
+	<button
+		hx-post={ helpers.RouteFor(ctx, "workout-share", w.ID) }
+		hx-target="body"
+		hx-swap="innerHTML"
+		class="share dangerous"
+		title={ i18n.T(ctx, "translation.Regenerate_publicly_shareable_link") }
+	>
+		@helpers.IconFor("generate-share")
+	</button>
 	if w.HasFile() {
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-refresh", w.ID)) } method="post">
 			<button title={ i18n.T(ctx, "translation.refresh") }>
