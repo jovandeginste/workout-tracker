@@ -68,8 +68,8 @@ fi:
     Admin: Ylläpitäjä
     Aerial: Ilmakuva
     All: Kaikki
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Kaikki harjoitukset virkistetään
-      tulevien minuuttien aikana.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Kaikki harjoitukset 
+      virkistetään tulevien minuuttien aikana.
     Application_settings: Sovelluksen asetukset
     Are_you_sure_you_want_to_delete_this_s: 'Haluatko varmasti poistaa tämän: %s?'
     Autodetect: Automaattinen tunnistus
@@ -103,10 +103,11 @@ fi:
     File: Tiedosto
     Filter: Suodata
     Heart_rate: Syke
-    it_took_me_s_to_go_s_i_averaged_s: Minulla kesti %s kulkea %s. Keskiarvoni oli
-      %s.
+    it_took_me_s_to_go_s_i_averaged_s: Minulla kesti %s kulkea %s. Keskiarvoni 
+      oli %s.
     Last: Viimeinen
-    Leave_blank_to_keep_current_password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
+    Leave_blank_to_keep_current_password: Jätä tyhjäksi säilyttääksesi nykyisen 
+      salasanan
     Location: Sijainti
     Logout: Kirjaudu ulos
     Manage: Hallitse
@@ -125,8 +126,8 @@ fi:
     Per: Per
     Please_help_translate_via_Weblate: Auta kääntämisessä Weblaten kautta
     Profile_updated: Profiili päivitetty
-    Publicly_shareable_link_was_copied_to_clipboard: Julkinen jakolinkki kopioitiin
-      leikepöydälle
+    Publicly_shareable_link_was_copied_to_clipboard: Julkinen jakolinkki 
+      kopioitiin leikepöydälle
     Recent_activity: Viimeaikainen toiminta
     Records_for_s: Tulokset käyttäjälle %s
     Register: Rekisteröidy
@@ -160,8 +161,8 @@ fi:
     Welcome: Tervetuloa!
     Workout: Harjoitus
     Workout_type: Harjoitustyyppi
-    Your_account_has_been_created_but_needs_to_be_activated: Tilisi on luotu, mutta
-      se täytyy aktivoida.
+    Your_account_has_been_created_but_needs_to_be_activated: Tilisi on luotu, 
+      mutta se täytyy aktivoida.
     Your_profile: Profiilisi
     Your_progress_per_s_for_the_past_s: Edistymisesi per %s viimeisten %s aikana
     create_route_segment: luo reittiosuus
@@ -196,7 +197,8 @@ fi:
   user:
     profile:
       auto_import_directory: Automaattinen tuontihakemisto
-      disable_social_sharing_buttons: Poista sosiaalisen median jakopainikkeet käytöstä
+      disable_social_sharing_buttons: Poista sosiaalisen median jakopainikkeet 
+        käytöstä
       enable_api_access: Ota API-käyttö käyttöön
       Language: Kieli
       preferred_units: Ensisijaiset yksiköt
