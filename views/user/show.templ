@@ -34,7 +34,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 				@ProfileCalendar(wos)
 			</div>
 		</div>
-		if len(users) > 0 {
+		if len(users) > 1 {
 			<div class="inner-form">
 				<h3>
 					@helpers.IconFor("users")
