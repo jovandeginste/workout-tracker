@@ -34,11 +34,11 @@ de:
     equipment: Ausrüstung
     workout: Training
     route_segment: Streckenabschnitt
-    remove_the_beginning_or_the_ending_of_a_workout: den Anfang oder das Ende eines
-      Trainings entfernen
+    remove_the_beginning_or_the_ending_of_a_workout: den Anfang oder das Ende 
+      eines Trainings entfernen
     split_files_with_multiple_tracks: Dateien mit mehreren Pfaden aufteilen
-    convert_from_not_yet_supported_file_format: aus einem bisher nicht unterstützten
-      Dateiformat konvertieren
+    convert_from_not_yet_supported_file_format: aus einem bisher nicht 
+      unterstützten Dateiformat konvertieren
   sports:
     cycling: Radfahren
     golfing: Golfen
@@ -77,7 +77,8 @@ de:
     Latest_measurements: Letzte Messungen
     Update_measurement: Messung aktualisieren
     Steps: Schritte
-    Regenerate_publicly_shareable_link: Öffentlich teilbaren Link (neu) generieren
+    Regenerate_publicly_shareable_link: Öffentlich teilbaren Link (neu) 
+      generieren
     API_key_updated: API-Schlüssel aktualisiert
     Actions: Aktionen
     Active: Aktiv
@@ -89,10 +90,11 @@ de:
     Admin: Administrator
     Aerial: Luftbild
     All: Alle
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Alle Trainings werden in
-      den nächsten Minuten aktualisiert.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Alle Trainings werden 
+      in den nächsten Minuten aktualisiert.
     Application_settings: Anwendungseinstellungen
-    Are_you_sure_you_want_to_delete_this_s: Möchtest du dieses %s wirklich löschen?
+    Are_you_sure_you_want_to_delete_this_s: Möchtest du dieses %s wirklich 
+      löschen?
     Autodetect: Automatisch erkennen
     Average_per_minute: Durchschnitt pro Minute
     Average_speed: Durchschnittsgeschwindigkeit
@@ -119,17 +121,18 @@ de:
     Elevation: Höhe
     End: Ende
     Est_calories_burned: Geschätzter Kalorienverbrauch
-    Estimated_based_on_the_activity: Geschätzt auf der Grundlage der Aktivität und
-      deines zuletzt gemessenen Gewichts
+    Estimated_based_on_the_activity: Geschätzt auf der Grundlage der Aktivität 
+      und deines zuletzt gemessenen Gewichts
     Extra_metrics: Zusätzliche Metriken
     File: Datei
     Filter: Filter
     Heading: Kurs
     Heart_rate: Herzfrequenz
-    it_took_me_s_to_go_s_i_averaged_s: Es hat mich %s gekostet, um %s zu gehen. Ich
-      habe im Durchschnitt %s.
+    it_took_me_s_to_go_s_i_averaged_s: Es hat mich %s gekostet, um %s zu gehen. 
+      Ich habe im Durchschnitt %s.
     Last: Letzte
-    Leave_blank_to_keep_current_password: Leer lassen, um das aktuelle Passwort beizubehalten
+    Leave_blank_to_keep_current_password: Leer lassen, um das aktuelle Passwort 
+      beizubehalten
     Location: Standort
     Logout: Abmelden
     Manage: Verwalten
@@ -148,8 +151,8 @@ de:
     Per: pro
     Please_help_translate_via_Weblate: Hilf bei der Übersetzung mit Weblate
     Profile_updated: Profil aktualisiert
-    Publicly_shareable_link_was_copied_to_clipboard: Öffentlich teilbarer Link wurde
-      in die Zwischenablage kopiert
+    Publicly_shareable_link_was_copied_to_clipboard: Öffentlich teilbarer Link 
+      wurde in die Zwischenablage kopiert
     Recent_activity: Kürzliche Aktivität
     Records_for_s: Aufzeichnungen für %s
     Register: Registrieren
@@ -189,11 +192,11 @@ de:
     Welcome: Herzlich willkommen!
     Workout: Training
     Workout_type: Trainingsart
-    Your_account_has_been_created_but_needs_to_be_activated: Dein Konto wurde erstellt,
-      muss aber noch aktiviert werden.
+    Your_account_has_been_created_but_needs_to_be_activated: Dein Konto wurde 
+      erstellt, muss aber noch aktiviert werden.
     Your_profile: Dein Profil
-    Your_progress_per_s_for_the_past_s: Dein Fortschritt pro %s für die vergangenen
-      %s
+    Your_progress_per_s_for_the_past_s: Dein Fortschritt pro %s für die 
+      vergangenen %s
     create_route_segment: Streckenabschnitt erstellen
     delete: löschen
     distance: Entfernung
@@ -221,21 +224,24 @@ de:
     The_equipment_s_has_been_deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
     The_equipment_s_has_been_updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
     You_can_find_inspiration_here: 'Hier kannst du Inspirationen finden:'
-    The_workout_s_will_be_refreshed_soon: Das Training ‚%s‘ wird bald aktualisiert…
+    The_workout_s_will_be_refreshed_soon: Das Training ‚%s‘ wird bald 
+      aktualisiert…
     The_workout_s_has_been_created: Das Training ‚%s‘ wurde erstellt.
-    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: Der
-      Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
-    The_route_segment_s_has_been_updated: Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
-    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: Beginnt
-      im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt
-      ‚%s‘.
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
+      Der Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach
+      Übereinstimmungen.
+    The_route_segment_s_has_been_updated: Der Streckenabschnitt ‚%s‘ wurde 
+      aktualisiert.
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
+      Beginnt im Hintergrund mit der Suche nach passenden Trainings für den 
+      Streckenabschnitt ‚%s‘.
     No_measurements_found: Keine Messungen gefunden
     Update: Aktualisieren
     Height: Höhe
     Are_you_sure: Bist du sicher?
     i_completed_a_workout_s: Ich habe das Training %s absolviert.
-    The_workout_s_now_has_a_shareable_link: Das Training '%s' hat nun einen teilbaren
-      Link
+    The_workout_s_now_has_a_shareable_link: Das Training '%s' hat nun einen 
+      teilbaren Link
     You_can_edit_your_GPX_files_before_uploading_them_here: 'Du kannst deine GPX-Dateien
       bearbeiten, bevor du sie hier hochlädst:'
     Try_one_of_these_sites: 'Probiere eine dieser Seiten:'
@@ -243,14 +249,16 @@ de:
     profile:
       your_settings: Deine Einstellungen
       auto_import_directory: Verzeichnis für automatischen Import
-      disable_social_sharing_buttons: Schaltflächen für soziale Netzwerke deaktivieren
+      disable_social_sharing_buttons: Schaltflächen für soziale Netzwerke 
+        deaktivieren
       enable_api_access: API-Zugriff aktivieren
       Language: Sprache
       preferred_units: Bevorzugte Einheiten
       refresh_all_your_workouts: Alle deine Trainingseinheiten aktualisieren
       show_full_date_by_default: Standardmäßig das vollständige Datum anzeigen
       time_zone: Zeitzone
-      totals_to_show_on_dashboard: Zusammenfassung aller Werte auf dem Dashboard anzeigen
+      totals_to_show_on_dashboard: Zusammenfassung aller Werte auf dem Dashboard
+        anzeigen
       update_preferred_units: Bevorzugte Einheiten aktualisieren
       update_profile: Profil aktualisieren
       copy_to_clipboard: In die Zwischenablage kopieren
