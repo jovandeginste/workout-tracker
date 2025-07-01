@@ -1,3 +1,6 @@
+export GOBIN := $(shell pwd)/tmp/bin
+export PATH := $(GOBIN):$(PATH)
+
 GIT_REF ?= $(shell git symbolic-ref HEAD)
 GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch
@@ -13,6 +16,8 @@ TEMPL_APP_PORT=8080
 TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
+
+BRANCH_NAME_DEPS ?= update-deps
 
 .PHONY: all clean test build screenshots meta install-dev-deps install-deps
 
@@ -49,21 +54,23 @@ watch/templ:
 
 watch/server:
 	air \
-		--build.bin                "$(WT_OUTPUT_FILE)" \
-		--build.cmd                "make build-server notify-proxy" \
-		--build.delay              1000 \
-		--build.exclude_dir        "assets,docs,frontend,testdata,tmp,vendor" \
-		--build.exclude_regex      "_test.go" \
-		--build.exclude_unchanged  false \
-		--build.include_ext        "go,html,json,yaml" \
-		--build.stop_on_error      true \
-		--screen.clear_on_rebuild  false 
+			--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
+			--build.cmd                "make build-server notify-proxy" \
+			--build.delay              1000 \
+			--build.exclude_dir        "assets,docs,testdata,tmp,vendor" \
+			--build.exclude_regex      "_test.go" \
+			--build.exclude_unchanged  false \
+			--build.include_ext        "go,html,json,yaml" \
+			--build.stop_on_error      true \
+			--screen.clear_on_rebuild  false 
 
 watch/tailwind:
-	npx tailwindcss -i ./main.css -o ./assets/output.css --minify --watch=always
+	npx tailwindcss \
+			-i ./main.css -o ./assets/output.css --minify --watch=always
 
 notify-proxy:
-	templ generate --notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
+	templ generate \
+			--notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 dev-backend:
 	$(MAKE) watch/templ &
@@ -83,28 +90,29 @@ meta: swagger screenshots changelog
 
 build-cli: build-frontend build-templates
 	go build \
-		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
-		-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
+			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
+			-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
 build-server:
 	go build \
-		-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
-		-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
+			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
+			-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
 
 build-docker:
-	docker build -t workout-tracker --pull \
-		--build-arg BUILD_TIME="$(BUILD_TIME)" \
-		--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
-		--build-arg GIT_REF="$(GIT_REF)" \
-		--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
-		--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
-		.
+	docker build \
+			-t workout-tracker --pull \
+			--build-arg BUILD_TIME="$(BUILD_TIME)" \
+			--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
+			--build-arg GIT_REF="$(GIT_REF)" \
+			--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
+			--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
+			.
 
 swagger:
 	swag init \
-		--parseDependency \
-		--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
-		--generalInfo api_handlers.go
+			--parseDependency \
+			--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
+			--generalInfo api_handlers.go
 
 build-frontend:
 	cd frontend && npm run build
@@ -127,9 +135,6 @@ build-dist: clean-dist
 	cp -v ./frontend/node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
 	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
 	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
-
-watch-tw:
-	npx tailwindcss -i ./main.css -o ./assets/output.css --watch
 
 build-templates:
 	templ generate
@@ -174,20 +179,26 @@ screenshots-i18n:
 screenshots-theme:
 	mkdir -p tmp/
 	convert docs/single_workout-dark.png \
-		-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
-		tmp/dark_resized.jpg
+			-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
+			tmp/dark_resized.jpg
 	convert docs/single_workout-light.png \
-		-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
-		tmp/light_resized.jpg
+			-resize $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT)\! \
+			tmp/light_resized.jpg
 	convert -size $(THEME_SCREENSHOT_WIDTH)x$(THEME_SCREENSHOT_HEIGHT) \
-		xc:white -draw "polygon 0,0 $(THEME_SCREENSHOT_WIDTH),0 $(THEME_SCREENSHOT_WIDTH),$(THEME_SCREENSHOT_HEIGHT)" \
-		tmp/mask.png
+			xc:white -draw "polygon 0,0 $(THEME_SCREENSHOT_WIDTH),0 $(THEME_SCREENSHOT_WIDTH),$(THEME_SCREENSHOT_HEIGHT)" \
+			tmp/mask.png
 	convert tmp/dark_resized.jpg tmp/light_resized.jpg tmp/mask.png \
-		-composite docs/single_workout-theme.jpg
+			-composite docs/single_workout-theme.jpg
 	rm -f tmp/dark_resized.jpg tmp/light_resized.jpg tmp/mask.png
 
 screenshots-responsive:
-	montage -font Liberation-Sans -density 300 -tile 3x0 -geometry +5+5 -background none docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
+	montage \
+			-font Liberation-Sans \
+			-density 300 \
+			-tile 3x0 \
+			-geometry +5+5 \
+			-background none \
+			docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
 
 go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
@@ -195,10 +206,19 @@ go-cover:
 	rm -vf coverage.out
 
 update-deps:
+	# Check no changes
+	@if [[ "$$(git status --porcelain | wc -l)" -gt 0 ]]; then echo "There are changes; please commit or stash them first"; exit 1; fi
+	# Check if branch exists locally or remotely
+	@if git show-ref --verify --quiet refs/heads/$(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists locally. Aborting."; exit 1; fi
+	@if git ls-remote --exit-code --heads origin $(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists remotely. Aborting."; exit 1; fi
+	git switch --create $(BRANCH_NAME_DEPS)
 	npm update
 	go get -u -t ./...
 	go mod tidy
 	go mod vendor
+	git add .
+	git commit -m "build(deps): Update Go and frontend dependencies"
+	git push origin $(BRANCH_NAME_DEPS)
 
 changelog:
 	git cliff -o CHANGELOG.md

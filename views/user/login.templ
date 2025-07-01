@@ -15,6 +15,7 @@ templ Login() {
 						@helpers.IconFor("welcome")
 						{ i18n.T(ctx, "translation.Welcome") }
 					</h2>
+					@templ.Raw(helpers.MarkdownToHTML(i18n.T(ctx, "translation.HelpTranslating")))
 				</div>
 			</div>
 			<div>

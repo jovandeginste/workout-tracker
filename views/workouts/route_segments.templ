@@ -11,7 +11,6 @@ templ RouteSegments(segments []*database.RouteSegmentMatch) {
 	<table>
 		<thead>
 			<tr>
-				<th></th>
 				<th>{ i18n.T(ctx, "translation.Name") }</th>
 				<th>{ i18n.T(ctx, "translation.Distance") }</th>
 				<th>{ i18n.T(ctx, "translation.Duration") }</th>
@@ -22,9 +21,6 @@ templ RouteSegments(segments []*database.RouteSegmentMatch) {
 		<tbody class="whitespace-nowrap font-mono">
 			for _, s := range segments {
 				<tr>
-					<td>
-						@helpers.IconFor("route-segment")
-					</td>
 					<td class="flex flex-wrap gap-1">
 						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-show", s.RouteSegment.ID)) }>
 							{ s.RouteSegment.Name }

@@ -12,12 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
-	"github.com/microcosm-cc/bluemonday"
 	"github.com/tkrajina/gpxgo/gpx"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -287,14 +283,6 @@ func (w *Workout) Distance() float64 {
 	}
 
 	return w.Data.TotalDistance
-}
-
-func (w *Workout) MarkdownNotes() string {
-	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(w.Notes))
-	renderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
-	safeHTML := bluemonday.UGCPolicy().SanitizeBytes(markdown.Render(doc, renderer))
-
-	return string(safeHTML)
 }
 
 func (d *GPXData) Save(db *gorm.DB) error {
@@ -632,7 +620,6 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	}
 
 	w.setData(gpxAsMapData(gpxContent))
-
 	if err := w.Data.Save(db); err != nil {
 		return err
 	}
@@ -641,6 +628,8 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
+	w.UpdateAverages()
+	w.UpdateExtraMetrics()
 	w.Dirty = false
 
 	return w.Save(db)

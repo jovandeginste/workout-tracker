@@ -85,6 +85,10 @@ func preMigrationActions(db *gorm.DB) error {
 	}
 
 	for _, k := range []string{"average_speed", "average_speed_no_pause"} {
+		if !db.Migrator().HasColumn(&MapData{}, k) {
+			continue
+		}
+
 		q := db.
 			Model(&MapData{}).Where(k+" in ?", []float64{math.Inf(1), math.Inf(-1), math.NaN()}).
 			Update(k, 0)

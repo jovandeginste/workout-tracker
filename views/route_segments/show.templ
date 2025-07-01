@@ -84,7 +84,7 @@ templ Show(s *database.RouteSegment) {
 							{ i18n.T(ctx, "translation.Notes") }
 						</h3>
 						<div>
-							@templ.Raw(s.MarkdownNotes())
+							@templ.Raw(helpers.MarkdownToHTML(s.Notes))
 						</div>
 					</div>
 				}

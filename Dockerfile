@@ -1,4 +1,4 @@
-FROM node:22-alpine AS frontend
+FROM node:24-alpine AS frontend
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY assets ./assets
 
 RUN make build-dist build-tw
 
-FROM golang:1.24.1-alpine AS backend
+FROM golang:1.24.4-alpine AS backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
@@ -40,7 +40,7 @@ RUN go build \
   -ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
   -o /commands/ ./cmd/...
 
-FROM alpine:latest
+FROM alpine:3
 
 RUN apk add --no-cache tzdata
 COPY --from=backend /commands/* /app/

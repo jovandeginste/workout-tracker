@@ -4,8 +4,8 @@ ru:
   notices:
     workouts_added:
       one: 'Добавлена %{count} новая тренировка: %{list}'
-      few: 'Добавлена %{count} новая тренировка: %{list}'
-      many: 'Добавлена %{count} новая тренировка: %{list}'
+      few: 'Добавлены %{count} новые тренировки: %{list}'
+      many: 'Добавлено %{count} новых тренировок: %{list}'
   misc:
     years_1: 1 год
     years_2: 2 года
@@ -22,6 +22,7 @@ ru:
     month_1: 1 месяц
     day_15: 15 дней
     month_3: 3 месяца
+    split_files_with_multiple_tracks: разделить файлы с несколькими путями
   sports:
     snowboarding: сноуборд
     walking: ходьба
@@ -66,8 +67,8 @@ ru:
     Add_workouts: Добавить тренировки
     Admin: Админ
     Aerial: Esri World Imagery
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут обновлены
-      в ближайшие минуты.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут 
+      обновлены в ближайшие минуты.
     Application_settings: Настройки
     Are_you_sure_you_want_to_delete_this_s: Вы уверены, что хотите удалить %s?
     Autodetect: Автоопределение
@@ -92,7 +93,7 @@ ru:
     Disable_account_registration: Отключить регистрацию
     Distance: Расстояние
     Duration: Продолжительность
-    Elevation: Высота
+    Elevation: Подъём
     End: Конец
     Est_calories_burned: Сожжено калорий
     Estimated_based_on_the_activity: Оценка основана на виде активности
@@ -100,8 +101,8 @@ ru:
     File: Файл
     Heading: Направление
     Heart_rate: ЧСС
-    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить текущий
-      пароль
+    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить 
+      текущий пароль
     Location: Местоположение
     Logout: Выход
     Manage: Управление
@@ -116,10 +117,11 @@ ru:
     Other_users: Другие пользователи
     Password: Пароль
     Per: в
-    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на Weblate
+    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на 
+      Weblate
     Profile_updated: Профиль обновлен
-    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка скопирована
-      в буфер обмена
+    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка 
+      скопирована в буфер обмена
     Recent_activity: Недавняя активность
     Register: Зарегистрироваться
     Show_map_in_full_width: Показать карту в полную ширину
@@ -153,8 +155,8 @@ ru:
     Welcome: Добро пожаловать!
     Workout: Тренировка
     Workout_type: Тип тренировки
-    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан, но
-      его необходимо активировать.
+    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан,
+      но его необходимо активировать.
     Your_profile: Ваш профиль
     Your_progress_per_s_for_the_past_s: Ваш прогресс в %s за прошедшие %s
     create_route_segment: создать участок маршрута
@@ -181,6 +183,13 @@ ru:
     All: Все
     Total_weight: Общий вес
     Try_one_of_these_sites: 'Попробуйте один из этих сайтов:'
+    Sort_by: Сортировать по
+    Total_repetitions: Всего повторений
+    Repetitions: Повторения
+    Reset_changes: Сбросить изменения
+    Totals: Всего
+    Update: Обновить
+    Height: Высота
   user:
     profile:
       time_zone: Часовой пояс
@@ -195,13 +204,26 @@ ru:
       copy_to_clipboard: Cкопировать в буфер обмена
       enable_api_access: Включить доступ к API
       refresh_all_your_workouts: Обновить все ваши тренировки
-      auto_import_directory: Каталог автоматического импорта
+      auto_import_directory: Папка автоматического импорта
       Theme: Тема
       your_settings: Настройки
       Light: Светлая
       Dark: Темная
+      Browser_System: Обозреватель / ОС
     update: Обновить пользователя
   workout:
     update: Обновить тренировку
   equipment:
     update: Обновить снаряжение
+  alerts:
+    workouts_added:
+      one: 'Возникла %{count} проблема в процессе добавления занятий: %{list}'
+      few: 'Возникло %{count} проблемы в процессе добавления занятий: %{list}'
+      many: 'Возникло %{count} проблем в процессе добавления занятий: %{list}'
+    something_wrong: 'Что-то пошло не так: %{message}'
+    route_segments_added:
+      one: 'Возникла %{count} проблема в процессе добавления отрывка трассы: %{list}'
+      few: 'Возникло %{count} проблемы в процессе добавления отрывка трассы: %{list}'
+      many: 'Возникло %{count} проблем в процессе добавления отрывка трассы: %{list}'
+  route_segment:
+    update: Обновить участок маршрута

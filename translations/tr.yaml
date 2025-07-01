@@ -1,0 +1,158 @@
+tr:
+  translation:
+    Name: Ad
+    All: Tümü
+    Continue: Devam et
+    Created: Oluşturuldu
+    File: Dosya
+    Time_paused: Zaman duraklatıldı
+    User: Kullanıcı
+    edit: düzenle
+    refresh: yenile
+    Admin: Yönetici
+    Duration: Süre
+    Time: Zaman
+    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız 
+      oluşturuldu, ancak etkinleştirilmesi gerekiyor.
+    Calories: Kalori
+    ascending: artan
+    Notes: Notlar
+    Password: Parola
+    Profile_updated: Profil güncellendi
+    Register: Kayıt ol
+    Totals: Toplam
+    Type: Tür
+    Username: Kullanıcı adı
+    Username_email: Kullanıcı adı (e-posta)
+    Weight: Ağırlık
+    Welcome: Hoş geldin!
+    delete: sil
+    download: indir
+    duration: süre
+    distance: mesafe
+    descending: azalan
+    Resources: Kaynaklar
+    Update: Güncelleme
+    up: tırmanma
+    Speed: Hız
+    Updated: Güncellendi
+    Details: Ayrıntılar
+    Location: Konum
+    Source: Kaynak
+    Distance: Mesafe
+    Accuracy: Doğruluk
+    Cancel: İptal
+    Filter: Süzgeç
+    Date: Tarih
+    Application_settings: Uygulama ayarları
+    Average_speed_no_pause: Ortalama hız (duraklamasız)
+    Default_workout_types: Varsayılan çalışma türleri
+    Steps: Adım
+    Add_equipment: Ekipman ekle
+    Add_route_segment: Rota bölümü ekle
+    Add_workout: Çalışma ekle
+    Add_a_workout: Bir çalışma ekle
+    Add_workouts: Çalışmalar ekle
+    Average_per_minute: Dakikalık ortalama
+    Average_speed: Ortalama hız
+    Average_tempo: Ortalama tempo
+    Average_tempo_no_pause: Ortalama tempo (duraklamasız)
+    Create_a_new_account: Yeni hesap oluştur
+    Create_route_segment: Rota bölümü oluştur
+    Dashboard_for_s: '%s için gösterge'
+    Workout: Çalışma
+    Workout_type: Çalışma türü
+    create_route_segment: rota bölümü oluştur
+    workouts: çalışmalar
+    Active: Etkin
+    API_key_updated: API anahtarı güncellendi
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Tüm egzersizler 
+      sonraki dakikalarda yenilenecektir.
+    Are_you_sure_you_want_to_delete_this_s: Bu %s'yi silmek istediğinden emin 
+      misin?
+    Description: Tanım
+    Last: Son
+    Logout: Oturumu kapat
+    Manage: Yönet
+    Leave_blank_to_keep_current_password: Mevcut parolayı kullanmak için boş 
+      bırakın
+    Matches: Eşleşmeler
+    Reset_changes: Değişiklikleri sıfırla
+    Show_map_in_full_width: Haritayı tam genişlikte göster
+    Sign_in: Oturum aç
+    Start: Başla
+    find_matches: eşleşmeleri bul
+    how_to_use: nasıl kullanılır
+    the_configuration_file: yapılandırma dosyası
+    Total_weight: Toplam ağırlık
+    Filter_workouts: Çalışmaları süz
+    The_workout_s_has_been_created: "'%s' çalışması oluşturuldu."
+    Sort_by: Sırala
+  user:
+    profile:
+      Light: Aydınlık
+      Language: Dil
+      show_hide: göster/gizle
+      time_zone: Zaman dilimi
+      Dark: Karanlık
+      preferred_units: Tercih edilen birimler
+  misc:
+    years_5: 5 yıl
+    years_1: 1 yıl
+    day_15: 15 gün
+    years_10: 10 yıl
+    years_2: 2 yıl
+    month_3: 3 ay
+    month_1: 1 ay
+    month_6: 6 ay
+    day_7: 7 gün
+    day: gün
+    month: ay
+    route_segment: rota bölümü
+    remove_the_beginning_or_the_ending_of_a_workout: çalışma başlangıcı veya 
+      sonunu kaldır
+    workout: çalışma
+    equipment: ekipman
+    split_files_with_multiple_tracks: dosyaları birden çok parçaya böl
+  notices:
+    workouts_added:
+      one: 'Yeni bir antrenman eklendi: %{list}'
+      other: 'Yeni %{count} antrenman eklendi: %{list}'
+    route_segments_added:
+      one: 'Bir yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri arıyoruz'
+      other: '%{count} yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri
+        arıyoruz'
+  alerts:
+    route_segments_added:
+      one: 'Rota bölümü eklerken bir sorunla karşılaşıldı: %{list}'
+      other: 'Rota bölümü eklerken %{count} sorunla karşılaşıldı: %{list}'
+    workouts_added:
+      one: 'Egzersiz eklerken bir sorunla karşılaşıldı: %{list}'
+      other: 'Egzersiz eklerken %{count} sorunla karşılaşıldı: %{list}'
+    something_wrong: 'Bir şeyler ters gitti: %{message}'
+  menu:
+    Heatmap: Isı haritası
+    Statistics: Sayımlama
+    route_segments: Rota bölümleri
+    Dashboard: Gösterge
+    Equipment: Ekipman
+    Workouts: Çalışmalar
+  units:
+    centimeter: santimetre
+    kilometers: kilometre
+    inch: inç
+    kilograms: kilogram
+    meters: metre
+    miles: mil
+  settings:
+    update: Güncelleme ayarları
+  sports:
+    golfing: golf oynamak
+    hiking: doğa yürüyüşü
+    running: koşu
+    swimming: yüzme
+    walking: yürüme
+    weight-lifting: ağırlık kaldırma
+    other: diğerleri
+    cycling: bisiklete binmek
+    e-cycling: e-bisiklet

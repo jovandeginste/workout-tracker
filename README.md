@@ -446,12 +446,13 @@ application is tested with GPX files from these sources:
 - Garmin Connect (export to GPX)
 - FitoTrack (automatic export to GPX)
 - Workoutdoors (export to GPX)
+- Runtastic / Adidas Running using
+  [this tool](https://github.com/Griffsano/RuntasticConverter)
 
 ## TODO
 
 - write tests!!!!!
 - add support for authentication through a reverse proxy
-- make a dev-flag that doesn't embed all files in the binary
 - add support for generic database drivers
   - added support for MySQL, but untested so far
   - added support for Postgres by @icewind1991
