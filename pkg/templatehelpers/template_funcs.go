@@ -10,6 +10,10 @@ import (
 
 const InvalidValue = "N/A"
 
+func HumanCadence(cad float64) string {
+	return fmt.Sprintf("%.2f", cad)
+}
+
 func HumanCaloriesKcal(cal float64) string {
 	return fmt.Sprintf("%.2f kcal", cal)
 }
