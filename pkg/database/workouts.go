@@ -630,7 +630,11 @@ func (w *Workout) UpdateAverages() {
 				trackedFor += p.Duration
 			}
 		}
-		w.Data.AverageCadence /= float64(trackedFor.Seconds())
+		if trackedFor.Seconds() > 0 {
+			w.Data.AverageCadence /= float64(trackedFor.Seconds())
+		} else {
+			w.Data.AverageCadence = 0
+		}
 	}
 }
 
