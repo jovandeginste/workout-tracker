@@ -225,12 +225,28 @@ func (w *Workout) MaxSpeed() float64 {
 	return w.Data.MaxSpeed
 }
 
+func (w *Workout) MaxCadence() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MaxCadence
+}
+
 func (w *Workout) AverageSpeedNoPause() float64 {
 	if w.Data == nil {
 		return 0
 	}
 
 	return w.Data.AverageSpeedNoPause
+}
+
+func (w *Workout) AverageCadence() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.AverageCadence
 }
 
 func (w *Workout) PauseDuration() time.Duration {
@@ -604,6 +620,22 @@ func (w *Workout) UpdateAverages() {
 	}
 
 	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
+
+	if w.HasCadence() {
+		trackedFor := time.Duration(0)
+		for _, p := range w.Data.Details.Points {
+			if c, ok := p.ExtraMetrics["cadence"]; ok {
+				w.Data.MaxCadence = max(w.Data.MaxCadence, c)
+				w.Data.AverageCadence += c * float64(p.Duration.Seconds())
+				trackedFor += p.Duration
+			}
+		}
+		if trackedFor.Seconds() > 0 {
+			w.Data.AverageCadence /= float64(trackedFor.Seconds())
+		} else {
+			w.Data.AverageCadence = 0
+		}
+	}
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
@@ -672,6 +704,10 @@ func (w *Workout) CaloriesBurned() float64 {
 
 func (w *Workout) HasElevation() bool {
 	return w.HasExtraMetric("elevation")
+}
+
+func (w *Workout) HasSpeed() bool {
+	return w.HasExtraMetric("speed")
 }
 
 func (w *Workout) HasCadence() bool {
