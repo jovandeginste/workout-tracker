@@ -42,12 +42,21 @@ func (sc *StatConfig) GetBucketString(sqlDialect string) string {
 	}
 }
 
+func (sc *StatConfig) GetDayBucketFormatExpression(sqlDialect string) string {
+	switch sqlDialect {
+	case postgresDialect:
+		return "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket"
+	default:
+		return "min(strftime('%Y-%m-%d', workouts.date)) as bucket"
+	}
+}
+
 func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
 	switch sqlDialect {
 	case postgresDialect:
-		return "to_char(workouts.date, '" + sc.GetBucketString(sqlDialect) + "') as bucket"
+		return fmt.Sprintf("to_char(workouts.date, '%s') as raw_bucket", sc.GetBucketString(sqlDialect))
 	default:
-		return "strftime('" + sc.GetBucketString(sqlDialect) + "', workouts.date) as bucket"
+		return fmt.Sprintf("strftime('%s', workouts.date) as raw_bucket", sc.GetBucketString(sqlDialect))
 	}
 }
 
@@ -101,6 +110,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
 			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
 			statConfig.GetBucketFormatExpression(sqlDialect),
+			statConfig.GetDayBucketFormatExpression(sqlDialect),
 		).
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID)
@@ -109,7 +119,13 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())
 	}
 
-	rows, err := q.Group("bucket, workout_type").Rows()
+	// Grouping by `raw_bucket` instead of `bucket` ensures that the data is grouped
+	// based on the raw, unprocessed bucket values as defined in the database schema.
+	// This is necessary to maintain consistency with the bucket format expressions
+	// used in the SELECT clause and to avoid potential mismatches caused by
+	// transformations or processing applied to `bucket`.
+	// The `bucket` field is provided for frontend rendering purposes only.
+	rows, err := q.Group("raw_bucket, workout_type").Rows()
 	if err != nil {
 		return nil, err
 	}
