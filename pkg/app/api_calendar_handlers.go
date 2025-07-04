@@ -13,6 +13,7 @@ import (
 type Event struct {
 	Title string    `json:"title"`
 	Start time.Time `json:"start"`
+	End   time.Time `json:"end"`
 	URL   string    `json:"url"`
 }
 
@@ -92,7 +93,8 @@ func (a *App) apiCalendar(c echo.Context) error {
 
 		events = append(events, Event{
 			Title: d,
-			Start: w.Date,
+			Start: w.GetDate(),
+			End:   w.GetEnd(),
 			URL:   a.echo.Reverse("workout-show", w.ID),
 		})
 	}
