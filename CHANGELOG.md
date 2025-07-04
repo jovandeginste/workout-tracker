@@ -4,6 +4,67 @@ All notable changes to this project will be documented in this file.
 
 ## What's Changed
 
+- feat(calendar): Send workout end times to calendar, by @jovandeginste, in
+  [#581](https://github.com/jovandeginste/workout-tracker/pull/581)
+- feat(statistics): Distinguish aggregation bucket from representative day, by
+  @jovandeginste, in
+  [#580](https://github.com/jovandeginste/workout-tracker/pull/580)
+- fix(user): Rebuild user show template, by @jovandeginste, in
+  [#579](https://github.com/jovandeginste/workout-tracker/pull/579)
+- Add cadence stats to workout details, by @jovandeginste, in
+  [#576](https://github.com/jovandeginste/workout-tracker/pull/576)
+  - Fix json, by @bastianjoel
+  - Fix potention Zero division error, by @bastianjoel
+  - Add cadence stats to workout details, by @bastianjoel
+- refactor(handlers): Extract calendar API handler, by @jovandeginste, in
+  [#578](https://github.com/jovandeginste/workout-tracker/pull/578)
+- chore(deps): bump gorm.io/datatypes from 1.2.5 to 1.2.6 in the all group, by
+  @jovandeginste, in
+  [#575](https://github.com/jovandeginste/workout-tracker/pull/575)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#573](https://github.com/jovandeginste/workout-tracker/pull/573)
+  - Translated using Weblate (Portuguese (Brazil)), by @matheuseduardo
+  - Translated using Weblate (Polish), by @michal-stelmach
+  - Translated using Weblate (Finnish), by @weblate
+  - Translated using Weblate (Russian), by @weblate
+  - Translated using Weblate (Dutch), by @weblate
+  - Translated using Weblate (German), by @weblate
+- fix(ui): change the test on other users sections, by @jovandeginste, in
+  [#572](https://github.com/jovandeginste/workout-tracker/pull/572)
+  - fix(ui): change the test on other users sections, by @nicosomb
+- fix(ui): Rebuild code after changing templates, by @jovandeginste, in
+  [#571](https://github.com/jovandeginste/workout-tracker/pull/571)
+- refactor(workouts): Update icon for matching route segments, by
+  @jovandeginste, in
+  [#570](https://github.com/jovandeginste/workout-tracker/pull/570)
+- Improve import of GPX files with time issues, by @jovandeginste, in
+  [#569](https://github.com/jovandeginste/workout-tracker/pull/569)
+  - fix(workout): Ensure data consistency after GPX import, by @jovandeginste
+  - feat(gpx): Improve GPX time precision and parsing robustness, by
+    @jovandeginste
+- build(deps): Update Go and frontend dependencies, by @jovandeginste, in
+  [#568](https://github.com/jovandeginste/workout-tracker/pull/568)
+  - build(make): Automate dependency update workflow, by @jovandeginste
+- chore(deps): bump github.com/go-viper/mapstructure/v2 from 2.2.1 to 2.3.0 in
+  the go_modules group, by @jovandeginste, in
+  [#567](https://github.com/jovandeginste/workout-tracker/pull/567)
+- feat: add workout public link deletion, by @jovandeginste, in
+  [#565](https://github.com/jovandeginste/workout-tracker/pull/565)
+  - refactor(workouts): Improve workout sharing UI and text, by @jovandeginste
+  - feat(htmx): Implement HTMX method override for workout share actions, by
+    @jovandeginste
+  - feat: add workout public link deletion, by @nicosomb
+- Fix the way templ is run, by @jovandeginste, in
+  [#566](https://github.com/jovandeginste/workout-tracker/pull/566)
+  - style(makefile): Standardize indentation of multi-line commands, by
+    @jovandeginste
+  - Recompile with correct version of templ, by @jovandeginste
+  - build: Use local paths for Go-installed tools in Makefile, by @jovandeginste
+
+## What's Changed in v2.3.0
+
+- Update changelog, by @jovandeginste, in
+  [#564](https://github.com/jovandeginste/workout-tracker/pull/564)
 - chore(deps): bump the all group with 5 updates, by @jovandeginste, in
   [#563](https://github.com/jovandeginste/workout-tracker/pull/563)
 - chore(deps): bump node from 22-alpine to 24-alpine, by @jovandeginste, in
@@ -106,6 +167,9 @@ All notable changes to this project will be documented in this file.
 - @BorATICI made their first contribution
 - @matheuseduardo made their first contribution
 - @yurtpage made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.2.2...v2.3.0
 
 ## What's Changed in v2.2.2
 
