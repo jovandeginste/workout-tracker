@@ -24,6 +24,8 @@ var (
 	ErrWorkoutAlreadyExists = errors.New("user already has workout with exact start time")
 )
 
+const minEventDuration = 1 * time.Second
+
 type Workout struct {
 	Model
 	Date                time.Time            `gorm:"not null;uniqueIndex:idx_start_user" json:"date"`                                    // The timestamp the workout was recorded
@@ -127,6 +129,14 @@ func (w *Workout) AverageSpeed() float64 {
 	}
 
 	return w.Data.AverageSpeed
+}
+
+func (w *Workout) GetEnd() time.Time {
+	if w.TotalDuration() <= 0 {
+		return w.GetDate().Add(minEventDuration)
+	}
+
+	return w.GetDate().Add(w.Duration())
 }
 
 func (w *Workout) TotalDuration() time.Duration {
