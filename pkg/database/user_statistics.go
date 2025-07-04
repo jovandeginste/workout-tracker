@@ -23,6 +23,7 @@ type (
 	// Bucket is the consolidation of workout information for a given time bucket
 	Bucket struct {
 		Bucket              string        `json:"bucket,omitempty"`              // The name of the bucket
+		RawBucket           string        `json:"raw_bucket,omitempty"`          // One day in the bucket (for statistic rendering)
 		WorkoutType         WorkoutType   `json:"workoutType"`                   // The type of the workout
 		Workouts            int           `json:"workouts"`                      // The number of workouts in the bucket
 		Distance            float64       `json:"distance,omitempty"`            // The total distance in the bucket
