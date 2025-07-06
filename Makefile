@@ -50,7 +50,7 @@ watch/templ:
 			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
-			--proxybind="localhost" \
+			--proxybind="0.0.0.0"
 
 watch/server:
 	air \
