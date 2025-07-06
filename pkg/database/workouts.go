@@ -625,11 +625,16 @@ func (w *Workout) UpdateAverages() {
 
 	if w.Data.TotalDuration == 0 {
 		w.Data.AverageSpeed = 0
+		w.Data.AverageSpeedNoPause = 0
 	} else {
 		w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+		durationNoPause := (w.Data.TotalDuration - w.Data.PauseDuration).Seconds()
+		if durationNoPause > 0 {
+			w.Data.AverageSpeedNoPause = w.Data.TotalDistance / durationNoPause
+		} else {
+			w.Data.AverageSpeedNoPause = 0
+		}
 	}
-
-	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
 
 	if w.HasCadence() {
 		trackedFor := time.Duration(0)
