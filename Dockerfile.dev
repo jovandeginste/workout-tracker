@@ -38,6 +38,4 @@ COPY vendor ./vendor
 COPY views ./views
 COPY translations ./translations
 
-RUN make install-dev-deps
-
 ENTRYPOINT ["make", "dev-backend"]

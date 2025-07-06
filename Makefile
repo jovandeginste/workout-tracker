@@ -14,23 +14,18 @@ THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT=8090
 TEMPL_APP_PORT=8080
 TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
+TEMPL_COMMAND ?= go run github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
 
 BRANCH_NAME_DEPS ?= update-deps
 
-.PHONY: all clean test build screenshots meta install-dev-deps install-deps
+.PHONY: all clean test build screenshots meta install-deps
 
 all: clean install-deps test build
 
-install-dev-deps:
-	go install github.com/swaggo/swag/cmd/swag@latest
-	go install github.com/air-verse/air@latest
-	go install github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
-	go install github.com/mdomke/git-semver/v6@latest
-
 release-patch release-minor release-major:
-	$(MAKE) release VERSION=$(shell git-semver -target $(subst release-,,$@))
+	$(MAKE) release VERSION=$(shell go run github.com/mdomke/git-semver/v6@latest -target $(subst release-,,$@))
 
 release:
 	git tag -s -a $(VERSION) -m "Release $(VERSION)"
@@ -46,14 +41,14 @@ clean:
 
 
 watch/templ:
-	templ generate --watch \
+	$(TEMPL_COMMAND) generate --watch \
 			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
 			--proxybind="0.0.0.0"
 
 watch/server:
-	air \
+	go run github.com/air-verse/air@latest \
 			--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
 			--build.cmd                "make build-server notify-proxy" \
 			--build.delay              1000 \
@@ -69,7 +64,7 @@ watch/tailwind:
 			-i ./main.css -o ./assets/output.css --minify --watch=always
 
 notify-proxy:
-	templ generate \
+	$(TEMPL_COMMAND) generate \
 			--notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 dev-backend:
@@ -109,7 +104,7 @@ build-docker:
 			.
 
 swagger:
-	swag init \
+	go run github.com/swaggo/swag/cmd/swag@latest init \
 			--parseDependency \
 			--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 			--generalInfo api_handlers.go
@@ -137,7 +132,7 @@ build-dist: clean-dist
 	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
 
 build-templates:
-	templ generate
+	$(TEMPL_COMMAND) generate
 
 test-packages:
 	$(GO_TEST) ./pkg/...
