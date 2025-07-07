@@ -73,7 +73,7 @@ zh-Hans:
     Latest_measurements: 最新测量
     Update_measurement: 更新测量
     Steps: 步数
-    Regenerate_publicly_shareable_link: "（重新）生成可公开分享的链接"
+    Regenerate_publicly_shareable_link: "（重新）生成链接"
     API_key_updated: API 密钥已更新
     Actions: 操作
     Active: 活跃
@@ -99,7 +99,7 @@ zh-Hans:
     Cancel: 取消
     Circular: 循环
     Continue: 继续
-    Copy_publicly_shareable_link: 复制可公开分享的链接
+    Copy_publicly_shareable_link: 复制链接
     Create_a_new_account: 创建新账号
     Create_route_segment: 创建路线段
     Created: 已创建
@@ -226,6 +226,11 @@ zh-Hans:
     i_completed_a_workout_s: 我完成了一次锻炼：%s。
     The_workout_s_now_has_a_shareable_link: 锻炼 '%s' 现有可分享的链接
     HelpTranslating: "我们希望您能帮助翻译！\n\n请[通过 Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)协助翻译\n"
+    The_shareable_link_is_deleted_for_the_workout_s: 已删除锻炼 '%s' 的可分享链接
+    delete_public_share: 删除链接
+    Average_cadence: 平均步频
+    Max_cadence: 最大步频
+    public_share: 可公开分享的链接
   user:
     profile:
       your_settings: 您的设置
