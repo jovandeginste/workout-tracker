@@ -623,29 +623,55 @@ func (w *Workout) UpdateAverages() {
 		return
 	}
 
+	w.calculateAverageSpeeds()
+	w.calculateCadence()
+}
+
+func (w *Workout) calculateAverageSpeeds() {
+	w.Data.AverageSpeed = 0
+	w.Data.AverageSpeedNoPause = 0
+
 	if w.Data.TotalDuration == 0 {
-		w.Data.AverageSpeed = 0
-	} else {
-		w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+		return
 	}
 
-	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
+	w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
 
-	if w.HasCadence() {
-		trackedFor := time.Duration(0)
-		for _, p := range w.Data.Details.Points {
-			if c, ok := p.ExtraMetrics["cadence"]; ok {
-				w.Data.MaxCadence = max(w.Data.MaxCadence, c)
-				w.Data.AverageCadence += c * float64(p.Duration.Seconds())
-				trackedFor += p.Duration
-			}
-		}
-		if trackedFor.Seconds() > 0 {
-			w.Data.AverageCadence /= float64(trackedFor.Seconds())
-		} else {
-			w.Data.AverageCadence = 0
-		}
+	if w.Data.TotalDuration == w.Data.PauseDuration {
+		w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
+		return
 	}
+
+	w.Data.AverageSpeedNoPause = w.Data.TotalDistance / (w.Data.TotalDuration - w.Data.PauseDuration).Seconds()
+}
+
+func (w *Workout) calculateCadence() {
+	w.Data.MaxCadence = 0
+	w.Data.AverageCadence = 0
+
+	if !w.HasCadence() {
+		return
+	}
+
+	trackedFor := time.Duration(0)
+	avgCadence := 0.0
+
+	for _, p := range w.Data.Details.Points {
+		c, ok := p.ExtraMetrics["cadence"]
+		if !ok {
+			continue
+		}
+
+		w.Data.MaxCadence = max(w.Data.MaxCadence, c)
+		avgCadence += c * p.Duration.Seconds()
+		trackedFor += p.Duration
+	}
+
+	if trackedFor.Seconds() == 0 {
+		return
+	}
+
+	w.Data.AverageCadence = avgCadence / trackedFor.Seconds()
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
