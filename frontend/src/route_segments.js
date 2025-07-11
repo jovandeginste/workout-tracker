@@ -1,7 +1,7 @@
 let startMarker;
 let endMarker;
 
-function editMap(params) {
+globalThis.editMap = function editMap(params) {
   document.addEventListener("DOMContentLoaded", () => {
     // Create map
     const map = L.map(params.elementID, {
@@ -65,8 +65,8 @@ function editMap(params) {
 
     map.fitBounds(group.getBounds(), { animate: false });
   });
-}
-function updateStart() {
+};
+globalThis.updateStart = function updateStart() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
 
@@ -80,8 +80,8 @@ function updateStart() {
   }
 
   updateInfo();
-}
-function updateEnd() {
+};
+globalThis.updateEnd = function updateEnd() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
 
@@ -95,28 +95,28 @@ function updateEnd() {
   }
 
   updateInfo();
-}
+};
 
-function updateAll() {
+globalThis.updateAll = function updateAll() {
   updateStart();
   updateEnd();
   updateInfo();
-}
+};
 
-function updateInfo() {
+globalThis.updateInfo = function updateInfo() {
   updateDistance();
   updateLines();
-}
+};
 
-function updateDistance() {
+globalThis.updateDistance = function updateDistance() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
 
   d = points[end - 1].distance - points[start].distance;
   document.getElementById("distance-show").textContent = d.toFixed(2) + " m";
-}
+};
 
-function updateLines() {
+globalThis.updateLines = function updateLines() {
   start = Number(document.getElementById("start").value);
   end = Number(document.getElementById("end").value);
 
@@ -136,4 +136,4 @@ function updateLines() {
         pt.line.setStyle({ color: "#00FF00" });
     }
   });
-}
+};
