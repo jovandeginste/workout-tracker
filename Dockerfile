@@ -14,7 +14,7 @@ COPY assets ./assets
 
 RUN make build-dist build-tw
 
-FROM golang:1.24.4-alpine AS backend
+FROM golang:1.24.5-alpine AS backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
