@@ -107,3 +107,17 @@ globalThis.readDailyHeight = function readDailyHeight() {
   ft.value = Math.floor(height.value / 12);
   inch.value = height.value % 12;
 };
+
+globalThis.fullMap = function fullMap(map) {
+  const d = document.getElementById("map-container");
+  const mapEl = document.getElementById(map);
+
+  d.classList.toggle("small-size");
+  d.classList.toggle("full-size");
+
+  if (mapEl) {
+    mapEl.updateSize();
+  }
+
+  return false;
+};

@@ -3,8 +3,6 @@ import * as esbuild from "esbuild";
 let ctx = await esbuild.context({
   entryPoints: [
     "src/common.js",
-    "src/map.js",
-    "src/route_segments.js",
     "src/components/**/*.js",
     "src/views/**/*.js",
   ],

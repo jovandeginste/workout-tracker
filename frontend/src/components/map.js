@@ -1,6 +1,27 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+/*
+interface Point {
+  lat: number;
+  lng: number;
+  title: string;
+  elevation: number;
+}
+
+interface Parameters {
+  elementID: string;         // ID of the element to put the map in
+  center: [number, number];  // Lat, long coordinate to center the map to
+  points: Point[];           // Points of the route to show
+  minElevation: number;
+  maxElevation: number;
+  maxSpeed: number;
+  speedName: string;        // Name for speed layer
+  elevationName: string;    // Name of elevation layer
+  streetsName: string;
+  aerialName: string;
+}
+*/
 class WtMap extends HTMLElement {
   constructor() {
     super();
@@ -21,6 +42,7 @@ class WtMap extends HTMLElement {
       elevationName: mapConfig.ElevationName,
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
+      showElevation: mapConfig.ShowElevation,
     };
 
     this.points = JSON.parse(this.getAttribute("map-points") || "[]");
@@ -218,6 +240,10 @@ class WtMap extends HTMLElement {
     if (!this.hoverMarker) return;
     this.hoverMarker.closeTooltip();
   }
+
+  updateSize() {
+    map.invalidateSize(true);
+  };
 }
 
 customElements.define("wt-map", WtMap);

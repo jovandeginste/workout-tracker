@@ -11,7 +11,7 @@ templ CreateRouteSegment(w *database.Workout) {
 	@partials.Page(
 		partials.NewPageOptions().
 			WithSharing().WithCharts().WithMaps().
-			WithScripts("/route_segments.js"),
+			WithScripts("views/workouts/create_route_segment.js"),
 	) {
 		<div class="gap-4">
 			<h2>
@@ -22,45 +22,28 @@ templ CreateRouteSegment(w *database.Workout) {
 		<div class="lg:flex lg:flex-wrap">
 			<div class="basis-1/2">
 				<div class="inner-form">
-					<div
-						id="map"
-						class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
-					>
-						{{
+					{{
 	type mapPoint struct {
 		Lat           float64 `json:"lat"`
 		Lng           float64 `json:"lng"`
 		TotalDistance float64 `json:"distance"`
 	}
 
-	type mapConfig struct {
-		ElementID string     `json:"elementID"`
-		Center    []float64  `json:"center"`
-		Points    []mapPoint `json:"points"`
-	}
-
-	cfg := mapConfig{
-		ElementID: "map",
-		Center:    []float64{w.Data.Center.Lat, w.Data.Center.Lng},
-	}
-
+	points := []mapPoint{}
 	for _, p := range w.Details().Points {
-		cfg.Points = append(cfg.Points, mapPoint{
+		points = append(points, mapPoint{
 			Lat:           p.Lat,
 			Lng:           p.Lng,
 			TotalDistance: p.TotalDistance,
 		})
 	}
-						}}
-						@templ.JSONScript("map-config", cfg)
-						<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
-						<script>
-                var cfg = JSON.parse(document.getElementById('map-config').textContent)
-                var points = cfg.points
-
-                editMap(cfg)
-              </script>
-					</div>
+					}}
+					<create-route-segment-map
+						id="segment-map"
+						class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+						map-center={ templ.JSONString([]float64{w.Data.Center.Lat, w.Data.Center.Lng}) }
+						map-points={ templ.JSONString(points) }
+					></create-route-segment-map>
 				</div>
 			</div>
 			<div class="basis-1/2">
@@ -93,7 +76,7 @@ templ CreateRouteSegment(w *database.Workout) {
 										min="1"
 										max={ helpers.A2S(len(w.Details().Points)) }
 										value="1"
-										oninput="updateStart()"
+										oninput="getElementById('segment-map').updateStart()"
 									/>
 									<span id="start-show"></span>
 								</td>
@@ -109,7 +92,7 @@ templ CreateRouteSegment(w *database.Workout) {
 										min="1"
 										max={ helpers.A2S(len(w.Details().Points)) }
 										value={ helpers.A2S(len(w.Details().Points)) }
-										oninput="updateEnd()"
+										oninput="getElementById('segment-map').updateEnd()"
 									/>
 									<span id="end-show"></span>
 								</td>
@@ -133,12 +116,6 @@ templ CreateRouteSegment(w *database.Workout) {
 						</tfoot>
 					</table>
 				</form>
-				<script>
-            // When document is loaded, run functions
-            document.addEventListener("DOMContentLoaded", function () {
-              updateInfo();
-            });
-          </script>
 			</div>
 		</div>
 	}

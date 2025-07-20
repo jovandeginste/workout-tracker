@@ -20,6 +20,7 @@ templ Map(w *database.Workout) {
 		ElevationName string
 		StreetsName   string
 		AerialName    string
+		ShowElevation bool
 	}{
 		CenterLat:     w.Center().Lat,
 		CenterLng:     w.Center().Lng,
@@ -30,6 +31,7 @@ templ Map(w *database.Workout) {
 		ElevationName: i18n.T(ctx, "translation.Elevation"),
 		StreetsName:   i18n.T(ctx, "translation.Streets"),
 		AerialName:    i18n.T(ctx, "translation.Aerial"),
+		ShowElevation: true,
 	}
 
 	type point struct {
@@ -62,7 +64,7 @@ templ Map(w *database.Workout) {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap()">
+			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap('workout-map')">
 				@helpers.IconFor("expand")
 			</a>
 		</div>
