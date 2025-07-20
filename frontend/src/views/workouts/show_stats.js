@@ -3,16 +3,17 @@ import ApexCharts from 'apexcharts';
 class WorkoutStats extends HTMLElement {
   constructor() {
     super();
+    this.style.display = 'block';
+  }
 
+  connectedCallback() {
+    this.mapElement = document.getElementById(this.getAttribute('map-id'));
     this.preferredUnits = JSON.parse(this.getAttribute('preferred-units'));
     this.data = JSON.parse(this.getAttribute('data'));
     this.tz = this.getAttribute('tz');
     this.lang = this.getAttribute('lang');
     this.translations = JSON.parse(this.getAttribute('translations'));
-    this.style.display = 'block';
-  }
 
-  connectedCallback() {
     let theme = 'light';
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       theme = 'dark';
@@ -44,7 +45,7 @@ class WorkoutStats extends HTMLElement {
             el.setAttribute("data-lng", p.Item.firstPoint.lng);
             el.setAttribute("data-title", p.Label);
 
-            set_marker(el)
+            this.mapElement.setMarker(el)
             return val + " " + this.preferredUnits.speed;
             }
           },

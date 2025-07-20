@@ -36,12 +36,13 @@ translations := map[string]string{
 }
 	}}
 	<workout-stats
-	  tz={ helpers.Timezone(ctx) }
-	  lang={ helpers.Language(ctx) }
-	  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(pu)) }
-	  translations={ templ.JSONString(translations) }
-	  data={ templ.JSONString(data) }>
-	</workout-stats>
+		map-id="workout-map"
+		tz={ helpers.Timezone(ctx) }
+		lang={ helpers.Language(ctx) }
+		preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(pu)) }
+		translations={ templ.JSONString(translations) }
+		data={ templ.JSONString(data) }
+	></workout-stats>
 
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" }></script>
 }

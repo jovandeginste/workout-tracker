@@ -5,8 +5,12 @@ let ctx = await esbuild.context({
     "src/common.js",
     "src/map.js",
     "src/route_segments.js",
+    "src/components/**/*.js",
     "src/views/**/*.js",
   ],
+  loader: {
+    ".png": "file",
+  },
   bundle: true,
   minify: true,
   sourcemap: true,
