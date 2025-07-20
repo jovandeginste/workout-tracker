@@ -94,7 +94,7 @@ func Breakdown(stats database.WorkoutBreakdown) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		for _, i := range stats.Items {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<tr onmouseover=\"set_marker(this)\" onmouseout=\"clear_marker()\" data-lat=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<tr onmouseover=\"getElementById('workout-map').setMarker(this)\" onmouseout=\"getElementById('workout-map').clearMarker()\" data-lat=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

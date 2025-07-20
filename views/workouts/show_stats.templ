@@ -12,7 +12,6 @@ type item struct {
 }
 
 templ ShowStats(stats database.WorkoutBreakdown) {
-	<div id="chart"></div>
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
 	{{
 data := []item{}
@@ -36,147 +35,14 @@ translations := map[string]string{
 	"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 }
 	}}
-	@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(pu))
-	@templ.JSONScript("data", data)
-	@templ.JSONScript("tz", helpers.Timezone(ctx))
-	@templ.JSONScript("lang", helpers.Language(ctx))
-	@templ.JSONScript("translations", translations)
-	<script>
-  var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)
-  var data = JSON.parse(document.getElementById('data').textContent)
-  var tz = JSON.parse(document.getElementById('tz').textContent)
-  var lang = JSON.parse(document.getElementById('lang').textContent)
-  var translations = JSON.parse(document.getElementById('translations').textContent)
+	<workout-stats
+		map-id="workout-map"
+		tz={ helpers.Timezone(ctx) }
+		lang={ helpers.Language(ctx) }
+		preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(pu)) }
+		translations={ templ.JSONString(translations) }
+		data={ templ.JSONString(data) }
+	></workout-stats>
 
-  var theme = 'light';
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    theme = 'dark';
-  }
-
-  var options = {
-    theme: { mode: theme },
-    chart: {
-      height: 400,
-      animations: { enabled: false },
-      toolbar: { show: false },
-    },
-    legend: {
-      position: 'top',
-      formatter: (seriesName, opts)=>{
-        if(opts.seriesIndex>3) return '';
-        return seriesName;
-      },
-      markers: { size: [12,12,12,12,0] }
-    },
-    tooltip: {
-      x: { format: 'HH:mm', },
-      y: [
-        {
-          formatter: function (val, opts) {
-          var p = data[opts.dataPointIndex]
-          var el = document.createElement('div');
-          el.setAttribute("data-lat", p.Item.firstPoint.lat);
-          el.setAttribute("data-lng", p.Item.firstPoint.lng);
-          el.setAttribute("data-title", p.Label);
-
-          set_marker(el)
-          return val + " " + preferredUnits.speed;
-          }
-        },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.elevation; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.heartRate; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.cadence; } },
-        { formatter: function (val, opts) { return val + " " + preferredUnits.distance; } },
-        { formatter: function (val, opts) { return formatDuration(val); } },
-      ],
-    },
-    stroke: {
-      width: 2,
-      curve: 'smooth',
-    },
-    markers: {
-      size: 1,
-    },
-    series: [
-      {
-        name: translations.averagespeed,
-        type: "line",
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localAverageSpeed })),
-      },
-      {
-        name: translations.elevation,
-        type: "area",
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localElevation })),
-      },
-      {
-        name: translations.heartrate,
-        type: "line",
-        display: false,
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localHeartRate })),
-      },
-      {
-        name: translations.cadence,
-        type: "line",
-        display: false,
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localCadence })),
-      },
-      {
-        name: translations.distance,
-        type: "none",
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localTotalDistance })),
-      },
-      {
-        name: translations.duration,
-        type: "none",
-        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.totalDurationSeconds })),
-      },
-    ],
-    xaxis: {
-      labels: {
-        formatter: (val, ts, opts) => {
-          return new Date(ts).toLocaleTimeString(lang, { timeZone: tz })
-        },
-      },
-      type: "datetime",
-    },
-    yaxis: [
-      {
-        min: 0,
-        labels: {
-          formatter: (val) => {
-            return val + " " + preferredUnits.speed;
-          },
-        },
-      },
-      {
-        labels: {
-          formatter: (val) => {
-            return val + " " + preferredUnits.elevation;
-          },
-        },
-        opposite: true,
-      },
-      {
-        labels: {
-          formatter: (val) => {
-            return val + " " + preferredUnits.heartRate;
-          },
-        },
-      },
-      {
-        labels: {
-          formatter: (val) => {
-            return val + " " + preferredUnits.cadence;
-          },
-        },
-      },
-      { show: false },
-    ],
-  };
-
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
-  chart.hideSeries(translations.heartrate);
-  chart.hideSeries(translations.cadence);
-</script>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" }></script>
 }

@@ -22,8 +22,8 @@ templ Breakdown(stats database.WorkoutBreakdown) {
 		<tbody class="whitespace-nowrap font-mono">
 			for _, i := range stats.Items {
 				<tr
-					onmouseover="set_marker(this)"
-					onmouseout="clear_marker()"
+					onmouseover="getElementById('workout-map').setMarker(this)"
+					onmouseout="getElementById('workout-map').clearMarker()"
 					data-lat={ fmt.Sprintf("%f", i.LastPoint.Lat) }
 					data-lng={ fmt.Sprintf("%f", i.LastPoint.Lng) }
 					data-title={ PointTitle(ctx, preferredUnits, i.LastPoint) }

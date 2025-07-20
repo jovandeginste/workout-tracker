@@ -14,23 +14,18 @@ THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT=8090
 TEMPL_APP_PORT=8080
 TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
+TEMPL_COMMAND ?= go run github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
 
 GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
 
 BRANCH_NAME_DEPS ?= update-deps
 
-.PHONY: all clean test build screenshots meta install-dev-deps install-deps
+.PHONY: all clean test build screenshots meta install-deps
 
 all: clean install-deps test build
 
-install-dev-deps:
-	go install github.com/swaggo/swag/cmd/swag@latest
-	go install github.com/air-verse/air@latest
-	go install github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
-	go install github.com/mdomke/git-semver/v6@latest
-
 release-patch release-minor release-major:
-	$(MAKE) release VERSION=$(shell git-semver -target $(subst release-,,$@))
+	$(MAKE) release VERSION=$(shell go run github.com/mdomke/git-semver/v6@latest -target $(subst release-,,$@))
 
 release:
 	git tag -s -a $(VERSION) -m "Release $(VERSION)"
@@ -38,7 +33,7 @@ release:
 	@echo "New release: https://github.com/jovandeginste/workout-tracker/releases/new"
 
 install-deps:
-	npm install
+	cd frontend && npm install
 
 clean:
 	rm -fv ./assets/output.css ./workout-tracker
@@ -46,14 +41,14 @@ clean:
 
 
 watch/templ:
-	templ generate --watch \
+	$(TEMPL_COMMAND) generate --watch \
 			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
-			--proxybind="localhost" \
+			--proxybind="0.0.0.0"
 
 watch/server:
-	air \
+	go run github.com/air-verse/air@latest \
 			--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
 			--build.cmd                "make build-server notify-proxy" \
 			--build.delay              1000 \
@@ -69,8 +64,12 @@ watch/tailwind:
 			-i ./main.css -o ./assets/output.css --minify --watch=always
 
 notify-proxy:
-	templ generate \
+	$(TEMPL_COMMAND) generate \
 			--notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
+
+dev-backend:
+	$(MAKE) watch/templ &
+	$(MAKE) watch/server
 
 dev: 
 	$(MAKE) watch/templ &
@@ -78,11 +77,13 @@ dev:
 	$(MAKE) watch/tailwind &
 	sleep infinity
 
+dev-docker:
+	docker compose -f docker-compose.dev.yaml up --build
 
 build: build-dist build-server build-docker screenshots
 meta: swagger screenshots changelog
 
-build-cli: build-tw build-templates
+build-cli: build-frontend build-templates
 	go build \
 			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 			-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
@@ -103,42 +104,35 @@ build-docker:
 			.
 
 swagger:
-	swag init \
+	go run github.com/swaggo/swag/cmd/swag@latest init \
 			--parseDependency \
 			--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 			--generalInfo api_handlers.go
 
-build-tw:
-	npx tailwindcss \
-			-i ./main.css -o ./assets/output.css --minify
+build-frontend:
+	cd frontend && npm run build
 
 clean-dist:
 	rm -rf ./assets/dist/
 
 build-dist: clean-dist
 	mkdir -p ./assets/dist/images
-	cp -v ./node_modules/fullcalendar/index.global.min.js ./assets/dist/fullcalendar.min.js
-	cp -v ./node_modules/leaflet/dist/leaflet.css ./assets/dist/
-	cp -v ./node_modules/leaflet/dist/images/* ./assets/dist/images/
-	cp -v ./node_modules/leaflet/dist/leaflet.js ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
-	cp -v ./node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
-	cp -v ./node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
-	cp -v ./node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
-	cp -v ./node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
-	cp -v ./node_modules/simpleheat/simpleheat.js ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
-	cp -v ./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
-
-
-watch-tw:
-	npx tailwindcss \
-			-i ./main.css -o ./assets/output.css --watch
+	cp -v ./frontend/node_modules/leaflet/dist/leaflet.css ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet/dist/images/* ./assets/dist/images/
+	cp -v ./frontend/node_modules/leaflet/dist/leaflet.js ./assets/dist/
+	cp -v ./frontend/node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
+	cp -v ./frontend/node_modules/shareon/dist/shareon.min.css ./assets/dist/
+	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
+	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
+	cp -v ./frontend/node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
+	cp -v ./frontend/node_modules/simpleheat/simpleheat.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
+	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
 
 build-templates:
-	templ generate
+	$(TEMPL_COMMAND) generate
 
 test-packages:
 	$(GO_TEST) ./pkg/...
