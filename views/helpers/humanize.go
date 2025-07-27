@@ -27,6 +27,10 @@ func HumanSpeed(ctx context.Context, d float64) string {
 	return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed())(d)
 }
 
+func HumanCadence(d float64) string {
+	return templatehelpers.HumanCadence(d)
+}
+
 func HumanCalories(d float64) string {
 	return templatehelpers.HumanCaloriesKcal(d)
 }

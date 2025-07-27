@@ -35,16 +35,20 @@ func (j *JSON) Scan(value interface{}) error {
 		return nil
 	}
 	var bytes []byte
-	switch v := value.(type) {
-	case []byte:
-		if len(v) > 0 {
-			bytes = make([]byte, len(v))
-			copy(bytes, v)
+	if s, ok := value.(fmt.Stringer); ok {
+		bytes = []byte(s.String())
+	} else {
+		switch v := value.(type) {
+		case []byte:
+			if len(v) > 0 {
+				bytes = make([]byte, len(v))
+				copy(bytes, v)
+			}
+		case string:
+			bytes = []byte(v)
+		default:
+			return errors.New(fmt.Sprint("Failed to unmarshal JSONB value:", value))
 		}
-	case string:
-		bytes = []byte(v)
-	default:
-		return errors.New(fmt.Sprint("Failed to unmarshal JSONB value:", value))
 	}
 
 	result := json.RawMessage(bytes)
@@ -394,6 +398,8 @@ func (jsonSet *JSONSetExpression) Build(builder clause.Builder) {
 						break
 					}
 					stmt.AddVar(builder, gorm.Expr("CAST(? AS JSON)", string(b)))
+				case reflect.Bool:
+					builder.WriteString(strconv.FormatBool(rv.Bool()))
 				default:
 					stmt.AddVar(builder, value)
 				}

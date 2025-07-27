@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"regexp"
 	"strconv"
-	"time"
 
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -23,6 +22,7 @@ var (
 	ErrNotAuthorized = errors.New("not authorized")
 	ErrInvalidAPIKey = errors.New("invalid API key")
 	htmlConcatenizer = regexp.MustCompile(`\s*\n\s*`)
+	calTS            = "2006-01-02T15:04:05"
 )
 
 type APIResponse struct {
@@ -471,75 +471,6 @@ func (a *App) apiImportHandler(c echo.Context) error {
 	}
 
 	resp.Results = w
-
-	return c.JSON(http.StatusOK, resp)
-}
-
-type Event struct {
-	Title string    `json:"title"`
-	Start time.Time `json:"start"`
-	URL   string    `json:"url"`
-}
-
-// apiCalendar returns the calendar events of all workouts of the current user
-// @Summary      List the calendar events of all workouts of the current user
-// @Param        start query    string false "Start date of the calendar view"
-// @Param        end query    string false "End date of the calendar view"
-// @Produce      json
-// @Success      200  {object}  APIResponse{results=[]Event}
-// @Failure      400  {object}  APIResponse
-// @Failure      404  {object}  APIResponse
-// @Failure      500  {object}  APIResponse
-// @Router       /workouts/coordinates [get]
-func (a *App) apiCalendar(c echo.Context) error {
-	resp := APIResponse{}
-	events := []Event{}
-
-	queryParams := struct {
-		Start *string `query:"start"`
-		End   *string `query:"end"`
-	}{}
-	if err := c.Bind(&queryParams); err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	u := a.getCurrentUser(c)
-	db := a.db.Preload("Data").Preload("Data.Details")
-
-	if queryParams.Start != nil {
-		db = db.Where("workouts.date >= ?", queryParams.Start)
-	}
-
-	if queryParams.End != nil {
-		db = db.Where("workouts.date < ?", queryParams.End)
-	}
-
-	wos, err := u.GetWorkouts(db)
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	for _, w := range wos {
-		buf := templ.GetBuffer()
-		defer templ.ReleaseBuffer(buf)
-
-		t := workouts.EventTitle(w, u.PreferredUnits())
-		if err := t.Render(c.Request().Context(), buf); err != nil {
-			return a.renderAPIError(c, resp, err)
-		}
-
-		d := buf.String()
-		// Remove all newlines and surrounding whitespace
-		d = htmlConcatenizer.ReplaceAllString(d, "")
-
-		events = append(events, Event{
-			Title: d,
-			Start: w.Date,
-			URL:   a.echo.Reverse("workout-show", w.ID),
-		})
-	}
-
-	resp.Results = events
 
 	return c.JSON(http.StatusOK, resp)
 }

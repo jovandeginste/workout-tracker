@@ -24,6 +24,8 @@ var (
 	ErrWorkoutAlreadyExists = errors.New("user already has workout with exact start time")
 )
 
+const minEventDuration = 1 * time.Second
+
 type Workout struct {
 	Model
 	Date                time.Time            `gorm:"not null;uniqueIndex:idx_start_user" json:"date"`                                    // The timestamp the workout was recorded
@@ -129,6 +131,14 @@ func (w *Workout) AverageSpeed() float64 {
 	return w.Data.AverageSpeed
 }
 
+func (w *Workout) GetEnd() time.Time {
+	if w.TotalDuration() <= 0 {
+		return w.GetDate().Add(minEventDuration)
+	}
+
+	return w.GetDate().Add(w.Duration())
+}
+
 func (w *Workout) TotalDuration() time.Duration {
 	if w.Data == nil {
 		return 0
@@ -225,12 +235,28 @@ func (w *Workout) MaxSpeed() float64 {
 	return w.Data.MaxSpeed
 }
 
+func (w *Workout) MaxCadence() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MaxCadence
+}
+
 func (w *Workout) AverageSpeedNoPause() float64 {
 	if w.Data == nil {
 		return 0
 	}
 
 	return w.Data.AverageSpeedNoPause
+}
+
+func (w *Workout) AverageCadence() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.AverageCadence
 }
 
 func (w *Workout) PauseDuration() time.Duration {
@@ -597,13 +623,55 @@ func (w *Workout) UpdateAverages() {
 		return
 	}
 
+	w.calculateAverageSpeeds()
+	w.calculateCadence()
+}
+
+func (w *Workout) calculateAverageSpeeds() {
+	w.Data.AverageSpeed = 0
+	w.Data.AverageSpeedNoPause = 0
+
 	if w.Data.TotalDuration == 0 {
-		w.Data.AverageSpeed = 0
-	} else {
-		w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+		return
 	}
 
-	w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
+	w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
+
+	if w.Data.TotalDuration == w.Data.PauseDuration {
+		w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
+		return
+	}
+
+	w.Data.AverageSpeedNoPause = w.Data.TotalDistance / (w.Data.TotalDuration - w.Data.PauseDuration).Seconds()
+}
+
+func (w *Workout) calculateCadence() {
+	w.Data.MaxCadence = 0
+	w.Data.AverageCadence = 0
+
+	if !w.HasCadence() {
+		return
+	}
+
+	trackedFor := time.Duration(0)
+	avgCadence := 0.0
+
+	for _, p := range w.Data.Details.Points {
+		c, ok := p.ExtraMetrics["cadence"]
+		if !ok {
+			continue
+		}
+
+		w.Data.MaxCadence = max(w.Data.MaxCadence, c)
+		avgCadence += c * p.Duration.Seconds()
+		trackedFor += p.Duration
+	}
+
+	if trackedFor.Seconds() == 0 {
+		return
+	}
+
+	w.Data.AverageCadence = avgCadence / trackedFor.Seconds()
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
@@ -672,6 +740,10 @@ func (w *Workout) CaloriesBurned() float64 {
 
 func (w *Workout) HasElevation() bool {
 	return w.HasExtraMetric("elevation")
+}
+
+func (w *Workout) HasSpeed() bool {
+	return w.HasExtraMetric("speed")
 }
 
 func (w *Workout) HasCadence() bool {

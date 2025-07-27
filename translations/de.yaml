@@ -52,6 +52,8 @@ de:
     push-ups: Liegestütze
     e-cycling: E-Biken
     kayaking: Kayaking
+    rowing: Rudern
+    other: Andere
   menu:
     Equipment: Ausrüstung
     Statistics: Statistik
@@ -77,8 +79,7 @@ de:
     Latest_measurements: Letzte Messungen
     Update_measurement: Messung aktualisieren
     Steps: Schritte
-    Regenerate_publicly_shareable_link: Öffentlich teilbaren Link (neu) 
-      generieren
+    Regenerate_publicly_shareable_link: Link (neu) generieren
     API_key_updated: API-Schlüssel aktualisiert
     Actions: Aktionen
     Active: Aktiv
@@ -106,7 +107,7 @@ de:
     Cancel: Abbrechen
     Circular: Rundtour
     Continue: Weiter
-    Copy_publicly_shareable_link: Öffentlich teilbaren Link kopieren
+    Copy_publicly_shareable_link: Link kopieren
     Create_a_new_account: Neues Konto erstellen
     Create_route_segment: Streckenabschnitt erstellen
     Created: Erstellt
@@ -245,6 +246,14 @@ de:
     You_can_edit_your_GPX_files_before_uploading_them_here: 'Du kannst deine GPX-Dateien
       bearbeiten, bevor du sie hier hochlädst:'
     Try_one_of_these_sites: 'Probiere eine dieser Seiten:'
+    The_shareable_link_is_deleted_for_the_workout_s: Der teilbare Link für das 
+      Training '%s' ist gelöscht
+    delete_public_share: Link löschen
+    Average_cadence: Durchschnittliche Kadenz
+    HelpTranslating: "Wir würden uns über Ihre Hilfe freuen!\n\nBitte helfen Sie beim
+      Übersetzen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)\n"
+    Max_cadence: Maximale Trittfrequenz
+    public_share: Öffentlich teilbarer Link
   user:
     profile:
       your_settings: Deine Einstellungen
@@ -273,3 +282,5 @@ de:
     update: Training aktualisieren
   equipment:
     update: Ausrüstung aktualisieren
+  route_segment:
+    update: Streckenabschnitt aktualisieren

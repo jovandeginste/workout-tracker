@@ -97,6 +97,7 @@ en:
     The_shareable_link_is_deleted_for_the_workout_s: The shareable link is deleted for the workout '%s'
     delete_public_share: Delete link
     Autodetect: Auto-detect
+    Average_cadence: Average cadence
     Average_per_minute: Average per minute
     Average_speed: Average speed
     Average_speed_no_pause: Average speed (no pause)
@@ -144,6 +145,7 @@ en:
     Manual: Manual
     Matches: Matches
     Matching_route_segments: Matching route segments
+    Max_cadence: Max cadence
     Max_elevation: Max elevation
     Max_speed: Max speed
     Min_elevation: Min elevation

@@ -464,7 +464,7 @@ google.golang.org/protobuf/runtime/protoimpl
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# gorm.io/datatypes v1.2.5
+# gorm.io/datatypes v1.2.6
 ## explicit; go 1.19
 gorm.io/datatypes
 # gorm.io/driver/mysql v1.6.0
