@@ -243,7 +243,7 @@ class WtMap extends HTMLElement {
 
   updateSize() {
     map.invalidateSize(true);
-  };
+  }
 }
 
 customElements.define("wt-map", WtMap);

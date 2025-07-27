@@ -1,11 +1,7 @@
 import * as esbuild from "esbuild";
 
 let ctx = await esbuild.context({
-  entryPoints: [
-    "src/common.js",
-    "src/components/**/*.js",
-    "src/views/**/*.js",
-  ],
+  entryPoints: ["src/common.js", "src/components/**/*.js", "src/views/**/*.js"],
   loader: {
     ".png": "file",
   },
