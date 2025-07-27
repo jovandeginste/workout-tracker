@@ -1,3 +1,4 @@
+import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
 
 let ctx = await esbuild.context({
@@ -12,6 +13,20 @@ let ctx = await esbuild.context({
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",
   publicPath: "/assets/",
+  plugins: [
+    copy({
+      assets: {
+        from: ["./node_modules/shareon/dist/*.{js,css}"],
+        to: ["../assets/vendor/shareon"],
+      },
+    }),
+    copy({
+      assets: {
+        from: ["./node_modules/htmx.org/dist/htmx.min.js"],
+        to: ["../assets/vendor/htmx"],
+      },
+    }),
+  ],
 });
 
 if (process.argv.indexOf(`--watch`) !== -1) {

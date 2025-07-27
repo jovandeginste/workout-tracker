@@ -12,7 +12,7 @@ COPY pkg ./pkg
 COPY views ./views
 COPY assets ./assets
 
-RUN make build-dist build-tw
+RUN make build-frontend
 
 FROM golang:1.24.4-alpine AS backend
 ARG BUILD_TIME

@@ -80,7 +80,7 @@ dev:
 dev-docker:
 	docker compose -f docker-compose.dev.yaml up --build
 
-build: build-dist build-server build-docker screenshots
+build: build-server build-docker screenshots
 meta: swagger screenshots changelog
 
 build-cli: build-frontend build-templates
@@ -111,20 +111,6 @@ swagger:
 
 build-frontend:
 	cd frontend && npm run build
-
-clean-dist:
-	rm -rf ./assets/dist/
-
-build-dist: clean-dist
-	mkdir -p ./assets/dist/images
-	cp -v ./frontend/node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
-	cp -v ./frontend/node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -v ./frontend/node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
-	cp -v ./frontend/node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
-	cp -v ./frontend/node_modules/simpleheat/simpleheat.js ./assets/dist/
-	cp -v ./frontend/node_modules/leaflet.markercluster/dist/leaflet.markercluster.js ./assets/dist/
-	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.css ./assets/dist/
-	cp -v ./frontend/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css ./assets/dist/
 
 build-templates:
 	$(TEMPL_COMMAND) generate
