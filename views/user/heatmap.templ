@@ -8,88 +8,24 @@ import (
 )
 
 templ Heatmap(workouts []*database.Workout) {
-	@partials.Page(partials.NewPageOptions().WithHeatMaps()) {
+	@partials.Page(partials.NewPageOptions()) {
+		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.css" } />
+		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.js" }></script>
 		<h2>
 			@helpers.IconFor(`heatmap`)
 			{ i18n.T(ctx, "menu.Heatmap") }
 		</h2>
 		<div id="map-container" class="small-size pagebreak">
-			<div
+			<wt-heatmap
 				id="map"
 				class="border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]"
-			>
-				@templ.JSONScript("api-workouts-coordinates-route", helpers.RouteFor(ctx, "api-workouts-coordinates"))
-				@templ.JSONScript("api-workouts-centers-route", helpers.RouteFor(ctx, "api-workouts-centers"))
-				@templ.JSONScript("i18n-streets", i18n.T(ctx, "translation.Streets"))
-				@templ.JSONScript("i18n-aerial", i18n.T(ctx, "translation.Aerial"))
-				<script>
-            var map = L.map("map", {
-              fadeAnimation: false,
-            });
-            const layerStreet = L.tileLayer(
-              "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              {
-                attribution:
-                  '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                className: "map-tiles",
-              },
-            );
-
-            const layerAerial = L.tileLayer(
-              "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-              {
-                attribution: "Powered by Esri",
-              },
-            );
-            L.control
-              .layers(
-                {
-                  [JSON.parse(document.getElementById('i18n-streets').textContent)]: layerStreet,
-                  [JSON.parse(document.getElementById('i18n-aerial').textContent)]: layerAerial,
-                }
-              )
-              .addTo(map);
-
-            layerStreet.addTo(map);
-
-            var heatConfig = { radius: 10 };
-            var clusterConfig = { showCoverageOnHover: false };
-
-            fetch(JSON.parse(document.getElementById('api-workouts-coordinates-route').textContent), {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-              },
-            })
-              .then((response) => response.json())
-              .then((response) => {
-                var data = geoJson2heat(response.results);
-                L.heatLayer(data, heatConfig).addTo(map);
-              });
-
-            fetch(JSON.parse(document.getElementById('api-workouts-centers-route').textContent), {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-              },
-            })
-              .then((response) => response.json())
-              .then((response) => {
-                var markers = L.markerClusterGroup(clusterConfig);
-                var geoJsonLayer = L.geoJson(response.results, {
-                  onEachFeature: function (feature, layer) {
-                    layer.bindPopup(feature.properties.details);
-                  },
-                });
-                geoJsonLayer.onEachFeature;
-
-                markers.addLayer(geoJsonLayer);
-                markers.addTo(map);
-
-                map.fitBounds(markers.getBounds());
-              });
-          </script>
-			</div>
+        api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
+        api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
+        i18n={ templ.JSONString(map[string]string{
+          "streets": i18n.T(ctx, "translation.Streets"),
+          "aerial":  i18n.T(ctx, "translation.Aerial"),
+        }) }
+			></wt-heatmap>
 		</div>
 	}
 }

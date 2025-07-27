@@ -11,6 +11,7 @@ let ctx = await esbuild.context({
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",
+  publicPath: "/assets/",
 });
 
 if (process.argv.indexOf(`--watch`) !== -1) {
