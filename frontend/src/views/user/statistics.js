@@ -64,7 +64,7 @@ class WtStatistic extends HTMLElement {
       options.tooltip.y = [
         {
           formatter: function (val, _) {
-            return val + " " + preferredUnits[this.type];
+            return val + " " + this.preferredUnits[this.type];
           },
         },
       ];
@@ -72,7 +72,7 @@ class WtStatistic extends HTMLElement {
         {
           labels: {
             formatter: (val) => {
-              return val + " " + preferredUnits[this.type];
+              return val + " " + this.preferredUnits[this.type];
             },
           },
         },

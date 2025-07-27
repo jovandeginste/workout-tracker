@@ -55,6 +55,7 @@ class WtMap extends HTMLElement {
     const map = L.map(this, {
       fadeAnimation: false,
     }).setView(this.config.center, 15);
+    this.map = map;
     const layerStreet = L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -242,7 +243,7 @@ class WtMap extends HTMLElement {
   }
 
   updateSize() {
-    map.invalidateSize(true);
+    this.map.invalidateSize(true);
   }
 }
 
