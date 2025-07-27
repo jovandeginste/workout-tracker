@@ -276,7 +276,7 @@ func Show(w *database.Workout) templ.Component {
 		})
 		templ_7745c5c3_Err = partials.Page(
 			partials.NewPageOptions().
-				WithSharing().WithCharts().WithMaps().
+				WithSharing().
 				WithScripts("/route_segments.js"),
 		).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

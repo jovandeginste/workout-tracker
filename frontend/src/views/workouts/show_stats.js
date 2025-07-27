@@ -1,4 +1,5 @@
 import ApexCharts from "apexcharts";
+import { formatDuration } from "../../helpers";
 
 class WorkoutStats extends HTMLElement {
   constructor() {

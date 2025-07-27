@@ -10,7 +10,7 @@ import (
 templ Show(w *database.Workout) {
 	@partials.Page(
 		partials.NewPageOptions().
-			WithSharing().WithCharts().WithMaps().
+			WithSharing().
 			WithScripts("/route_segments.js"),
 	) {
 		{{ currentUser := helpers.CurrentUser(ctx) }}

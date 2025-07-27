@@ -22,20 +22,8 @@ func (o *PageOptions) WithStyles(styles ...string) *PageOptions {
 	}
 }
 
-func (o *PageOptions) WithCharts() *PageOptions {
-	return o.
-		WithScripts("/dist/apexcharts.min.js").
-		WithStyles("/dist/apexcharts.css")
-}
-
-func (o *PageOptions) WithMaps() *PageOptions {
-	return o.
-		WithScripts("/dist/leaflet.js").
-		WithStyles("/dist/leaflet.css")
-}
-
 func (o *PageOptions) WithHeatMaps() *PageOptions {
-	return o.WithMaps().
+	return o.
 		WithScripts(
 			"/dist/simpleheat.js",
 			"/dist/leaflet-heat.js",

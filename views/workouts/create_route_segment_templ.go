@@ -243,7 +243,7 @@ func CreateRouteSegment(w *database.Workout) templ.Component {
 		})
 		templ_7745c5c3_Err = partials.Page(
 			partials.NewPageOptions().
-				WithSharing().WithCharts().WithMaps().
+				WithSharing().
 				WithScripts("views/workouts/create_route_segment.js"),
 		).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

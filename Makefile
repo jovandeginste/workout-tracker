@@ -117,13 +117,8 @@ clean-dist:
 
 build-dist: clean-dist
 	mkdir -p ./assets/dist/images
-	cp -v ./frontend/node_modules/leaflet/dist/leaflet.css ./assets/dist/
-	cp -v ./frontend/node_modules/leaflet/dist/images/* ./assets/dist/images/
-	cp -v ./frontend/node_modules/leaflet/dist/leaflet.js ./assets/dist/
 	cp -v ./frontend/node_modules/shareon/dist/shareon.iife.js  ./assets/dist/
 	cp -v ./frontend/node_modules/shareon/dist/shareon.min.css ./assets/dist/
-	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.min.js ./assets/dist/
-	cp -v ./frontend/node_modules/apexcharts/dist/apexcharts.css ./assets/dist/
 	cp -v ./frontend/node_modules/htmx.org/dist/htmx.min.js ./assets/dist/
 	cp -v ./frontend/node_modules/leaflet.heat/dist/leaflet-heat.js ./assets/dist/
 	cp -v ./frontend/node_modules/simpleheat/simpleheat.js ./assets/dist/

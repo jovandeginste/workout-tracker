@@ -9,6 +9,7 @@ import (
 
 templ RouteSegmentMap(s *database.RouteSegment) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" } />
 		<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 		{{
 	mapConfig := struct {

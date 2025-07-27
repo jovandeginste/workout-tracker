@@ -8,6 +8,7 @@ import (
 
 templ Map(w *database.Workout) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" } />
 	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 	{{
 	mapConfig := struct {
