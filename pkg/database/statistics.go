@@ -107,8 +107,8 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
 			"max(max_speed) as max_speed",
-			fmt.Sprintf("avg(total_distance / (total_duration / %d)) as average_speed", time.Second),
-			fmt.Sprintf("avg(total_distance / ((total_duration - pause_duration) / %d)) as average_speed_no_pause", time.Second),
+			fmt.Sprintf("avg(total_distance / COALESCE(NULLIF(NULLIF(total_duration, 0) / %d, 0), total_distance)) as average_speed", time.Second),
+			fmt.Sprintf("avg(total_distance / COALESCE(NULLIF(NULLIF(total_duration - pause_duration, 0) / %d, 0), total_distance)) as average_speed_no_pause", time.Second),
 			statConfig.GetBucketFormatExpression(sqlDialect),
 			statConfig.GetDayBucketFormatExpression(sqlDialect),
 		).
@@ -255,8 +255,8 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		&r.Distance:            "max(total_distance)",
 		&r.MaxSpeed:            "max(max_speed)",
 		&r.TotalUp:             "max(total_up)",
-		&r.AverageSpeed:        fmt.Sprintf("max(total_distance / (total_duration / %d))", time.Second),
-		&r.AverageSpeedNoPause: fmt.Sprintf("max(total_distance / ((total_duration - pause_duration) / %d))", time.Second),
+		&r.AverageSpeed:        fmt.Sprintf("max(total_distance / COALESCE(NULLIF(NULLIF(total_duration, 0) / %d, 0), total_distance))", time.Second),
+		&r.AverageSpeedNoPause: fmt.Sprintf("max(total_distance / COALESCE(NULLIF(NULLIF(total_duration - pause_duration, 0) / %d, 0), total_distance))", time.Second),
 	}
 
 	for k, v := range mapping {
