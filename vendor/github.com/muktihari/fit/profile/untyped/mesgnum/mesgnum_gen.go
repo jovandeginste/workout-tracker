@@ -26,6 +26,7 @@ const (
 	PowerZone                   = 9
 	MetZone                     = 10
 	Sport                       = 12
+	TrainingSettings            = 13
 	Goal                        = 15
 	Session                     = 18
 	Lap                         = 19

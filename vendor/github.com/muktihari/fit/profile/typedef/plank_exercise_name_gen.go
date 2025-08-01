@@ -148,6 +148,7 @@ const (
 	PlankExerciseNamePlankWithArmVariations                           PlankExerciseName = 132
 	PlankExerciseNamePlankWithLegLift                                 PlankExerciseName = 133
 	PlankExerciseNameReversePlankWithLegPull                          PlankExerciseName = 134
+	PlankExerciseNameRingPlankSprawls                                 PlankExerciseName = 135
 	PlankExerciseNameInvalid                                          PlankExerciseName = 0xFFFF
 )
 
@@ -425,6 +426,8 @@ func (p PlankExerciseName) String() string {
 		return "plank_with_leg_lift"
 	case PlankExerciseNameReversePlankWithLegPull:
 		return "reverse_plank_with_leg_pull"
+	case PlankExerciseNameRingPlankSprawls:
+		return "ring_plank_sprawls"
 	default:
 		return "PlankExerciseNameInvalid(" + strconv.FormatUint(uint64(p), 10) + ")"
 	}
@@ -703,6 +706,8 @@ func PlankExerciseNameFromString(s string) PlankExerciseName {
 		return PlankExerciseNamePlankWithLegLift
 	case "reverse_plank_with_leg_pull":
 		return PlankExerciseNameReversePlankWithLegPull
+	case "ring_plank_sprawls":
+		return PlankExerciseNameRingPlankSprawls
 	default:
 		return PlankExerciseNameInvalid
 	}
@@ -846,5 +851,6 @@ func ListPlankExerciseName() []PlankExerciseName {
 		PlankExerciseNamePlankWithArmVariations,
 		PlankExerciseNamePlankWithLegLift,
 		PlankExerciseNameReversePlankWithLegPull,
+		PlankExerciseNameRingPlankSprawls,
 	}
 }

@@ -25,6 +25,8 @@ const (
 	LegCurlExerciseNameStaggeredStanceGoodMorning  LegCurlExerciseName = 9
 	LegCurlExerciseNameSwissBallHipRaiseAndLegCurl LegCurlExerciseName = 10
 	LegCurlExerciseNameZercherGoodMorning          LegCurlExerciseName = 11
+	LegCurlExerciseNameBandGoodMorning             LegCurlExerciseName = 12
+	LegCurlExerciseNameBarGoodMorning              LegCurlExerciseName = 13
 	LegCurlExerciseNameInvalid                     LegCurlExerciseName = 0xFFFF
 )
 
@@ -56,6 +58,10 @@ func (l LegCurlExerciseName) String() string {
 		return "swiss_ball_hip_raise_and_leg_curl"
 	case LegCurlExerciseNameZercherGoodMorning:
 		return "zercher_good_morning"
+	case LegCurlExerciseNameBandGoodMorning:
+		return "band_good_morning"
+	case LegCurlExerciseNameBarGoodMorning:
+		return "bar_good_morning"
 	default:
 		return "LegCurlExerciseNameInvalid(" + strconv.FormatUint(uint64(l), 10) + ")"
 	}
@@ -88,6 +94,10 @@ func LegCurlExerciseNameFromString(s string) LegCurlExerciseName {
 		return LegCurlExerciseNameSwissBallHipRaiseAndLegCurl
 	case "zercher_good_morning":
 		return LegCurlExerciseNameZercherGoodMorning
+	case "band_good_morning":
+		return LegCurlExerciseNameBandGoodMorning
+	case "bar_good_morning":
+		return LegCurlExerciseNameBarGoodMorning
 	default:
 		return LegCurlExerciseNameInvalid
 	}
@@ -108,5 +118,7 @@ func ListLegCurlExerciseName() []LegCurlExerciseName {
 		LegCurlExerciseNameStaggeredStanceGoodMorning,
 		LegCurlExerciseNameSwissBallHipRaiseAndLegCurl,
 		LegCurlExerciseNameZercherGoodMorning,
+		LegCurlExerciseNameBandGoodMorning,
+		LegCurlExerciseNameBarGoodMorning,
 	}
 }

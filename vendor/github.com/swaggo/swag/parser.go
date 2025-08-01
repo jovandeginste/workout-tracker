@@ -182,6 +182,9 @@ type Parser struct {
 
 	// ParseFuncBody whether swag should parse api info inside of funcs
 	ParseFuncBody bool
+
+	// UseStructName Dont use those ugly full-path names when using dependency flag
+	UseStructName bool
 }
 
 // FieldParserFactory create FieldParser.
@@ -191,6 +194,7 @@ type FieldParserFactory func(ps *Parser, field *ast.Field) FieldParser
 type FieldParser interface {
 	ShouldSkip() bool
 	FieldNames() ([]string, error)
+	FirstTagValue(tag string) string
 	FormName() string
 	HeaderName() string
 	PathName() string
@@ -257,6 +261,13 @@ func SetParseDependency(parseDependency int) func(*Parser) {
 		if p.packages != nil {
 			p.packages.parseDependency = p.ParseDependency
 		}
+	}
+}
+
+// SetUseStructName sets whether to strip the full-path definition name.
+func SetUseStructName(useStructName bool) func(*Parser) {
+	return func(p *Parser) {
+		p.UseStructName = useStructName
 	}
 }
 
@@ -535,8 +546,7 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 			setSwaggerInfo(parser.swagger, attr, value)
 		case descriptionAttr:
 			if previousAttribute == attribute {
-				parser.swagger.Info.Description += "\n" + value
-
+				parser.swagger.Info.Description = AppendDescription(parser.swagger.Info.Description, value)
 				continue
 			}
 
@@ -676,6 +686,21 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 
 					parser.swagger.Extensions[attribute[1:]] = valueJSON
 				}
+			} else if strings.HasPrefix(attribute, "@tag.x-") {
+				extensionName := attribute[5:]
+
+				if len(value) == 0 {
+					return fmt.Errorf("annotation %s need a value", attribute)
+				}
+
+				if tag.Extensions == nil {
+					tag.Extensions = make(map[string]interface{})
+				}
+
+				// tag.Extensions.Add(extensionName, value) works wrong (transforms extensionName to lower case)
+				// needed to save case for ReDoc
+				// https://redocly.com/docs/api-reference-docs/specification-extensions/x-display-name/
+				tag.Extensions[extensionName] = value
 			}
 		}
 
@@ -827,7 +852,7 @@ loopline:
 func parseSecurity(commentLine string) map[string][]string {
 	securityMap := make(map[string][]string)
 
-	for _, securityOption := range strings.Split(commentLine, "||") {
+	for _, securityOption := range securityPairSepPattern.Split(commentLine, -1) {
 		securityOption = strings.TrimSpace(securityOption)
 
 		left, right := strings.Index(securityOption, "["), strings.Index(securityOption, "]")
@@ -1025,6 +1050,37 @@ func matchExtension(extensionToMatch string, comments []*ast.Comment) (match boo
 	return true
 }
 
+func getFuncDoc(decl any) (*ast.CommentGroup, bool) {
+	switch astDecl := decl.(type) {
+	case *ast.FuncDecl: // func name() {}
+		return astDecl.Doc, true
+	case *ast.GenDecl: // var name = namePointToFuncDirectlyOrIndirectly
+		if astDecl.Tok != token.VAR {
+			return nil, false
+		}
+		if len(astDecl.Specs) == 0 {
+			return nil, false
+		}
+		varSpec, ok := astDecl.Specs[0].(*ast.ValueSpec)
+		if !ok || len(varSpec.Values) != 1 {
+			return nil, false
+		}
+		_, ok = getFuncDoc(varSpec)
+		return astDecl.Doc, ok
+	case *ast.ValueSpec:
+		if len(astDecl.Values) == 0 {
+			return nil, false
+		}
+		value, ok := astDecl.Values[0].(*ast.Ident)
+		if !ok || value == nil || value.Obj == nil || value.Obj.Decl == nil {
+			return nil, false
+		}
+		_, ok = getFuncDoc(value.Obj.Decl)
+		return astDecl.Doc, ok
+	}
+	return nil, false
+}
+
 // ParseRouterAPIInfo parses router api info for given astFile.
 func (parser *Parser) ParseRouterAPIInfo(fileInfo *AstFileInfo) error {
 	if (fileInfo.ParseFlag & ParseOperations) == ParseNone {
@@ -1044,10 +1100,10 @@ func (parser *Parser) ParseRouterAPIInfo(fileInfo *AstFileInfo) error {
 		return nil
 	}
 
-	for _, astDescription := range fileInfo.File.Decls {
-		astDeclaration, ok := astDescription.(*ast.FuncDecl)
-		if ok && astDeclaration.Doc != nil && astDeclaration.Doc.List != nil {
-			if err := parser.parseRouterAPIInfoComment(astDeclaration.Doc.List, fileInfo); err != nil {
+	for _, decl := range fileInfo.File.Decls {
+		funcDoc, ok := getFuncDoc(decl)
+		if ok && funcDoc != nil && funcDoc.List != nil {
+			if err := parser.parseRouterAPIInfoComment(funcDoc.List, fileInfo); err != nil {
 				return err
 			}
 		}
@@ -1063,7 +1119,7 @@ func (parser *Parser) parseRouterAPIInfoComment(comments []*ast.Comment, fileInf
 		for _, comment := range comments {
 			err := operation.ParseComment(comment.Text, fileInfo.File)
 			if err != nil {
-				return fmt.Errorf("ParseComment error in file %s :%+v", fileInfo.Path, err)
+				return fmt.Errorf("ParseComment error in file %s for comment: '%s': %+v", fileInfo.Path, comment.Text, err)
 			}
 			if operation.State != "" && operation.State != parser.HostState {
 				return nil
@@ -1175,7 +1231,7 @@ func (parser *Parser) getTypeSchema(typeName string, file *ast.File, ref bool) (
 		return &spec.Schema{}, nil
 	}
 	if IsGolangPrimitiveType(typeName) {
-		return PrimitiveSchema(TransToValidSchemeType(typeName)), nil
+		return TransToValidPrimitiveSchema(typeName), nil
 	}
 
 	schemaType, err := convertFromSpecificToPrimitive(typeName)
@@ -1276,11 +1332,21 @@ func (parser *Parser) ParseDefinition(typeSpecDef *TypeSpecDef) (*Schema, error)
 		parser.debug.Printf("Skipping '%s', recursion detected.", typeName)
 
 		return &Schema{
-				Name:    typeName,
+				Name:    typeSpecDef.SchemaName,
 				PkgPath: typeSpecDef.PkgPath,
 				Schema:  PrimitiveSchema(OBJECT),
 			},
 			ErrRecursiveParseStruct
+	}
+
+	if parser.UseStructName {
+		schemaName := strings.Split(typeSpecDef.SchemaName, ".")
+		if len(schemaName) > 1 {
+			typeSpecDef.SchemaName = schemaName[len(schemaName)-1]
+			typeName = typeSpecDef.SchemaName
+		} else {
+			parser.debug.Printf("Could not strip type name of %s", typeName)
+		}
 	}
 
 	parser.structStack = append(parser.structStack, typeSpecDef)
@@ -1303,9 +1369,11 @@ func (parser *Parser) ParseDefinition(typeSpecDef *TypeSpecDef) (*Schema, error)
 	if len(typeSpecDef.Enums) > 0 {
 		var varnames []string
 		var enumComments = make(map[string]string)
+		var enumDescriptions = make([]string, 0, len(typeSpecDef.Enums))
 		for _, value := range typeSpecDef.Enums {
 			definition.Enum = append(definition.Enum, value.Value)
 			varnames = append(varnames, value.key)
+			enumDescriptions = append(enumDescriptions, value.Comment)
 			if len(value.Comment) > 0 {
 				enumComments[value.key] = value.Comment
 			}
@@ -1316,6 +1384,7 @@ func (parser *Parser) ParseDefinition(typeSpecDef *TypeSpecDef) (*Schema, error)
 		definition.Extensions[enumVarNamesExtension] = varnames
 		if len(enumComments) > 0 {
 			definition.Extensions[enumCommentsExtension] = enumComments
+			definition.Extensions[enumDescriptionsExtension] = enumDescriptions
 		}
 	}
 
@@ -1596,17 +1665,19 @@ func (parser *Parser) parseStructField(file *ast.File, field *ast.Field) (map[st
 		tagRequired = append(tagRequired, fieldNames...)
 	}
 
-	if schema.Extensions == nil {
-		schema.Extensions = make(spec.Extensions)
-	}
 	if formName := ps.FormName(); len(formName) > 0 {
-		schema.Extensions["formData"] = formName
+		schema.AddExtension("formData", formName)
 	}
 	if headerName := ps.HeaderName(); len(headerName) > 0 {
-		schema.Extensions["header"] = headerName
+		schema.AddExtension("header", headerName)
 	}
 	if pathName := ps.PathName(); len(pathName) > 0 {
-		schema.Extensions["path"] = pathName
+		schema.AddExtension("path", pathName)
+	}
+	if len(schema.Type) > 0 && schema.Type[0] == ARRAY {
+		if collectionFormat := ps.FirstTagValue(collectionFormatTag); len(collectionFormat) > 0 {
+			schema.AddExtension(collectionFormatTag, collectionFormat)
+		}
 	}
 	fields := make(map[string]spec.Schema)
 	for _, name := range fieldNames {

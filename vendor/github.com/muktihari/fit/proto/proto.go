@@ -303,7 +303,7 @@ func NewMessageDefinition(mesg *Message) (*MessageDefinition, error) {
 	}
 
 	for i := range mesg.Fields {
-		size := Sizeof(mesg.Fields[i].Value)
+		size := mesg.Fields[i].Value.Size()
 		if size > maxValueSize {
 			return nil, fmt.Errorf("Fields[%d].Value's size should be <= %d: %w",
 				i, maxValueSize, errValueSizeExceed255)
@@ -322,7 +322,7 @@ func NewMessageDefinition(mesg *Message) (*MessageDefinition, error) {
 	mesgDef.DeveloperFieldDefinitions = make([]DeveloperFieldDefinition, 0, len(mesg.DeveloperFields))
 	mesgDef.Header |= DevDataMask
 	for i := range mesg.DeveloperFields {
-		size := Sizeof(mesg.DeveloperFields[i].Value)
+		size := mesg.DeveloperFields[i].Value.Size()
 		if size > maxValueSize {
 			return nil, fmt.Errorf("Fields[%d].Value's size should be <= %d: %w",
 				i, maxValueSize, errValueSizeExceed255)

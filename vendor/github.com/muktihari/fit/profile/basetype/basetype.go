@@ -178,27 +178,7 @@ func (t BaseType) Size() byte {
 
 // Valid checks whether BaseType is valid or not.
 func (t BaseType) Valid() bool {
-	switch t {
-	case Enum,
-		Sint8,
-		Uint8,
-		Sint16,
-		Uint16,
-		Sint32,
-		Uint32,
-		String,
-		Float32,
-		Float64,
-		Uint8z,
-		Uint16z,
-		Uint32z,
-		Byte,
-		Sint64,
-		Uint64,
-		Uint64z:
-		return true
-	}
-	return false
+	return sizes[t] > 0
 }
 
 // GoType returns go equivalent type in string.

@@ -46,6 +46,25 @@ const (
 	ExerciseCategoryTricepsExtension  ExerciseCategory = 30
 	ExerciseCategoryWarmUp            ExerciseCategory = 31
 	ExerciseCategoryRun               ExerciseCategory = 32
+	ExerciseCategoryBike              ExerciseCategory = 33
+	ExerciseCategoryCardioSensors     ExerciseCategory = 34 // Exercises within workouts that use GPS/sensors rather than rep counting
+	ExerciseCategoryMove              ExerciseCategory = 35
+	ExerciseCategoryPose              ExerciseCategory = 36
+	ExerciseCategoryBandedExercises   ExerciseCategory = 37
+	ExerciseCategoryBattleRope        ExerciseCategory = 38
+	ExerciseCategoryElliptical        ExerciseCategory = 39
+	ExerciseCategoryFloorClimb        ExerciseCategory = 40
+	ExerciseCategoryIndoorBike        ExerciseCategory = 41
+	ExerciseCategoryIndoorRow         ExerciseCategory = 42
+	ExerciseCategoryLadder            ExerciseCategory = 43
+	ExerciseCategorySandbag           ExerciseCategory = 44
+	ExerciseCategorySled              ExerciseCategory = 45
+	ExerciseCategorySledgeHammer      ExerciseCategory = 46
+	ExerciseCategoryStairStepper      ExerciseCategory = 47
+	ExerciseCategorySuspension        ExerciseCategory = 49
+	ExerciseCategoryTire              ExerciseCategory = 50
+	ExerciseCategoryRunIndoor         ExerciseCategory = 52
+	ExerciseCategoryBikeOutdoor       ExerciseCategory = 53
 	ExerciseCategoryUnknown           ExerciseCategory = 65534
 	ExerciseCategoryInvalid           ExerciseCategory = 0xFFFF
 )
@@ -120,6 +139,44 @@ func (e ExerciseCategory) String() string {
 		return "warm_up"
 	case ExerciseCategoryRun:
 		return "run"
+	case ExerciseCategoryBike:
+		return "bike"
+	case ExerciseCategoryCardioSensors:
+		return "cardio_sensors"
+	case ExerciseCategoryMove:
+		return "move"
+	case ExerciseCategoryPose:
+		return "pose"
+	case ExerciseCategoryBandedExercises:
+		return "banded_exercises"
+	case ExerciseCategoryBattleRope:
+		return "battle_rope"
+	case ExerciseCategoryElliptical:
+		return "elliptical"
+	case ExerciseCategoryFloorClimb:
+		return "floor_climb"
+	case ExerciseCategoryIndoorBike:
+		return "indoor_bike"
+	case ExerciseCategoryIndoorRow:
+		return "indoor_row"
+	case ExerciseCategoryLadder:
+		return "ladder"
+	case ExerciseCategorySandbag:
+		return "sandbag"
+	case ExerciseCategorySled:
+		return "sled"
+	case ExerciseCategorySledgeHammer:
+		return "sledge_hammer"
+	case ExerciseCategoryStairStepper:
+		return "stair_stepper"
+	case ExerciseCategorySuspension:
+		return "suspension"
+	case ExerciseCategoryTire:
+		return "tire"
+	case ExerciseCategoryRunIndoor:
+		return "run_indoor"
+	case ExerciseCategoryBikeOutdoor:
+		return "bike_outdoor"
 	case ExerciseCategoryUnknown:
 		return "unknown"
 	default:
@@ -196,6 +253,44 @@ func ExerciseCategoryFromString(s string) ExerciseCategory {
 		return ExerciseCategoryWarmUp
 	case "run":
 		return ExerciseCategoryRun
+	case "bike":
+		return ExerciseCategoryBike
+	case "cardio_sensors":
+		return ExerciseCategoryCardioSensors
+	case "move":
+		return ExerciseCategoryMove
+	case "pose":
+		return ExerciseCategoryPose
+	case "banded_exercises":
+		return ExerciseCategoryBandedExercises
+	case "battle_rope":
+		return ExerciseCategoryBattleRope
+	case "elliptical":
+		return ExerciseCategoryElliptical
+	case "floor_climb":
+		return ExerciseCategoryFloorClimb
+	case "indoor_bike":
+		return ExerciseCategoryIndoorBike
+	case "indoor_row":
+		return ExerciseCategoryIndoorRow
+	case "ladder":
+		return ExerciseCategoryLadder
+	case "sandbag":
+		return ExerciseCategorySandbag
+	case "sled":
+		return ExerciseCategorySled
+	case "sledge_hammer":
+		return ExerciseCategorySledgeHammer
+	case "stair_stepper":
+		return ExerciseCategoryStairStepper
+	case "suspension":
+		return ExerciseCategorySuspension
+	case "tire":
+		return ExerciseCategoryTire
+	case "run_indoor":
+		return ExerciseCategoryRunIndoor
+	case "bike_outdoor":
+		return ExerciseCategoryBikeOutdoor
 	case "unknown":
 		return ExerciseCategoryUnknown
 	default:
@@ -239,6 +334,25 @@ func ListExerciseCategory() []ExerciseCategory {
 		ExerciseCategoryTricepsExtension,
 		ExerciseCategoryWarmUp,
 		ExerciseCategoryRun,
+		ExerciseCategoryBike,
+		ExerciseCategoryCardioSensors,
+		ExerciseCategoryMove,
+		ExerciseCategoryPose,
+		ExerciseCategoryBandedExercises,
+		ExerciseCategoryBattleRope,
+		ExerciseCategoryElliptical,
+		ExerciseCategoryFloorClimb,
+		ExerciseCategoryIndoorBike,
+		ExerciseCategoryIndoorRow,
+		ExerciseCategoryLadder,
+		ExerciseCategorySandbag,
+		ExerciseCategorySled,
+		ExerciseCategorySledgeHammer,
+		ExerciseCategoryStairStepper,
+		ExerciseCategorySuspension,
+		ExerciseCategoryTire,
+		ExerciseCategoryRunIndoor,
+		ExerciseCategoryBikeOutdoor,
 		ExerciseCategoryUnknown,
 	}
 }

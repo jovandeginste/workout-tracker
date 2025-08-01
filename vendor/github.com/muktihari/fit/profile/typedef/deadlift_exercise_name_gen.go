@@ -32,6 +32,11 @@ const (
 	DeadliftExerciseNameSumoDeadliftHighPull                  DeadliftExerciseName = 16
 	DeadliftExerciseNameTrapBarDeadlift                       DeadliftExerciseName = 17
 	DeadliftExerciseNameWideGripBarbellDeadlift               DeadliftExerciseName = 18
+	DeadliftExerciseNameKettlebellDeadlift                    DeadliftExerciseName = 20
+	DeadliftExerciseNameKettlebellSumoDeadlift                DeadliftExerciseName = 21
+	DeadliftExerciseNameRomanianDeadlift                      DeadliftExerciseName = 23
+	DeadliftExerciseNameSingleLegRomanianDeadliftCircuit      DeadliftExerciseName = 24
+	DeadliftExerciseNameStraightLegDeadlift                   DeadliftExerciseName = 25
 	DeadliftExerciseNameInvalid                               DeadliftExerciseName = 0xFFFF
 )
 
@@ -77,6 +82,16 @@ func (d DeadliftExerciseName) String() string {
 		return "trap_bar_deadlift"
 	case DeadliftExerciseNameWideGripBarbellDeadlift:
 		return "wide_grip_barbell_deadlift"
+	case DeadliftExerciseNameKettlebellDeadlift:
+		return "kettlebell_deadlift"
+	case DeadliftExerciseNameKettlebellSumoDeadlift:
+		return "kettlebell_sumo_deadlift"
+	case DeadliftExerciseNameRomanianDeadlift:
+		return "romanian_deadlift"
+	case DeadliftExerciseNameSingleLegRomanianDeadliftCircuit:
+		return "single_leg_romanian_deadlift_circuit"
+	case DeadliftExerciseNameStraightLegDeadlift:
+		return "straight_leg_deadlift"
 	default:
 		return "DeadliftExerciseNameInvalid(" + strconv.FormatUint(uint64(d), 10) + ")"
 	}
@@ -123,6 +138,16 @@ func DeadliftExerciseNameFromString(s string) DeadliftExerciseName {
 		return DeadliftExerciseNameTrapBarDeadlift
 	case "wide_grip_barbell_deadlift":
 		return DeadliftExerciseNameWideGripBarbellDeadlift
+	case "kettlebell_deadlift":
+		return DeadliftExerciseNameKettlebellDeadlift
+	case "kettlebell_sumo_deadlift":
+		return DeadliftExerciseNameKettlebellSumoDeadlift
+	case "romanian_deadlift":
+		return DeadliftExerciseNameRomanianDeadlift
+	case "single_leg_romanian_deadlift_circuit":
+		return DeadliftExerciseNameSingleLegRomanianDeadliftCircuit
+	case "straight_leg_deadlift":
+		return DeadliftExerciseNameStraightLegDeadlift
 	default:
 		return DeadliftExerciseNameInvalid
 	}
@@ -150,5 +175,10 @@ func ListDeadliftExerciseName() []DeadliftExerciseName {
 		DeadliftExerciseNameSumoDeadliftHighPull,
 		DeadliftExerciseNameTrapBarDeadlift,
 		DeadliftExerciseNameWideGripBarbellDeadlift,
+		DeadliftExerciseNameKettlebellDeadlift,
+		DeadliftExerciseNameKettlebellSumoDeadlift,
+		DeadliftExerciseNameRomanianDeadlift,
+		DeadliftExerciseNameSingleLegRomanianDeadliftCircuit,
+		DeadliftExerciseNameStraightLegDeadlift,
 	}
 }

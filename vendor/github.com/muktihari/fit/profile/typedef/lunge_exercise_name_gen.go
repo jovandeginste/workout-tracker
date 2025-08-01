@@ -94,6 +94,16 @@ const (
 	LungeExerciseNameWalkingLunge                                  LungeExerciseName = 78
 	LungeExerciseNameWeightedWalkingLunge                          LungeExerciseName = 79
 	LungeExerciseNameWideGripOverheadBarbellSplitSquat             LungeExerciseName = 80
+	LungeExerciseNameAlternatingDumbbellLunge                      LungeExerciseName = 81
+	LungeExerciseNameDumbbellReverseLunge                          LungeExerciseName = 82
+	LungeExerciseNameOverheadDumbbellLunge                         LungeExerciseName = 83
+	LungeExerciseNameScissorPowerSwitch                            LungeExerciseName = 84
+	LungeExerciseNameDumbbellOverheadWalkingLunge                  LungeExerciseName = 85
+	LungeExerciseNameCurtsyLunge                                   LungeExerciseName = 86
+	LungeExerciseNameWeightedCurtsyLunge                           LungeExerciseName = 87
+	LungeExerciseNameWeightedShiftingSideLunge                     LungeExerciseName = 88
+	LungeExerciseNameWeightedSideLungeAndPress                     LungeExerciseName = 89
+	LungeExerciseNameWeightedSideLungeJumpOff                      LungeExerciseName = 90
 	LungeExerciseNameInvalid                                       LungeExerciseName = 0xFFFF
 )
 
@@ -263,6 +273,26 @@ func (l LungeExerciseName) String() string {
 		return "weighted_walking_lunge"
 	case LungeExerciseNameWideGripOverheadBarbellSplitSquat:
 		return "wide_grip_overhead_barbell_split_squat"
+	case LungeExerciseNameAlternatingDumbbellLunge:
+		return "alternating_dumbbell_lunge"
+	case LungeExerciseNameDumbbellReverseLunge:
+		return "dumbbell_reverse_lunge"
+	case LungeExerciseNameOverheadDumbbellLunge:
+		return "overhead_dumbbell_lunge"
+	case LungeExerciseNameScissorPowerSwitch:
+		return "scissor_power_switch"
+	case LungeExerciseNameDumbbellOverheadWalkingLunge:
+		return "dumbbell_overhead_walking_lunge"
+	case LungeExerciseNameCurtsyLunge:
+		return "curtsy_lunge"
+	case LungeExerciseNameWeightedCurtsyLunge:
+		return "weighted_curtsy_lunge"
+	case LungeExerciseNameWeightedShiftingSideLunge:
+		return "weighted_shifting_side_lunge"
+	case LungeExerciseNameWeightedSideLungeAndPress:
+		return "weighted_side_lunge_and_press"
+	case LungeExerciseNameWeightedSideLungeJumpOff:
+		return "weighted_side_lunge_jump_off"
 	default:
 		return "LungeExerciseNameInvalid(" + strconv.FormatUint(uint64(l), 10) + ")"
 	}
@@ -433,6 +463,26 @@ func LungeExerciseNameFromString(s string) LungeExerciseName {
 		return LungeExerciseNameWeightedWalkingLunge
 	case "wide_grip_overhead_barbell_split_squat":
 		return LungeExerciseNameWideGripOverheadBarbellSplitSquat
+	case "alternating_dumbbell_lunge":
+		return LungeExerciseNameAlternatingDumbbellLunge
+	case "dumbbell_reverse_lunge":
+		return LungeExerciseNameDumbbellReverseLunge
+	case "overhead_dumbbell_lunge":
+		return LungeExerciseNameOverheadDumbbellLunge
+	case "scissor_power_switch":
+		return LungeExerciseNameScissorPowerSwitch
+	case "dumbbell_overhead_walking_lunge":
+		return LungeExerciseNameDumbbellOverheadWalkingLunge
+	case "curtsy_lunge":
+		return LungeExerciseNameCurtsyLunge
+	case "weighted_curtsy_lunge":
+		return LungeExerciseNameWeightedCurtsyLunge
+	case "weighted_shifting_side_lunge":
+		return LungeExerciseNameWeightedShiftingSideLunge
+	case "weighted_side_lunge_and_press":
+		return LungeExerciseNameWeightedSideLungeAndPress
+	case "weighted_side_lunge_jump_off":
+		return LungeExerciseNameWeightedSideLungeJumpOff
 	default:
 		return LungeExerciseNameInvalid
 	}
@@ -522,5 +572,15 @@ func ListLungeExerciseName() []LungeExerciseName {
 		LungeExerciseNameWalkingLunge,
 		LungeExerciseNameWeightedWalkingLunge,
 		LungeExerciseNameWideGripOverheadBarbellSplitSquat,
+		LungeExerciseNameAlternatingDumbbellLunge,
+		LungeExerciseNameDumbbellReverseLunge,
+		LungeExerciseNameOverheadDumbbellLunge,
+		LungeExerciseNameScissorPowerSwitch,
+		LungeExerciseNameDumbbellOverheadWalkingLunge,
+		LungeExerciseNameCurtsyLunge,
+		LungeExerciseNameWeightedCurtsyLunge,
+		LungeExerciseNameWeightedShiftingSideLunge,
+		LungeExerciseNameWeightedSideLungeAndPress,
+		LungeExerciseNameWeightedSideLungeJumpOff,
 	}
 }

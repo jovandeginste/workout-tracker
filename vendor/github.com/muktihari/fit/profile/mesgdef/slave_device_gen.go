@@ -7,9 +7,8 @@
 package mesgdef
 
 import (
-	"github.com/muktihari/fit/factory"
-	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/basetype"
+	"github.com/muktihari/fit/profile/factory"
 	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/proto"
 )
@@ -29,27 +28,41 @@ type SlaveDevice struct {
 // NewSlaveDevice creates new SlaveDevice struct based on given mesg.
 // If mesg is nil, it will return SlaveDevice with all fields being set to its corresponding invalid value.
 func NewSlaveDevice(mesg *proto.Message) *SlaveDevice {
-	vals := [2]proto.Value{}
+	m := new(SlaveDevice)
+	m.Reset(mesg)
+	return m
+}
 
-	var unknownFields []proto.Field
-	var developerFields []proto.DeveloperField
+// Reset resets all SlaveDevice's fields based on given mesg.
+// If mesg is nil, all fields will be set to its corresponding invalid value.
+func (m *SlaveDevice) Reset(mesg *proto.Message) {
+	var (
+		vals            [2]proto.Value
+		unknownFields   []proto.Field
+		developerFields []proto.DeveloperField
+	)
+
 	if mesg != nil {
-		arr := pool.Get().(*[poolsize]proto.Field)
-		unknownFields = arr[:0]
+		var n int
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Num > 1 || mesg.Fields[i].Name == factory.NameUnknown {
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
+		}
+		unknownFields = make([]proto.Field, 0, n)
+		for i := range mesg.Fields {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 2 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
-		unknownFields = sliceutil.Clone(unknownFields)
-		*arr = [poolsize]proto.Field{}
-		pool.Put(arr)
 		developerFields = mesg.DeveloperFields
 	}
 
-	return &SlaveDevice{
+	*m = SlaveDevice{
 		Manufacturer: typedef.Manufacturer(vals[0].Uint16()),
 		Product:      vals[1].Uint16(),
 
@@ -68,9 +81,7 @@ func (m *SlaveDevice) ToMesg(options *Options) proto.Message {
 
 	fac := options.Factory
 
-	arr := pool.Get().(*[poolsize]proto.Field)
-	fields := arr[:0]
-
+	fields := make([]proto.Field, 0, 2)
 	mesg := proto.Message{Num: typedef.MesgNumSlaveDevice}
 
 	if m.Manufacturer != typedef.ManufacturerInvalid {
@@ -84,14 +95,10 @@ func (m *SlaveDevice) ToMesg(options *Options) proto.Message {
 		fields = append(fields, field)
 	}
 
-	for i := range m.UnknownFields {
-		fields = append(fields, m.UnknownFields[i])
-	}
-
-	mesg.Fields = make([]proto.Field, len(fields))
-	copy(mesg.Fields, fields)
-	*arr = [poolsize]proto.Field{}
-	pool.Put(arr)
+	n := len(fields)
+	mesg.Fields = make([]proto.Field, n+len(m.UnknownFields))
+	copy(mesg.Fields[:n], fields)
+	copy(mesg.Fields[n:], m.UnknownFields)
 
 	mesg.DeveloperFields = m.DeveloperFields
 

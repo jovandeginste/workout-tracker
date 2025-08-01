@@ -13,41 +13,48 @@ import (
 type LateralRaiseExerciseName uint16
 
 const (
-	LateralRaiseExerciseName45DegreeCableExternalRotation         LateralRaiseExerciseName = 0
-	LateralRaiseExerciseNameAlternatingLateralRaiseWithStaticHold LateralRaiseExerciseName = 1
-	LateralRaiseExerciseNameBarMuscleUp                           LateralRaiseExerciseName = 2
-	LateralRaiseExerciseNameBentOverLateralRaise                  LateralRaiseExerciseName = 3
-	LateralRaiseExerciseNameCableDiagonalRaise                    LateralRaiseExerciseName = 4
-	LateralRaiseExerciseNameCableFrontRaise                       LateralRaiseExerciseName = 5
-	LateralRaiseExerciseNameCalorieRow                            LateralRaiseExerciseName = 6
-	LateralRaiseExerciseNameComboShoulderRaise                    LateralRaiseExerciseName = 7
-	LateralRaiseExerciseNameDumbbellDiagonalRaise                 LateralRaiseExerciseName = 8
-	LateralRaiseExerciseNameDumbbellVRaise                        LateralRaiseExerciseName = 9
-	LateralRaiseExerciseNameFrontRaise                            LateralRaiseExerciseName = 10
-	LateralRaiseExerciseNameLeaningDumbbellLateralRaise           LateralRaiseExerciseName = 11
-	LateralRaiseExerciseNameLyingDumbbellRaise                    LateralRaiseExerciseName = 12
-	LateralRaiseExerciseNameMuscleUp                              LateralRaiseExerciseName = 13
-	LateralRaiseExerciseNameOneArmCableLateralRaise               LateralRaiseExerciseName = 14
-	LateralRaiseExerciseNameOverhandGripRearLateralRaise          LateralRaiseExerciseName = 15
-	LateralRaiseExerciseNamePlateRaises                           LateralRaiseExerciseName = 16
-	LateralRaiseExerciseNameRingDip                               LateralRaiseExerciseName = 17
-	LateralRaiseExerciseNameWeightedRingDip                       LateralRaiseExerciseName = 18
-	LateralRaiseExerciseNameRingMuscleUp                          LateralRaiseExerciseName = 19
-	LateralRaiseExerciseNameWeightedRingMuscleUp                  LateralRaiseExerciseName = 20
-	LateralRaiseExerciseNameRopeClimb                             LateralRaiseExerciseName = 21
-	LateralRaiseExerciseNameWeightedRopeClimb                     LateralRaiseExerciseName = 22
-	LateralRaiseExerciseNameScaption                              LateralRaiseExerciseName = 23
-	LateralRaiseExerciseNameSeatedLateralRaise                    LateralRaiseExerciseName = 24
-	LateralRaiseExerciseNameSeatedRearLateralRaise                LateralRaiseExerciseName = 25
-	LateralRaiseExerciseNameSideLyingLateralRaise                 LateralRaiseExerciseName = 26
-	LateralRaiseExerciseNameStandingLift                          LateralRaiseExerciseName = 27
-	LateralRaiseExerciseNameSuspendedRow                          LateralRaiseExerciseName = 28
-	LateralRaiseExerciseNameUnderhandGripRearLateralRaise         LateralRaiseExerciseName = 29
-	LateralRaiseExerciseNameWallSlide                             LateralRaiseExerciseName = 30
-	LateralRaiseExerciseNameWeightedWallSlide                     LateralRaiseExerciseName = 31
-	LateralRaiseExerciseNameArmCircles                            LateralRaiseExerciseName = 32
-	LateralRaiseExerciseNameShavingTheHead                        LateralRaiseExerciseName = 33
-	LateralRaiseExerciseNameInvalid                               LateralRaiseExerciseName = 0xFFFF
+	LateralRaiseExerciseName45DegreeCableExternalRotation             LateralRaiseExerciseName = 0
+	LateralRaiseExerciseNameAlternatingLateralRaiseWithStaticHold     LateralRaiseExerciseName = 1
+	LateralRaiseExerciseNameBarMuscleUp                               LateralRaiseExerciseName = 2
+	LateralRaiseExerciseNameBentOverLateralRaise                      LateralRaiseExerciseName = 3
+	LateralRaiseExerciseNameCableDiagonalRaise                        LateralRaiseExerciseName = 4
+	LateralRaiseExerciseNameCableFrontRaise                           LateralRaiseExerciseName = 5
+	LateralRaiseExerciseNameCalorieRow                                LateralRaiseExerciseName = 6
+	LateralRaiseExerciseNameComboShoulderRaise                        LateralRaiseExerciseName = 7
+	LateralRaiseExerciseNameDumbbellDiagonalRaise                     LateralRaiseExerciseName = 8
+	LateralRaiseExerciseNameDumbbellVRaise                            LateralRaiseExerciseName = 9
+	LateralRaiseExerciseNameFrontRaise                                LateralRaiseExerciseName = 10
+	LateralRaiseExerciseNameLeaningDumbbellLateralRaise               LateralRaiseExerciseName = 11
+	LateralRaiseExerciseNameLyingDumbbellRaise                        LateralRaiseExerciseName = 12
+	LateralRaiseExerciseNameMuscleUp                                  LateralRaiseExerciseName = 13
+	LateralRaiseExerciseNameOneArmCableLateralRaise                   LateralRaiseExerciseName = 14
+	LateralRaiseExerciseNameOverhandGripRearLateralRaise              LateralRaiseExerciseName = 15
+	LateralRaiseExerciseNamePlateRaises                               LateralRaiseExerciseName = 16
+	LateralRaiseExerciseNameRingDip                                   LateralRaiseExerciseName = 17
+	LateralRaiseExerciseNameWeightedRingDip                           LateralRaiseExerciseName = 18
+	LateralRaiseExerciseNameRingMuscleUp                              LateralRaiseExerciseName = 19
+	LateralRaiseExerciseNameWeightedRingMuscleUp                      LateralRaiseExerciseName = 20
+	LateralRaiseExerciseNameRopeClimb                                 LateralRaiseExerciseName = 21
+	LateralRaiseExerciseNameWeightedRopeClimb                         LateralRaiseExerciseName = 22
+	LateralRaiseExerciseNameScaption                                  LateralRaiseExerciseName = 23
+	LateralRaiseExerciseNameSeatedLateralRaise                        LateralRaiseExerciseName = 24
+	LateralRaiseExerciseNameSeatedRearLateralRaise                    LateralRaiseExerciseName = 25
+	LateralRaiseExerciseNameSideLyingLateralRaise                     LateralRaiseExerciseName = 26
+	LateralRaiseExerciseNameStandingLift                              LateralRaiseExerciseName = 27
+	LateralRaiseExerciseNameSuspendedRow                              LateralRaiseExerciseName = 28
+	LateralRaiseExerciseNameUnderhandGripRearLateralRaise             LateralRaiseExerciseName = 29
+	LateralRaiseExerciseNameWallSlide                                 LateralRaiseExerciseName = 30
+	LateralRaiseExerciseNameWeightedWallSlide                         LateralRaiseExerciseName = 31
+	LateralRaiseExerciseNameArmCircles                                LateralRaiseExerciseName = 32
+	LateralRaiseExerciseNameShavingTheHead                            LateralRaiseExerciseName = 33
+	LateralRaiseExerciseNameDumbbellLateralRaise                      LateralRaiseExerciseName = 34
+	LateralRaiseExerciseNameRingDipKipping                            LateralRaiseExerciseName = 36
+	LateralRaiseExerciseNameWallWalk                                  LateralRaiseExerciseName = 37
+	LateralRaiseExerciseNameDumbbellFrontRaiseWheelchair              LateralRaiseExerciseName = 38
+	LateralRaiseExerciseNameDumbbellLateralRaiseWheelchair            LateralRaiseExerciseName = 39
+	LateralRaiseExerciseNamePoleDoubleArmOverheadAndForwardWheelchair LateralRaiseExerciseName = 40
+	LateralRaiseExerciseNamePoleStraightArmOverheadWheelchair         LateralRaiseExerciseName = 41
+	LateralRaiseExerciseNameInvalid                                   LateralRaiseExerciseName = 0xFFFF
 )
 
 func (l LateralRaiseExerciseName) Uint16() uint16 { return uint16(l) }
@@ -122,6 +129,20 @@ func (l LateralRaiseExerciseName) String() string {
 		return "arm_circles"
 	case LateralRaiseExerciseNameShavingTheHead:
 		return "shaving_the_head"
+	case LateralRaiseExerciseNameDumbbellLateralRaise:
+		return "dumbbell_lateral_raise"
+	case LateralRaiseExerciseNameRingDipKipping:
+		return "ring_dip_kipping"
+	case LateralRaiseExerciseNameWallWalk:
+		return "wall_walk"
+	case LateralRaiseExerciseNameDumbbellFrontRaiseWheelchair:
+		return "dumbbell_front_raise_wheelchair"
+	case LateralRaiseExerciseNameDumbbellLateralRaiseWheelchair:
+		return "dumbbell_lateral_raise_wheelchair"
+	case LateralRaiseExerciseNamePoleDoubleArmOverheadAndForwardWheelchair:
+		return "pole_double_arm_overhead_and_forward_wheelchair"
+	case LateralRaiseExerciseNamePoleStraightArmOverheadWheelchair:
+		return "pole_straight_arm_overhead_wheelchair"
 	default:
 		return "LateralRaiseExerciseNameInvalid(" + strconv.FormatUint(uint64(l), 10) + ")"
 	}
@@ -198,6 +219,20 @@ func LateralRaiseExerciseNameFromString(s string) LateralRaiseExerciseName {
 		return LateralRaiseExerciseNameArmCircles
 	case "shaving_the_head":
 		return LateralRaiseExerciseNameShavingTheHead
+	case "dumbbell_lateral_raise":
+		return LateralRaiseExerciseNameDumbbellLateralRaise
+	case "ring_dip_kipping":
+		return LateralRaiseExerciseNameRingDipKipping
+	case "wall_walk":
+		return LateralRaiseExerciseNameWallWalk
+	case "dumbbell_front_raise_wheelchair":
+		return LateralRaiseExerciseNameDumbbellFrontRaiseWheelchair
+	case "dumbbell_lateral_raise_wheelchair":
+		return LateralRaiseExerciseNameDumbbellLateralRaiseWheelchair
+	case "pole_double_arm_overhead_and_forward_wheelchair":
+		return LateralRaiseExerciseNamePoleDoubleArmOverheadAndForwardWheelchair
+	case "pole_straight_arm_overhead_wheelchair":
+		return LateralRaiseExerciseNamePoleStraightArmOverheadWheelchair
 	default:
 		return LateralRaiseExerciseNameInvalid
 	}
@@ -240,5 +275,12 @@ func ListLateralRaiseExerciseName() []LateralRaiseExerciseName {
 		LateralRaiseExerciseNameWeightedWallSlide,
 		LateralRaiseExerciseNameArmCircles,
 		LateralRaiseExerciseNameShavingTheHead,
+		LateralRaiseExerciseNameDumbbellLateralRaise,
+		LateralRaiseExerciseNameRingDipKipping,
+		LateralRaiseExerciseNameWallWalk,
+		LateralRaiseExerciseNameDumbbellFrontRaiseWheelchair,
+		LateralRaiseExerciseNameDumbbellLateralRaiseWheelchair,
+		LateralRaiseExerciseNamePoleDoubleArmOverheadAndForwardWheelchair,
+		LateralRaiseExerciseNamePoleStraightArmOverheadWheelchair,
 	}
 }

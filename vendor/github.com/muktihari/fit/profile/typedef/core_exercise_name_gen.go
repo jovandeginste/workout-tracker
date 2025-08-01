@@ -13,80 +13,101 @@ import (
 type CoreExerciseName uint16
 
 const (
-	CoreExerciseNameAbsJabs                          CoreExerciseName = 0
-	CoreExerciseNameWeightedAbsJabs                  CoreExerciseName = 1
-	CoreExerciseNameAlternatingPlateReach            CoreExerciseName = 2
-	CoreExerciseNameBarbellRollout                   CoreExerciseName = 3
-	CoreExerciseNameWeightedBarbellRollout           CoreExerciseName = 4
-	CoreExerciseNameBodyBarObliqueTwist              CoreExerciseName = 5
-	CoreExerciseNameCableCorePress                   CoreExerciseName = 6
-	CoreExerciseNameCableSideBend                    CoreExerciseName = 7
-	CoreExerciseNameSideBend                         CoreExerciseName = 8
-	CoreExerciseNameWeightedSideBend                 CoreExerciseName = 9
-	CoreExerciseNameCrescentCircle                   CoreExerciseName = 10
-	CoreExerciseNameWeightedCrescentCircle           CoreExerciseName = 11
-	CoreExerciseNameCyclingRussianTwist              CoreExerciseName = 12
-	CoreExerciseNameWeightedCyclingRussianTwist      CoreExerciseName = 13
-	CoreExerciseNameElevatedFeetRussianTwist         CoreExerciseName = 14
-	CoreExerciseNameWeightedElevatedFeetRussianTwist CoreExerciseName = 15
-	CoreExerciseNameHalfTurkishGetUp                 CoreExerciseName = 16
-	CoreExerciseNameKettlebellWindmill               CoreExerciseName = 17
-	CoreExerciseNameKneelingAbWheel                  CoreExerciseName = 18
-	CoreExerciseNameWeightedKneelingAbWheel          CoreExerciseName = 19
-	CoreExerciseNameModifiedFrontLever               CoreExerciseName = 20
-	CoreExerciseNameOpenKneeTucks                    CoreExerciseName = 21
-	CoreExerciseNameWeightedOpenKneeTucks            CoreExerciseName = 22
-	CoreExerciseNameSideAbsLegLift                   CoreExerciseName = 23
-	CoreExerciseNameWeightedSideAbsLegLift           CoreExerciseName = 24
-	CoreExerciseNameSwissBallJackknife               CoreExerciseName = 25
-	CoreExerciseNameWeightedSwissBallJackknife       CoreExerciseName = 26
-	CoreExerciseNameSwissBallPike                    CoreExerciseName = 27
-	CoreExerciseNameWeightedSwissBallPike            CoreExerciseName = 28
-	CoreExerciseNameSwissBallRollout                 CoreExerciseName = 29
-	CoreExerciseNameWeightedSwissBallRollout         CoreExerciseName = 30
-	CoreExerciseNameTriangleHipPress                 CoreExerciseName = 31
-	CoreExerciseNameWeightedTriangleHipPress         CoreExerciseName = 32
-	CoreExerciseNameTrxSuspendedJackknife            CoreExerciseName = 33
-	CoreExerciseNameWeightedTrxSuspendedJackknife    CoreExerciseName = 34
-	CoreExerciseNameUBoat                            CoreExerciseName = 35
-	CoreExerciseNameWeightedUBoat                    CoreExerciseName = 36
-	CoreExerciseNameWindmillSwitches                 CoreExerciseName = 37
-	CoreExerciseNameWeightedWindmillSwitches         CoreExerciseName = 38
-	CoreExerciseNameAlternatingSlideOut              CoreExerciseName = 39
-	CoreExerciseNameWeightedAlternatingSlideOut      CoreExerciseName = 40
-	CoreExerciseNameGhdBackExtensions                CoreExerciseName = 41
-	CoreExerciseNameWeightedGhdBackExtensions        CoreExerciseName = 42
-	CoreExerciseNameOverheadWalk                     CoreExerciseName = 43
-	CoreExerciseNameInchworm                         CoreExerciseName = 44
-	CoreExerciseNameWeightedModifiedFrontLever       CoreExerciseName = 45
-	CoreExerciseNameRussianTwist                     CoreExerciseName = 46
-	CoreExerciseNameAbdominalLegRotations            CoreExerciseName = 47 // Deprecated do not use
-	CoreExerciseNameArmAndLegExtensionOnKnees        CoreExerciseName = 48
-	CoreExerciseNameBicycle                          CoreExerciseName = 49
-	CoreExerciseNameBicepCurlWithLegExtension        CoreExerciseName = 50
-	CoreExerciseNameCatCow                           CoreExerciseName = 51
-	CoreExerciseNameCorkscrew                        CoreExerciseName = 52
-	CoreExerciseNameCrissCross                       CoreExerciseName = 53
-	CoreExerciseNameCrissCrossWithBall               CoreExerciseName = 54 // Deprecated do not use
-	CoreExerciseNameDoubleLegStretch                 CoreExerciseName = 55
-	CoreExerciseNameKneeFolds                        CoreExerciseName = 56
-	CoreExerciseNameLowerLift                        CoreExerciseName = 57
-	CoreExerciseNameNeckPull                         CoreExerciseName = 58
-	CoreExerciseNamePelvicClocks                     CoreExerciseName = 59
-	CoreExerciseNameRollOver                         CoreExerciseName = 60
-	CoreExerciseNameRollUp                           CoreExerciseName = 61
-	CoreExerciseNameRolling                          CoreExerciseName = 62
-	CoreExerciseNameRowing1                          CoreExerciseName = 63
-	CoreExerciseNameRowing2                          CoreExerciseName = 64
-	CoreExerciseNameScissors                         CoreExerciseName = 65
-	CoreExerciseNameSingleLegCircles                 CoreExerciseName = 66
-	CoreExerciseNameSingleLegStretch                 CoreExerciseName = 67
-	CoreExerciseNameSnakeTwist1And2                  CoreExerciseName = 68 // Deprecated do not use
-	CoreExerciseNameSwan                             CoreExerciseName = 69
-	CoreExerciseNameSwimming                         CoreExerciseName = 70
-	CoreExerciseNameTeaser                           CoreExerciseName = 71
-	CoreExerciseNameTheHundred                       CoreExerciseName = 72
-	CoreExerciseNameInvalid                          CoreExerciseName = 0xFFFF
+	CoreExerciseNameAbsJabs                              CoreExerciseName = 0
+	CoreExerciseNameWeightedAbsJabs                      CoreExerciseName = 1
+	CoreExerciseNameAlternatingPlateReach                CoreExerciseName = 2
+	CoreExerciseNameBarbellRollout                       CoreExerciseName = 3
+	CoreExerciseNameWeightedBarbellRollout               CoreExerciseName = 4
+	CoreExerciseNameBodyBarObliqueTwist                  CoreExerciseName = 5
+	CoreExerciseNameCableCorePress                       CoreExerciseName = 6
+	CoreExerciseNameCableSideBend                        CoreExerciseName = 7
+	CoreExerciseNameSideBend                             CoreExerciseName = 8
+	CoreExerciseNameWeightedSideBend                     CoreExerciseName = 9
+	CoreExerciseNameCrescentCircle                       CoreExerciseName = 10
+	CoreExerciseNameWeightedCrescentCircle               CoreExerciseName = 11
+	CoreExerciseNameCyclingRussianTwist                  CoreExerciseName = 12
+	CoreExerciseNameWeightedCyclingRussianTwist          CoreExerciseName = 13
+	CoreExerciseNameElevatedFeetRussianTwist             CoreExerciseName = 14
+	CoreExerciseNameWeightedElevatedFeetRussianTwist     CoreExerciseName = 15
+	CoreExerciseNameHalfTurkishGetUp                     CoreExerciseName = 16
+	CoreExerciseNameKettlebellWindmill                   CoreExerciseName = 17
+	CoreExerciseNameKneelingAbWheel                      CoreExerciseName = 18
+	CoreExerciseNameWeightedKneelingAbWheel              CoreExerciseName = 19
+	CoreExerciseNameModifiedFrontLever                   CoreExerciseName = 20
+	CoreExerciseNameOpenKneeTucks                        CoreExerciseName = 21
+	CoreExerciseNameWeightedOpenKneeTucks                CoreExerciseName = 22
+	CoreExerciseNameSideAbsLegLift                       CoreExerciseName = 23
+	CoreExerciseNameWeightedSideAbsLegLift               CoreExerciseName = 24
+	CoreExerciseNameSwissBallJackknife                   CoreExerciseName = 25
+	CoreExerciseNameWeightedSwissBallJackknife           CoreExerciseName = 26
+	CoreExerciseNameSwissBallPike                        CoreExerciseName = 27
+	CoreExerciseNameWeightedSwissBallPike                CoreExerciseName = 28
+	CoreExerciseNameSwissBallRollout                     CoreExerciseName = 29
+	CoreExerciseNameWeightedSwissBallRollout             CoreExerciseName = 30
+	CoreExerciseNameTriangleHipPress                     CoreExerciseName = 31
+	CoreExerciseNameWeightedTriangleHipPress             CoreExerciseName = 32
+	CoreExerciseNameTrxSuspendedJackknife                CoreExerciseName = 33
+	CoreExerciseNameWeightedTrxSuspendedJackknife        CoreExerciseName = 34
+	CoreExerciseNameUBoat                                CoreExerciseName = 35
+	CoreExerciseNameWeightedUBoat                        CoreExerciseName = 36
+	CoreExerciseNameWindmillSwitches                     CoreExerciseName = 37
+	CoreExerciseNameWeightedWindmillSwitches             CoreExerciseName = 38
+	CoreExerciseNameAlternatingSlideOut                  CoreExerciseName = 39
+	CoreExerciseNameWeightedAlternatingSlideOut          CoreExerciseName = 40
+	CoreExerciseNameGhdBackExtensions                    CoreExerciseName = 41
+	CoreExerciseNameWeightedGhdBackExtensions            CoreExerciseName = 42
+	CoreExerciseNameOverheadWalk                         CoreExerciseName = 43
+	CoreExerciseNameInchworm                             CoreExerciseName = 44
+	CoreExerciseNameWeightedModifiedFrontLever           CoreExerciseName = 45
+	CoreExerciseNameRussianTwist                         CoreExerciseName = 46
+	CoreExerciseNameAbdominalLegRotations                CoreExerciseName = 47 // Deprecated do not use
+	CoreExerciseNameArmAndLegExtensionOnKnees            CoreExerciseName = 48
+	CoreExerciseNameBicycle                              CoreExerciseName = 49
+	CoreExerciseNameBicepCurlWithLegExtension            CoreExerciseName = 50
+	CoreExerciseNameCatCow                               CoreExerciseName = 51
+	CoreExerciseNameCorkscrew                            CoreExerciseName = 52
+	CoreExerciseNameCrissCross                           CoreExerciseName = 53
+	CoreExerciseNameCrissCrossWithBall                   CoreExerciseName = 54 // Deprecated do not use
+	CoreExerciseNameDoubleLegStretch                     CoreExerciseName = 55
+	CoreExerciseNameKneeFolds                            CoreExerciseName = 56
+	CoreExerciseNameLowerLift                            CoreExerciseName = 57
+	CoreExerciseNameNeckPull                             CoreExerciseName = 58
+	CoreExerciseNamePelvicClocks                         CoreExerciseName = 59
+	CoreExerciseNameRollOver                             CoreExerciseName = 60
+	CoreExerciseNameRollUp                               CoreExerciseName = 61
+	CoreExerciseNameRolling                              CoreExerciseName = 62
+	CoreExerciseNameRowing1                              CoreExerciseName = 63
+	CoreExerciseNameRowing2                              CoreExerciseName = 64
+	CoreExerciseNameScissors                             CoreExerciseName = 65
+	CoreExerciseNameSingleLegCircles                     CoreExerciseName = 66
+	CoreExerciseNameSingleLegStretch                     CoreExerciseName = 67
+	CoreExerciseNameSnakeTwist1And2                      CoreExerciseName = 68 // Deprecated do not use
+	CoreExerciseNameSwan                                 CoreExerciseName = 69
+	CoreExerciseNameSwimming                             CoreExerciseName = 70
+	CoreExerciseNameTeaser                               CoreExerciseName = 71
+	CoreExerciseNameTheHundred                           CoreExerciseName = 72
+	CoreExerciseNameBicepCurlWithLegExtensionWithWeights CoreExerciseName = 73
+	CoreExerciseNameHangingLSit                          CoreExerciseName = 75
+	CoreExerciseNameLowerLiftWithWeights                 CoreExerciseName = 77
+	CoreExerciseNameRingLSit                             CoreExerciseName = 79
+	CoreExerciseNameRowing1WithWeights                   CoreExerciseName = 80
+	CoreExerciseNameRowing2WithWeights                   CoreExerciseName = 81
+	CoreExerciseNameScissorsWithWeights                  CoreExerciseName = 82
+	CoreExerciseNameSingleLegStretchWithWeights          CoreExerciseName = 83
+	CoreExerciseNameToesToElbows                         CoreExerciseName = 84
+	CoreExerciseNameWeightedCrissCross                   CoreExerciseName = 85
+	CoreExerciseNameWeightedDoubleLegStretch             CoreExerciseName = 86
+	CoreExerciseNameWeightedTheHundred                   CoreExerciseName = 87
+	CoreExerciseNameLSit                                 CoreExerciseName = 88
+	CoreExerciseNameTurkishGetUp                         CoreExerciseName = 89
+	CoreExerciseNameWeightedRingLSit                     CoreExerciseName = 90
+	CoreExerciseNameWeightedHangingLSit                  CoreExerciseName = 91
+	CoreExerciseNameWeightedLSit                         CoreExerciseName = 92
+	CoreExerciseNameSideBendLowWheelchair                CoreExerciseName = 93
+	CoreExerciseNameSideBendMidWheelchair                CoreExerciseName = 94
+	CoreExerciseNameSideBendHighWheelchair               CoreExerciseName = 95
+	CoreExerciseNameSeatedSideBend                       CoreExerciseName = 96
+	CoreExerciseNameInvalid                              CoreExerciseName = 0xFFFF
 )
 
 func (c CoreExerciseName) Uint16() uint16 { return uint16(c) }
@@ -239,6 +260,48 @@ func (c CoreExerciseName) String() string {
 		return "teaser"
 	case CoreExerciseNameTheHundred:
 		return "the_hundred"
+	case CoreExerciseNameBicepCurlWithLegExtensionWithWeights:
+		return "bicep_curl_with_leg_extension_with_weights"
+	case CoreExerciseNameHangingLSit:
+		return "hanging_l_sit"
+	case CoreExerciseNameLowerLiftWithWeights:
+		return "lower_lift_with_weights"
+	case CoreExerciseNameRingLSit:
+		return "ring_l_sit"
+	case CoreExerciseNameRowing1WithWeights:
+		return "rowing_1_with_weights"
+	case CoreExerciseNameRowing2WithWeights:
+		return "rowing_2_with_weights"
+	case CoreExerciseNameScissorsWithWeights:
+		return "scissors_with_weights"
+	case CoreExerciseNameSingleLegStretchWithWeights:
+		return "single_leg_stretch_with_weights"
+	case CoreExerciseNameToesToElbows:
+		return "toes_to_elbows"
+	case CoreExerciseNameWeightedCrissCross:
+		return "weighted_criss_cross"
+	case CoreExerciseNameWeightedDoubleLegStretch:
+		return "weighted_double_leg_stretch"
+	case CoreExerciseNameWeightedTheHundred:
+		return "weighted_the_hundred"
+	case CoreExerciseNameLSit:
+		return "l_sit"
+	case CoreExerciseNameTurkishGetUp:
+		return "turkish_get_up"
+	case CoreExerciseNameWeightedRingLSit:
+		return "weighted_ring_l_sit"
+	case CoreExerciseNameWeightedHangingLSit:
+		return "weighted_hanging_l_sit"
+	case CoreExerciseNameWeightedLSit:
+		return "weighted_l_sit"
+	case CoreExerciseNameSideBendLowWheelchair:
+		return "side_bend_low_wheelchair"
+	case CoreExerciseNameSideBendMidWheelchair:
+		return "side_bend_mid_wheelchair"
+	case CoreExerciseNameSideBendHighWheelchair:
+		return "side_bend_high_wheelchair"
+	case CoreExerciseNameSeatedSideBend:
+		return "seated_side_bend"
 	default:
 		return "CoreExerciseNameInvalid(" + strconv.FormatUint(uint64(c), 10) + ")"
 	}
@@ -393,6 +456,48 @@ func CoreExerciseNameFromString(s string) CoreExerciseName {
 		return CoreExerciseNameTeaser
 	case "the_hundred":
 		return CoreExerciseNameTheHundred
+	case "bicep_curl_with_leg_extension_with_weights":
+		return CoreExerciseNameBicepCurlWithLegExtensionWithWeights
+	case "hanging_l_sit":
+		return CoreExerciseNameHangingLSit
+	case "lower_lift_with_weights":
+		return CoreExerciseNameLowerLiftWithWeights
+	case "ring_l_sit":
+		return CoreExerciseNameRingLSit
+	case "rowing_1_with_weights":
+		return CoreExerciseNameRowing1WithWeights
+	case "rowing_2_with_weights":
+		return CoreExerciseNameRowing2WithWeights
+	case "scissors_with_weights":
+		return CoreExerciseNameScissorsWithWeights
+	case "single_leg_stretch_with_weights":
+		return CoreExerciseNameSingleLegStretchWithWeights
+	case "toes_to_elbows":
+		return CoreExerciseNameToesToElbows
+	case "weighted_criss_cross":
+		return CoreExerciseNameWeightedCrissCross
+	case "weighted_double_leg_stretch":
+		return CoreExerciseNameWeightedDoubleLegStretch
+	case "weighted_the_hundred":
+		return CoreExerciseNameWeightedTheHundred
+	case "l_sit":
+		return CoreExerciseNameLSit
+	case "turkish_get_up":
+		return CoreExerciseNameTurkishGetUp
+	case "weighted_ring_l_sit":
+		return CoreExerciseNameWeightedRingLSit
+	case "weighted_hanging_l_sit":
+		return CoreExerciseNameWeightedHangingLSit
+	case "weighted_l_sit":
+		return CoreExerciseNameWeightedLSit
+	case "side_bend_low_wheelchair":
+		return CoreExerciseNameSideBendLowWheelchair
+	case "side_bend_mid_wheelchair":
+		return CoreExerciseNameSideBendMidWheelchair
+	case "side_bend_high_wheelchair":
+		return CoreExerciseNameSideBendHighWheelchair
+	case "seated_side_bend":
+		return CoreExerciseNameSeatedSideBend
 	default:
 		return CoreExerciseNameInvalid
 	}
@@ -474,5 +579,26 @@ func ListCoreExerciseName() []CoreExerciseName {
 		CoreExerciseNameSwimming,
 		CoreExerciseNameTeaser,
 		CoreExerciseNameTheHundred,
+		CoreExerciseNameBicepCurlWithLegExtensionWithWeights,
+		CoreExerciseNameHangingLSit,
+		CoreExerciseNameLowerLiftWithWeights,
+		CoreExerciseNameRingLSit,
+		CoreExerciseNameRowing1WithWeights,
+		CoreExerciseNameRowing2WithWeights,
+		CoreExerciseNameScissorsWithWeights,
+		CoreExerciseNameSingleLegStretchWithWeights,
+		CoreExerciseNameToesToElbows,
+		CoreExerciseNameWeightedCrissCross,
+		CoreExerciseNameWeightedDoubleLegStretch,
+		CoreExerciseNameWeightedTheHundred,
+		CoreExerciseNameLSit,
+		CoreExerciseNameTurkishGetUp,
+		CoreExerciseNameWeightedRingLSit,
+		CoreExerciseNameWeightedHangingLSit,
+		CoreExerciseNameWeightedLSit,
+		CoreExerciseNameSideBendLowWheelchair,
+		CoreExerciseNameSideBendMidWheelchair,
+		CoreExerciseNameSideBendHighWheelchair,
+		CoreExerciseNameSeatedSideBend,
 	}
 }

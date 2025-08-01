@@ -8,40 +8,21 @@ package proto
 type Version byte
 
 const (
-	ErrProtocolVersionNotSupported = errorString("protocol version not supported")
+	vMajorShift = 4
+	vMinorMask  = 1<<vMajorShift - 1
 
-	MajorVersionShift = 4
-	MajorVersionMask  = 0x0F << MajorVersionShift
-	MinorVersionMask  = 0x0F
-
-	V1   Version = 1 << MajorVersionShift // V1 is Version 1.0
-	V2   Version = 2 << MajorVersionShift // V2 is Version 2.0
-	Vmax         = V2                     // Vmax is an alias for the current latest version.
+	V1   Version = 1 << vMajorShift // V1 is Version 1.0
+	V2   Version = 2 << vMajorShift // V2 is Version 2.0
+	Vmax         = V2               // Vmax is an alias for the current latest version.
 )
 
-// CreateVersion creates version from major and minor value, it can only create version up < Vmax.
-func CreateVersion(major, minor byte) (Version, bool) {
-	version := Version((major << MajorVersionShift) | minor)
-	if version > Vmax {
-		return 0, false
-	}
-	return version, true
+// CreateVersion creates version from major and minor value. Each value is 4 bits value (max: 15).
+func CreateVersion(major, minor byte) Version {
+	return Version(major<<vMajorShift | minor&vMinorMask)
 }
 
-// Validate checks whether given version is a valid version.
-func Validate(version Version) error {
-	if VersionMajor(version) > VersionMajor(Vmax) {
-		return ErrProtocolVersionNotSupported
-	}
-	return nil
-}
+// Major returns major value.
+func (v Version) Major() byte { return byte(v >> vMajorShift) }
 
-// VersionMajor returns major value of given version
-func VersionMajor(version Version) byte {
-	return byte(version >> MajorVersionShift)
-}
-
-// VersionMinor returns minor value of given version
-func VersionMinor(version Version) byte {
-	return byte(version & MinorVersionMask)
-}
+// Minor returns minor value.
+func (v Version) Minor() byte { return byte(v & vMinorMask) }

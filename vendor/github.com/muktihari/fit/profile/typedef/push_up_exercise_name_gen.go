@@ -92,6 +92,18 @@ const (
 	PushUpExerciseNameWeightedRingPushUp                         PushUpExerciseName = 76
 	PushUpExerciseNamePushUp                                     PushUpExerciseName = 77
 	PushUpExerciseNamePilatesPushup                              PushUpExerciseName = 78
+	PushUpExerciseNameDynamicPushUp                              PushUpExerciseName = 79
+	PushUpExerciseNameKippingHandstandPushUp                     PushUpExerciseName = 80
+	PushUpExerciseNameShoulderTappingPushUp                      PushUpExerciseName = 81
+	PushUpExerciseNameBicepsPushUp                               PushUpExerciseName = 82
+	PushUpExerciseNameHinduPushUp                                PushUpExerciseName = 83
+	PushUpExerciseNamePikePushUp                                 PushUpExerciseName = 84
+	PushUpExerciseNameWideGripPushUp                             PushUpExerciseName = 85
+	PushUpExerciseNameWeightedBicepsPushUp                       PushUpExerciseName = 86
+	PushUpExerciseNameWeightedHinduPushUp                        PushUpExerciseName = 87
+	PushUpExerciseNameWeightedPikePushUp                         PushUpExerciseName = 88
+	PushUpExerciseNameKippingParalletteHandstandPushUp           PushUpExerciseName = 89
+	PushUpExerciseNameWallPushUp                                 PushUpExerciseName = 90
 	PushUpExerciseNameInvalid                                    PushUpExerciseName = 0xFFFF
 )
 
@@ -257,6 +269,30 @@ func (p PushUpExerciseName) String() string {
 		return "push_up"
 	case PushUpExerciseNamePilatesPushup:
 		return "pilates_pushup"
+	case PushUpExerciseNameDynamicPushUp:
+		return "dynamic_push_up"
+	case PushUpExerciseNameKippingHandstandPushUp:
+		return "kipping_handstand_push_up"
+	case PushUpExerciseNameShoulderTappingPushUp:
+		return "shoulder_tapping_push_up"
+	case PushUpExerciseNameBicepsPushUp:
+		return "biceps_push_up"
+	case PushUpExerciseNameHinduPushUp:
+		return "hindu_push_up"
+	case PushUpExerciseNamePikePushUp:
+		return "pike_push_up"
+	case PushUpExerciseNameWideGripPushUp:
+		return "wide_grip_push_up"
+	case PushUpExerciseNameWeightedBicepsPushUp:
+		return "weighted_biceps_push_up"
+	case PushUpExerciseNameWeightedHinduPushUp:
+		return "weighted_hindu_push_up"
+	case PushUpExerciseNameWeightedPikePushUp:
+		return "weighted_pike_push_up"
+	case PushUpExerciseNameKippingParalletteHandstandPushUp:
+		return "kipping_parallette_handstand_push_up"
+	case PushUpExerciseNameWallPushUp:
+		return "wall_push_up"
 	default:
 		return "PushUpExerciseNameInvalid(" + strconv.FormatUint(uint64(p), 10) + ")"
 	}
@@ -423,6 +459,30 @@ func PushUpExerciseNameFromString(s string) PushUpExerciseName {
 		return PushUpExerciseNamePushUp
 	case "pilates_pushup":
 		return PushUpExerciseNamePilatesPushup
+	case "dynamic_push_up":
+		return PushUpExerciseNameDynamicPushUp
+	case "kipping_handstand_push_up":
+		return PushUpExerciseNameKippingHandstandPushUp
+	case "shoulder_tapping_push_up":
+		return PushUpExerciseNameShoulderTappingPushUp
+	case "biceps_push_up":
+		return PushUpExerciseNameBicepsPushUp
+	case "hindu_push_up":
+		return PushUpExerciseNameHinduPushUp
+	case "pike_push_up":
+		return PushUpExerciseNamePikePushUp
+	case "wide_grip_push_up":
+		return PushUpExerciseNameWideGripPushUp
+	case "weighted_biceps_push_up":
+		return PushUpExerciseNameWeightedBicepsPushUp
+	case "weighted_hindu_push_up":
+		return PushUpExerciseNameWeightedHinduPushUp
+	case "weighted_pike_push_up":
+		return PushUpExerciseNameWeightedPikePushUp
+	case "kipping_parallette_handstand_push_up":
+		return PushUpExerciseNameKippingParalletteHandstandPushUp
+	case "wall_push_up":
+		return PushUpExerciseNameWallPushUp
 	default:
 		return PushUpExerciseNameInvalid
 	}
@@ -510,5 +570,17 @@ func ListPushUpExerciseName() []PushUpExerciseName {
 		PushUpExerciseNameWeightedRingPushUp,
 		PushUpExerciseNamePushUp,
 		PushUpExerciseNamePilatesPushup,
+		PushUpExerciseNameDynamicPushUp,
+		PushUpExerciseNameKippingHandstandPushUp,
+		PushUpExerciseNameShoulderTappingPushUp,
+		PushUpExerciseNameBicepsPushUp,
+		PushUpExerciseNameHinduPushUp,
+		PushUpExerciseNamePikePushUp,
+		PushUpExerciseNameWideGripPushUp,
+		PushUpExerciseNameWeightedBicepsPushUp,
+		PushUpExerciseNameWeightedHinduPushUp,
+		PushUpExerciseNameWeightedPikePushUp,
+		PushUpExerciseNameKippingParalletteHandstandPushUp,
+		PushUpExerciseNameWallPushUp,
 	}
 }
