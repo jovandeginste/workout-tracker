@@ -188,9 +188,27 @@ const (
 	SitUpExerciseName
 	SquatExerciseName
 	TotalBodyExerciseName
+	MoveExerciseName
+	PoseExerciseName
 	TricepsExtensionExerciseName
 	WarmUpExerciseName
 	RunExerciseName
+	BikeExerciseName
+	BandedExercisesExerciseName
+	BattleRopeExerciseName
+	EllipticalExerciseName
+	FloorClimbExerciseName
+	IndoorBikeExerciseName
+	IndoorRowExerciseName
+	LadderExerciseName
+	SandbagExerciseName
+	SledExerciseName
+	SledgeHammerExerciseName
+	StairStepperExerciseName
+	SuspensionExerciseName
+	TireExerciseName
+	BikeOutdoorExerciseName
+	RunIndoorExerciseName
 	WaterType
 	TissueModelType
 	DiveGasStatus
@@ -565,12 +583,48 @@ func (p ProfileType) String() string {
 		return "squat_exercise_name"
 	case TotalBodyExerciseName:
 		return "total_body_exercise_name"
+	case MoveExerciseName:
+		return "move_exercise_name"
+	case PoseExerciseName:
+		return "pose_exercise_name"
 	case TricepsExtensionExerciseName:
 		return "triceps_extension_exercise_name"
 	case WarmUpExerciseName:
 		return "warm_up_exercise_name"
 	case RunExerciseName:
 		return "run_exercise_name"
+	case BikeExerciseName:
+		return "bike_exercise_name"
+	case BandedExercisesExerciseName:
+		return "banded_exercises_exercise_name"
+	case BattleRopeExerciseName:
+		return "battle_rope_exercise_name"
+	case EllipticalExerciseName:
+		return "elliptical_exercise_name"
+	case FloorClimbExerciseName:
+		return "floor_climb_exercise_name"
+	case IndoorBikeExerciseName:
+		return "indoor_bike_exercise_name"
+	case IndoorRowExerciseName:
+		return "indoor_row_exercise_name"
+	case LadderExerciseName:
+		return "ladder_exercise_name"
+	case SandbagExerciseName:
+		return "sandbag_exercise_name"
+	case SledExerciseName:
+		return "sled_exercise_name"
+	case SledgeHammerExerciseName:
+		return "sledge_hammer_exercise_name"
+	case StairStepperExerciseName:
+		return "stair_stepper_exercise_name"
+	case SuspensionExerciseName:
+		return "suspension_exercise_name"
+	case TireExerciseName:
+		return "tire_exercise_name"
+	case BikeOutdoorExerciseName:
+		return "bike_outdoor_exercise_name"
+	case RunIndoorExerciseName:
+		return "run_indoor_exercise_name"
 	case WaterType:
 		return "water_type"
 	case TissueModelType:
@@ -967,12 +1021,48 @@ func ProfileTypeFromString(s string) ProfileType {
 		return SquatExerciseName
 	case "total_body_exercise_name":
 		return TotalBodyExerciseName
+	case "move_exercise_name":
+		return MoveExerciseName
+	case "pose_exercise_name":
+		return PoseExerciseName
 	case "triceps_extension_exercise_name":
 		return TricepsExtensionExerciseName
 	case "warm_up_exercise_name":
 		return WarmUpExerciseName
 	case "run_exercise_name":
 		return RunExerciseName
+	case "bike_exercise_name":
+		return BikeExerciseName
+	case "banded_exercises_exercise_name":
+		return BandedExercisesExerciseName
+	case "battle_rope_exercise_name":
+		return BattleRopeExerciseName
+	case "elliptical_exercise_name":
+		return EllipticalExerciseName
+	case "floor_climb_exercise_name":
+		return FloorClimbExerciseName
+	case "indoor_bike_exercise_name":
+		return IndoorBikeExerciseName
+	case "indoor_row_exercise_name":
+		return IndoorRowExerciseName
+	case "ladder_exercise_name":
+		return LadderExerciseName
+	case "sandbag_exercise_name":
+		return SandbagExerciseName
+	case "sled_exercise_name":
+		return SledExerciseName
+	case "sledge_hammer_exercise_name":
+		return SledgeHammerExerciseName
+	case "stair_stepper_exercise_name":
+		return StairStepperExerciseName
+	case "suspension_exercise_name":
+		return SuspensionExerciseName
+	case "tire_exercise_name":
+		return TireExerciseName
+	case "bike_outdoor_exercise_name":
+		return BikeOutdoorExerciseName
+	case "run_indoor_exercise_name":
+		return RunIndoorExerciseName
 	case "water_type":
 		return WaterType
 	case "tissue_model_type":
@@ -1196,9 +1286,27 @@ func ListProfileType() []ProfileType {
 		SitUpExerciseName,
 		SquatExerciseName,
 		TotalBodyExerciseName,
+		MoveExerciseName,
+		PoseExerciseName,
 		TricepsExtensionExerciseName,
 		WarmUpExerciseName,
 		RunExerciseName,
+		BikeExerciseName,
+		BandedExercisesExerciseName,
+		BattleRopeExerciseName,
+		EllipticalExerciseName,
+		FloorClimbExerciseName,
+		IndoorBikeExerciseName,
+		IndoorRowExerciseName,
+		LadderExerciseName,
+		SandbagExerciseName,
+		SledExerciseName,
+		SledgeHammerExerciseName,
+		StairStepperExerciseName,
+		SuspensionExerciseName,
+		TireExerciseName,
+		BikeOutdoorExerciseName,
+		RunIndoorExerciseName,
 		WaterType,
 		TissueModelType,
 		DiveGasStatus,
@@ -1611,11 +1719,47 @@ func (p ProfileType) BaseType() basetype.BaseType {
 		return basetype.Uint16
 	case TotalBodyExerciseName:
 		return basetype.Uint16
+	case MoveExerciseName:
+		return basetype.Uint16
+	case PoseExerciseName:
+		return basetype.Uint16
 	case TricepsExtensionExerciseName:
 		return basetype.Uint16
 	case WarmUpExerciseName:
 		return basetype.Uint16
 	case RunExerciseName:
+		return basetype.Uint16
+	case BikeExerciseName:
+		return basetype.Uint16
+	case BandedExercisesExerciseName:
+		return basetype.Uint16
+	case BattleRopeExerciseName:
+		return basetype.Uint16
+	case EllipticalExerciseName:
+		return basetype.Uint16
+	case FloorClimbExerciseName:
+		return basetype.Uint16
+	case IndoorBikeExerciseName:
+		return basetype.Uint16
+	case IndoorRowExerciseName:
+		return basetype.Uint16
+	case LadderExerciseName:
+		return basetype.Uint16
+	case SandbagExerciseName:
+		return basetype.Uint16
+	case SledExerciseName:
+		return basetype.Uint16
+	case SledgeHammerExerciseName:
+		return basetype.Uint16
+	case StairStepperExerciseName:
+		return basetype.Uint16
+	case SuspensionExerciseName:
+		return basetype.Uint16
+	case TireExerciseName:
+		return basetype.Uint16
+	case BikeOutdoorExerciseName:
+		return basetype.Uint16
+	case RunIndoorExerciseName:
 		return basetype.Uint16
 	case WaterType:
 		return basetype.Enum

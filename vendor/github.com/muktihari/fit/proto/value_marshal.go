@@ -16,7 +16,7 @@ const ErrTypeNotSupported = errorString("type is not supported")
 // If arch is 0, marshal in Little-Endian, otherwise marshal in Big-Endian.
 func (v Value) MarshalAppend(b []byte, arch byte) ([]byte, error) {
 	// NOTE: The size of the resulting bytes should align with Sizeof.
-	switch v.typ {
+	switch v.Type() {
 	case TypeBool:
 		val := v.Bool()
 		if val > 1 {

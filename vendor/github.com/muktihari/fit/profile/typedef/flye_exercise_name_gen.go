@@ -23,6 +23,9 @@ const (
 	FlyeExerciseNameSwissBallDumbbellFlye             FlyeExerciseName = 7
 	FlyeExerciseNameArmRotations                      FlyeExerciseName = 8
 	FlyeExerciseNameHugATree                          FlyeExerciseName = 9
+	FlyeExerciseNameFaceDownInclineReverseFlye        FlyeExerciseName = 10
+	FlyeExerciseNameInclineReverseFlye                FlyeExerciseName = 11
+	FlyeExerciseNameRearDeltFlyWheelchair             FlyeExerciseName = 12
 	FlyeExerciseNameInvalid                           FlyeExerciseName = 0xFFFF
 )
 
@@ -50,6 +53,12 @@ func (f FlyeExerciseName) String() string {
 		return "arm_rotations"
 	case FlyeExerciseNameHugATree:
 		return "hug_a_tree"
+	case FlyeExerciseNameFaceDownInclineReverseFlye:
+		return "face_down_incline_reverse_flye"
+	case FlyeExerciseNameInclineReverseFlye:
+		return "incline_reverse_flye"
+	case FlyeExerciseNameRearDeltFlyWheelchair:
+		return "rear_delt_fly_wheelchair"
 	default:
 		return "FlyeExerciseNameInvalid(" + strconv.FormatUint(uint64(f), 10) + ")"
 	}
@@ -78,6 +87,12 @@ func FlyeExerciseNameFromString(s string) FlyeExerciseName {
 		return FlyeExerciseNameArmRotations
 	case "hug_a_tree":
 		return FlyeExerciseNameHugATree
+	case "face_down_incline_reverse_flye":
+		return FlyeExerciseNameFaceDownInclineReverseFlye
+	case "incline_reverse_flye":
+		return FlyeExerciseNameInclineReverseFlye
+	case "rear_delt_fly_wheelchair":
+		return FlyeExerciseNameRearDeltFlyWheelchair
 	default:
 		return FlyeExerciseNameInvalid
 	}
@@ -96,5 +111,8 @@ func ListFlyeExerciseName() []FlyeExerciseName {
 		FlyeExerciseNameSwissBallDumbbellFlye,
 		FlyeExerciseNameArmRotations,
 		FlyeExerciseNameHugATree,
+		FlyeExerciseNameFaceDownInclineReverseFlye,
+		FlyeExerciseNameInclineReverseFlye,
+		FlyeExerciseNameRearDeltFlyWheelchair,
 	}
 }

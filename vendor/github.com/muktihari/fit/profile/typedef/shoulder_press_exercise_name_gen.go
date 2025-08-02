@@ -37,6 +37,13 @@ const (
 	ShoulderPressExerciseNameSplitStanceHammerCurlToPress             ShoulderPressExerciseName = 21
 	ShoulderPressExerciseNameSwissBallDumbbellShoulderPress           ShoulderPressExerciseName = 22
 	ShoulderPressExerciseNameWeightPlateFrontRaise                    ShoulderPressExerciseName = 23
+	ShoulderPressExerciseNameDumbbellShoulderPress                    ShoulderPressExerciseName = 24
+	ShoulderPressExerciseNameMilitaryPress                            ShoulderPressExerciseName = 25
+	ShoulderPressExerciseNameStrictPress                              ShoulderPressExerciseName = 27
+	ShoulderPressExerciseNameDumbbellFrontRaise                       ShoulderPressExerciseName = 28
+	ShoulderPressExerciseNameDumbbellCurlToOverheadPressWheelchair    ShoulderPressExerciseName = 29
+	ShoulderPressExerciseNameArnoldPressWheelchair                    ShoulderPressExerciseName = 30
+	ShoulderPressExerciseNameOverheadDumbbellPressWheelchair          ShoulderPressExerciseName = 31
 	ShoulderPressExerciseNameInvalid                                  ShoulderPressExerciseName = 0xFFFF
 )
 
@@ -92,6 +99,20 @@ func (s ShoulderPressExerciseName) String() string {
 		return "swiss_ball_dumbbell_shoulder_press"
 	case ShoulderPressExerciseNameWeightPlateFrontRaise:
 		return "weight_plate_front_raise"
+	case ShoulderPressExerciseNameDumbbellShoulderPress:
+		return "dumbbell_shoulder_press"
+	case ShoulderPressExerciseNameMilitaryPress:
+		return "military_press"
+	case ShoulderPressExerciseNameStrictPress:
+		return "strict_press"
+	case ShoulderPressExerciseNameDumbbellFrontRaise:
+		return "dumbbell_front_raise"
+	case ShoulderPressExerciseNameDumbbellCurlToOverheadPressWheelchair:
+		return "dumbbell_curl_to_overhead_press_wheelchair"
+	case ShoulderPressExerciseNameArnoldPressWheelchair:
+		return "arnold_press_wheelchair"
+	case ShoulderPressExerciseNameOverheadDumbbellPressWheelchair:
+		return "overhead_dumbbell_press_wheelchair"
 	default:
 		return "ShoulderPressExerciseNameInvalid(" + strconv.FormatUint(uint64(s), 10) + ")"
 	}
@@ -148,6 +169,20 @@ func ShoulderPressExerciseNameFromString(s string) ShoulderPressExerciseName {
 		return ShoulderPressExerciseNameSwissBallDumbbellShoulderPress
 	case "weight_plate_front_raise":
 		return ShoulderPressExerciseNameWeightPlateFrontRaise
+	case "dumbbell_shoulder_press":
+		return ShoulderPressExerciseNameDumbbellShoulderPress
+	case "military_press":
+		return ShoulderPressExerciseNameMilitaryPress
+	case "strict_press":
+		return ShoulderPressExerciseNameStrictPress
+	case "dumbbell_front_raise":
+		return ShoulderPressExerciseNameDumbbellFrontRaise
+	case "dumbbell_curl_to_overhead_press_wheelchair":
+		return ShoulderPressExerciseNameDumbbellCurlToOverheadPressWheelchair
+	case "arnold_press_wheelchair":
+		return ShoulderPressExerciseNameArnoldPressWheelchair
+	case "overhead_dumbbell_press_wheelchair":
+		return ShoulderPressExerciseNameOverheadDumbbellPressWheelchair
 	default:
 		return ShoulderPressExerciseNameInvalid
 	}
@@ -180,5 +215,12 @@ func ListShoulderPressExerciseName() []ShoulderPressExerciseName {
 		ShoulderPressExerciseNameSplitStanceHammerCurlToPress,
 		ShoulderPressExerciseNameSwissBallDumbbellShoulderPress,
 		ShoulderPressExerciseNameWeightPlateFrontRaise,
+		ShoulderPressExerciseNameDumbbellShoulderPress,
+		ShoulderPressExerciseNameMilitaryPress,
+		ShoulderPressExerciseNameStrictPress,
+		ShoulderPressExerciseNameDumbbellFrontRaise,
+		ShoulderPressExerciseNameDumbbellCurlToOverheadPressWheelchair,
+		ShoulderPressExerciseNameArnoldPressWheelchair,
+		ShoulderPressExerciseNameOverheadDumbbellPressWheelchair,
 	}
 }

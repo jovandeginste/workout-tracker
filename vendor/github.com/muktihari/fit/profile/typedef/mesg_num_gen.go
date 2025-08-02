@@ -26,6 +26,7 @@ const (
 	MesgNumPowerZone                   MesgNum = 9
 	MesgNumMetZone                     MesgNum = 10
 	MesgNumSport                       MesgNum = 12
+	MesgNumTrainingSettings            MesgNum = 13
 	MesgNumGoal                        MesgNum = 15
 	MesgNumSession                     MesgNum = 18
 	MesgNumLap                         MesgNum = 19
@@ -170,6 +171,8 @@ func (m MesgNum) String() string {
 		return "met_zone"
 	case MesgNumSport:
 		return "sport"
+	case MesgNumTrainingSettings:
+		return "training_settings"
 	case MesgNumGoal:
 		return "goal"
 	case MesgNumSession:
@@ -425,6 +428,8 @@ func MesgNumFromString(s string) MesgNum {
 		return MesgNumMetZone
 	case "sport":
 		return MesgNumSport
+	case "training_settings":
+		return MesgNumTrainingSettings
 	case "goal":
 		return MesgNumGoal
 	case "session":
@@ -668,6 +673,7 @@ func ListMesgNum() []MesgNum {
 		MesgNumPowerZone,
 		MesgNumMetZone,
 		MesgNumSport,
+		MesgNumTrainingSettings,
 		MesgNumGoal,
 		MesgNumSession,
 		MesgNumLap,
@@ -790,10 +796,6 @@ func ListMesgNum() []MesgNum {
 //
 // This is intended for those who prefer using this SDK as it is without the need to generate custom SDK using cmd/fitgen.
 func MesgNumRegister(v MesgNum, s string) error {
-	if v >= MesgNumInvalid {
-		return fmt.Errorf("could not register outside max range: %d", MesgNumInvalid)
-	}
-
 	switch v {
 	case MesgNumFileId:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumFileId", v)
@@ -819,6 +821,8 @@ func MesgNumRegister(v MesgNum, s string) error {
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumMetZone", v)
 	case MesgNumSport:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumSport", v)
+	case MesgNumTrainingSettings:
+		return fmt.Errorf("duplicate: %d is already exist for MesgNumTrainingSettings", v)
 	case MesgNumGoal:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumGoal", v)
 	case MesgNumSession:
@@ -1039,6 +1043,8 @@ func MesgNumRegister(v MesgNum, s string) error {
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumMfgRangeMin", v)
 	case MesgNumMfgRangeMax:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumMfgRangeMax", v)
+	case MesgNumInvalid:
+		return fmt.Errorf("duplicate: %d is already exist for MesgNumInvalid", v)
 	}
 
 	mesgnumToString[v] = s

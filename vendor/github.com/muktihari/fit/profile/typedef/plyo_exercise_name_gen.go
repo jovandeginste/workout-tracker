@@ -46,6 +46,11 @@ const (
 	PlyoExerciseNameWeightedSquatJumpOntoBox              PlyoExerciseName = 30
 	PlyoExerciseNameSquatJumpsInAndOut                    PlyoExerciseName = 31
 	PlyoExerciseNameWeightedSquatJumpsInAndOut            PlyoExerciseName = 32
+	PlyoExerciseNameBoxJump                               PlyoExerciseName = 33
+	PlyoExerciseNameBoxJumpOvers                          PlyoExerciseName = 34
+	PlyoExerciseNameBoxJumpOversOverTheBox                PlyoExerciseName = 35
+	PlyoExerciseNameStarJumpSquats                        PlyoExerciseName = 36
+	PlyoExerciseNameJumpSquat                             PlyoExerciseName = 37
 	PlyoExerciseNameInvalid                               PlyoExerciseName = 0xFFFF
 )
 
@@ -119,6 +124,16 @@ func (p PlyoExerciseName) String() string {
 		return "squat_jumps_in_and_out"
 	case PlyoExerciseNameWeightedSquatJumpsInAndOut:
 		return "weighted_squat_jumps_in_and_out"
+	case PlyoExerciseNameBoxJump:
+		return "box_jump"
+	case PlyoExerciseNameBoxJumpOvers:
+		return "box_jump_overs"
+	case PlyoExerciseNameBoxJumpOversOverTheBox:
+		return "box_jump_overs_over_the_box"
+	case PlyoExerciseNameStarJumpSquats:
+		return "star_jump_squats"
+	case PlyoExerciseNameJumpSquat:
+		return "jump_squat"
 	default:
 		return "PlyoExerciseNameInvalid(" + strconv.FormatUint(uint64(p), 10) + ")"
 	}
@@ -193,6 +208,16 @@ func PlyoExerciseNameFromString(s string) PlyoExerciseName {
 		return PlyoExerciseNameSquatJumpsInAndOut
 	case "weighted_squat_jumps_in_and_out":
 		return PlyoExerciseNameWeightedSquatJumpsInAndOut
+	case "box_jump":
+		return PlyoExerciseNameBoxJump
+	case "box_jump_overs":
+		return PlyoExerciseNameBoxJumpOvers
+	case "box_jump_overs_over_the_box":
+		return PlyoExerciseNameBoxJumpOversOverTheBox
+	case "star_jump_squats":
+		return PlyoExerciseNameStarJumpSquats
+	case "jump_squat":
+		return PlyoExerciseNameJumpSquat
 	default:
 		return PlyoExerciseNameInvalid
 	}
@@ -234,5 +259,10 @@ func ListPlyoExerciseName() []PlyoExerciseName {
 		PlyoExerciseNameWeightedSquatJumpOntoBox,
 		PlyoExerciseNameSquatJumpsInAndOut,
 		PlyoExerciseNameWeightedSquatJumpsInAndOut,
+		PlyoExerciseNameBoxJump,
+		PlyoExerciseNameBoxJumpOvers,
+		PlyoExerciseNameBoxJumpOversOverTheBox,
+		PlyoExerciseNameStarJumpSquats,
+		PlyoExerciseNameJumpSquat,
 	}
 }

@@ -44,6 +44,66 @@ const (
 	WarmUpExerciseNameWalkingLegCradles           WarmUpExerciseName = 28
 	WarmUpExerciseNameWalkout                     WarmUpExerciseName = 29
 	WarmUpExerciseNameWalkoutFromPushUpPosition   WarmUpExerciseName = 30
+	WarmUpExerciseNameBicepsStretch               WarmUpExerciseName = 31
+	WarmUpExerciseNameGlutesStretch               WarmUpExerciseName = 32
+	WarmUpExerciseNameStandingHamstringStretch    WarmUpExerciseName = 33
+	WarmUpExerciseNameStretch9090                 WarmUpExerciseName = 34
+	WarmUpExerciseNameStretchAbs                  WarmUpExerciseName = 35
+	WarmUpExerciseNameStretchButterfly            WarmUpExerciseName = 36
+	WarmUpExerciseNameStretchCalf                 WarmUpExerciseName = 37
+	WarmUpExerciseNameStretchCatCow               WarmUpExerciseName = 38
+	WarmUpExerciseNameStretchChildsPose           WarmUpExerciseName = 39
+	WarmUpExerciseNameStretchCobra                WarmUpExerciseName = 40
+	WarmUpExerciseNameStretchForearms             WarmUpExerciseName = 41
+	WarmUpExerciseNameStretchForwardGlutes        WarmUpExerciseName = 42
+	WarmUpExerciseNameStretchFrontSplit           WarmUpExerciseName = 43
+	WarmUpExerciseNameStretchHamstring            WarmUpExerciseName = 44
+	WarmUpExerciseNameStretchHipFlexorAndQuad     WarmUpExerciseName = 45
+	WarmUpExerciseNameStretchLat                  WarmUpExerciseName = 46
+	WarmUpExerciseNameStretchLevatorScapulae      WarmUpExerciseName = 47
+	WarmUpExerciseNameStretchLungeWithSpinalTwist WarmUpExerciseName = 48
+	WarmUpExerciseNameStretchLungingHipFlexor     WarmUpExerciseName = 49
+	WarmUpExerciseNameStretchLyingAbduction       WarmUpExerciseName = 50
+	WarmUpExerciseNameStretchLyingItBand          WarmUpExerciseName = 51
+	WarmUpExerciseNameStretchLyingKneeToChest     WarmUpExerciseName = 52
+	WarmUpExerciseNameStretchLyingPiriformis      WarmUpExerciseName = 53
+	WarmUpExerciseNameStretchLyingSpinalTwist     WarmUpExerciseName = 54
+	WarmUpExerciseNameStretchNeck                 WarmUpExerciseName = 55
+	WarmUpExerciseNameStretchObliques             WarmUpExerciseName = 56
+	WarmUpExerciseNameStretchOverUnderShoulder    WarmUpExerciseName = 57
+	WarmUpExerciseNameStretchPectoral             WarmUpExerciseName = 58
+	WarmUpExerciseNameStretchPigeonPose           WarmUpExerciseName = 59
+	WarmUpExerciseNameStretchPiriformis           WarmUpExerciseName = 60
+	WarmUpExerciseNameStretchQuad                 WarmUpExerciseName = 61
+	WarmUpExerciseNameStretchScorpion             WarmUpExerciseName = 62
+	WarmUpExerciseNameStretchShoulder             WarmUpExerciseName = 63
+	WarmUpExerciseNameStretchSide                 WarmUpExerciseName = 64
+	WarmUpExerciseNameStretchSideLunge            WarmUpExerciseName = 65
+	WarmUpExerciseNameStretchSideSplit            WarmUpExerciseName = 66
+	WarmUpExerciseNameStretchStandingItBand       WarmUpExerciseName = 67
+	WarmUpExerciseNameStretchStraddle             WarmUpExerciseName = 68
+	WarmUpExerciseNameStretchTriceps              WarmUpExerciseName = 69
+	WarmUpExerciseNameStretchWallChestAndShoulder WarmUpExerciseName = 70
+	WarmUpExerciseNameNeckRotationsWheelchair     WarmUpExerciseName = 71
+	WarmUpExerciseNameHalfKneelingArmRotation     WarmUpExerciseName = 72
+	WarmUpExerciseNameThreeWayAnkleMobilization   WarmUpExerciseName = 73
+	WarmUpExerciseNameNinetyNinetyHipSwitch       WarmUpExerciseName = 74 // 90_90_hip_switch
+	WarmUpExerciseNameActiveFrog                  WarmUpExerciseName = 75
+	WarmUpExerciseNameShoulderSweeps              WarmUpExerciseName = 76
+	WarmUpExerciseNameAnkleLunges                 WarmUpExerciseName = 77
+	WarmUpExerciseNameBackRollFoamRoller          WarmUpExerciseName = 78
+	WarmUpExerciseNameBearCrawl                   WarmUpExerciseName = 79
+	WarmUpExerciseNameLatissimusDorsiFoamRoll     WarmUpExerciseName = 80
+	WarmUpExerciseNameReverseTHipOpener           WarmUpExerciseName = 81
+	WarmUpExerciseNameShoulderRolls               WarmUpExerciseName = 82
+	WarmUpExerciseNameChestOpeners                WarmUpExerciseName = 83
+	WarmUpExerciseNameTricepsStretch              WarmUpExerciseName = 84
+	WarmUpExerciseNameUpperBackStretch            WarmUpExerciseName = 85
+	WarmUpExerciseNameHipCircles                  WarmUpExerciseName = 86
+	WarmUpExerciseNameAnkleStretch                WarmUpExerciseName = 87
+	WarmUpExerciseNameMarchingInPlace             WarmUpExerciseName = 88
+	WarmUpExerciseNameTricepsStretchWheelchair    WarmUpExerciseName = 89
+	WarmUpExerciseNameUpperBackStretchWheelchair  WarmUpExerciseName = 90
 	WarmUpExerciseNameInvalid                     WarmUpExerciseName = 0xFFFF
 )
 
@@ -113,6 +173,126 @@ func (w WarmUpExerciseName) String() string {
 		return "walkout"
 	case WarmUpExerciseNameWalkoutFromPushUpPosition:
 		return "walkout_from_push_up_position"
+	case WarmUpExerciseNameBicepsStretch:
+		return "biceps_stretch"
+	case WarmUpExerciseNameGlutesStretch:
+		return "glutes_stretch"
+	case WarmUpExerciseNameStandingHamstringStretch:
+		return "standing_hamstring_stretch"
+	case WarmUpExerciseNameStretch9090:
+		return "stretch_90_90"
+	case WarmUpExerciseNameStretchAbs:
+		return "stretch_abs"
+	case WarmUpExerciseNameStretchButterfly:
+		return "stretch_butterfly"
+	case WarmUpExerciseNameStretchCalf:
+		return "stretch_calf"
+	case WarmUpExerciseNameStretchCatCow:
+		return "stretch_cat_cow"
+	case WarmUpExerciseNameStretchChildsPose:
+		return "stretch_childs_pose"
+	case WarmUpExerciseNameStretchCobra:
+		return "stretch_cobra"
+	case WarmUpExerciseNameStretchForearms:
+		return "stretch_forearms"
+	case WarmUpExerciseNameStretchForwardGlutes:
+		return "stretch_forward_glutes"
+	case WarmUpExerciseNameStretchFrontSplit:
+		return "stretch_front_split"
+	case WarmUpExerciseNameStretchHamstring:
+		return "stretch_hamstring"
+	case WarmUpExerciseNameStretchHipFlexorAndQuad:
+		return "stretch_hip_flexor_and_quad"
+	case WarmUpExerciseNameStretchLat:
+		return "stretch_lat"
+	case WarmUpExerciseNameStretchLevatorScapulae:
+		return "stretch_levator_scapulae"
+	case WarmUpExerciseNameStretchLungeWithSpinalTwist:
+		return "stretch_lunge_with_spinal_twist"
+	case WarmUpExerciseNameStretchLungingHipFlexor:
+		return "stretch_lunging_hip_flexor"
+	case WarmUpExerciseNameStretchLyingAbduction:
+		return "stretch_lying_abduction"
+	case WarmUpExerciseNameStretchLyingItBand:
+		return "stretch_lying_it_band"
+	case WarmUpExerciseNameStretchLyingKneeToChest:
+		return "stretch_lying_knee_to_chest"
+	case WarmUpExerciseNameStretchLyingPiriformis:
+		return "stretch_lying_piriformis"
+	case WarmUpExerciseNameStretchLyingSpinalTwist:
+		return "stretch_lying_spinal_twist"
+	case WarmUpExerciseNameStretchNeck:
+		return "stretch_neck"
+	case WarmUpExerciseNameStretchObliques:
+		return "stretch_obliques"
+	case WarmUpExerciseNameStretchOverUnderShoulder:
+		return "stretch_over_under_shoulder"
+	case WarmUpExerciseNameStretchPectoral:
+		return "stretch_pectoral"
+	case WarmUpExerciseNameStretchPigeonPose:
+		return "stretch_pigeon_pose"
+	case WarmUpExerciseNameStretchPiriformis:
+		return "stretch_piriformis"
+	case WarmUpExerciseNameStretchQuad:
+		return "stretch_quad"
+	case WarmUpExerciseNameStretchScorpion:
+		return "stretch_scorpion"
+	case WarmUpExerciseNameStretchShoulder:
+		return "stretch_shoulder"
+	case WarmUpExerciseNameStretchSide:
+		return "stretch_side"
+	case WarmUpExerciseNameStretchSideLunge:
+		return "stretch_side_lunge"
+	case WarmUpExerciseNameStretchSideSplit:
+		return "stretch_side_split"
+	case WarmUpExerciseNameStretchStandingItBand:
+		return "stretch_standing_it_band"
+	case WarmUpExerciseNameStretchStraddle:
+		return "stretch_straddle"
+	case WarmUpExerciseNameStretchTriceps:
+		return "stretch_triceps"
+	case WarmUpExerciseNameStretchWallChestAndShoulder:
+		return "stretch_wall_chest_and_shoulder"
+	case WarmUpExerciseNameNeckRotationsWheelchair:
+		return "neck_rotations_wheelchair"
+	case WarmUpExerciseNameHalfKneelingArmRotation:
+		return "half_kneeling_arm_rotation"
+	case WarmUpExerciseNameThreeWayAnkleMobilization:
+		return "three_way_ankle_mobilization"
+	case WarmUpExerciseNameNinetyNinetyHipSwitch:
+		return "ninety_ninety_hip_switch"
+	case WarmUpExerciseNameActiveFrog:
+		return "active_frog"
+	case WarmUpExerciseNameShoulderSweeps:
+		return "shoulder_sweeps"
+	case WarmUpExerciseNameAnkleLunges:
+		return "ankle_lunges"
+	case WarmUpExerciseNameBackRollFoamRoller:
+		return "back_roll_foam_roller"
+	case WarmUpExerciseNameBearCrawl:
+		return "bear_crawl"
+	case WarmUpExerciseNameLatissimusDorsiFoamRoll:
+		return "latissimus_dorsi_foam_roll"
+	case WarmUpExerciseNameReverseTHipOpener:
+		return "reverse_t_hip_opener"
+	case WarmUpExerciseNameShoulderRolls:
+		return "shoulder_rolls"
+	case WarmUpExerciseNameChestOpeners:
+		return "chest_openers"
+	case WarmUpExerciseNameTricepsStretch:
+		return "triceps_stretch"
+	case WarmUpExerciseNameUpperBackStretch:
+		return "upper_back_stretch"
+	case WarmUpExerciseNameHipCircles:
+		return "hip_circles"
+	case WarmUpExerciseNameAnkleStretch:
+		return "ankle_stretch"
+	case WarmUpExerciseNameMarchingInPlace:
+		return "marching_in_place"
+	case WarmUpExerciseNameTricepsStretchWheelchair:
+		return "triceps_stretch_wheelchair"
+	case WarmUpExerciseNameUpperBackStretchWheelchair:
+		return "upper_back_stretch_wheelchair"
 	default:
 		return "WarmUpExerciseNameInvalid(" + strconv.FormatUint(uint64(w), 10) + ")"
 	}
@@ -183,6 +363,126 @@ func WarmUpExerciseNameFromString(s string) WarmUpExerciseName {
 		return WarmUpExerciseNameWalkout
 	case "walkout_from_push_up_position":
 		return WarmUpExerciseNameWalkoutFromPushUpPosition
+	case "biceps_stretch":
+		return WarmUpExerciseNameBicepsStretch
+	case "glutes_stretch":
+		return WarmUpExerciseNameGlutesStretch
+	case "standing_hamstring_stretch":
+		return WarmUpExerciseNameStandingHamstringStretch
+	case "stretch_90_90":
+		return WarmUpExerciseNameStretch9090
+	case "stretch_abs":
+		return WarmUpExerciseNameStretchAbs
+	case "stretch_butterfly":
+		return WarmUpExerciseNameStretchButterfly
+	case "stretch_calf":
+		return WarmUpExerciseNameStretchCalf
+	case "stretch_cat_cow":
+		return WarmUpExerciseNameStretchCatCow
+	case "stretch_childs_pose":
+		return WarmUpExerciseNameStretchChildsPose
+	case "stretch_cobra":
+		return WarmUpExerciseNameStretchCobra
+	case "stretch_forearms":
+		return WarmUpExerciseNameStretchForearms
+	case "stretch_forward_glutes":
+		return WarmUpExerciseNameStretchForwardGlutes
+	case "stretch_front_split":
+		return WarmUpExerciseNameStretchFrontSplit
+	case "stretch_hamstring":
+		return WarmUpExerciseNameStretchHamstring
+	case "stretch_hip_flexor_and_quad":
+		return WarmUpExerciseNameStretchHipFlexorAndQuad
+	case "stretch_lat":
+		return WarmUpExerciseNameStretchLat
+	case "stretch_levator_scapulae":
+		return WarmUpExerciseNameStretchLevatorScapulae
+	case "stretch_lunge_with_spinal_twist":
+		return WarmUpExerciseNameStretchLungeWithSpinalTwist
+	case "stretch_lunging_hip_flexor":
+		return WarmUpExerciseNameStretchLungingHipFlexor
+	case "stretch_lying_abduction":
+		return WarmUpExerciseNameStretchLyingAbduction
+	case "stretch_lying_it_band":
+		return WarmUpExerciseNameStretchLyingItBand
+	case "stretch_lying_knee_to_chest":
+		return WarmUpExerciseNameStretchLyingKneeToChest
+	case "stretch_lying_piriformis":
+		return WarmUpExerciseNameStretchLyingPiriformis
+	case "stretch_lying_spinal_twist":
+		return WarmUpExerciseNameStretchLyingSpinalTwist
+	case "stretch_neck":
+		return WarmUpExerciseNameStretchNeck
+	case "stretch_obliques":
+		return WarmUpExerciseNameStretchObliques
+	case "stretch_over_under_shoulder":
+		return WarmUpExerciseNameStretchOverUnderShoulder
+	case "stretch_pectoral":
+		return WarmUpExerciseNameStretchPectoral
+	case "stretch_pigeon_pose":
+		return WarmUpExerciseNameStretchPigeonPose
+	case "stretch_piriformis":
+		return WarmUpExerciseNameStretchPiriformis
+	case "stretch_quad":
+		return WarmUpExerciseNameStretchQuad
+	case "stretch_scorpion":
+		return WarmUpExerciseNameStretchScorpion
+	case "stretch_shoulder":
+		return WarmUpExerciseNameStretchShoulder
+	case "stretch_side":
+		return WarmUpExerciseNameStretchSide
+	case "stretch_side_lunge":
+		return WarmUpExerciseNameStretchSideLunge
+	case "stretch_side_split":
+		return WarmUpExerciseNameStretchSideSplit
+	case "stretch_standing_it_band":
+		return WarmUpExerciseNameStretchStandingItBand
+	case "stretch_straddle":
+		return WarmUpExerciseNameStretchStraddle
+	case "stretch_triceps":
+		return WarmUpExerciseNameStretchTriceps
+	case "stretch_wall_chest_and_shoulder":
+		return WarmUpExerciseNameStretchWallChestAndShoulder
+	case "neck_rotations_wheelchair":
+		return WarmUpExerciseNameNeckRotationsWheelchair
+	case "half_kneeling_arm_rotation":
+		return WarmUpExerciseNameHalfKneelingArmRotation
+	case "three_way_ankle_mobilization":
+		return WarmUpExerciseNameThreeWayAnkleMobilization
+	case "ninety_ninety_hip_switch":
+		return WarmUpExerciseNameNinetyNinetyHipSwitch
+	case "active_frog":
+		return WarmUpExerciseNameActiveFrog
+	case "shoulder_sweeps":
+		return WarmUpExerciseNameShoulderSweeps
+	case "ankle_lunges":
+		return WarmUpExerciseNameAnkleLunges
+	case "back_roll_foam_roller":
+		return WarmUpExerciseNameBackRollFoamRoller
+	case "bear_crawl":
+		return WarmUpExerciseNameBearCrawl
+	case "latissimus_dorsi_foam_roll":
+		return WarmUpExerciseNameLatissimusDorsiFoamRoll
+	case "reverse_t_hip_opener":
+		return WarmUpExerciseNameReverseTHipOpener
+	case "shoulder_rolls":
+		return WarmUpExerciseNameShoulderRolls
+	case "chest_openers":
+		return WarmUpExerciseNameChestOpeners
+	case "triceps_stretch":
+		return WarmUpExerciseNameTricepsStretch
+	case "upper_back_stretch":
+		return WarmUpExerciseNameUpperBackStretch
+	case "hip_circles":
+		return WarmUpExerciseNameHipCircles
+	case "ankle_stretch":
+		return WarmUpExerciseNameAnkleStretch
+	case "marching_in_place":
+		return WarmUpExerciseNameMarchingInPlace
+	case "triceps_stretch_wheelchair":
+		return WarmUpExerciseNameTricepsStretchWheelchair
+	case "upper_back_stretch_wheelchair":
+		return WarmUpExerciseNameUpperBackStretchWheelchair
 	default:
 		return WarmUpExerciseNameInvalid
 	}
@@ -222,5 +522,65 @@ func ListWarmUpExerciseName() []WarmUpExerciseName {
 		WarmUpExerciseNameWalkingLegCradles,
 		WarmUpExerciseNameWalkout,
 		WarmUpExerciseNameWalkoutFromPushUpPosition,
+		WarmUpExerciseNameBicepsStretch,
+		WarmUpExerciseNameGlutesStretch,
+		WarmUpExerciseNameStandingHamstringStretch,
+		WarmUpExerciseNameStretch9090,
+		WarmUpExerciseNameStretchAbs,
+		WarmUpExerciseNameStretchButterfly,
+		WarmUpExerciseNameStretchCalf,
+		WarmUpExerciseNameStretchCatCow,
+		WarmUpExerciseNameStretchChildsPose,
+		WarmUpExerciseNameStretchCobra,
+		WarmUpExerciseNameStretchForearms,
+		WarmUpExerciseNameStretchForwardGlutes,
+		WarmUpExerciseNameStretchFrontSplit,
+		WarmUpExerciseNameStretchHamstring,
+		WarmUpExerciseNameStretchHipFlexorAndQuad,
+		WarmUpExerciseNameStretchLat,
+		WarmUpExerciseNameStretchLevatorScapulae,
+		WarmUpExerciseNameStretchLungeWithSpinalTwist,
+		WarmUpExerciseNameStretchLungingHipFlexor,
+		WarmUpExerciseNameStretchLyingAbduction,
+		WarmUpExerciseNameStretchLyingItBand,
+		WarmUpExerciseNameStretchLyingKneeToChest,
+		WarmUpExerciseNameStretchLyingPiriformis,
+		WarmUpExerciseNameStretchLyingSpinalTwist,
+		WarmUpExerciseNameStretchNeck,
+		WarmUpExerciseNameStretchObliques,
+		WarmUpExerciseNameStretchOverUnderShoulder,
+		WarmUpExerciseNameStretchPectoral,
+		WarmUpExerciseNameStretchPigeonPose,
+		WarmUpExerciseNameStretchPiriformis,
+		WarmUpExerciseNameStretchQuad,
+		WarmUpExerciseNameStretchScorpion,
+		WarmUpExerciseNameStretchShoulder,
+		WarmUpExerciseNameStretchSide,
+		WarmUpExerciseNameStretchSideLunge,
+		WarmUpExerciseNameStretchSideSplit,
+		WarmUpExerciseNameStretchStandingItBand,
+		WarmUpExerciseNameStretchStraddle,
+		WarmUpExerciseNameStretchTriceps,
+		WarmUpExerciseNameStretchWallChestAndShoulder,
+		WarmUpExerciseNameNeckRotationsWheelchair,
+		WarmUpExerciseNameHalfKneelingArmRotation,
+		WarmUpExerciseNameThreeWayAnkleMobilization,
+		WarmUpExerciseNameNinetyNinetyHipSwitch,
+		WarmUpExerciseNameActiveFrog,
+		WarmUpExerciseNameShoulderSweeps,
+		WarmUpExerciseNameAnkleLunges,
+		WarmUpExerciseNameBackRollFoamRoller,
+		WarmUpExerciseNameBearCrawl,
+		WarmUpExerciseNameLatissimusDorsiFoamRoll,
+		WarmUpExerciseNameReverseTHipOpener,
+		WarmUpExerciseNameShoulderRolls,
+		WarmUpExerciseNameChestOpeners,
+		WarmUpExerciseNameTricepsStretch,
+		WarmUpExerciseNameUpperBackStretch,
+		WarmUpExerciseNameHipCircles,
+		WarmUpExerciseNameAnkleStretch,
+		WarmUpExerciseNameMarchingInPlace,
+		WarmUpExerciseNameTricepsStretchWheelchair,
+		WarmUpExerciseNameUpperBackStretchWheelchair,
 	}
 }

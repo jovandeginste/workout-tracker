@@ -13,29 +13,50 @@ import (
 type CardioExerciseName uint16
 
 const (
-	CardioExerciseNameBobAndWeaveCircle         CardioExerciseName = 0
-	CardioExerciseNameWeightedBobAndWeaveCircle CardioExerciseName = 1
-	CardioExerciseNameCardioCoreCrawl           CardioExerciseName = 2
-	CardioExerciseNameWeightedCardioCoreCrawl   CardioExerciseName = 3
-	CardioExerciseNameDoubleUnder               CardioExerciseName = 4
-	CardioExerciseNameWeightedDoubleUnder       CardioExerciseName = 5
-	CardioExerciseNameJumpRope                  CardioExerciseName = 6
-	CardioExerciseNameWeightedJumpRope          CardioExerciseName = 7
-	CardioExerciseNameJumpRopeCrossover         CardioExerciseName = 8
-	CardioExerciseNameWeightedJumpRopeCrossover CardioExerciseName = 9
-	CardioExerciseNameJumpRopeJog               CardioExerciseName = 10
-	CardioExerciseNameWeightedJumpRopeJog       CardioExerciseName = 11
-	CardioExerciseNameJumpingJacks              CardioExerciseName = 12
-	CardioExerciseNameWeightedJumpingJacks      CardioExerciseName = 13
-	CardioExerciseNameSkiMoguls                 CardioExerciseName = 14
-	CardioExerciseNameWeightedSkiMoguls         CardioExerciseName = 15
-	CardioExerciseNameSplitJacks                CardioExerciseName = 16
-	CardioExerciseNameWeightedSplitJacks        CardioExerciseName = 17
-	CardioExerciseNameSquatJacks                CardioExerciseName = 18
-	CardioExerciseNameWeightedSquatJacks        CardioExerciseName = 19
-	CardioExerciseNameTripleUnder               CardioExerciseName = 20
-	CardioExerciseNameWeightedTripleUnder       CardioExerciseName = 21
-	CardioExerciseNameInvalid                   CardioExerciseName = 0xFFFF
+	CardioExerciseNameBobAndWeaveCircle               CardioExerciseName = 0
+	CardioExerciseNameWeightedBobAndWeaveCircle       CardioExerciseName = 1
+	CardioExerciseNameCardioCoreCrawl                 CardioExerciseName = 2
+	CardioExerciseNameWeightedCardioCoreCrawl         CardioExerciseName = 3
+	CardioExerciseNameDoubleUnder                     CardioExerciseName = 4
+	CardioExerciseNameWeightedDoubleUnder             CardioExerciseName = 5
+	CardioExerciseNameJumpRope                        CardioExerciseName = 6
+	CardioExerciseNameWeightedJumpRope                CardioExerciseName = 7
+	CardioExerciseNameJumpRopeCrossover               CardioExerciseName = 8
+	CardioExerciseNameWeightedJumpRopeCrossover       CardioExerciseName = 9
+	CardioExerciseNameJumpRopeJog                     CardioExerciseName = 10
+	CardioExerciseNameWeightedJumpRopeJog             CardioExerciseName = 11
+	CardioExerciseNameJumpingJacks                    CardioExerciseName = 12
+	CardioExerciseNameWeightedJumpingJacks            CardioExerciseName = 13
+	CardioExerciseNameSkiMoguls                       CardioExerciseName = 14
+	CardioExerciseNameWeightedSkiMoguls               CardioExerciseName = 15
+	CardioExerciseNameSplitJacks                      CardioExerciseName = 16
+	CardioExerciseNameWeightedSplitJacks              CardioExerciseName = 17
+	CardioExerciseNameSquatJacks                      CardioExerciseName = 18
+	CardioExerciseNameWeightedSquatJacks              CardioExerciseName = 19
+	CardioExerciseNameTripleUnder                     CardioExerciseName = 20
+	CardioExerciseNameWeightedTripleUnder             CardioExerciseName = 21
+	CardioExerciseNameElliptical                      CardioExerciseName = 22
+	CardioExerciseNameSpinning                        CardioExerciseName = 23
+	CardioExerciseNamePolePaddleForwardWheelchair     CardioExerciseName = 24
+	CardioExerciseNamePolePaddleBackwardWheelchair    CardioExerciseName = 25
+	CardioExerciseNamePoleHandcycleForwardWheelchair  CardioExerciseName = 26
+	CardioExerciseNamePoleHandcycleBackwardWheelchair CardioExerciseName = 27
+	CardioExerciseNamePoleRainbowWheelchair           CardioExerciseName = 28
+	CardioExerciseNameDoublePunchForwardWheelchair    CardioExerciseName = 29
+	CardioExerciseNameDoublePunchDownWheelchair       CardioExerciseName = 30
+	CardioExerciseNameDoublePunchSidewaysWheelchair   CardioExerciseName = 31
+	CardioExerciseNameDoublePunchUpWheelchair         CardioExerciseName = 32
+	CardioExerciseNameSitSkiWheelchair                CardioExerciseName = 33
+	CardioExerciseNameSittingJacksWheelchair          CardioExerciseName = 34
+	CardioExerciseNamePunchForwardWheelchair          CardioExerciseName = 35
+	CardioExerciseNamePunchDownWheelchair             CardioExerciseName = 36
+	CardioExerciseNamePunchSidewaysWheelchair         CardioExerciseName = 37
+	CardioExerciseNamePunchUpWheelchair               CardioExerciseName = 38
+	CardioExerciseNamePunchBagWheelchair              CardioExerciseName = 39
+	CardioExerciseNamePoleDdFfUuWheelchair            CardioExerciseName = 40
+	CardioExerciseNameButterflyArmsWheelchair         CardioExerciseName = 41
+	CardioExerciseNamePunch                           CardioExerciseName = 42
+	CardioExerciseNameInvalid                         CardioExerciseName = 0xFFFF
 )
 
 func (c CardioExerciseName) Uint16() uint16 { return uint16(c) }
@@ -86,6 +107,48 @@ func (c CardioExerciseName) String() string {
 		return "triple_under"
 	case CardioExerciseNameWeightedTripleUnder:
 		return "weighted_triple_under"
+	case CardioExerciseNameElliptical:
+		return "elliptical"
+	case CardioExerciseNameSpinning:
+		return "spinning"
+	case CardioExerciseNamePolePaddleForwardWheelchair:
+		return "pole_paddle_forward_wheelchair"
+	case CardioExerciseNamePolePaddleBackwardWheelchair:
+		return "pole_paddle_backward_wheelchair"
+	case CardioExerciseNamePoleHandcycleForwardWheelchair:
+		return "pole_handcycle_forward_wheelchair"
+	case CardioExerciseNamePoleHandcycleBackwardWheelchair:
+		return "pole_handcycle_backward_wheelchair"
+	case CardioExerciseNamePoleRainbowWheelchair:
+		return "pole_rainbow_wheelchair"
+	case CardioExerciseNameDoublePunchForwardWheelchair:
+		return "double_punch_forward_wheelchair"
+	case CardioExerciseNameDoublePunchDownWheelchair:
+		return "double_punch_down_wheelchair"
+	case CardioExerciseNameDoublePunchSidewaysWheelchair:
+		return "double_punch_sideways_wheelchair"
+	case CardioExerciseNameDoublePunchUpWheelchair:
+		return "double_punch_up_wheelchair"
+	case CardioExerciseNameSitSkiWheelchair:
+		return "sit_ski_wheelchair"
+	case CardioExerciseNameSittingJacksWheelchair:
+		return "sitting_jacks_wheelchair"
+	case CardioExerciseNamePunchForwardWheelchair:
+		return "punch_forward_wheelchair"
+	case CardioExerciseNamePunchDownWheelchair:
+		return "punch_down_wheelchair"
+	case CardioExerciseNamePunchSidewaysWheelchair:
+		return "punch_sideways_wheelchair"
+	case CardioExerciseNamePunchUpWheelchair:
+		return "punch_up_wheelchair"
+	case CardioExerciseNamePunchBagWheelchair:
+		return "punch_bag_wheelchair"
+	case CardioExerciseNamePoleDdFfUuWheelchair:
+		return "pole_dd_ff_uu_wheelchair"
+	case CardioExerciseNameButterflyArmsWheelchair:
+		return "butterfly_arms_wheelchair"
+	case CardioExerciseNamePunch:
+		return "punch"
 	default:
 		return "CardioExerciseNameInvalid(" + strconv.FormatUint(uint64(c), 10) + ")"
 	}
@@ -138,6 +201,48 @@ func CardioExerciseNameFromString(s string) CardioExerciseName {
 		return CardioExerciseNameTripleUnder
 	case "weighted_triple_under":
 		return CardioExerciseNameWeightedTripleUnder
+	case "elliptical":
+		return CardioExerciseNameElliptical
+	case "spinning":
+		return CardioExerciseNameSpinning
+	case "pole_paddle_forward_wheelchair":
+		return CardioExerciseNamePolePaddleForwardWheelchair
+	case "pole_paddle_backward_wheelchair":
+		return CardioExerciseNamePolePaddleBackwardWheelchair
+	case "pole_handcycle_forward_wheelchair":
+		return CardioExerciseNamePoleHandcycleForwardWheelchair
+	case "pole_handcycle_backward_wheelchair":
+		return CardioExerciseNamePoleHandcycleBackwardWheelchair
+	case "pole_rainbow_wheelchair":
+		return CardioExerciseNamePoleRainbowWheelchair
+	case "double_punch_forward_wheelchair":
+		return CardioExerciseNameDoublePunchForwardWheelchair
+	case "double_punch_down_wheelchair":
+		return CardioExerciseNameDoublePunchDownWheelchair
+	case "double_punch_sideways_wheelchair":
+		return CardioExerciseNameDoublePunchSidewaysWheelchair
+	case "double_punch_up_wheelchair":
+		return CardioExerciseNameDoublePunchUpWheelchair
+	case "sit_ski_wheelchair":
+		return CardioExerciseNameSitSkiWheelchair
+	case "sitting_jacks_wheelchair":
+		return CardioExerciseNameSittingJacksWheelchair
+	case "punch_forward_wheelchair":
+		return CardioExerciseNamePunchForwardWheelchair
+	case "punch_down_wheelchair":
+		return CardioExerciseNamePunchDownWheelchair
+	case "punch_sideways_wheelchair":
+		return CardioExerciseNamePunchSidewaysWheelchair
+	case "punch_up_wheelchair":
+		return CardioExerciseNamePunchUpWheelchair
+	case "punch_bag_wheelchair":
+		return CardioExerciseNamePunchBagWheelchair
+	case "pole_dd_ff_uu_wheelchair":
+		return CardioExerciseNamePoleDdFfUuWheelchair
+	case "butterfly_arms_wheelchair":
+		return CardioExerciseNameButterflyArmsWheelchair
+	case "punch":
+		return CardioExerciseNamePunch
 	default:
 		return CardioExerciseNameInvalid
 	}
@@ -168,5 +273,26 @@ func ListCardioExerciseName() []CardioExerciseName {
 		CardioExerciseNameWeightedSquatJacks,
 		CardioExerciseNameTripleUnder,
 		CardioExerciseNameWeightedTripleUnder,
+		CardioExerciseNameElliptical,
+		CardioExerciseNameSpinning,
+		CardioExerciseNamePolePaddleForwardWheelchair,
+		CardioExerciseNamePolePaddleBackwardWheelchair,
+		CardioExerciseNamePoleHandcycleForwardWheelchair,
+		CardioExerciseNamePoleHandcycleBackwardWheelchair,
+		CardioExerciseNamePoleRainbowWheelchair,
+		CardioExerciseNameDoublePunchForwardWheelchair,
+		CardioExerciseNameDoublePunchDownWheelchair,
+		CardioExerciseNameDoublePunchSidewaysWheelchair,
+		CardioExerciseNameDoublePunchUpWheelchair,
+		CardioExerciseNameSitSkiWheelchair,
+		CardioExerciseNameSittingJacksWheelchair,
+		CardioExerciseNamePunchForwardWheelchair,
+		CardioExerciseNamePunchDownWheelchair,
+		CardioExerciseNamePunchSidewaysWheelchair,
+		CardioExerciseNamePunchUpWheelchair,
+		CardioExerciseNamePunchBagWheelchair,
+		CardioExerciseNamePoleDdFfUuWheelchair,
+		CardioExerciseNameButterflyArmsWheelchair,
+		CardioExerciseNamePunch,
 	}
 }

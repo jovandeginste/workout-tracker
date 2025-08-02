@@ -7,9 +7,8 @@
 package mesgdef
 
 import (
-	"github.com/muktihari/fit/factory"
-	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/basetype"
+	"github.com/muktihari/fit/profile/factory"
 	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/proto"
 )
@@ -40,16 +39,31 @@ type ExdDataConceptConfiguration struct {
 // NewExdDataConceptConfiguration creates new ExdDataConceptConfiguration struct based on given mesg.
 // If mesg is nil, it will return ExdDataConceptConfiguration with all fields being set to its corresponding invalid value.
 func NewExdDataConceptConfiguration(mesg *proto.Message) *ExdDataConceptConfiguration {
-	vals := [12]proto.Value{}
+	m := new(ExdDataConceptConfiguration)
+	m.Reset(mesg)
+	return m
+}
 
-	var state [1]uint8
-	var unknownFields []proto.Field
-	var developerFields []proto.DeveloperField
+// Reset resets all ExdDataConceptConfiguration's fields based on given mesg.
+// If mesg is nil, all fields will be set to its corresponding invalid value.
+func (m *ExdDataConceptConfiguration) Reset(mesg *proto.Message) {
+	var (
+		vals            [12]proto.Value
+		state           [1]uint8
+		unknownFields   []proto.Field
+		developerFields []proto.DeveloperField
+	)
+
 	if mesg != nil {
-		arr := pool.Get().(*[poolsize]proto.Field)
-		unknownFields = arr[:0]
+		var n int
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Num > 11 || mesg.Fields[i].Name == factory.NameUnknown {
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
+		}
+		unknownFields = make([]proto.Field, 0, n)
+		for i := range mesg.Fields {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
@@ -57,15 +71,14 @@ func NewExdDataConceptConfiguration(mesg *proto.Message) *ExdDataConceptConfigur
 				pos := mesg.Fields[i].Num / 8
 				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
 			}
-			vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 12 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
-		unknownFields = sliceutil.Clone(unknownFields)
-		*arr = [poolsize]proto.Field{}
-		pool.Put(arr)
 		developerFields = mesg.DeveloperFields
 	}
 
-	return &ExdDataConceptConfiguration{
+	*m = ExdDataConceptConfiguration{
 		ScreenIndex:  vals[0].Uint8(),
 		ConceptField: vals[1].Uint8(),
 		FieldId:      vals[2].Uint8(),
@@ -95,9 +108,7 @@ func (m *ExdDataConceptConfiguration) ToMesg(options *Options) proto.Message {
 
 	fac := options.Factory
 
-	arr := pool.Get().(*[poolsize]proto.Field)
-	fields := arr[:0]
-
+	fields := make([]proto.Field, 0, 11)
 	mesg := proto.Message{Num: typedef.MesgNumExdDataConceptConfiguration}
 
 	if m.ScreenIndex != basetype.Uint8Invalid {
@@ -162,14 +173,10 @@ func (m *ExdDataConceptConfiguration) ToMesg(options *Options) proto.Message {
 		fields = append(fields, field)
 	}
 
-	for i := range m.UnknownFields {
-		fields = append(fields, m.UnknownFields[i])
-	}
-
-	mesg.Fields = make([]proto.Field, len(fields))
-	copy(mesg.Fields, fields)
-	*arr = [poolsize]proto.Field{}
-	pool.Put(arr)
+	n := len(fields)
+	mesg.Fields = make([]proto.Field, n+len(m.UnknownFields))
+	copy(mesg.Fields[:n], fields)
+	copy(mesg.Fields[n:], m.UnknownFields)
 
 	mesg.DeveloperFields = m.DeveloperFields
 

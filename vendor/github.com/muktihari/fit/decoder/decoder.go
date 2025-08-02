@@ -9,15 +9,15 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"slices"
 	"sync"
 
-	"github.com/muktihari/fit/factory"
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/kit/hash"
 	"github.com/muktihari/fit/kit/hash/crc16"
-	"github.com/muktihari/fit/kit/scaleoffset"
 	"github.com/muktihari/fit/profile"
 	"github.com/muktihari/fit/profile/basetype"
+	"github.com/muktihari/fit/profile/factory"
 	"github.com/muktihari/fit/profile/mesgdef"
 	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/fieldnum"
@@ -117,11 +117,7 @@ type Option func(o *options)
 
 // WithFactory sets custom factory.
 func WithFactory(factory Factory) Option {
-	return func(o *options) {
-		if factory != nil {
-			o.factory = factory
-		}
-	}
+	return func(o *options) { o.factory = factory }
 }
 
 // WithMesgListener adds listeners to the listener pool, where each listener will receive
@@ -199,7 +195,7 @@ func New(r io.Reader, opts ...Option) *Decoder {
 	d := &Decoder{
 		readBuffer:  new(readBuffer),
 		accumulator: NewAccumulator(),
-		crc16:       crc16.New(nil),
+		crc16:       crc16.New(),
 	}
 	d.Reset(r, opts...)
 	return d
@@ -490,10 +486,6 @@ func (d *Decoder) decodeFileHeader() error {
 		DataType:        proto.DataTypeFIT,
 	}
 
-	if err := proto.Validate(d.fileHeader.ProtocolVersion); err != nil {
-		return err
-	}
-
 	if d.fileHeader.DataSize == 0 {
 		return fmt.Errorf("invalid data size: %w", ErrNotFITFile)
 	}
@@ -575,19 +567,21 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 	}
 
 	mesgDef.FieldDefinitions = mesgDef.FieldDefinitions[:0]
-	var baseType basetype.BaseType
 	for ; len(b) >= 3; b = b[3:] {
-		baseType = basetype.BaseType(b[2])
-		if !baseType.Valid() {
-			return fmt.Errorf("message definition number: %s(%d): fields[%d].BaseType: %s: %w",
-				mesgDef.MesgNum, mesgDef.MesgNum, len(mesgDef.FieldDefinitions), baseType, errInvalidBaseType)
+		fieldDef := proto.FieldDefinition{
+			Num:      b[0],
+			Size:     b[1],
+			BaseType: basetype.BaseType(b[2]),
 		}
-		mesgDef.FieldDefinitions = append(mesgDef.FieldDefinitions,
-			proto.FieldDefinition{
-				Num:      b[0],
-				Size:     b[1],
-				BaseType: baseType,
-			})
+		if !fieldDef.BaseType.Valid() {
+			return fmt.Errorf("message definition number: %s(%d): fields[%d].BaseType: %s: %w",
+				mesgDef.MesgNum, mesgDef.MesgNum, len(mesgDef.FieldDefinitions), fieldDef.BaseType, errInvalidBaseType)
+		}
+		if fieldDef.Size == 0 {
+			d.logf("mesgNum: %s, fieldNum: %d: size is zero", mesgDef.MesgNum, fieldDef.Num)
+			continue
+		}
+		mesgDef.FieldDefinitions = append(mesgDef.FieldDefinitions, fieldDef)
 	}
 
 	mesgDef.DeveloperFieldDefinitions = mesgDef.DeveloperFieldDefinitions[:0]
@@ -604,12 +598,16 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 		}
 
 		for ; len(b) >= 3; b = b[3:] {
-			mesgDef.DeveloperFieldDefinitions = append(mesgDef.DeveloperFieldDefinitions,
-				proto.DeveloperFieldDefinition{
-					Num:                b[0],
-					Size:               b[1],
-					DeveloperDataIndex: b[2],
-				})
+			devFieldDef := proto.DeveloperFieldDefinition{
+				Num:                b[0],
+				Size:               b[1],
+				DeveloperDataIndex: b[2],
+			}
+			if devFieldDef.Size == 0 {
+				d.logf("mesgNum: %s, devFieldNum: %d: size is zero", mesgDef.MesgNum, devFieldDef.Num)
+				continue
+			}
+			mesgDef.DeveloperFieldDefinitions = append(mesgDef.DeveloperFieldDefinitions, devFieldDef)
 		}
 	}
 
@@ -704,45 +702,49 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 	for i := range mesgDef.FieldDefinitions {
 		fieldDef := &mesgDef.FieldDefinitions[i]
 
+		b, err := d.readN(int(fieldDef.Size))
+		if err != nil {
+			return err
+		}
+
 		// We enforce field.Array for string type to match the value defined in factory for all non-unknown fields.
-		var overrideStringArray bool
 		field := d.factory.CreateField(mesgDef.MesgNum, fieldDef.Num)
 		if field.Name == factory.NameUnknown {
 			// Assign fieldDef's type for unknown field so later we can encode it as per its original value.
 			field.BaseType = fieldDef.BaseType
-			field.Type = profile.ProfileTypeFromBaseType(field.BaseType)
-			// Check if the size corresponds to an array.
-			field.Array = fieldDef.Size > field.BaseType.Size() && fieldDef.Size%field.BaseType.Size() == 0
-			// Fallback to FIT Protocol's string rule: decoder will determine it by counting the utf8 null-terminated string.
-			overrideStringArray = field.BaseType == basetype.String
+			field.Type = profile.ProfileType(field.BaseType & basetype.BaseTypeNumMask)
+			if field.BaseType == basetype.String {
+				// Fallback to FIT Protocol's string rule: decoder will determine it by counting the utf8 null-terminated string.
+				field.Array = strcount(b) > 1
+			} else {
+				// Check if the size corresponds to an array.
+				field.Array = fieldDef.Size > field.BaseType.Size() && fieldDef.Size%field.BaseType.Size() == 0
+			}
 		}
 
 		var (
 			baseType    = field.BaseType
 			profileType = field.Type
-			array       = field.Array
+			isArray     = field.Array
 		)
 
 		// Gracefully handle poorly encoded FIT file.
-		if fieldDef.Size == 0 {
-			d.logField(mesg, fieldDef, "Size is zero. Skip")
-			continue
-		} else if fieldDef.Size < baseType.Size() {
-			baseType = basetype.Byte
-			profileType = profile.Byte
-			array = fieldDef.Size > baseType.Size() && fieldDef.Size&baseType.Size() == 0
+		if fieldDef.Size < baseType.Size() {
+			baseType = basetype.Uint8
+			profileType = profile.Uint8
+			isArray = true
 			d.logField(mesg, fieldDef, "Size is less than expected. Fallback: decode as byte(s) and convert the value")
 		} else if fieldDef.Size > baseType.Size() && !field.Array && baseType != basetype.String {
 			d.logField(mesg, fieldDef, "field.Array is false. Fallback: retrieve first array's value only")
 		}
 
-		field.Value, err = d.readValue(fieldDef.Size, mesgDef.Architecture, baseType, profileType, array, overrideStringArray)
+		field.Value, err = proto.UnmarshalValue(b, mesgDef.Architecture, baseType, profileType, isArray)
 		if err != nil {
 			return err
 		}
 
 		if baseType != field.BaseType { // Convert value
-			field.Value = convertBytesToValue(field.Value, field.BaseType)
+			field.Value = convertBytesToValue(field.Value.SliceUint8(), mesgDef.Architecture, field.BaseType)
 		}
 
 		if field.Num == proto.FieldNumTimestamp && field.Value.Type() == proto.TypeUint32 {
@@ -752,7 +754,7 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 		}
 
 		if field.Accumulate && d.options.shouldExpandComponent {
-			d.collectAccumulableValues(mesg.Num, field.Num, field.Value)
+			d.accumulator.CollectValue(mesg.Num, field.Num, field.Value)
 		}
 
 		mesg.Fields = append(mesg.Fields, field)
@@ -775,82 +777,6 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 	}
 
 	return nil
-}
-
-// collectAccumulableValues collects the field values to be used in component expansion.
-func (d *Decoder) collectAccumulableValues(mesgNum typedef.MesgNum, fieldNum byte, val proto.Value) {
-	switch val.Type() {
-	case proto.TypeInt8:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Int8()))
-	case proto.TypeUint8:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Uint8()))
-	case proto.TypeInt16:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Int16()))
-	case proto.TypeUint16:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Uint16()))
-	case proto.TypeInt32:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Int32()))
-	case proto.TypeUint32:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Uint32()))
-	case proto.TypeInt64:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Int64()))
-	case proto.TypeUint64:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Uint64()))
-	case proto.TypeFloat32:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Float32()))
-	case proto.TypeFloat64:
-		d.accumulator.Collect(mesgNum, fieldNum, uint32(val.Float64()))
-	case proto.TypeSliceInt8:
-		vals := val.SliceInt8()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceUint8:
-		vals := val.SliceUint8()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceInt16:
-		vals := val.SliceInt16()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceUint16:
-		vals := val.SliceUint16()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceInt32:
-		vals := val.SliceInt32()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceUint32:
-		vals := val.SliceUint32()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceInt64:
-		vals := val.SliceInt64()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceUint64:
-		vals := val.SliceUint64()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceFloat32:
-		vals := val.SliceFloat32()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	case proto.TypeSliceFloat64:
-		vals := val.SliceFloat64()
-		for i := range vals {
-			d.accumulator.Collect(mesgNum, fieldNum, uint32(vals[i]))
-		}
-	}
 }
 
 func (d *Decoder) expandComponents(mesg *proto.Message, containingValue proto.Value, baseType basetype.BaseType, components []proto.Component) {
@@ -886,8 +812,8 @@ func (d *Decoder) expandComponents(mesg *proto.Message, containingValue proto.Va
 			val = d.accumulator.Accumulate(mesg.Num, component.FieldNum, val, component.Bits)
 		}
 
-		componentScaled := scaleoffset.Apply(val, component.Scale, component.Offset)
-		val = uint32(scaleoffset.Discard(componentScaled, componentField.Scale, componentField.Offset))
+		scaledValue := float64(val)/component.Scale - component.Offset
+		val = uint32((scaledValue + componentField.Offset) * componentField.Scale)
 		value := convertUint32ToValue(val, componentField.BaseType)
 
 		// All components fields are appended, so it makes more sense to search from the last order.
@@ -939,22 +865,16 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 	for i := range mesgDef.DeveloperFieldDefinitions {
 		devFieldDef := &mesgDef.DeveloperFieldDefinitions[i]
 
-		var ok bool
-		for _, developerDataIndex := range d.developerDataIndexes {
-			if developerDataIndex == devFieldDef.DeveloperDataIndex {
-				ok = true
-				break
-			}
+		b, err := d.readN(int(devFieldDef.Size))
+		if err != nil {
+			return err
 		}
 
-		if !ok {
-			// NOTE: Currently, we allow missing DeveloperDataId message,
-			// we only use FieldDescription messages to decode developer data.
-			if d.options.logWriter != nil {
-				fmt.Fprintf(d.options.logWriter,
-					"mesg.Num: %d, developerFields[%d].Num: %d: missing developer data id with developer data index '%d'",
-					mesg.Num, i, devFieldDef.Num, devFieldDef.DeveloperDataIndex)
-			}
+		// NOTE: Currently, we allow missing DeveloperDataId message,
+		// we only use FieldDescription messages to decode developer data.
+		if !slices.Contains(d.developerDataIndexes, devFieldDef.DeveloperDataIndex) {
+			d.logf("mesg.Num: %d, developerFields[%d].Num: %d: missing developer data id with developer data index '%d'",
+				mesg.Num, i, devFieldDef.Num, devFieldDef.DeveloperDataIndex)
 		}
 
 		// Find the FieldDescription that refers to this DeveloperField.
@@ -973,14 +893,9 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 		}
 
 		if fieldDesc == nil {
-			if d.options.logWriter != nil {
-				fmt.Fprintf(d.options.logWriter, "mesg.Num: %d, developerFields[%d].Num: %d: Can't interpret developer field, "+
-					"no field description mesg found. Just read acquired bytes (%d) and move forward. [byte pos: %d]\n",
-					mesg.Num, i, devFieldDef.Num, devFieldDef.Size, d.n)
-			}
-			if _, err := d.readN(int(devFieldDef.Size)); err != nil {
-				return fmt.Errorf("no field description found, unable to read acquired bytes: %w", err)
-			}
+			d.logf("mesg.Num: %d, developerFields[%d].Num: %d: Can't interpret developer field, "+
+				"no field description mesg found. Just read acquired bytes (%d) and move forward. [byte pos: %d]\n",
+				mesg.Num, i, devFieldDef.Num, devFieldDef.Size, d.n)
 			continue
 		}
 
@@ -989,35 +904,32 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 				fieldDesc.FitBaseTypeId, errInvalidBaseType)
 		}
 
-		var isArray bool
-		baseType := fieldDesc.FitBaseTypeId
-		profileType := profile.ProfileTypeFromBaseType(baseType)
+		var (
+			baseType    = fieldDesc.FitBaseTypeId
+			profileType = profile.ProfileType(baseType & basetype.BaseTypeNumMask)
+			isArray     = devFieldDef.Size > baseType.Size() && devFieldDef.Size%baseType.Size() == 0
+		)
 
 		// Gracefully handle poorly encoded FIT file.
-		if devFieldDef.Size == 0 {
-			d.logDeveloperField(mesg, devFieldDef, fieldDesc.FitBaseTypeId, "Size is zero. Skip")
-			continue
-		} else if devFieldDef.Size < fieldDesc.FitBaseTypeId.Size() {
-			baseType = basetype.Byte
-			profileType = profile.Byte
+		if devFieldDef.Size < fieldDesc.FitBaseTypeId.Size() {
+			baseType = basetype.Uint8
+			profileType = profile.Uint8
+			isArray = true
 			d.logDeveloperField(mesg, devFieldDef, fieldDesc.FitBaseTypeId,
 				"Size is less than expected. Fallback: decode as byte(s) and convert the value")
 		}
 
-		if devFieldDef.Size > baseType.Size() && devFieldDef.Size%baseType.Size() == 0 {
-			isArray = true
-		}
-
 		// NOTE: It seems there is no standard on utilizing Array field to handle []string in developer fields.
 		// Discussion: https://forums.garmin.com/developer/fit-sdk/f/discussion/355554/how-to-determine-developer-field-s-value-type-is-a-string-or-string
-		overrideStringArray := fieldDesc.FitBaseTypeId == basetype.String
-		val, err := d.readValue(devFieldDef.Size, mesgDef.Architecture, baseType, profileType, isArray, overrideStringArray)
-		if err != nil {
-			return err
+		if fieldDesc.FitBaseTypeId == basetype.String {
+			isArray = strcount(b) > 1
 		}
 
+		// SAFETY: Base type validity is checked. The only error is when base type is invalid.
+		val, _ := proto.UnmarshalValue(b, mesgDef.Architecture, baseType, profileType, isArray)
+
 		if baseType != fieldDesc.FitBaseTypeId { // Convert value
-			val = convertBytesToValue(val, fieldDesc.FitBaseTypeId)
+			val = convertBytesToValue(val.SliceUint8(), mesgDef.Architecture, fieldDesc.FitBaseTypeId)
 		}
 
 		// NOTE: Decoder will not attempt to validate native data when both NativeMesgNum and NativeFieldNum are valid.
@@ -1058,19 +970,14 @@ func (d *Decoder) readN(n int) ([]byte, error) {
 	return b, nil
 }
 
-// readValue reads message value bytes from reader and convert it into its corresponding type. Size should not be zero.
-func (d *Decoder) readValue(size byte, arch byte, baseType basetype.BaseType, profileType profile.ProfileType, isArray, overrideStringArray bool) (val proto.Value, err error) {
-	b, err := d.readN(int(size))
-	if err != nil {
-		return val, err
-	}
-	if overrideStringArray && baseType == basetype.String {
-		isArray = strcount(b) > 1
-	}
-	return proto.UnmarshalValue(b, arch, baseType, profileType, isArray)
-}
-
 const logFieldTemplate = "mesg.Num: %q, %s.Num: %d, size: %d, type: %q (size: %d). %s. [bytes pos: %d]\n"
+
+func (d *Decoder) logf(format string, args ...any) {
+	if d.options.logWriter == nil {
+		return
+	}
+	fmt.Fprintf(d.options.logWriter, format, args...)
+}
 
 // logField logs field related issues only if logWriter is not nil.
 func (d *Decoder) logField(m *proto.Message, fd *proto.FieldDefinition, msg string) {
@@ -1165,7 +1072,7 @@ func convertUint32ToValue(val uint32, baseType basetype.BaseType) proto.Value {
 	switch baseType {
 	case basetype.Sint8:
 		return proto.Int8(int8(val))
-	case basetype.Enum, basetype.Uint8, basetype.Uint8z:
+	case basetype.Enum, basetype.Byte, basetype.Uint8, basetype.Uint8z:
 		return proto.Uint8(uint8(val))
 	case basetype.Sint16:
 		return proto.Int16(int16(val))
@@ -1188,23 +1095,24 @@ func convertUint32ToValue(val uint32, baseType basetype.BaseType) proto.Value {
 }
 
 // convertBytesToValue converts val in the form of byte or []byte into target baseType.
-// This is used for casting value of bad encoded FIT files.
-func convertBytesToValue(val proto.Value, baseType basetype.BaseType) proto.Value {
+// This is used for casting value of bad encoded FIT files where value takes fewer bytes
+// than specified in profile. Example:
+//   - 1 byte but for uint16, should have been 2 bytes
+//   - 3 bytes but for uint32, should have been 4 bytes
+func convertBytesToValue(b []uint8, arch byte, baseType basetype.BaseType) proto.Value {
 	var value uint64
-	switch val.Type() {
-	case proto.TypeUint8:
-		value = uint64(val.Uint8())
-	case proto.TypeSliceUint8:
-		b := val.SliceUint8()
+	if arch == proto.LittleEndian {
 		for i := range b {
 			value |= uint64(b[i]) << (i * 8)
 		}
+	} else {
+		n := len(b) - 1
+		for i := range b {
+			value |= uint64(b[i]) << ((n - i) * 8)
+		}
 	}
-	switch baseType {
-	case basetype.Sint8:
-		return proto.Int8(int8(value))
-	case basetype.Enum, basetype.Uint8, basetype.Uint8z:
-		return proto.Uint8(uint8(value))
+
+	switch baseType { // only eligible for numeric type size > 1
 	case basetype.Sint16:
 		return proto.Int16(int16(value))
 	case basetype.Uint16, basetype.Uint16z:
@@ -1221,8 +1129,9 @@ func convertBytesToValue(val proto.Value, baseType basetype.BaseType) proto.Valu
 		return proto.Float32(float32(value))
 	case basetype.Float64:
 		return proto.Float64(float64(value))
+	default:
+		return proto.SliceUint8(b)
 	}
-	return val
 }
 
 // valueAppend appends elem into slice. Elem must be has type element of

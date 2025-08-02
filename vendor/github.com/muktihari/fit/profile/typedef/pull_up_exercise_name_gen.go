@@ -52,6 +52,13 @@ const (
 	PullUpExerciseNameSuspendedChinUp                  PullUpExerciseName = 36
 	PullUpExerciseNameWeightedSuspendedChinUp          PullUpExerciseName = 37
 	PullUpExerciseNamePullUp                           PullUpExerciseName = 38
+	PullUpExerciseNameChinUp                           PullUpExerciseName = 39
+	PullUpExerciseNameNeutralGripChinUp                PullUpExerciseName = 40
+	PullUpExerciseNameWeightedChinUp                   PullUpExerciseName = 41
+	PullUpExerciseNameBandAssistedPullUp               PullUpExerciseName = 42
+	PullUpExerciseNameNeutralGripPullUp                PullUpExerciseName = 43
+	PullUpExerciseNameWeightedNeutralGripChinUp        PullUpExerciseName = 44
+	PullUpExerciseNameWeightedNeutralGripPullUp        PullUpExerciseName = 45
 	PullUpExerciseNameInvalid                          PullUpExerciseName = 0xFFFF
 )
 
@@ -137,6 +144,20 @@ func (p PullUpExerciseName) String() string {
 		return "weighted_suspended_chin_up"
 	case PullUpExerciseNamePullUp:
 		return "pull_up"
+	case PullUpExerciseNameChinUp:
+		return "chin_up"
+	case PullUpExerciseNameNeutralGripChinUp:
+		return "neutral_grip_chin_up"
+	case PullUpExerciseNameWeightedChinUp:
+		return "weighted_chin_up"
+	case PullUpExerciseNameBandAssistedPullUp:
+		return "band_assisted_pull_up"
+	case PullUpExerciseNameNeutralGripPullUp:
+		return "neutral_grip_pull_up"
+	case PullUpExerciseNameWeightedNeutralGripChinUp:
+		return "weighted_neutral_grip_chin_up"
+	case PullUpExerciseNameWeightedNeutralGripPullUp:
+		return "weighted_neutral_grip_pull_up"
 	default:
 		return "PullUpExerciseNameInvalid(" + strconv.FormatUint(uint64(p), 10) + ")"
 	}
@@ -223,6 +244,20 @@ func PullUpExerciseNameFromString(s string) PullUpExerciseName {
 		return PullUpExerciseNameWeightedSuspendedChinUp
 	case "pull_up":
 		return PullUpExerciseNamePullUp
+	case "chin_up":
+		return PullUpExerciseNameChinUp
+	case "neutral_grip_chin_up":
+		return PullUpExerciseNameNeutralGripChinUp
+	case "weighted_chin_up":
+		return PullUpExerciseNameWeightedChinUp
+	case "band_assisted_pull_up":
+		return PullUpExerciseNameBandAssistedPullUp
+	case "neutral_grip_pull_up":
+		return PullUpExerciseNameNeutralGripPullUp
+	case "weighted_neutral_grip_chin_up":
+		return PullUpExerciseNameWeightedNeutralGripChinUp
+	case "weighted_neutral_grip_pull_up":
+		return PullUpExerciseNameWeightedNeutralGripPullUp
 	default:
 		return PullUpExerciseNameInvalid
 	}
@@ -270,5 +305,12 @@ func ListPullUpExerciseName() []PullUpExerciseName {
 		PullUpExerciseNameSuspendedChinUp,
 		PullUpExerciseNameWeightedSuspendedChinUp,
 		PullUpExerciseNamePullUp,
+		PullUpExerciseNameChinUp,
+		PullUpExerciseNameNeutralGripChinUp,
+		PullUpExerciseNameWeightedChinUp,
+		PullUpExerciseNameBandAssistedPullUp,
+		PullUpExerciseNameNeutralGripPullUp,
+		PullUpExerciseNameWeightedNeutralGripChinUp,
+		PullUpExerciseNameWeightedNeutralGripPullUp,
 	}
 }
