@@ -269,6 +269,7 @@ Other environment variables, with their default values:
 
 ```bash
 WT_BIND="[::]:8080"
+WT_WEB_ROOT="/my-workout-tracker"
 WT_LOGGING="true"
 WT_DEBUG="false"
 WT_DATABASE_DRIVER="sqlite"
@@ -459,5 +460,5 @@ application is tested with GPX files from these sources:
 - add support for other types of import files (eg. Garmin fit files)
   - importing fit files works, kinda: there seems to be an issue with the
     elevation
-  - see https://github.com/tormoder/fit/issues/87
-  - https://www.fitfileviewer.com/ gives the same elevation issue
+  - see <https://github.com/tormoder/fit/issues/87>
+  - <https://www.fitfileviewer.com/> gives the same elevation issue
