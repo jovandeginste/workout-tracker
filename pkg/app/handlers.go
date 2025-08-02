@@ -3,7 +3,6 @@ package app
 import (
 	"errors"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/a-h/templ"
@@ -13,6 +12,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 	"github.com/stackus/hxgo/hxecho"
 )
 
@@ -98,7 +98,7 @@ func (a *App) dailyHandler(c echo.Context) error {
 
 	count := 20
 	if cs := c.QueryParam("count"); cs != "" {
-		if ci, err := strconv.Atoi(cs); err == nil {
+		if ci, err := cast.ToIntE(cs); err == nil {
 			count = ci
 		} else {
 			return a.redirectWithError(c, a.echo.Reverse("daily"), err)

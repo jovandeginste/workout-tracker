@@ -1,14 +1,13 @@
 package app
 
 import (
-	"strconv"
-
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 )
 
 func (a *App) getUser(c echo.Context) (*database.User, error) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return nil, err
 	}

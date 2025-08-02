@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
-	"strconv"
 
 	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -16,6 +15,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 	geojson "github.com/paulmach/orb/geojson"
+	"github.com/spf13/cast"
 )
 
 var (
@@ -341,7 +341,7 @@ func (a *App) apiStatisticsHandler(c echo.Context) error {
 func (a *App) apiWorkoutBreakdownHandler(c echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -417,13 +417,13 @@ func (a *App) apiWorkoutAddHandler(c echo.Context) error {
 func (a *App) apiWorkoutHandler(c echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
 	details := false
-	if err = echo.QueryParamsBinder(c).Bool("details", &details).BindError(); err != nil {
+	if err := echo.QueryParamsBinder(c).Bool("details", &details).BindError(); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
@@ -512,7 +512,7 @@ func (a *App) apiDailyHandler(c echo.Context) error {
 	limit := 50
 
 	if l := c.QueryParam("limit"); l != "" {
-		if nl, err := strconv.Atoi(l); err == nil {
+		if nl, err := cast.ToIntE(l); err == nil {
 			limit = nl
 		} else {
 			return a.renderAPIError(c, resp, err)

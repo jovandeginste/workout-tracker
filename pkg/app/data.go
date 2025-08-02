@@ -3,11 +3,11 @@ package app
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/invopop/ctxi18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/spf13/cast"
 
 	"github.com/labstack/echo/v4"
 )
@@ -79,7 +79,7 @@ func (a *App) getCurrentUser(c echo.Context) *database.User {
 }
 
 func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (a *App) getRouteSegment(c echo.Context) (*database.RouteSegment, error) {
 }
 
 func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (a *App) getWorkout(c echo.Context) (*database.Workout, error) {
 }
 
 func (a *App) getEquipment(c echo.Context) (*database.Equipment, error) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return nil, err
 	}

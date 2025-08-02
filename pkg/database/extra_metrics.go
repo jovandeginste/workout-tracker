@@ -1,8 +1,7 @@
 package database
 
 import (
-	"strconv"
-
+	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
@@ -33,7 +32,7 @@ func (em ExtraMetrics) ParseGPXExtensions(extension gpx.Extension) {
 func getGPXExtensionKeyValue(n *gpx.ExtensionNode) (string, float64) {
 	name := standardExtensionName(n.XMLName.Local)
 
-	if data, err := strconv.ParseFloat(n.Data, 64); err == nil {
+	if data, err := cast.ToFloat64E(n.Data); err == nil {
 		return name, data
 	}
 

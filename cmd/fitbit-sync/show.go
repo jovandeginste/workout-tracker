@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/anyappinc/fitbit"
 	"github.com/aquasecurity/table"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
+	"github.com/spf13/cast"
 )
 
 func (fs *fitbitSync) showProfile() {
@@ -16,8 +17,8 @@ func (fs *fitbitSync) showProfile() {
 	log.Print("Fetching Fitbit information...")
 
 	fmt.Println("Information for:", fs.profile.FullName)
-	fmt.Printf("- weight: %.2f %s\n", fs.profile.Weight, units.Weight)
-	fmt.Printf("- height: %.2f %s\n", fs.profile.Height, units.Height)
+	fmt.Println("- weight:", templatehelpers.RoundFloat64(fs.profile.Weight), units.Weight)
+	fmt.Println("- height:", templatehelpers.RoundFloat64(fs.profile.Height), units.Height)
 	fmt.Println()
 }
 
@@ -48,7 +49,7 @@ func (fs *fitbitSync) showActivities(days int) error {
 				a.StartDateTime.Format("2006-01-02T15:04"),
 				a.Name,
 				a.Duration.String(),
-				fmt.Sprintf("%.2f %s", a.Distance, units.Distance),
+				templatehelpers.RoundFloat64(a.Distance)+" "+units.Distance,
 			)
 		}
 
@@ -58,12 +59,12 @@ func (fs *fitbitSync) showActivities(days int) error {
 
 		summaries.AddRow(
 			d.Format("2006-01-02"),
-			strconv.FormatInt(act.Summary.Steps, 10),
-			strconv.FormatFloat(findTotal(act.Summary.Distances), 'g', 2, 64)+" "+units.Distance,
-			strconv.FormatInt(act.Summary.SedentaryMinutes, 10)+" min",
-			strconv.FormatInt(act.Summary.LightlyActiveMinutes, 10)+" min",
-			strconv.FormatInt(act.Summary.FairlyActiveMinutes, 10)+" min",
-			strconv.FormatInt(act.Summary.VeryActiveMinutes, 10)+" min",
+			cast.ToString(act.Summary.Steps),
+			templatehelpers.RoundFloat64(findTotal(act.Summary.Distances))+" "+units.Distance,
+			cast.ToString(act.Summary.SedentaryMinutes)+" min",
+			cast.ToString(act.Summary.LightlyActiveMinutes)+" min",
+			cast.ToString(act.Summary.FairlyActiveMinutes)+" min",
+			cast.ToString(act.Summary.VeryActiveMinutes)+" min",
 		)
 	}
 
@@ -84,5 +85,5 @@ func findTotal(s []fitbit.Distance) float64 {
 		}
 	}
 
-	return 9
+	return 0
 }
