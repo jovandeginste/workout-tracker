@@ -22,7 +22,6 @@ var (
 	ErrNotAuthorized = errors.New("not authorized")
 	ErrInvalidAPIKey = errors.New("invalid API key")
 	htmlConcatenizer = regexp.MustCompile(`\s*\n\s*`)
-	calTS            = "2006-01-02T15:04:05"
 )
 
 type APIResponse struct {

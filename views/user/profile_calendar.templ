@@ -9,11 +9,13 @@ templ ProfileCalendar(workouts []*database.Workout) {
 	<div class="inner-form min-h-[450px]" id="calendar"></div>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/dist/fullcalendar.min.js" }></script>
 	@templ.JSONScript("api-workouts-calendar-route", helpers.RouteFor(ctx, "api-workouts-calendar"))
+	@templ.JSONScript("timezone", helpers.Timezone(ctx))
 	<script>
   document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
+    var timezone = JSON.parse(document.getElementById('timezone').textContent);
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZone: timezone,
       initialView: "dayGridMonth",
       locale: Intl.DateTimeFormat().resolvedOptions().locale,
       firstDay: 1,
