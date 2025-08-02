@@ -107,6 +107,7 @@ swagger:
 			--parseDependency \
 			--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 			--generalInfo api_handlers.go
+	git commit docs/ -m "Update swagger" -m "changelog: ignore" || echo "No changes to commit"
 
 build-tw:
 	npx tailwindcss \
