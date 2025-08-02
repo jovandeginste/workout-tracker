@@ -10,6 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
+const calTS = "2006-01-02T15:04:05"
+
 type Event struct {
 	Title string    `json:"title"`
 	Start time.Time `json:"start"`
@@ -18,8 +20,24 @@ type Event struct {
 }
 
 type calendarQueryParams struct {
-	Start *string `query:"start"`
-	End   *string `query:"end"`
+	Start    *string `query:"start"`
+	End      *string `query:"end"`
+	TimeZone *string `query:"timeZone"` // eg Europe/Brussels
+	tz       *time.Location
+}
+
+func (cqp *calendarQueryParams) SetTZ() {
+	cqp.tz = time.UTC
+	if cqp.TimeZone == nil {
+		return
+	}
+
+	tz, err := time.LoadLocation(*cqp.TimeZone)
+	if err != nil {
+		return
+	}
+
+	cqp.tz = tz
 }
 
 func (cqp calendarQueryParams) SetStart(db *gorm.DB) *gorm.DB {
@@ -27,7 +45,7 @@ func (cqp calendarQueryParams) SetStart(db *gorm.DB) *gorm.DB {
 		return db
 	}
 
-	start, err := time.Parse(calTS, *cqp.Start)
+	start, err := time.ParseInLocation(calTS, *cqp.Start, cqp.tz)
 	if err != nil {
 		return db
 	}
@@ -40,7 +58,7 @@ func (cqp calendarQueryParams) SetEnd(db *gorm.DB) *gorm.DB {
 		return db
 	}
 
-	end, err := time.Parse(calTS, *cqp.End)
+	end, err := time.ParseInLocation(calTS, *cqp.End, cqp.tz)
 	if err != nil {
 		return db
 	}
@@ -70,6 +88,7 @@ func (a *App) apiCalendar(c echo.Context) error {
 	u := a.getCurrentUser(c)
 	db := a.db.Preload("Data").Preload("Data.Details")
 
+	queryParams.SetTZ()
 	db = queryParams.SetStart(db)
 	db = queryParams.SetEnd(db)
 
@@ -93,8 +112,8 @@ func (a *App) apiCalendar(c echo.Context) error {
 
 		events = append(events, Event{
 			Title: d,
-			Start: w.GetDate(),
-			End:   w.GetEnd(),
+			Start: w.GetDate().In(queryParams.tz),
+			End:   w.GetEnd().In(queryParams.tz),
 			URL:   a.echo.Reverse("workout-show", w.ID),
 		})
 	}
