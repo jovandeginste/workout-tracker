@@ -5,13 +5,13 @@ import (
 	"errors"
 	"net/http"
 	"path"
-	"strconv"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 	"github.com/stackus/hxgo/hxecho"
 )
 
@@ -54,7 +54,7 @@ func (a *App) workoutsHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsShowHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
@@ -75,7 +75,7 @@ func (a *App) workoutsFormHandler(c echo.Context) error {
 	w := &database.Workout{}
 
 	if c.FormValue("id") != "" {
-		id, err := strconv.ParseUint(c.FormValue("id"), 10, 64)
+		id, err := cast.ToUint64E(c.FormValue("id"))
 		if err != nil {
 			return Render(c, http.StatusOK, workouts.Form(w))
 		}
@@ -136,7 +136,7 @@ func (a *App) workoutShowShared(c echo.Context) error {
 }
 
 func (a *App) workoutsShareHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
@@ -159,7 +159,7 @@ func (a *App) workoutsShareHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsShareDeleteHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
@@ -181,7 +181,7 @@ func (a *App) workoutsShareDeleteHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsRefreshHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
@@ -228,7 +228,7 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 }
 
 func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}
@@ -260,7 +260,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error
 }
 
 func (a *App) workoutsCreateRouteSegmentHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
 	}

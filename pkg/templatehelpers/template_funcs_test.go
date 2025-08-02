@@ -23,13 +23,13 @@ func TestCountryCodeToFlag(t *testing.T) {
 }
 
 func TestHumanDistanceKM(t *testing.T) {
-	assert.Equal(t, "0.00", HumanDistanceKM(1.23))
+	assert.Equal(t, "0", HumanDistanceKM(1.23))
 	assert.Equal(t, "1.23", HumanDistanceKM(1234))
 	assert.Equal(t, "1234.57", HumanDistanceKM(1234567))
 }
 
 func TestHumanDistance(t *testing.T) {
-	assert.Equal(t, "0.00", HumanDistanceKM(1.23))
+	assert.Equal(t, "0", HumanDistanceKM(1.23))
 	assert.Equal(t, "1.23", HumanDistanceKM(1234))
 	assert.Equal(t, "1234.57", HumanDistanceKM(1234567))
 }

@@ -5,11 +5,11 @@ import (
 	"encoding/xml"
 	"errors"
 	"math"
-	"strconv"
 
 	"github.com/muktihari/fit/decoder"
 	"github.com/muktihari/fit/kit/semicircles"
 	"github.com/muktihari/fit/profile/filedef"
+	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
@@ -57,13 +57,13 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 
 		if r.HeartRate != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "heart-rate"}, Data: strconv.FormatUint(uint64(r.HeartRate), 10),
+				XMLName: xml.Name{Local: "heart-rate"}, Data: cast.ToString(r.HeartRate),
 			})
 		}
 
 		if r.Cadence != 0xFF {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "cadence"}, Data: strconv.FormatUint(uint64(r.Cadence), 10),
+				XMLName: xml.Name{Local: "cadence"}, Data: cast.ToString(r.Cadence),
 			})
 		}
 

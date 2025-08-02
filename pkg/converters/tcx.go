@@ -3,9 +3,9 @@ package converters
 import (
 	"encoding/xml"
 	"errors"
-	"strconv"
 
 	"github.com/galeone/tcx"
+	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
@@ -68,13 +68,13 @@ func tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 
 	if t.HR != 0 {
 		p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-			XMLName: xml.Name{Local: "heart-rate"}, Data: strconv.FormatUint(uint64(t.HR), 10),
+			XMLName: xml.Name{Local: "heart-rate"}, Data: cast.ToString(t.HR),
 		})
 	}
 
 	if t.Cad != 0 {
 		p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-			XMLName: xml.Name{Local: "cadence"}, Data: strconv.FormatUint(uint64(t.Cad), 10),
+			XMLName: xml.Name{Local: "cadence"}, Data: cast.ToString(t.Cad),
 		})
 	}
 

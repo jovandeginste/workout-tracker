@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"os"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/aquasecurity/table"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
+	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 )
 
@@ -54,7 +55,7 @@ func (c *cli) workoutsDiagCmd() *cobra.Command {
 					issues = []string{"OK"}
 				}
 
-				t.AddRow(strconv.FormatUint(id, 10), wo.Name, strings.Join(issues, "; "))
+				t.AddRow(cast.ToString(id), wo.Name, strings.Join(issues, "; "))
 			}
 
 			t.Render()
@@ -78,7 +79,7 @@ func (c *cli) workoutsListCmd() *cobra.Command {
 			}
 
 			for _, wo := range workouts {
-				t.AddRow(strconv.FormatUint(wo.ID, 10), wo.Date.String(), wo.Name)
+				t.AddRow(cast.ToString(wo.ID), wo.Date.String(), wo.Name)
 			}
 
 			t.Render()
@@ -94,7 +95,7 @@ func (c *cli) workoutsShowCmd() *cobra.Command {
 		Short: "Show information about a workout",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			id, err := strconv.ParseUint(args[0], 10, 32)
+			id, err := cast.ToUint64E(args[0])
 			if err != nil {
 				return err
 			}
@@ -107,13 +108,13 @@ func (c *cli) workoutsShowCmd() *cobra.Command {
 				return err
 			}
 
-			t.AddRow("ID", strconv.FormatUint(wo.ID, 10))
+			t.AddRow("ID", cast.ToString(wo.ID))
 			t.AddRow("Date", wo.Date.String())
 			t.AddRow("Name", wo.Name)
 
 			t.AddRow("Location", wo.Address())
-			t.AddRow("Distance (m)", strconv.FormatFloat(wo.TotalDistance(), 'f', 2, 64))
-			t.AddRow("Duration (s)", strconv.FormatFloat(wo.TotalDuration().Seconds(), 'f', 2, 64))
+			t.AddRow("Distance (m)", templatehelpers.RoundFloat64(wo.TotalDistance()))
+			t.AddRow("Duration (s)", templatehelpers.RoundFloat64(wo.TotalDuration().Seconds()))
 
 			t.Render()
 
@@ -136,7 +137,7 @@ func (c *cli) workoutsExportCmd() *cobra.Command {
 			filter := len(args) > 0
 
 			for _, id := range ids {
-				if filter && !slices.Contains(args, strconv.FormatUint(id, 10)) {
+				if filter && !slices.Contains(args, cast.ToString(id)) {
 					continue
 				}
 

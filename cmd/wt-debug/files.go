@@ -88,7 +88,7 @@ func (c *cli) workoutsCalculateCmd() *cobra.Command {
 
 				p := workout.Data.Details.Points
 				lp := p[len(p)-1]
-				fmt.Printf("- last point total distance: %.2fm (%s %s)\n", lp.TotalDistance, dstF(lp.TotalDistance), dst)
+				fmt.Printf("- last point total distance: %sm (%s %s)\n", templatehelpers.RoundFloat64(lp.TotalDistance), dstF(lp.TotalDistance), dst)
 			}
 
 			return nil

@@ -8,7 +8,7 @@ import (
 const MeterPerKM = 1000
 
 func HumanHeightCMNoSuffix(d float64) string {
-	return fmt.Sprintf("%.2f", d)
+	return RoundFloat64(d)
 }
 
 func HumanHeightCM(d float64) string {
@@ -16,11 +16,11 @@ func HumanHeightCM(d float64) string {
 }
 
 func HumanWeightKG(d float64) string {
-	return fmt.Sprintf("%.2f", d)
+	return RoundFloat64(d)
 }
 
 func HumanDistanceKM(d float64) string {
-	return fmt.Sprintf("%.2f", d/MeterPerKM)
+	return RoundFloat64(d / MeterPerKM)
 }
 
 func HumanSpeedKPH(mps float64) string {
@@ -30,7 +30,7 @@ func HumanSpeedKPH(mps float64) string {
 
 	kmph := 3.6 * mps
 
-	return fmt.Sprintf("%.2f", kmph)
+	return RoundFloat64(kmph)
 }
 
 func HumanTempoKM(mps float64) string {
@@ -47,5 +47,5 @@ func HumanTempoKM(mps float64) string {
 }
 
 func HumanElevationM(m float64) string {
-	return fmt.Sprintf("%.2f", m)
+	return RoundFloat64(m)
 }

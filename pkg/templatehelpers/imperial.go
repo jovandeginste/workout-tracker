@@ -29,11 +29,11 @@ func HumanHeightFeetInch(d float64) string {
 }
 
 func HumanWeightPounds(d float64) string {
-	return fmt.Sprintf("%.2f", PoundsPerKG*d)
+	return RoundFloat64(PoundsPerKG * d)
 }
 
 func HumanDistanceMile(d float64) string {
-	return fmt.Sprintf("%.2f", MilesPerKM*d/MeterPerKM)
+	return RoundFloat64(MilesPerKM * d / MeterPerKM)
 }
 
 func HumanSpeedMilePH(mps float64) string {
@@ -43,7 +43,7 @@ func HumanSpeedMilePH(mps float64) string {
 
 	kmph := 3.6 * mps
 
-	return fmt.Sprintf("%.2f", MilesPerKM*kmph)
+	return RoundFloat64(MilesPerKM * kmph)
 }
 
 func HumanTempoMile(mps float64) string {
@@ -60,5 +60,5 @@ func HumanTempoMile(mps float64) string {
 }
 
 func HumanElevationFt(m float64) string {
-	return fmt.Sprintf("%.2f", FeetPerMeter*m)
+	return RoundFloat64(FeetPerMeter * m)
 }

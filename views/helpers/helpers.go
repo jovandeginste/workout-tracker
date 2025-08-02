@@ -10,6 +10,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/microcosm-cc/bluemonday"
 )
 
@@ -109,7 +110,7 @@ func A2S(v any) string {
 	case int, uint64:
 		return fmt.Sprintf("%d", e)
 	case float64:
-		return fmt.Sprintf("%.2f", e)
+		return templatehelpers.RoundFloat64(e)
 	default:
 		return fmt.Sprintf("%v", e)
 	}
