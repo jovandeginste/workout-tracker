@@ -51,19 +51,31 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 			continue
 		}
 
-		if a := r.EnhancedAltitudeScaled(); !math.IsNaN(a) {
-			p.Elevation = *gpx.NewNullableFloat64(a)
+		if r.EnhancedAltitude != math.MaxUint32 {
+			p.Elevation = *gpx.NewNullableFloat64(r.EnhancedAltitudeScaled())
 		}
 
-		if r.HeartRate != 0xFF {
+		if r.EnhancedSpeed != math.MaxUint32 {
+			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
+				XMLName: xml.Name{Local: "enhanced-speed"}, Data: cast.ToString(r.EnhancedSpeedScaled()),
+			})
+		}
+
+		if r.HeartRate != math.MaxUint8 {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
 				XMLName: xml.Name{Local: "heart-rate"}, Data: cast.ToString(r.HeartRate),
 			})
 		}
 
-		if r.Cadence != 0xFF {
+		if r.Cadence != math.MaxUint8 {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
 				XMLName: xml.Name{Local: "cadence"}, Data: cast.ToString(r.Cadence),
+			})
+		}
+
+		if r.Temperature != math.MaxInt8 {
+			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
+				XMLName: xml.Name{Local: "temperature"}, Data: cast.ToString(r.Temperature),
 			})
 		}
 

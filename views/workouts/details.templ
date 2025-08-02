@@ -424,6 +424,16 @@ templ FullWorkoutDetails(w *database.Workout) {
 								@helpers.IconFor("cadence")
 							</div>
 						}
+						if w.HasEnhancedSpeed() {
+							<div title={ i18n.T(ctx, "translation.enhanced_speed") }>
+								@helpers.IconFor("max-speed")
+							</div>
+						}
+						if w.HasTemperature() {
+							<div title={ i18n.T(ctx, "translation.temperature") }>
+								@helpers.IconFor("temperature")
+							</div>
+						}
 						if w.HasHeading() {
 							<div title={ i18n.T(ctx, "translation.Heading") }>
 								@helpers.IconFor("heading")
