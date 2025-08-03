@@ -106,8 +106,8 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			"sum(total_distance) as distance",
 			"sum(total_up) as up",
 			"max(max_speed) as max_speed",
-			"max(average_speed) as average_speed",
-			"max(average_speed_no_pause) as average_speed_no_pause",
+			"sum(total_duration * average_speed) / sum(total_duration) as average_speed",
+			"sum((total_duration - pause_duration) * average_speed_no_pause) / NULLIF(sum(total_duration - pause_duration), 0) as average_speed_no_pause",
 			statConfig.GetBucketFormatExpression(sqlDialect),
 			statConfig.GetDayBucketFormatExpression(sqlDialect),
 		).
