@@ -532,21 +532,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List the calendar events of all workouts of the current user",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Start date of the calendar view",
-                        "name": "start",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "End date of the calendar view",
-                        "name": "end",
-                        "in": "query"
-                    }
-                ],
+                "summary": "List all coordinates of all workouts of the current user",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -559,10 +545,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/app.Event"
-                                            }
+                                            "$ref": "#/definitions/geojson.FeatureCollection"
                                         }
                                     }
                                 }
@@ -735,6 +718,9 @@ const docTemplate = `{
         "app.Event": {
             "type": "object",
             "properties": {
+                "end": {
+                    "type": "string"
+                },
                 "start": {
                     "type": "string"
                 },
@@ -960,6 +946,10 @@ const docTemplate = `{
                     "description": "The max speed in the bucket",
                     "type": "number"
                 },
+                "raw_bucket": {
+                    "description": "One day in the bucket (for statistic rendering)",
+                    "type": "string"
+                },
                 "up": {
                     "description": "The total up elevation in the bucket",
                     "type": "number"
@@ -1061,7 +1051,8 @@ const docTemplate = `{
         "database.ExtraMetrics": {
             "type": "object",
             "additionalProperties": {
-                "type": "number"
+                "type": "number",
+                "format": "float64"
             }
         },
         "database.Float64Record": {
@@ -1149,6 +1140,10 @@ const docTemplate = `{
                     "description": "The generic location of the workout",
                     "type": "string"
                 },
+                "averageCadence": {
+                    "description": "The average cadence of the workout",
+                    "type": "number"
+                },
                 "averageSpeed": {
                     "description": "The average speed of the workout",
                     "type": "number"
@@ -1189,6 +1184,10 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "maxCadence": {
+                    "description": "The maximum cadence of the workout",
+                    "type": "number"
                 },
                 "maxElevation": {
                     "description": "The maximum elevation of the workout",

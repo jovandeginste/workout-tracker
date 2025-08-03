@@ -7,9 +7,8 @@
 package mesgdef
 
 import (
-	"github.com/muktihari/fit/factory"
-	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/basetype"
+	"github.com/muktihari/fit/profile/factory"
 	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/proto"
 )
@@ -31,27 +30,41 @@ type Course struct {
 // NewCourse creates new Course struct based on given mesg.
 // If mesg is nil, it will return Course with all fields being set to its corresponding invalid value.
 func NewCourse(mesg *proto.Message) *Course {
-	vals := [8]proto.Value{}
+	m := new(Course)
+	m.Reset(mesg)
+	return m
+}
 
-	var unknownFields []proto.Field
-	var developerFields []proto.DeveloperField
+// Reset resets all Course's fields based on given mesg.
+// If mesg is nil, all fields will be set to its corresponding invalid value.
+func (m *Course) Reset(mesg *proto.Message) {
+	var (
+		vals            [8]proto.Value
+		unknownFields   []proto.Field
+		developerFields []proto.DeveloperField
+	)
+
 	if mesg != nil {
-		arr := pool.Get().(*[poolsize]proto.Field)
-		unknownFields = arr[:0]
+		var n int
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Num > 7 || mesg.Fields[i].Name == factory.NameUnknown {
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
+		}
+		unknownFields = make([]proto.Field, 0, n)
+		for i := range mesg.Fields {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 8 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
-		unknownFields = sliceutil.Clone(unknownFields)
-		*arr = [poolsize]proto.Field{}
-		pool.Put(arr)
 		developerFields = mesg.DeveloperFields
 	}
 
-	return &Course{
+	*m = Course{
 		Sport:        typedef.Sport(vals[4].Uint8()),
 		Name:         vals[5].String(),
 		Capabilities: typedef.CourseCapabilities(vals[6].Uint32z()),
@@ -72,9 +85,7 @@ func (m *Course) ToMesg(options *Options) proto.Message {
 
 	fac := options.Factory
 
-	arr := pool.Get().(*[poolsize]proto.Field)
-	fields := arr[:0]
-
+	fields := make([]proto.Field, 0, 4)
 	mesg := proto.Message{Num: typedef.MesgNumCourse}
 
 	if m.Sport != typedef.SportInvalid {
@@ -98,14 +109,10 @@ func (m *Course) ToMesg(options *Options) proto.Message {
 		fields = append(fields, field)
 	}
 
-	for i := range m.UnknownFields {
-		fields = append(fields, m.UnknownFields[i])
-	}
-
-	mesg.Fields = make([]proto.Field, len(fields))
-	copy(mesg.Fields, fields)
-	*arr = [poolsize]proto.Field{}
-	pool.Put(arr)
+	n := len(fields)
+	mesg.Fields = make([]proto.Field, n+len(m.UnknownFields))
+	copy(mesg.Fields[:n], fields)
+	copy(mesg.Fields[n:], m.UnknownFields)
 
 	mesg.DeveloperFields = m.DeveloperFields
 

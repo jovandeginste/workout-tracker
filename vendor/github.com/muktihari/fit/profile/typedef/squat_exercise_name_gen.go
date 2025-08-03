@@ -105,6 +105,15 @@ const (
 	SquatExerciseNameSquatJumpsInNOut                                SquatExerciseName = 89
 	SquatExerciseNamePilatesPlieSquatsParallelTurnedOutFlatAndHeels  SquatExerciseName = 90
 	SquatExerciseNameReleveStraightLegAndKneeBentWithOneLegVariation SquatExerciseName = 91
+	SquatExerciseNameAlternatingBoxDumbbellStepUps                   SquatExerciseName = 92
+	SquatExerciseNameDumbbellOverheadSquatSingleArm                  SquatExerciseName = 93
+	SquatExerciseNameDumbbellSquatSnatch                             SquatExerciseName = 94
+	SquatExerciseNameMedicineBallSquat                               SquatExerciseName = 95
+	SquatExerciseNameWallBallSquatAndPress                           SquatExerciseName = 97
+	SquatExerciseNameSquatAmericanSwing                              SquatExerciseName = 98
+	SquatExerciseNameAirSquat                                        SquatExerciseName = 100
+	SquatExerciseNameDumbbellThrusters                               SquatExerciseName = 101
+	SquatExerciseNameOverheadBarbellSquat                            SquatExerciseName = 102
 	SquatExerciseNameInvalid                                         SquatExerciseName = 0xFFFF
 )
 
@@ -296,6 +305,24 @@ func (s SquatExerciseName) String() string {
 		return "pilates_plie_squats_parallel_turned_out_flat_and_heels"
 	case SquatExerciseNameReleveStraightLegAndKneeBentWithOneLegVariation:
 		return "releve_straight_leg_and_knee_bent_with_one_leg_variation"
+	case SquatExerciseNameAlternatingBoxDumbbellStepUps:
+		return "alternating_box_dumbbell_step_ups"
+	case SquatExerciseNameDumbbellOverheadSquatSingleArm:
+		return "dumbbell_overhead_squat_single_arm"
+	case SquatExerciseNameDumbbellSquatSnatch:
+		return "dumbbell_squat_snatch"
+	case SquatExerciseNameMedicineBallSquat:
+		return "medicine_ball_squat"
+	case SquatExerciseNameWallBallSquatAndPress:
+		return "wall_ball_squat_and_press"
+	case SquatExerciseNameSquatAmericanSwing:
+		return "squat_american_swing"
+	case SquatExerciseNameAirSquat:
+		return "air_squat"
+	case SquatExerciseNameDumbbellThrusters:
+		return "dumbbell_thrusters"
+	case SquatExerciseNameOverheadBarbellSquat:
+		return "overhead_barbell_squat"
 	default:
 		return "SquatExerciseNameInvalid(" + strconv.FormatUint(uint64(s), 10) + ")"
 	}
@@ -488,6 +515,24 @@ func SquatExerciseNameFromString(s string) SquatExerciseName {
 		return SquatExerciseNamePilatesPlieSquatsParallelTurnedOutFlatAndHeels
 	case "releve_straight_leg_and_knee_bent_with_one_leg_variation":
 		return SquatExerciseNameReleveStraightLegAndKneeBentWithOneLegVariation
+	case "alternating_box_dumbbell_step_ups":
+		return SquatExerciseNameAlternatingBoxDumbbellStepUps
+	case "dumbbell_overhead_squat_single_arm":
+		return SquatExerciseNameDumbbellOverheadSquatSingleArm
+	case "dumbbell_squat_snatch":
+		return SquatExerciseNameDumbbellSquatSnatch
+	case "medicine_ball_squat":
+		return SquatExerciseNameMedicineBallSquat
+	case "wall_ball_squat_and_press":
+		return SquatExerciseNameWallBallSquatAndPress
+	case "squat_american_swing":
+		return SquatExerciseNameSquatAmericanSwing
+	case "air_squat":
+		return SquatExerciseNameAirSquat
+	case "dumbbell_thrusters":
+		return SquatExerciseNameDumbbellThrusters
+	case "overhead_barbell_squat":
+		return SquatExerciseNameOverheadBarbellSquat
 	default:
 		return SquatExerciseNameInvalid
 	}
@@ -588,5 +633,14 @@ func ListSquatExerciseName() []SquatExerciseName {
 		SquatExerciseNameSquatJumpsInNOut,
 		SquatExerciseNamePilatesPlieSquatsParallelTurnedOutFlatAndHeels,
 		SquatExerciseNameReleveStraightLegAndKneeBentWithOneLegVariation,
+		SquatExerciseNameAlternatingBoxDumbbellStepUps,
+		SquatExerciseNameDumbbellOverheadSquatSingleArm,
+		SquatExerciseNameDumbbellSquatSnatch,
+		SquatExerciseNameMedicineBallSquat,
+		SquatExerciseNameWallBallSquatAndPress,
+		SquatExerciseNameSquatAmericanSwing,
+		SquatExerciseNameAirSquat,
+		SquatExerciseNameDumbbellThrusters,
+		SquatExerciseNameOverheadBarbellSquat,
 	}
 }

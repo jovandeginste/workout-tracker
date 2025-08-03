@@ -46,6 +46,9 @@ const (
 	ShoulderStabilityExerciseNameWeightedSwissBallWRaise                ShoulderStabilityExerciseName = 30
 	ShoulderStabilityExerciseNameSwissBallYRaise                        ShoulderStabilityExerciseName = 31
 	ShoulderStabilityExerciseNameWeightedSwissBallYRaise                ShoulderStabilityExerciseName = 32
+	ShoulderStabilityExerciseNameCableInternalRotation                  ShoulderStabilityExerciseName = 33
+	ShoulderStabilityExerciseNameLyingInternalRotation                  ShoulderStabilityExerciseName = 34
+	ShoulderStabilityExerciseNameSeatedDumbbellInternalRotation         ShoulderStabilityExerciseName = 35
 	ShoulderStabilityExerciseNameInvalid                                ShoulderStabilityExerciseName = 0xFFFF
 )
 
@@ -119,6 +122,12 @@ func (s ShoulderStabilityExerciseName) String() string {
 		return "swiss_ball_y_raise"
 	case ShoulderStabilityExerciseNameWeightedSwissBallYRaise:
 		return "weighted_swiss_ball_y_raise"
+	case ShoulderStabilityExerciseNameCableInternalRotation:
+		return "cable_internal_rotation"
+	case ShoulderStabilityExerciseNameLyingInternalRotation:
+		return "lying_internal_rotation"
+	case ShoulderStabilityExerciseNameSeatedDumbbellInternalRotation:
+		return "seated_dumbbell_internal_rotation"
 	default:
 		return "ShoulderStabilityExerciseNameInvalid(" + strconv.FormatUint(uint64(s), 10) + ")"
 	}
@@ -193,6 +202,12 @@ func ShoulderStabilityExerciseNameFromString(s string) ShoulderStabilityExercise
 		return ShoulderStabilityExerciseNameSwissBallYRaise
 	case "weighted_swiss_ball_y_raise":
 		return ShoulderStabilityExerciseNameWeightedSwissBallYRaise
+	case "cable_internal_rotation":
+		return ShoulderStabilityExerciseNameCableInternalRotation
+	case "lying_internal_rotation":
+		return ShoulderStabilityExerciseNameLyingInternalRotation
+	case "seated_dumbbell_internal_rotation":
+		return ShoulderStabilityExerciseNameSeatedDumbbellInternalRotation
 	default:
 		return ShoulderStabilityExerciseNameInvalid
 	}
@@ -234,5 +249,8 @@ func ListShoulderStabilityExerciseName() []ShoulderStabilityExerciseName {
 		ShoulderStabilityExerciseNameWeightedSwissBallWRaise,
 		ShoulderStabilityExerciseNameSwissBallYRaise,
 		ShoulderStabilityExerciseNameWeightedSwissBallYRaise,
+		ShoulderStabilityExerciseNameCableInternalRotation,
+		ShoulderStabilityExerciseNameLyingInternalRotation,
+		ShoulderStabilityExerciseNameSeatedDumbbellInternalRotation,
 	}
 }

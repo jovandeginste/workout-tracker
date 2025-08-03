@@ -54,6 +54,10 @@ const (
 	TricepsExtensionExerciseNameTricepsExtensionOnFloor                      TricepsExtensionExerciseName = 38
 	TricepsExtensionExerciseNameTricepsPressdown                             TricepsExtensionExerciseName = 39
 	TricepsExtensionExerciseNameWeightedDip                                  TricepsExtensionExerciseName = 40
+	TricepsExtensionExerciseNameAlternatingDumbbellLyingTricepsExtension     TricepsExtensionExerciseName = 41
+	TricepsExtensionExerciseNameTricepsPress                                 TricepsExtensionExerciseName = 42
+	TricepsExtensionExerciseNameDumbbellKickbackWheelchair                   TricepsExtensionExerciseName = 43
+	TricepsExtensionExerciseNameOverheadDumbbellTricepsExtensionWheelchair   TricepsExtensionExerciseName = 44
 	TricepsExtensionExerciseNameInvalid                                      TricepsExtensionExerciseName = 0xFFFF
 )
 
@@ -143,6 +147,14 @@ func (t TricepsExtensionExerciseName) String() string {
 		return "triceps_pressdown"
 	case TricepsExtensionExerciseNameWeightedDip:
 		return "weighted_dip"
+	case TricepsExtensionExerciseNameAlternatingDumbbellLyingTricepsExtension:
+		return "alternating_dumbbell_lying_triceps_extension"
+	case TricepsExtensionExerciseNameTricepsPress:
+		return "triceps_press"
+	case TricepsExtensionExerciseNameDumbbellKickbackWheelchair:
+		return "dumbbell_kickback_wheelchair"
+	case TricepsExtensionExerciseNameOverheadDumbbellTricepsExtensionWheelchair:
+		return "overhead_dumbbell_triceps_extension_wheelchair"
 	default:
 		return "TricepsExtensionExerciseNameInvalid(" + strconv.FormatUint(uint64(t), 10) + ")"
 	}
@@ -233,6 +245,14 @@ func TricepsExtensionExerciseNameFromString(s string) TricepsExtensionExerciseNa
 		return TricepsExtensionExerciseNameTricepsPressdown
 	case "weighted_dip":
 		return TricepsExtensionExerciseNameWeightedDip
+	case "alternating_dumbbell_lying_triceps_extension":
+		return TricepsExtensionExerciseNameAlternatingDumbbellLyingTricepsExtension
+	case "triceps_press":
+		return TricepsExtensionExerciseNameTricepsPress
+	case "dumbbell_kickback_wheelchair":
+		return TricepsExtensionExerciseNameDumbbellKickbackWheelchair
+	case "overhead_dumbbell_triceps_extension_wheelchair":
+		return TricepsExtensionExerciseNameOverheadDumbbellTricepsExtensionWheelchair
 	default:
 		return TricepsExtensionExerciseNameInvalid
 	}
@@ -282,5 +302,9 @@ func ListTricepsExtensionExerciseName() []TricepsExtensionExerciseName {
 		TricepsExtensionExerciseNameTricepsExtensionOnFloor,
 		TricepsExtensionExerciseNameTricepsPressdown,
 		TricepsExtensionExerciseNameWeightedDip,
+		TricepsExtensionExerciseNameAlternatingDumbbellLyingTricepsExtension,
+		TricepsExtensionExerciseNameTricepsPress,
+		TricepsExtensionExerciseNameDumbbellKickbackWheelchair,
+		TricepsExtensionExerciseNameOverheadDumbbellTricepsExtensionWheelchair,
 	}
 }

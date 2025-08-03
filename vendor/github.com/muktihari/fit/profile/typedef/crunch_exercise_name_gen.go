@@ -98,6 +98,7 @@ const (
 	CrunchExerciseNameWeightedToesToBar                       CrunchExerciseName = 82
 	CrunchExerciseNameCrunch                                  CrunchExerciseName = 83
 	CrunchExerciseNameStraightLegCrunchWithBall               CrunchExerciseName = 84
+	CrunchExerciseNameLegClimbCrunch                          CrunchExerciseName = 86
 	CrunchExerciseNameInvalid                                 CrunchExerciseName = 0xFFFF
 )
 
@@ -275,6 +276,8 @@ func (c CrunchExerciseName) String() string {
 		return "crunch"
 	case CrunchExerciseNameStraightLegCrunchWithBall:
 		return "straight_leg_crunch_with_ball"
+	case CrunchExerciseNameLegClimbCrunch:
+		return "leg_climb_crunch"
 	default:
 		return "CrunchExerciseNameInvalid(" + strconv.FormatUint(uint64(c), 10) + ")"
 	}
@@ -453,6 +456,8 @@ func CrunchExerciseNameFromString(s string) CrunchExerciseName {
 		return CrunchExerciseNameCrunch
 	case "straight_leg_crunch_with_ball":
 		return CrunchExerciseNameStraightLegCrunchWithBall
+	case "leg_climb_crunch":
+		return CrunchExerciseNameLegClimbCrunch
 	default:
 		return CrunchExerciseNameInvalid
 	}
@@ -546,5 +551,6 @@ func ListCrunchExerciseName() []CrunchExerciseName {
 		CrunchExerciseNameWeightedToesToBar,
 		CrunchExerciseNameCrunch,
 		CrunchExerciseNameStraightLegCrunchWithBall,
+		CrunchExerciseNameLegClimbCrunch,
 	}
 }

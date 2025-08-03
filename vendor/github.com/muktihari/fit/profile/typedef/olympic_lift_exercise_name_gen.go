@@ -13,28 +13,36 @@ import (
 type OlympicLiftExerciseName uint16
 
 const (
-	OlympicLiftExerciseNameBarbellHangPowerClean      OlympicLiftExerciseName = 0
-	OlympicLiftExerciseNameBarbellHangSquatClean      OlympicLiftExerciseName = 1
-	OlympicLiftExerciseNameBarbellPowerClean          OlympicLiftExerciseName = 2
-	OlympicLiftExerciseNameBarbellPowerSnatch         OlympicLiftExerciseName = 3
-	OlympicLiftExerciseNameBarbellSquatClean          OlympicLiftExerciseName = 4
-	OlympicLiftExerciseNameCleanAndJerk               OlympicLiftExerciseName = 5
-	OlympicLiftExerciseNameBarbellHangPowerSnatch     OlympicLiftExerciseName = 6
-	OlympicLiftExerciseNameBarbellHangPull            OlympicLiftExerciseName = 7
-	OlympicLiftExerciseNameBarbellHighPull            OlympicLiftExerciseName = 8
-	OlympicLiftExerciseNameBarbellSnatch              OlympicLiftExerciseName = 9
-	OlympicLiftExerciseNameBarbellSplitJerk           OlympicLiftExerciseName = 10
-	OlympicLiftExerciseNameClean                      OlympicLiftExerciseName = 11
-	OlympicLiftExerciseNameDumbbellClean              OlympicLiftExerciseName = 12
-	OlympicLiftExerciseNameDumbbellHangPull           OlympicLiftExerciseName = 13
-	OlympicLiftExerciseNameOneHandDumbbellSplitSnatch OlympicLiftExerciseName = 14
-	OlympicLiftExerciseNamePushJerk                   OlympicLiftExerciseName = 15
-	OlympicLiftExerciseNameSingleArmDumbbellSnatch    OlympicLiftExerciseName = 16
-	OlympicLiftExerciseNameSingleArmHangSnatch        OlympicLiftExerciseName = 17
-	OlympicLiftExerciseNameSingleArmKettlebellSnatch  OlympicLiftExerciseName = 18
-	OlympicLiftExerciseNameSplitJerk                  OlympicLiftExerciseName = 19
-	OlympicLiftExerciseNameSquatCleanAndJerk          OlympicLiftExerciseName = 20
-	OlympicLiftExerciseNameInvalid                    OlympicLiftExerciseName = 0xFFFF
+	OlympicLiftExerciseNameBarbellHangPowerClean            OlympicLiftExerciseName = 0
+	OlympicLiftExerciseNameBarbellHangSquatClean            OlympicLiftExerciseName = 1
+	OlympicLiftExerciseNameBarbellPowerClean                OlympicLiftExerciseName = 2
+	OlympicLiftExerciseNameBarbellPowerSnatch               OlympicLiftExerciseName = 3
+	OlympicLiftExerciseNameBarbellSquatClean                OlympicLiftExerciseName = 4
+	OlympicLiftExerciseNameCleanAndJerk                     OlympicLiftExerciseName = 5
+	OlympicLiftExerciseNameBarbellHangPowerSnatch           OlympicLiftExerciseName = 6
+	OlympicLiftExerciseNameBarbellHangPull                  OlympicLiftExerciseName = 7
+	OlympicLiftExerciseNameBarbellHighPull                  OlympicLiftExerciseName = 8
+	OlympicLiftExerciseNameBarbellSnatch                    OlympicLiftExerciseName = 9
+	OlympicLiftExerciseNameBarbellSplitJerk                 OlympicLiftExerciseName = 10
+	OlympicLiftExerciseNameClean                            OlympicLiftExerciseName = 11
+	OlympicLiftExerciseNameDumbbellClean                    OlympicLiftExerciseName = 12
+	OlympicLiftExerciseNameDumbbellHangPull                 OlympicLiftExerciseName = 13
+	OlympicLiftExerciseNameOneHandDumbbellSplitSnatch       OlympicLiftExerciseName = 14
+	OlympicLiftExerciseNamePushJerk                         OlympicLiftExerciseName = 15
+	OlympicLiftExerciseNameSingleArmDumbbellSnatch          OlympicLiftExerciseName = 16
+	OlympicLiftExerciseNameSingleArmHangSnatch              OlympicLiftExerciseName = 17
+	OlympicLiftExerciseNameSingleArmKettlebellSnatch        OlympicLiftExerciseName = 18
+	OlympicLiftExerciseNameSplitJerk                        OlympicLiftExerciseName = 19
+	OlympicLiftExerciseNameSquatCleanAndJerk                OlympicLiftExerciseName = 20
+	OlympicLiftExerciseNameDumbbellHangSnatch               OlympicLiftExerciseName = 21
+	OlympicLiftExerciseNameDumbbellPowerCleanAndJerk        OlympicLiftExerciseName = 22
+	OlympicLiftExerciseNameDumbbellPowerCleanAndPushPress   OlympicLiftExerciseName = 23
+	OlympicLiftExerciseNameDumbbellPowerCleanAndStrictPress OlympicLiftExerciseName = 24
+	OlympicLiftExerciseNameDumbbellSnatch                   OlympicLiftExerciseName = 25
+	OlympicLiftExerciseNameMedicineBallClean                OlympicLiftExerciseName = 26
+	OlympicLiftExerciseNameCleanAndPress                    OlympicLiftExerciseName = 27
+	OlympicLiftExerciseNameSnatch                           OlympicLiftExerciseName = 28
+	OlympicLiftExerciseNameInvalid                          OlympicLiftExerciseName = 0xFFFF
 )
 
 func (o OlympicLiftExerciseName) Uint16() uint16 { return uint16(o) }
@@ -83,6 +91,22 @@ func (o OlympicLiftExerciseName) String() string {
 		return "split_jerk"
 	case OlympicLiftExerciseNameSquatCleanAndJerk:
 		return "squat_clean_and_jerk"
+	case OlympicLiftExerciseNameDumbbellHangSnatch:
+		return "dumbbell_hang_snatch"
+	case OlympicLiftExerciseNameDumbbellPowerCleanAndJerk:
+		return "dumbbell_power_clean_and_jerk"
+	case OlympicLiftExerciseNameDumbbellPowerCleanAndPushPress:
+		return "dumbbell_power_clean_and_push_press"
+	case OlympicLiftExerciseNameDumbbellPowerCleanAndStrictPress:
+		return "dumbbell_power_clean_and_strict_press"
+	case OlympicLiftExerciseNameDumbbellSnatch:
+		return "dumbbell_snatch"
+	case OlympicLiftExerciseNameMedicineBallClean:
+		return "medicine_ball_clean"
+	case OlympicLiftExerciseNameCleanAndPress:
+		return "clean_and_press"
+	case OlympicLiftExerciseNameSnatch:
+		return "snatch"
 	default:
 		return "OlympicLiftExerciseNameInvalid(" + strconv.FormatUint(uint64(o), 10) + ")"
 	}
@@ -133,6 +157,22 @@ func OlympicLiftExerciseNameFromString(s string) OlympicLiftExerciseName {
 		return OlympicLiftExerciseNameSplitJerk
 	case "squat_clean_and_jerk":
 		return OlympicLiftExerciseNameSquatCleanAndJerk
+	case "dumbbell_hang_snatch":
+		return OlympicLiftExerciseNameDumbbellHangSnatch
+	case "dumbbell_power_clean_and_jerk":
+		return OlympicLiftExerciseNameDumbbellPowerCleanAndJerk
+	case "dumbbell_power_clean_and_push_press":
+		return OlympicLiftExerciseNameDumbbellPowerCleanAndPushPress
+	case "dumbbell_power_clean_and_strict_press":
+		return OlympicLiftExerciseNameDumbbellPowerCleanAndStrictPress
+	case "dumbbell_snatch":
+		return OlympicLiftExerciseNameDumbbellSnatch
+	case "medicine_ball_clean":
+		return OlympicLiftExerciseNameMedicineBallClean
+	case "clean_and_press":
+		return OlympicLiftExerciseNameCleanAndPress
+	case "snatch":
+		return OlympicLiftExerciseNameSnatch
 	default:
 		return OlympicLiftExerciseNameInvalid
 	}
@@ -162,5 +202,13 @@ func ListOlympicLiftExerciseName() []OlympicLiftExerciseName {
 		OlympicLiftExerciseNameSingleArmKettlebellSnatch,
 		OlympicLiftExerciseNameSplitJerk,
 		OlympicLiftExerciseNameSquatCleanAndJerk,
+		OlympicLiftExerciseNameDumbbellHangSnatch,
+		OlympicLiftExerciseNameDumbbellPowerCleanAndJerk,
+		OlympicLiftExerciseNameDumbbellPowerCleanAndPushPress,
+		OlympicLiftExerciseNameDumbbellPowerCleanAndStrictPress,
+		OlympicLiftExerciseNameDumbbellSnatch,
+		OlympicLiftExerciseNameMedicineBallClean,
+		OlympicLiftExerciseNameCleanAndPress,
+		OlympicLiftExerciseNameSnatch,
 	}
 }

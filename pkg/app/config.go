@@ -10,6 +10,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetEnvPrefix("WT")
 
 	viper.SetDefault("bind", "[::]:8080")
+	viper.SetDefault("web_root", "")
 	viper.SetDefault("logging", "true")
 	viper.SetDefault("debug", "false")
 	viper.SetDefault("database_driver", "sqlite")
@@ -19,6 +20,7 @@ func (a *App) ReadConfiguration() error {
 
 	for _, envVar := range []string{
 		"bind",
+		"web_root",
 		"jwt_encryption_key",
 		"logging",
 		"debug",

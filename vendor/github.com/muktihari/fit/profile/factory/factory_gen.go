@@ -154,11 +154,11 @@ func (f *Factory) RegisterMesg(mesg proto.Message) error {
 		f.registeredMesgs = make(map[typedef.MesgNum]proto.Message) // only alloc when needed
 	}
 	if mesg.Num > typedef.MesgNumMfgRangeMax {
-		return fmt.Errorf("could not register outside max range: %d: %w",
-			typedef.MesgNumMfgRangeMax, ErrRegisterForbidden)
+		return fmt.Errorf("mesg.Num %d is outside max range %d: %w",
+			mesg.Num, typedef.MesgNumMfgRangeMax, ErrRegisterForbidden)
 	}
 	if mesg.Num < 410 && mesgs[mesg.Num] != nil {
-		return fmt.Errorf("could not register on reserved predefined message, mesg.Num %d (%s) is already exist: %w",
+		return fmt.Errorf("mesg.Num %d is reserved for %q: %w",
 			mesg.Num, mesg.Num, ErrRegisterForbidden)
 	}
 	f.registeredMesgs[mesg.Num] = mesg
@@ -464,6 +464,12 @@ var mesgs = [...]*[256]*proto.FieldBase{
 		1:   {Name: "high_bpm", Num: 1, Type: profile.Uint8, BaseType: basetype.Uint8, Scale: 1},
 		2:   {Name: "calories", Num: 2, Type: profile.Uint16, BaseType: basetype.Uint16, Scale: 10, Units: "kcal / min"},
 		3:   {Name: "fat_calories", Num: 3, Type: profile.Uint8, BaseType: basetype.Uint8, Scale: 10, Units: "kcal / min"},
+	},
+	mesgnum.TrainingSettings: {
+		31:  {Name: "target_distance", Num: 31, Type: profile.Uint32, BaseType: basetype.Uint32, Scale: 100, Units: "m"},
+		32:  {Name: "target_speed", Num: 32, Type: profile.Uint16, BaseType: basetype.Uint16, Scale: 1000, Units: "m/s"},
+		33:  {Name: "target_time", Num: 33, Type: profile.Uint32, BaseType: basetype.Uint32, Scale: 1, Units: "s"},
+		153: {Name: "precise_target_speed", Num: 153, Type: profile.Uint32, BaseType: basetype.Uint32, Scale: 1e+06, Units: "m/s"},
 	},
 	mesgnum.DiveSettings: {
 		253: {Name: "timestamp", Num: 253, Type: profile.DateTime, BaseType: basetype.Uint32, Scale: 1},

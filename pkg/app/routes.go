@@ -4,6 +4,8 @@ import (
 	"context"
 	"log/slog"
 	"net/http"
+	"path"
+	"strings"
 	"time"
 
 	"github.com/alexedwards/scs/gormstore"
@@ -18,6 +20,11 @@ import (
 
 	session "github.com/spazzymoto/echo-scs-session"
 )
+
+func (a *App) WebRoot() string {
+	root := path.Join("/", a.Config.WebRoot)
+	return strings.TrimSuffix(root, "/")
+}
 
 func newEcho(logger *slog.Logger) *echo.Echo {
 	e := echo.New()
@@ -62,8 +69,7 @@ func (a *App) ConfigureWebserver() error {
 		}
 	})
 
-	publicGroup := e.Group("")
-
+	publicGroup := e.Group(a.WebRoot())
 	a.apiRoutes(publicGroup)
 
 	if a.AssetDir != "" {
@@ -137,7 +143,7 @@ func (a *App) addRoutesSecure(e *echo.Group) *echo.Group {
 	}))
 	secureGroup.Use(a.ValidateUserMiddleware)
 
-	secureGroup.GET("/", a.dashboardHandler).Name = "dashboard"
+	secureGroup.GET("", a.dashboardHandler).Name = "dashboard"
 	secureGroup.GET("/daily", a.dailyHandler).Name = "daily"
 	secureGroup.POST("/daily", a.dailyUpdateHandler).Name = "daily-update"
 	secureGroup.DELETE("/daily/:date", a.dailyDeleteHandler).Name = "daily-delete"

@@ -6,6 +6,6 @@ import (
 )
 
 templ ProfileCalendar(workouts []*database.Workout) {
-	<profile-calendar class="inner-form min-h-[450px]" api-workouts-calendar-route={ helpers.RouteFor(ctx, "api-workouts-calendar") }></profile-calendar>
+	<profile-calendar class="inner-form min-h-[450px]" api-workouts-calendar-route={ helpers.RouteFor(ctx, "api-workouts-calendar") } timezone={ helpers.Timezone(ctx) }></profile-calendar>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.js" }></script>
 }

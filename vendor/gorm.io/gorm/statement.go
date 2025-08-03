@@ -341,7 +341,9 @@ func (stmt *Statement) BuildCondition(query interface{}, args ...interface{}) []
 				if where, ok := cs.Expression.(clause.Where); ok {
 					if len(where.Exprs) == 1 {
 						if orConds, ok := where.Exprs[0].(clause.OrConditions); ok {
-							where.Exprs[0] = clause.AndConditions(orConds)
+							if len(orConds.Exprs) == 1 {
+								where.Exprs[0] = clause.AndConditions(orConds)
+							}
 						}
 					}
 					conds = append(conds, clause.And(where.Exprs...))
@@ -362,6 +364,9 @@ func (stmt *Statement) BuildCondition(query interface{}, args ...interface{}) []
 
 			for _, key := range keys {
 				column := clause.Column{Name: key, Table: curTable}
+				if strings.Contains(key, ".") {
+					column = clause.Column{Name: key}
+				}
 				conds = append(conds, clause.Eq{Column: column, Value: v[key]})
 			}
 		case map[string]interface{}:
@@ -374,6 +379,9 @@ func (stmt *Statement) BuildCondition(query interface{}, args ...interface{}) []
 			for _, key := range keys {
 				reflectValue := reflect.Indirect(reflect.ValueOf(v[key]))
 				column := clause.Column{Name: key, Table: curTable}
+				if strings.Contains(key, ".") {
+					column = clause.Column{Name: key}
+				}
 				switch reflectValue.Kind() {
 				case reflect.Slice, reflect.Array:
 					if _, ok := v[key].(driver.Valuer); ok {

@@ -1,9 +1,27 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
 ## What's Changed
 
+- build(swagger): Automate committing generated documentation
+- chore(templates): Generate templates with new version of templ
+- feat(web): Add configurable web root
+- chore(deps): bump the all group with 9 updates, by @jovandeginste, in
+  [#598](https://github.com/jovandeginste/workout-tracker/pull/598)
+- Fix `AverageSpeedNoPause` not updated correctly, by @jovandeginste, in
+  [#583](https://github.com/jovandeginste/workout-tracker/pull/583)
+  - refactor(workout): Extract and refine average metric calculations, by
+    @jovandeginste
+  - Fix `AverageSpeedNoPause` not updated correctly, by @bastianjoel
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#584](https://github.com/jovandeginste/workout-tracker/pull/584)
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (German)
+- fix(ui): restore the recent activities section, by @jovandeginste, in
+  [#585](https://github.com/jovandeginste/workout-tracker/pull/585)
+  - fix(ui): restore the recent activities section, by @nicosomb
+
+## What's Changed in v2.4.0
+
+- Update changelog, by @jovandeginste, in
+  [#582](https://github.com/jovandeginste/workout-tracker/pull/582)
 - feat(calendar): Send workout end times to calendar, by @jovandeginste, in
   [#581](https://github.com/jovandeginste/workout-tracker/pull/581)
 - feat(statistics): Distinguish aggregation bucket from representative day, by
@@ -60,6 +78,9 @@ All notable changes to this project will be documented in this file.
     @jovandeginste
   - Recompile with correct version of templ, by @jovandeginste
   - build: Use local paths for Go-installed tools in Makefile, by @jovandeginste
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.3.0...v2.4.0
 
 ## What's Changed in v2.3.0
 

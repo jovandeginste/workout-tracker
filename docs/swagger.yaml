@@ -10,6 +10,8 @@ definitions:
     type: object
   app.Event:
     properties:
+      end:
+        type: string
       start:
         type: string
       title:
@@ -168,6 +170,9 @@ definitions:
       maxSpeed:
         description: The max speed in the bucket
         type: number
+      raw_bucket:
+        description: One day in the bucket (for statistic rendering)
+        type: string
       up:
         description: The total up elevation in the bucket
         type: number
@@ -236,6 +241,7 @@ definitions:
     type: object
   database.ExtraMetrics:
     additionalProperties:
+      format: float64
       type: number
     type: object
   database.Float64Record:
@@ -296,6 +302,9 @@ definitions:
       addressString:
         description: The generic location of the workout
         type: string
+      averageCadence:
+        description: The average cadence of the workout
+        type: number
       averageSpeed:
         description: The average speed of the workout
         type: number
@@ -322,6 +331,9 @@ definitions:
         type: array
       id:
         type: integer
+      maxCadence:
+        description: The maximum cadence of the workout
+        type: number
       maxElevation:
         description: The maximum elevation of the workout
         type: number
@@ -1222,15 +1234,6 @@ paths:
       summary: Break down a workdown per units
   /workouts/coordinates:
     get:
-      parameters:
-      - description: Start date of the calendar view
-        in: query
-        name: start
-        type: string
-      - description: End date of the calendar view
-        in: query
-        name: end
-        type: string
       produces:
       - application/json
       responses:
@@ -1241,9 +1244,7 @@ paths:
             - $ref: '#/definitions/app.APIResponse'
             - properties:
                 results:
-                  items:
-                    $ref: '#/definitions/app.Event'
-                  type: array
+                  $ref: '#/definitions/geojson.FeatureCollection'
               type: object
         "400":
           description: Bad Request
@@ -1257,5 +1258,5 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/app.APIResponse'
-      summary: List the calendar events of all workouts of the current user
+      summary: List all coordinates of all workouts of the current user
 swagger: "2.0"

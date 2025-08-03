@@ -178,10 +178,6 @@ func ListFile() []File {
 //
 // This is intended for those who prefer using this SDK as it is without the need to generate custom SDK using cmd/fitgen.
 func FileRegister(v File, s string) error {
-	if v >= FileInvalid {
-		return fmt.Errorf("could not register outside max range: %d", FileInvalid)
-	}
-
 	switch v {
 	case FileDevice:
 		return fmt.Errorf("duplicate: %d is already exist for FileDevice", v)
@@ -223,6 +219,8 @@ func FileRegister(v File, s string) error {
 		return fmt.Errorf("duplicate: %d is already exist for FileMfgRangeMin", v)
 	case FileMfgRangeMax:
 		return fmt.Errorf("duplicate: %d is already exist for FileMfgRangeMax", v)
+	case FileInvalid:
+		return fmt.Errorf("duplicate: %d is already exist for FileInvalid", v)
 	}
 
 	fileToString[v] = s

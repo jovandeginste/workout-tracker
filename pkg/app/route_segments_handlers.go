@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"net/http"
 	"path"
-	"strconv"
 	"strings"
 
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/route_segments"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 	"github.com/stackus/hxgo/hxecho"
 )
 
@@ -174,7 +174,7 @@ func (a *App) routeSegmentsUpdateHandler(c echo.Context) error {
 }
 
 func (a *App) routeSegmentFindMatches(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}

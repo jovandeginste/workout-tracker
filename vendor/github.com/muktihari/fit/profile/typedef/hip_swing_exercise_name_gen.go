@@ -16,6 +16,7 @@ const (
 	HipSwingExerciseNameSingleArmKettlebellSwing HipSwingExerciseName = 0
 	HipSwingExerciseNameSingleArmDumbbellSwing   HipSwingExerciseName = 1
 	HipSwingExerciseNameStepOutSwing             HipSwingExerciseName = 2
+	HipSwingExerciseNameOneArmSwing              HipSwingExerciseName = 3
 	HipSwingExerciseNameInvalid                  HipSwingExerciseName = 0xFFFF
 )
 
@@ -29,6 +30,8 @@ func (h HipSwingExerciseName) String() string {
 		return "single_arm_dumbbell_swing"
 	case HipSwingExerciseNameStepOutSwing:
 		return "step_out_swing"
+	case HipSwingExerciseNameOneArmSwing:
+		return "one_arm_swing"
 	default:
 		return "HipSwingExerciseNameInvalid(" + strconv.FormatUint(uint64(h), 10) + ")"
 	}
@@ -43,6 +46,8 @@ func HipSwingExerciseNameFromString(s string) HipSwingExerciseName {
 		return HipSwingExerciseNameSingleArmDumbbellSwing
 	case "step_out_swing":
 		return HipSwingExerciseNameStepOutSwing
+	case "one_arm_swing":
+		return HipSwingExerciseNameOneArmSwing
 	default:
 		return HipSwingExerciseNameInvalid
 	}
@@ -54,5 +59,6 @@ func ListHipSwingExerciseName() []HipSwingExerciseName {
 		HipSwingExerciseNameSingleArmKettlebellSwing,
 		HipSwingExerciseNameSingleArmDumbbellSwing,
 		HipSwingExerciseNameStepOutSwing,
+		HipSwingExerciseNameOneArmSwing,
 	}
 }

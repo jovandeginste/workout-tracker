@@ -47,6 +47,7 @@ const (
 	HipStabilityExerciseNameWeightedStandingRearLegRaise      HipStabilityExerciseName = 31
 	HipStabilityExerciseNameSupineHipInternalRotation         HipStabilityExerciseName = 32
 	HipStabilityExerciseNameWeightedSupineHipInternalRotation HipStabilityExerciseName = 33
+	HipStabilityExerciseNameLyingAbductionStretch             HipStabilityExerciseName = 34
 	HipStabilityExerciseNameInvalid                           HipStabilityExerciseName = 0xFFFF
 )
 
@@ -122,6 +123,8 @@ func (h HipStabilityExerciseName) String() string {
 		return "supine_hip_internal_rotation"
 	case HipStabilityExerciseNameWeightedSupineHipInternalRotation:
 		return "weighted_supine_hip_internal_rotation"
+	case HipStabilityExerciseNameLyingAbductionStretch:
+		return "lying_abduction_stretch"
 	default:
 		return "HipStabilityExerciseNameInvalid(" + strconv.FormatUint(uint64(h), 10) + ")"
 	}
@@ -198,6 +201,8 @@ func HipStabilityExerciseNameFromString(s string) HipStabilityExerciseName {
 		return HipStabilityExerciseNameSupineHipInternalRotation
 	case "weighted_supine_hip_internal_rotation":
 		return HipStabilityExerciseNameWeightedSupineHipInternalRotation
+	case "lying_abduction_stretch":
+		return HipStabilityExerciseNameLyingAbductionStretch
 	default:
 		return HipStabilityExerciseNameInvalid
 	}
@@ -240,5 +245,6 @@ func ListHipStabilityExerciseName() []HipStabilityExerciseName {
 		HipStabilityExerciseNameWeightedStandingRearLegRaise,
 		HipStabilityExerciseNameSupineHipInternalRotation,
 		HipStabilityExerciseNameWeightedSupineHipInternalRotation,
+		HipStabilityExerciseNameLyingAbductionStretch,
 	}
 }

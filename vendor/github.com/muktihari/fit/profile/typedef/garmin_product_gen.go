@@ -252,6 +252,8 @@ const (
 	GarminProductGpsmap66                   GarminProduct = 3028
 	GarminProductApproachS10                GarminProduct = 3049
 	GarminProductVivoactive3mL              GarminProduct = 3066
+	GarminProductFr245                      GarminProduct = 3076
+	GarminProductFr245Music                 GarminProduct = 3077
 	GarminProductApproachG80                GarminProduct = 3085
 	GarminProductEdge130Asia                GarminProduct = 3092
 	GarminProductEdge1030Bontrager          GarminProduct = 3095
@@ -282,6 +284,7 @@ const (
 	GarminProductMarqExpedition             GarminProduct = 3250
 	GarminProductMarqAthlete                GarminProduct = 3251
 	GarminProductDescentMk2                 GarminProduct = 3258
+	GarminProductFr45                       GarminProduct = 3282
 	GarminProductGpsmap66i                  GarminProduct = 3284
 	GarminProductFenix6sSport               GarminProduct = 3287
 	GarminProductFenix6s                    GarminProduct = 3288
@@ -331,6 +334,8 @@ const (
 	GarminProductEdge1030Plus               GarminProduct = 3570
 	GarminProductRally200                   GarminProduct = 3578 // Rally 100/200 Power Meter Series
 	GarminProductFr745                      GarminProduct = 3589
+	GarminProductVenusqMusic                GarminProduct = 3596
+	GarminProductVenusqMusicV2              GarminProduct = 3599
 	GarminProductVenusq                     GarminProduct = 3600
 	GarminProductLily                       GarminProduct = 3615
 	GarminProductMarqAdventurer             GarminProduct = 3624
@@ -355,9 +360,10 @@ const (
 	GarminProductEdge1040                   GarminProduct = 3843
 	GarminProductMarqGolferAsia             GarminProduct = 3850
 	GarminProductVenu2Plus                  GarminProduct = 3851
-	GarminProductGnss                       GarminProduct = 3865
+	GarminProductGnss                       GarminProduct = 3865 // Airoha AG3335M Family
 	GarminProductFr55                       GarminProduct = 3869
 	GarminProductInstinct2                  GarminProduct = 3888
+	GarminProductInstinct2S                 GarminProduct = 3889
 	GarminProductFenix7s                    GarminProduct = 3905
 	GarminProductFenix7                     GarminProduct = 3906
 	GarminProductFenix7x                    GarminProduct = 3907
@@ -443,7 +449,20 @@ const (
 	GarminProductFenix8                     GarminProduct = 4536
 	GarminProductD2Mach1Pro                 GarminProduct = 4556
 	GarminProductEnduro3                    GarminProduct = 4575
+	GarminProductInstincte40Mm              GarminProduct = 4583
+	GarminProductInstincte45Mm              GarminProduct = 4584
+	GarminProductInstinct3Solar45Mm         GarminProduct = 4585
+	GarminProductInstinct3Amoled45Mm        GarminProduct = 4586
+	GarminProductInstinct3Amoled50Mm        GarminProduct = 4587
+	GarminProductDescentG2                  GarminProduct = 4588
+	GarminProductHrm200                     GarminProduct = 4606
+	GarminProductVivoactive6                GarminProduct = 4625
+	GarminProductApproachs44                GarminProduct = 4647
+	GarminProductApproachs50                GarminProduct = 4656
 	GarminProductFenixE                     GarminProduct = 4666
+	GarminProductInstinct3Solar50Mm         GarminProduct = 4759
+	GarminProductTactix8Amoled              GarminProduct = 4775
+	GarminProductTactix8Solar               GarminProduct = 4776
 	GarminProductSdm4                       GarminProduct = 10007 // SDM4 footpod
 	GarminProductEdgeRemote                 GarminProduct = 10014
 	GarminProductTacxTrainingAppWin         GarminProduct = 20533
@@ -941,6 +960,10 @@ func (g GarminProduct) String() string {
 		return "approach_s10"
 	case GarminProductVivoactive3mL:
 		return "vivoactive3m_l"
+	case GarminProductFr245:
+		return "fr245"
+	case GarminProductFr245Music:
+		return "fr245_music"
 	case GarminProductApproachG80:
 		return "approach_g80"
 	case GarminProductEdge130Asia:
@@ -1001,6 +1024,8 @@ func (g GarminProduct) String() string {
 		return "marq_athlete"
 	case GarminProductDescentMk2:
 		return "descent_mk2"
+	case GarminProductFr45:
+		return "fr45"
 	case GarminProductGpsmap66i:
 		return "gpsmap66i"
 	case GarminProductFenix6sSport:
@@ -1099,6 +1124,10 @@ func (g GarminProduct) String() string {
 		return "rally_200"
 	case GarminProductFr745:
 		return "fr745"
+	case GarminProductVenusqMusic:
+		return "venusq_music"
+	case GarminProductVenusqMusicV2:
+		return "venusq_music_v2"
 	case GarminProductVenusq:
 		return "venusq"
 	case GarminProductLily:
@@ -1153,6 +1182,8 @@ func (g GarminProduct) String() string {
 		return "fr55"
 	case GarminProductInstinct2:
 		return "instinct_2"
+	case GarminProductInstinct2S:
+		return "instinct_2s"
 	case GarminProductFenix7s:
 		return "fenix7s"
 	case GarminProductFenix7:
@@ -1323,8 +1354,34 @@ func (g GarminProduct) String() string {
 		return "d2_mach1_pro"
 	case GarminProductEnduro3:
 		return "enduro3"
+	case GarminProductInstincte40Mm:
+		return "instinctE_40mm"
+	case GarminProductInstincte45Mm:
+		return "instinctE_45mm"
+	case GarminProductInstinct3Solar45Mm:
+		return "instinct3_solar_45mm"
+	case GarminProductInstinct3Amoled45Mm:
+		return "instinct3_amoled_45mm"
+	case GarminProductInstinct3Amoled50Mm:
+		return "instinct3_amoled_50mm"
+	case GarminProductDescentG2:
+		return "descent_g2"
+	case GarminProductHrm200:
+		return "hrm_200"
+	case GarminProductVivoactive6:
+		return "vivoactive6"
+	case GarminProductApproachs44:
+		return "approachS44"
+	case GarminProductApproachs50:
+		return "approachS50"
 	case GarminProductFenixE:
 		return "fenix_e"
+	case GarminProductInstinct3Solar50Mm:
+		return "instinct3_solar_50mm"
+	case GarminProductTactix8Amoled:
+		return "tactix8_amoled"
+	case GarminProductTactix8Solar:
+		return "tactix8_solar"
 	case GarminProductSdm4:
 		return "sdm4"
 	case GarminProductEdgeRemote:
@@ -1835,6 +1892,10 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductApproachS10
 	case "vivoactive3m_l":
 		return GarminProductVivoactive3mL
+	case "fr245":
+		return GarminProductFr245
+	case "fr245_music":
+		return GarminProductFr245Music
 	case "approach_g80":
 		return GarminProductApproachG80
 	case "edge_130_asia":
@@ -1895,6 +1956,8 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductMarqAthlete
 	case "descent_mk2":
 		return GarminProductDescentMk2
+	case "fr45":
+		return GarminProductFr45
 	case "gpsmap66i":
 		return GarminProductGpsmap66i
 	case "fenix6S_sport":
@@ -1993,6 +2056,10 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductRally200
 	case "fr745":
 		return GarminProductFr745
+	case "venusq_music":
+		return GarminProductVenusqMusic
+	case "venusq_music_v2":
+		return GarminProductVenusqMusicV2
 	case "venusq":
 		return GarminProductVenusq
 	case "lily":
@@ -2047,6 +2114,8 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductFr55
 	case "instinct_2":
 		return GarminProductInstinct2
+	case "instinct_2s":
+		return GarminProductInstinct2S
 	case "fenix7s":
 		return GarminProductFenix7s
 	case "fenix7":
@@ -2217,8 +2286,34 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductD2Mach1Pro
 	case "enduro3":
 		return GarminProductEnduro3
+	case "instinctE_40mm":
+		return GarminProductInstincte40Mm
+	case "instinctE_45mm":
+		return GarminProductInstincte45Mm
+	case "instinct3_solar_45mm":
+		return GarminProductInstinct3Solar45Mm
+	case "instinct3_amoled_45mm":
+		return GarminProductInstinct3Amoled45Mm
+	case "instinct3_amoled_50mm":
+		return GarminProductInstinct3Amoled50Mm
+	case "descent_g2":
+		return GarminProductDescentG2
+	case "hrm_200":
+		return GarminProductHrm200
+	case "vivoactive6":
+		return GarminProductVivoactive6
+	case "approachS44":
+		return GarminProductApproachs44
+	case "approachS50":
+		return GarminProductApproachs50
 	case "fenix_e":
 		return GarminProductFenixE
+	case "instinct3_solar_50mm":
+		return GarminProductInstinct3Solar50Mm
+	case "tactix8_amoled":
+		return GarminProductTactix8Amoled
+	case "tactix8_solar":
+		return GarminProductTactix8Solar
 	case "sdm4":
 		return GarminProductSdm4
 	case "edge_remote":
@@ -2490,6 +2585,8 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductGpsmap66,
 		GarminProductApproachS10,
 		GarminProductVivoactive3mL,
+		GarminProductFr245,
+		GarminProductFr245Music,
 		GarminProductApproachG80,
 		GarminProductEdge130Asia,
 		GarminProductEdge1030Bontrager,
@@ -2520,6 +2617,7 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductMarqExpedition,
 		GarminProductMarqAthlete,
 		GarminProductDescentMk2,
+		GarminProductFr45,
 		GarminProductGpsmap66i,
 		GarminProductFenix6sSport,
 		GarminProductFenix6s,
@@ -2569,6 +2667,8 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductEdge1030Plus,
 		GarminProductRally200,
 		GarminProductFr745,
+		GarminProductVenusqMusic,
+		GarminProductVenusqMusicV2,
 		GarminProductVenusq,
 		GarminProductLily,
 		GarminProductMarqAdventurer,
@@ -2596,6 +2696,7 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductGnss,
 		GarminProductFr55,
 		GarminProductInstinct2,
+		GarminProductInstinct2S,
 		GarminProductFenix7s,
 		GarminProductFenix7,
 		GarminProductFenix7x,
@@ -2681,7 +2782,20 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductFenix8,
 		GarminProductD2Mach1Pro,
 		GarminProductEnduro3,
+		GarminProductInstincte40Mm,
+		GarminProductInstincte45Mm,
+		GarminProductInstinct3Solar45Mm,
+		GarminProductInstinct3Amoled45Mm,
+		GarminProductInstinct3Amoled50Mm,
+		GarminProductDescentG2,
+		GarminProductHrm200,
+		GarminProductVivoactive6,
+		GarminProductApproachs44,
+		GarminProductApproachs50,
 		GarminProductFenixE,
+		GarminProductInstinct3Solar50Mm,
+		GarminProductTactix8Amoled,
+		GarminProductTactix8Solar,
 		GarminProductSdm4,
 		GarminProductEdgeRemote,
 		GarminProductTacxTrainingAppWin,

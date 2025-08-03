@@ -4,3 +4,6 @@ jwt_encryption_key: some_long_random_string
 debug: false
 # Which host and port to bind on
 bind: "[::]:80"
+
+# The root path of the web application
+web_root: /my-workout-tracker

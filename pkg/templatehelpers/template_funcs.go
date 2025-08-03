@@ -1,21 +1,22 @@
 package templatehelpers
 
 import (
-	"fmt"
+	"math"
 	"strings"
 	"time"
 
 	"github.com/biter777/countries"
+	"github.com/spf13/cast"
 )
 
 const InvalidValue = "N/A"
 
 func HumanCadence(cad float64) string {
-	return fmt.Sprintf("%.2f", cad)
+	return RoundFloat64(cad)
 }
 
 func HumanCaloriesKcal(cal float64) string {
-	return fmt.Sprintf("%.2f kcal", cal)
+	return RoundFloat64(cal) + " kcal"
 }
 
 func NumericDuration(d time.Duration) float64 {
@@ -138,4 +139,9 @@ func DistanceToDatabase(v float64, unit string) float64 {
 	default:
 		return v * MeterPerKM
 	}
+}
+
+// RoundFloat64 rounds a float64 to 2 decimal places and returns it as a string.
+func RoundFloat64(f float64) string {
+	return cast.ToString(math.Round(f*100) / 100)
 }

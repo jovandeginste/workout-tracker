@@ -13,12 +13,16 @@ import (
 type CarryExerciseName uint16
 
 const (
-	CarryExerciseNameBarHolds          CarryExerciseName = 0
-	CarryExerciseNameFarmersWalk       CarryExerciseName = 1
-	CarryExerciseNameFarmersWalkOnToes CarryExerciseName = 2
-	CarryExerciseNameHexDumbbellHold   CarryExerciseName = 3
-	CarryExerciseNameOverheadCarry     CarryExerciseName = 4
-	CarryExerciseNameInvalid           CarryExerciseName = 0xFFFF
+	CarryExerciseNameBarHolds              CarryExerciseName = 0
+	CarryExerciseNameFarmersWalk           CarryExerciseName = 1
+	CarryExerciseNameFarmersWalkOnToes     CarryExerciseName = 2
+	CarryExerciseNameHexDumbbellHold       CarryExerciseName = 3
+	CarryExerciseNameOverheadCarry         CarryExerciseName = 4
+	CarryExerciseNameDumbbellWaiterCarry   CarryExerciseName = 5
+	CarryExerciseNameFarmersCarryWalkLunge CarryExerciseName = 6
+	CarryExerciseNameFarmersCarry          CarryExerciseName = 7
+	CarryExerciseNameFarmersCarryOnToes    CarryExerciseName = 8
+	CarryExerciseNameInvalid               CarryExerciseName = 0xFFFF
 )
 
 func (c CarryExerciseName) Uint16() uint16 { return uint16(c) }
@@ -35,6 +39,14 @@ func (c CarryExerciseName) String() string {
 		return "hex_dumbbell_hold"
 	case CarryExerciseNameOverheadCarry:
 		return "overhead_carry"
+	case CarryExerciseNameDumbbellWaiterCarry:
+		return "dumbbell_waiter_carry"
+	case CarryExerciseNameFarmersCarryWalkLunge:
+		return "farmers_carry_walk_lunge"
+	case CarryExerciseNameFarmersCarry:
+		return "farmers_carry"
+	case CarryExerciseNameFarmersCarryOnToes:
+		return "farmers_carry_on_toes"
 	default:
 		return "CarryExerciseNameInvalid(" + strconv.FormatUint(uint64(c), 10) + ")"
 	}
@@ -53,6 +65,14 @@ func CarryExerciseNameFromString(s string) CarryExerciseName {
 		return CarryExerciseNameHexDumbbellHold
 	case "overhead_carry":
 		return CarryExerciseNameOverheadCarry
+	case "dumbbell_waiter_carry":
+		return CarryExerciseNameDumbbellWaiterCarry
+	case "farmers_carry_walk_lunge":
+		return CarryExerciseNameFarmersCarryWalkLunge
+	case "farmers_carry":
+		return CarryExerciseNameFarmersCarry
+	case "farmers_carry_on_toes":
+		return CarryExerciseNameFarmersCarryOnToes
 	default:
 		return CarryExerciseNameInvalid
 	}
@@ -66,5 +86,9 @@ func ListCarryExerciseName() []CarryExerciseName {
 		CarryExerciseNameFarmersWalkOnToes,
 		CarryExerciseNameHexDumbbellHold,
 		CarryExerciseNameOverheadCarry,
+		CarryExerciseNameDumbbellWaiterCarry,
+		CarryExerciseNameFarmersCarryWalkLunge,
+		CarryExerciseNameFarmersCarry,
+		CarryExerciseNameFarmersCarryOnToes,
 	}
 }

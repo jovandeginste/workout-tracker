@@ -945,3 +945,8 @@ func (t *Table) IsEmpty() bool {
 func (t *Table) RowCount() int {
 	return len(t.data)
 }
+
+// Clear clears the table data
+func (t *Table) Clear() {
+	t.data = nil
+}

@@ -51,6 +51,9 @@ const (
 	SitUpExerciseNameXAbs                                SitUpExerciseName = 35
 	SitUpExerciseNameWeightedXAbs                        SitUpExerciseName = 36
 	SitUpExerciseNameSitUp                               SitUpExerciseName = 37
+	SitUpExerciseNameGhdSitUps                           SitUpExerciseName = 38
+	SitUpExerciseNameSitUpTurkishGetUp                   SitUpExerciseName = 39
+	SitUpExerciseNameRussianTwistOnSwissBall             SitUpExerciseName = 40
 	SitUpExerciseNameInvalid                             SitUpExerciseName = 0xFFFF
 )
 
@@ -134,6 +137,12 @@ func (s SitUpExerciseName) String() string {
 		return "weighted_x_abs"
 	case SitUpExerciseNameSitUp:
 		return "sit_up"
+	case SitUpExerciseNameGhdSitUps:
+		return "ghd_sit_ups"
+	case SitUpExerciseNameSitUpTurkishGetUp:
+		return "sit_up_turkish_get_up"
+	case SitUpExerciseNameRussianTwistOnSwissBall:
+		return "russian_twist_on_swiss_ball"
 	default:
 		return "SitUpExerciseNameInvalid(" + strconv.FormatUint(uint64(s), 10) + ")"
 	}
@@ -218,6 +227,12 @@ func SitUpExerciseNameFromString(s string) SitUpExerciseName {
 		return SitUpExerciseNameWeightedXAbs
 	case "sit_up":
 		return SitUpExerciseNameSitUp
+	case "ghd_sit_ups":
+		return SitUpExerciseNameGhdSitUps
+	case "sit_up_turkish_get_up":
+		return SitUpExerciseNameSitUpTurkishGetUp
+	case "russian_twist_on_swiss_ball":
+		return SitUpExerciseNameRussianTwistOnSwissBall
 	default:
 		return SitUpExerciseNameInvalid
 	}
@@ -264,5 +279,8 @@ func ListSitUpExerciseName() []SitUpExerciseName {
 		SitUpExerciseNameXAbs,
 		SitUpExerciseNameWeightedXAbs,
 		SitUpExerciseNameSitUp,
+		SitUpExerciseNameGhdSitUps,
+		SitUpExerciseNameSitUpTurkishGetUp,
+		SitUpExerciseNameRussianTwistOnSwissBall,
 	}
 }

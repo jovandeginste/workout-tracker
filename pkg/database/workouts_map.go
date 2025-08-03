@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/paulmach/orb"
 	"github.com/ringsaturn/tzf"
+	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -335,6 +336,20 @@ func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 	return p2.Distance3D(&p1)
 }
 
+func maxSpeedForSegment(segment gpx.GPXTrackSegment) float64 {
+	ms := segment.MovingData().MaxSpeed
+
+	for _, p := range segment.Points {
+		if n, ok := p.Extensions.GetNode("", "enhanced-speed"); ok {
+			if newMS, err := cast.ToFloat64E(n.Data); err == nil && newMS > ms {
+				ms = newMS
+			}
+		}
+	}
+
+	return ms
+}
+
 func createMapData(gpxContent *gpx.GPX) *MapData {
 	if len(gpxContent.Tracks) == 0 {
 		return nil
@@ -360,7 +375,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 			maxElevation = max(maxElevation, segment.ElevationBounds().MaxElevation)
 			uphill += segment.UphillDownhill().Uphill
 			downhill += segment.UphillDownhill().Downhill
-			maxSpeed = max(maxSpeed, segment.MovingData().MaxSpeed)
+			maxSpeed = max(maxSpeed, maxSpeedForSegment(segment))
 			pauseDuration += time.Duration(segment.MovingData().StoppedTime)
 		}
 	}

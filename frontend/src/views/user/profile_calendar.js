@@ -11,7 +11,7 @@ class ProfileCalendar extends HTMLElement {
 
   connectedCallback() {
     var calendar = new Calendar(this, {
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZone: this.getAttribute("timezone"),
       initialView: "dayGridMonth",
       locale: Intl.DateTimeFormat().resolvedOptions().locale,
       firstDay: 1,

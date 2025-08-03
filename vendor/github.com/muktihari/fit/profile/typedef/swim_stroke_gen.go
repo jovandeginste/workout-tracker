@@ -20,6 +20,8 @@ const (
 	SwimStrokeDrill        SwimStroke = 4
 	SwimStrokeMixed        SwimStroke = 5
 	SwimStrokeIm           SwimStroke = 6 // IM is a mixed interval containing the same number of lengths for each of: Butterfly, Backstroke, Breaststroke, Freestyle, swam in that order.
+	SwimStrokeImByRound    SwimStroke = 7 // For repeated workout steps, a new individual medly stroke is used for each round.
+	SwimStrokeRimo         SwimStroke = 8 // Reverse IM Order
 	SwimStrokeInvalid      SwimStroke = 0xFF
 )
 
@@ -41,6 +43,10 @@ func (s SwimStroke) String() string {
 		return "mixed"
 	case SwimStrokeIm:
 		return "im"
+	case SwimStrokeImByRound:
+		return "im_by_round"
+	case SwimStrokeRimo:
+		return "rimo"
 	default:
 		return "SwimStrokeInvalid(" + strconv.Itoa(int(s)) + ")"
 	}
@@ -63,6 +69,10 @@ func SwimStrokeFromString(s string) SwimStroke {
 		return SwimStrokeMixed
 	case "im":
 		return SwimStrokeIm
+	case "im_by_round":
+		return SwimStrokeImByRound
+	case "rimo":
+		return SwimStrokeRimo
 	default:
 		return SwimStrokeInvalid
 	}
@@ -78,5 +88,7 @@ func ListSwimStroke() []SwimStroke {
 		SwimStrokeDrill,
 		SwimStrokeMixed,
 		SwimStrokeIm,
+		SwimStrokeImByRound,
+		SwimStrokeRimo,
 	}
 }

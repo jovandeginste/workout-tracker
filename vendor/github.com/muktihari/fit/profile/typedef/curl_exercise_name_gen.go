@@ -57,6 +57,13 @@ const (
 	CurlExerciseNameSwissBallEzBarPreacherCurl                CurlExerciseName = 41
 	CurlExerciseNameTwistingStandingDumbbellBicepsCurl        CurlExerciseName = 42
 	CurlExerciseNameWideGripEzBarBicepsCurl                   CurlExerciseName = 43
+	CurlExerciseNameOneArmConcentrationCurl                   CurlExerciseName = 44
+	CurlExerciseNameStandingZottmanBicepsCurl                 CurlExerciseName = 45
+	CurlExerciseNameDumbbellBicepsCurl                        CurlExerciseName = 46
+	CurlExerciseNameDragCurlWheelchair                        CurlExerciseName = 47
+	CurlExerciseNameDumbbellBicepsCurlWheelchair              CurlExerciseName = 48
+	CurlExerciseNameBottleCurl                                CurlExerciseName = 49
+	CurlExerciseNameSeatedBottleCurl                          CurlExerciseName = 50
 	CurlExerciseNameInvalid                                   CurlExerciseName = 0xFFFF
 )
 
@@ -152,6 +159,20 @@ func (c CurlExerciseName) String() string {
 		return "twisting_standing_dumbbell_biceps_curl"
 	case CurlExerciseNameWideGripEzBarBicepsCurl:
 		return "wide_grip_ez_bar_biceps_curl"
+	case CurlExerciseNameOneArmConcentrationCurl:
+		return "one_arm_concentration_curl"
+	case CurlExerciseNameStandingZottmanBicepsCurl:
+		return "standing_zottman_biceps_curl"
+	case CurlExerciseNameDumbbellBicepsCurl:
+		return "dumbbell_biceps_curl"
+	case CurlExerciseNameDragCurlWheelchair:
+		return "drag_curl_wheelchair"
+	case CurlExerciseNameDumbbellBicepsCurlWheelchair:
+		return "dumbbell_biceps_curl_wheelchair"
+	case CurlExerciseNameBottleCurl:
+		return "bottle_curl"
+	case CurlExerciseNameSeatedBottleCurl:
+		return "seated_bottle_curl"
 	default:
 		return "CurlExerciseNameInvalid(" + strconv.FormatUint(uint64(c), 10) + ")"
 	}
@@ -248,6 +269,20 @@ func CurlExerciseNameFromString(s string) CurlExerciseName {
 		return CurlExerciseNameTwistingStandingDumbbellBicepsCurl
 	case "wide_grip_ez_bar_biceps_curl":
 		return CurlExerciseNameWideGripEzBarBicepsCurl
+	case "one_arm_concentration_curl":
+		return CurlExerciseNameOneArmConcentrationCurl
+	case "standing_zottman_biceps_curl":
+		return CurlExerciseNameStandingZottmanBicepsCurl
+	case "dumbbell_biceps_curl":
+		return CurlExerciseNameDumbbellBicepsCurl
+	case "drag_curl_wheelchair":
+		return CurlExerciseNameDragCurlWheelchair
+	case "dumbbell_biceps_curl_wheelchair":
+		return CurlExerciseNameDumbbellBicepsCurlWheelchair
+	case "bottle_curl":
+		return CurlExerciseNameBottleCurl
+	case "seated_bottle_curl":
+		return CurlExerciseNameSeatedBottleCurl
 	default:
 		return CurlExerciseNameInvalid
 	}
@@ -300,5 +335,12 @@ func ListCurlExerciseName() []CurlExerciseName {
 		CurlExerciseNameSwissBallEzBarPreacherCurl,
 		CurlExerciseNameTwistingStandingDumbbellBicepsCurl,
 		CurlExerciseNameWideGripEzBarBicepsCurl,
+		CurlExerciseNameOneArmConcentrationCurl,
+		CurlExerciseNameStandingZottmanBicepsCurl,
+		CurlExerciseNameDumbbellBicepsCurl,
+		CurlExerciseNameDragCurlWheelchair,
+		CurlExerciseNameDumbbellBicepsCurlWheelchair,
+		CurlExerciseNameBottleCurl,
+		CurlExerciseNameSeatedBottleCurl,
 	}
 }

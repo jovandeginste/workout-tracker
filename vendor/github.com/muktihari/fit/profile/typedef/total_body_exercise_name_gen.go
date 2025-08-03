@@ -13,20 +13,27 @@ import (
 type TotalBodyExerciseName uint16
 
 const (
-	TotalBodyExerciseNameBurpee                           TotalBodyExerciseName = 0
-	TotalBodyExerciseNameWeightedBurpee                   TotalBodyExerciseName = 1
-	TotalBodyExerciseNameBurpeeBoxJump                    TotalBodyExerciseName = 2
-	TotalBodyExerciseNameWeightedBurpeeBoxJump            TotalBodyExerciseName = 3
-	TotalBodyExerciseNameHighPullBurpee                   TotalBodyExerciseName = 4
-	TotalBodyExerciseNameManMakers                        TotalBodyExerciseName = 5
-	TotalBodyExerciseNameOneArmBurpee                     TotalBodyExerciseName = 6
-	TotalBodyExerciseNameSquatThrusts                     TotalBodyExerciseName = 7
-	TotalBodyExerciseNameWeightedSquatThrusts             TotalBodyExerciseName = 8
-	TotalBodyExerciseNameSquatPlankPushUp                 TotalBodyExerciseName = 9
-	TotalBodyExerciseNameWeightedSquatPlankPushUp         TotalBodyExerciseName = 10
-	TotalBodyExerciseNameStandingTRotationBalance         TotalBodyExerciseName = 11
-	TotalBodyExerciseNameWeightedStandingTRotationBalance TotalBodyExerciseName = 12
-	TotalBodyExerciseNameInvalid                          TotalBodyExerciseName = 0xFFFF
+	TotalBodyExerciseNameBurpee                                         TotalBodyExerciseName = 0
+	TotalBodyExerciseNameWeightedBurpee                                 TotalBodyExerciseName = 1
+	TotalBodyExerciseNameBurpeeBoxJump                                  TotalBodyExerciseName = 2
+	TotalBodyExerciseNameWeightedBurpeeBoxJump                          TotalBodyExerciseName = 3
+	TotalBodyExerciseNameHighPullBurpee                                 TotalBodyExerciseName = 4
+	TotalBodyExerciseNameManMakers                                      TotalBodyExerciseName = 5
+	TotalBodyExerciseNameOneArmBurpee                                   TotalBodyExerciseName = 6
+	TotalBodyExerciseNameSquatThrusts                                   TotalBodyExerciseName = 7
+	TotalBodyExerciseNameWeightedSquatThrusts                           TotalBodyExerciseName = 8
+	TotalBodyExerciseNameSquatPlankPushUp                               TotalBodyExerciseName = 9
+	TotalBodyExerciseNameWeightedSquatPlankPushUp                       TotalBodyExerciseName = 10
+	TotalBodyExerciseNameStandingTRotationBalance                       TotalBodyExerciseName = 11
+	TotalBodyExerciseNameWeightedStandingTRotationBalance               TotalBodyExerciseName = 12
+	TotalBodyExerciseNameBarbellBurpee                                  TotalBodyExerciseName = 13
+	TotalBodyExerciseNameBurpeeBoxJumpOverYesLiterallyJumpingOverTheBox TotalBodyExerciseName = 15
+	TotalBodyExerciseNameBurpeeBoxJumpStepUpOver                        TotalBodyExerciseName = 16
+	TotalBodyExerciseNameLateralBarbellBurpee                           TotalBodyExerciseName = 17
+	TotalBodyExerciseNameTotalBodyBurpeeOverBar                         TotalBodyExerciseName = 18
+	TotalBodyExerciseNameBurpeeBoxJumpOver                              TotalBodyExerciseName = 19
+	TotalBodyExerciseNameBurpeeWheelchair                               TotalBodyExerciseName = 20
+	TotalBodyExerciseNameInvalid                                        TotalBodyExerciseName = 0xFFFF
 )
 
 func (t TotalBodyExerciseName) Uint16() uint16 { return uint16(t) }
@@ -59,6 +66,20 @@ func (t TotalBodyExerciseName) String() string {
 		return "standing_t_rotation_balance"
 	case TotalBodyExerciseNameWeightedStandingTRotationBalance:
 		return "weighted_standing_t_rotation_balance"
+	case TotalBodyExerciseNameBarbellBurpee:
+		return "barbell_burpee"
+	case TotalBodyExerciseNameBurpeeBoxJumpOverYesLiterallyJumpingOverTheBox:
+		return "burpee_box_jump_over_yes_literally_jumping_over_the_box"
+	case TotalBodyExerciseNameBurpeeBoxJumpStepUpOver:
+		return "burpee_box_jump_step_up_over"
+	case TotalBodyExerciseNameLateralBarbellBurpee:
+		return "lateral_barbell_burpee"
+	case TotalBodyExerciseNameTotalBodyBurpeeOverBar:
+		return "total_body_burpee_over_bar"
+	case TotalBodyExerciseNameBurpeeBoxJumpOver:
+		return "burpee_box_jump_over"
+	case TotalBodyExerciseNameBurpeeWheelchair:
+		return "burpee_wheelchair"
 	default:
 		return "TotalBodyExerciseNameInvalid(" + strconv.FormatUint(uint64(t), 10) + ")"
 	}
@@ -93,6 +114,20 @@ func TotalBodyExerciseNameFromString(s string) TotalBodyExerciseName {
 		return TotalBodyExerciseNameStandingTRotationBalance
 	case "weighted_standing_t_rotation_balance":
 		return TotalBodyExerciseNameWeightedStandingTRotationBalance
+	case "barbell_burpee":
+		return TotalBodyExerciseNameBarbellBurpee
+	case "burpee_box_jump_over_yes_literally_jumping_over_the_box":
+		return TotalBodyExerciseNameBurpeeBoxJumpOverYesLiterallyJumpingOverTheBox
+	case "burpee_box_jump_step_up_over":
+		return TotalBodyExerciseNameBurpeeBoxJumpStepUpOver
+	case "lateral_barbell_burpee":
+		return TotalBodyExerciseNameLateralBarbellBurpee
+	case "total_body_burpee_over_bar":
+		return TotalBodyExerciseNameTotalBodyBurpeeOverBar
+	case "burpee_box_jump_over":
+		return TotalBodyExerciseNameBurpeeBoxJumpOver
+	case "burpee_wheelchair":
+		return TotalBodyExerciseNameBurpeeWheelchair
 	default:
 		return TotalBodyExerciseNameInvalid
 	}
@@ -114,5 +149,12 @@ func ListTotalBodyExerciseName() []TotalBodyExerciseName {
 		TotalBodyExerciseNameWeightedSquatPlankPushUp,
 		TotalBodyExerciseNameStandingTRotationBalance,
 		TotalBodyExerciseNameWeightedStandingTRotationBalance,
+		TotalBodyExerciseNameBarbellBurpee,
+		TotalBodyExerciseNameBurpeeBoxJumpOverYesLiterallyJumpingOverTheBox,
+		TotalBodyExerciseNameBurpeeBoxJumpStepUpOver,
+		TotalBodyExerciseNameLateralBarbellBurpee,
+		TotalBodyExerciseNameTotalBodyBurpeeOverBar,
+		TotalBodyExerciseNameBurpeeBoxJumpOver,
+		TotalBodyExerciseNameBurpeeWheelchair,
 	}
 }

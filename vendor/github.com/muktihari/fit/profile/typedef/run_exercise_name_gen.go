@@ -13,11 +13,14 @@ import (
 type RunExerciseName uint16
 
 const (
-	RunExerciseNameRun     RunExerciseName = 0
-	RunExerciseNameWalk    RunExerciseName = 1
-	RunExerciseNameJog     RunExerciseName = 2
-	RunExerciseNameSprint  RunExerciseName = 3
-	RunExerciseNameInvalid RunExerciseName = 0xFFFF
+	RunExerciseNameRun       RunExerciseName = 0
+	RunExerciseNameWalk      RunExerciseName = 1
+	RunExerciseNameJog       RunExerciseName = 2
+	RunExerciseNameSprint    RunExerciseName = 3
+	RunExerciseNameRunOrWalk RunExerciseName = 4
+	RunExerciseNameSpeedWalk RunExerciseName = 5
+	RunExerciseNameWarmUp    RunExerciseName = 6
+	RunExerciseNameInvalid   RunExerciseName = 0xFFFF
 )
 
 func (r RunExerciseName) Uint16() uint16 { return uint16(r) }
@@ -32,6 +35,12 @@ func (r RunExerciseName) String() string {
 		return "jog"
 	case RunExerciseNameSprint:
 		return "sprint"
+	case RunExerciseNameRunOrWalk:
+		return "run_or_walk"
+	case RunExerciseNameSpeedWalk:
+		return "speed_walk"
+	case RunExerciseNameWarmUp:
+		return "warm_up"
 	default:
 		return "RunExerciseNameInvalid(" + strconv.FormatUint(uint64(r), 10) + ")"
 	}
@@ -48,6 +57,12 @@ func RunExerciseNameFromString(s string) RunExerciseName {
 		return RunExerciseNameJog
 	case "sprint":
 		return RunExerciseNameSprint
+	case "run_or_walk":
+		return RunExerciseNameRunOrWalk
+	case "speed_walk":
+		return RunExerciseNameSpeedWalk
+	case "warm_up":
+		return RunExerciseNameWarmUp
 	default:
 		return RunExerciseNameInvalid
 	}
@@ -60,5 +75,8 @@ func ListRunExerciseName() []RunExerciseName {
 		RunExerciseNameWalk,
 		RunExerciseNameJog,
 		RunExerciseNameSprint,
+		RunExerciseNameRunOrWalk,
+		RunExerciseNameSpeedWalk,
+		RunExerciseNameWarmUp,
 	}
 }

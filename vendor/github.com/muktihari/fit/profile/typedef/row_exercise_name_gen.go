@@ -47,6 +47,25 @@ const (
 	RowExerciseNameUnderhandGripCableRow                      RowExerciseName = 31
 	RowExerciseNameVGripCableRow                              RowExerciseName = 32
 	RowExerciseNameWideGripSeatedCableRow                     RowExerciseName = 33
+	RowExerciseNameAlternatingDumbbellRow                     RowExerciseName = 34
+	RowExerciseNameInvertedRow                                RowExerciseName = 35
+	RowExerciseNameRow                                        RowExerciseName = 36
+	RowExerciseNameWeightedRow                                RowExerciseName = 37
+	RowExerciseNameIndoorRow                                  RowExerciseName = 38
+	RowExerciseNameBandedFacePulls                            RowExerciseName = 39
+	RowExerciseNameChestSupportedDumbbellRow                  RowExerciseName = 40
+	RowExerciseNameDeclineRingRow                             RowExerciseName = 41
+	RowExerciseNameElevatedRingRow                            RowExerciseName = 42
+	RowExerciseNameRdlBentOverRowWithBarbellDumbbell          RowExerciseName = 43
+	RowExerciseNameRingRow                                    RowExerciseName = 44
+	RowExerciseNameBarbellRow                                 RowExerciseName = 45
+	RowExerciseNameBentOverRowWithBarbell                     RowExerciseName = 46
+	RowExerciseNameBentOverRowWithDumbell                     RowExerciseName = 47
+	RowExerciseNameSeatedUnderhandGripCableRow                RowExerciseName = 48
+	RowExerciseNameTrxInvertedRow                             RowExerciseName = 49
+	RowExerciseNameWeightedInvertedRow                        RowExerciseName = 50
+	RowExerciseNameWeightedTrxInvertedRow                     RowExerciseName = 51
+	RowExerciseNameDumbbellRowWheelchair                      RowExerciseName = 52
 	RowExerciseNameInvalid                                    RowExerciseName = 0xFFFF
 )
 
@@ -122,6 +141,44 @@ func (r RowExerciseName) String() string {
 		return "v_grip_cable_row"
 	case RowExerciseNameWideGripSeatedCableRow:
 		return "wide_grip_seated_cable_row"
+	case RowExerciseNameAlternatingDumbbellRow:
+		return "alternating_dumbbell_row"
+	case RowExerciseNameInvertedRow:
+		return "inverted_row"
+	case RowExerciseNameRow:
+		return "row"
+	case RowExerciseNameWeightedRow:
+		return "weighted_row"
+	case RowExerciseNameIndoorRow:
+		return "indoor_row"
+	case RowExerciseNameBandedFacePulls:
+		return "banded_face_pulls"
+	case RowExerciseNameChestSupportedDumbbellRow:
+		return "chest_supported_dumbbell_row"
+	case RowExerciseNameDeclineRingRow:
+		return "decline_ring_row"
+	case RowExerciseNameElevatedRingRow:
+		return "elevated_ring_row"
+	case RowExerciseNameRdlBentOverRowWithBarbellDumbbell:
+		return "rdl_bent_over_row_with_barbell_dumbbell"
+	case RowExerciseNameRingRow:
+		return "ring_row"
+	case RowExerciseNameBarbellRow:
+		return "barbell_row"
+	case RowExerciseNameBentOverRowWithBarbell:
+		return "bent_over_row_with_barbell"
+	case RowExerciseNameBentOverRowWithDumbell:
+		return "bent_over_row_with_dumbell"
+	case RowExerciseNameSeatedUnderhandGripCableRow:
+		return "seated_underhand_grip_cable_row"
+	case RowExerciseNameTrxInvertedRow:
+		return "trx_inverted_row"
+	case RowExerciseNameWeightedInvertedRow:
+		return "weighted_inverted_row"
+	case RowExerciseNameWeightedTrxInvertedRow:
+		return "weighted_trx_inverted_row"
+	case RowExerciseNameDumbbellRowWheelchair:
+		return "dumbbell_row_wheelchair"
 	default:
 		return "RowExerciseNameInvalid(" + strconv.FormatUint(uint64(r), 10) + ")"
 	}
@@ -198,6 +255,44 @@ func RowExerciseNameFromString(s string) RowExerciseName {
 		return RowExerciseNameVGripCableRow
 	case "wide_grip_seated_cable_row":
 		return RowExerciseNameWideGripSeatedCableRow
+	case "alternating_dumbbell_row":
+		return RowExerciseNameAlternatingDumbbellRow
+	case "inverted_row":
+		return RowExerciseNameInvertedRow
+	case "row":
+		return RowExerciseNameRow
+	case "weighted_row":
+		return RowExerciseNameWeightedRow
+	case "indoor_row":
+		return RowExerciseNameIndoorRow
+	case "banded_face_pulls":
+		return RowExerciseNameBandedFacePulls
+	case "chest_supported_dumbbell_row":
+		return RowExerciseNameChestSupportedDumbbellRow
+	case "decline_ring_row":
+		return RowExerciseNameDeclineRingRow
+	case "elevated_ring_row":
+		return RowExerciseNameElevatedRingRow
+	case "rdl_bent_over_row_with_barbell_dumbbell":
+		return RowExerciseNameRdlBentOverRowWithBarbellDumbbell
+	case "ring_row":
+		return RowExerciseNameRingRow
+	case "barbell_row":
+		return RowExerciseNameBarbellRow
+	case "bent_over_row_with_barbell":
+		return RowExerciseNameBentOverRowWithBarbell
+	case "bent_over_row_with_dumbell":
+		return RowExerciseNameBentOverRowWithDumbell
+	case "seated_underhand_grip_cable_row":
+		return RowExerciseNameSeatedUnderhandGripCableRow
+	case "trx_inverted_row":
+		return RowExerciseNameTrxInvertedRow
+	case "weighted_inverted_row":
+		return RowExerciseNameWeightedInvertedRow
+	case "weighted_trx_inverted_row":
+		return RowExerciseNameWeightedTrxInvertedRow
+	case "dumbbell_row_wheelchair":
+		return RowExerciseNameDumbbellRowWheelchair
 	default:
 		return RowExerciseNameInvalid
 	}
@@ -240,5 +335,24 @@ func ListRowExerciseName() []RowExerciseName {
 		RowExerciseNameUnderhandGripCableRow,
 		RowExerciseNameVGripCableRow,
 		RowExerciseNameWideGripSeatedCableRow,
+		RowExerciseNameAlternatingDumbbellRow,
+		RowExerciseNameInvertedRow,
+		RowExerciseNameRow,
+		RowExerciseNameWeightedRow,
+		RowExerciseNameIndoorRow,
+		RowExerciseNameBandedFacePulls,
+		RowExerciseNameChestSupportedDumbbellRow,
+		RowExerciseNameDeclineRingRow,
+		RowExerciseNameElevatedRingRow,
+		RowExerciseNameRdlBentOverRowWithBarbellDumbbell,
+		RowExerciseNameRingRow,
+		RowExerciseNameBarbellRow,
+		RowExerciseNameBentOverRowWithBarbell,
+		RowExerciseNameBentOverRowWithDumbell,
+		RowExerciseNameSeatedUnderhandGripCableRow,
+		RowExerciseNameTrxInvertedRow,
+		RowExerciseNameWeightedInvertedRow,
+		RowExerciseNameWeightedTrxInvertedRow,
+		RowExerciseNameDumbbellRowWheelchair,
 	}
 }

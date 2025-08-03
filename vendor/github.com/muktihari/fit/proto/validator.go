@@ -28,7 +28,7 @@ func (p *Validator) ValidateMessageDefinition(mesgDef *MessageDefinition) error 
 		}
 		for _, fieldDef := range mesgDef.FieldDefinitions {
 			if fieldDef.BaseType&basetype.BaseTypeNumMask > basetype.Byte&basetype.BaseTypeNumMask { // byte was the last type added in 1.0
-				return fmt.Errorf("protocol version 1.0 do not support type '%s': %w", fieldDef.BaseType, ErrProtocolViolation)
+				return fmt.Errorf("protocol version 1.0 do not support type %q: %w", fieldDef.BaseType, ErrProtocolViolation)
 			}
 		}
 		return nil
@@ -45,7 +45,7 @@ func (p *Validator) ValidateMessage(mesg *Message) error {
 		for i := range mesg.Fields {
 			field := &mesg.Fields[i]
 			if field.BaseType&basetype.BaseTypeNumMask > basetype.Byte&basetype.BaseTypeNumMask { // byte was the last type added in 1.0
-				return fmt.Errorf("protocol version 1.0 do not support type '%s': %w", field.BaseType, ErrProtocolViolation)
+				return fmt.Errorf("protocol version 1.0 do not support type %q: %w", field.BaseType, ErrProtocolViolation)
 			}
 		}
 	}

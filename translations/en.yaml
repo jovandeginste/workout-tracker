@@ -105,6 +105,8 @@ en:
     Average_tempo_no_pause: Average tempo (no pause)
     Bidirectional: Bidirectional
     Cadence: Cadence
+    enhanced_speed: Enhanced speed
+    temperature: Temperature
     Cancel: Cancel
     Circular: Circular
     Continue: Continue

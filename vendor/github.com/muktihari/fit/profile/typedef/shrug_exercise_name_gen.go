@@ -30,6 +30,14 @@ const (
 	ShrugExerciseNameSerratusShrug                  ShrugExerciseName = 14
 	ShrugExerciseNameWeightedSerratusShrug          ShrugExerciseName = 15
 	ShrugExerciseNameWideGripJumpShrug              ShrugExerciseName = 16
+	ShrugExerciseNameWideGripBarbellShrug           ShrugExerciseName = 17
+	ShrugExerciseNameBehindTheBackShrug             ShrugExerciseName = 18
+	ShrugExerciseNameDumbbellShrugWheelchair        ShrugExerciseName = 19
+	ShrugExerciseNameShrugWheelchair                ShrugExerciseName = 20
+	ShrugExerciseNameShrugArmDownWheelchair         ShrugExerciseName = 21
+	ShrugExerciseNameShrugArmMidWheelchair          ShrugExerciseName = 22
+	ShrugExerciseNameShrugArmUpWheelchair           ShrugExerciseName = 23
+	ShrugExerciseNameUprightRow                     ShrugExerciseName = 24
 	ShrugExerciseNameInvalid                        ShrugExerciseName = 0xFFFF
 )
 
@@ -71,6 +79,22 @@ func (s ShrugExerciseName) String() string {
 		return "weighted_serratus_shrug"
 	case ShrugExerciseNameWideGripJumpShrug:
 		return "wide_grip_jump_shrug"
+	case ShrugExerciseNameWideGripBarbellShrug:
+		return "wide_grip_barbell_shrug"
+	case ShrugExerciseNameBehindTheBackShrug:
+		return "behind_the_back_shrug"
+	case ShrugExerciseNameDumbbellShrugWheelchair:
+		return "dumbbell_shrug_wheelchair"
+	case ShrugExerciseNameShrugWheelchair:
+		return "shrug_wheelchair"
+	case ShrugExerciseNameShrugArmDownWheelchair:
+		return "shrug_arm_down_wheelchair"
+	case ShrugExerciseNameShrugArmMidWheelchair:
+		return "shrug_arm_mid_wheelchair"
+	case ShrugExerciseNameShrugArmUpWheelchair:
+		return "shrug_arm_up_wheelchair"
+	case ShrugExerciseNameUprightRow:
+		return "upright_row"
 	default:
 		return "ShrugExerciseNameInvalid(" + strconv.FormatUint(uint64(s), 10) + ")"
 	}
@@ -113,6 +137,22 @@ func ShrugExerciseNameFromString(s string) ShrugExerciseName {
 		return ShrugExerciseNameWeightedSerratusShrug
 	case "wide_grip_jump_shrug":
 		return ShrugExerciseNameWideGripJumpShrug
+	case "wide_grip_barbell_shrug":
+		return ShrugExerciseNameWideGripBarbellShrug
+	case "behind_the_back_shrug":
+		return ShrugExerciseNameBehindTheBackShrug
+	case "dumbbell_shrug_wheelchair":
+		return ShrugExerciseNameDumbbellShrugWheelchair
+	case "shrug_wheelchair":
+		return ShrugExerciseNameShrugWheelchair
+	case "shrug_arm_down_wheelchair":
+		return ShrugExerciseNameShrugArmDownWheelchair
+	case "shrug_arm_mid_wheelchair":
+		return ShrugExerciseNameShrugArmMidWheelchair
+	case "shrug_arm_up_wheelchair":
+		return ShrugExerciseNameShrugArmUpWheelchair
+	case "upright_row":
+		return ShrugExerciseNameUprightRow
 	default:
 		return ShrugExerciseNameInvalid
 	}
@@ -138,5 +178,13 @@ func ListShrugExerciseName() []ShrugExerciseName {
 		ShrugExerciseNameSerratusShrug,
 		ShrugExerciseNameWeightedSerratusShrug,
 		ShrugExerciseNameWideGripJumpShrug,
+		ShrugExerciseNameWideGripBarbellShrug,
+		ShrugExerciseNameBehindTheBackShrug,
+		ShrugExerciseNameDumbbellShrugWheelchair,
+		ShrugExerciseNameShrugWheelchair,
+		ShrugExerciseNameShrugArmDownWheelchair,
+		ShrugExerciseNameShrugArmMidWheelchair,
+		ShrugExerciseNameShrugArmUpWheelchair,
+		ShrugExerciseNameUprightRow,
 	}
 }

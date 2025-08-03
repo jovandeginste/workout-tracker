@@ -746,6 +746,14 @@ func (w *Workout) HasSpeed() bool {
 	return w.HasExtraMetric("speed")
 }
 
+func (w *Workout) HasTemperature() bool {
+	return w.HasExtraMetric("temperature")
+}
+
+func (w *Workout) HasEnhancedSpeed() bool {
+	return w.HasExtraMetric("enhanced-speed")
+}
+
 func (w *Workout) HasCadence() bool {
 	return w.HasExtraMetric("cadence")
 }

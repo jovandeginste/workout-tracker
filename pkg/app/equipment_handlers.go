@@ -2,11 +2,11 @@ package app
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/equipment"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 	"github.com/stackus/hxgo/hxecho"
 )
 
@@ -51,7 +51,7 @@ func (a *App) equipmentHandler(c echo.Context) error {
 }
 
 func (a *App) equipmentShowHandler(c echo.Context) error {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("equipment"), err)
 	}
