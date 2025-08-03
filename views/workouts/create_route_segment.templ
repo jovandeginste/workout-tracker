@@ -11,7 +11,7 @@ templ CreateRouteSegment(w *database.Workout) {
 	@partials.Page(
 		partials.NewPageOptions().
 			WithSharing().
-			WithScripts("views/workouts/create_route_segment.js"),
+			WithWebComponent("views/workouts/create_route_segment"),
 	) {
 		<div class="gap-4">
 			<h2>
