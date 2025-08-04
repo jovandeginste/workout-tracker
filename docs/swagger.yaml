@@ -777,7 +777,7 @@ definitions:
     - WorkoutTypeRunning
     - WorkoutTypeCycling
     - WorkoutTypeECycling
-    - WorkoutTypeHorseRiding    
+    - WorkoutTypeHorseRiding
     - WorkoutTypeInlineSkating
     - WorkoutTypeWalking
     - WorkoutTypeSkiing
