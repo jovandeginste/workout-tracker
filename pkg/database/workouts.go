@@ -399,6 +399,10 @@ func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypeCycling, true
 	case "snowboarding":
 		return WorkoutTypeSnowboarding, true
+	case "horse-riding", "horseback-riding":
+		return WorkoutTypeHorseRiding, true
+	case "inline-skating", "skating", "skate":
+		return WorkoutTypeInlineSkating, true
 	case "skiing":
 		return WorkoutTypeSkiing, true
 	case "swimming":

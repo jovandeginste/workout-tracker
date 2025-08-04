@@ -757,6 +757,8 @@ definitions:
     - running
     - cycling
     - e-cycling
+    - horse-riding
+    - inline-skating
     - walking
     - skiing
     - snowboarding
@@ -775,6 +777,8 @@ definitions:
     - WorkoutTypeRunning
     - WorkoutTypeCycling
     - WorkoutTypeECycling
+    - WorkoutTypeHorseRiding    
+    - WorkoutTypeInlineSkating
     - WorkoutTypeWalking
     - WorkoutTypeSkiing
     - WorkoutTypeSnowboarding

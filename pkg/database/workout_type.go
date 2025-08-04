@@ -15,6 +15,8 @@ const (
 	WorkoutTypeRunning       WorkoutType = "running"
 	WorkoutTypeCycling       WorkoutType = "cycling"
 	WorkoutTypeECycling      WorkoutType = "e-cycling"
+	WorkoutTypeHorseRiding	 WorkoutType = "horse-riding"
+	WorkoutTypeInlineSkating WorkoutType = "inline-skating"
 	WorkoutTypeWalking       WorkoutType = "walking"
 	WorkoutTypeSkiing        WorkoutType = "skiing"
 	WorkoutTypeSnowboarding  WorkoutType = "snowboarding"
@@ -45,6 +47,8 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeRunning:      {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeCycling:      {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeECycling:     {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeHorseRiding:  {Location: true, Distance: true, Repetition: false, Weight: false},	
+	WorkoutTypeInlineSkating:{Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeWalking:      {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeSkiing:       {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeSnowboarding: {Location: true, Distance: true, Repetition: false, Weight: false},
