@@ -752,6 +752,7 @@ definitions:
     type: object
   database.WorkoutType:
     enum:
+    - unknown
     - auto
     - running
     - cycling
@@ -769,6 +770,7 @@ definitions:
     - other
     type: string
     x-enum-varnames:
+    - WorkoutTypeUnknown
     - WorkoutTypeAutoDetect
     - WorkoutTypeRunning
     - WorkoutTypeCycling

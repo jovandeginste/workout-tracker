@@ -1807,6 +1807,7 @@
         "database.WorkoutType": {
             "type": "string",
             "enum": [
+                "unknown",
                 "auto",
                 "running",
                 "cycling",
@@ -1824,6 +1825,7 @@
                 "other"
             ],
             "x-enum-varnames": [
+                "WorkoutTypeUnknown",
                 "WorkoutTypeAutoDetect",
                 "WorkoutTypeRunning",
                 "WorkoutTypeCycling",

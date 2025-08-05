@@ -38,6 +38,8 @@ en:
     remove_the_beginning_or_the_ending_of_a_workout: remove the beginning or the ending
       of a workout
   sports:
+    auto: auto-detect
+    unknown: unknown
     cycling: cycling
     e-cycling: e-cycling
     golfing: golfing

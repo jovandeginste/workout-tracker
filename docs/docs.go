@@ -1814,6 +1814,7 @@ const docTemplate = `{
         "database.WorkoutType": {
             "type": "string",
             "enum": [
+                "unknown",
                 "auto",
                 "running",
                 "cycling",
@@ -1831,6 +1832,7 @@ const docTemplate = `{
                 "other"
             ],
             "x-enum-varnames": [
+                "WorkoutTypeUnknown",
                 "WorkoutTypeAutoDetect",
                 "WorkoutTypeRunning",
                 "WorkoutTypeCycling",

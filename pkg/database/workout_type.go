@@ -10,6 +10,7 @@ type (
 )
 
 const (
+	WorkoutTypeUnknown       WorkoutType = "unknown"
 	WorkoutTypeAutoDetect    WorkoutType = "auto"
 	WorkoutTypeRunning       WorkoutType = "running"
 	WorkoutTypeCycling       WorkoutType = "cycling"
@@ -136,6 +137,10 @@ func (wt WorkoutType) StringT() string {
 }
 
 func (wt WorkoutType) String() string {
+	if wt == "" {
+		return string(WorkoutTypeUnknown)
+	}
+
 	return string(wt)
 }
 
