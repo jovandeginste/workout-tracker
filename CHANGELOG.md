@@ -1,8 +1,36 @@
 ## What's Changed
 
-- build(swagger): Automate committing generated documentation
-- chore(templates): Generate templates with new version of templ
-- feat(web): Add configurable web root
+- feat(stats): Allow users to customize displayed total statistics
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#604](https://github.com/jovandeginste/workout-tracker/pull/604)
+  - Translated using Weblate (Russian), by @yurtpage
+- feat(metrics): Add enhanced speed and temperature to workouts, by
+  @jovandeginste, in
+  [#603](https://github.com/jovandeginste/workout-tracker/pull/603)
+- refactor(conversions): Replace strconv with spf13/cast, by @jovandeginste, in
+  [#602](https://github.com/jovandeginste/workout-tracker/pull/602)
+  - refactor(conversions): Replace strconv with spf13/cast or fmt, by
+    @jovandeginste
+- feat(config): Add web root configuration examples, by @jovandeginste, in
+  [#601](https://github.com/jovandeginste/workout-tracker/pull/601)
+- feat(calendar): Implement timezone support for calendar view, by
+  @jovandeginste, in
+  [#600](https://github.com/jovandeginste/workout-tracker/pull/600)
+- Fix zero division errors for workouts with total duration of 0, by
+  @jovandeginste, in
+  [#596](https://github.com/jovandeginste/workout-tracker/pull/596)
+  - Fix zero division errors for workouts with total duration of 0, by
+    @bastianjoel
+- feat(web): Add configurable web root, by @jovandeginste, in
+  [#599](https://github.com/jovandeginste/workout-tracker/pull/599)
+  - build(swagger): Automate committing generated documentation, by
+    @jovandeginste
+  - chore(templates): Generate templates with new version of templ, by
+    @jovandeginste
+  - feat(web): Add configurable web root, by @jovandeginste
+- chore(deps): bump golang from 1.24.4-alpine to 1.24.5-alpine, by
+  @jovandeginste, in
+  [#589](https://github.com/jovandeginste/workout-tracker/pull/589)
 - chore(deps): bump the all group with 9 updates, by @jovandeginste, in
   [#598](https://github.com/jovandeginste/workout-tracker/pull/598)
 - Fix `AverageSpeedNoPause` not updated correctly, by @jovandeginste, in
