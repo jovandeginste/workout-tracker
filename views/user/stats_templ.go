@@ -62,7 +62,7 @@ func StatsRecordsTotal(user *database.User) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.StringT()), helpers.A2S(totals.Workouts), "").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = StatisticTile(user.Profile.TotalsShow.String(), i18n.T(ctx, user.Profile.TotalsShow.StringT()), helpers.A2S(totals.Workouts), "").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -15,7 +15,7 @@ templ StatsRecordsTotal(user *database.User) {
 	} else {
 		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 		<div class="md:flex md:flex-wrap">
-			@StatisticTile(totals.WorkoutType.String(), i18n.T(ctx, totals.WorkoutType.StringT()), helpers.A2S(totals.Workouts), "")
+			@StatisticTile(user.Profile.TotalsShow.String(), i18n.T(ctx, user.Profile.TotalsShow.StringT()), helpers.A2S(totals.Workouts), "")
 			@StatisticTile("distance", i18n.T(ctx, "translation.distance"), helpers.HumanDistance(ctx, totals.Distance), preferredUnits.Distance())
 			@StatisticTile("up", i18n.T(ctx, "translation.up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
 			@StatisticTile("duration", i18n.T(ctx, "translation.duration"), helpers.HumanDuration(totals.Duration), "")
