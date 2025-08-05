@@ -110,7 +110,7 @@ swagger:
 			--generalInfo api_handlers.go
 	git commit docs/ -m "Update swagger" -m "changelog: ignore" || echo "No changes to commit"
 
-build-frontend:
+build-frontend: install-deps
 	cd frontend && npm run build
 
 build-templates:
