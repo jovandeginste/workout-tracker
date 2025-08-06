@@ -55,27 +55,28 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 			p.Elevation = *gpx.NewNullableFloat64(r.EnhancedAltitudeScaled())
 		}
 
-		if r.EnhancedSpeed != math.MaxUint32 {
-			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "enhanced-speed"}, Data: cast.ToString(r.EnhancedSpeedScaled()),
-			})
+		gpxExtensionData := map[string]string{}
+		if r.Cadence != math.MaxUint8 {
+			gpxExtensionData["cadence"] = cast.ToString(r.Cadence)
 		}
 
 		if r.HeartRate != math.MaxUint8 {
-			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "heart-rate"}, Data: cast.ToString(r.HeartRate),
-			})
+			gpxExtensionData["heart-rate"] = cast.ToString(r.HeartRate)
 		}
 
-		if r.Cadence != math.MaxUint8 {
-			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "cadence"}, Data: cast.ToString(r.Cadence),
-			})
+		if r.EnhancedSpeed != math.MaxUint32 {
+			gpxExtensionData["speed"] = cast.ToString(r.EnhancedSpeedScaled())
+		} else if r.Speed != math.MaxUint16 {
+			gpxExtensionData["speed"] = cast.ToString(r.SpeedScaled())
 		}
 
 		if r.Temperature != math.MaxInt8 {
+			gpxExtensionData["temperature"] = cast.ToString(r.Temperature)
+		}
+
+		for key, value := range gpxExtensionData {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-				XMLName: xml.Name{Local: "temperature"}, Data: cast.ToString(r.Temperature),
+				XMLName: xml.Name{Local: key}, Data: value,
 			})
 		}
 

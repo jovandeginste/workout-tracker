@@ -12,7 +12,6 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/paulmach/orb"
 	"github.com/ringsaturn/tzf"
-	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -340,8 +339,10 @@ func maxSpeedForSegment(segment gpx.GPXTrackSegment) float64 {
 	ms := segment.MovingData().MaxSpeed
 
 	for _, p := range segment.Points {
-		if n, ok := p.Extensions.GetNode("", "enhanced-speed"); ok {
-			if newMS, err := cast.ToFloat64E(n.Data); err == nil && newMS > ms {
+		extraMetrics := ExtraMetrics{}
+		extraMetrics.ParseGPXExtensions(p.Extensions)
+		if newMS, ok := extraMetrics["speed"]; ok {
+			if newMS > ms {
 				ms = newMS
 			}
 		}

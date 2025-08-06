@@ -47,10 +47,12 @@ func standardExtensionName(name string) string {
 		return "horizontal-accuracy"
 	case "vAcc": // vertical accuracy estimate [mm]
 		return "vertical-accuracy"
-	case "ns3:hr", "hr":
+	case "ns3:hr", "hr", "heartrate":
 		return "heart-rate"
 	case "ns3:cad", "cad":
 		return "cadence"
+	case "atemp", "temp":
+		return "temperature"
 	default:
 		return name
 	}

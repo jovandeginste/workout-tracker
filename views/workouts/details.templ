@@ -426,7 +426,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 						}
 						if w.HasEnhancedSpeed() {
 							<div title={ i18n.T(ctx, "translation.enhanced_speed") }>
-								@helpers.IconFor("max-speed")
+								@helpers.IconFor("speed")
 							</div>
 						}
 						if w.HasTemperature() {
@@ -437,11 +437,6 @@ templ FullWorkoutDetails(w *database.Workout) {
 						if w.HasHeading() {
 							<div title={ i18n.T(ctx, "translation.Heading") }>
 								@helpers.IconFor("heading")
-							</div>
-						}
-						if w.HasSpeed() {
-							<div title={ i18n.T(ctx, "translation.Speed") }>
-								@helpers.IconFor("speed")
 							</div>
 						}
 						if w.HasAccuracy() {
