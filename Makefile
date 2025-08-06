@@ -72,6 +72,7 @@ dev-backend:
 	$(MAKE) watch/server
 
 dev: 
+	echo "DEPRECATED: Use 'make dev-docker' instead"
 	$(MAKE) watch/templ &
 	$(MAKE) watch/server &
 	$(MAKE) watch/tailwind &
@@ -79,6 +80,12 @@ dev:
 
 dev-docker:
 	docker compose -f docker-compose.dev.yaml up --build
+
+dev-docker-sqlite:
+	ENV_FILE=sqlite.env docker compose -f docker-compose.dev.yaml up --build
+
+dev-docker-clean:
+	docker compose -f docker-compose.dev.yaml down --remove-orphans --volumes
 
 build: build-server build-docker screenshots
 meta: swagger screenshots changelog

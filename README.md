@@ -401,16 +401,14 @@ make build-swagger # Generates swagger docs
 
 # Running it
 make serve # Runs the compiled binary
-make dev # Runs a wrapper that watches for changes, then rebuilds and restarts
 
 # Cleanin' up
 make clean # Removes build artifacts
-```
 
-To run the development setup with docker compose, you can use:
-
-```bash
-make dev-docker
+# Development
+make dev-docker # Runs the server in a docker compose setup
+make dev-docker-sqlite # Runs the server in a docker compose setup with SQLite
+make dev-docker-clean # Removes volumes created by the dev-docker targets
 ```
 
 ## What is this, technically?
