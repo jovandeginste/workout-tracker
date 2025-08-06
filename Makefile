@@ -78,11 +78,13 @@ dev:
 	$(MAKE) watch/tailwind &
 	sleep infinity
 
-dev-docker:
+dev-docker: dev-docker-postgres
+
+dev-docker-postgres:
 	docker compose -f docker-compose.dev.yaml up --build
 
 dev-docker-sqlite:
-	ENV_FILE=sqlite.env docker compose -f docker-compose.dev.yaml up --build
+	docker compose -f docker-compose.dev.sqlite.yaml up --build
 
 dev-docker-clean:
 	docker compose -f docker-compose.dev.yaml down --remove-orphans --volumes
@@ -150,7 +152,7 @@ test-go: test-commands test-templates test-packages
 screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n
 
 generate-screenshots: build-server
-	export WT_BIND=[::]:8180 WT_DSN=screenshots.db; \
+	export WT_BIND=[::]:8180 WT_DSN=./tmp/screenshots.db; \
 			$(WT_OUTPUT_FILE) & \
 			export SERVER_PID=$$!; \
 			sleep 1; \

@@ -32,7 +32,7 @@ services:
     environment:
       - APP_ENV=development
       - WT_JWT_ENCRYPTION_KEY=dev-secret-key
-    env_file: ${ENV_FILE:-postgres.env}
+    env_file: ./postgres.env
     depends_on:
       db:
         condition: service_healthy
