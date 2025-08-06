@@ -346,7 +346,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		}
 
 		if workoutType == WorkoutTypeAutoDetect {
-			workoutType = autoDetectWorkoutType(data, g.GPX)
+			workoutType = autoDetectWorkoutType(data, g.GPX, g.Data.Name)
 		}
 
 		w := &Workout{
@@ -422,7 +422,7 @@ func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 	}
 }
 
-func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
+func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX, dataName string) WorkoutType {
 	if gpxContent == nil {
 		if workoutType, ok := workoutTypeFromData(data.Type); ok {
 			return workoutType
@@ -437,6 +437,16 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX) WorkoutType {
 
 		if workoutType, ok := workoutTypeFromData(firstTrack.Type); ok {
 			return workoutType
+		}
+	}
+
+	// If the GPX file mentions a workout type in the name (Runkeeper), use it
+	if len(dataName) > 0 {
+		nameField := strings.Fields(dataName)
+		if len(nameField) > 0 {
+			if workoutType, ok := workoutTypeFromData(nameField[0]); ok {
+				return workoutType
+			}
 		}
 	}
 
