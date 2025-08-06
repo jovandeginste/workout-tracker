@@ -8,12 +8,9 @@ import (
 
 templ Map(w *database.Workout) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<div
-		id="map"
-		class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
-	>
-		<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
-		{{
+	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" } />
+	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
+	{{
 	mapConfig := struct {
 		CenterLat     float64
 		CenterLng     float64
@@ -24,6 +21,7 @@ templ Map(w *database.Workout) {
 		ElevationName string
 		StreetsName   string
 		AerialName    string
+		ShowElevation bool
 	}{
 		CenterLat:     w.Center().Lat,
 		CenterLng:     w.Center().Lng,
@@ -34,10 +32,9 @@ templ Map(w *database.Workout) {
 		ElevationName: i18n.T(ctx, "translation.Elevation"),
 		StreetsName:   i18n.T(ctx, "translation.Streets"),
 		AerialName:    i18n.T(ctx, "translation.Aerial"),
+		ShowElevation: true,
 	}
-		}}
-		@templ.JSONScript("map-config", mapConfig)
-		{{
+
 	type point struct {
 		Lat       float64 `json:"lat"`
 		Lng       float64 `json:"lng"`
@@ -56,31 +53,19 @@ templ Map(w *database.Workout) {
 			Title:     PointTitle(ctx, pu, &p),
 		})
 	}
-		}}
-		@templ.JSONScript("map-points", points)
-		<script>
-    mapConfig = JSON.parse(document.getElementById('map-config').textContent)
-    makeMap({
-      elementID: "map",
-      center: [mapConfig.CenterLat  ,   mapConfig.CenterLng  ],
-      minElevation: mapConfig.MinElevation ,
-      maxElevation:  mapConfig.MaxElevation ,
-      maxSpeed: mapConfig.MaxSpeed ,
-      speedName: mapConfig.SpeedName,
-      elevationName: mapConfig.ElevationName,
-      streetsName: mapConfig.StreetsName,
-      aerialName: mapConfig.AerialName,
-
-      points: JSON.parse(document.getElementById('map-points').textContent)
-    });
-  </script>
-	</div>
+	}}
+	<wt-map
+		id="workout-map"
+		class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+		map-config={ templ.JSONString(mapConfig) }
+		map-points={ templ.JSONString(points) }
+	></wt-map>
 	<div class="flex flex-wrap">
 		if !helpers.AppConfig(ctx).SocialsDisabled && !helpers.CurrentUser(ctx).Profile.SocialsDisabled {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap()">
+			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap('workout-map')">
 				@helpers.IconFor("expand")
 			</a>
 		</div>

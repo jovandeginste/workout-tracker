@@ -9,11 +9,8 @@ import (
 
 templ RouteSegmentMap(s *database.RouteSegment) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<div
-		id="map"
-		class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
-	>
-		<script src={ helpers.RouteFor(ctx, "assets") + "/map.js" }></script>
+		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" } />
+		<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 		{{
 	mapConfig := struct {
 		CenterLat     float64
@@ -56,22 +53,10 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 		})
 	}
 		}}
-		@templ.JSONScript("map-points", points)
-		<script>
-    mapConfig = JSON.parse(document.getElementById('map-config').textContent)
-    makeMap({
-      elementID: "map",
-      center: [mapConfig.CenterLat  ,   mapConfig.CenterLng  ],
-      minElevation: mapConfig.MinElevation ,
-      maxElevation:  mapConfig.MaxElevation ,
-      speedName: mapConfig.SpeedName,
-      elevationName: mapConfig.ElevationName,
-      streetsName: mapConfig.StreetsName,
-      aerialName: mapConfig.AerialName,
-      showElevation: true,
-
-      points: JSON.parse(document.getElementById('map-points').textContent)
-    });
-  </script>
-	</div>
+	<wt-map
+		id="map"
+		class="border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]"
+		map-config={ templ.JSONString(mapConfig) }
+		map-points={ templ.JSONString(points) }
+	></wt-map>
 }

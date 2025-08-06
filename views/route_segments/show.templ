@@ -8,7 +8,7 @@ import (
 )
 
 templ Show(s *database.RouteSegment) {
-	@partials.Page(partials.NewPageOptions().WithMaps()) {
+	@partials.Page(partials.NewPageOptions()) {
 		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 		<div class="gap-4">
 			<span class="float-right actions">

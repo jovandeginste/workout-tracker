@@ -8,7 +8,8 @@ import (
 )
 
 templ Statistics(u *database.User, since, per string) {
-	@partials.Page(partials.NewPageOptions().WithCharts()) {
+	@partials.Page(partials.NewPageOptions()) {
+		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<h2>
 			@helpers.IconFor("statistics")
 			{ i18n.T(ctx, "translation.Your_progress_per_s_for_the_past_s", i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticPerOptions(), per)), i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticSinceOptions(), since))) }
@@ -29,6 +30,11 @@ templ Statistics(u *database.User, since, per string) {
 				</select>
 				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
+		  {{ currentUser := helpers.CurrentUser(ctx) }}
+		  {{ stats, err := currentUser.GetStatisticsFor(since, per) }}
+		  if err != nil {
+			  <pre>{ err.Error() }</pre>
+		  }
 			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
 				<div>
 					<div class="inner-form">
@@ -36,7 +42,11 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("workout")
 							{ i18n.T(ctx, "menu.Workouts") }
 						</h3>
-						<div id="workouts-per-time"></div>
+						<wt-stat
+						  id="workouts-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  type="workouts"></wt-stat>
 					</div>
 				</div>
 				<div>
@@ -45,7 +55,13 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("duration")
 							{ i18n.T(ctx, "translation.Duration") }
 						</h3>
-						<div id="duration-per-time"></div>
+						<wt-stat
+						  id="duration-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  filter-no-duration
+						  type="durationSeconds"
+						  unit="duration"></wt-stat>
 					</div>
 				</div>
 				<div>
@@ -54,7 +70,13 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("distance")
 							{ i18n.T(ctx, "translation.Distance") }
 						</h3>
-						<div id="distance-per-time"></div>
+						<wt-stat
+						  id="distance-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  filter-no-duration
+						  type="localDistance"
+						  unit="distance"></wt-stat>
 					</div>
 				</div>
 				<div>
@@ -63,7 +85,13 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("speed")
 							{ i18n.T(ctx, "translation.Average_speed") }
 						</h3>
-						<div id="average-speed-per-time"></div>
+						<wt-stat
+						  id="average-speed-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  filter-no-duration
+						  type="localAverageSpeed"
+						  unit="speed"></wt-stat>
 					</div>
 				</div>
 				<div>
@@ -72,7 +100,13 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("speed")
 							{ i18n.T(ctx, "translation.Average_speed_no_pause") }
 						</h3>
-						<div id="average-speed-no-pause-per-time"></div>
+						<wt-stat
+						  id="average-speed-no-pause-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  filter-no-duration
+						  type="localAverageSpeedNoPause"
+						  unit="speed"></wt-stat>
 					</div>
 				</div>
 				<div>
@@ -81,163 +115,16 @@ templ Statistics(u *database.User, since, per string) {
 							@helpers.IconFor("max-speed")
 							{ i18n.T(ctx, "translation.Max_speed") }
 						</h3>
-						<div id="max-speed-per-time"></div>
+						<wt-stat
+						  id="max-speed-per-time"
+						  stats={ templ.JSONString(stats) }
+						  preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						  filter-no-duration
+						  type="localMaxSpeed"
+						  unit="speed"></wt-stat>
 					</div>
 				</div>
 			</div>
 		</div>
-		{{ currentUser := helpers.CurrentUser(ctx) }}
-		{{ stats, err := currentUser.GetStatisticsFor(since, per) }}
-		if err != nil {
-			<pre>{ err.Error() }</pre>
-		}
-		@templ.JSONScript("stats", stats)
-		@templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(currentUser.PreferredUnits()))
-		<script>
-      var stats = JSON.parse(document.getElementById('stats').textContent)
-      var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)
-
-      var theme = 'light';
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        theme = 'dark';
-      }
-
-      var options = {
-        theme: { mode: theme },
-        chart: {
-          width: "99%",
-          animations: { enabled: false },
-          toolbar: { show: false },
-          type: "bar",
-        },
-        dataLabels: { enabled: false },
-        legend: { position: 'top' },
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-        },
-        xaxis: { type: "datetime", },
-      }
-
-      new ApexCharts(document.querySelector("#workouts-per-time"), {
-        ...options,
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets).map(e => ({ x: e.bucket, y: e.workouts })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-
-      new ApexCharts(document.querySelector("#duration-per-time"), {
-        ...options,
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-          y: [
-            { formatter: function (val, opts) { return formatDuration(val); } },
-          ],
-        },
-        yaxis: [
-          { labels: { formatter: (val) => { return formatDuration(val); } } },
-        ],
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets)
-            .filter(e => e.duration > 0)
-            .map(e => ({ x: e.bucket, y: e.durationSeconds })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-
-      new ApexCharts(document.querySelector("#distance-per-time"), {
-        ...options,
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-          y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.distance; } },
-          ],
-        },
-        yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.distance; } } },
-        ],
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets)
-            .filter(e => e.distance > 0)
-            .map(e => ({ x: e.bucket, y: e.localDistance })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-
-      new ApexCharts(document.querySelector("#average-speed-per-time"), {
-        ...options,
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-          y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
-          ],
-        },
-        yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
-        ],
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets)
-            .filter(e => e.distance > 0)
-            .map(e => ({ x: e.bucket, y: e.localAverageSpeed })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-
-      new ApexCharts(document.querySelector("#average-speed-no-pause-per-time"), {
-        ...options,
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-          y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
-          ],
-        },
-        yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
-        ],
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets)
-            .filter(e => e.distance > 0)
-            .map(e => ({ x: e.bucket, y: e.localAverageSpeedNoPause })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-
-      new ApexCharts(document.querySelector("#max-speed-per-time"), {
-        ...options,
-        tooltip: {
-          x: { format: 'MMM \'yy', },
-          y: [
-            { formatter: function (val, opts) { return val + " " + preferredUnits.speed; } },
-          ],
-        },
-        yaxis: [
-          { labels: { formatter: (val) => { return val + " " + preferredUnits.speed; } } },
-        ],
-        series: Object.entries(stats.buckets).map(entry => {
-          const [key, value] = entry;
-          return {
-            name: value.localWorkoutType,
-            data: Object.values(value.buckets)
-            .filter(e => e.distance > 0)
-            .map(e => ({ x: e.bucket, y: e.localMaxSpeed })),
-          };
-        }).filter(e => e.data.length > 0),
-      }).render();
-    </script>
 	}
 }

@@ -391,9 +391,9 @@ make test-assets test-go # Run tests for the individual components
 
 # Building
 make build # Builds all components
-make build-tw # Builds the Tailwind CSS output file
+make build-frontend # Builds the frontend assets
 make build-templates # Builds the templ templates
-make build-server # Builds the web server (includes build-tw and build-templates)
+make build-server # Builds the web server (includes build-templates)
 make build-docker # Performs all builds inside Docker containers, creates a Docker image
 make build-swagger # Generates swagger docs
 
@@ -401,11 +401,14 @@ make build-swagger # Generates swagger docs
 
 # Running it
 make serve # Runs the compiled binary
-make dev # Runs a wrapper that watches for changes, then rebuilds and restarts
-make watch-tw # Runs the Tailwind CSS watcher (not useful unless you're debugging Tailwind CSS)
 
 # Cleanin' up
 make clean # Removes build artifacts
+
+# Development
+make dev-docker # Runs the server in a docker compose setup
+make dev-docker-sqlite # Runs the server in a docker compose setup with SQLite
+make dev-docker-clean # Removes volumes created by the dev-docker targets
 ```
 
 ## What is this, technically?

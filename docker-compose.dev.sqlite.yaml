@@ -1,0 +1,21 @@
+services:
+  workout-tracker-assets:
+    extends:
+      file: ./docker-compose.dev.yaml
+      service: workout-tracker-assets
+
+  workout-tracker:
+    extends:
+      file: ./docker-compose.dev.yaml
+      service: workout-tracker
+    volumes:
+      - ./data/:/data/
+    env_file: ./sqlite.env
+    depends_on: !reset []
+
+volumes:
+  asset-volume:
+
+networks:
+  workout-tracker:
+    external: false

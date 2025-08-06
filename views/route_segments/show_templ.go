@@ -341,7 +341,7 @@ func Show(s *database.RouteSegment) templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = partials.Page(partials.NewPageOptions().WithMaps()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.Page(partials.NewPageOptions()).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

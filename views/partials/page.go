@@ -8,6 +8,13 @@ func NewPageOptions() *PageOptions {
 	return &PageOptions{Scripts: nil, Styles: nil}
 }
 
+func (o *PageOptions) WithWebComponent(name string) *PageOptions {
+	return &PageOptions{
+		Scripts: append(o.Scripts, name+".js"),
+		Styles:  append(o.Styles, name+".css"),
+	}
+}
+
 func (o *PageOptions) WithScripts(scripts ...string) *PageOptions {
 	return &PageOptions{
 		Scripts: append(o.Scripts, scripts...),
@@ -22,33 +29,8 @@ func (o *PageOptions) WithStyles(styles ...string) *PageOptions {
 	}
 }
 
-func (o *PageOptions) WithCharts() *PageOptions {
-	return o.
-		WithScripts("/dist/apexcharts.min.js").
-		WithStyles("/dist/apexcharts.css")
-}
-
-func (o *PageOptions) WithMaps() *PageOptions {
-	return o.
-		WithScripts("/dist/leaflet.js").
-		WithStyles("/dist/leaflet.css")
-}
-
-func (o *PageOptions) WithHeatMaps() *PageOptions {
-	return o.WithMaps().
-		WithScripts(
-			"/dist/simpleheat.js",
-			"/dist/leaflet-heat.js",
-			"/dist/leaflet.markercluster.js",
-		).
-		WithStyles(
-			"/dist/MarkerCluster.css",
-			"/dist/MarkerCluster.Default.css",
-		)
-}
-
 func (o *PageOptions) WithSharing() *PageOptions {
 	return o.
-		WithScripts("/dist/shareon.iife.js").
-		WithStyles("/dist/shareon.min.css")
+		WithScripts("/vendor/shareon/shareon.iife.js").
+		WithStyles("/vendor/shareon/shareon.min.css")
 }

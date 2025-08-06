@@ -37,20 +37,33 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		pu := helpers.CurrentUser(ctx).PreferredUnits()
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"map\" class=\"border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]\"><script src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<link rel=\"stylesheet\" type=\"text/css\" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/map.js")
+		var templ_7745c5c3_Var2 templ.SafeURL
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(helpers.RouteFor(ctx, "assets") + "/components/map.css")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 16, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 12, Col: 103}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"></script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"><script src=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/components/map.js")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 13, Col: 70}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -97,11 +110,33 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 				Title:     workouts.PointTitle(ctx, pu, &p),
 			})
 		}
-		templ_7745c5c3_Err = templ.JSONScript("map-points", points).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<wt-map id=\"map\" class=\"border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]\" map-config=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<script>\n    mapConfig = JSON.parse(document.getElementById('map-config').textContent)\n    makeMap({\n      elementID: \"map\",\n      center: [mapConfig.CenterLat  ,   mapConfig.CenterLng  ],\n      minElevation: mapConfig.MinElevation ,\n      maxElevation:  mapConfig.MaxElevation ,\n      speedName: mapConfig.SpeedName,\n      elevationName: mapConfig.ElevationName,\n      streetsName: mapConfig.StreetsName,\n      aerialName: mapConfig.AerialName,\n      showElevation: true,\n\n      points: JSON.parse(document.getElementById('map-points').textContent)\n    });\n  </script></div>")
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(mapConfig))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 59, Col: 42}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" map-points=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(points))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 60, Col: 39}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"></wt-map>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

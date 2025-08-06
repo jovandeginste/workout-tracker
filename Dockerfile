@@ -4,15 +4,15 @@ WORKDIR /app
 
 RUN apk --no-cache add make
 
-COPY Makefile package.json package-lock.json ./
-RUN make install-deps
-COPY tailwind.config.js ./tailwind.config.js
-COPY main.css ./main.css
-COPY pkg ./pkg
-COPY views ./views
-COPY assets ./assets
+COPY frontend ./frontend
+RUN cd frontend && \
+    npm ci
 
-RUN make build-dist build-tw
+COPY Makefile ./
+COPY assets ./assets
+COPY views ./views
+
+RUN make build-frontend
 
 FROM golang:1.24.5-alpine AS backend
 ARG BUILD_TIME
@@ -32,8 +32,7 @@ COPY vendor ./vendor
 COPY views ./views
 COPY assets ./assets
 COPY translations ./translations
-COPY --from=frontend /app/assets/output.css ./assets/output.css
-COPY --from=frontend /app/assets/dist ./assets/dist
+COPY --from=frontend /app/assets ./assets
 
 ENV CGO_ENABLED=0
 RUN go build \

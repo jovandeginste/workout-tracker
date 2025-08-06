@@ -60,7 +60,7 @@ func CreateRouteSegment(w *database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2></div><div class=\"lg:flex lg:flex-wrap\"><div class=\"basis-1/2\"><div class=\"inner-form\"><div id=\"map\" class=\"border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2></div><div class=\"lg:flex lg:flex-wrap\"><div class=\"basis-1/2\"><div class=\"inner-form\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -71,172 +71,171 @@ func CreateRouteSegment(w *database.Workout) templ.Component {
 				TotalDistance float64 `json:"distance"`
 			}
 
-			type mapConfig struct {
-				ElementID string     `json:"elementID"`
-				Center    []float64  `json:"center"`
-				Points    []mapPoint `json:"points"`
-			}
-
-			cfg := mapConfig{
-				ElementID: "map",
-				Center:    []float64{w.Data.Center.Lat, w.Data.Center.Lng},
-			}
-
+			points := []mapPoint{}
 			for _, p := range w.Details().Points {
-				cfg.Points = append(cfg.Points, mapPoint{
+				points = append(points, mapPoint{
 					Lat:           p.Lat,
 					Lng:           p.Lng,
 					TotalDistance: p.TotalDistance,
 				})
 			}
-			templ_7745c5c3_Err = templ.JSONScript("map-config", cfg).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<script src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<create-route-segment-map id=\"segment-map\" class=\"border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]\" map-center=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/map.js")
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString([]float64{w.Data.Center.Lat, w.Data.Center.Lng}))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 56, Col: 63}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 44, Col: 84}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"></script><script>\n                var cfg = JSON.parse(document.getElementById('map-config').textContent)\n                var points = cfg.points\n\n                editMap(cfg)\n              </script></div></div></div><div class=\"basis-1/2\"><form class=\"inner-form\" method=\"post\" action=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" map-points=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var4 templ.SafeURL
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment-create", w.ID)))
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(points))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 70, Col: 88}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 45, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"><table><tbody><tr><td><label for=\"name\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"></create-route-segment-map></div></div><div class=\"basis-1/2\"><form class=\"inner-form\" method=\"post\" action=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Name"))
+			var templ_7745c5c3_Var5 templ.SafeURL
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment-create", w.ID)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 75, Col: 63}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 53, Col: 88}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label></td><td><input type=\"text\" id=\"name\" name=\"name\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"><table><tbody><tr><td><label for=\"name\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Name"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 81, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 58, Col: 63}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"></td></tr><tr><td><label for=\"start\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</label></td><td><input type=\"text\" id=\"name\" name=\"name\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Start"))
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 86, Col: 65}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 64, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</label></td><td><input class=\"w-96\" type=\"range\" id=\"start\" name=\"start\" min=\"1\" max=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"></td></tr><tr><td><label for=\"start\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(len(w.Details().Points)))
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Start"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 94, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 69, Col: 65}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" value=\"1\" oninput=\"updateStart()\"> <span id=\"start-show\"></span></td></tr><tr><td><label for=\"end\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</label></td><td><input class=\"w-96\" type=\"range\" id=\"start\" name=\"start\" min=\"1\" max=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.End"))
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(len(w.Details().Points)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 102, Col: 61}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 77, Col: 52}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</label></td><td><input class=\"w-96\" type=\"range\" id=\"end\" name=\"end\" min=\"1\" max=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" value=\"1\" oninput=\"getElementById('segment-map').updateStart()\"> <span id=\"start-show\"></span></td></tr><tr><td><label for=\"end\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(len(w.Details().Points)))
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.End"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 110, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 85, Col: 61}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</label></td><td><input class=\"w-96\" type=\"range\" id=\"end\" name=\"end\" min=\"1\" max=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(len(w.Details().Points)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 111, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 93, Col: 52}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" oninput=\"updateEnd()\"> <span id=\"end-show\"></span></td></tr><tr><td><label for=\"distance\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
-			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Distance"))
+			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(len(w.Details().Points)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 118, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 94, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</label></td><td><span id=\"distance-show\"></span></td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" oninput=\"getElementById('segment-map').updateEnd()\"> <span id=\"end-show\"></span></td></tr><tr><td><label for=\"distance\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
-			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Create_route_segment"))
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Distance"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 129, Col: 59}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 101, Col: 71}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</button></td></tr></tfoot></table></form><script>\n            // When document is loaded, run functions\n            document.addEventListener(\"DOMContentLoaded\", function () {\n              updateInfo();\n            });\n          </script></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</label></td><td><span id=\"distance-show\"></span></td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var14 string
+			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Create_route_segment"))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/create_route_segment.templ`, Line: 112, Col: 59}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button></td></tr></tfoot></table></form></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -244,8 +243,8 @@ func CreateRouteSegment(w *database.Workout) templ.Component {
 		})
 		templ_7745c5c3_Err = partials.Page(
 			partials.NewPageOptions().
-				WithSharing().WithCharts().WithMaps().
-				WithScripts("/route_segments.js"),
+				WithSharing().
+				WithWebComponent("views/workouts/create_route_segment"),
 		).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

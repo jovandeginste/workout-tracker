@@ -40,10 +40,6 @@ func ShowStats(stats database.WorkoutBreakdown) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"chart\"></div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		pu := helpers.CurrentUser(ctx).PreferredUnits()
 
 		data := []item{}
@@ -66,27 +62,85 @@ func ShowStats(stats database.WorkoutBreakdown) templ.Component {
 			"cadence":      i18n.T(ctx, "translation.Cadence"),
 			"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 		}
-		templ_7745c5c3_Err = templ.JSONScript("preferred-units", helpers.PreferredUnitsToJSON(pu)).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<workout-stats map-id=\"workout-map\" tz=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("data", data).Render(ctx, templ_7745c5c3_Buffer)
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.Timezone(ctx))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 40, Col: 28}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("tz", helpers.Timezone(ctx)).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" lang=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("lang", helpers.Language(ctx)).Render(ctx, templ_7745c5c3_Buffer)
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.Language(ctx))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 41, Col: 30}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("translations", translations).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" preferred-units=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<script>\n  var preferredUnits = JSON.parse(document.getElementById('preferred-units').textContent)\n  var data = JSON.parse(document.getElementById('data').textContent)\n  var tz = JSON.parse(document.getElementById('tz').textContent)\n  var lang = JSON.parse(document.getElementById('lang').textContent)\n  var translations = JSON.parse(document.getElementById('translations').textContent)\n\n  var theme = 'light';\n  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {\n    theme = 'dark';\n  }\n\n  var options = {\n    theme: { mode: theme },\n    chart: {\n      height: 400,\n      animations: { enabled: false },\n      toolbar: { show: false },\n    },\n    legend: {\n      position: 'top',\n      formatter: (seriesName, opts)=>{\n        if(opts.seriesIndex>3) return '';\n        return seriesName;\n      },\n      markers: { size: [12,12,12,12,0] }\n    },\n    tooltip: {\n      x: { format: 'HH:mm', },\n      y: [\n        {\n          formatter: function (val, opts) {\n          var p = data[opts.dataPointIndex]\n          var el = document.createElement('div');\n          el.setAttribute(\"data-lat\", p.Item.firstPoint.lat);\n          el.setAttribute(\"data-lng\", p.Item.firstPoint.lng);\n          el.setAttribute(\"data-title\", p.Label);\n\n          set_marker(el)\n          return val + \" \" + preferredUnits.speed;\n          }\n        },\n        { formatter: function (val, opts) { return val + \" \" + preferredUnits.elevation; } },\n        { formatter: function (val, opts) { return val + \" \" + preferredUnits.heartRate; } },\n        { formatter: function (val, opts) { return val + \" \" + preferredUnits.cadence; } },\n        { formatter: function (val, opts) { return val + \" \" + preferredUnits.distance; } },\n        { formatter: function (val, opts) { return formatDuration(val); } },\n      ],\n    },\n    stroke: {\n      width: 2,\n      curve: 'smooth',\n    },\n    markers: {\n      size: 1,\n    },\n    series: [\n      {\n        name: translations.averagespeed,\n        type: \"line\",\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localAverageSpeed })),\n      },\n      {\n        name: translations.elevation,\n        type: \"area\",\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localElevation })),\n      },\n      {\n        name: translations.heartrate,\n        type: \"line\",\n        display: false,\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localHeartRate })),\n      },\n      {\n        name: translations.cadence,\n        type: \"line\",\n        display: false,\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localCadence })),\n      },\n      {\n        name: translations.distance,\n        type: \"none\",\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.localTotalDistance })),\n      },\n      {\n        name: translations.duration,\n        type: \"none\",\n        data: data.map(e => ({ x: e.Item.firstPoint.time, y: e.Item.totalDurationSeconds })),\n      },\n    ],\n    xaxis: {\n      labels: {\n        formatter: (val, ts, opts) => {\n          return new Date(ts).toLocaleTimeString(lang, { timeZone: tz })\n        },\n      },\n      type: \"datetime\",\n    },\n    yaxis: [\n      {\n        min: 0,\n        labels: {\n          formatter: (val) => {\n            return val + \" \" + preferredUnits.speed;\n          },\n        },\n      },\n      {\n        labels: {\n          formatter: (val) => {\n            return val + \" \" + preferredUnits.elevation;\n          },\n        },\n        opposite: true,\n      },\n      {\n        labels: {\n          formatter: (val) => {\n            return val + \" \" + preferredUnits.heartRate;\n          },\n        },\n      },\n      {\n        labels: {\n          formatter: (val) => {\n            return val + \" \" + preferredUnits.cadence;\n          },\n        },\n      },\n      { show: false },\n    ],\n  };\n\n  var chart = new ApexCharts(document.querySelector(\"#chart\"), options);\n  chart.render();\n  chart.hideSeries(translations.heartrate);\n  chart.hideSeries(translations.cadence);\n</script>")
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(helpers.PreferredUnitsToJSON(pu)))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 42, Col: 70}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" translations=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(translations))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 43, Col: 47}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" data=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(data))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 44, Col: 31}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"></workout-stats><script src=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 47, Col: 80}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,3 +1,6 @@
+import * as L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
 /*
 interface Point {
   lat: number;
@@ -19,25 +22,40 @@ interface Parameters {
   aerialName: string;
 }
 */
-let hoverMarker;
-let map;
+class WtMap extends HTMLElement {
+  constructor() {
+    super();
 
-function fullMap() {
-  d = document.getElementById("map-container");
+    this.hoverMarker = null;
+  }
 
-  d.classList.toggle("small-size");
-  d.classList.toggle("full-size");
+  connectedCallback() {
+    this.style.display = "block";
 
-  map.invalidateSize(true);
-  return false;
-}
+    const mapConfig = JSON.parse(this.getAttribute("map-config") || "{}");
+    this.config = {
+      center: [mapConfig.CenterLat, mapConfig.CenterLng],
+      minElevation: mapConfig.MinElevation,
+      maxElevation: mapConfig.MaxElevation,
+      maxSpeed: mapConfig.MaxSpeed,
+      speedName: mapConfig.SpeedName,
+      elevationName: mapConfig.ElevationName,
+      streetsName: mapConfig.StreetsName,
+      aerialName: mapConfig.AerialName,
+      showElevation: mapConfig.ShowElevation,
+    };
 
-function makeMap(params) {
-  document.addEventListener("DOMContentLoaded", () => {
-    // Create map
-    map = L.map(params.elementID, {
+    this.points = JSON.parse(this.getAttribute("map-points") || "[]");
+    if (this.points.length !== 0) {
+      this.makeMap();
+    }
+  }
+
+  makeMap() {
+    const map = L.map(this, {
       fadeAnimation: false,
-    }).setView(params.center, 15);
+    }).setView(this.config.center, 15);
+    this.map = map;
     const layerStreet = L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -56,7 +74,7 @@ function makeMap(params) {
 
     L.control.scale().addTo(map);
 
-    const speeds = params.points
+    const speeds = this.points
       .filter((x) => x.speed !== null)
       .map((x) => x.speed);
 
@@ -84,8 +102,8 @@ function makeMap(params) {
     const elevationLayerGroup = new L.featureGroup();
 
     var hasSpeed = false;
-    params.points.forEach((pt) => {
-      p = [pt.lat, pt.lng];
+    this.points.forEach((pt) => {
+      let p = [pt.lat, pt.lng];
 
       if (prevPoint) {
         // Add invisible point to map to allow fitBounds to work
@@ -100,9 +118,9 @@ function makeMap(params) {
         );
 
         // Elevation
-        polyLineProperties["color"] = getColor(
-          (pt.elevation - params.minElevation) /
-            (params.maxElevation - params.minElevation),
+        polyLineProperties["color"] = this.getColor(
+          (pt.elevation - this.config.minElevation) /
+            (this.config.maxElevation - this.config.minElevation),
         );
         L.polyline([prevPoint, p], polyLineProperties).addTo(
           elevationLayerGroup,
@@ -122,7 +140,7 @@ function makeMap(params) {
 
           const zScore =
             ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed; // -1...1 is within one standard deviation
-          polyLineProperties["color"] = getColor(0.5 + zScore / 2);
+          polyLineProperties["color"] = this.getColor(0.5 + zScore / 2);
         }
         L.polyline([prevPoint, p], polyLineProperties).addTo(speedLayerGroup);
       }
@@ -130,13 +148,13 @@ function makeMap(params) {
       prevPoint = p;
     });
 
-    if (!hasSpeed || params.showElevation) {
+    if (!hasSpeed || this.config.showElevation) {
       elevationLayerGroup.addTo(map);
     } else {
       speedLayerGroup.addTo(map);
     }
 
-    var last = params.points[params.points.length - 1];
+    var last = this.points[this.points.length - 1];
     group.addLayer(
       L.circleMarker([last.lat, last.lng], {
         color: "red",
@@ -149,7 +167,7 @@ function makeMap(params) {
         .bindTooltip(last.title),
     );
 
-    var first = params.points[0];
+    var first = this.points[0];
     group.addLayer(
       L.circleMarker([first.lat, first.lng], {
         color: "green",
@@ -162,24 +180,24 @@ function makeMap(params) {
         .bindTooltip(first.title),
     );
 
-    if (!hoverMarker) {
-      hoverMarker = L.circleMarker(first, {
+    if (!this.hoverMarker) {
+      this.hoverMarker = L.circleMarker(first, {
         color: "blue",
         radius: 8,
       });
     }
 
-    hoverMarker.addTo(map); // Adding marker to the map
+    this.hoverMarker.addTo(map); // Adding marker to the map
 
     L.control
       .layers(
         {
-          [params.streetsName]: layerStreet,
-          [params.aerialName]: layerAerial,
+          [this.config.streetsName]: layerStreet,
+          [this.config.aerialName]: layerAerial,
         },
         {
-          [params.elevationName]: elevationLayerGroup,
-          [params.speedName]: speedLayerGroup,
+          [this.config.elevationName]: elevationLayerGroup,
+          [this.config.speedName]: speedLayerGroup,
         },
       )
       .addTo(map);
@@ -187,40 +205,46 @@ function makeMap(params) {
     layerStreet.addTo(map);
 
     map.fitBounds(group.getBounds(), { animate: false });
-  });
-}
-
-function set_marker(obj) {
-  var lat = obj.getAttribute("data-lat");
-  var lng = obj.getAttribute("data-lng");
-  var title = obj.getAttribute("data-title");
-
-  if (!hoverMarker) return;
-
-  if (title != null) {
-    hoverMarker.bindTooltip(title);
   }
 
-  hoverMarker.setLatLng([lat, lng]);
+  // Determine color for a value; value from 0 to 1
+  // Linearly interpolate between blue and green
+  getColor(value) {
+    value = Math.max(0, Math.min(1, value)); // Clamp to 0...1
 
-  // Adding popup to the marker
-  hoverMarker.openTooltip();
+    const lowColor = [50, 50, 255];
+    const highColor = [50, 255, 50];
+    const color = [0, 1, 2].map((i) =>
+      Math.floor(value * (highColor[i] - lowColor[i]) + lowColor[i]),
+    );
+    return `rgb(${color.join(",")})`;
+  }
+
+  setMarker(obj) {
+    const lat = obj.getAttribute("data-lat");
+    const lng = obj.getAttribute("data-lng");
+    const title = obj.getAttribute("data-title");
+
+    if (!this.hoverMarker) return;
+
+    if (title != null) {
+      this.hoverMarker.bindTooltip(title);
+    }
+
+    this.hoverMarker.setLatLng([lat, lng]);
+
+    // Adding popup to the marker
+    this.hoverMarker.openTooltip();
+  }
+
+  clearMarker() {
+    if (!this.hoverMarker) return;
+    this.hoverMarker.closeTooltip();
+  }
+
+  updateSize() {
+    this.map.invalidateSize(true);
+  }
 }
 
-function clear_marker() {
-  if (!hoverMarker) return;
-  hoverMarker.closeTooltip();
-}
-
-// Determine color for a value; value from 0 to 1
-// Linearly interpolate between blue and green
-function getColor(value) {
-  value = Math.max(0, Math.min(1, value)); // Clamp to 0...1
-
-  const lowColor = [50, 50, 255];
-  const highColor = [50, 255, 50];
-  const color = [0, 1, 2].map((i) =>
-    Math.floor(value * (highColor[i] - lowColor[i]) + lowColor[i]),
-  );
-  return `rgb(${color.join(",")})`;
-}
+customElements.define("wt-map", WtMap);
