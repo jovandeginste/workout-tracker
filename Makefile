@@ -61,8 +61,7 @@ watch/server:
 			--screen.clear_on_rebuild  false 
 
 watch/tailwind:
-	npx tailwindcss \
-			-i ./main.css -o ./assets/output.css --minify --watch=always
+	cd frontend && npm run watch:tw
 
 notify-proxy:
 	$(TEMPL_COMMAND) generate \
