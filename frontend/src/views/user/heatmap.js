@@ -19,6 +19,8 @@ class WtHeatmap extends HTMLElement {
   }
 
   connectedCallback() {
+    const clean = new URLSearchParams(window.location.search).get("clean");
+
     this.apiWorkoutsCoordinatesRoute = JSON.parse(
       this.getAttribute("api-workouts-coordinates-route"),
     );
@@ -65,6 +67,14 @@ class WtHeatmap extends HTMLElement {
     layerStreet.addTo(map);
 
     var heatConfig = { radius: 10 };
+    if (clean == "1") {
+      heatConfig = {
+        radius: 1,
+        minOpacity: 1,
+        blur: 1,
+        gradient: { 0: "blue" },
+      };
+    }
     var clusterConfig = { showCoverageOnHover: false };
 
     fetch(this.apiWorkoutsCoordinatesRoute, {
