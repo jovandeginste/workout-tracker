@@ -11,53 +11,24 @@ services:
     tty: true
 
   workout-tracker:
+    extends:
+      file: ./docker-compose.base.yaml
+      service: workout-tracker
     build:
       context: .
       dockerfile: Dockerfile.dev
       target: builder-backend
     container_name: wt-app-dev
-    restart: unless-stopped
     ports:
-      - 8080:8080
       - 8090:8090
     volumes:
       - asset-volume:/app/assets
+      - cache-volume:/root/.cache
       - ./cmd:/app/cmd
       - ./pkg:/app/pkg
       - ./vendor:/app/vendor
       - ./views:/app/views
       - ./translations:/app/translations
-    networks:
-      - workout-tracker
     environment:
       - APP_ENV=development
       - WT_JWT_ENCRYPTION_KEY=dev-secret-key
-    env_file: ./postgres.env
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    image: postgres:16-alpine
-    container_name: wt-db
-    restart: unless-stopped
-    shm_size: 128mb
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - workout-tracker
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    env_file:
-      - postgres.env
-
-volumes:
-  asset-volume:
-  db-data:
-
-networks:
-  workout-tracker:
-    external: false

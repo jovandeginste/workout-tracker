@@ -1,0 +1,25 @@
+services:
+  workout-tracker:
+    container_name: wt-app
+    image: ghcr.io/jovandeginste/workout-tracker:master
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - workout-tracker
+    environment:
+      - WT_JWT_ENCRYPTION_KEY=my-secret-key
+  db:
+    image: postgres:16-alpine
+    container_name: wt-db
+    restart: unless-stopped
+    shm_size: 128mb
+    networks:
+      - workout-tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - postgres.env
