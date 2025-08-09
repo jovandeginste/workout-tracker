@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY frontend ./frontend
 RUN cd frontend && \
-    npm ci
+  npm ci
 
 COPY Makefile ./
 COPY assets ./assets
@@ -37,4 +37,5 @@ COPY vendor ./vendor
 COPY views ./views
 COPY translations ./translations
 
+ENV CGO_ENABLED=0
 ENTRYPOINT ["make", "dev-backend"]

@@ -1,12 +1,12 @@
 FROM node:24-alpine AS frontend
 
-WORKDIR /app
-
 RUN apk --no-cache add make
+
+WORKDIR /app
 
 COPY frontend ./frontend
 RUN cd frontend && \
-    npm ci
+  npm ci
 
 COPY Makefile ./
 COPY assets ./assets
