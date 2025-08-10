@@ -48,6 +48,10 @@ zh-Hans:
     kayaking: 皮艇
     other: 其它
     rowing: 划船
+    auto: 自动检测
+    unknown: 未知
+    horse-riding: 马术
+    inline-skating: 轮滑
   menu:
     Dashboard: 仪表板
     Equipment: 设备
@@ -231,6 +235,8 @@ zh-Hans:
     Average_cadence: 平均步频
     Max_cadence: 最大步频
     public_share: 可公开分享的链接
+    enhanced_speed: 增强速度
+    temperature: 温度
   user:
     profile:
       your_settings: 您的设置
