@@ -15,6 +15,88 @@ class WorkoutStats extends HTMLElement {
     this.lang = this.getAttribute("lang");
     this.translations = JSON.parse(this.getAttribute("translations"));
 
+    const metricSettings = {
+      speed: {
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.speed}`,
+        formatterYaxis: true,
+        yaxis: { min: 0 },
+      },
+      elevation: {
+        seriesType: "area",
+        formatter: (val) =>
+          `${val ? val.toFixed(2) : "-"} ${this.preferredUnits.elevation}`,
+        formatterYaxis: true,
+        yaxis: { opposite: true },
+      },
+      "heart-rate": {
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.heartRate}`,
+        formatterYaxis: true,
+        hiddenByDefault: true,
+        yaxis: {},
+      },
+      cadence: {
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.cadence}`,
+        formatterYaxis: true,
+        hiddenByDefault: true,
+        yaxis: {},
+      },
+      temperature: {
+        formatter: (val) =>
+          `${val ?? "-"} ${this.preferredUnits.temperature || "°C"}`,
+        formatterYaxis: true,
+        hiddenByDefault: true,
+        yaxis: {},
+      },
+      distance: {
+        seriesType: "none",
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.distance}`,
+        yaxis: { show: false },
+        legend: false,
+      },
+      duration: {
+        seriesType: "none",
+        formatter: (val) => formatDuration(val),
+        yaxis: { show: false },
+        legend: false,
+      },
+    };
+
+    const series = [];
+    const yTooltips = [];
+    const yaxis = [];
+    for (let metric of Object.keys(metricSettings)) {
+      if (metric === "time") continue;
+      if (this.data[metric] !== undefined) {
+        series.push({
+          id: metric,
+          name: this.data[metric].Label,
+          type: metricSettings[metric].seriesType || "line",
+          hidden: metricSettings[metric].hiddenByDefault || false,
+          data: this.data[metric].Data.map((val, i) => ({
+            x: new Date(this.data["time"].Data[i]),
+            y: val,
+          })),
+        });
+
+        yTooltips.push({
+          formatter: metricSettings[metric].formatter,
+        });
+
+        const yaxisConfig = {};
+        if (metricSettings[metric].yaxis) {
+          Object.assign(yaxisConfig, metricSettings[metric].yaxis);
+        }
+
+        if (metricSettings[metric].formatterYaxis) {
+          yaxisConfig.labels = {
+            formatter: metricSettings[metric].formatter,
+          };
+        }
+
+        yaxis.push(yaxisConfig);
+      }
+    }
+
     let theme = "light";
     if (
       window.matchMedia &&
@@ -29,119 +111,47 @@ class WorkoutStats extends HTMLElement {
         height: 400,
         animations: { enabled: false },
         toolbar: { show: false },
+        events: {
+          mouseMove: (_event, _chartContext, config) => {
+            if (config.dataPointIndex === -1) return;
+
+            if (
+              this.data["position"] !== undefined &&
+              this.data["position"].Data[config.dataPointIndex]
+            ) {
+              let p = this.data["position"].Data[config.dataPointIndex];
+              let el = document.createElement("div");
+              el.setAttribute("data-lat", p[0]);
+              el.setAttribute("data-lng", p[1]);
+
+              this.mapElement.setMarker(el);
+            }
+          },
+        },
       },
       legend: {
         position: "top",
         formatter: (seriesName, opts) => {
-          if (opts.seriesIndex > 3) return "";
+          if (series[opts.seriesIndex].type === "none") {
+            return "";
+          }
+
           return seriesName;
         },
-        markers: { size: [12, 12, 12, 12, 0] },
+        markers: { size: series.map((s) => (s.type !== `none` ? 12 : 0)) },
       },
       tooltip: {
         x: { format: "HH:mm" },
-        y: [
-          {
-            formatter: (val, opts) => {
-              let p = this.data[opts.dataPointIndex];
-              let el = document.createElement("div");
-              el.setAttribute("data-lat", p.Item.firstPoint.lat);
-              el.setAttribute("data-lng", p.Item.firstPoint.lng);
-              el.setAttribute("data-title", p.Label);
-
-              this.mapElement.setMarker(el);
-              return val + " " + this.preferredUnits.speed;
-            },
-          },
-          {
-            formatter: (val, opts) => {
-              return val + " " + this.preferredUnits.elevation;
-            },
-          },
-          {
-            formatter: (val, opts) => {
-              return val + " " + this.preferredUnits.heartRate;
-            },
-          },
-          {
-            formatter: (val, opts) => {
-              return val + " " + this.preferredUnits.cadence;
-            },
-          },
-          {
-            formatter: (val, opts) => {
-              return val + " " + this.preferredUnits.distance;
-            },
-          },
-          {
-            formatter: (val, opts) => {
-              return formatDuration(val);
-            },
-          },
-        ],
+        y: yTooltips,
       },
       stroke: {
         width: 2,
         curve: "smooth",
       },
-      markers: {
-        size: 1,
-      },
-      series: [
-        {
-          name: this.translations.averagespeed,
-          type: "line",
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.localAverageSpeed,
-          })),
-        },
-        {
-          name: this.translations.elevation,
-          type: "area",
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.localElevation,
-          })),
-        },
-        {
-          name: this.translations.heartrate,
-          type: "line",
-          display: false,
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.localHeartRate,
-          })),
-        },
-        {
-          name: this.translations.cadence,
-          type: "line",
-          display: false,
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.localCadence,
-          })),
-        },
-        {
-          name: this.translations.distance,
-          type: "none",
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.localTotalDistance,
-          })),
-        },
-        {
-          name: this.translations.duration,
-          type: "none",
-          data: this.data.map((e) => ({
-            x: e.Item.firstPoint.time,
-            y: e.Item.totalDurationSeconds,
-          })),
-        },
-      ],
+      series,
       xaxis: {
         labels: {
-          formatter: (val, ts, opts) => {
+          formatter: (_val, ts, _opts) => {
             return new Date(ts).toLocaleTimeString(this.lang, {
               timeZone: this.tz,
             });
@@ -149,45 +159,11 @@ class WorkoutStats extends HTMLElement {
         },
         type: "datetime",
       },
-      yaxis: [
-        {
-          min: 0,
-          labels: {
-            formatter: (val) => {
-              return val + " " + this.preferredUnits.speed;
-            },
-          },
-        },
-        {
-          labels: {
-            formatter: (val) => {
-              return val + " " + this.preferredUnits.elevation;
-            },
-          },
-          opposite: true,
-        },
-        {
-          labels: {
-            formatter: (val) => {
-              return val + " " + this.preferredUnits.heartRate;
-            },
-          },
-        },
-        {
-          labels: {
-            formatter: (val) => {
-              return val + " " + this.preferredUnits.cadence;
-            },
-          },
-        },
-        { show: false },
-      ],
+      yaxis,
     };
 
     let chart = new ApexCharts(this, options);
     chart.render();
-    chart.hideSeries(this.translations.heartrate);
-    chart.hideSeries(this.translations.cadence);
   }
 }
 

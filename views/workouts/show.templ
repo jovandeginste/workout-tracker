@@ -94,9 +94,7 @@ templ Show(w *database.Workout) {
 						{ i18n.T(ctx, "translation.Elevation") }
 					</span>
 				</h3>
-				if stats, err := w.StatisticsPer(1, "min"); err == nil {
-					@ShowStats(stats)
-				}
+				@ShowStats(w)
 			</div>
 		}
 	}
