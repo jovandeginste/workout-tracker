@@ -9,7 +9,7 @@ services:
       file: ./docker-compose.dev.yaml
       service: workout-tracker
     volumes:
-      - ./data/:/data/
+      - ../data/:/data/
     env_file: ./sqlite.env
 
 volumes:

@@ -1,3 +1,5 @@
 .git
 /assets/dist/
 /frontend/node_modules/
+/data/
+/docker/

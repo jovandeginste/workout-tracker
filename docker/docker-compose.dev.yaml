@@ -1,13 +1,13 @@
 services:
   workout-tracker-assets:
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ..
+      dockerfile: docker/Dockerfile.dev
       target: builder-frontend
     volumes:
       - asset-volume:/app/assets
-      - ./views:/app/views
-      - ./frontend/src:/app/frontend/src
+      - ../views:/app/views
+      - ../frontend/src:/app/frontend/src
     tty: true
 
   workout-tracker:
@@ -15,8 +15,8 @@ services:
       file: ./docker-compose.base.yaml
       service: workout-tracker
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ..
+      dockerfile: docker/Dockerfile.dev
       target: builder-backend
     container_name: wt-app-dev
     ports:
@@ -24,11 +24,11 @@ services:
     volumes:
       - asset-volume:/app/assets
       - cache-volume:/root/.cache
-      - ./cmd:/app/cmd
-      - ./pkg:/app/pkg
-      - ./vendor:/app/vendor
-      - ./views:/app/views
-      - ./translations:/app/translations
+      - ../cmd:/app/cmd
+      - ../pkg:/app/pkg
+      - ../vendor:/app/vendor
+      - ../views:/app/views
+      - ../translations:/app/translations
     environment:
       - APP_ENV=development
       - WT_JWT_ENCRYPTION_KEY=dev-secret-key

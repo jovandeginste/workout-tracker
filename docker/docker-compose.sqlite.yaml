@@ -5,7 +5,7 @@ services:
       service: workout-tracker
     volumes:
       # Mount local directory for sqlite database
-      - ./data:/data
+      - ../data:/data
 
 networks:
   workout-tracker:
