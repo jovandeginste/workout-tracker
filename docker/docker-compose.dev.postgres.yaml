@@ -8,13 +8,22 @@ services:
     extends:
       file: ./docker-compose.dev.yaml
       service: workout-tracker
+    env_file: ./postgres.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    extends:
+      file: ./docker-compose.base.yaml
+      service: db
     volumes:
-      - ./data/:/data/
-    env_file: ./sqlite.env
-    depends_on: !reset []
+      - db-data:/var/lib/postgresql/data
 
 volumes:
   asset-volume:
+  cache-volume:
+  db-data:
 
 networks:
   workout-tracker:

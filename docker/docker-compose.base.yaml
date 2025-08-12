@@ -1,27 +1,19 @@
 services:
   workout-tracker:
-    image: ghcr.io/jovandeginste/workout-tracker:master
     container_name: wt-app
+    image: ghcr.io/jovandeginste/workout-tracker:master
     restart: unless-stopped
     ports:
-      # Host Port:Container Port
       - 8080:8080
     networks:
       - workout-tracker
-    env_file:
-      - postgres.env
-    depends_on:
-      db:
-        condition: service_healthy
-
+    environment:
+      - WT_JWT_ENCRYPTION_KEY=my-secret-key
   db:
     image: postgres:16-alpine
     container_name: wt-db
     restart: unless-stopped
     shm_size: 128mb
-    volumes:
-      # Store database files in a local directory.
-      - ./data:/var/lib/postgresql/data
     networks:
       - workout-tracker
     healthcheck:
@@ -31,7 +23,3 @@ services:
       retries: 5
     env_file:
       - postgres.env
-
-networks:
-  workout-tracker:
-    external: false

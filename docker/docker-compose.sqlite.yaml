@@ -1,0 +1,12 @@
+services:
+  workout-tracker:
+    extends:
+      file: docker-compose.base.yaml
+      service: workout-tracker
+    volumes:
+      # Mount local directory for sqlite database
+      - ../data:/data
+
+networks:
+  workout-tracker:
+    external: false

@@ -29,8 +29,9 @@ release-patch release-minor release-major:
 
 release:
 	git tag -s -a $(VERSION) -m "Release $(VERSION)"
-	@echo "Now run 'git push --tags' and create a new release"
-	@echo "New release: https://github.com/jovandeginste/workout-tracker/releases/new"
+	@echo "Now run:"
+	@echo "- git push --tags"
+	@echo "- gh release create --generate-notes $(VERSION)"
 
 install-deps:
 	cd frontend && npm install
@@ -60,8 +61,7 @@ watch/server:
 			--screen.clear_on_rebuild  false 
 
 watch/tailwind:
-	npx tailwindcss \
-			-i ./main.css -o ./assets/output.css --minify --watch=always
+	cd frontend && npm run watch:tw
 
 notify-proxy:
 	$(TEMPL_COMMAND) generate \
@@ -81,13 +81,13 @@ dev:
 dev-docker: dev-docker-postgres
 
 dev-docker-postgres:
-	docker compose -f docker-compose.dev.yaml up --build
+	docker compose -f docker/docker-compose.dev.postgres.yaml up --build
 
 dev-docker-sqlite:
-	docker compose -f docker-compose.dev.sqlite.yaml up --build
+	docker compose -f docker/docker-compose.dev.sqlite.yaml up --build
 
 dev-docker-clean:
-	docker compose -f docker-compose.dev.yaml down --remove-orphans --volumes
+	docker compose -f docker/docker-compose.dev.postgres.yaml down --remove-orphans --volumes
 
 build: build-server build-docker screenshots
 meta: swagger screenshots changelog

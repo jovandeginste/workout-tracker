@@ -1,0 +1,21 @@
+services:
+  workout-tracker:
+    extends:
+      file: docker-compose.base.yaml
+      service: workout-tracker
+    env_file:
+      - postgres.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    extends:
+      file: docker-compose.base.yaml
+      service: db
+    volumes:
+      - ../data:/var/lib/postgresql/data
+
+networks:
+  workout-tracker:
+    external: false
