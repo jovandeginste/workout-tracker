@@ -8,49 +8,51 @@ import (
 )
 
 templ Breakdown(stats database.WorkoutBreakdown) {
+	<script async src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" }></script>
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<table>
-		<thead>
-			<tr>
-				<th></th>
-				<th>{ i18n.T(ctx, "translation.Distance") }</th>
-				<th class="lg:hidden 3xl:table-cell">{ i18n.T(ctx, "translation.Duration") }</th>
-				<th>{ i18n.T(ctx, "translation.Speed") }</th>
-				<th>{ i18n.T(ctx, "translation.Tempo") }</th>
-			</tr>
-		</thead>
-		<tbody class="whitespace-nowrap font-mono">
-			for _, i := range stats.Items {
-				<tr
-					onmouseover="getElementById('workout-map').setMarker(this)"
-					onmouseout="getElementById('workout-map').clearMarker()"
-					data-lat={ fmt.Sprintf("%f", i.LastPoint.Lat) }
-					data-lng={ fmt.Sprintf("%f", i.LastPoint.Lng) }
-					data-title={ PointTitle(ctx, preferredUnits, i.LastPoint) }
-				>
-					<td class="text-right">
-						if i.IsWorst {
-							<span class="text-orange-600">
-								@helpers.IconFor("worst")
-							</span>
-						}
-						if i.IsBest {
-							<span class="text-green-500">
-								@helpers.IconFor("best")
-							</span>
-						}
-						{ helpers.A2S(i.Counter) }
-					</td>
-					<td>
-						{ helpers.HumanDistance(ctx, i.TotalDistance) } { preferredUnits.Distance() }
-					</td>
-					<td class="lg:hidden 3xl:table-cell">
-						{ helpers.HumanDuration(i.TotalDuration) }
-					</td>
-					<td>{ helpers.HumanSpeed(ctx, i.Speed) } { preferredUnits.Speed() }</td>
-					<td>{ helpers.HumanTempo(ctx, i.Speed) } { preferredUnits.Tempo() }</td>
+	<workout-breakdown map-id="workout-map">
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>{ i18n.T(ctx, "translation.Distance") }</th>
+					<th class="lg:hidden 3xl:table-cell">{ i18n.T(ctx, "translation.Duration") }</th>
+					<th>{ i18n.T(ctx, "translation.Speed") }</th>
+					<th>{ i18n.T(ctx, "translation.Tempo") }</th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody class="whitespace-nowrap font-mono">
+				for _, i := range stats.Items {
+					<tr
+						class="breakdown-item"
+						data-lat={ fmt.Sprintf("%f", i.LastPoint.Lat) }
+						data-lng={ fmt.Sprintf("%f", i.LastPoint.Lng) }
+						data-title={ PointTitle(ctx, preferredUnits, i.LastPoint) }
+					>
+						<td class="text-right">
+							if i.IsWorst {
+								<span class="text-orange-600">
+									@helpers.IconFor("worst")
+								</span>
+							}
+							if i.IsBest {
+								<span class="text-green-500">
+									@helpers.IconFor("best")
+								</span>
+							}
+							{ helpers.A2S(i.Counter) }
+						</td>
+						<td>
+							{ helpers.HumanDistance(ctx, i.TotalDistance) } { preferredUnits.Distance() }
+						</td>
+						<td class="lg:hidden 3xl:table-cell">
+							{ helpers.HumanDuration(i.TotalDuration) }
+						</td>
+						<td>{ helpers.HumanSpeed(ctx, i.Speed) } { preferredUnits.Speed() }</td>
+						<td>{ helpers.HumanTempo(ctx, i.Speed) } { preferredUnits.Tempo() }</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</workout-breakdown>
 }

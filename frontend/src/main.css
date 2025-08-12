@@ -15,7 +15,7 @@
     @apply basis-full h-dvh;
   }
   .small-size {
-    @apply basis-1/2 2xl:basis-1/3;
+    @apply basis-1/2;
   }
 
   .map-tiles,
@@ -250,6 +250,10 @@
       tr {
         @apply even:bg-neutral-300 odd:bg-neutral-200 hover:bg-amber-100;
         @apply dark:even:bg-neutral-700 dark:odd:bg-neutral-800 dark:hover:bg-amber-800;
+      }
+      tr.active {
+        @apply bg-amber-200;
+        @apply dark:bg-amber-800;
       }
     }
   }
