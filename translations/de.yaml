@@ -54,6 +54,10 @@ de:
     kayaking: Kayaking
     rowing: Rudern
     other: Andere
+    auto: automatisch detektieren
+    unknown: unbekannt
+    horse-riding: Reiten
+    inline-skating: Inlineskaten
   menu:
     Equipment: Ausrüstung
     Statistics: Statistik
@@ -254,6 +258,8 @@ de:
       Übersetzen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)\n"
     Max_cadence: Maximale Trittfrequenz
     public_share: Öffentlich teilbarer Link
+    enhanced_speed: Verbesserte Geschwindigkeit
+    temperature: Temperatur
   user:
     profile:
       your_settings: Deine Einstellungen
