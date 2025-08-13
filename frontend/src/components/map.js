@@ -89,17 +89,6 @@ class WtMap extends HTMLElement {
     positions.forEach((p, i) => {
       if (prevPoint) {
         const elevation = this.workout.elevation.Data[i] || 0;
-        const tooltipDisplay = {
-          time: "",
-          distance: this.preferredUnits.distance,
-          duration: "",
-          speed: this.preferredUnits.speed,
-          elevation: this.preferredUnits.elevation,
-          "heart-rate": this.preferredUnits.heartRate,
-          cadence: this.preferredUnits.cadence,
-          temperature: this.preferredUnits.temperature,
-        };
-
         // Add invisible point to map to allow fitBounds to work
         group.addLayer(
           L.circleMarker(p, {
@@ -109,30 +98,7 @@ class WtMap extends HTMLElement {
             radius: 4,
           })
             .addTo(map)
-            .bindTooltip(() => {
-              let tooltip = `<ul>`;
-              for (const [field, unit] of Object.entries(tooltipDisplay)) {
-                if (this.workout[field]?.Data[i] !== undefined) {
-                  const label = this.workout[field].Label;
-                  const val = this.workout[field].Data[i];
-                  let formattedVal =
-                    typeof val === "number" && val % 1 !== 0
-                      ? val.toFixed(2)
-                      : val;
-                  if (field === "duration") {
-                    formattedVal = formatDuration(val);
-                  } else if (field === "time" && val !== null) {
-                    formattedVal = new Date(val).toTimeString().substr(0, 5);
-                  }
-
-                  if (val !== null) {
-                    tooltip += `<li><b>${label}</b>: ${formattedVal} ${unit}</li>`;
-                  }
-                }
-              }
-              tooltip += `</ul>`;
-              return tooltip;
-            }),
+            .bindTooltip(() => this.getTooltip(i)),
         );
 
         // Elevation
@@ -164,7 +130,7 @@ class WtMap extends HTMLElement {
         radius: 6,
       })
         .addTo(map)
-        .bindTooltip(last.title),
+        .bindTooltip(this.getTooltip(positions.length - 1)),
     );
 
     let first = positions[0];
@@ -177,7 +143,7 @@ class WtMap extends HTMLElement {
         radius: 6,
       })
         .addTo(map)
-        .bindTooltip(first.title),
+        .bindTooltip(this.getTooltip(0)),
     );
 
     if (!this.hoverMarker) {
@@ -270,6 +236,40 @@ class WtMap extends HTMLElement {
     });
 
     return speedLayerGroup;
+  }
+
+  getTooltip(i) {
+    const tooltipDisplay = {
+      time: "",
+      distance: this.preferredUnits.distance,
+      duration: "",
+      speed: this.preferredUnits.speed,
+      elevation: this.preferredUnits.elevation,
+      "heart-rate": this.preferredUnits.heartRate,
+      cadence: this.preferredUnits.cadence,
+      temperature: this.preferredUnits.temperature,
+    };
+
+    let tooltip = `<ul>`;
+    for (const [field, unit] of Object.entries(tooltipDisplay)) {
+      if (this.workout[field]?.Data[i] !== undefined) {
+        const label = this.workout[field].Label;
+        const val = this.workout[field].Data[i];
+        let formattedVal =
+          typeof val === "number" && val % 1 !== 0 ? val.toFixed(2) : val;
+        if (field === "duration") {
+          formattedVal = formatDuration(val);
+        } else if (field === "time" && val !== null) {
+          formattedVal = new Date(val).toTimeString().substr(0, 5);
+        }
+
+        if (val !== null) {
+          tooltip += `<li><b>${label}</b>: ${formattedVal} ${unit}</li>`;
+        }
+      }
+    }
+    tooltip += `</ul>`;
+    return tooltip;
   }
 
   // Determine color for a value; value from 0 to 1
