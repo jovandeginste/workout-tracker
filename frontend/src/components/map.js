@@ -86,10 +86,12 @@ class WtMap extends HTMLElement {
       speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
         (speeds.length - 1),
     );
+    const trackRenderer = L.canvas({ padding: 0.4 });
 
     // Add features to the map
     const group = new L.featureGroup();
     const polyLineProperties = {
+      renderer: trackRenderer,
       weight: 4,
       interactive: false,
     };
@@ -101,7 +103,7 @@ class WtMap extends HTMLElement {
     const speedLayerGroup = new L.featureGroup();
     const elevationLayerGroup = new L.featureGroup();
 
-    var hasSpeed = false;
+    let hasSpeed = false;
     this.points.forEach((pt) => {
       let p = [pt.lat, pt.lng];
 
@@ -109,6 +111,7 @@ class WtMap extends HTMLElement {
         // Add invisible point to map to allow fitBounds to work
         group.addLayer(
           L.circleMarker([pt.lat, pt.lng], {
+            renderer: trackRenderer,
             opacity: 0,
             fill: false,
             radius: 4,
@@ -154,7 +157,7 @@ class WtMap extends HTMLElement {
       speedLayerGroup.addTo(map);
     }
 
-    var last = this.points[this.points.length - 1];
+    let last = this.points[this.points.length - 1];
     group.addLayer(
       L.circleMarker([last.lat, last.lng], {
         color: "red",
@@ -167,7 +170,7 @@ class WtMap extends HTMLElement {
         .bindTooltip(last.title),
     );
 
-    var first = this.points[0];
+    let first = this.points[0];
     group.addLayer(
       L.circleMarker([first.lat, first.lng], {
         color: "green",
