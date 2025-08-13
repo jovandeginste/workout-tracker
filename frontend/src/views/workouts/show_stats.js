@@ -9,8 +9,13 @@ class WorkoutStats extends HTMLElement {
 
   connectedCallback() {
     this.mapElement = document.getElementById(this.getAttribute("map-id"));
-    this.preferredUnits = JSON.parse(this.getAttribute("preferred-units"));
-    this.data = JSON.parse(this.getAttribute("data"));
+    this.preferredUnits = JSON.parse(
+      document.getElementById(this.getAttribute("preferred-units-el"))
+        .textContent,
+    );
+    this.data = JSON.parse(
+      document.getElementById(this.getAttribute("data-el")).textContent,
+    );
     this.tz = this.getAttribute("tz");
     this.lang = this.getAttribute("lang");
     this.translations = JSON.parse(this.getAttribute("translations"));

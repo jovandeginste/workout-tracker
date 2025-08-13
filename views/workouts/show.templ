@@ -13,6 +13,7 @@ templ Show(w *database.Workout) {
 			WithSharing(),
 	) {
 		{{ currentUser := helpers.CurrentUser(ctx) }}
+		@DataJson(w)
 		<div class="gap-4">
 			if w.User.ID == currentUser.ID {
 				<span class="float-right actions">

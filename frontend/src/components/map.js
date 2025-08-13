@@ -1,5 +1,6 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { formatDuration } from "../helpers";
 
 /*
 interface Point {
@@ -45,50 +46,29 @@ class WtMap extends HTMLElement {
       showElevation: mapConfig.ShowElevation,
     };
 
-    this.points = JSON.parse(this.getAttribute("map-points") || "[]");
-    if (this.points.length !== 0) {
+    this.workout = JSON.parse(
+      document.getElementById(this.getAttribute("data-el")).textContent,
+    );
+    this.preferredUnits = JSON.parse(
+      document.getElementById(this.getAttribute("preferred-units-el"))
+        .textContent,
+    );
+    if (this.workout?.positions?.Data?.length !== 0) {
       this.makeMap();
     }
   }
 
   makeMap() {
-    const map = L.map(this, {
+    this.map = L.map(this, {
       fadeAnimation: false,
     }).setView(this.config.center, 15);
-    this.map = map;
-    const layerStreet = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        className: "map-tiles",
-      },
-    );
 
-    const layerAerial = L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Powered by Esri",
-      },
-    );
-
-    L.control.scale().addTo(map);
-
-    const speeds = this.points
-      .filter((x) => x.speed !== null)
-      .map((x) => x.speed);
-
-    const averageSpeed =
-      speeds.reduce((a, x) => {
-        return a + x;
-      }, 0) / speeds.length;
-    const stdevSpeed = Math.sqrt(
-      speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
-        (speeds.length - 1),
-    );
-    const trackRenderer = L.canvas({ padding: 0.4 });
+    const map = this.map;
+    const layerStreet = this.getStreetLayer();
+    const layerAerial = this.getAerialLayer();
 
     // Add features to the map
+    const trackRenderer = L.canvas({ padding: 0.4 });
     const group = new L.featureGroup();
     const polyLineProperties = {
       renderer: trackRenderer,
@@ -97,69 +77,86 @@ class WtMap extends HTMLElement {
     };
 
     let prevPoint;
+    const hasSpeed = !!this.workout.speed?.Data?.length;
     // Add points with tooltip to map.
-    const MOVING_AVERAGE_LENGTH = 15;
-    const movingSpeeds = [];
-    const speedLayerGroup = new L.featureGroup();
+    let speedLayerGroup;
+    if (hasSpeed) {
+      speedLayerGroup = this.getSpeedLayerGroup(polyLineProperties);
+    }
     const elevationLayerGroup = new L.featureGroup();
 
-    let hasSpeed = false;
-    this.points.forEach((pt) => {
-      let p = [pt.lat, pt.lng];
-
+    const positions = this.workout.position.Data;
+    positions.forEach((p, i) => {
       if (prevPoint) {
+        const elevation = this.workout.elevation.Data[i] || 0;
+        const tooltipDisplay = {
+          time: "",
+          distance: this.preferredUnits.distance,
+          duration: "",
+          speed: this.preferredUnits.speed,
+          elevation: this.preferredUnits.elevation,
+          "heart-rate": this.preferredUnits.heartRate,
+          cadence: this.preferredUnits.cadence,
+          temperature: this.preferredUnits.temperature,
+        };
+
         // Add invisible point to map to allow fitBounds to work
         group.addLayer(
-          L.circleMarker([pt.lat, pt.lng], {
+          L.circleMarker(p, {
             renderer: trackRenderer,
             opacity: 0,
             fill: false,
             radius: 4,
           })
             .addTo(map)
-            .bindTooltip(pt.title),
+            .bindTooltip(() => {
+              let tooltip = `<ul>`;
+              for (const [field, unit] of Object.entries(tooltipDisplay)) {
+                if (this.workout[field]?.Data[i] !== undefined) {
+                  const label = this.workout[field].Label;
+                  const val = this.workout[field].Data[i];
+                  let formattedVal =
+                    typeof val === "number" && val % 1 !== 0
+                      ? val.toFixed(2)
+                      : val;
+                  if (field === "duration") {
+                    formattedVal = formatDuration(val);
+                  } else if (field === "time" && val !== null) {
+                    formattedVal = new Date(val).toTimeString().substr(0, 5);
+                  }
+
+                  if (val !== null) {
+                    tooltip += `<li><b>${label}</b>: ${formattedVal} ${unit}</li>`;
+                  }
+                }
+              }
+              tooltip += `</ul>`;
+              return tooltip;
+            }),
         );
 
         // Elevation
         polyLineProperties["color"] = this.getColor(
-          (pt.elevation - this.config.minElevation) /
+          (elevation - this.config.minElevation) /
             (this.config.maxElevation - this.config.minElevation),
         );
         L.polyline([prevPoint, p], polyLineProperties).addTo(
           elevationLayerGroup,
         );
-
-        // Speed
-        if (pt.speed === null || pt.speed < 0.1) {
-          polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
-        } else {
-          hasSpeed = true;
-          if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
-            movingSpeeds.shift();
-          }
-          movingSpeeds.push(pt.speed);
-          const movingAverageSpeed =
-            movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
-
-          const zScore =
-            ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed; // -1...1 is within one standard deviation
-          polyLineProperties["color"] = this.getColor(0.5 + zScore / 2);
-        }
-        L.polyline([prevPoint, p], polyLineProperties).addTo(speedLayerGroup);
       }
 
       prevPoint = p;
     });
 
-    if (!hasSpeed || this.config.showElevation) {
+    if (!speedLayerGroup || this.config.showElevation) {
       elevationLayerGroup.addTo(map);
     } else {
       speedLayerGroup.addTo(map);
     }
 
-    let last = this.points[this.points.length - 1];
+    let last = positions[positions.length - 1];
     group.addLayer(
-      L.circleMarker([last.lat, last.lng], {
+      L.circleMarker(last, {
         color: "red",
         fill: true,
         fillColor: "red",
@@ -170,9 +167,9 @@ class WtMap extends HTMLElement {
         .bindTooltip(last.title),
     );
 
-    let first = this.points[0];
+    let first = positions[0];
     group.addLayer(
-      L.circleMarker([first.lat, first.lng], {
+      L.circleMarker(first, {
         color: "green",
         fill: true,
         fillColor: "green",
@@ -192,22 +189,87 @@ class WtMap extends HTMLElement {
 
     this.hoverMarker.addTo(map); // Adding marker to the map
 
+    const overlays = {
+      [this.config.elevationName]: elevationLayerGroup,
+    };
+    if (speedLayerGroup) {
+      overlays[this.config.speedName] = speedLayerGroup;
+    }
+
+    L.control.scale().addTo(map);
     L.control
       .layers(
         {
           [this.config.streetsName]: layerStreet,
           [this.config.aerialName]: layerAerial,
         },
-        {
-          [this.config.elevationName]: elevationLayerGroup,
-          [this.config.speedName]: speedLayerGroup,
-        },
+        overlays,
       )
       .addTo(map);
 
     layerStreet.addTo(map);
 
     map.fitBounds(group.getBounds(), { animate: false });
+  }
+
+  getStreetLayer() {
+    return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      className: "map-tiles",
+    });
+  }
+
+  getAerialLayer() {
+    return L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution: "Powered by Esri",
+      },
+    );
+  }
+
+  getSpeedLayerGroup(polyLineProperties = {}) {
+    const MOVING_AVERAGE_LENGTH = 15;
+    const movingSpeeds = [];
+    const speeds = this.workout.speed?.Data.filter((x) => x !== null);
+
+    const averageSpeed =
+      speeds.reduce((a, x) => {
+        return a + x;
+      }, 0) / speeds.length;
+    const stdevSpeed = Math.sqrt(
+      speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
+        (speeds.length - 1),
+    );
+
+    const speedLayerGroup = new L.featureGroup();
+
+    let prevPoint;
+    this.workout.position.Data.forEach((p, i) => {
+      if (prevPoint) {
+        const speed = this.workout.speed.Data[i] || null;
+        if (speed === null || speed < 0.1) {
+          polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
+        } else {
+          if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
+            movingSpeeds.shift();
+          }
+          movingSpeeds.push(speed);
+          const movingAverageSpeed =
+            movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
+
+          const zScore =
+            ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed; // -1...1 is within one standard deviation
+          polyLineProperties["color"] = this.getColor(0.5 + zScore / 2);
+        }
+        L.polyline([prevPoint, p], polyLineProperties).addTo(speedLayerGroup);
+      }
+
+      prevPoint = p;
+    });
+
+    return speedLayerGroup;
   }
 
   // Determine color for a value; value from 0 to 1
