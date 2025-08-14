@@ -50,6 +50,10 @@ func (u UserPreferredUnits) Height() string {
 	}
 }
 
+func (u UserPreferredUnits) Temperature() string {
+	return "°C"
+}
+
 func (u UserPreferredUnits) Cadence() string {
 	return "spm"
 }

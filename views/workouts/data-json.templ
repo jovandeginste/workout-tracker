@@ -1,0 +1,85 @@
+package workouts
+
+import (
+	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/spf13/cast"
+)
+
+type dataset struct {
+	Label string
+	Data  []any
+}
+
+templ DataJson(w *database.Workout) {
+	{{ pu := helpers.PreferredUnitsToJSON(helpers.CurrentUser(ctx).PreferredUnits()) }}
+	{{
+translations := map[string]string{
+	"distance":     i18n.T(ctx, "translation.Distance"),
+	"duration":     i18n.T(ctx, "translation.Duration"),
+	"calories":     i18n.T(ctx, "translation.Calories"),
+	"heart-rate":   i18n.T(ctx, "translation.Heart_rate"),
+	"temperature":  i18n.T(ctx, "translation.temperature"),
+	"speed":        i18n.T(ctx, "translation.Speed"),
+	"elevation":    i18n.T(ctx, "translation.Elevation"),
+	"cadence":      i18n.T(ctx, "translation.Cadence"),
+	"averagespeed": i18n.T(ctx, "translation.Average_speed"),
+}
+data := map[string]*dataset{
+	"position": {
+		Label: "",
+		Data:  []any{},
+	},
+	"time": {
+		Label: i18n.T(ctx, "translation.Time"),
+		Data:  []any{},
+	},
+	"distance": {
+		Label: i18n.T(ctx, "translation.Distance"),
+		Data:  []any{},
+	},
+	"speed": {
+		Label: i18n.T(ctx, "translation.Speed"),
+		Data:  []any{},
+	},
+	"duration": {
+		Label: i18n.T(ctx, "translation.Duration"),
+		Data:  []any{},
+	},
+}
+for _, m := range w.Data.ExtraMetrics {
+	data[m] = &dataset{
+		Label: translations[m],
+		Data:  []any{},
+	}
+}
+
+for _, p := range w.Details().Points {
+	data["position"].Data = append(data["position"].Data, []float64{p.Lat, p.Lng})
+	data["time"].Data = append(data["time"].Data, p.Time)
+	data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
+	data["duration"].Data = append(data["duration"].Data, p.TotalDuration.Seconds())
+	if _, ok := p.ExtraMetrics["speed"]; !ok || p.ExtraMetrics.Get("speed") == 0 {
+		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeed(ctx, p.AverageSpeed())))
+	} else {
+		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeed(ctx, p.ExtraMetrics.Get("speed"))))
+	}
+
+	for _, m := range w.Data.ExtraMetrics {
+		if m == "speed" {
+			continue
+		}
+
+		if v, ok := p.ExtraMetrics[m]; ok {
+			data[m].Data = append(data[m].Data, v)
+		} else {
+			data[m].Data = append(data[m].Data, nil)
+		}
+	}
+}
+	}}
+
+	@templ.JSONScript("workout-preferred-units", pu)
+	@templ.JSONScript("workout-data", data)
+}

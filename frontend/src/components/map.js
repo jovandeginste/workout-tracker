@@ -1,5 +1,6 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { formatDuration } from "../helpers";
 
 /*
 interface Point {
@@ -45,38 +46,159 @@ class WtMap extends HTMLElement {
       showElevation: mapConfig.ShowElevation,
     };
 
-    this.points = JSON.parse(this.getAttribute("map-points") || "[]");
-    if (this.points.length !== 0) {
+    this.workout = JSON.parse(
+      document.getElementById(this.getAttribute("data-el")).textContent,
+    );
+    this.preferredUnits = JSON.parse(
+      document.getElementById(this.getAttribute("preferred-units-el"))
+        .textContent,
+    );
+    if (this.workout?.positions?.Data?.length !== 0) {
       this.makeMap();
     }
   }
 
   makeMap() {
-    const map = L.map(this, {
+    this.map = L.map(this, {
       fadeAnimation: false,
     }).setView(this.config.center, 15);
-    this.map = map;
-    const layerStreet = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        className: "map-tiles",
-      },
+
+    const map = this.map;
+    const layerStreet = this.getStreetLayer();
+    const layerAerial = this.getAerialLayer();
+
+    // Add features to the map
+    const trackRenderer = L.canvas({ padding: 0.4 });
+    const group = new L.featureGroup();
+    const polyLineProperties = {
+      renderer: trackRenderer,
+      weight: 4,
+      interactive: false,
+    };
+
+    let prevPoint;
+    const hasSpeed = !!this.workout.speed?.Data?.length;
+    // Add points with tooltip to map.
+    let speedLayerGroup;
+    if (hasSpeed) {
+      speedLayerGroup = this.getSpeedLayerGroup(polyLineProperties);
+    }
+    const elevationLayerGroup = new L.featureGroup();
+
+    const positions = this.workout.position.Data;
+    positions.forEach((p, i) => {
+      if (prevPoint) {
+        const elevation = this.workout.elevation.Data[i] || 0;
+        // Add invisible point to map to allow fitBounds to work
+        group.addLayer(
+          L.circleMarker(p, {
+            renderer: trackRenderer,
+            opacity: 0,
+            fill: false,
+            radius: 4,
+          })
+            .addTo(map)
+            .bindTooltip(() => this.getTooltip(i)),
+        );
+
+        // Elevation
+        polyLineProperties["color"] = this.getColor(
+          (elevation - this.config.minElevation) /
+            (this.config.maxElevation - this.config.minElevation),
+        );
+        L.polyline([prevPoint, p], polyLineProperties).addTo(
+          elevationLayerGroup,
+        );
+      }
+
+      prevPoint = p;
+    });
+
+    if (!speedLayerGroup || this.config.showElevation) {
+      elevationLayerGroup.addTo(map);
+    } else {
+      speedLayerGroup.addTo(map);
+    }
+
+    let last = positions[positions.length - 1];
+    group.addLayer(
+      L.circleMarker(last, {
+        color: "red",
+        fill: true,
+        fillColor: "red",
+        fillOpacity: 1,
+        radius: 6,
+      })
+        .addTo(map)
+        .bindTooltip(this.getTooltip(positions.length - 1)),
     );
 
-    const layerAerial = L.tileLayer(
+    let first = positions[0];
+    group.addLayer(
+      L.circleMarker(first, {
+        color: "green",
+        fill: true,
+        fillColor: "green",
+        fillOpacity: 1,
+        radius: 6,
+      })
+        .addTo(map)
+        .bindTooltip(this.getTooltip(0)),
+    );
+
+    if (!this.hoverMarker) {
+      this.hoverMarker = L.circleMarker(first, {
+        color: "blue",
+        radius: 8,
+      });
+    }
+
+    this.hoverMarker.addTo(map); // Adding marker to the map
+
+    const overlays = {
+      [this.config.elevationName]: elevationLayerGroup,
+    };
+    if (speedLayerGroup) {
+      overlays[this.config.speedName] = speedLayerGroup;
+    }
+
+    L.control.scale().addTo(map);
+    L.control
+      .layers(
+        {
+          [this.config.streetsName]: layerStreet,
+          [this.config.aerialName]: layerAerial,
+        },
+        overlays,
+      )
+      .addTo(map);
+
+    layerStreet.addTo(map);
+
+    map.fitBounds(group.getBounds(), { animate: false });
+  }
+
+  getStreetLayer() {
+    return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      className: "map-tiles",
+    });
+  }
+
+  getAerialLayer() {
+    return L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
       {
         attribution: "Powered by Esri",
       },
     );
+  }
 
-    L.control.scale().addTo(map);
-
-    const speeds = this.points
-      .filter((x) => x.speed !== null)
-      .map((x) => x.speed);
+  getSpeedLayerGroup(polyLineProperties = {}) {
+    const MOVING_AVERAGE_LENGTH = 15;
+    const movingSpeeds = [];
+    const speeds = this.workout.speed?.Data.filter((x) => x !== null);
 
     const averageSpeed =
       speeds.reduce((a, x) => {
@@ -87,54 +209,19 @@ class WtMap extends HTMLElement {
         (speeds.length - 1),
     );
 
-    // Add features to the map
-    const group = new L.featureGroup();
-    const polyLineProperties = {
-      weight: 4,
-      interactive: false,
-    };
+    const speedLayerGroup = new L.featureGroup();
 
     let prevPoint;
-    // Add points with tooltip to map.
-    const MOVING_AVERAGE_LENGTH = 15;
-    const movingSpeeds = [];
-    const speedLayerGroup = new L.featureGroup();
-    const elevationLayerGroup = new L.featureGroup();
-
-    var hasSpeed = false;
-    this.points.forEach((pt) => {
-      let p = [pt.lat, pt.lng];
-
+    this.workout.position.Data.forEach((p, i) => {
       if (prevPoint) {
-        // Add invisible point to map to allow fitBounds to work
-        group.addLayer(
-          L.circleMarker([pt.lat, pt.lng], {
-            opacity: 0,
-            fill: false,
-            radius: 4,
-          })
-            .addTo(map)
-            .bindTooltip(pt.title),
-        );
-
-        // Elevation
-        polyLineProperties["color"] = this.getColor(
-          (pt.elevation - this.config.minElevation) /
-            (this.config.maxElevation - this.config.minElevation),
-        );
-        L.polyline([prevPoint, p], polyLineProperties).addTo(
-          elevationLayerGroup,
-        );
-
-        // Speed
-        if (pt.speed === null || pt.speed < 0.1) {
+        const speed = this.workout.speed.Data[i] || null;
+        if (speed === null || speed < 0.1) {
           polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
         } else {
-          hasSpeed = true;
           if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
             movingSpeeds.shift();
           }
-          movingSpeeds.push(pt.speed);
+          movingSpeeds.push(speed);
           const movingAverageSpeed =
             movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
 
@@ -148,63 +235,41 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (!hasSpeed || this.config.showElevation) {
-      elevationLayerGroup.addTo(map);
-    } else {
-      speedLayerGroup.addTo(map);
+    return speedLayerGroup;
+  }
+
+  getTooltip(i) {
+    const tooltipDisplay = {
+      time: "",
+      distance: this.preferredUnits.distance,
+      duration: "",
+      speed: this.preferredUnits.speed,
+      elevation: this.preferredUnits.elevation,
+      "heart-rate": this.preferredUnits.heartRate,
+      cadence: this.preferredUnits.cadence,
+      temperature: this.preferredUnits.temperature,
+    };
+
+    let tooltip = `<ul>`;
+    for (const [field, unit] of Object.entries(tooltipDisplay)) {
+      if (this.workout[field]?.Data[i] !== undefined) {
+        const label = this.workout[field].Label;
+        const val = this.workout[field].Data[i];
+        let formattedVal =
+          typeof val === "number" && val % 1 !== 0 ? val.toFixed(2) : val;
+        if (field === "duration") {
+          formattedVal = formatDuration(val);
+        } else if (field === "time" && val !== null) {
+          formattedVal = new Date(val).toTimeString().substr(0, 5);
+        }
+
+        if (val !== null) {
+          tooltip += `<li><b>${label}</b>: ${formattedVal} ${unit}</li>`;
+        }
+      }
     }
-
-    var last = this.points[this.points.length - 1];
-    group.addLayer(
-      L.circleMarker([last.lat, last.lng], {
-        color: "red",
-        fill: true,
-        fillColor: "red",
-        fillOpacity: 1,
-        radius: 6,
-      })
-        .addTo(map)
-        .bindTooltip(last.title),
-    );
-
-    var first = this.points[0];
-    group.addLayer(
-      L.circleMarker([first.lat, first.lng], {
-        color: "green",
-        fill: true,
-        fillColor: "green",
-        fillOpacity: 1,
-        radius: 6,
-      })
-        .addTo(map)
-        .bindTooltip(first.title),
-    );
-
-    if (!this.hoverMarker) {
-      this.hoverMarker = L.circleMarker(first, {
-        color: "blue",
-        radius: 8,
-      });
-    }
-
-    this.hoverMarker.addTo(map); // Adding marker to the map
-
-    L.control
-      .layers(
-        {
-          [this.config.streetsName]: layerStreet,
-          [this.config.aerialName]: layerAerial,
-        },
-        {
-          [this.config.elevationName]: elevationLayerGroup,
-          [this.config.speedName]: speedLayerGroup,
-        },
-      )
-      .addTo(map);
-
-    layerStreet.addTo(map);
-
-    map.fitBounds(group.getBounds(), { animate: false });
+    tooltip += `</ul>`;
+    return tooltip;
   }
 
   // Determine color for a value; value from 0 to 1
