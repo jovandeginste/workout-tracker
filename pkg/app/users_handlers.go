@@ -78,6 +78,9 @@ func (a *App) userRegisterHandler(c echo.Context) error {
 	u.Profile.Theme = BrowserTheme
 	u.Profile.TotalsShow = DefaultTotalsShow
 	u.Profile.Language = BrowserLanguage
+	// ensure user is not admin and not active by default
+	u.Admin = false
+	u.Active = false
 
 	if err := u.Create(a.db); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("user-login"), err)
