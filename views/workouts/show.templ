@@ -33,7 +33,7 @@ templ Show(w *database.Workout) {
 		</div>
 		<div class="lg:flex lg:flex-wrap print:block">
 			if w.HasTracks() {
-				<div id="map-container" class="small-size pagebreak">
+				<div id="map-container" class="basis-1/2 pagebreak">
 					<div class="inner-form">
 						@Map(w)
 					</div>
@@ -91,9 +91,13 @@ templ Show(w *database.Workout) {
 			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
 				<div class="inner-form">
 					<div class="print:w-full overflow-y-auto">
-						if stats, err := w.StatisticsPer(1, currentUser.PreferredUnits().Distance()); err == nil {
-							@Breakdown(stats)
-						}
+						<script async src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" }></script>
+						<workout-breakdown
+							map-id="workout-map"
+							chart-id="workout-stats"
+							data-el="workout-data"
+							preferred-units-el="workout-preferred-units"
+						></workout-breakdown>
 					</div>
 				</div>
 			}

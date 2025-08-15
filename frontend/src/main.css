@@ -15,7 +15,7 @@
     @apply basis-full h-dvh;
   }
   .small-size {
-    @apply basis-1/2;
+    @apply basis-1/2 2xl:basis-1/3;
   }
 
   .map-tiles,
