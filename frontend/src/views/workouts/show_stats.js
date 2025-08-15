@@ -8,6 +8,7 @@ class WorkoutStats extends HTMLElement {
   }
 
   connectedCallback() {
+    this.colorMode = this.getAttribute("color-mode") || "browser";
     this.mapElement = document.getElementById(this.getAttribute("map-id"));
     this.preferredUnits = JSON.parse(
       document.getElementById(this.getAttribute("preferred-units-el"))
@@ -29,7 +30,10 @@ class WorkoutStats extends HTMLElement {
       elevation: {
         seriesType: "area",
         formatter: (val) =>
-          `${val ? val.toFixed(2) : "-"} ${this.preferredUnits.elevation}`,
+          `${val !== null ? val.toFixed(2) : "-"} ${
+            this.preferredUnits.elevation
+          }`,
+        labelFormatter: (val) => `${val} ${this.preferredUnits.elevation}`,
         formatterYaxis: true,
         yaxis: { opposite: true },
       },
@@ -94,7 +98,9 @@ class WorkoutStats extends HTMLElement {
 
         if (metricSettings[metric].formatterYaxis) {
           yaxisConfig.labels = {
-            formatter: metricSettings[metric].formatter,
+            formatter:
+              metricSettings[metric].labelFormatter ||
+              metricSettings[metric].formatter,
           };
         }
 
@@ -102,18 +108,23 @@ class WorkoutStats extends HTMLElement {
       }
     }
 
-    let theme = "light";
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      theme = "dark";
+    let theme = this.colorMode;
+    if (theme === "browser") {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        theme = "dark";
+      } else {
+        theme = "light";
+      }
     }
 
     let options = {
       theme: { mode: theme },
       chart: {
-        height: 400,
+        height: "100%",
+        background: "transparent",
         animations: { enabled: false },
         toolbar: { show: false },
         events: {
@@ -152,6 +163,11 @@ class WorkoutStats extends HTMLElement {
       stroke: {
         width: 2,
         curve: "smooth",
+      },
+      plotOptions: {
+        area: {
+          fillTo: "end",
+        },
       },
       series,
       xaxis: {
