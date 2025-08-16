@@ -49,6 +49,10 @@ ru:
     rowing: гребля
     kayaking: каякинг
     other: другое
+    auto: автоопределение
+    unknown: неизвестно
+    horse-riding: езда на лошадях
+    inline-skating: катание на коньках
   menu:
     Statistics: Статистика
     Workouts: Тренировки
@@ -244,6 +248,8 @@ ru:
     i_completed_a_workout_s: 'Я выполнил тренировку: «%s».'
     HelpTranslating: "Мы будем признательны вашей помощи с переводом!\n\nПожалуйста,
       помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)\n"
+    enhanced_speed: Улучшенная скорость
+    temperature: Температура
   user:
     profile:
       time_zone: Часовой пояс
