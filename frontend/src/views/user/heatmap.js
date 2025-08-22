@@ -62,9 +62,68 @@ class WtHeatmap extends HTMLElement {
       })
       .addTo(map);
 
+    let heatLayer = null;
+    let heatMapData = null;
+    let markers = null;
+    const rerenderHeatMap = () => {
+      if (heatMapData === null || markers === null) {
+        return;
+      }
+      if (heatLayer !== null) {
+        map.removeLayer(heatLayer);
+      }
+      const radius = L.DomUtil.get("radius").value;
+      const blur = L.DomUtil.get("blur").value;
+      const showMarkers = L.DomUtil.get("showMarkers").checked;
+      const onlyTrace = L.DomUtil.get("onlyTrace").checked;
+      var config = {
+        radius: Number(radius),
+        blur: Number(blur),
+      };
+      if (onlyTrace) {
+        config.radius = 1;
+        config.blur = 1;
+        config.minOpacity = 1;
+        config.gradient = { 0: "blue" };
+      }
+      heatLayer = L.heatLayer(heatMapData, config);
+      heatLayer.addTo(map);
+      if (showMarkers) {
+        markers.addTo(map);
+      } else {
+        markers.removeFrom(map);
+      }
+    };
+
+    let customControl = L.Control.extend({
+      options: { position: "topright" },
+
+      onAdd: function () {
+        const container = L.DomUtil.create("div", "flex flex-col p-2");
+
+        container.style.backgroundColor = "white";
+        container.innerHTML = `
+        <div class="flex items-center"><label for="radius" class="w-12">Radius</label><input class="p-0" type="range" id="radius" value="10" min="1" max="30"/></div>
+        <div class="flex items-center"><label for="blur" class="w-12">Blur</label><input class="p-0" type="range" id="blur" value="15" min="1" max="30"/></div>
+        <div class="flex items-center"><input type="checkbox" id="showMarkers" name="showMarkers" checked /><label for="showMarkers">Show Markers</label></div>
+        <div class="flex items-center"><input type="checkbox" id="onlyTrace" name="onlyTrace" /><label for="onlyTrace">Only show where you've been</label></div>
+        `;
+
+        // Prevent map drag when clicking control
+        L.DomEvent.disableClickPropagation(container);
+
+        container.querySelectorAll("input").forEach((element) => {
+          element.oninput = L.Util.throttle(rerenderHeatMap, 50);
+        });
+
+        return container;
+      },
+    });
+
+    map.addControl(new customControl());
+
     layerStreet.addTo(map);
 
-    var heatConfig = { radius: 10 };
     var clusterConfig = { showCoverageOnHover: false };
 
     fetch(this.apiWorkoutsCoordinatesRoute, {
@@ -75,8 +134,8 @@ class WtHeatmap extends HTMLElement {
     })
       .then((response) => response.json())
       .then((response) => {
-        var data = geoJson2heat(response.results);
-        L.heatLayer(data, heatConfig).addTo(map);
+        heatMapData = geoJson2heat(response.results);
+        rerenderHeatMap();
       });
 
     fetch(this.apiWorkoutsCentersRoute, {
@@ -87,8 +146,8 @@ class WtHeatmap extends HTMLElement {
     })
       .then((response) => response.json())
       .then((response) => {
-        var markers = L.markerClusterGroup(clusterConfig);
-        var geoJsonLayer = L.geoJson(response.results, {
+        markers = L.markerClusterGroup(clusterConfig);
+        const geoJsonLayer = L.geoJson(response.results, {
           onEachFeature: function (feature, layer) {
             layer.bindPopup(feature.properties.details);
           },
