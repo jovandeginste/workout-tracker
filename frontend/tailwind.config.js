@@ -2,7 +2,7 @@
 const { addDynamicIconSelectors } = require("@iconify/tailwind");
 
 module.exports = {
-  content: ["../views/**/*.{html,js,go,templ}", "./src/**/*.{html,js}"],
+  content: ["../views/**/*.{html,js,ts,go,templ}", "./src/**/*.{html,js,ts}"],
   darkMode: "selector",
   theme: {
     extend: {},
