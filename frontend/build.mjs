@@ -2,13 +2,19 @@ import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
 
 let ctx = await esbuild.context({
-  entryPoints: ["src/common.js", "src/components/**/*.js", "src/views/**/*.js"],
+  entryPoints: [
+    "src/common.js",
+    "src/components/**/*.ts",
+    "src/views/**/*.ts",
+    "src/components/**/*.js",
+    "src/views/**/*.js"
+  ],
   loader: {
     ".png": "file",
   },
   bundle: true,
   minify: true,
-  sourcemap: true,
+  sourcemap: 'external',
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",
