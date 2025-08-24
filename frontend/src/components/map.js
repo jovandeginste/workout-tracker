@@ -1,6 +1,6 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { formatDuration } from "../helpers";
+import { formatDuration } from "../helpers.js";
 
 /*
 interface Point {
@@ -46,6 +46,7 @@ class WtMap extends HTMLElement {
       showElevation: mapConfig.ShowElevation,
     };
 
+    this.segmentLayerGroup = L.featureGroup();
     this.workout = JSON.parse(
       document.getElementById(this.getAttribute("data-el")).textContent,
     );
@@ -305,6 +306,30 @@ class WtMap extends HTMLElement {
   clearMarker() {
     if (!this.hoverMarker) return;
     this.hoverMarker.closeTooltip();
+  }
+
+  setSegment(_title, data) {
+    this.segmentLayerGroup.clearLayers();
+
+    const positions = data["position"];
+    for (let i = 1; i < positions.length; i++) {
+      L.polyline([positions[i - 1], positions[i]], {
+        color: "red"
+      }).addTo(this.segmentLayerGroup);
+    }
+
+    this.segmentLayerGroup.addTo(this.map);
+  }
+
+  fitSegmentBounds() {
+    this.map.fitBounds(this.segmentLayerGroup.getBounds(), {
+      animate: false,
+      padding: [20, 20],
+    });
+  }
+
+  clearSegment() {
+    this.segmentLayerGroup.clearLayers();
   }
 
   updateSize() {

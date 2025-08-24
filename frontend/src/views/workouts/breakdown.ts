@@ -1,8 +1,11 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from 'lit/decorators.js';
+import { formatDuration } from "../../helpers.js";
 
 @customElement("workout-breakdown")
 class WorkoutBreakdown extends LitElement {
+  private activeItem: HTMLElement | null = null;
+
   @property()
   intervalDistance = 1;
 
@@ -24,8 +27,8 @@ class WorkoutBreakdown extends LitElement {
   preferredUnits: any = {};
   availableMetrics: Record<string, string> = {
     distance: '',
-    speed: '',
     duration: '',
+    speed: '',
     elevation: '',
     'heart-rate': '',
     cadence: '',
@@ -60,8 +63,8 @@ class WorkoutBreakdown extends LitElement {
 
       this.availableMetrics = {
         distance: this.preferredUnits.distance || '',
-        speed: this.preferredUnits.speed || '',
         duration: '',
+        speed: this.preferredUnits.speed || '',
         elevation: this.preferredUnits.elevation || '',
         'heart-rate': this.preferredUnits.heartRate || '',
         cadence: this.preferredUnits.cadence || '',
@@ -73,13 +76,18 @@ class WorkoutBreakdown extends LitElement {
   tableHeader() {
     const header = html`<tr class="breakdown-header">
       <th></th>
+      <th></th>
       ${Object.keys(this.availableMetrics).map(metric => {
-        if (this.data[metric] !== undefined) {
-          const col = this.data[metric].Label;
-          return html`<th>${col}</th>`;
+      if (this.data[metric] !== undefined) {
+        const col = this.data[metric].Label;
+        if (metric === 'speed') {
+          // TODO: localize "Tempo"
+          return html`<th>${col}</th><th>Tempo</th>`;
         }
-        return '';
-      })}
+        return html`<th>${col}</th>`;
+      }
+      return '';
+    })}
     </tr>`;
     return header;
   }
@@ -108,6 +116,10 @@ class WorkoutBreakdown extends LitElement {
       }
     }
 
+    if (Object.keys(intervalValues).length !== 0) {
+      items.push([currentDistance, intervalValues]);
+    }
+
     // Marks best and worst values by speed
     let fastest = [0, 0];
     let slowest = [0, 0];
@@ -134,20 +146,17 @@ class WorkoutBreakdown extends LitElement {
     return rows;
   }
 
-  tableRow(distance, intervalValues) {
-    return html`<tr class="breakdown-item">
+  tableRow(distance: number, intervalValues) {
+    return html`<tr class="cursor-pointer" @click="${(e) => this.itemClick(e, intervalValues)}">
       ${this.tableRecordCell(intervalValues)}
+      <td>${distance / this.intervalDistance + 1}</td>
       ${Object.keys(this.availableMetrics).map(metric => {
-        if (this.data[metric] === undefined) {
-          return '';
-        }
+      if (this.data[metric] === undefined) {
+        return '';
+      }
 
-        try {
-          return this.tableCell(distance, metric, intervalValues);
-        } catch (e) {
-          return html`<td>-</td>`;
-        }
-      })}
+      return this.tableCell(distance, metric, intervalValues);
+    })}
     </tr>`;
   }
 
@@ -163,11 +172,15 @@ class WorkoutBreakdown extends LitElement {
     return html`<td></td>`;
   }
 
-  tableCell(distance, metric, intervalValues) {
+  tableCell(distance: number, metric: string, intervalValues) {
     const displayDecimals = ["speed", "elevation", "temperature"];
     const mData = intervalValues[metric].filter((v: any) => v !== null);
+    if (metric === "duration") {
+      return html`<td>${formatDuration(mData[mData.length - 1])}`
+    }
+
     if (metric === "distance") {
-      const lastDist = mData[mData.length - 1];
+      const lastDist = +mData[mData.length - 1];
       if (lastDist < distance + this.intervalDistance - 0.05) {
         return html`<td>${lastDist.toFixed(2)} ${this.availableMetrics[metric]}</td>`;
       } else {
@@ -175,26 +188,19 @@ class WorkoutBreakdown extends LitElement {
       }
     }
 
-    if (metric === "duration") {
-      if (mData.length === 0) {
-        return html`<td>-</td>`;
-      }
-
-      const totalDuration = mData[mData.length - 1] - mData[0];
-      const minutes = Math.floor(totalDuration / 60);
-      let seconds: number | string = totalDuration % 60;
-      if (seconds < 10) {
-        seconds = `0${seconds}`;
-      }
-
-      return html`<td>${minutes}:${seconds} min/${this.preferredUnits.distance}</td>`;
-    }
-
     if (mData.length === 0) {
       return html`<td>-</td>`;
     }
 
     const value = mData.reduce((a, b) => a + b, 0) / intervalValues[metric].length;
+    if (metric === "speed") {
+      const pace = value > 0 ? 3600 / value : 0;
+      const seconds = Math.round(pace % 60).toString().padStart(2, '0');
+      // TODO: localize "min" unit
+      return html`<td>${value.toFixed(2)} ${this.availableMetrics[metric] || ""}</td>
+                  <td>${Math.floor(pace / 60)}:${seconds} min/${this.preferredUnits.distance || ""}</td>`;
+    }
+
     if (displayDecimals.includes(metric)) {
       return html`<td>${value.toFixed(2)} ${this.availableMetrics[metric] || ""}</td>`;
     }
@@ -210,38 +216,17 @@ class WorkoutBreakdown extends LitElement {
       </table>
     `;
   }
-  /*
-  connectedCallback() {
-    this.render();
 
-    this.querySelectorAll(`.breakdown-item`).forEach((item) => {
-      item.addEventListener("mouseover", () => this.itemMouseOver(item));
-      item.addEventListener("mouseout", this.itemMouseOut.bind(this));
-      item.addEventListener("click", () => this.itemClick(item));
-    });
-  }
-
-  itemClick(item) {
-    if (this.activeItem === item) {
+  private itemClick(e: Event, values: any) {
+    if (this.activeItem === e.currentTarget) {
       this.setActiveItem(null);
     } else {
-      this.setActiveItem(item);
+      this.setActiveItem(e.currentTarget as HTMLElement, values);
+      this.mapEl.fitSegmentBounds();
     }
   }
 
-  itemMouseOver(item) {
-    if (!this.activeItem) {
-      this.mapEl.setMarker(item);
-    }
-  }
-
-  itemMouseOut() {
-    if (!this.activeItem) {
-      this.mapEl.clearMarker();
-    }
-  }
-
-  setActiveItem(item) {
+  private setActiveItem(item: HTMLElement, values?: any) {
     if (this.activeItem) {
       this.activeItem.classList.remove(`active`);
     }
@@ -250,10 +235,9 @@ class WorkoutBreakdown extends LitElement {
     if (this.activeItem) {
       this.mapEl.scrollIntoView({ behavior: `smooth` });
       this.activeItem.classList.add(`active`);
-      this.mapEl.setMarker(this.activeItem);
+      this.mapEl.setSegment('', values);
     } else {
-      this.mapEl.clearMarker();
+      this.mapEl.clearSegment();
     }
   }
-  */
 }
