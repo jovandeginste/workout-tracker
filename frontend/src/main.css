@@ -51,7 +51,7 @@
 
   textarea,
   select,
-  input {
+  input:not([type="range"]) {
     @apply rounded-xl px-6 py-2 border;
     @apply bg-zinc-100 border-zinc-300 placeholder:text-slate-500;
     @apply dark:bg-zinc-900 dark:border-zinc-700 dark:placeholder:text-slate-500;
