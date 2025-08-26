@@ -183,8 +183,8 @@ class WorkoutStats extends HTMLElement {
       yaxis,
     };
 
-    let chart = new ApexCharts(this, options);
-    chart.render();
+    this.chart = new ApexCharts(this, options);
+    this.chart.render();
   }
 }
 

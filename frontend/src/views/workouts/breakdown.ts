@@ -13,6 +13,9 @@ class WorkoutBreakdown extends LitElement {
   mapId = '';
 
   @property()
+  chartId = '';
+
+  @property()
   workoutStatsId = '';
 
   @property()
@@ -22,6 +25,7 @@ class WorkoutBreakdown extends LitElement {
   preferredUnitsEl = '';
 
   mapEl: HTMLElement | null = null;
+  chartEl: HTMLElement | null = null;
   workoutStatsEl: HTMLElement | null = null;
   data: any = {};
   preferredUnits: any = {};
@@ -42,6 +46,10 @@ class WorkoutBreakdown extends LitElement {
   willUpdate(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('mapId')) {
       this.mapEl = document.getElementById(this.mapId);
+    }
+
+    if (changedProperties.has('chartId')) {
+      this.chartEl = document.getElementById(this.chartId);
     }
 
     if (changedProperties.has('workoutStatsId')) {
@@ -188,6 +196,17 @@ class WorkoutBreakdown extends LitElement {
       }
     }
 
+    if (metric === "elevation" && mData.length > 0) {
+      const elevationGain = mData.reduce((a, c) => [c, a[1] + c - a[0]], [mData[0], 0])[1];
+      if (elevationGain > 0) {
+        return html`<td><span class="icon-decoration icon-[fa6-solid--chevron-up]"></span> ${elevationGain.toFixed(2)} ${this.availableMetrics[metric]}</td>`;
+      } else if (elevationGain < 0) {
+        return html`<td><span class="icon-decoration icon-[fa6-solid--chevron-down]"></span> ${Math.abs(elevationGain).toFixed(2)} ${this.availableMetrics[metric]}</td>`;
+      }
+
+      return html`<td>0 ${this.availableMetrics[metric]}</td>`;
+    }
+
     if (mData.length === 0) {
       return html`<td>-</td>`;
     }
@@ -233,11 +252,13 @@ class WorkoutBreakdown extends LitElement {
 
     this.activeItem = item;
     if (this.activeItem) {
-      this.mapEl.scrollIntoView({ behavior: `smooth` });
+      this.mapEl?.scrollIntoView({ behavior: `smooth` });
       this.activeItem.classList.add(`active`);
-      this.mapEl.setSegment('', values);
+      this.mapEl?.setSegment('', values);
+      this.chartEl?.chart.zoomX(new Date(values["time"][0]).getTime(), new Date(values["time"][values["time"].length - 1]).getTime());
     } else {
       this.mapEl.clearSegment();
+      this.chartEl.chart.zoomX();
     }
   }
 }
