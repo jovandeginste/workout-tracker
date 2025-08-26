@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
+  }
+}

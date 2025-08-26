@@ -1,5 +1,5 @@
 import ApexCharts from "apexcharts";
-import { formatDuration } from "../../helpers";
+import { formatDuration } from "../../helpers.js";
 
 class WorkoutStats extends HTMLElement {
   constructor() {
@@ -183,8 +183,8 @@ class WorkoutStats extends HTMLElement {
       yaxis,
     };
 
-    let chart = new ApexCharts(this, options);
-    chart.render();
+    this.chart = new ApexCharts(this, options);
+    this.chart.render();
   }
 }
 
