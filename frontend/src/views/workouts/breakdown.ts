@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property } from "lit/decorators.js";
 import { formatDuration } from "../../helpers.js";
 
 @customElement("workout-breakdown")
@@ -10,19 +10,19 @@ class WorkoutBreakdown extends LitElement {
   intervalDistance = 1;
 
   @property()
-  mapId = '';
+  mapId = "";
 
   @property()
-  chartId = '';
+  chartId = "";
 
   @property()
-  workoutStatsId = '';
+  workoutStatsId = "";
 
   @property()
-  dataEl = '';
+  dataEl = "";
 
   @property()
-  preferredUnitsEl = '';
+  preferredUnitsEl = "";
 
   mapEl: HTMLElement | null = null;
   chartEl: HTMLElement | null = null;
@@ -30,13 +30,13 @@ class WorkoutBreakdown extends LitElement {
   data: any = {};
   preferredUnits: any = {};
   availableMetrics: Record<string, string> = {
-    distance: '',
-    duration: '',
-    speed: '',
-    elevation: '',
-    'heart-rate': '',
-    cadence: '',
-    temperature: '',
+    distance: "",
+    duration: "",
+    speed: "",
+    elevation: "",
+    "heart-rate": "",
+    cadence: "",
+    temperature: "",
   };
 
   protected createRenderRoot() {
@@ -44,39 +44,39 @@ class WorkoutBreakdown extends LitElement {
   }
 
   willUpdate(changedProperties: PropertyValues<this>) {
-    if (changedProperties.has('mapId')) {
+    if (changedProperties.has("mapId")) {
       this.mapEl = document.getElementById(this.mapId);
     }
 
-    if (changedProperties.has('chartId')) {
+    if (changedProperties.has("chartId")) {
       this.chartEl = document.getElementById(this.chartId);
     }
 
-    if (changedProperties.has('workoutStatsId')) {
+    if (changedProperties.has("workoutStatsId")) {
       this.workoutStatsEl = document.getElementById(this.workoutStatsId);
     }
 
-    if (changedProperties.has('dataEl')) {
+    if (changedProperties.has("dataEl")) {
       const dataElement = document.getElementById(this.dataEl);
       if (dataElement) {
-        this.data = JSON.parse(dataElement.textContent || '{}');
+        this.data = JSON.parse(dataElement.textContent || "{}");
       }
     }
 
-    if (changedProperties.has('preferredUnitsEl')) {
+    if (changedProperties.has("preferredUnitsEl")) {
       const unitsElement = document.getElementById(this.preferredUnitsEl);
       if (unitsElement) {
-        this.preferredUnits = JSON.parse(unitsElement.textContent || '{}');
+        this.preferredUnits = JSON.parse(unitsElement.textContent || "{}");
       }
 
       this.availableMetrics = {
-        distance: this.preferredUnits.distance || '',
-        duration: '',
-        speed: this.preferredUnits.speed || '',
-        elevation: this.preferredUnits.elevation || '',
-        'heart-rate': this.preferredUnits.heartRate || '',
-        cadence: this.preferredUnits.cadence || '',
-        temperature: this.preferredUnits.temperature || '',
+        distance: this.preferredUnits.distance || "",
+        duration: "",
+        speed: this.preferredUnits.speed || "",
+        elevation: this.preferredUnits.elevation || "",
+        "heart-rate": this.preferredUnits.heartRate || "",
+        cadence: this.preferredUnits.cadence || "",
+        temperature: this.preferredUnits.temperature || "",
       };
     }
   }
@@ -85,16 +85,21 @@ class WorkoutBreakdown extends LitElement {
     const header = html`<tr class="breakdown-header">
       <th></th>
       <th></th>
-      ${Object.keys(this.availableMetrics).map(metric => {
+      ${Object.keys(this.availableMetrics).map((metric) => {
       if (this.data[metric] !== undefined) {
         const col = this.data[metric].Label;
-        if (metric === 'speed') {
+        if (metric === "speed") {
           // TODO: localize "Tempo"
-          return html`<th>${col}</th><th>Tempo</th>`;
+          return html`<th>${col}</th>
+              <th>Tempo</th>`;
+        }
+        if (metric === "elevation") {
+          // TODO: localize "Tempo"
+          return html`<th colspan="2">${col}</th>`;
         }
         return html`<th>${col}</th>`;
       }
-      return '';
+      return "";
     })}
     </tr>`;
     return header;
@@ -134,7 +139,8 @@ class WorkoutBreakdown extends LitElement {
     for (let i = 0; i < items.length; i++) {
       const values = items[i][1];
       if (values.speed && values.speed.length > 0) {
-        const speed = values.speed.reduce((a, b) => a + b, 0) / values.speed.length;
+        const speed =
+          values.speed.reduce((a, b) => a + b, 0) / values.speed.length;
         if (speed > fastest[1]) {
           fastest = [i, speed];
         }
@@ -155,12 +161,15 @@ class WorkoutBreakdown extends LitElement {
   }
 
   tableRow(distance: number, intervalValues) {
-    return html`<tr class="cursor-pointer" @click="${(e) => this.itemClick(e, intervalValues)}">
+    return html`<tr
+      class="cursor-pointer"
+      @click="${(e) => this.itemClick(e, intervalValues)}"
+    >
       ${this.tableRecordCell(intervalValues)}
       <td>${distance / this.intervalDistance + 1}</td>
-      ${Object.keys(this.availableMetrics).map(metric => {
+      ${Object.keys(this.availableMetrics).map((metric) => {
       if (this.data[metric] === undefined) {
-        return '';
+        return "";
       }
 
       return this.tableCell(distance, metric, intervalValues);
@@ -170,11 +179,21 @@ class WorkoutBreakdown extends LitElement {
 
   tableRecordCell(intervalValues) {
     if (intervalValues.best) {
-      return html`<td class="text-right"><span class="text-green-500"><span class="icon-decoration icon-[fa6-solid--arrow-up-long]"></span></span></td>`;
+      return html`<td class="text-right">
+        <span class="text-green-500"
+          ><span class="icon-decoration icon-[fa6-solid--arrow-up-long]"></span
+        ></span>
+      </td>`;
     }
 
     if (intervalValues.worst) {
-      return html`<td class="text-right"><span class="text-orange-600"><span class="icon-decoration icon-[fa6-solid--arrow-down-long]"></span></span></td>`;
+      return html`<td class="text-right">
+        <span class="text-orange-600"
+          ><span
+            class="icon-decoration icon-[fa6-solid--arrow-down-long]"
+          ></span
+        ></span>
+      </td>`;
     }
 
     return html`<td></td>`;
@@ -184,54 +203,86 @@ class WorkoutBreakdown extends LitElement {
     const displayDecimals = ["speed", "elevation", "temperature"];
     const mData = intervalValues[metric].filter((v: any) => v !== null);
     if (metric === "duration") {
-      return html`<td>${formatDuration(mData[mData.length - 1])}`
+      return html`<td>${formatDuration(mData[mData.length - 1])}</td>`;
     }
 
     if (metric === "distance") {
       const lastDist = +mData[mData.length - 1];
       if (lastDist < distance + this.intervalDistance - 0.05) {
-        return html`<td>${lastDist.toFixed(2)} ${this.availableMetrics[metric]}</td>`;
+        return html`<td>
+          ${lastDist.toFixed(2)} ${this.availableMetrics[metric]}
+        </td>`;
       } else {
-        return html`<td>${(distance + this.intervalDistance).toFixed(2)} ${this.availableMetrics[metric]}</td>`;
+        return html`<td>
+          ${(distance + this.intervalDistance).toFixed(2)}
+          ${this.availableMetrics[metric]}
+        </td>`;
       }
     }
 
     if (metric === "elevation" && mData.length > 0) {
-      const elevationGain = mData.reduce((a, c) => [c, a[1] + c - a[0]], [mData[0], 0])[1];
-      if (elevationGain > 0) {
-        return html`<td><span class="icon-decoration icon-[fa6-solid--chevron-up]"></span> ${elevationGain.toFixed(2)} ${this.availableMetrics[metric]}</td>`;
-      } else if (elevationGain < 0) {
-        return html`<td><span class="icon-decoration icon-[fa6-solid--chevron-down]"></span> ${Math.abs(elevationGain).toFixed(2)} ${this.availableMetrics[metric]}</td>`;
-      }
+      const elevationChange = mData.reduce(
+        (a, c) => {
+          const elevationGain = c - a[0];
+          if (elevationGain > 0) {
+            return [c, a[1] + elevationGain, a[2]];
+          }
+          return [c, a[1], a[2] + Math.abs(elevationGain)];
+        },
+        [mData[0], 0, 0],
+      );
 
-      return html`<td>0 ${this.availableMetrics[metric]}</td>`;
+      return html`<td>
+          <span class="icon-decoration icon-[fa6-solid--chevron-up]"></span>
+          ${elevationChange[1].toFixed(2)} ${this.availableMetrics[metric]}
+        </td>
+        <td>
+          <span class="icon-decoration icon-[fa6-solid--chevron-down]"></span>
+          ${elevationChange[2].toFixed(2)} ${this.availableMetrics[metric]}
+        </td>`;
     }
 
     if (mData.length === 0) {
       return html`<td>-</td>`;
     }
 
-    const value = mData.reduce((a, b) => a + b, 0) / intervalValues[metric].length;
+    const value =
+      mData.reduce((a, b) => a + b, 0) / intervalValues[metric].length;
     if (metric === "speed") {
       const pace = value > 0 ? 3600 / value : 0;
-      const seconds = Math.round(pace % 60).toString().padStart(2, '0');
+      const seconds = Math.round(pace % 60)
+        .toString()
+        .padStart(2, "0");
       // TODO: localize "min" unit
-      return html`<td>${value.toFixed(2)} ${this.availableMetrics[metric] || ""}</td>
-                  <td>${Math.floor(pace / 60)}:${seconds} min/${this.preferredUnits.distance || ""}</td>`;
+      return html`<td>
+          ${value.toFixed(2)} ${this.availableMetrics[metric] || ""}
+        </td>
+        <td>
+          ${Math.floor(pace / 60)}:${seconds}
+          min/${this.preferredUnits.distance || ""}
+        </td>`;
     }
 
     if (displayDecimals.includes(metric)) {
-      return html`<td>${value.toFixed(2)} ${this.availableMetrics[metric] || ""}</td>`;
+      return html`<td>
+        ${value.toFixed(2)} ${this.availableMetrics[metric] || ""}
+      </td>`;
     }
 
-    return html`<td>${value.toFixed(0)} ${this.availableMetrics[metric] || ""}</td>`;
+    return html`<td>
+      ${value.toFixed(0)} ${this.availableMetrics[metric] || ""}
+    </td>`;
   }
 
   render() {
     return html`
       <table class="breakdown-table">
-        <thead>${this.tableHeader()}</thead>
-        <tbody class="whitespace-nowrap font-mono">${this.tableData()}</tbody>
+        <thead>
+          ${this.tableHeader()}
+        </thead>
+        <tbody class="whitespace-nowrap font-mono">
+          ${this.tableData()}
+        </tbody>
       </table>
     `;
   }
@@ -254,8 +305,11 @@ class WorkoutBreakdown extends LitElement {
     if (this.activeItem) {
       this.mapEl?.scrollIntoView({ behavior: `smooth` });
       this.activeItem.classList.add(`active`);
-      this.mapEl?.setSegment('', values);
-      this.chartEl?.chart.zoomX(new Date(values["time"][0]).getTime(), new Date(values["time"][values["time"].length - 1]).getTime());
+      this.mapEl?.setSegment("", values);
+      this.chartEl?.chart.zoomX(
+        new Date(values["time"][0]).getTime(),
+        new Date(values["time"][values["time"].length - 1]).getTime(),
+      );
     } else {
       this.mapEl.clearSegment();
       this.chartEl.chart.zoomX();
