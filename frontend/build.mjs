@@ -1,6 +1,7 @@
 import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
 
+const isWatch = process.argv.indexOf(`--watch`) !== -1;
 let ctx = await esbuild.context({
   entryPoints: [
     "src/common.js",
@@ -13,8 +14,8 @@ let ctx = await esbuild.context({
     ".png": "file",
   },
   bundle: true,
-  minify: true,
-  sourcemap: 'external',
+  minify: !isWatch,
+  sourcemap: isWatch ? 'inline' : false,
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",
