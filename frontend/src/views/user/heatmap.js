@@ -18,7 +18,7 @@ class WtHeatmap extends HTMLElement {
     super();
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.apiWorkoutsCoordinatesRoute = JSON.parse(
       this.getAttribute("api-workouts-coordinates-route"),
     );
@@ -72,19 +72,25 @@ class WtHeatmap extends HTMLElement {
       if (heatLayer !== null) {
         map.removeLayer(heatLayer);
       }
-      const radius = L.DomUtil.get("radius").value;
-      const blur = L.DomUtil.get("blur").value;
+      const radiusEl = L.DomUtil.get("radius");
+      const blurEl = L.DomUtil.get("blur");
       const showMarkers = L.DomUtil.get("showMarkers").checked;
       const onlyTrace = L.DomUtil.get("onlyTrace").checked;
       var config = {
-        radius: Number(radius),
-        blur: Number(blur),
+        radius: Number(radiusEl.value),
+        blur: Number(blurEl.value),
       };
       if (onlyTrace) {
         config.radius = 1;
         config.blur = 1;
         config.minOpacity = 1;
         config.gradient = { 0: "blue" };
+
+        radiusEl.disabled = true;
+        blurEl.disabled = true;
+      } else {
+        radiusEl.disabled = false;
+        blurEl.disabled = false;
       }
       heatLayer = L.heatLayer(heatMapData, config);
       heatLayer.addTo(map);
@@ -103,10 +109,10 @@ class WtHeatmap extends HTMLElement {
 
         container.style.backgroundColor = "white";
         container.innerHTML = `
-        <div class="flex items-center"><label for="radius" class="w-12">Radius</label><input class="p-0" type="range" id="radius" value="10" min="1" max="30"/></div>
-        <div class="flex items-center"><label for="blur" class="w-12">Blur</label><input class="p-0" type="range" id="blur" value="15" min="1" max="30"/></div>
-        <div class="flex items-center"><input type="checkbox" id="showMarkers" name="showMarkers" checked /><label for="showMarkers">Show Markers</label></div>
-        <div class="flex items-center"><input type="checkbox" id="onlyTrace" name="onlyTrace" /><label for="onlyTrace">Only show where you've been</label></div>
+        <div class="flex items-center"><label for="radius" class="w-12 text-zinc-800">Radius</label><input class="p-0" type="range" id="radius" value="10" min="1" max="30"/></div>
+        <div class="flex items-center"><label for="blur" class="w-12 text-zinc-800">Blur</label><input class="p-0" type="range" id="blur" value="15" min="1" max="30"/></div>
+        <div class="flex items-center"><input type="checkbox" id="showMarkers" name="showMarkers" class="mr-1" checked /><label for="showMarkers" class="text-zinc-800">Show Markers</label></div>
+        <div class="flex items-center"><input type="checkbox" id="onlyTrace" name="onlyTrace" class="mr-1" /><label for="onlyTrace" class="text-zinc-800">Only show where you've been</label></div>
         `;
 
         // Prevent map drag when clicking control
@@ -126,39 +132,36 @@ class WtHeatmap extends HTMLElement {
 
     var clusterConfig = { showCoverageOnHover: false };
 
-    fetch(this.apiWorkoutsCoordinatesRoute, {
+    let resp = await fetch(this.apiWorkoutsCoordinatesRoute, {
       method: "GET",
       headers: {
         Accept: "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        heatMapData = geoJson2heat(response.results);
-        rerenderHeatMap();
-      });
+    });
+    let respJson = await resp.json();
+    heatMapData = geoJson2heat(respJson.results);
 
-    fetch(this.apiWorkoutsCentersRoute, {
+    resp = await fetch(this.apiWorkoutsCentersRoute, {
       method: "GET",
       headers: {
         Accept: "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        markers = L.markerClusterGroup(clusterConfig);
-        const geoJsonLayer = L.geoJson(response.results, {
-          onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.details);
-          },
-        });
-        geoJsonLayer.onEachFeature;
+    });
+    respJson = await resp.json();
+    markers = L.markerClusterGroup(clusterConfig);
+    const geoJsonLayer = L.geoJson(respJson.results, {
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.details);
+      },
+    });
+    geoJsonLayer.onEachFeature;
 
-        markers.addLayer(geoJsonLayer);
-        markers.addTo(map);
+    markers.addLayer(geoJsonLayer);
+    markers.addTo(map);
 
-        map.fitBounds(markers.getBounds());
-      });
+    map.fitBounds(markers.getBounds());
+
+    rerenderHeatMap();
   }
 }
 
