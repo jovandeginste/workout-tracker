@@ -305,7 +305,6 @@ export class WorkoutBreakdown extends LitElement {
 
     this.activeItem = item;
     if (this.activeItem) {
-      this.mapEl?.scrollIntoView({ behavior: `smooth` });
       this.activeItem.classList.add(`active`);
       this.mapEl?.setSegment("", values);
       this.chartEl?.zoomX(
