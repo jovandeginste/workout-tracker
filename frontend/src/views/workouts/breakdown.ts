@@ -69,21 +69,21 @@ export class WorkoutBreakdown extends LitElement {
       <th></th>
       <th></th>
       ${Object.keys(this.availableMetrics).map((metric) => {
-      if (this.data[metric] !== undefined) {
-        const col = this.data[metric].Label;
-        if (metric === "speed") {
-          // TODO: localize "Tempo"
-          return html`<th>${col}</th>
+        if (this.data[metric] !== undefined) {
+          const col = this.data[metric].Label;
+          if (metric === "speed") {
+            // TODO: localize "Tempo"
+            return html`<th>${col}</th>
               <th>Tempo</th>`;
+          }
+          if (metric === "elevation") {
+            // TODO: localize "Tempo"
+            return html`<th colspan="2">${col}</th>`;
+          }
+          return html`<th>${col}</th>`;
         }
-        if (metric === "elevation") {
-          // TODO: localize "Tempo"
-          return html`<th colspan="2">${col}</th>`;
-        }
-        return html`<th>${col}</th>`;
-      }
-      return "";
-    })}
+        return "";
+      })}
     </tr>`;
     return header;
   }
@@ -151,12 +151,12 @@ export class WorkoutBreakdown extends LitElement {
       ${this.tableRecordCell(intervalValues)}
       <td>${distance / this.intervalDistance + 1}</td>
       ${Object.keys(this.availableMetrics).map((metric) => {
-      if (this.data[metric] === undefined) {
-        return "";
-      }
+        if (this.data[metric] === undefined) {
+          return "";
+        }
 
-      return this.tableCell(distance, metric, intervalValues);
-    })}
+        return this.tableCell(distance, metric, intervalValues);
+      })}
     </tr>`;
   }
 
@@ -272,16 +272,19 @@ export class WorkoutBreakdown extends LitElement {
       </table>
       <div class="flex justify-end py-3">
         <nav class="isolate inline-flex">
-          ${intervals.map(interval => {
+          ${intervals.map((interval) => {
             return html`<a
               href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this.intervalDistance === interval ? 'bg-indigo-500 text-white' : ''}"
+              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this
+                .intervalDistance === interval
+                ? "bg-indigo-500 text-white"
+                : ""}"
               @click=${(e: Event) => {
                 e.preventDefault();
                 this.setActiveItem(null);
                 this.intervalDistance = interval;
               }}
-              >${interval} ${this.preferredUnits.distance || ''}</a
+              >${interval} ${this.preferredUnits.distance || ""}</a
             >`;
           })}
         </nav>

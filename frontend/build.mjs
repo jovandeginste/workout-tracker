@@ -8,14 +8,14 @@ let ctx = await esbuild.context({
     "src/components/**/*.ts",
     "src/views/**/*.ts",
     "src/components/**/*.js",
-    "src/views/**/*.js"
+    "src/views/**/*.js",
   ],
   loader: {
     ".png": "file",
   },
   bundle: true,
   minify: !isWatch,
-  sourcemap: isWatch ? 'inline' : false,
+  sourcemap: isWatch ? "inline" : false,
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",

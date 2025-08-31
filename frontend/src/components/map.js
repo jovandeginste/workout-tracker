@@ -314,7 +314,7 @@ class WtMap extends HTMLElement {
     const positions = data["position"];
     for (let i = 1; i < positions.length; i++) {
       L.polyline([positions[i - 1], positions[i]], {
-        color: "red"
+        color: "red",
       }).addTo(this.segmentLayerGroup);
     }
 

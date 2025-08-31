@@ -172,13 +172,13 @@ export class WorkoutStats extends LitElement {
               max:
                 this.type === "time"
                   ? new Date(
-                    this.data["time"].Data[this.data["time"].Data.length - 1],
-                  ).valueOf()
+                      this.data["time"].Data[this.data["time"].Data.length - 1],
+                    ).valueOf()
                   : parseFloat(
-                    this.data["distance"].Data[
-                    this.data["distance"].Data.length - 1
-                    ],
-                  ),
+                      this.data["distance"].Data[
+                        this.data["distance"].Data.length - 1
+                      ],
+                    ),
             },
             ...Object.fromEntries(
               Object.keys(metricSettings)
@@ -289,7 +289,8 @@ export class WorkoutStats extends LitElement {
       elevation: {
         seriesType: "area",
         formatter: (val) =>
-          `${val !== null ? val.toFixed(2) : "-"} ${this.preferredUnits.elevation
+          `${val !== null ? val.toFixed(2) : "-"} ${
+            this.preferredUnits.elevation
           }`,
         labelFormatter: (val) => `${val} ${this.preferredUnits.elevation}`,
         formatterYaxis: true,
