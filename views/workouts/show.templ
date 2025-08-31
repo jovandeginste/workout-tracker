@@ -91,12 +91,12 @@ templ Show(w *database.Workout) {
 			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
 				<div class="inner-form">
 					<div class="print:w-full overflow-y-auto">
-						<script async src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" }></script>
+						<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
 						<workout-breakdown
-							mapId="workout-map"
-							chartId="workout-stats"
-							dataEl="workout-data"
-							preferredUnitsEl="workout-preferred-units"
+							map-id="workout-map"
+							chart-id="workout-stats"
+							data-el="workout-data"
+							preferred-units-el="workout-preferred-units"
 						></workout-breakdown>
 					</div>
 				</div>

@@ -20,17 +20,16 @@ translations := map[string]string{
 	"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 }
 }}
-	<div class="h-[300px] md:h-[400px]">
-		<workout-stats
-			id="workout-stats"
-			color-mode={ helpers.CurrentUser(ctx).Profile.Theme }
-			map-id="workout-map"
-			data-el="workout-data"
-			preferred-units-el="workout-preferred-units"
-			tz={ helpers.Timezone(ctx) }
-			lang={ helpers.Language(ctx) }
-			translations={ templ.JSONString(translations) }
-		></workout-stats>
-	</div>
-	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" }></script>
+	<workout-stats
+		id="workout-stats"
+ 		class="h-[300px] md:h-[400px]"
+		color-mode={ helpers.CurrentUser(ctx).Profile.Theme }
+		map-id="workout-map"
+		data-el="workout-data"
+		preferred-units-el="workout-preferred-units"
+		tz={ helpers.Timezone(ctx) }
+		lang={ helpers.Language(ctx) }
+		translations={ templ.JSONString(translations) }
+	></workout-stats>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" } type="module"></script>
 }

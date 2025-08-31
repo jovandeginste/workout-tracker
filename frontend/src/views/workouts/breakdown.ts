@@ -1,34 +1,41 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { formatDuration } from "../../helpers.js";
+import { WorkoutStats } from "./show_stats.js";
 
 @customElement("workout-breakdown")
-class WorkoutBreakdown extends LitElement {
+export class WorkoutBreakdown extends LitElement {
   private activeItem: HTMLElement | null = null;
 
   @property()
   intervalDistance = 1;
 
-  @property()
-  mapId = "";
+  @property({
+    attribute: "map-id",
+    converter: (value: string) => document.getElementById(value),
+  })
+  mapEl: any | null = null; // TODO: Update map type if possible
 
-  @property()
-  chartId = "";
+  @property({
+    attribute: "chart-id",
+    converter: (value: string) => document.getElementById(value),
+  })
+  chartEl: WorkoutStats | null = null;
 
-  @property()
-  workoutStatsId = "";
-
-  @property()
-  dataEl = "";
-
-  @property()
-  preferredUnitsEl = "";
-
-  mapEl: HTMLElement | null = null;
-  chartEl: HTMLElement | null = null;
-  workoutStatsEl: HTMLElement | null = null;
+  @property({
+    attribute: "data-el",
+    converter: (id: string) =>
+      JSON.parse(document.getElementById(id)?.textContent || "{}"),
+  })
   data: any = {};
-  preferredUnits: any = {};
+
+  @property({
+    attribute: "preferred-units-el",
+    converter: (id: string) =>
+      JSON.parse(document.getElementById(id)?.textContent || "null"),
+  })
+  preferredUnits = null;
+
   availableMetrics: Record<string, string> = {
     distance: "",
     duration: "",
@@ -44,31 +51,7 @@ class WorkoutBreakdown extends LitElement {
   }
 
   willUpdate(changedProperties: PropertyValues<this>) {
-    if (changedProperties.has("mapId")) {
-      this.mapEl = document.getElementById(this.mapId);
-    }
-
-    if (changedProperties.has("chartId")) {
-      this.chartEl = document.getElementById(this.chartId);
-    }
-
-    if (changedProperties.has("workoutStatsId")) {
-      this.workoutStatsEl = document.getElementById(this.workoutStatsId);
-    }
-
-    if (changedProperties.has("dataEl")) {
-      const dataElement = document.getElementById(this.dataEl);
-      if (dataElement) {
-        this.data = JSON.parse(dataElement.textContent || "{}");
-      }
-    }
-
-    if (changedProperties.has("preferredUnitsEl")) {
-      const unitsElement = document.getElementById(this.preferredUnitsEl);
-      if (unitsElement) {
-        this.preferredUnits = JSON.parse(unitsElement.textContent || "{}");
-      }
-
+    if (changedProperties.has("preferredUnits")) {
       this.availableMetrics = {
         distance: this.preferredUnits.distance || "",
         duration: "",
@@ -325,13 +308,13 @@ class WorkoutBreakdown extends LitElement {
       this.mapEl?.scrollIntoView({ behavior: `smooth` });
       this.activeItem.classList.add(`active`);
       this.mapEl?.setSegment("", values);
-      this.chartEl?.chart.zoomX(
+      this.chartEl?.zoomX(
         new Date(values["time"][0]).getTime(),
         new Date(values["time"][values["time"].length - 1]).getTime(),
       );
     } else {
       this.mapEl.clearSegment();
-      this.chartEl.chart.zoomX();
+      this.chartEl.resetZoom();
     }
   }
 }

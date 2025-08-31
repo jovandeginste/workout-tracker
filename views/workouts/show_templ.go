@@ -259,20 +259,20 @@ func Show(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div class=\"inner-form\"><div class=\"print:w-full overflow-y-auto\"><script async src=\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div class=\"inner-form\"><div class=\"print:w-full overflow-y-auto\"><script src=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var8 string
 				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js")
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 94, Col: 90}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 94, Col: 84}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\"></script><workout-breakdown mapId=\"workout-map\" chartId=\"workout-stats\" dataEl=\"workout-data\" preferredUnitsEl=\"workout-preferred-units\"></workout-breakdown></div></div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" type=\"module\"></script><workout-breakdown map-id=\"workout-map\" chart-id=\"workout-stats\" data-el=\"workout-data\" preferred-units-el=\"workout-preferred-units\"></workout-breakdown></div></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
