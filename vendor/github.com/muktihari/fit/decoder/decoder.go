@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"io"
 	"slices"
-	"sync"
 
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/kit/hash"
@@ -49,7 +48,6 @@ const (
 type Decoder struct {
 	readBuffer  *readBuffer // read from io.Reader with buffer without extra copying.
 	n           int64       // n is a read bytes counter, always moving forward, do not reset (except on full reset).
-	factory     Factory
 	accumulator *Accumulator
 	crc16       hash.Hash16
 	err         error // Any error occurs during process.
@@ -59,22 +57,20 @@ type Decoder struct {
 
 	options options
 
-	once           sync.Once // It is used to invoke decodeFileHeader exactly once. Must be reassigned on init/reset.
-	cur            uint32    // The current byte position relative to bytes of the messages, reset on next chained FIT file.
-	timestamp      uint32    // Active timestamp
-	lastTimeOffset byte      // Last time offset
-
 	// FIT File Representation
 	fileHeader proto.FileHeader
 	messages   []proto.Message
 	crc        uint16
 
+	lastTimeOffset byte   // Last time offset
+	timestamp      uint32 // Active timestamp
+	cur            uint32 // The current byte position relative to bytes of the messages, reset on next chained FIT file.
+
 	// FileId Message is a special message that must present in a FIT file.
 	fileId *mesgdef.FileId
 
-	// Message Definition Lookup
-	localMessageDefinitions      [proto.LocalMesgNumMask + 1]*proto.MessageDefinition // message definition for upcoming message data
-	localMessageDefinitionsArray [proto.LocalMesgNumMask + 1]proto.MessageDefinition  // PERF: backing array for message definition
+	// Message definitions for upcoming message data
+	localMessageDefinitions [proto.LocalMesgNumMask + 1]proto.MessageDefinition
 
 	// Developer Data Lookup
 	developerDataIndexes []uint8
@@ -124,18 +120,14 @@ func WithFactory(factory Factory) Option {
 // every message as soon as it is decoded. The listeners will be appended not replaced.
 // If users need to reset use Reset().
 func WithMesgListener(listeners ...MesgListener) Option {
-	return func(o *options) {
-		o.mesgListeners = append(o.mesgListeners, listeners...)
-	}
+	return func(o *options) { o.mesgListeners = append(o.mesgListeners, listeners...) }
 }
 
 // WithMesgDefListener adds listeners to the listener pool, where each listener will receive
 // every message definition as soon as it is decoded. The listeners will be appended not replaced.
 // If users need to reset use Reset().
 func WithMesgDefListener(listeners ...MesgDefListener) Option {
-	return func(o *options) {
-		o.mesgDefListeners = append(o.mesgDefListeners, listeners...)
-	}
+	return func(o *options) { o.mesgDefListeners = append(o.mesgDefListeners, listeners...) }
 }
 
 // WithBroadcastOnly directs the Decoder to only broadcast the messages without retaining them, reducing memory usage when
@@ -227,13 +219,11 @@ func (d *Decoder) Reset(r io.Reader, opts ...Option) {
 	}
 
 	d.readBuffer.Reset(r, d.options.readBufferSize)
-	d.factory = d.options.factory
 }
 
 func (d *Decoder) reset() {
 	d.accumulator.Reset()
 	d.crc16.Reset()
-	d.once = sync.Once{}
 	d.cur = 0
 	d.timestamp = 0
 	d.lastTimeOffset = 0
@@ -247,7 +237,9 @@ func (d *Decoder) reset() {
 // releaseTemporaryObjects releases objects that being created during a single decode process
 // by stops referencing those objects so it can be garbage-collected on next GC cycle.
 func (d *Decoder) releaseTemporaryObjects() {
-	d.localMessageDefinitions = [proto.LocalMesgNumMask + 1]*proto.MessageDefinition{}
+	for i := range d.localMessageDefinitions {
+		d.localMessageDefinitions[i].Header = 0
+	}
 	d.fieldsArray = [255]proto.Field{}
 	d.developerFieldsArray = [255]proto.DeveloperField{}
 	d.fileId = nil
@@ -295,7 +287,7 @@ func (d *Decoder) CheckIntegrity() (seq int, err error) {
 		if err = d.decodeCRC(); err != nil {
 			break
 		}
-		d.once = sync.Once{}
+		d.fileHeader = proto.FileHeader{}
 		d.cur = 0
 		seq++
 	}
@@ -315,10 +307,7 @@ func (d *Decoder) CheckIntegrity() (seq int, err error) {
 // discardMessages efficiently discards bytes used by messages.
 func (d *Decoder) discardMessages() (err error) {
 	for d.cur < d.fileHeader.DataSize {
-		size := int(d.fileHeader.DataSize - d.cur)
-		if size > reservedbuf {
-			size = reservedbuf
-		}
+		size := int(min(d.fileHeader.DataSize-d.cur, reservedbuf))
 		if _, err = d.readN(size); err != nil { // Discard bytes
 			return err
 		}
@@ -330,9 +319,6 @@ func (d *Decoder) discardMessages() (err error) {
 //
 // If we choose to continue, Decode picks up where this left then continue decoding next messages instead of starting from zero.
 func (d *Decoder) PeekFileHeader() (*proto.FileHeader, error) {
-	if d.err != nil {
-		return nil, d.err
-	}
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
 		return nil, d.err
 	}
@@ -345,9 +331,6 @@ func (d *Decoder) PeekFileHeader() (*proto.FileHeader, error) {
 //
 // If we choose to continue, Decode picks up where this left then continue decoding next messages instead of starting from zero.
 func (d *Decoder) PeekFileId() (*mesgdef.FileId, error) {
-	if d.err != nil {
-		return nil, d.err
-	}
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
 		return nil, d.err
 	}
@@ -381,9 +364,6 @@ func (d *Decoder) Next() bool {
 //	     }
 //	}
 func (d *Decoder) Decode() (*proto.FIT, error) {
-	if d.err != nil {
-		return nil, d.err
-	}
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
 		return nil, d.err
 	}
@@ -425,10 +405,6 @@ func (d *Decoder) Decode() (*proto.FIT, error) {
 //		}
 //	 }
 func (d *Decoder) Discard() error {
-	if d.err != nil {
-		return d.err
-	}
-
 	optionsShouldChecksum := d.options.shouldChecksum
 	d.options.shouldChecksum = false
 	defer func() { d.options.shouldChecksum = optionsShouldChecksum }()
@@ -448,7 +424,9 @@ func (d *Decoder) Discard() error {
 
 // decodeFileHeaderOnce invokes decodeFileHeader exactly once.
 func (d *Decoder) decodeFileHeaderOnce() error {
-	d.once.Do(func() { d.err = d.decodeFileHeader() })
+	if d.fileHeader == (proto.FileHeader{}) && d.err == nil {
+		d.err = d.decodeFileHeader()
+	}
 	return d.err
 }
 
@@ -501,7 +479,8 @@ func (d *Decoder) decodeFileHeader() error {
 
 	_, _ = d.crc16.Write(b[:len(b)-2])
 	if d.crc16.Sum16() != d.fileHeader.CRC { // check file header integrity
-		return fmt.Errorf("expected file header's crc: %d, got: %d: %w", d.fileHeader.CRC, d.crc16.Sum16(), ErrCRCChecksumMismatch)
+		return fmt.Errorf("expected file header's crc: %d, got: %d: %w",
+			d.fileHeader.CRC, d.crc16.Sum16(), ErrCRCChecksumMismatch)
 	}
 
 	d.crc16.Reset() // this hash will be re-used for calculating data integrity.
@@ -527,7 +506,8 @@ func (d *Decoder) decodeMessage() error {
 
 	// NOTE: Compressed Timestamp Header Bit 5-6 is the local message type.
 	// Bit 6 overlap with MesgDefinitionMask; It's a message definition only if Bit 7 is zero.
-	if (header & (proto.MesgCompressedHeaderMask | proto.MesgDefinitionMask)) == proto.MesgDefinitionMask {
+	const mask = proto.MesgCompressedHeaderMask | proto.MesgDefinitionMask
+	if (header & mask) == proto.MesgDefinitionMask {
 		return d.decodeMessageDefinition(header)
 	}
 	return d.decodeMessageData(header)
@@ -539,21 +519,13 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 		return err
 	}
 
-	localMesgNum := header & proto.LocalMesgNumMask
-	mesgDef := d.localMessageDefinitions[localMesgNum]
-	if mesgDef == nil {
-		// PERF: Use backing array to avoid object creation. On init, allocate slices
-		// with max cap for more deterministic performance by avoiding re-allocation.
-		mesgDef = &d.localMessageDefinitionsArray[localMesgNum]
-		if mesgDef.FieldDefinitions == nil && mesgDef.DeveloperFieldDefinitions == nil {
-			mesgDef.FieldDefinitions = make([]proto.FieldDefinition, 0, 255)
-			mesgDef.DeveloperFieldDefinitions = make([]proto.DeveloperFieldDefinition, 0, 255)
-		}
-	}
-
+	mesgDef := &d.localMessageDefinitions[header&proto.LocalMesgNumMask]
 	mesgDef.Header = header
 	mesgDef.Reserved = b[0]
 	mesgDef.Architecture = b[1]
+	mesgDef.FieldDefinitions = mesgDef.FieldDefinitions[:0]
+	mesgDef.DeveloperFieldDefinitions = mesgDef.DeveloperFieldDefinitions[:0]
+
 	if mesgDef.Architecture == proto.LittleEndian {
 		mesgDef.MesgNum = typedef.MesgNum(binary.LittleEndian.Uint16(b[2:4]))
 	} else {
@@ -566,7 +538,10 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 		return err
 	}
 
-	mesgDef.FieldDefinitions = mesgDef.FieldDefinitions[:0]
+	if mesgDef.FieldDefinitions == nil {
+		mesgDef.FieldDefinitions = make([]proto.FieldDefinition, 0, 255)
+	}
+
 	for ; len(b) >= 3; b = b[3:] {
 		fieldDef := proto.FieldDefinition{
 			Num:      b[0],
@@ -584,7 +559,6 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 		mesgDef.FieldDefinitions = append(mesgDef.FieldDefinitions, fieldDef)
 	}
 
-	mesgDef.DeveloperFieldDefinitions = mesgDef.DeveloperFieldDefinitions[:0]
 	if (header & proto.DevDataMask) == proto.DevDataMask {
 		b, err = d.readN(1)
 		if err != nil {
@@ -595,6 +569,10 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 		b, err = d.readN(n * 3) // 3 byte per field
 		if err != nil {
 			return err
+		}
+
+		if mesgDef.DeveloperFieldDefinitions == nil {
+			mesgDef.DeveloperFieldDefinitions = make([]proto.DeveloperFieldDefinition, 0, 255)
 		}
 
 		for ; len(b) >= 3; b = b[3:] {
@@ -610,8 +588,6 @@ func (d *Decoder) decodeMessageDefinition(header byte) error {
 			mesgDef.DeveloperFieldDefinitions = append(mesgDef.DeveloperFieldDefinitions, devFieldDef)
 		}
 	}
-
-	d.localMessageDefinitions[localMesgNum] = mesgDef
 
 	if len(d.options.mesgDefListeners) > 0 {
 		// Clone since we don't have control of the object lifecycle outside Decoder.
@@ -631,8 +607,9 @@ func (d *Decoder) decodeMessageData(header byte) (err error) {
 	if (header & proto.MesgCompressedHeaderMask) == proto.MesgCompressedHeaderMask {
 		localMesgNum = (header & proto.CompressedLocalMesgNumMask) >> proto.CompressedBitShift
 	}
-	mesgDef := d.localMessageDefinitions[localMesgNum&proto.LocalMesgNumMask] // bounds check eliminated due to the mask
-	if mesgDef == nil {
+
+	mesgDef := &d.localMessageDefinitions[localMesgNum&proto.LocalMesgNumMask] // bounds check eliminated due to the mask
+	if mesgDef.Header == 0 {
 		return ErrMesgDefMissing
 	}
 
@@ -645,7 +622,7 @@ func (d *Decoder) decodeMessageData(header byte) (err error) {
 		d.timestamp += uint32((timeOffset - d.lastTimeOffset) & proto.CompressedTimeMask)
 		d.lastTimeOffset = timeOffset
 
-		timestampField := d.factory.CreateField(mesgDef.MesgNum, proto.FieldNumTimestamp)
+		timestampField := d.options.factory.CreateField(mesgDef.MesgNum, proto.FieldNumTimestamp)
 		if timestampField.Name == factory.NameUnknown {
 			timestampField.BaseType = basetype.Uint32
 			timestampField.Type = profile.DateTime
@@ -708,7 +685,7 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 		}
 
 		// We enforce field.Array for string type to match the value defined in factory for all non-unknown fields.
-		field := d.factory.CreateField(mesgDef.MesgNum, fieldDef.Num)
+		field := d.options.factory.CreateField(mesgDef.MesgNum, fieldDef.Num)
 		if field.Name == factory.NameUnknown {
 			// Assign fieldDef's type for unknown field so later we can encode it as per its original value.
 			field.BaseType = fieldDef.BaseType
@@ -797,7 +774,7 @@ func (d *Decoder) expandComponents(mesg *proto.Message, containingValue proto.Va
 	for i := range components {
 		component := &components[i]
 
-		componentField = d.factory.CreateField(mesg.Num, component.FieldNum)
+		componentField = d.options.factory.CreateField(mesg.Num, component.FieldNum)
 		componentField.IsExpandedField = true
 
 		// A component can only have max 32 bits value.
@@ -997,23 +974,14 @@ func (d *Decoder) logDeveloperField(m *proto.Message, dfd *proto.DeveloperFieldD
 
 // DecodeWithContext is similar to Decode but with respect to context propagation.
 func (d *Decoder) DecodeWithContext(ctx context.Context) (*proto.FIT, error) {
-	if d.err != nil {
-		return nil, d.err
-	}
 	if ctx == nil {
 		ctx = context.Background()
-	}
-	if d.err = checkContext(ctx); d.err != nil {
-		return nil, d.err
 	}
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
 		return nil, d.err
 	}
 	defer d.releaseTemporaryObjects()
 	if d.err = d.decodeMessagesWithContext(ctx); d.err != nil {
-		return nil, d.err
-	}
-	if d.err = checkContext(ctx); d.err != nil {
 		return nil, d.err
 	}
 	if d.err = d.decodeCRC(); d.err != nil {
@@ -1026,15 +994,6 @@ func (d *Decoder) DecodeWithContext(ctx context.Context) (*proto.FIT, error) {
 	}
 	d.reset()
 	return fit, nil
-}
-
-func checkContext(ctx context.Context) error {
-	select {
-	case <-ctx.Done():
-		return ctx.Err()
-	default:
-		return nil
-	}
 }
 
 func (d *Decoder) decodeMessagesWithContext(ctx context.Context) (err error) {

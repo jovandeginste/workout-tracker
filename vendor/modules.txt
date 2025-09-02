@@ -5,7 +5,7 @@ filippo.io/edwards25519/field
 # github.com/KyleBanks/depth v1.2.1
 ## explicit
 github.com/KyleBanks/depth
-# github.com/a-h/templ v0.3.924
+# github.com/a-h/templ v0.3.943
 ## explicit; go 1.23.0
 github.com/a-h/templ
 github.com/a-h/templ/runtime
@@ -47,8 +47,8 @@ github.com/dustin/go-humanize
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
 github.com/fsnotify/fsnotify/internal
-# github.com/fsouza/slognil v0.4.2
-## explicit; go 1.23
+# github.com/fsouza/slognil v0.4.3
+## explicit; go 1.24.0
 github.com/fsouza/slognil
 # github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 ## explicit; go 1.19
@@ -179,7 +179,7 @@ github.com/microcosm-cc/bluemonday/css
 # github.com/mitchellh/mapstructure v1.5.0
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
-# github.com/muktihari/fit v0.25.0
+# github.com/muktihari/fit v0.25.1
 ## explicit; go 1.23.0
 github.com/muktihari/fit/decoder
 github.com/muktihari/fit/internal/sliceutil
@@ -252,7 +252,7 @@ github.com/samber/lo
 github.com/samber/lo/internal/constraints
 github.com/samber/lo/internal/rand
 github.com/samber/lo/mutable
-# github.com/samber/slog-echo v1.16.1
+# github.com/samber/slog-echo v1.17.1
 ## explicit; go 1.21
 github.com/samber/slog-echo
 # github.com/sersh88/timeago v1.0.0
@@ -279,10 +279,10 @@ github.com/spf13/afero/mem
 ## explicit; go 1.21.0
 github.com/spf13/cast
 github.com/spf13/cast/internal
-# github.com/spf13/cobra v1.9.1
+# github.com/spf13/cobra v1.10.1
 ## explicit; go 1.15
 github.com/spf13/cobra
-# github.com/spf13/pflag v1.0.6
+# github.com/spf13/pflag v1.0.9
 ## explicit; go 1.12
 github.com/spf13/pflag
 # github.com/spf13/viper v1.20.1
@@ -297,7 +297,7 @@ github.com/spf13/viper/internal/features
 ## explicit; go 1.21
 github.com/stackus/hxgo
 github.com/stackus/hxgo/hxecho
-# github.com/stretchr/testify v1.10.0
+# github.com/stretchr/testify v1.11.1
 ## explicit; go 1.17
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/assert/yaml
@@ -355,7 +355,7 @@ go.opentelemetry.io/otel/trace/internal/telemetry
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.40.0
+# golang.org/x/crypto v0.41.0
 ## explicit; go 1.23.0
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
@@ -365,12 +365,12 @@ golang.org/x/crypto/pbkdf2
 # golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b
 ## explicit; go 1.23.0
 golang.org/x/exp/constraints
-# golang.org/x/mod v0.25.0
+# golang.org/x/mod v0.26.0
 ## explicit; go 1.23.0
 golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/module
 golang.org/x/mod/semver
-# golang.org/x/net v0.41.0
+# golang.org/x/net v0.42.0
 ## explicit; go 1.23.0
 golang.org/x/net/context/ctxhttp
 golang.org/x/net/html
@@ -392,15 +392,15 @@ golang.org/x/oauth2/internal
 ## explicit; go 1.23.0
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.34.0
+# golang.org/x/sys v0.35.0
 ## explicit; go 1.23.0
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.33.0
+# golang.org/x/term v0.34.0
 ## explicit; go 1.23.0
 golang.org/x/term
-# golang.org/x/text v0.27.0
+# golang.org/x/text v0.28.0
 ## explicit; go 1.23.0
 golang.org/x/text/cases
 golang.org/x/text/encoding
@@ -431,7 +431,7 @@ golang.org/x/text/width
 # golang.org/x/time v0.12.0
 ## explicit; go 1.23.0
 golang.org/x/time/rate
-# golang.org/x/tools v0.34.0
+# golang.org/x/tools v0.35.0
 ## explicit; go 1.23.0
 golang.org/x/tools/go/ast/astutil
 golang.org/x/tools/go/buildutil
@@ -488,7 +488,7 @@ gorm.io/driver/mysql
 # gorm.io/driver/postgres v1.6.0
 ## explicit; go 1.20
 gorm.io/driver/postgres
-# gorm.io/gorm v1.30.1
+# gorm.io/gorm v1.30.2
 ## explicit; go 1.18
 gorm.io/gorm
 gorm.io/gorm/callbacks
