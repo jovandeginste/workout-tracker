@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"math"
+	"time"
 
 	"github.com/muktihari/fit/decoder"
 	"github.com/muktihari/fit/kit/semicircles"
@@ -27,8 +28,9 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 		return nil, errors.New("no sessions found")
 	}
 
+	name := act.Sessions[0].Sport.String() + " - " + act.Activity.LocalTimestamp.Format(time.DateTime)
 	gpxFile := &gpx.GPX{
-		Name:    act.FileId.TimeCreated.String(),
+		Name:    name,
 		Time:    &act.FileId.TimeCreated,
 		Creator: act.FileId.Manufacturer.String(),
 	}
