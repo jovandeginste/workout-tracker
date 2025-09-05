@@ -35,9 +35,24 @@ templ Edit(e *database.Equipment) {
 											type="text"
 											id="description"
 											name="description"
-											rows="10"
+											rows="2"
 										>
 											{ e.Description }
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label for="notes">{ i18n.T(ctx, "translation.Notes") }</label>
+									</th>
+									<td>
+										<textarea
+											type="text"
+											id="notes"
+											name="notes"
+											rows="10"
+										>
+											{ e.Notes }
 										</textarea>
 									</td>
 								</tr>
