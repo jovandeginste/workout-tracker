@@ -22,6 +22,7 @@ type Equipment struct {
 
 	UserID uint64 `gorm:"not null;index" json:"userID"`             // The ID of the user who owns the workout
 	Active bool   `gorm:"default:true" json:"active" form:"active"` // Whether this equipment is active
+	Notes  string `json:"notes" form:"notes"`                       // The notes associated with the equipment, in markdown
 }
 
 type WorkoutEquipment struct {

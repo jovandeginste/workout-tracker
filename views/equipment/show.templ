@@ -100,6 +100,17 @@ templ Show(e *database.Equipment) {
 						</tbody>
 					</table>
 				</div>
+				if len(e.Notes) > 0 {
+					<div class="inner-form">
+						<h3>
+							@helpers.IconFor("note")
+							{ i18n.T(ctx, "translation.Notes") }
+						</h3>
+						<div>
+							@templ.Raw(helpers.MarkdownToHTML(e.Notes))
+						</div>
+					</div>
+				}
 			</div>
 			<div class="basis-1/2">
 				<div class="inner-form">
