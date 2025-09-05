@@ -5,7 +5,7 @@ go 1.24.1
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
-	github.com/a-h/templ v0.3.924
+	github.com/a-h/templ v0.3.943
 	github.com/alexedwards/scs/gormstore v0.0.0-20250417082927-ab20b3feb5e9
 	github.com/alexedwards/scs/v2 v2.9.0
 	github.com/anyappinc/fitbit v0.0.3
@@ -14,7 +14,7 @@ require (
 	github.com/cat-dealer/go-rand/v2 v2.0.0
 	github.com/codingsince1985/geo-golang v1.8.5
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
-	github.com/fsouza/slognil v0.4.2
+	github.com/fsouza/slognil v0.4.3
 	github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 	github.com/glebarez/sqlite v1.11.0
 	github.com/go-gorm/caches/v4 v4.0.5
@@ -29,28 +29,28 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/mattn/go-isatty v0.0.20
 	github.com/microcosm-cc/bluemonday v1.0.27
-	github.com/muktihari/fit v0.25.0
+	github.com/muktihari/fit v0.25.1
 	github.com/orandin/slog-gorm v1.4.0
 	github.com/paulmach/orb v0.11.1
 	github.com/ringsaturn/tzf v1.0.0
-	github.com/samber/slog-echo v1.16.1
+	github.com/samber/slog-echo v1.17.1
 	github.com/sersh88/timeago v1.0.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spazzymoto/echo-scs-session v1.0.0
 	github.com/spf13/cast v1.9.2
-	github.com/spf13/cobra v1.9.1
+	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.20.1
 	github.com/stackus/hxgo v0.3.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	github.com/swaggo/swag v1.16.6
 	github.com/tkrajina/gpxgo v1.4.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.40.0
-	golang.org/x/text v0.27.0
+	golang.org/x/crypto v0.41.0
+	golang.org/x/text v0.28.0
 	gorm.io/datatypes v1.2.6
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/driver/postgres v1.6.0
-	gorm.io/gorm v1.30.1
+	gorm.io/gorm v1.30.2
 	resty.dev/v3 v3.0.0-beta.3
 )
 
@@ -93,7 +93,7 @@ require (
 	github.com/samber/lo v1.51.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.14.0 // indirect
-	github.com/spf13/pflag v1.0.6 // indirect
+	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/tidwall/geoindex v1.7.0 // indirect
 	github.com/tidwall/geojson v1.4.5 // indirect
@@ -106,14 +106,14 @@ require (
 	go.opentelemetry.io/otel/trace v1.37.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b // indirect
-	golang.org/x/mod v0.25.0 // indirect
-	golang.org/x/net v0.41.0 // indirect
+	golang.org/x/mod v0.26.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.34.0 // indirect
-	golang.org/x/term v0.33.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/term v0.34.0 // indirect
 	golang.org/x/time v0.12.0 // indirect
-	golang.org/x/tools v0.34.0 // indirect
+	golang.org/x/tools v0.35.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.66.1 // indirect

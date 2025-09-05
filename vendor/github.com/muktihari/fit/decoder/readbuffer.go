@@ -16,7 +16,7 @@ const (
 	reservedbuf = 765
 
 	minReadBufferSize     = reservedbuf // should not less than this
-	maxReadBufferSize     = math.MaxUint32
+	maxReadBufferSize     = math.MaxUint32 & math.MaxInt
 	defaultReadBufferSize = 4096
 )
 

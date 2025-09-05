@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     version = {
-      url = "github:a-h/version/0.0.8";
+      url = "github:a-h/version/0.0.10";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xc = {
@@ -28,12 +28,24 @@
       ];
       forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f {
         inherit system;
-        pkgs = import nixpkgs { inherit system; };
-        pkgs-unstable = import nixpkgs-unstable { inherit system; };
+        pkgs =
+          let
+            pkgs-unstable = import nixpkgs-unstable { inherit system; };
+          in
+          import nixpkgs {
+            inherit system;
+            overlays = [
+              (final: prev: {
+                gopls = pkgs-unstable.gopls;
+                version = version.packages.${system}.default; # Used to apply version numbers to the repo.
+                xc = xc.packages.${system}.xc;
+              })
+            ];
+          };
       });
     in
     {
-      packages = forAllSystems ({ system, pkgs, ... }:
+      packages = forAllSystems ({ pkgs, ... }:
         rec {
           default = templ;
 
@@ -41,7 +53,7 @@
             name = "templ";
             subPackages = [ "cmd/templ" ];
             src = gitignore.lib.gitignoreSource ./.;
-            vendorHash = "sha256-oObzlisjvS9LeMYh3DzP+l7rgqBo9bQcbNjKCUJ8rcY=";
+            vendorHash = "sha256-pVZjZCXT/xhBCMyZdR7kEmB9jqhTwRISFp63bQf6w5A=";
             env = {
               CGO_ENABLED = 0;
             };
@@ -57,20 +69,21 @@
         });
 
       # `nix develop` provides a shell containing development tools.
-      devShell = forAllSystems ({ system, pkgs, pkgs-unstable, ... }:
+      devShell = forAllSystems ({ pkgs, ... }:
         pkgs.mkShell {
           buildInputs = [
             pkgs.golangci-lint
             pkgs.cosign # Used to sign container images.
             pkgs.esbuild # Used to package JS examples.
             pkgs.go
-            pkgs-unstable.gopls
+            pkgs.gopls
             pkgs.goreleaser
             pkgs.gotestsum
             pkgs.ko # Used to build Docker images.
             pkgs.nodejs # Used to build templ-docs.
-            version.packages.${system}.default # Used to apply version numbers to the repo.
-            xc.packages.${system}.xc
+            pkgs.nodePackages.prettier # Used for formatting JS and CSS.
+            pkgs.version
+            pkgs.xc
           ];
         });
 
