@@ -46,7 +46,12 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 }
 
 func addDetails(ctx context.Context, data map[string]*dataset, w *database.Workout) {
-	for _, p := range w.Details().Points {
+	d := w.Details()
+	if d == nil {
+		return
+	}
+
+	for _, p := range d.Points {
 		s := 0.0
 		if ems, ok := p.ExtraMetrics["speed"]; ok && ems > 0 {
 			s = ems
