@@ -1,5 +1,5 @@
 import ApexCharts from "apexcharts";
-import { formatDuration } from "../../helpers";
+import { formatDuration } from "../../helpers.js";
 
 class WtStatistic extends HTMLElement {
   constructor() {

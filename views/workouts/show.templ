@@ -33,27 +33,16 @@ templ Show(w *database.Workout) {
 		</div>
 		<div class="lg:flex lg:flex-wrap print:block">
 			if w.HasTracks() {
-				<div id="map-container" class="small-size pagebreak">
+				<div id="map-container" class="basis-1/2 pagebreak">
 					<div class="inner-form">
 						@Map(w)
 					</div>
 				</div>
 			}
-			<div class="basis-1/2 2xl:basis-1/3">
+			<div class="basis-1/2">
 				<div class="inner-form">
 					@FullWorkoutDetails(w)
 				</div>
-			</div>
-			<div class="basis-1/2 2xl:basis-1/3">
-				if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
-					<div class="inner-form">
-						<div class="print:w-full overflow-y-auto">
-							if stats, err := w.StatisticsPer(1, currentUser.PreferredUnits().Distance()); err == nil {
-								@Breakdown(stats)
-							}
-						</div>
-					</div>
-				}
 			</div>
 		</div>
 		if len(w.RouteSegmentMatches) > 0 {
@@ -98,5 +87,20 @@ templ Show(w *database.Workout) {
 				@ShowStats(w)
 			</div>
 		}
+		<div>
+			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
+				<div class="inner-form">
+					<div class="print:w-full overflow-y-auto">
+						<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
+						<workout-breakdown
+							map-id="workout-map"
+							chart-id="workout-stats"
+							data-el="workout-data"
+							preferred-units-el="workout-preferred-units"
+						></workout-breakdown>
+					</div>
+				</div>
+			}
+		</div>
 	}
 }
