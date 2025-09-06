@@ -219,6 +219,15 @@ export class WorkoutStats extends LitElement {
             mode: "index",
             intersect: false,
           },
+          onHover: (_, i) => {
+            const index = i[0]?.index;
+            let p = this.data["position"].Data[index];
+            let el = document.createElement("div");
+            el.setAttribute("data-lat", p[0]);
+            el.setAttribute("data-lng", p[1]);
+
+            this.map.setMarker(el);
+          },
           plugins: {
             decimation: {
               enabled: true,
