@@ -4,7 +4,7 @@ import "github.com/jovandeginste/workout-tracker/v2/views/helpers"
 
 templ Page(options *PageOptions) {
 	<!DOCTYPE html>
-	<html>
+	<html lang={ helpers.Language(ctx) }>
 		<head>
 			for _, script := range options.Scripts {
 				<script src={ helpers.RouteFor(ctx, "assets") + script }></script>

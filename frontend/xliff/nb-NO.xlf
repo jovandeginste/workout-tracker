@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="nb-NO" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="translation.Tempo">
+  <source>Tempo</source>
+</trans-unit>
+</body>
+</file>
+</xliff>

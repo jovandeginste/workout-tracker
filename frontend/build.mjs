@@ -1,5 +1,7 @@
 import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
+import { runAndLog } from "@lit/localize-tools/lib/cli.js";
+import { syncXliffFiles } from "./util/sync-translations.mjs";
 
 const isWatch = process.argv.indexOf(`--watch`) !== -1;
 let ctx = await esbuild.context({
@@ -35,6 +37,15 @@ let ctx = await esbuild.context({
     }),
   ],
 });
+
+{
+  await runAndLog(["", "lit-localize", "extract"]);
+  await syncXliffFiles();
+  await runAndLog(["", "lit-localize", "build"]);
+  if (process.argv.indexOf(`--update-translations`) !== -1) {
+    process.exit(0);
+  }
+}
 
 if (process.argv.indexOf(`--watch`) !== -1) {
   await ctx.watch();

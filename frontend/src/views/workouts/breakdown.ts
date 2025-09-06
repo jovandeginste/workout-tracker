@@ -2,8 +2,13 @@ import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { formatDuration } from "../../helpers.js";
 import { WorkoutStats } from "./show_stats.js";
+import { localized, msg } from "@lit/localize";
+import { initLocalize } from "../../locale.js";
+
+initLocalize();
 
 @customElement("workout-breakdown")
+@localized()
 export class WorkoutBreakdown extends LitElement {
   private activeItem: HTMLElement | null = null;
 
@@ -72,12 +77,10 @@ export class WorkoutBreakdown extends LitElement {
         if (this.data[metric] !== undefined) {
           const col = this.data[metric].Label;
           if (metric === "speed") {
-            // TODO: localize "Tempo"
             return html`<th>${col}</th>
-              <th>Tempo</th>`;
+              <th>${msg("Tempo", { id: "translation.Tempo" })}</th>`;
           }
           if (metric === "elevation") {
-            // TODO: localize "Tempo"
             return html`<th colspan="2">${col}</th>`;
           }
           return html`<th>${col}</th>`;
@@ -236,13 +239,11 @@ export class WorkoutBreakdown extends LitElement {
       const seconds = Math.round(pace % 60)
         .toString()
         .padStart(2, "0");
-      // TODO: localize "min" unit
       return html`<td>
           ${value.toFixed(2)} ${this.availableMetrics[metric] || ""}
         </td>
         <td>
-          ${Math.floor(pace / 60)}:${seconds}
-          min/${this.preferredUnits.distance || ""}
+          ${Math.floor(pace / 60)}:${seconds} ${this.preferredUnits.tempo || ""}
         </td>`;
     }
 
