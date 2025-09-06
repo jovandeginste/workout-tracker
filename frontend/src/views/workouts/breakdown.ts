@@ -263,14 +263,16 @@ export class WorkoutBreakdown extends LitElement {
     const intervals = [1, 2, 5, 10, 25].filter((d) => d < totalDistance);
 
     return html`
-      <table class="breakdown-table">
-        <thead>
-          ${this.tableHeader()}
-        </thead>
-        <tbody class="whitespace-nowrap font-mono">
-          ${this.tableData()}
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="breakdown-table">
+          <thead>
+            ${this.tableHeader()}
+          </thead>
+          <tbody class="whitespace-nowrap font-mono">
+            ${this.tableData()}
+          </tbody>
+        </table>
+      </div>
       <div class="flex justify-end py-3">
         <nav class="isolate inline-flex">
           ${intervals.map((interval) => {
