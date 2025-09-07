@@ -1,0 +1,130 @@
+services:
+  workout-tracker:
+    profiles:
+      - do-not-use-directly
+    container_name: wt-app
+    image: ghcr.io/jovandeginste/workout-tracker:master
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - workout-tracker
+    environment:
+      - WT_JWT_ENCRYPTION_KEY_FILE=/run/secrets/jwt_encryption_key
+    secrets:
+      - jwt_encryption_key
+
+  db-postgres:
+    profiles:
+      - do-not-use-directly
+    image: postgres:16-alpine
+    container_name: db
+    restart: unless-stopped
+    shm_size: 128mb
+    networks:
+      - workout-tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    env_file: ./postgres.env
+
+  dev-workout-tracker-postgres:
+    profiles:
+      - dev-postgres
+    extends: dev-workout-tracker
+    env_file: ./postgres.env
+    depends_on:
+      dev-db-postgres:
+        condition: service_healthy
+
+  dev-db-postgres:
+    profiles:
+      - dev-postgres
+    extends: db-postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+  dev-workout-tracker-sqlite:
+    profiles:
+      - dev-sqlite
+    extends: dev-workout-tracker
+    volumes:
+      - ../data/:/data/
+    environment:
+      WT_DATABASE_DRIVER: sqlite
+      WT_DSN: /data/database.db
+
+  workout-tracker-assets:
+    profiles:
+      - dev-sqlite
+      - dev-postgres
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+      target: builder-frontend
+    volumes:
+      - asset-volume:/app/assets
+      - ../views:/app/views
+      - ../frontend/src:/app/frontend/src
+    tty: true
+
+  dev-workout-tracker:
+    profiles:
+      - do-not-use-directly
+    extends: workout-tracker
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+      target: builder-backend
+    container_name: wt-app-dev
+    ports:
+      - 8090:8090
+    volumes:
+      - asset-volume:/app/assets
+      - cache-volume:/root/.cache
+      - ../cmd:/app/cmd
+      - ../pkg:/app/pkg
+      - ../vendor:/app/vendor
+      - ../views:/app/views
+      - ../translations:/app/translations
+    environment:
+      - APP_ENV=development
+
+  app-workout-tracker-postgres:
+    profiles:
+      - app-postgres
+    extends: workout-tracker
+    env_file: ./postgres.env
+    depends_on:
+      app-db-postgres:
+        condition: service_healthy
+
+  app-db-postgres:
+    profiles:
+      - app-postgres
+    extends: db-postgres
+    volumes:
+      - ../data/:/var/lib/postgresql/data/
+
+  app-workout-tracker-sqlite:
+    profiles:
+      - app-sqlite
+    extends: workout-tracker
+    volumes:
+      # Mount local directory for sqlite database
+      - ../data/:/data/
+
+secrets:
+  jwt_encryption_key:
+    file: ./jwt_encryption_key.txt
+
+volumes:
+  asset-volume:
+  cache-volume:
+  db-data:
+
+networks:
+  workout-tracker:
+    external: false
