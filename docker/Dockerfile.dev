@@ -11,6 +11,7 @@ RUN cd frontend && \
 COPY Makefile ./
 COPY assets ./assets
 COPY views ./views
+COPY translations ./translations
 
 WORKDIR /app/frontend
 ENTRYPOINT ["npm", "run", "dev"]

@@ -1,0 +1,18 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="pl">
+    <body>
+      <trans-unit id="translation.Tempo">
+        <source>Tempo</source>
+        <target>Tempo</target>
+      </trans-unit>
+      <trans-unit id="translation.Total_up">
+        <source>Total up</source>
+        <target>Łącznie w górę</target>
+      </trans-unit>
+      <trans-unit id="translation.Total_down">
+        <source>Total down</source>
+        <target>Łącznie w dół</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

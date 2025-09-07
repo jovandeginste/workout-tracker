@@ -1,14 +1,23 @@
 import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
+import { runAndLog } from "@lit/localize-tools/lib/cli.js";
+import { syncXliffFiles } from "./util/sync-translations.mjs";
 
+const isWatch = process.argv.indexOf(`--watch`) !== -1;
 let ctx = await esbuild.context({
-  entryPoints: ["src/common.js", "src/components/**/*.js", "src/views/**/*.js"],
+  entryPoints: [
+    "src/common.js",
+    "src/components/**/*.ts",
+    "src/views/**/*.ts",
+    "src/components/**/*.js",
+    "src/views/**/*.js",
+  ],
   loader: {
     ".png": "file",
   },
   bundle: true,
-  minify: true,
-  sourcemap: true,
+  minify: !isWatch,
+  sourcemap: isWatch ? "inline" : false,
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
   outdir: "../assets/",
@@ -28,6 +37,15 @@ let ctx = await esbuild.context({
     }),
   ],
 });
+
+{
+  await runAndLog(["", "lit-localize", "extract"]);
+  await syncXliffFiles();
+  await runAndLog(["", "lit-localize", "build"]);
+  if (process.argv.indexOf(`--update-translations`) !== -1) {
+    process.exit(0);
+  }
+}
 
 if (process.argv.indexOf(`--watch`) !== -1) {
   await ctx.watch();

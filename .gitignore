@@ -11,3 +11,4 @@ coverage.out
 !/assets/*.go
 .aider*
 *_templ.txt
+/frontend/src/generated
