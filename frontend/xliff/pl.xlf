@@ -13,6 +13,14 @@
         <source>Total down</source>
         <target>Łącznie w dół</target>
       </trans-unit>
+      <trans-unit id="translation.Average_speed">
+        <source>Average speed</source>
+        <target>Średnia szybkość</target>
+      </trans-unit>
+      <trans-unit id="translation.Elevation">
+        <source>Elevation</source>
+        <target>Wysokość</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

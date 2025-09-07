@@ -13,6 +13,14 @@
         <source>Total down</source>
         <target>Dénivelé négatif total</target>
       </trans-unit>
+      <trans-unit id="translation.Average_speed">
+        <source>Average speed</source>
+        <target>Vitesse moyenne</target>
+      </trans-unit>
+      <trans-unit id="translation.Elevation">
+        <source>Elevation</source>
+        <target>Dénivelé positif</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
