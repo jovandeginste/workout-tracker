@@ -179,6 +179,11 @@ export class WorkoutStats extends LitElement {
                         this.data["distance"].Data.length - 1
                       ],
                     ),
+              ticks: {
+                callback: (val) => {
+                  return new Date(val as number).toTimeString().substr(0, 5);
+                },
+              },
             },
             ...Object.fromEntries(
               Object.keys(metricSettings)
@@ -247,6 +252,14 @@ export class WorkoutStats extends LitElement {
             },
             tooltip: {
               callbacks: {
+                title: (tooltipItems) => {
+                  if (!tooltipItems[0]) {
+                    return;
+                  }
+
+                  const x = tooltipItems[0].parsed.x;
+                  return new Date(x).toTimeString().substr(0, 5);
+                },
                 label: (tooltipItem) => {
                   const settings = metricSettings[tooltipItem.dataset.yAxisID];
                   let value = tooltipItem.formattedValue;
@@ -254,7 +267,7 @@ export class WorkoutStats extends LitElement {
                     value = settings.formatter(tooltipItem.raw);
                   }
 
-                  return value;
+                  return `${tooltipItem.dataset.label}: ${value}`;
                 },
               },
             },
