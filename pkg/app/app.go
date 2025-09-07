@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"log/slog"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -36,11 +37,24 @@ type App struct {
 }
 
 func (a *App) jwtSecret() []byte {
-	if a.Config.JWTEncryptionKey == "" {
-		a.logger.Error("JWTEncryptionKey is not set; generating a random string at startup")
-
-		a.Config.JWTEncryptionKey = rand.String(32, rand.GetAlphaNumericPool())
+	if a.Config.JWTEncryptionKey != "" {
+		return []byte(a.Config.JWTEncryptionKey)
 	}
+
+	if a.Config.JWTEncryptionKeyFile != "" {
+		a.logger.Info("reading JWTEncryptionKeyFile", "file", a.Config.JWTEncryptionKeyFile)
+
+		key, err := os.ReadFile(a.Config.JWTEncryptionKeyFile)
+		if err == nil {
+			a.Config.JWTEncryptionKey = strings.TrimSpace(string(key))
+			return []byte(a.Config.JWTEncryptionKey)
+		}
+
+		a.logger.Error("could not read JWTEncryptionKeyFile", "error", err)
+	}
+
+	a.logger.Error("JWTEncryptionKey is not set; generating a random string at startup")
+	a.Config.JWTEncryptionKey = rand.String(32, rand.GetAlphaNumericPool())
 
 	return []byte(a.Config.JWTEncryptionKey)
 }
@@ -89,6 +103,8 @@ func (a *App) ConfigureGeocoder() error {
 }
 
 func (a *App) ConfigureDatabase() error {
+	a.SetDSN()
+
 	a.logger.Info("Connecting to the database '" + a.Config.DatabaseDriver + "': " + a.Config.DSN)
 
 	db, err := database.Connect(a.Config.DatabaseDriver, a.Config.DSN, a.Config.Debug, a.rawLogger)

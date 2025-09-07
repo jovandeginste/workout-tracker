@@ -8,7 +8,9 @@ services:
     networks:
       - workout-tracker
     environment:
-      - WT_JWT_ENCRYPTION_KEY=my-secret-key
+      - WT_JWT_ENCRYPTION_KEY_FILE=/run/secrets/jwt_encryption_key
+    secrets:
+      - jwt_encryption_key
   db:
     image: postgres:16-alpine
     container_name: wt-db
