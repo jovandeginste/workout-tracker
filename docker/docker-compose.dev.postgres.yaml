@@ -28,3 +28,7 @@ volumes:
 networks:
   workout-tracker:
     external: false
+
+secrets:
+  jwt_encryption_key:
+    file: ./jwt_encryption_key.txt

@@ -31,4 +31,3 @@ services:
       - ../translations:/app/translations
     environment:
       - APP_ENV=development
-      - WT_JWT_ENCRYPTION_KEY=dev-secret-key

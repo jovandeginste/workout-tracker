@@ -31,6 +31,9 @@ type EnvConfig struct {
 	DSN              string `mapstructure:"dsn" gorm:"-"`                // Database DSN
 	Logging          bool   `mapstructure:"logging" gorm:"-"`            // Enable logging
 	Debug            bool   `mapstructure:"debug" gorm:"-"`              // Debug logging mode
+
+	JWTEncryptionKeyFile string `mapstructure:"jwt_encryption_key_file" gorm:"-"` // File containing the encryption key for JWT
+	DSNFile              string `mapstructure:"dsn_file" gorm:"-"`                // File containing the database DSN
 }
 
 func getConfig(db *gorm.DB) (*Config, error) {

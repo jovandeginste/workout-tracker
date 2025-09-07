@@ -1,5 +1,8 @@
 # This is the key that signs JWT tokens
 jwt_encryption_key: some_long_random_string
+# or read the JWT encryption key from a file
+jwt_encryption_key_file: /path/to/jwt_encryption_key.txt
+
 # Enables debug output in both the web and database server
 debug: false
 # Which host and port to bind on

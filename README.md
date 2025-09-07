@@ -91,6 +91,16 @@ docker run -p 8080:8080 \
     ghcr.io/jovandeginste/workout-tracker:master
 ```
 
+or read the JWT encryption key from a file:
+
+```bash
+docker run -p 8080:8080 \
+    -e WT_JWT_ENCRYPTION_KEY_FILE=/run/secrets/jwt_encryption_key.txt \
+    -v $PWD/jwt_encryption_key.txt:/run/secrets/jwt_encryption_key.txt \
+    -v $PWD/data:/data \
+    ghcr.io/jovandeginste/workout-tracker:master
+```
+
 or use docker compose
 
 ```bash
@@ -132,6 +142,14 @@ To persist sessions, run:
 
 ```bash
 export WT_JWT_ENCRYPTION_KEY=my-secret-key
+./workout-tracker
+```
+
+or read the JWT encryption key from a file:
+
+```bash
+echo "my-secret-key" > ./jwt_encryption_key.txt
+export WT_JWT_ENCRYPTION_KEY_FILE=./jwt_encryption_key.txt
 ./workout-tracker
 ```
 
@@ -256,7 +274,8 @@ current sessions.
 Generate a secure key and write it to `workout-tracker.yaml`:
 
 ```bash
-echo "jwt_encryption_key: $(pwgen -c 32)" > workout-tracker.yaml
+echo "jwt_encryption_key_file: ./jwt_encryption_key.txt" > ./workout-tracker.yaml
+pwgen -c 32 > ./jwt_encryption_key.txt
 ```
 
 or export it as an environment variable:

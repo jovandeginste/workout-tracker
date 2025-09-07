@@ -1,6 +1,9 @@
 package app
 
 import (
+	"os"
+	"strings"
+
 	"github.com/spf13/viper"
 )
 
@@ -22,10 +25,12 @@ func (a *App) ReadConfiguration() error {
 		"bind",
 		"web_root",
 		"jwt_encryption_key",
+		"jwt_encryption_key_file",
 		"logging",
 		"debug",
 		"database_driver",
 		"dsn",
+		"dsn_file",
 		"registration_disabled",
 		"socials_disabled",
 	} {
@@ -53,4 +58,24 @@ func (a *App) ResetConfiguration() error {
 	}
 
 	return a.Config.UpdateFromDatabase(a.db)
+}
+
+func (a *App) SetDSN() {
+	if a.Config.DSN != "" {
+		return
+	}
+
+	if a.Config.DSNFile == "" {
+		return
+	}
+
+	a.logger.Info("reading DSNFile", "file", a.Config.DSNFile)
+
+	dsn, err := os.ReadFile(a.Config.DSNFile)
+	if err != nil {
+		a.logger.Error("could not read DSN file", "error", err)
+		return
+	}
+
+	a.Config.DSN = strings.TrimSpace(string(dsn))
 }
