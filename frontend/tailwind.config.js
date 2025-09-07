@@ -15,6 +15,9 @@ module.exports = {
     {
       pattern: /text-(green|rose)-500/,
     },
+    "md:table-cell",
+    "lg:table-cell",
+    "xl:table-cell",
   ],
   variants: {
     customPlugin: ["responsive", "hover"],

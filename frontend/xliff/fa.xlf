@@ -5,6 +5,12 @@
 <trans-unit id="translation.Tempo">
   <source>Tempo</source>
 </trans-unit>
+<trans-unit id="translation.Total_up">
+  <source>Total up</source>
+</trans-unit>
+<trans-unit id="translation.Total_down">
+  <source>Total down</source>
+</trans-unit>
 </body>
 </file>
 </xliff>

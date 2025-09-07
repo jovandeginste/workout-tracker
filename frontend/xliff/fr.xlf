@@ -5,6 +5,14 @@
         <source>Tempo</source>
         <target>Allure</target>
       </trans-unit>
+      <trans-unit id="translation.Total_up">
+        <source>Total up</source>
+        <target>Dénivelé positif total</target>
+      </trans-unit>
+      <trans-unit id="translation.Total_down">
+        <source>Total down</source>
+        <target>Dénivelé négatif total</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

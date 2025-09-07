@@ -5,6 +5,14 @@
         <source>Tempo</source>
         <target>Tempo</target>
       </trans-unit>
+      <trans-unit id="translation.Total_up">
+        <source>Total up</source>
+        <target>Totaal omhoog</target>
+      </trans-unit>
+      <trans-unit id="translation.Total_down">
+        <source>Total down</source>
+        <target>Totaal omlaag</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
