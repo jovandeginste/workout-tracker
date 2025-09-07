@@ -15,7 +15,7 @@ COPY views ./views
 WORKDIR /app/frontend
 ENTRYPOINT ["npm", "run", "dev"]
 
-FROM golang:1.24.6-alpine AS builder-backend
+FROM golang:1.25.1-alpine AS builder-backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF
