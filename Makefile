@@ -81,13 +81,22 @@ dev:
 dev-docker: dev-docker-postgres
 
 dev-docker-postgres:
-	docker compose -f docker/docker-compose.dev.postgres.yaml up --build
+	docker compose \
+			--project-directory ./docker/ \
+			--profile dev-postgres \
+			up --build
 
 dev-docker-sqlite:
-	docker compose -f docker/docker-compose.dev.sqlite.yaml up --build
+	docker compose \
+			--project-directory ./docker/ \
+			--profile dev-sqlite \
+			up --build
 
 dev-docker-clean:
-	docker compose -f docker/docker-compose.dev.postgres.yaml down --remove-orphans --volumes
+	docker compose --project-directory ./docker/ \
+			--profile dev-sqlite \
+			--profile dev-postgres \
+			down --remove-orphans --volumes
 
 build: build-server build-docker screenshots
 meta: swagger screenshots changelog
