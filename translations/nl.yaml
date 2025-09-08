@@ -99,6 +99,10 @@ nl:
       verwijderen?
     Autodetect: Automatisch detecteren
     Average_per_minute: Gemiddelde per minuut
+    WorkoutAttributeLocked: Dit attribuut is vergrendeld tegen automatische updates
+    WorkoutLocked: De attributen van workout '%s' zijn nu vergrendeld
+    WorkoutUnLocked: De attributen van workout '%s' zijn nu ontgrendeld
+    LockWorkout: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
     Average_speed: Gemiddelde snelheid
     Average_speed_no_pause: Gemiddelde snelheid (zonder pauze)
     Average_tempo: Gemiddelde tempo

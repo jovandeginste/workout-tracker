@@ -30,6 +30,7 @@ func (a *App) addRoutesWorkouts(e *echo.Group) {
 	workoutsGroup.DELETE("/:id/share", a.workoutsShareDeleteHandler).Name = "workout-share-delete"
 	workoutsGroup.GET("/:id/route-segment", a.workoutsCreateRouteSegmentHandler).Name = "workout-route-segment"
 	workoutsGroup.POST("/:id/route-segment", a.workoutsCreateRouteSegmentFromWorkoutHandler).Name = "workout-route-segment-create"
+	workoutsGroup.POST("/:id/toggle-lock", a.workoutsToggleLockHandler).Name = "workout-toggle-lock"
 	workoutsGroup.GET("/add", a.workoutsAddHandler).Name = "workout-add"
 	workoutsGroup.GET("/form", a.workoutsFormHandler).Name = "workout-form"
 }
@@ -225,6 +226,32 @@ func (a *App) workoutsEditHandler(c echo.Context) error {
 	}
 
 	return Render(c, http.StatusOK, workouts.Edit(w))
+}
+
+func (a *App) workoutsToggleLockHandler(c echo.Context) error {
+	id, err := cast.ToUint64E(c.Param("id"))
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	workout, err := database.GetWorkoutDetails(a.db, id)
+	if err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workouts"), err)
+	}
+
+	workout.Locked = !workout.Locked
+
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
+	}
+
+	if workout.Locked {
+		a.addNoticeT(c, "translation.WorkoutLocked", workout.Name)
+	} else {
+		a.addNoticeT(c, "translation.WorkoutUnLocked", workout.Name)
+	}
+
+	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))
 }
 
 func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c echo.Context) error {

@@ -85,6 +85,10 @@
     @apply bg-amber-300;
     @apply dark:bg-amber-500;
   }
+  span.dangerous {
+    @apply text-rose-700;
+    @apply dark:text-rose-500;
+  }
   button.dangerous,
   a.dangerous {
     @apply border-rose-600;

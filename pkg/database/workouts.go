@@ -40,6 +40,7 @@ type Workout struct {
 	Equipment           []Equipment          `json:"equipment,omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
 	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:"routeSegmentMatches,omitempty"`                   // Which route segments match
 	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user" json:"userID"`                            // The ID of the user who owns the workout
+	Locked              bool                 `json:"locked"`                                                                             // Whether the workout's main attributes should be auto-updated
 	Dirty               bool                 `json:"dirty"`                                                                              // Whether the workout has been modified and the details should be re-rendered
 }
 
@@ -628,6 +629,11 @@ func (w *Workout) setData(data *MapData) {
 	if w.Data.Details != nil {
 		data.Details.ID = w.Data.Details.ID
 		data.Details.MapDataID = w.Data.Details.MapDataID
+	}
+
+	if w.Locked {
+		data.TotalDistance = w.Data.TotalDistance
+		data.TotalDuration = w.Data.TotalDuration
 	}
 
 	data.UpdateAddress()
