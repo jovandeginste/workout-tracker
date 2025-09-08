@@ -16,6 +16,14 @@ en:
       one: 'Added 1 new route segment: %{list} - we search for matches in the background'
       other: 'Added %{count} new route segments: %{list} - we search for matches in
         the background'
+  climb_type:
+    start_climb: start climb
+    in_climb: climb
+    end_climb: end climb
+    start_descent: start descent
+    in_descent: descent
+    end_descent: end descent
+    flat: flat
   misc:
     month_1: 1 month
     years_1: 1 year
@@ -113,6 +121,8 @@ en:
     Average_tempo_no_pause: Average tempo (no pause)
     Bidirectional: Bidirectional
     Cadence: Cadence
+    Slope: Slope
+    Climb: Type of climb
     enhanced_speed: Enhanced speed
     temperature: Temperature
     Cancel: Cancel

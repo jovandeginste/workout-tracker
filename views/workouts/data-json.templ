@@ -24,6 +24,8 @@ func translationMap(ctx context.Context) map[string]string {
 		"elevation":    i18n.T(ctx, "translation.Elevation"),
 		"cadence":      i18n.T(ctx, "translation.Cadence"),
 		"averagespeed": i18n.T(ctx, "translation.Average_speed"),
+		"slope":        i18n.T(ctx, "translation.Slope"),
+		"climb":        i18n.T(ctx, "translation.Climb"),
 	}
 }
 
@@ -34,6 +36,8 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 		"distance": {Label: i18n.T(ctx, "translation.Distance"), Data: []any{}},
 		"speed":    {Label: i18n.T(ctx, "translation.Speed"), Data: []any{}},
 		"duration": {Label: i18n.T(ctx, "translation.Duration"), Data: []any{}},
+		"slope":    {Label: i18n.T(ctx, "translation.Slope"), Data: []any{}},
+		"climb":    {Label: i18n.T(ctx, "translation.Climb"), Data: []any{}},
 	}
 
 	translations := translationMap(ctx)
@@ -63,6 +67,8 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 		data["time"].Data = append(data["time"].Data, p.Time)
 		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
 		data["duration"].Data = append(data["duration"].Data, p.TotalDuration.Seconds())
+		data["slope"].Data = append(data["slope"].Data, p.SlopeGrade)
+		data["climb"].Data = append(data["climb"].Data, i18n.T(ctx, "climb_type."+string(p.SlopeState)))
 		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeed(ctx, s)))
 
 		for _, m := range w.Data.ExtraMetrics {
