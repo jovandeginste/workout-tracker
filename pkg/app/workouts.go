@@ -47,6 +47,7 @@ type ManualWorkout struct {
 	Weight          *float64              `form:"weight" json:"weight"`
 	Notes           *string               `form:"notes" json:"notes"`
 	Type            *database.WorkoutType `form:"type" json:"type"`
+	CustomType      *string               `form:"custom_type" json:"custom_type"`
 
 	units *database.UserPreferredUnits
 }
@@ -143,6 +144,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Notes, m.Notes)
 	setIfNotNil(&w.Date, dDate)
 	setIfNotNil(&w.Type, m.Type)
+	setIfNotNil(&w.CustomType, m.CustomType)
 
 	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())

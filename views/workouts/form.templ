@@ -10,6 +10,21 @@ import (
 templ Form(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	{{ preferredUnits := currentUser.PreferredUnits() }}
+	if w.HasCustomType() {
+		<tr>
+			<td><label for="custom_type">{ i18n.T(ctx, "translation.Type") }</label></td>
+			<td>
+				<input
+					type="text"
+					name="custom_type"
+					id="custom_type"
+					size="60"
+					value={ w.CustomType }
+					required
+				/>
+			</td>
+		</tr>
+	}
 	<tr>
 		<td><label for="name">{ i18n.T(ctx, "translation.Name") }</label></td>
 		<td>
