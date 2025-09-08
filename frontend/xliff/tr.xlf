@@ -17,6 +17,9 @@
       <trans-unit id="translation.Elevation">
         <source>Elevation</source>
       </trans-unit>
+<trans-unit id="translation.Breakdown">
+  <source>Breakdown</source>
+</trans-unit>
     </body>
   </file>
 </xliff>

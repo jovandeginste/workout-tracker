@@ -188,7 +188,31 @@ export class WorkoutStats extends LitElement {
   public render(): TemplateResult {
     this.style.display = "block";
     return html`
-        <div class="flex justify-between py-3">
+        <div>
+          <div class="float-right">
+            <nav>
+              <a
+                href="#"
+                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
+                  this.type === "time" ? "bg-indigo-500 text-white" : ""
+                }"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.type = "time";
+                }}
+                ><span class="icon-[fa6-regular--clock]"></span></a>
+              <a
+                href="#"
+                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
+                  this.type === "distance" ? "bg-indigo-500 text-white" : ""
+                }"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.type = "distance";
+                }}
+                ><span class="icon-[fa6-solid--road]"></span></a
+            </nav>
+          </div>
           <h3>
             <span>
               <span class="icon-decoration icon-[fa6-solid--gauge]"></span>
@@ -200,28 +224,6 @@ export class WorkoutStats extends LitElement {
               ${msg("Elevation", { id: "translation.Elevation" })}
             </span>
           </h3>
-          <nav class="isolate inline-flex">
-            <a
-              href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                this.type === "time" ? "bg-indigo-500 text-white" : ""
-              }"
-              @click=${(e: Event) => {
-                e.preventDefault();
-                this.type = "time";
-              }}
-              ><span class="icon-[fa6-regular--clock]"></span></a>
-            <a
-              href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                this.type === "distance" ? "bg-indigo-500 text-white" : ""
-              }"
-              @click=${(e: Event) => {
-                e.preventDefault();
-                this.type = "distance";
-              }}
-              ><span class="icon-[fa6-solid--road]"></span></a
-          </nav>
         </div>
         <div class="h-[300px] md:h-[400px]">
           <canvas></canvas>

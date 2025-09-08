@@ -21,6 +21,10 @@
         <source>Elevation</source>
         <target>Hoogte</target>
       </trans-unit>
+      <trans-unit id="translation.Breakdown">
+        <source>Breakdown</source>
+        <target>Uitsplitsing</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
