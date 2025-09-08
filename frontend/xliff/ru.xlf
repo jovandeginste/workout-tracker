@@ -13,6 +13,17 @@
         <source>Total down</source>
         <target>Потеря высоты</target>
       </trans-unit>
+      <trans-unit id="translation.Average_speed">
+        <source>Average speed</source>
+        <target>Средняя скорость</target>
+      </trans-unit>
+      <trans-unit id="translation.Elevation">
+        <source>Elevation</source>
+        <target>Подъём</target>
+      </trans-unit>
+<trans-unit id="translation.Breakdown">
+  <source>Breakdown</source>
+</trans-unit>
     </body>
   </file>
 </xliff>

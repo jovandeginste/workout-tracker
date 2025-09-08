@@ -13,6 +13,17 @@
         <source>Total down</source>
         <target>总下降</target>
       </trans-unit>
+      <trans-unit id="translation.Average_speed">
+        <source>Average speed</source>
+        <target>平均速度</target>
+      </trans-unit>
+      <trans-unit id="translation.Elevation">
+        <source>Elevation</source>
+        <target>海拔</target>
+      </trans-unit>
+<trans-unit id="translation.Breakdown">
+  <source>Breakdown</source>
+</trans-unit>
     </body>
   </file>
 </xliff>
