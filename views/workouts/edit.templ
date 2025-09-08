@@ -13,6 +13,9 @@ templ Edit(w *database.Workout) {
 			<h2>
 				@helpers.IconFor(w.Type.String())
 				@Name(w, 0)
+				if w.HasCustomType() {
+					<i>({ w.CustomType })</i>
+				}
 			</h2>
 		</div>
 		<div class="sm:flex sm:flex-wrap">

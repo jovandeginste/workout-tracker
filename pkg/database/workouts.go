@@ -36,6 +36,7 @@ type Workout struct {
 	Name                string               `gorm:"not null" json:"name"`                                                               // The name of the workout
 	Notes               string               `json:"notes"`                                                                              // The notes associated with the workout, in markdown
 	Type                WorkoutType          `json:"type"`                                                                               // The type of the workout
+	CustomType          string               `json:"custom_type"`                                                                        // The type of the workout, custom
 	Equipment           []Equipment          `json:"equipment,omitempty" gorm:"constraint:OnDelete:CASCADE;many2many:workout_equipment"` // Which equipment is used for this workout
 	RouteSegmentMatches []*RouteSegmentMatch `gorm:"constraint:OnDelete:CASCADE" json:"routeSegmentMatches,omitempty"`                   // Which route segments match
 	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user" json:"userID"`                            // The ID of the user who owns the workout
@@ -48,6 +49,10 @@ type GPXData struct {
 	Content   []byte `gorm:"type:bytes" json:"content"`             // The file content
 	Checksum  []byte `gorm:"not null;uniqueIndex" json:"checksum"`  // The checksum of the content
 	WorkoutID uint64 `gorm:"not null;uniqueIndex" json:"workoutID"` // The ID of the workout
+}
+
+func (w *Workout) HasCustomType() bool {
+	return w.Type == WorkoutTypeOther
 }
 
 func (w *Workout) AfterFind(tx *gorm.DB) error {

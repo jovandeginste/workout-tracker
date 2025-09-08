@@ -26,6 +26,9 @@ templ Item(w *database.Workout) {
 				<abbr class="overflow-hidden" title={ helpers.LocalDate(ctx, w.Date) }>
 					{ helpers.RelativeDate(ctx, w.Date) }
 				</abbr>
+				if w.HasCustomType() {
+					<span class="float-right"><i>({ w.CustomType })</i></span>
+				}
 			</div>
 			<span class="text-xs">
 				@ListDetails(w)

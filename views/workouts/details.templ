@@ -61,7 +61,11 @@ templ Details(w *database.Workout) {
 				<td>
 					<span>
 						@helpers.IconFor(w.Type.String())
-						{ i18n.T(ctx,w.Type.StringT()) }
+						if w.HasCustomType() {
+							<i>{ w.CustomType }</i>
+						} else {
+							{ i18n.T(ctx, w.Type.StringT()) }
+						}
 					</span>
 				</td>
 			</tr>
@@ -190,7 +194,11 @@ templ FullWorkoutDetails(w *database.Workout) {
 				<td>
 					<span>
 						@helpers.IconFor(w.Type.String())
-						{ i18n.T(ctx, w.Type.StringT()) }
+						if w.HasCustomType() {
+							<i>{ w.CustomType }</i>
+						} else {
+							{ i18n.T(ctx, w.Type.StringT()) }
+						}
 					</span>
 				</td>
 			</tr>
