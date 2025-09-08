@@ -7,6 +7,23 @@ import (
 )
 
 templ Actions(w *database.Workout) {
+	{{
+	t := ""
+	if w.Locked {
+		t = "dangerous"
+	}
+	}}
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-toggle-lock", w.ID)) } method="post">
+		<button class={ t } title={ i18n.T(ctx, "translation.LockWorkout") }>
+			<a>
+				if w.Locked {
+					@helpers.IconFor("locked")
+				} else {
+					@helpers.IconFor("unlocked")
+				}
+			</a>
+		</button>
+	</form>
 	if w.HasFile() {
 		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get">
 			<button class="download" title={ i18n.T(ctx, "translation.download") }>

@@ -102,6 +102,10 @@ en:
     delete_public_share: Delete link
     Autodetect: Auto-detect
     Average_cadence: Average cadence
+    WorkoutAttributeLocked: This attribute is locked from automatic updates
+    WorkoutLocked: The attributes of workout '%s' are now locked
+    WorkoutUnLocked: The attributes of workout '%s' are now unlocked
+    LockWorkout: Lock or unlock the attributes of this workout from automatic updates.
     Average_per_minute: Average per minute
     Average_speed: Average speed
     Average_speed_no_pause: Average speed (no pause)
