@@ -21,6 +21,9 @@
         <source>Elevation</source>
         <target>Elevazione</target>
       </trans-unit>
+<trans-unit id="translation.Breakdown">
+  <source>Breakdown</source>
+</trans-unit>
     </body>
   </file>
 </xliff>

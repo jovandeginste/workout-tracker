@@ -294,24 +294,30 @@ export class WorkoutBreakdown extends LitElement {
     const intervals = [1, 2, 5, 10, 25].filter((d) => d < totalDistance);
 
     return html`
-      <div class="flex justify-end py-3">
-        <nav class="isolate inline-flex">
-          ${intervals.map((interval) => {
-            return html`<a
-              href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this
-                .intervalDistance === interval
-                ? "bg-indigo-500 text-white"
-                : ""}"
-              @click=${(e: Event) => {
-                e.preventDefault();
-                this.setActiveItem(null);
-                this.intervalDistance = interval;
-              }}
-              >${interval} ${this.preferredUnits.distance || ""}</a
-            >`;
-          })}
-        </nav>
+      <div>
+        <div class="float-right">
+          <nav>
+            ${intervals.map((interval) => {
+              return html`<a
+                href="#"
+                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this
+                  .intervalDistance === interval
+                  ? "bg-indigo-500 text-white"
+                  : ""}"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.setActiveItem(null);
+                  this.intervalDistance = interval;
+                }}
+                >${interval} ${this.preferredUnits.distance || ""}</a
+              >`;
+            })}
+          </nav>
+        </div>
+        <h3>
+          <span class="icon-decoration icon-[fa6-solid--table-cells]"></span>
+          ${msg("Breakdown", { id: "translation.Breakdown" })}
+        </h3>
       </div>
       <div class="overflow-x-auto">
         <table class="breakdown-table">
