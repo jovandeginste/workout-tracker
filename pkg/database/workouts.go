@@ -573,7 +573,7 @@ func (w *Workout) save(db *gorm.DB) error {
 		return ErrInvalidData
 	}
 
-	if !w.HasFile() {
+	if w.HasFile() {
 		w.UpdateAverages()
 	}
 
