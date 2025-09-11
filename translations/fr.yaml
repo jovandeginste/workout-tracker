@@ -60,6 +60,10 @@ fr:
     e-cycling: vélo électrique
     kayaking: kayak
     rowing: aviron
+    auto: détection automatique
+    unknown: inconnu
+    horse-riding: équitation
+    inline-skating: patinage en ligne
   menu:
     Dashboard: Tableau de bord
     Equipment: Équipement
@@ -76,7 +80,7 @@ fr:
     kilograms: kilogrammes
     pounds: livres
     kilometers_per_hour: kilomètres par heure
-    miles_per_hour: miles à l'heure
+    miles_per_hour: miles par heure
     inch: pouce
     centimeter: centimètre
   settings:
@@ -255,6 +259,25 @@ fr:
       à jour.
     Height: Taille
     Are_you_sure: Êtes vous sûr ?
+    ClimbElevation: Dénivelé positif
+    ClimbDistance: Distance d'ascension
+    ClimbDuration: durée d'ascension
+    StartDistance: Distance de départ
+    The_shareable_link_is_deleted_for_the_workout_s: Le lien partageable est 
+      supprimé pour l'entraînement '%s'
+    delete_public_share: Supprimer le lien
+    Average_cadence: Cadence moyenne
+    WorkoutAttributeLocked: Cet attribut est verrouillé contre les mises à jour 
+      automatiques
+    WorkoutLocked: Les attributs de l'entraînement '%s' sont désormais 
+      verrouillés
+    WorkoutUnLocked: Les attributs de l'entraînement '%s' sont désormais 
+      débloqués
+    Slope: Pente
+    Climb: Type d'ascension
+    temperature: Température
+    Max_cadence: Cadence maximale
+    public_share: Lien partageable publiquement
   user:
     profile:
       auto_import_directory: Importation de répertoire automatique
@@ -269,7 +292,7 @@ fr:
       totals_to_show_on_dashboard: Totaux à afficher sur le tableau de bord
       update_preferred_units: Mettre à jour les unités préférées
       update_profile: Mettre à jour le profil
-      copy_to_clipboard: copier dans le Presse-papiers
+      copy_to_clipboard: Copier dans le presse-papiers
       generate_a_new_api_key: générer une nouvelle clé API
       show_hide: afficher/masquer
       Theme: Thème
@@ -284,3 +307,10 @@ fr:
     update: Mettre à jour l'équipement
   route_segment:
     update: Mettre à jour un segment d'itinéraire
+  climb_type:
+    start_climb: commencer la montée
+    in_climb: montée
+    end_climb: fin de la montée
+    start_descent: début de la descente
+    in_descent: descente
+    end_descent: fin de la descente
