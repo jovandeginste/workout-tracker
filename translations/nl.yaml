@@ -18,6 +18,14 @@ nl:
         naar matches'
       other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
         op de achtergrond naar matches'
+  climb_type:
+    start_climb: start klim
+    in_climb: klim
+    end_climb: einde klim
+    start_descent: start afdaling
+    in_descent: afdaling
+    end_descent: einde afdaling
+    flat: vlak
   misc:
     years_1: 1 jaar
     years_10: 10 jaar
@@ -109,6 +117,8 @@ nl:
     Average_tempo_no_pause: Gemiddelde tempo (zonder pauze)
     Bidirectional: Bidirectioneel
     Cadence: Cadans
+    Slope: Helling
+    Climb: Type klim
     Cancel: Annuleren
     Circular: Rondtoer
     Continue: Doorgaan

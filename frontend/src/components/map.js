@@ -41,9 +41,11 @@ class WtMap extends HTMLElement {
       maxSpeed: mapConfig.MaxSpeed,
       speedName: mapConfig.SpeedName,
       elevationName: mapConfig.ElevationName,
+      slopeName: mapConfig.SlopeName,
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
       showElevation: mapConfig.ShowElevation,
+      showSlope: mapConfig.ShowSlope,
     };
 
     this.segmentLayerGroup = L.featureGroup();
@@ -84,6 +86,14 @@ class WtMap extends HTMLElement {
     if (hasSpeed) {
       speedLayerGroup = this.getSpeedLayerGroup(polyLineProperties);
     }
+
+    const hasSlope = !!this.workout.slope?.Data?.length;
+    // Add points with tooltip to map.
+    let slopeLayerGroup;
+    if (hasSlope) {
+      slopeLayerGroup = this.getSlopeLayerGroup(polyLineProperties);
+    }
+
     const elevationLayerGroup = new L.featureGroup();
 
     const positions = this.workout.position.Data;
@@ -115,10 +125,12 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (!speedLayerGroup || this.config.showElevation) {
-      elevationLayerGroup.addTo(map);
-    } else {
+    if (speedLayerGroup && this.config.showSpeed) {
       speedLayerGroup.addTo(map);
+    } else if (slopeLayerGroup && this.config.showSlope) {
+      slopeLayerGroup.addTo(map);
+    } else {
+      elevationLayerGroup.addTo(map);
     }
 
     let last = positions[positions.length - 1];
@@ -162,6 +174,9 @@ class WtMap extends HTMLElement {
     if (speedLayerGroup) {
       overlays[this.config.speedName] = speedLayerGroup;
     }
+    if (slopeLayerGroup) {
+      overlays[this.config.slopeName] = slopeLayerGroup;
+    }
 
     L.control.scale().addTo(map);
     L.control
@@ -194,6 +209,29 @@ class WtMap extends HTMLElement {
         attribution: "Powered by Esri",
       },
     );
+  }
+
+  getSlopeLayerGroup(polyLineProperties = {}) {
+    const slopeLayerGroup = new L.featureGroup();
+
+    const slopes = this.workout.slope?.Data.filter((x) => x !== null);
+
+    const maxSlope = Math.max(...slopes);
+    const minSlope = Math.min(...slopes);
+
+    let prevPoint;
+    this.workout.position.Data.forEach((p, i) => {
+      if (prevPoint) {
+        const slope = this.workout.slope.Data[i] || 0;
+        const zScore = (slope - minSlope) / (maxSlope - minSlope);
+
+        polyLineProperties["color"] = this.getColor(zScore);
+        L.polyline([prevPoint, p], polyLineProperties).addTo(slopeLayerGroup);
+      }
+      prevPoint = p;
+    });
+
+    return slopeLayerGroup;
   }
 
   getSpeedLayerGroup(polyLineProperties = {}) {
@@ -249,6 +287,8 @@ class WtMap extends HTMLElement {
       "heart-rate": this.preferredUnits.heartRate,
       cadence: this.preferredUnits.cadence,
       temperature: this.preferredUnits.temperature,
+      slope: "",
+      climb: "",
     };
 
     let tooltip = `<ul>`;

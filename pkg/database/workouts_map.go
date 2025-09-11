@@ -90,14 +90,15 @@ type MapCenter struct {
 type MapPoint struct {
 	Time time.Time `json:"time"` // The time the point was recorded
 
-	ExtraMetrics  ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
-	Lat           float64       `json:"lat"`           // The latitude of the point
-	Lng           float64       `json:"lng"`           // The longitude of the point
-	Elevation     float64       `json:"elevation"`     // The elevation of the point
-	Distance      float64       `json:"distance"`      // The distance from the previous point
-	TotalDistance float64       `json:"totalDistance"` // The total distance of the workout up to this point
-	Duration      time.Duration `json:"duration"`      // The duration from the previous point
-	TotalDuration time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
+	ExtraMetrics   ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
+	Lat            float64       `json:"lat"`           // The latitude of the point
+	Lng            float64       `json:"lng"`           // The longitude of the point
+	Elevation      float64       `json:"elevation"`     // The elevation of the point
+	Distance       float64       `json:"distance"`      // The distance from the previous point
+	TotalDistance  float64       `json:"totalDistance"` // The total distance of the workout up to this point
+	Duration       time.Duration `json:"duration"`      // The duration from the previous point
+	TotalDuration  time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
+	SlopeDetection               // Climb information for this point
 }
 
 func (m *MapCenter) ToOrbPoint() *orb.Point {
@@ -189,6 +190,10 @@ func shouldAddState(address *geo.Address) bool {
 }
 
 func (m *MapData) Save(db *gorm.DB) error {
+	if err := db.Save(m.Details).Error; err != nil {
+		return err
+	}
+
 	return db.Save(m).Error
 }
 

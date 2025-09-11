@@ -638,6 +638,7 @@ func (w *Workout) setData(data *MapData) {
 
 	data.UpdateAddress()
 	data.UpdateExtraMetrics()
+	data.CalculateSlopes()
 	data.correctNaN()
 
 	w.Data = data

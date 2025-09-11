@@ -81,6 +81,8 @@ func TestWorkout_UpdateData(t *testing.T) {
 	assert.NotZero(t, d.Details.MapDataID)
 	assert.NotZero(t, w.Data.Details.MapDataID)
 
+	d.CalculateSlopes()
+
 	w.setData(dummyMapData())
 	require.NoError(t, w.Save(db))
 
