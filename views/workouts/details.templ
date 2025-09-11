@@ -102,6 +102,7 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("duration")
 					</td>
 					<td class="whitespace-nowrap font-mono">
+						@showLocked(w)
 						{ helpers.HumanDuration (w.TotalDuration()) }
 					</td>
 				</tr>
@@ -112,6 +113,7 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("distance")
 					</td>
 					<td class="whitespace-nowrap font-mono">
+						@showLocked(w)
 						{ helpers.HumanDistance (ctx, w.TotalDistance()) }
 						{ currentUser.PreferredUnits().Distance() }
 					</td>
@@ -462,10 +464,9 @@ templ FullWorkoutDetails(w *database.Workout) {
 }
 
 templ showLocked(w *database.Workout) {
-	if !w.Locked {
-		return
+	if w.Locked {
+		<span class="dangerous" title={ i18n.T(ctx, "translation.WorkoutAttributeLocked") }>
+			@helpers.IconFor("locked")
+		</span>
 	}
-	<span class="dangerous" title={ i18n.T(ctx, "translation.WorkoutAttributeLocked") }>
-		@helpers.IconFor("locked")
-	</span>
 }
