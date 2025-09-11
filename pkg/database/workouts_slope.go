@@ -30,8 +30,9 @@ const (
 
 // SlopeDetection holds the calculated slope and climb state for a given point.
 type SlopeDetection struct {
-	SlopeGrade float64    `json:"slope_grade"` // Slope as a decimal (-1.0 to 1.0)
-	SlopeState SlopeState `json:"slope_state"` // The detected climb/descent state
+	ClimbNumber int        `json:"climb_number"`
+	SlopeGrade  float64    `json:"slope_grade"` // Slope as a decimal (-1.0 to 1.0)
+	SlopeState  SlopeState `json:"slope_state"` // The detected climb/descent state
 }
 
 // calculateSlopes processes a slice of MapPoints and returns a slice of ClimbDetection.
@@ -45,9 +46,12 @@ func (d *MapData) CalculateSlopes() {
 		return
 	}
 
+	climbNumber := 0
+
 	// The first point can't have a slope since it has no previous point.
 	points[0].SlopeGrade = 0.0
 	points[0].SlopeState = Flat
+	points[0].ClimbNumber = climbNumber
 
 	for i := 1; i < len(points); i++ {
 		currentPoint := points[i]
@@ -75,8 +79,13 @@ func (d *MapData) CalculateSlopes() {
 
 		state := detectSlopeState(slopeGrade, points[i-1].SlopeState)
 
+		if state == StartClimb {
+			climbNumber++
+		}
+
 		points[i].SlopeGrade = slopeGrade
 		points[i].SlopeState = state
+		points[i].ClimbNumber = climbNumber
 	}
 }
 
