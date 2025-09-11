@@ -5,6 +5,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"time"
 )
 
 templ Show(w *database.Workout) {
@@ -103,7 +104,59 @@ templ Show(w *database.Workout) {
 						></workout-breakdown>
 					</div>
 				</div>
+				@ShowClimbs(w)
 			}
 		</div>
 	}
+}
+
+templ ShowClimbs(w *database.Workout) {
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<div class="inner-form">
+		<div class="print:w-full overflow-y-auto">
+			<table>
+				<thead>
+					<tr class="climb-header">
+						<th></th>
+						<th>{ i18n.T(ctx, "translation.ClimbElevation") }</th>
+						<th>{ i18n.T(ctx, "translation.StartDistance") }</th>
+						<th>{ i18n.T(ctx, "translation.ClimbDistance") }</th>
+						<th>{ i18n.T(ctx, "translation.StartDuration") }</th>
+						<th>{ i18n.T(ctx, "translation.ClimbDuration") }</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{ c := 0 }}
+					{{ sDist := 0.0 }}
+					{{ sElev := 0.0 }}
+					{{ mElev := 0.0 }}
+					{{ sDur := 0 * time.Second }}
+					for _, p := range w.Data.Details.Points {
+						if p.SlopeState == database.StartClimb {
+							{{ sDist = p.TotalDistance }}
+							{{ sElev = p.Elevation }}
+							{{ sDur = p.TotalDuration }}
+							{{ mElev = sElev }}
+						}
+						if p.Elevation > mElev {
+							{{ mElev = p.Elevation }}
+						}
+						if p.SlopeState == database.EndClimb {
+							if p.TotalDistance - sDist > database.SmoothingDistance {
+								{{ c += 1 }}
+								<tr>
+									<td>{ c }</td>
+									<td>{ helpers.HumanElevation(ctx, mElev - sElev) } { pu.Elevation() }</td>
+									<td>{ helpers.HumanDistance(ctx, sDist) } { pu.Distance() }</td>
+									<td>{ helpers.HumanDistance(ctx, p.TotalDistance - sDist) } { pu.Distance() }</td>
+									<td>{ helpers.HumanDuration(sDur) }</td>
+									<td>{ helpers.HumanDuration(p.TotalDuration - sDur) }</td>
+								</tr>
+							}
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
 }
