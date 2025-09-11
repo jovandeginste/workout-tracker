@@ -190,8 +190,10 @@ func shouldAddState(address *geo.Address) bool {
 }
 
 func (m *MapData) Save(db *gorm.DB) error {
-	if err := db.Save(m.Details).Error; err != nil {
-		return err
+	if m.Details != nil {
+		if err := db.Save(m.Details).Error; err != nil {
+			return err
+		}
 	}
 
 	return db.Save(m).Error
