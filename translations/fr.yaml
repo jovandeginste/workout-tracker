@@ -89,7 +89,7 @@ fr:
     API_key_updated: Clé API mise à jour
     Actions: Actions
     Active: Actif
-    Add_a_workout: Ajouter un entraînement
+    Add_a_workout: Ajouter une séance d'entraînement
     Add_equipment: Ajouter des équipements
     Add_route_segment: Ajouter un segment
     Add_workout: Ajouter un entraînement
@@ -259,9 +259,9 @@ fr:
       à jour.
     Height: Taille
     Are_you_sure: Êtes vous sûr ?
-    ClimbElevation: Dénivelé positif
+    ClimbElevation: Ascension
     ClimbDistance: Distance d'ascension
-    ClimbDuration: durée d'ascension
+    ClimbDuration: Durée d'ascension
     StartDistance: Distance de départ
     The_shareable_link_is_deleted_for_the_workout_s: Le lien partageable est 
       supprimé pour l'entraînement '%s'
@@ -278,9 +278,12 @@ fr:
     temperature: Température
     Max_cadence: Cadence maximale
     public_share: Lien partageable publiquement
+    LockWorkout: Verrouillez ou déverrouillez les attributs de cet entraînement 
+      des mises à jour automatiques.
+    enhanced_speed: Vitesse améliorée
   user:
     profile:
-      auto_import_directory: Importation de répertoire automatique
+      auto_import_directory: Répertoire d'imporation automatique
       disable_social_sharing_buttons: Désactiver les boutons de partage sur les 
         réseaux sociaux
       enable_api_access: Activer l'accès à l'API
@@ -293,7 +296,7 @@ fr:
       update_preferred_units: Mettre à jour les unités préférées
       update_profile: Mettre à jour le profil
       copy_to_clipboard: Copier dans le presse-papiers
-      generate_a_new_api_key: générer une nouvelle clé API
+      generate_a_new_api_key: Générer une nouvelle clé API
       show_hide: afficher/masquer
       Theme: Thème
       Light: Clair
@@ -314,3 +317,4 @@ fr:
     start_descent: début de la descente
     in_descent: descente
     end_descent: fin de la descente
+    flat: plat
