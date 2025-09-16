@@ -634,6 +634,7 @@ func (w *Workout) setData(data *MapData) {
 	if w.Locked {
 		data.TotalDistance = w.Data.TotalDistance
 		data.TotalDuration = w.Data.TotalDuration
+		data.Address = w.Data.Address
 	}
 
 	data.UpdateAddress()
