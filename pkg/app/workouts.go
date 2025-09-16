@@ -152,7 +152,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Data.TotalRepetitions, m.Repetitions)
 	setIfNotNil(&w.Data.TotalWeight, m.ToWeight())
 
-	if w.Data.Address == nil && m.Location != nil {
+	if m.Location != nil && w.FullAddress() != *m.Location {
 		a, err := geocoder.Find(*m.Location)
 		if err != nil {
 			w.Data.Address = nil
@@ -160,9 +160,9 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 		}
 
 		w.Data.Address = a
+		w.Data.UpdateAddress()
 	}
 
-	w.Data.UpdateAddress()
 	w.Data.UpdateExtraMetrics()
 }
 

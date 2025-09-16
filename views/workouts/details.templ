@@ -179,7 +179,10 @@ templ FullWorkoutDetails(w *database.Workout) {
 					@helpers.IconFor("location")
 				</td>
 				<th>{ i18n.T(ctx, "translation.Location") }</th>
-				<td>{ w.Address() }</td>
+				<td>
+					@showLocked(w)
+					{ w.Address() }
+				</td>
 			</tr>
 			<tr>
 				<td>
