@@ -1,5 +1,8 @@
 fr:
   Street: Rue
+  climb:
+    distance: Distance d'ascension
+    start: Distance de départ
   alerts:
     workouts_added:
       one: "Un problème rencontré lors de l'ajout d'entraînements : %{list}"
@@ -96,6 +99,7 @@ fr:
     Add_workouts: Ajouter des entraînements
     Admin: Admin
     Aerial: Aérien
+    Slope: Pente
     All_workouts_will_be_refreshed_in_the_coming_minutes: Toutes les séances 
       d'entraînement seront actualisées dans les prochaines minutes.
     Application_settings: Paramètres de l'application
@@ -259,10 +263,6 @@ fr:
       à jour.
     Height: Taille
     Are_you_sure: Êtes vous sûr ?
-    ClimbElevation: Ascension
-    ClimbDistance: Distance d'ascension
-    ClimbDuration: Durée d'ascension
-    StartDistance: Distance de départ
     The_shareable_link_is_deleted_for_the_workout_s: Le lien partageable est 
       supprimé pour l'entraînement '%s'
     delete_public_share: Supprimer le lien
@@ -273,8 +273,6 @@ fr:
       verrouillés
     WorkoutUnLocked: Les attributs de l'entraînement '%s' sont désormais 
       débloqués
-    Slope: Pente
-    Climb: Type d'ascension
     temperature: Température
     Max_cadence: Cadence maximale
     public_share: Lien partageable publiquement
@@ -310,11 +308,3 @@ fr:
     update: Mettre à jour l'équipement
   route_segment:
     update: Mettre à jour un segment d'itinéraire
-  climb_type:
-    start_climb: commencer la montée
-    in_climb: montée
-    end_climb: fin de la montée
-    start_descent: début de la descente
-    in_descent: descente
-    end_descent: fin de la descente
-    flat: plat

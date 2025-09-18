@@ -287,8 +287,7 @@ class WtMap extends HTMLElement {
       "heart-rate": this.preferredUnits.heartRate,
       cadence: this.preferredUnits.cadence,
       temperature: this.preferredUnits.temperature,
-      slope: "",
-      climb: "",
+      slope: "%",
     };
 
     let tooltip = `<ul>`;

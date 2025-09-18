@@ -68,6 +68,7 @@ type MapData struct {
 	AddressString string    `json:"addressString"`                         // The generic location of the workout
 	Center        MapCenter `gorm:"serializer:json" json:"center"`         // The center of the workout (in coordinates)
 	WorkoutID     uint64    `gorm:"not null;uniqueIndex" json:"workoutID"` // The workout this data belongs to
+	Climbs        []Segment `gorm:"serializer:json" json:"climbs"`         // Auto-detected climbs
 	converters.WorkoutData
 }
 
@@ -90,15 +91,15 @@ type MapCenter struct {
 type MapPoint struct {
 	Time time.Time `json:"time"` // The time the point was recorded
 
-	ExtraMetrics   ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
-	Lat            float64       `json:"lat"`           // The latitude of the point
-	Lng            float64       `json:"lng"`           // The longitude of the point
-	Elevation      float64       `json:"elevation"`     // The elevation of the point
-	Distance       float64       `json:"distance"`      // The distance from the previous point
-	TotalDistance  float64       `json:"totalDistance"` // The total distance of the workout up to this point
-	Duration       time.Duration `json:"duration"`      // The duration from the previous point
-	TotalDuration  time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
-	SlopeDetection               // Climb information for this point
+	ExtraMetrics  ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
+	Lat           float64       `json:"lat"`           // The latitude of the point
+	Lng           float64       `json:"lng"`           // The longitude of the point
+	Elevation     float64       `json:"elevation"`     // The elevation of the point
+	Distance      float64       `json:"distance"`      // The distance from the previous point
+	TotalDistance float64       `json:"totalDistance"` // The total distance of the workout up to this point
+	Duration      time.Duration `json:"duration"`      // The duration from the previous point
+	TotalDuration time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
+	SlopeGrade    float64       `json:"slopeGrade"`    // The grade of the slope at this point
 }
 
 func (m *MapCenter) ToOrbPoint() *orb.Point {

@@ -16,14 +16,6 @@ en:
       one: 'Added 1 new route segment: %{list} - we search for matches in the background'
       other: 'Added %{count} new route segments: %{list} - we search for matches in
         the background'
-  climb_type:
-    start_climb: start climb
-    in_climb: climb
-    end_climb: end climb
-    start_descent: start descent
-    in_descent: descent
-    end_descent: end descent
-    flat: flat
   misc:
     month_1: 1 month
     years_1: 1 year
@@ -85,6 +77,14 @@ en:
     miles_per_hour: miles per hour
   settings:
     update: Update settings
+  climb:
+    distance: Climb distance
+    start: Start distance
+    type_descent: 'Descent #%d'
+    type_climb: 'Climb #%d'
+    elevation_gain_loss: Elevation gain/loss
+    average_slope: Average slope
+    category: Category
   translation:
     Latest_measurements: Latest measurements
     Update_measurement: Update measurement
@@ -100,12 +100,8 @@ en:
     Add_workouts: Add workouts
     Admin: Admin
     Aerial: Aerial
-    ClimbElevation: Climb elevation
-    ClimbDistance: Climb distance
-    ClimbDuration: Climb duration
-    StartDistance: Start distance
-    StartDuration: Start duration
     All: All
+    Slope: Slope
     All_workouts_will_be_refreshed_in_the_coming_minutes: All workouts will be refreshed
       in the coming minutes.
     Application_settings: Application settings
@@ -126,8 +122,6 @@ en:
     Average_tempo_no_pause: Average tempo (no pause)
     Bidirectional: Bidirectional
     Cadence: Cadence
-    Slope: Slope
-    Climb: Type of climb
     enhanced_speed: Enhanced speed
     temperature: Temperature
     Cancel: Cancel
