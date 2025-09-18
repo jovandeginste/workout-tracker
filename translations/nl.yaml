@@ -18,14 +18,14 @@ nl:
         naar matches'
       other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
         op de achtergrond naar matches'
-  climb_type:
-    start_climb: start klim
-    in_climb: klim
-    end_climb: einde klim
-    start_descent: start afdaling
-    in_descent: afdaling
-    end_descent: einde afdaling
-    flat: vlak
+  climb:
+    distance: Klimafstand
+    start: Startafstand
+    type_descent: 'Afdaling #%d'
+    type_climb: 'Klim #%d'
+    elevation_gain_loss: Stijging/afdaling
+    average_slope: Gemiddelde hellingsgraad
+    category: Categorie
   misc:
     years_1: 1 jaar
     years_10: 10 jaar
@@ -117,11 +117,11 @@ nl:
     Average_tempo_no_pause: Gemiddelde tempo (zonder pauze)
     Bidirectional: Bidirectioneel
     Cadence: Cadans
-    Slope: Helling
-    Climb: Type klim
     Cancel: Annuleren
     Circular: Rondtoer
     Continue: Doorgaan
+    temperature: Temperatuur
+    Slope: Helling
     Copy_publicly_shareable_link: Kopieer publieke koppeling
     Create_a_new_account: Maak een nieuwe account
     Create_route_segment: Maak een route segment

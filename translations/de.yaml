@@ -17,6 +17,10 @@ de:
         nach Übereinstimmungen'
       other: '%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im
         Hintergrund nach Übereinstimmungen'
+  climb:
+    distance: Aufstieg Distanz
+    start: Startdistanz
+    type_climb: 'Aufstieg #%d'
   misc:
     day_7: 7 Tage
     month_6: 6 Monate
@@ -81,6 +85,7 @@ de:
     update: Einstellungen speichern
   translation:
     Latest_measurements: Letzte Messungen
+    Slope: Steigung
     Update_measurement: Messung aktualisieren
     Steps: Schritte
     Regenerate_publicly_shareable_link: Link (neu) generieren
@@ -260,19 +265,12 @@ de:
     public_share: Öffentlich teilbarer Link
     enhanced_speed: Verbesserte Geschwindigkeit
     temperature: Temperatur
-    ClimbElevation: Aufstieg Höhe
-    ClimbDistance: Aufstieg Distanz
-    ClimbDuration: Aufstieg Dauer
-    StartDistance: Startdistanz
-    StartDuration: Startdauer
     WorkoutAttributeLocked: Dieses Attribut ist für automatische 
       Aktualisierungen gesperrt
     WorkoutLocked: Die Attribute des Trainings '%s' sind jetzt gesperrt
     WorkoutUnLocked: Die Attribute des Trainings '%s' sind jetzt entsperrt
     LockWorkout: Die Attribute dieses Trainings für automatische 
       Aktualisierungen sperren oder entsperren.
-    Slope: Steigung
-    Climb: Typ des Aufstiegs
   user:
     profile:
       your_settings: Deine Einstellungen
@@ -303,11 +301,3 @@ de:
     update: Ausrüstung aktualisieren
   route_segment:
     update: Streckenabschnitt aktualisieren
-  climb_type:
-    start_climb: Start Aufstieg
-    in_climb: Aufstieg
-    end_climb: Ende Aufstieg
-    start_descent: Start Abstieg
-    in_descent: Abstieg
-    end_descent: Ende Abstieg
-    flat: Flach

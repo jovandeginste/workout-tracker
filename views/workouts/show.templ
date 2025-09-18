@@ -3,9 +3,9 @@ package workouts
 import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
-	"time"
 )
 
 templ Show(w *database.Workout) {
@@ -118,42 +118,32 @@ templ ShowClimbs(w *database.Workout) {
 				<thead>
 					<tr class="climb-header">
 						<th></th>
-						<th>{ i18n.T(ctx, "translation.ClimbElevation") }</th>
-						<th>{ i18n.T(ctx, "translation.StartDistance") }</th>
-						<th>{ i18n.T(ctx, "translation.ClimbDistance") }</th>
-						<th>{ i18n.T(ctx, "translation.StartDuration") }</th>
-						<th>{ i18n.T(ctx, "translation.ClimbDuration") }</th>
+						<th>{ i18n.T(ctx, "climb.start") }</th>
+						<th>{ i18n.T(ctx, "climb.distance") }</th>
+						<th>
+							{ i18n.T(ctx, "climb.elevation_gain_loss") }
+						</th>
+						<th>{ i18n.T(ctx, "climb.average_slope") }</th>
+						<th>{ i18n.T(ctx, "climb.category") }</th>
 					</tr>
 				</thead>
 				<tbody>
-					{{ c := 0 }}
-					{{ sDist := 0.0 }}
-					{{ sElev := 0.0 }}
-					{{ mElev := 0.0 }}
-					{{ sDur := 0 * time.Second }}
-					for _, p := range w.Data.Details.Points {
-						if p.SlopeState == database.StartClimb {
-							{{ sDist = p.TotalDistance }}
-							{{ sElev = p.Elevation }}
-							{{ sDur = p.TotalDuration }}
-							{{ mElev = sElev }}
-						}
-						if p.Elevation > mElev {
-							{{ mElev = p.Elevation }}
-						}
-						if p.SlopeState == database.EndClimb {
-							if p.TotalDistance - sDist > database.SmoothingDistance {
-								{{ c += 1 }}
-								<tr>
-									<td>{ c }</td>
-									<td>{ helpers.HumanElevation(ctx, mElev - sElev) } { pu.Elevation() }</td>
-									<td>{ helpers.HumanDistance(ctx, sDist) } { pu.Distance() }</td>
-									<td>{ helpers.HumanDistance(ctx, p.TotalDistance - sDist) } { pu.Distance() }</td>
-									<td>{ helpers.HumanDuration(sDur) }</td>
-									<td>{ helpers.HumanDuration(p.TotalDuration - sDur) }</td>
-								</tr>
-							}
-						}
+					for _, climb := range w.Data.Climbs {
+						<tr>
+							<td>
+								if climb.Type == "climb" {
+									<span class="text-green-500"><span class="icon-decoration icon-[fa6-solid--arrow-up-long]"></span></span>
+								} else {
+									<span class="text-orange-600"><span class="icon-decoration icon-[fa6-solid--arrow-down-long]"></span></span>
+								}
+								{ i18n.T(ctx, "climb.type_"+climb.Type, climb.Index) }
+							</td>
+							<td>{ helpers.HumanDistance(ctx, climb.StartDistance) } { pu.Distance() }</td>
+							<td>{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
+							<td>{ helpers.HumanElevation(ctx, climb.Elevation) } { pu.Elevation() }</td>
+							<td>{ templatehelpers.RoundFloat64(climb.AvgSlope) }%</td>
+							<td>{ climb.Category }</td>
+						</tr>
 					}
 				</tbody>
 			</table>

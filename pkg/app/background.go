@@ -23,7 +23,7 @@ var (
 
 const (
 	FileAddDelay                 = -1 * time.Minute
-	WorkerDelay                  = 1 * time.Minute
+	WorkerDelay                  = 5 * time.Second
 	workerRouteSegmentsBatchSize = 10
 	workerWorkoutsBatchSize      = 10
 )
