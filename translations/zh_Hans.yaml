@@ -1,18 +1,14 @@
 zh-Hans:
   alerts:
     workouts_added:
-      one: 添加锻炼时遇到 %{count} 个问题：%{list}
       other: 添加锻炼时遇到 %{count} 个问题：%{list}
     something_wrong: 出了些问题：%{message}
     route_segments_added:
-      one: 添加路线段时遇到 %{count} 个问题：%{list}
-      other:
+      other: 添加路线段时遇到 1 个问题：%{list}
   notices:
     workouts_added:
-      one: 添加了 %{count} 份新锻炼：%{list}
       other: 添加了 %{count} 份新锻炼：%{list}
     route_segments_added:
-      one: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
       other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
   misc:
     month_6: 6月
@@ -237,6 +233,11 @@ zh-Hans:
     public_share: 可公开分享的链接
     enhanced_speed: 增强速度
     temperature: 温度
+    Slope: 坡度
+    WorkoutAttributeLocked: 此属性已锁定，禁止自动更新
+    WorkoutLocked: 锻炼 '%s' 的属性现已锁定
+    WorkoutUnLocked: 锻炼 '%s' 的属性现已解锁
+    LockWorkout: 锁定或解锁此锻炼的属性，禁止自动更新。
   user:
     profile:
       your_settings: 您的设置
@@ -265,3 +266,11 @@ zh-Hans:
     update: 更新设备
   route_segment:
     update: 更新路线段
+  climb:
+    distance: 爬升距离
+    start: 起始距离
+    type_descent: '下降 #%d'
+    type_climb: '爬升 #%d'
+    elevation_gain_loss: 海拔升降
+    average_slope: 平均坡度
+    category: 分类

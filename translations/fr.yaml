@@ -3,29 +3,34 @@ fr:
   climb:
     distance: Distance d'ascension
     start: Distance de départ
+    category: Categorie
+    average_slope: Pente moyenne
+    elevation_gain_loss: Gain/perte d'altitude
+    type_descent: 'Descente #%d'
+    type_climb: 'Montée #%d'
   alerts:
     workouts_added:
       one: "Un problème rencontré lors de l'ajout d'entraînements : %{list}"
       many: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
-      other:
+      other: "%{count} problèmes rencontrés lors de l'ajout d'entraînements : %{list}"
     route_segments_added:
-      one: "Un problème est survenu durant l'ajout d'un segment d'itinéraire: %{list}"
-      many: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire:
+      one: "Un problème est survenu durant l'ajout d'un segment d'itinéraire : %{list}"
+      many: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire :
         %{list}"
-      other: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire:
+      other: "%{count} problèmes sont survenus durant l'ajout d'un segment d'itinéraire :
         %{list}"
-    something_wrong: "Quelque chose s'est mal passé: %{message}"
+    something_wrong: "Quelque chose s'est mal passé : %{message}"
   notices:
     workouts_added:
       one: "Ajout d'un nouvel entraînement : %{list}"
-      many: 'Ajout de %{count} nouveau(x) entraînement(s) : %{list}'
-      other:
+      many: 'Ajout de %{count} nouveaux entraînements : %{list}'
+      other: 'Ajout de %{count} nouveaux entraînements : %{list}'
     route_segments_added:
-      one: "Ajout d'un nouveau segment d'itinéraire: %{list} - nous recherchons des
+      one: "Ajout d'un nouveau segment d'itinéraire : %{list} - nous recherchons des
         correspondances en arrière-plan"
-      many: "Ajout de %{count} nouveaux segments d'itinéraire: %{list} - nous recherchons
+      many: "Ajout de %{count} nouveaux segments d'itinéraire : %{list} - nous recherchons
         des correspondances en arrière-plan"
-      other: "Ajout de %{count} nouveaux segments d'itinéraire: %{list} - nous recherchons
+      other: "Ajout de %{count} nouveaux segments d'itinéraire : %{list} - nous recherchons
         des correspondances en arrière-plan"
   misc:
     month: mois
@@ -79,11 +84,11 @@ fr:
     feet: pieds
     kilometers: kilomètres
     meters: mètres
-    miles: miles
+    miles: milles
     kilograms: kilogrammes
     pounds: livres
     kilometers_per_hour: kilomètres par heure
-    miles_per_hour: miles par heure
+    miles_per_hour: milles par heure
     inch: pouce
     centimeter: centimètre
   settings:
@@ -117,7 +122,7 @@ fr:
     Circular: Circulaire
     Continue: Continuer
     Create_a_new_account: Créer un nouveau compte
-    Create_route_segment: Créer un segment
+    Create_route_segment: Créer un segment d'itinéraire
     Created: Créé
     Dashboard_for_s: Tableau de bord pour %s
     Date: Date
@@ -247,7 +252,7 @@ fr:
     All: Tous
     Heading: En-tête
     Steps: Pas
-    Regenerate_publicly_shareable_link: (Re)générer lien public partageable
+    Regenerate_publicly_shareable_link: (Re)générer le lien
     Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
       Commencez à rechercher en arrière-plan les entraînements correspondants 
       pour le segment d'itinéraire '%s'.
@@ -255,7 +260,7 @@ fr:
     Update_measurement: Mesures mises à jour
     The_workout_s_now_has_a_shareable_link: L'entraînement '%s' dispose 
       désormais d'un lien partageable
-    Copy_publicly_shareable_link: Copier le lien public partageable
+    Copy_publicly_shareable_link: Copier le lien
     Last: Dernier
     Sort_by: Trier par
     Streets: Rues
@@ -276,7 +281,7 @@ fr:
     temperature: Température
     Max_cadence: Cadence maximale
     public_share: Lien partageable publiquement
-    LockWorkout: Verrouillez ou déverrouillez les attributs de cet entraînement 
+    LockWorkout: Verrouiller ou déverrouiller les attributs de cet entraînement 
       des mises à jour automatiques.
     enhanced_speed: Vitesse améliorée
   user:
@@ -287,7 +292,7 @@ fr:
       enable_api_access: Activer l'accès à l'API
       Language: Langue
       preferred_units: Unités préférées
-      refresh_all_your_workouts: Rafraîchissez toutes vos séances d'entraînement
+      refresh_all_your_workouts: Rafraîchir toutes les séances d'entraînement
       show_full_date_by_default: Afficher la date complète par défaut
       time_zone: Fuseau horaire
       totals_to_show_on_dashboard: Totaux à afficher sur le tableau de bord
