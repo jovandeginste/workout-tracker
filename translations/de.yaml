@@ -21,6 +21,10 @@ de:
     distance: Aufstieg Distanz
     start: Startdistanz
     type_climb: 'Aufstieg #%d'
+    type_descent: 'Abstieg #%d'
+    average_slope: Durchschnittliche Steigung
+    category: Kategorie
+    elevation_gain_loss: Höhenunterschied
   misc:
     day_7: 7 Tage
     month_6: 6 Monate
