@@ -14,6 +14,7 @@ import (
 
 	"github.com/codingsince1985/geo-golang"
 	"github.com/google/go-querystring/query"
+	"github.com/hashicorp/go-retryablehttp"
 )
 
 var (
@@ -26,7 +27,7 @@ const requestInterval = time.Second
 
 type client struct {
 	url         string
-	client      http.Client
+	client      *retryablehttp.Client
 	logger      *slog.Logger
 	lastRequest time.Time
 	userAgent   string
@@ -109,10 +110,15 @@ func (c *client) wait() {
 }
 
 func SetClient(l *slog.Logger, ua string) {
+	r := retryablehttp.NewClient()
+	r.RetryMax = 5
+	r.RetryWaitMin = 10 * time.Second
+	r.HTTPClient.Timeout = 30 * time.Second
+
 	c = &client{
 		url:       "https://nominatim.openstreetmap.org/",
 		userAgent: ua,
-		client:    http.Client{},
+		client:    r,
 		logger:    l,
 	}
 }
@@ -139,7 +145,7 @@ func search(a string) ([]Result, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodGet, c.url+"search?"+v.Encode(), nil)
+	req, err := retryablehttp.NewRequest(http.MethodGet, c.url+"search?"+v.Encode(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +212,7 @@ func Reverse(q Query) (*geo.Address, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodGet, c.url+"reverse?"+v.Encode(), nil)
+	req, err := retryablehttp.NewRequest(http.MethodGet, c.url+"reverse?"+v.Encode(), nil)
 	if err != nil {
 		return nil, err
 	}
