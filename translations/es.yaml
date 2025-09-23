@@ -1,1 +1,32 @@
-{}
+alerts:
+  something_wrong: 'Algo ha salido mal: %{message}'
+  workouts_added:
+    one: 'Se ha encontrado un problema al añadir el entrenamiento: %{list}'
+    many: 'Se han encontrado %{count} problemas al añadir el entrenamiento: %{list}'
+    other: Se encontraron problemas al añadir el entrenamiento
+  route_segments_added:
+    one: 'Se ha encontrado un problema mientras añadiamos un segmento: %{list}'
+    many: 'Se han encontrado problemas mientras añadiamos un segmento: %{list}'
+    other: 'Se han encontrado %{count} problemas mientras añadiamos un segmento: %{list}'
+notices:
+  workouts_added:
+    one: 'Añadido nuevo entrenamiento: %{list}'
+    many: Se han añadido los entrenamientos
+    other: 'Se han añadido %{count} nuevos entrenamientos: %{list}'
+misc:
+  month_1: 1 mes
+  years_1: 1 año
+  years_10: 10 años
+  day_15: 15 dias
+  years_2: 2 años
+  month_3: 3 meses
+  years_5: 5 años
+  month_6: 6 meses
+  day_7: 7 dias
+  forever: Siempre
+  day: dia
+  month: mes
+  equipment: equipamiento
+  route_segment: segmento
+  workout: entrenamiento
+  split_files_with_multiple_tracks: dividir archivos en múltiples tracks
