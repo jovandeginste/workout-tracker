@@ -31,6 +31,7 @@ var (
 		language.Polish,
 		language.Russian,
 		language.SimplifiedChinese,
+		language.Spanish,
 		language.Turkish,
 	}
 )
