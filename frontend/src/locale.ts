@@ -8,6 +8,7 @@ export function initLocalize() {
     loadLocale: (locale) =>
       ({
         de: () => import("./generated/locales/de"),
+        es: () => import("./generated/locales/es"),
         fa: () => import("./generated/locales/fa"),
         fi: () => import("./generated/locales/fi"),
         fr: () => import("./generated/locales/fr"),

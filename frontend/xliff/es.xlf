@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="es" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="translation.Average_speed">
+  <source>Average speed</source>
+</trans-unit>
+<trans-unit id="translation.Elevation">
+  <source>Elevation</source>
+</trans-unit>
+<trans-unit id="translation.Tempo">
+  <source>Tempo</source>
+</trans-unit>
+<trans-unit id="translation.Total_up">
+  <source>Total up</source>
+</trans-unit>
+<trans-unit id="translation.Total_down">
+  <source>Total down</source>
+</trans-unit>
+<trans-unit id="translation.Breakdown">
+  <source>Breakdown</source>
+</trans-unit>
+</body>
+</file>
+</xliff>
