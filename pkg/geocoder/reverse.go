@@ -21,9 +21,13 @@ var (
 	c                  *client
 	ErrClientNotSet    = errors.New("geocoder: client not set")
 	ErrAddressNotFound = errors.New("geocoder: address not found")
-)
 
-const requestInterval = time.Second
+	OSMURL          = "https://nominatim.openstreetmap.org/"
+	RetryMax        = 5
+	RetryWaitMin    = 3 * time.Second
+	ClientTimeout   = 30 * time.Second
+	RequestInterval = time.Second
+)
 
 type client struct {
 	url         string
@@ -100,7 +104,7 @@ func (c *client) wait() {
 		return
 	}
 
-	d := requestInterval - time.Since(c.lastRequest)
+	d := RequestInterval - time.Since(c.lastRequest)
 	if d < 0 {
 		return
 	}
@@ -110,13 +114,22 @@ func (c *client) wait() {
 }
 
 func SetClient(l *slog.Logger, ua string) {
+	if c != nil {
+		return
+	}
+
+	ResetClient(l, ua)
+}
+
+func ResetClient(l *slog.Logger, ua string) {
 	r := retryablehttp.NewClient()
-	r.RetryMax = 5
-	r.RetryWaitMin = 10 * time.Second
-	r.HTTPClient.Timeout = 30 * time.Second
+	r.RetryMax = RetryMax
+	r.RetryWaitMin = RetryWaitMin
+	r.HTTPClient.Timeout = ClientTimeout
+	r.Logger = l
 
 	c = &client{
-		url:       "https://nominatim.openstreetmap.org/",
+		url:       OSMURL,
 		userAgent: ua,
 		client:    r,
 		logger:    l,
