@@ -28,7 +28,12 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 		return nil, errors.New("no sessions found")
 	}
 
-	name := act.Sessions[0].Sport.String() + " - " + act.Activity.LocalTimestamp.Format(time.DateTime)
+	activityTime := act.Activity.LocalTimestamp
+	if activityTime.IsZero() {
+		activityTime = act.Sessions[0].StartTime.Local()
+	}
+
+	name := act.Sessions[0].Sport.String() + " - " + activityTime.Format(time.DateTime)
 	gpxFile := &gpx.GPX{
 		Name:    name,
 		Time:    &act.FileId.TimeCreated,
