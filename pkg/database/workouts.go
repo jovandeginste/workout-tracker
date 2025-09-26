@@ -366,6 +366,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 			Date:   *d,
 		}
 
+		// If multiple GPX files are extracted (e.g., from a zip), use the individual GPX filename.
 		if filename == "" || len(gpxContent) > 1 {
 			filename = g.Filename()
 		}
