@@ -366,7 +366,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 			Date:   *d,
 		}
 
-		if filename == "" {
+		if filename == "" || len(gpxContent) > 1 {
 			filename = g.Filename()
 		}
 
