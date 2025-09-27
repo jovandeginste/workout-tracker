@@ -13,55 +13,130 @@ templ Show(w *database.Workout) {
 		partials.NewPageOptions().
 			WithSharing(),
 	) {
-		{{ currentUser := helpers.CurrentUser(ctx) }}
+		<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/service.js" } type="module"></script>
+		<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/page.js" } type="module"></script>
+
 		@DataJson(w)
-		<div class="gap-4">
-			if w.User.ID == currentUser.ID {
-				<span class="float-right actions">
-					if w.Dirty {
-						<span class="dirty">
-							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "translation.refresh_in_progress") }
-						</span>
-					}
-					@Actions(w)
-				</span>
-			}
-			<h2>
-				@helpers.IconFor(w.Type.String())
-				@Name(w, 0)
-				if w.HasCustomType() {
-					<i>({ w.CustomType })</i>
+		<div class="workout">
+			@Header(w)
+			@KeyMetrics(w)
+
+			<!-- Map and Statistics -->
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				if w.HasTracks() {
+		  		<div class="workout-card">
+			  		<div class="p-4 border-b border-gray-200 dark:border-neutral-700">
+				  		<h3 class="font-semibold mb-0">
+					  		@helpers.IconFor("route-segment")
+					  		Route Map
+				  		</h3>
+			  		</div>
+			  		<div id="map-container">
+			    		@Map(w)
+			  		</div>
+		  		</div>
 				}
-			</h2>
-		</div>
-		<div class="lg:flex lg:flex-wrap print:block">
-			if w.HasTracks() {
-				<div id="map-container" class="basis-1/2 pagebreak">
-					<div class="inner-form">
-						@Map(w)
-					</div>
+
+				@Stats(w)
+			</div>
+
+			<!-- Workout chart -->
+			if w.Details() != nil {
+				<div class="workout-card print:hidden">
+					@Chart(w)
 				</div>
 			}
+
+			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
+				<!-- Tabbed Content -->
+				<div id="intervals-card" class="workout-card">
+					<div class="border-b border-gray-200 dark:border-neutral-700">
+						<nav class="flex space-x-8 px-4">
+							<button
+								class="tab-button active"
+								onclick="workoutPage.showTab('intervals')"
+							>
+								@helpers.IconFor("units")
+								{ i18n.T(ctx, "translation.Breakdown") }
+							</button>
+							if len(w.RouteSegmentMatches) > 0 {
+								<button
+									class="tab-button"
+									onclick="workoutPage.showTab('segments')"
+								>
+									@helpers.IconFor("route-segment")
+									{ i18n.T(ctx, "translation.Route_segments") }
+								</button>
+							}
+							if len(w.Data.Climbs) > 0 {
+								<button
+									class="tab-button"
+									onclick="workoutPage.showTab('climbs')"
+								>
+									@helpers.IconFor("elevation")
+									{ i18n.T(ctx, "translation.Climbs") }
+								</button>
+							}
+						</nav>
+					</div>
+					<!-- Breakdown Tab -->
+					<div id="intervals-tab" class="p-4 tab-content">
+						<div class="print:w-full overflow-x-auto">
+							<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
+							<workout-breakdown
+								map-id="workout-map"
+								chart-id="workout-stats"
+								data-el="workout-data"
+								preferred-units-el="workout-preferred-units"
+							></workout-breakdown>
+						</div>
+					</div>
+					<!-- Segments Tab -->
+					if len(w.RouteSegmentMatches) > 0 {
+						<div id="segments-tab" class="p-4 tab-content hidden">
+							<div class="flex justify-between items-center mb-4">
+								<h4>
+									@helpers.IconFor("route-segment")
+									{ i18n.T(ctx, "translation.Matching_route_segments") }
+								</h4>
+							</div>
+							<div class="print:w-full overflow-y-auto overflow-x-auto">
+								@RouteSegments(w.RouteSegmentMatches)
+							</div>
+						</div>
+					}
+					<!-- Climbs Tab -->
+					if len(w.Data.Climbs) > 0 {
+						<div id="climbs-tab" class="p-4 tab-content hidden">
+							<div class="space-y-4">
+								<div class="flex justify-between items-center">
+									<h4 class="font-semibold">
+										@helpers.IconFor("elevation")
+										{ i18n.T(ctx, "translation.Climbs") }
+									</h4>
+									<span class="text-sm text-gray-500 dark:text-gray-400">
+										@helpers.IconFor("attention")
+										{ i18n.T(ctx, "translation.Climbs_detected", len(w.Data.Climbs)) }
+									</span>
+								</div>
+								<div class="space-y-3">
+									@ShowClimbs(w)
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+		</div>
+
+		<div class="lg:flex lg:flex-wrap print:block">
 			<div class="basis-1/2">
 				<div class="inner-form">
 					@FullWorkoutDetails(w)
 				</div>
 			</div>
 		</div>
-		if len(w.RouteSegmentMatches) > 0 {
-			<div class="pagebreak">
-				<div class="basis-1/2 2xl:basis-1/3 inner-form">
-					<h3>
-						@helpers.IconFor("route-segment")
-						{ i18n.T(ctx, "translation.Matching_route_segments") }
-					</h3>
-					<div class="print:w-full overflow-y-auto">
-						@RouteSegments(w.RouteSegmentMatches)
-					</div>
-				</div>
-			</div>
-		}
+
 		<div class="pagebreak">
 			if len(w.Notes) > 0 {
 				<div class="inner-form">
@@ -75,67 +150,60 @@ templ Show(w *database.Workout) {
 				</div>
 			}
 		</div>
-		if w.Details() != nil {
-			<div class="inner-form print:hidden">
-				@ShowStats(w)
-			</div>
-		}
-		<div>
-			if w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil {
-				<div class="inner-form">
-					<div class="print:w-full overflow-y-auto">
-						<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
-						<workout-breakdown
-							map-id="workout-map"
-							chart-id="workout-stats"
-							data-el="workout-data"
-							preferred-units-el="workout-preferred-units"
-						></workout-breakdown>
-					</div>
-				</div>
-				@ShowClimbs(w)
-			}
-		</div>
 	}
 }
 
 templ ShowClimbs(w *database.Workout) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<div class="inner-form">
-		<div class="print:w-full overflow-y-auto">
-			<table>
-				<thead>
-					<tr class="climb-header">
-						<th></th>
-						<th>{ i18n.T(ctx, "climb.start") }</th>
-						<th>{ i18n.T(ctx, "climb.distance") }</th>
-						<th>
-							{ i18n.T(ctx, "climb.elevation_gain_loss") }
-						</th>
-						<th>{ i18n.T(ctx, "climb.average_slope") }</th>
-						<th>{ i18n.T(ctx, "climb.category") }</th>
-					</tr>
-				</thead>
-				<tbody>
-					for _, climb := range w.Data.Climbs {
-						<tr>
-							<td>
-								if climb.Type == "climb" {
-									<span class="text-green-500"><span class="icon-decoration icon-[fa6-solid--arrow-up-long]"></span></span>
-								} else {
-									<span class="text-orange-600"><span class="icon-decoration icon-[fa6-solid--arrow-down-long]"></span></span>
-								}
-								{ i18n.T(ctx, "climb.type_"+climb.Type, climb.Index) }
-							</td>
-							<td>{ helpers.HumanDistance(ctx, climb.StartDistance) } { pu.Distance() }</td>
-							<td>{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
-							<td>{ helpers.HumanElevation(ctx, climb.Elevation) } { pu.Elevation() }</td>
-							<td>{ templatehelpers.RoundFloat64(climb.AvgSlope) }%</td>
-							<td>{ climb.Category }</td>
-						</tr>
+	for _, climb := range w.Data.Climbs {
+		<div class="bg-gray-50 dark:bg-neutral-900 rounded-lg p-4 border border-gray-200 dark:border-neutral-700">
+			<div class="flex justify-between items-start mb-3">
+				<h5 class="font-medium">
+					if climb.Type == "climb" {
+						<span class="text-green-500"><span class="icon-decoration icon-[fa6-solid--arrow-up-long]"></span></span>
+					} else {
+						<span class="text-orange-600"><span class="icon-decoration icon-[fa6-solid--arrow-down-long]"></span></span>
 					}
-				</tbody>
-			</table>
+					{ i18n.T(ctx, "climb.type_"+climb.Type, climb.Index) }
+				</h5>
+
+				switch climb.Category {
+					case "Hors Catégorie":
+						<span class="text-xs bg-red-500 dark:bg-red-600 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 1":
+						<span class="text-xs bg-orange-500 dark:bg-orange-600 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 2":
+						<span class="text-xs bg-yellow-500 dark:bg-yellow-600 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 3":
+						<span class="text-xs bg-lime-500 dark:bg-lime-600 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 4":
+						<span class="text-xs bg-green-400 dark:bg-green-500 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 5":
+						<span class="text-xs bg-green-500 dark:bg-green-600 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					case "Category 6":
+						<span class="text-xs bg-green-600 dark:bg-green-700 text-white px-2 py-1 rounded">{ climb.Category }</span>
+					default:
+						<span class="text-xs bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">{ climb.Category }</span>
+				}
+			</div>
+			<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+				<div>
+					@helpers.IconFor("route-segment")
+					<span class="text-gray-500 dark:text-gray-400">{ i18n.T(ctx, "climb.start") }:</span> { helpers.HumanDistance(ctx, climb.StartDistance) } { pu.Distance() }
+				</div>
+				<div>
+					@helpers.IconFor("distance")
+					<span class="text-gray-500 dark:text-gray-400">{ i18n.T(ctx, "climb.distance") }:</span> { helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }
+				</div>
+				<div>
+					@helpers.IconFor("elevation")
+					<span class="text-gray-500 dark:text-gray-400">{ i18n.T(ctx, "climb.elevation_gain_loss") }:</span> { helpers.HumanElevation(ctx, climb.Elevation) } { pu.Elevation() }
+				</div>
+				<div>
+					@helpers.IconFor("best")
+					<span class="text-gray-500 dark:text-gray-400">{ i18n.T(ctx, "climb.average_slope") }:</span> { templatehelpers.RoundFloat64(climb.AvgSlope) }%
+				</div>
+			</div>
 		</div>
-	</div>
+	}
 }

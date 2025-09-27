@@ -57,7 +57,7 @@ class WtMap extends HTMLElement {
         .textContent,
     );
     this.trackGroup = new L.featureGroup();
-    if (this.workout?.positions?.Data?.length !== 0) {
+    if (this.workout?.positions?.data?.length !== 0) {
       this.makeMap();
     }
   }
@@ -80,14 +80,14 @@ class WtMap extends HTMLElement {
     };
 
     let prevPoint;
-    const hasSpeed = !!this.workout.speed?.Data?.length;
+    const hasSpeed = !!this.workout.speed?.data?.length;
     // Add points with tooltip to map.
     let speedLayerGroup;
     if (hasSpeed) {
       speedLayerGroup = this.getSpeedLayerGroup(polyLineProperties);
     }
 
-    const hasSlope = !!this.workout.slope?.Data?.length;
+    const hasSlope = !!this.workout.slope?.data?.length;
     // Add points with tooltip to map.
     let slopeLayerGroup;
     if (hasSlope) {
@@ -96,10 +96,10 @@ class WtMap extends HTMLElement {
 
     const elevationLayerGroup = new L.featureGroup();
 
-    const positions = this.workout.position.Data;
+    const positions = this.workout.position.data;
     positions.forEach((p, i) => {
       if (prevPoint) {
-        const elevation = this.workout.elevation.Data[i] || 0;
+        const elevation = this.workout.elevation.data[i] || 0;
         // Add invisible point to map to allow fitBounds to work
         this.trackGroup.addLayer(
           L.circleMarker(p, {
@@ -214,15 +214,15 @@ class WtMap extends HTMLElement {
   getSlopeLayerGroup(polyLineProperties = {}) {
     const slopeLayerGroup = new L.featureGroup();
 
-    const slopes = this.workout.slope?.Data.filter((x) => x !== null);
+    const slopes = this.workout.slope?.data.filter((x) => x !== null);
 
     const maxSlope = Math.max(...slopes);
     const minSlope = Math.min(...slopes);
 
     let prevPoint;
-    this.workout.position.Data.forEach((p, i) => {
+    this.workout.position.data.forEach((p, i) => {
       if (prevPoint) {
-        const slope = this.workout.slope.Data[i] || 0;
+        const slope = this.workout.slope.data[i] || 0;
         const zScore = (slope - minSlope) / (maxSlope - minSlope);
 
         polyLineProperties["color"] = this.getColor(zScore);
@@ -237,7 +237,7 @@ class WtMap extends HTMLElement {
   getSpeedLayerGroup(polyLineProperties = {}) {
     const MOVING_AVERAGE_LENGTH = 15;
     const movingSpeeds = [];
-    const speeds = this.workout.speed?.Data.filter((x) => x !== null);
+    const speeds = this.workout.speed?.data.filter((x) => x !== null);
 
     const averageSpeed =
       speeds.reduce((a, x) => {
@@ -251,9 +251,9 @@ class WtMap extends HTMLElement {
     const speedLayerGroup = new L.featureGroup();
 
     let prevPoint;
-    this.workout.position.Data.forEach((p, i) => {
+    this.workout.position.data.forEach((p, i) => {
       if (prevPoint) {
-        const speed = this.workout.speed.Data[i] || null;
+        const speed = this.workout.speed.data[i] || null;
         if (speed === null || speed < 0.1) {
           polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
         } else {
@@ -292,9 +292,9 @@ class WtMap extends HTMLElement {
 
     let tooltip = `<ul>`;
     for (const [field, unit] of Object.entries(tooltipDisplay)) {
-      if (this.workout[field]?.Data[i] !== undefined) {
-        const label = this.workout[field].Label;
-        const val = this.workout[field].Data[i];
+      if (this.workout[field]?.data[i] !== undefined) {
+        const label = this.workout[field].label;
+        const val = this.workout[field].data[i];
         let formattedVal =
           typeof val === "number" && val % 1 !== 0 ? val.toFixed(2) : val;
         if (field === "duration") {

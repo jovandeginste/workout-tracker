@@ -116,7 +116,7 @@ func Add() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label></td><td><textarea type=\"text\" id=\"notes\" name=\"notes\" rows=\"10\"></textarea></td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label></td><td><textarea type=\"text\" id=\"notes\" name=\"notes\" rows=\"10\"></textarea></td></tr></tbody><tfoot><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

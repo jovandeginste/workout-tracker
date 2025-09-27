@@ -171,7 +171,7 @@ func Edit(s *database.RouteSegment) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</textarea></td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</textarea></td></tr></tbody><tfoot><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -184,7 +184,7 @@ func Edit(s *database.RouteSegment) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</button> <button type=\"reset\" class=\"edit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</button> <button type=\"reset\" class=\"button edit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -197,7 +197,7 @@ func Edit(s *database.RouteSegment) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button> <button type=\"button\" class=\"dangerous\" onclick=\"document.location=this.getAttribute('data-url')\" data-url=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button> <button type=\"button\" class=\"button dangerous\" onclick=\"document.location=this.getAttribute('data-url')\" data-url=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

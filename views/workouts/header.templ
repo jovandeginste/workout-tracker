@@ -1,0 +1,100 @@
+package workouts
+
+import (
+	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"fmt"
+)
+
+templ Header(w *database.Workout) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	<div class="workout-card p-3">
+		<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 ml-3">
+			<div class="flex items-center space-x-4">
+				<div class="text-3xl">
+					@helpers.IconFor(w.Type.String())
+				</div>
+				<div>
+					<h1 class="text-2xl font-bold">
+					  @Name(w, 0)
+            if w.HasCustomType() {
+					    <i>({ w.CustomType })</i>
+				    }
+				  </h1>
+			    if w.HasFile() {
+					  <div class="pt-1 text-gray-500 dark:text-gray-400">
+						  @helpers.IconFor("file")
+						  if len(w.Filename()) > 35 {
+							  <abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
+						  } else {
+							  { w.Filename() }
+						  }
+				    </div>
+			    }
+					<div class="text-gray-500 dark:text-gray-400">
+						if w.HasCustomType() {
+							<i>{ w.CustomType }</i>
+						} else {
+							{ i18n.T(ctx, w.Type.StringT()) }
+						}
+						<span class="mx-1">•</span>
+						<div class="inline relative dropdown">
+					    <a
+						    class="toggle"
+					    >
+						    @helpers.IconFor("date")
+					    </a>
+					    @partials.SnippetDate(w.Date)
+					    <div id="timeinfo" class="dropdown-menu w-400 p-2 hidden">
+						    <ul>
+							    <li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>
+							    <li>UTC: { helpers.InTimezone( w.Date, "UTC").String() }</li>
+							    <li>{ w.Timezone() }: {  helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
+						    </ul>
+					    </div>
+					  </div>
+					</div>
+				</div>
+			</div>
+			<div class="flex justify-center md:justify-start mt-3 md:mt-0">
+				<div class="flex flex-col md:flex-row md:space-x-6 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-lg px-4 py-2 items-center shadow">
+					<div class="flex items-center space-x-2 mb-2 md:mb-0">
+						@helpers.IconFor("location")
+						<span class="text-sm text-gray-700 dark:text-gray-200">
+					    @showLocked(w)
+					    { w.Address() }
+						</span>
+					</div>
+					<div class="hidden md:inline h-4 border-l border-gray-200 dark:border-neutral-700 mx-2"></div>
+					<div class="flex items-center space-x-2" >
+						@helpers.IconFor("source")
+						<span class="text-sm text-gray-700 dark:text-gray-200">{ w.Creator() }</span>
+					</div>
+				</div>
+			</div>
+			<div class="justify-end">
+				if w.PublicUUID != nil {
+          <div class="flex justify-end my-2 mr-3">
+				    if !helpers.AppConfig(ctx).SocialsDisabled && !helpers.CurrentUser(ctx).Profile.SocialsDisabled {
+					    @Social(w)
+				    }
+			    </div>
+				}
+
+			  if w.User.ID == currentUser.ID {
+			    <div class="flex items-center space-x-2 my-2">
+				    if w.Dirty {
+					    <span class="dirty">
+						    @helpers.IconFor("refresh")
+						    { i18n.T(ctx, "translation.refresh_in_progress") }
+					    </span>
+				    }
+				    @Actions(w)
+			    </div>
+			  }
+			</div>
+		</div>
+	</div>
+}

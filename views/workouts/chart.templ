@@ -6,7 +6,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 )
 
-templ ShowStats(w *database.Workout) {
+templ Chart(w *database.Workout) {
 	{{
 translations := map[string]string{
 	"distance":     i18n.T(ctx, "translation.Distance"),
@@ -20,7 +20,7 @@ translations := map[string]string{
 	"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 }
 }}
-	<workout-stats
+	<workout-chart
 		id="workout-stats"
 		color-mode={ helpers.CurrentUser(ctx).Profile.Theme }
 		map-id="workout-map"
@@ -29,6 +29,6 @@ translations := map[string]string{
 		tz={ helpers.Timezone(ctx) }
 		lang={ helpers.Language(ctx) }
 		translations={ templ.JSONString(translations) }
-	></workout-stats>
-	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" } type="module"></script>
+	></workout-chart>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/chart.js" } type="module"></script>
 }

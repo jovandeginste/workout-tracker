@@ -36,7 +36,7 @@ templ Profile(u *database.User) {
 templ userActions() {
 	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
 		<label for="refresh">{ i18n.T(ctx, "user.profile.refresh_all_your_workouts") }</label>
-		<button id="refresh" type="submit">
+		<button id="refresh" class="button" type="submit">
 			<a>
 				@helpers.IconFor("refresh")
 			</a>
@@ -86,7 +86,7 @@ templ userSettings(u *database.User) {
 								>
 									<button
 										type="button"
-										class="edit"
+										class="button edit"
 										title={ i18n.T(ctx, "user.profile.show_hide") }
 										onclick="toggleTextPassword(this, 'api_key');"
 									>
@@ -94,13 +94,14 @@ templ userSettings(u *database.User) {
 									</button>
 									<button
 										type="button"
+										class="button"
 										title={ i18n.T(ctx, "user.profile.copy_to_clipboard") }
 										onclick="copyToClipboard('api_key');"
 									>
 										@helpers.IconFor("copy")
 									</button>
 									<button
-										class="dangerous"
+										class="button dangerous"
 										title={ i18n.T(ctx, "user.profile.generate_a_new_api_key") }
 									>
 										@helpers.IconFor("refresh")
@@ -216,7 +217,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<td></td>
 					<td>
-						<button id="update-profile" type="submit">{ i18n.T(ctx, "user.profile.update_profile") }</button>
+						<button id="update-profile" class="button" type="submit">{ i18n.T(ctx, "user.profile.update_profile") }</button>
 					</td>
 				</tr>
 			</tbody>

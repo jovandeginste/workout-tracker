@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     // Iconify plugin
     addDynamicIconSelectors(),
+    "postcss-import",
   ],
   safelist: [
     {

@@ -1,0 +1,71 @@
+.workout {
+  .workout-card {
+    @apply rounded-xl m-2 border print:border-0;
+    @apply bg-neutral-200 border-neutral-200 hover:border-neutral-500;
+    @apply dark:bg-neutral-800 dark:border-neutral-800 dark:hover:border-neutral-500;
+
+    &.key-metric {
+      @apply p-4;
+      .title {
+        @apply flex items-center mb-2 text-xl;
+      }
+
+      .metric {
+        @apply text-lg text-gray-500 dark:text-gray-400 ml-2;
+      }
+
+      .value {
+        @apply text-2xl font-bold;
+      }
+
+      .value-sub {
+        @apply text-xs text-gray-400 dark:text-gray-500;
+      }
+    }
+
+    .tab-button {
+      @apply py-4 px-1 border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300;
+      &.active {
+        @apply border-blue-500 dark:border-blue-400 text-blue-500 dark:text-blue-400 font-medium;
+      }
+    }
+  }
+
+  .stat-list {
+    @apply p-4 space-y-4;
+
+    .stat-section {
+      &:not(:first-child) {
+        @apply border-t border-gray-200 dark:border-neutral-700 pt-4;
+      }
+
+      h4 {
+        @apply font-medium mb-3 text-gray-700 dark:text-gray-300;
+      }
+    }
+
+    .stat-row {
+      @apply grid grid-cols-3 gap-4 text-sm;
+    }
+
+    .stat {
+      @apply text-center;
+
+      .stat-label {
+        @apply text-gray-500 dark:text-gray-400 text-xs;
+      }
+
+      .stat-value {
+        @apply text-lg font-bold;
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  @apply absolute right-0 mt-2 w-56 bg-gray-100 dark:bg-neutral-700 border border-gray-200 dark:border-neutral-700 rounded-lg shadow-lg z-10;
+
+  .menu-item {
+    @apply w-full px-4 py-2 text-left text-sm hover:bg-gray-200 dark:hover:bg-neutral-600 dark:bg-neutral-700 flex items-center;
+  }
+}

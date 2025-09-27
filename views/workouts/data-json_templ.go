@@ -17,8 +17,8 @@ import (
 )
 
 type dataset struct {
-	Label string
-	Data  []any
+	Label string `json:"label"`
+	Data  []any  `json:"data"`
 }
 
 func translationMap(ctx context.Context) map[string]string {

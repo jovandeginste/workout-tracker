@@ -8,28 +8,28 @@ import (
 
 templ actions(s *database.RouteSegment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-download", s.ID)) } method="get">
-		<button class="download" title={ i18n.T(ctx, "translation.download") }>
+		<button class="button download" title={ i18n.T(ctx, "translation.download") }>
 			<a>
 				@helpers.IconFor("download")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-edit", s.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
+		<button class="button edit" title={ i18n.T(ctx, "translation.edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-refresh", s.ID)) } method="post">
-		<button title={ i18n.T(ctx, "translation.refresh") }>
+		<button class="button" title={ i18n.T(ctx, "translation.refresh") }>
 			<a>
 				@helpers.IconFor("refresh")
 			</a>
 		</button>
 	</form>
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "route-segment-matches", s.ID)) } method="post">
-		<button title={ i18n.T(ctx, "translation.find_matches") }>
+		<button class="button" title={ i18n.T(ctx, "translation.find_matches") }>
 			<a>
 				@helpers.IconFor("route-segment")
 			</a>
@@ -39,7 +39,7 @@ templ actions(s *database.RouteSegment) {
 		hx-get={ helpers.RouteFor(ctx, "route-segment-delete-confirm", s.ID) }
 		hx-target="#modal-container"
 		hx-swap="innerHTML"
-		class="dangerous"
+		class="button dangerous"
 		title={ i18n.T(ctx, "translation.delete") }
 	>
 		@helpers.IconFor("delete")
@@ -54,7 +54,7 @@ templ DeleteModal(s *database.RouteSegment) {
 		<div class="window">
 			<div class="flex justify-end p-2">
 				<button
-					class="close-modal"
+					class="button close-modal"
 					hx-get={ helpers.RouteFor(ctx, "route-segments", s.ID) }
 					hx-target="body"
 					hx-swap="innerHTML"
@@ -74,13 +74,13 @@ templ DeleteModal(s *database.RouteSegment) {
 				<div class="flex">
 					<button
 						hx-post={ helpers.RouteFor(ctx, "route-segment-delete", s.ID) }
-						class="confirm"
+						class="button confirm"
 					>{ i18n.T(ctx, "translation.Continue") }</button>
 					<button
 						hx-get={ helpers.RouteFor(ctx, "route-segments", s.ID) }
 						hx-target="body"
 						hx-swap="innerHTML"
-						class="cancel"
+						class="button cancel"
 					>{ i18n.T(ctx, "translation.Cancel") }</button>
 				</div>
 			</div>

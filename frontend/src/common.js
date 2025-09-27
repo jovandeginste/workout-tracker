@@ -107,3 +107,41 @@ globalThis.fullMap = function fullMap(map) {
 
   return false;
 };
+
+function registerDropdowns() {
+  const dropdowns = document.getElementsByClassName("dropdown");
+  let currentDropdown = null;
+
+  Array.prototype.slice.call(dropdowns).forEach((dropdown) => {
+    dropdown
+      .querySelector("& > .toggle")
+      .addEventListener("click", function (e) {
+        e.stopPropagation();
+        const menu = dropdown.querySelector("& > .dropdown-menu");
+        if (currentDropdown && currentDropdown !== dropdown) {
+          currentDropdown
+            .querySelector("& > .dropdown-menu")
+            .classList.add("hidden");
+        }
+
+        currentDropdown = currentDropdown === dropdown ? null : dropdown;
+        menu.classList.toggle("hidden");
+      });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!currentDropdown) return;
+
+    const menu = currentDropdown.querySelector("& > .dropdown-menu");
+    if (!menu.contains(e.target) && e.target !== menu.previousElementSibling) {
+      menu.classList.add("hidden");
+      currentDropdown = null;
+    }
+  });
+}
+
+globalThis.updateContent = function updatePage() {
+  registerDropdowns();
+};
+
+document.addEventListener("DOMContentLoaded", updateContent);

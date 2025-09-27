@@ -269,14 +269,14 @@ func Add() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<li><a target=\"_blank\" href=\"https://gpx.studio/\">gpx.studio — the online GPX file editor</a></li><li><a target=\"_blank\" href=\"https://kml2gpx.com/\">Kml2gpx.com: convert kml to gpx online</a></li><li><a target=\"_blank\" href=\"https://www.fitfileviewer.com/\">FIT File Viewer</a></li></ul></div></td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<li><a target=\"_blank\" href=\"https://gpx.studio/\">gpx.studio — the online GPX file editor</a></li><li><a target=\"_blank\" href=\"https://kml2gpx.com/\">Kml2gpx.com: convert kml to gpx online</a></li><li><a target=\"_blank\" href=\"https://www.fitfileviewer.com/\">FIT File Viewer</a></li></ul></div></td></tr></tbody><tfoot><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Add_workouts"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/add.templ`, Line: 93, Col: 73}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/add.templ`, Line: 93, Col: 88}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -370,14 +370,14 @@ func Add() templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</select></td></tr></thead> <tbody id=\"workout-form\"><tr><td></td><td>Select a category</td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</select></td></tr></thead> <tbody id=\"workout-form\"><tr><td></td><td>Select a category</td></tr></tbody><tfoot><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Add_workouts"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/add.templ`, Line: 139, Col: 73}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/add.templ`, Line: 139, Col: 88}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {

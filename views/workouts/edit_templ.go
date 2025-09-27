@@ -177,20 +177,20 @@ func Edit(w *database.Workout) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</select></td></tr></thead> <tbody id=\"workout-form\"><tr><td></td><td>Select a category</td></tr></tbody><tfoot><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</select></td></tr></thead> <tbody id=\"workout-form\"><tr><td></td><td>Select a category</td></tr></tbody><tfoot><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.update"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/edit.templ`, Line: 60, Col: 63}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/edit.templ`, Line: 60, Col: 78}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button> <button type=\"reset\" class=\"edit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button> <button type=\"reset\" class=\"button edit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -203,7 +203,7 @@ func Edit(w *database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</button> <button type=\"button\" class=\"dangerous\" onclick=\"document.location=this.getAttribute('data-url')\" data-url=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</button> <button type=\"button\" class=\"button dangerous\" onclick=\"document.location=this.getAttribute('data-url')\" data-url=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

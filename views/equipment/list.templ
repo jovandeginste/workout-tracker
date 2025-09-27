@@ -54,7 +54,7 @@ templ List(equipment []*database.Equipment) {
 
 templ actions(e *database.Equipment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
+		<button class="button edit" title={ i18n.T(ctx, "translation.edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
@@ -64,7 +64,7 @@ templ actions(e *database.Equipment) {
 		hx-get={ helpers.RouteFor(ctx, "equipment-delete-confirm", e.ID) }
 		hx-target="#modal-container"
 		hx-swap="innerHTML"
-		class="dangerous"
+		class="button dangerous"
 		title={ i18n.T(ctx, "translation.delete") }
 	>
 		@helpers.IconFor("delete")
@@ -79,7 +79,7 @@ templ DeleteModal(e *database.Equipment) {
 		<div class="window">
 			<div class="flex justify-end p-2">
 				<button
-					class="close-modal"
+					class="button close-modal"
 					hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
 					hx-target="body"
 					hx-swap="innerHTML"
@@ -99,13 +99,13 @@ templ DeleteModal(e *database.Equipment) {
 				<div class="flex">
 					<button
 						hx-post={ helpers.RouteFor(ctx, "equipment-delete", e.ID) }
-						class="confirm"
+						class="button confirm"
 					>{ i18n.T(ctx, "translation.Continue") }</button>
 					<button
 						hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
 						hx-target="body"
 						hx-swap="innerHTML"
-						class="cancel"
+						class="button cancel"
 					>{ i18n.T(ctx, "translation.Cancel") }</button>
 				</div>
 			</div>

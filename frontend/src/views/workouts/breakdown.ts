@@ -4,6 +4,7 @@ import { formatDuration } from "../../helpers.js";
 import { WorkoutStats } from "./show_stats.js";
 import { localized, msg } from "@lit/localize";
 import { initLocalize } from "../../locale.js";
+import { WorkoutData, WorkoutService } from "./service.js";
 
 initLocalize();
 
@@ -26,20 +27,6 @@ export class WorkoutBreakdown extends LitElement {
     converter: (value: string) => document.getElementById(value),
   })
   chartEl: WorkoutStats | null = null;
-
-  @property({
-    attribute: "data-el",
-    converter: (id: string) =>
-      JSON.parse(document.getElementById(id)?.textContent || "{}"),
-  })
-  data: any = {};
-
-  @property({
-    attribute: "preferred-units-el",
-    converter: (id: string) =>
-      JSON.parse(document.getElementById(id)?.textContent || "null"),
-  })
-  preferredUnits = null;
 
   availableMetrics: Record<string, { unit: string; displayFor?: string[] }> = {
     distance: {
@@ -70,22 +57,27 @@ export class WorkoutBreakdown extends LitElement {
     },
   };
 
+  private workoutService = new WorkoutService();
+  private preferredUnits = null;
+  private data: WorkoutData = null;
+
   protected createRenderRoot() {
     return this;
   }
 
-  willUpdate(changedProperties: PropertyValues<this>) {
-    if (changedProperties.has("preferredUnits")) {
-      this.availableMetrics.distance.unit = this.preferredUnits.distance || "";
-      this.availableMetrics.speed.unit = this.preferredUnits.speed || "";
-      this.availableMetrics.elevation.unit =
-        this.preferredUnits.elevation || "";
-      this.availableMetrics["heart-rate"].unit =
-        this.preferredUnits.heartRate || "";
-      this.availableMetrics.cadence.unit = this.preferredUnits.cadence || "";
-      this.availableMetrics.temperature.unit =
-        this.preferredUnits.temperature || "";
-    }
+  constructor() {
+    super();
+
+    this.preferredUnits = this.workoutService.preferredUnits;
+    this.data = this.workoutService.workoutData;
+    this.availableMetrics.distance.unit = this.preferredUnits.distance || "";
+    this.availableMetrics.speed.unit = this.preferredUnits.speed || "";
+    this.availableMetrics.elevation.unit = this.preferredUnits.elevation || "";
+    this.availableMetrics["heart-rate"].unit =
+      this.preferredUnits.heartRate || "";
+    this.availableMetrics.cadence.unit = this.preferredUnits.cadence || "";
+    this.availableMetrics.temperature.unit =
+      this.preferredUnits.temperature || "";
   }
 
   hiddenClasses(metric: string) {
@@ -98,11 +90,11 @@ export class WorkoutBreakdown extends LitElement {
 
   tableHeader() {
     const header = html`<tr class="breakdown-header">
-      <th></th>
-      <th></th>
+      <th width="1"></th>
+      <th width="1">#</th>
       ${Object.keys(this.availableMetrics).map((metric) => {
         if (this.data[metric] !== undefined) {
-          const col = this.data[metric].Label;
+          const col = this.data[metric].label;
           const hiddenClasses = this.hiddenClasses(metric);
           if (metric === "speed") {
             return html`<th class="${hiddenClasses}">${col}</th>
@@ -127,11 +119,11 @@ export class WorkoutBreakdown extends LitElement {
   }
 
   tableData() {
-    let currentDistance = Math.floor(+this.data.distance.Data[0] || 0);
+    let currentDistance = Math.floor(+this.data.distance.data[0] || 0);
     let intervalValues = {};
     const items = [];
-    for (let i = 0; i < this.data.time.Data.length; i++) {
-      const distance = +this.data.distance.Data[i] || 0;
+    for (let i = 0; i < this.data.time.data.length; i++) {
+      const distance = +this.data.distance.data[i] || 0;
       if (distance >= currentDistance + this.intervalDistance) {
         items.push([currentDistance, intervalValues]);
         currentDistance += this.intervalDistance;
@@ -139,7 +131,7 @@ export class WorkoutBreakdown extends LitElement {
       }
 
       for (const metric of Object.keys(this.data)) {
-        const value = this.data[metric].Data[i];
+        const value = this.data[metric].data[i];
         if (value !== undefined) {
           if (!intervalValues[metric]) {
             intervalValues[metric] = [];
@@ -290,34 +282,32 @@ export class WorkoutBreakdown extends LitElement {
   }
 
   render() {
-    const totalDistance = +this.data.distance?.Data?.slice(-1)[0] || 0;
+    const totalDistance = +this.data.distance?.data?.slice(-1)[0] || 0;
     const intervals = [1, 2, 5, 10, 25].filter((d) => d < totalDistance);
 
     return html`
-      <div>
-        <div class="float-right">
-          <nav>
-            ${intervals.map((interval) => {
-              return html`<a
-                href="#"
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this
-                  .intervalDistance === interval
-                  ? "bg-indigo-500 text-white"
-                  : ""}"
-                @click=${(e: Event) => {
-                  e.preventDefault();
-                  this.setActiveItem(null);
-                  this.intervalDistance = interval;
-                }}
-                >${interval} ${this.preferredUnits.distance || ""}</a
-              >`;
-            })}
-          </nav>
-        </div>
-        <h3>
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-semibold">
           <span class="icon-decoration icon-[fa6-solid--table-cells]"></span>
           ${msg("Breakdown", { id: "translation.Breakdown" })}
-        </h3>
+        </h4>
+        <nav class="flex space-x-2">
+          ${intervals.map((interval) => {
+            return html`<a
+              href="#"
+              class="px-3 py-1 text-xs rounded ${this.intervalDistance ===
+              interval
+                ? "bg-blue-500 dark:bg-blue-600 hover:bg-blue-400 dark:hover:bg-blue-500"
+                : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500"}"
+              @click=${(e: Event) => {
+                e.preventDefault();
+                this.setActiveItem(null);
+                this.intervalDistance = interval;
+              }}
+              >${interval} ${this.preferredUnits.distance || ""}</a
+            >`;
+          })}
+        </nav>
       </div>
       <div class="overflow-x-auto">
         <table class="breakdown-table">
