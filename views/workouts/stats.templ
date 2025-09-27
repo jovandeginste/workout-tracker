@@ -1,0 +1,126 @@
+package workouts
+
+import (
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+)
+
+templ Stats(w *database.Workout) {
+	<div class="workout-card">
+		<div class="p-4 border-b border-gray-200 dark:border-neutral-700">
+			<div class="flex items-center justify-between">
+				<h3 class="font-semibold mb-0">
+					@helpers.IconFor("statistics")
+					Statistics
+				</h3>
+				<div class="flex items-center space-x-2">
+					<!-- Selection indicator -->
+					<button
+						id="deselect-interval"
+						class="flex items-center space-x-2 px-3 py-1 bg-blue-500 dark:bg-blue-600 rounded text-xs hover:bg-red-400 dark:hover:bg-red-500 text-white hidden"
+						title="Deselect interval"
+						onclick="selectInterval(null)">
+						<div id="selection-indicator">Interval 2 (1.0km)</div>
+            <span class="icon-[fa6-solid--xmark]"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="stat-list">
+			<!-- Distance stats -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("distance")
+					Distance
+				</h4>
+				<div class="stat-row">
+					<!-- Distance, moving time, pause time -->
+				</div>
+			</div>
+
+			<!-- Elevation Statistics -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("elevation")
+					Elevation
+				</h4>
+				<div class="stat-row">
+					<!-- Elevation Gain, Loss, Average slop, max slope, min slope, vam, max height, min height -->
+				</div>
+			</div>
+
+			<!-- Speed Statistics -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("speed")
+					Speed
+				</h4>
+				<div class="stat-row">
+					<div class="stat">
+						<div class="stat-label">Average</div>
+						<div class="stat-value">17.8 km/h</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Maximum</div>
+						<div class="stat-value">47.4 km/h</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Moving Avg</div>
+						<div class="stat-value">18.2 km/h</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Heart Rate Statistics -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("heart-rate")
+					Heart Rate
+				</h4>
+				<div class="stat-row">
+					<div class="stat">
+						<div class="stat-label">Minimum</div>
+						<div class="stat-value">98 bpm</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Average</div>
+						<div class="stat-value">142 bpm</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Maximum</div>
+						<div class="stat-value">178 bpm</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Power/Cadence Statistics -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("cadence")
+					Cadence
+				</h4>
+				<div class="stat-row">
+					<div class="stat">
+						<div class="stat-label">Average</div>
+						<div class="stat-value">84 rpm</div>
+					</div>
+					<div class="stat">
+						<div class="stat-label">Maximum</div>
+						<div class="stat-value">158 rpm</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Temperature Statistics -->
+			<div class="stat-section">
+				<h4>
+					@helpers.IconFor("temperature")
+					Temperature
+				</h4>
+				<div class="stat-row">
+					<!-- Min, max, avg -->
+				</div>
+			</div>
+		</div>
+	</div>
+}

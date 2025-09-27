@@ -57,13 +57,13 @@ templ Edit(w *database.Workout) {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "workout.update") }</button>
-										<button type="reset" class="edit">
+										<button class="button" type="submit">{ i18n.T(ctx, "workout.update") }</button>
+										<button type="reset" class="button edit">
 											{ i18n.T(ctx, "translation.Reset_changes") }
 										</button>
 										<button
 											type="button"
-											class="dangerous"
+											class="button dangerous"
 											onclick="document.location=this.getAttribute('data-url')"
 											data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
 										>

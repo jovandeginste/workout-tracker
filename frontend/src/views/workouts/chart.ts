@@ -22,12 +22,13 @@ import "chartjs-adapter-date-fns";
 import Zoom from "chartjs-plugin-zoom";
 import { localized, msg } from "@lit/localize";
 import { initLocalize } from "../../locale.js";
+import { WorkoutData, WorkoutService } from "./service.js";
 
 initLocalize();
 
-@customElement("workout-stats")
+@customElement("workout-chart")
 @localized()
-export class WorkoutStats extends LitElement {
+export class WorkoutChart extends LitElement {
   @property({
     attribute: "color-mode",
   })
@@ -43,20 +44,6 @@ export class WorkoutStats extends LitElement {
   })
   map = null;
 
-  @property({
-    attribute: "preferred-units-el",
-    converter: (id: string) =>
-      JSON.parse(document.getElementById(id)?.textContent || "null"),
-  })
-  preferredUnits = null;
-
-  @property({
-    attribute: "data-el",
-    converter: (id: string) =>
-      JSON.parse(document.getElementById(id)?.textContent || "null"),
-  })
-  data = null;
-
   @property()
   tz: string = null;
 
@@ -68,7 +55,10 @@ export class WorkoutStats extends LitElement {
   })
   translations = null;
 
+  private workoutService = new WorkoutService();
   private timeLabels: number[] = [];
+  private preferredUnits = null;
+  private data: WorkoutData = null;
 
   public constructor() {
     super();
@@ -87,6 +77,30 @@ export class WorkoutStats extends LitElement {
       Legend,
       Zoom,
     );
+
+    this.preferredUnits = this.workoutService.preferredUnits;
+    this.data = this.workoutService.workoutData;
+
+    const metricSettings = this.getMetricSettings();
+    const datasets: ChartDatasetCustomTypesPerDataset[] = [];
+    for (let metric of Object.keys(metricSettings)) {
+      if (metric === "time") continue;
+      if (metric === "duration") continue;
+      if (metric === "distance") continue;
+      if (this.data[metric] !== undefined) {
+        datasets.push({
+          type: "line",
+          fill: metricSettings[metric].seriesType === "area" ? "start" : false,
+          spanGaps: true,
+          label: this.data[metric].label,
+          hidden: metricSettings[metric].hiddenByDefault || false,
+          data: this.data[metric].data,
+          yAxisID: metric,
+        });
+      }
+    }
+
+    this.chartData.datasets = datasets;
   }
 
   private chart: Chart | null = null;
@@ -110,10 +124,10 @@ export class WorkoutStats extends LitElement {
 
     if (this.type === "distance") {
       start = parseFloat(
-        this.data["distance"].Data[this.timeLabels.indexOf(start)],
+        this.data["distance"].data[this.timeLabels.indexOf(start)],
       );
       end = parseFloat(
-        this.data["distance"].Data[this.timeLabels.indexOf(end)],
+        this.data["distance"].data[this.timeLabels.indexOf(end)],
       );
     }
 
@@ -129,42 +143,18 @@ export class WorkoutStats extends LitElement {
   }
 
   public willUpdate(cProps: PropertyValues<this>) {
-    if (cProps.has("data") || cProps.has("type")) {
+    if (cProps.has("type")) {
       let labels: (number | Date)[];
-      this.timeLabels = this.data["time"].Data.map((t: number) =>
+      this.timeLabels = this.data["time"].data.map((t: number) =>
         new Date(t).valueOf(),
       );
       if (this.type === "time") {
         labels = this.timeLabels;
       } else if (this.type === "distance") {
-        labels = this.data["distance"].Data.map((d: string) => parseFloat(d));
+        labels = this.data["distance"].data.map((d: string) => parseFloat(d));
       }
 
       this.chartData.labels = labels;
-    }
-
-    if (cProps.has("data") || !cProps.has("preferredUnits")) {
-      const metricSettings = this.getMetricSettings();
-      const datasets: ChartDatasetCustomTypesPerDataset[] = [];
-      for (let metric of Object.keys(metricSettings)) {
-        if (metric === "time") continue;
-        if (metric === "duration") continue;
-        if (metric === "distance") continue;
-        if (this.data[metric] !== undefined) {
-          datasets.push({
-            type: "line",
-            fill:
-              metricSettings[metric].seriesType === "area" ? "start" : false,
-            spanGaps: true,
-            label: this.data[metric].Label,
-            hidden: metricSettings[metric].hiddenByDefault || false,
-            data: this.data[metric].Data,
-            yAxisID: metric,
-          });
-        }
-      }
-
-      this.chartData.datasets = datasets;
     }
   }
 
@@ -187,33 +177,9 @@ export class WorkoutStats extends LitElement {
 
   public render(): TemplateResult {
     this.style.display = "block";
-    return html`
-        <div>
-          <div class="float-right">
-            <nav>
-              <a
-                href="#"
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                  this.type === "time" ? "bg-indigo-500 text-white" : ""
-                }"
-                @click=${(e: Event) => {
-                  e.preventDefault();
-                  this.type = "time";
-                }}
-                ><span class="icon-[fa6-regular--clock]"></span></a>
-              <a
-                href="#"
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                  this.type === "distance" ? "bg-indigo-500 text-white" : ""
-                }"
-                @click=${(e: Event) => {
-                  e.preventDefault();
-                  this.type = "distance";
-                }}
-                ><span class="icon-[fa6-solid--road]"></span></a
-            </nav>
-          </div>
-          <h3>
+    return html` <div class="border-b border-gray-200 dark:border-neutral-700">
+        <div class="flex items-center justify-between px-4">
+          <h3 class="font-semibold mb-0">
             <span>
               <span class="icon-decoration icon-[fa6-solid--gauge]"></span>
               ${msg("Average speed", { id: "translation.Average_speed" })}
@@ -224,10 +190,37 @@ export class WorkoutStats extends LitElement {
               ${msg("Elevation", { id: "translation.Elevation" })}
             </span>
           </h3>
+          <div class="flex space-x-4 text-sm">
+            <nav class="flex space-x-8 px-4">
+              <button
+                class="tab-button ${this.type === "time" ? "active" : ""}"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.type = "time";
+                }}
+              >
+                <span class="icon-decoration icon-[fa6-regular--clock]"></span>
+                ${msg("Time", { id: "translation.Time" })}
+              </button>
+              <button
+                class="tab-button ${this.type === "distance" ? "active" : ""}"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.type = "distance";
+                }}
+              >
+                <span class="icon-decoration icon-[fa6-solid--road]"></span>
+                ${msg("Distance", { id: "translation.Distance" })}
+              </button>
+            </nav>
+          </div>
         </div>
+      </div>
+      <div class="p-4">
         <div class="h-[300px] md:h-[400px]">
           <canvas></canvas>
-        </div>`;
+        </div>
+      </div>`;
   }
 
   protected createRenderRoot() {
@@ -245,16 +238,16 @@ export class WorkoutStats extends LitElement {
           time: this.type === "time" ? { unit: "minute" } : undefined,
           min:
             this.type === "time"
-              ? new Date(this.data["time"].Data[0]).valueOf()
-              : parseFloat(this.data["distance"].Data[0]),
+              ? new Date(this.data["time"].data[0]).valueOf()
+              : parseFloat(this.data["distance"].data[0]),
           max:
             this.type === "time"
               ? new Date(
-                  this.data["time"].Data[this.data["time"].Data.length - 1],
+                  this.data["time"].data[this.data["time"].data.length - 1],
                 ).valueOf()
               : parseFloat(
-                  this.data["distance"].Data[
-                    this.data["distance"].Data.length - 1
+                  this.data["distance"].data[
+                    this.data["distance"].data.length - 1
                   ],
                 ),
           ticks: {
@@ -310,7 +303,7 @@ export class WorkoutStats extends LitElement {
       },
       onHover: (_, i) => {
         const index = i[0]?.index;
-        const p = this.data["position"].Data[index];
+        const p = this.data["position"].data[index];
         if (p) {
           const el = document.createElement("div");
           el.setAttribute("data-lat", p[0]);
