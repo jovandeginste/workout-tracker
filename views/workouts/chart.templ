@@ -6,7 +6,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 )
 
-templ ShowStats(w *database.Workout) {
+templ Chart(w *database.Workout) {
 	{{
 translations := map[string]string{
 	"distance":     i18n.T(ctx, "translation.Distance"),

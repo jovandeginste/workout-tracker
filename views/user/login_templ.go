@@ -128,7 +128,7 @@ func Login() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</label></td><td><input type=\"password\" id=\"password\" name=\"password\"></td></tr><tr><td></td><td><button id=\"signin\" type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</label></td><td><input type=\"password\" id=\"password\" name=\"password\"></td></tr><tr><td></td><td><button id=\"signin\" class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -215,7 +215,7 @@ func Login() templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</label></td><td><input type=\"password\" id=\"password\" name=\"password\"></td></tr><tr><td></td><td><button id=\"register\" type=\"submit\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</label></td><td><input type=\"password\" id=\"password\" name=\"password\"></td></tr><tr><td></td><td><button id=\"register\" class=\"button\" type=\"submit\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

@@ -28,7 +28,7 @@ templ Statistics(u *database.User, since, per string) {
 						<option value={ o.Key } selected?={ o.Key == per }>{ i18n.T(ctx, o.Translation) }</option>
 					}
 				</select>
-				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
+				<button class="button" type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
 		  {{ currentUser := helpers.CurrentUser(ctx) }}
 		  {{ stats, err := currentUser.GetStatisticsFor(since, per) }}

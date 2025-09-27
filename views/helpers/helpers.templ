@@ -1,5 +1,9 @@
 package helpers
 
 templ IconFor(name string) {
-	@templ.Raw(iconFor(name))
+	@templ.Raw(iconFor(name, "icon-decoration"))
+}
+
+templ IconForWith(name string, classes ...string) {
+	@templ.Raw(iconFor(name, classes...))
 }

@@ -1,5 +1,7 @@
 package helpers
 
+import "strings"
+
 // We need every icon fully qualified here. Otherwise Tailwind will not pick
 // it up and not add it to the generated CSS file.
 var iconMap = map[string]string{
@@ -106,10 +108,10 @@ var iconMap = map[string]string{
 	"github": "icon-[octicon--mark-github-16]",
 }
 
-func iconFor(what string) string {
+func iconFor(what string, classes ...string) string {
 	if icon, exists := iconMap[what]; exists {
-		return `<span class="icon-decoration ` + icon + `"></span>`
+		return `<span class="` + icon + ` ` + strings.Join(classes, " ") + `"></span>`
 	}
 
-	return `<span class="icon-decoration icon-[fa6-solid--question]"></span>`
+	return `<span class="` + strings.Join(classes, " ") + ` icon-[fa6-solid--question]"></span>`
 }
