@@ -1,3 +1,5 @@
+//go:build go1.21
+
 package logger
 
 import (
@@ -87,4 +89,12 @@ func (l *slogLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql 
 			Value: slog.GroupValue(fields...),
 		})
 	}
+}
+
+// ParamsFilter filter params
+func (l *slogLogger) ParamsFilter(ctx context.Context, sql string, params ...interface{}) (string, []interface{}) {
+	if l.Parameterized {
+		return sql, nil
+	}
+	return sql, params
 }
