@@ -207,7 +207,7 @@ update-deps:
 	@if git show-ref --verify --quiet refs/heads/$(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists locally. Aborting."; exit 1; fi
 	@if git ls-remote --exit-code --heads origin $(BRANCH_NAME_DEPS); then echo "Branch $(BRANCH_NAME_DEPS) already exists remotely. Aborting."; exit 1; fi
 	git switch --create $(BRANCH_NAME_DEPS)
-	npm update
+	cd frontend && npm update
 	go get -u -t ./...
 	go mod tidy
 	go mod vendor

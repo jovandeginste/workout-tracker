@@ -32,7 +32,11 @@ func (j JSONType[T]) Data() T {
 
 // Value return json value, implement driver.Valuer interface
 func (j JSONType[T]) Value() (driver.Value, error) {
-	return json.Marshal(j.data)
+	data, err := json.Marshal(j.data)
+	if err != nil {
+		return nil, err
+	}
+	return string(data), nil
 }
 
 // Scan scan value into JSONType[T], implements sql.Scanner interface
@@ -99,7 +103,11 @@ func NewJSONSlice[T any](s []T) JSONSlice[T] {
 
 // Value return json value, implement driver.Valuer interface
 func (j JSONSlice[T]) Value() (driver.Value, error) {
-	return json.Marshal(j)
+	data, err := json.Marshal(j)
+	if err != nil {
+		return nil, err
+	}
+	return string(data), nil
 }
 
 // Scan scan value into JSONType[T], implements sql.Scanner interface

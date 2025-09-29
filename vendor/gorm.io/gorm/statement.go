@@ -96,7 +96,9 @@ func (stmt *Statement) QuoteTo(writer clause.Writer, field interface{}) {
 		if v.Name == clause.CurrentTable {
 			if stmt.TableExpr != nil {
 				stmt.TableExpr.Build(stmt)
-			} else {
+			} else if stmt.Table != "" {
+				write(v.Raw, stmt.Table)
+			} else if stmt.AddError(stmt.Parse(stmt.Model)) == nil {
 				write(v.Raw, stmt.Table)
 			}
 		} else {
@@ -334,6 +336,8 @@ func (stmt *Statement) BuildCondition(query interface{}, args ...interface{}) []
 		switch v := arg.(type) {
 		case clause.Expression:
 			conds = append(conds, v)
+		case []clause.Expression:
+			conds = append(conds, v...)
 		case *DB:
 			v.executeScopes()
 
