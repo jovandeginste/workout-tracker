@@ -250,6 +250,7 @@ ru:
       помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)\n"
     enhanced_speed: Улучшенная скорость
     temperature: Температура
+    Slope: Уклон
   user:
     profile:
       time_zone: Часовой пояс
@@ -288,3 +289,6 @@ ru:
       many: 'Возникло %{count} проблем в процессе добавления отрывка трассы: %{list}'
   route_segment:
     update: Обновить участок маршрута
+  climb:
+    category: Категория
+    average_slope: Средний уклон
