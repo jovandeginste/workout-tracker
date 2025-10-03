@@ -104,7 +104,9 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 		elevDiff := (currentPoint.Elevation - prevPoint.Elevation)
 
 		var slope float64
-		if distDiff > 0 {
+		if _, ok := points[i].ExtraMetrics["grade"]; ok {
+			slope = points[i].ExtraMetrics.Get("grade")
+		} else if distDiff > 0 {
 			slope = (elevDiff / distDiff) * 100.0
 		}
 

@@ -79,7 +79,7 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeed(ctx, s)))
 
 		for _, m := range w.Data.ExtraMetrics {
-			if m == "speed" {
+			if m == "speed" || m == "grade" {
 				continue
 			}
 

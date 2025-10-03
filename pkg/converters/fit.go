@@ -81,6 +81,10 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 			gpxExtensionData["temperature"] = cast.ToString(r.Temperature)
 		}
 
+		if r.Grade != math.MaxInt16 {
+			gpxExtensionData["grade"] = cast.ToString(r.GradeScaled())
+		}
+
 		for key, value := range gpxExtensionData {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
 				XMLName: xml.Name{Local: key}, Data: value,
