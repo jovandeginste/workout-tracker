@@ -1,0 +1,87 @@
+package workouts
+
+import (
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/invopop/ctxi18n/i18n"
+)
+
+templ KeyMetrics(w *database.Workout) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+
+	<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+	  {{ amount := 0 }}
+
+		if w.Type.IsDistance() && amount < 4 {
+		  <div class="workout-card key-metric">
+			  <div class="title">
+				  @helpers.IconFor("distance")
+				  <div class="metric">{ i18n.T(ctx, "translation.Total_distance") }</div>
+			  </div>
+			  <div class="value">
+					@showLocked(w)
+					{ helpers.HumanDistance(ctx,w.TotalDistance() ) }
+					{ currentUser.PreferredUnits().Distance() }
+			  </div>
+		  </div>
+		  {{ amount = amount + 1 }}
+		}
+
+		if w.Type.IsDuration() && amount < 4 {
+		  <div class="workout-card key-metric">
+			  <div class="title">
+				  @helpers.IconFor("duration")
+				  <div class="metric">{ i18n.T(ctx, "translation.Total_duration") }</div>
+			  </div>
+			  <div class="value">
+					@showLocked(w)
+					{ helpers.HumanDuration(w.TotalDuration() ) }
+			  </div>
+			  if w.HasPause() {
+			    <div class="value-sub">
+            { i18n.T(ctx, "translation.Moving_time") }: { helpers.HumanDuration(w.TotalDuration() - w.PauseDuration()) }
+			    </div>
+			  }
+		  </div>
+		  {{ amount = amount + 1 }}
+		}
+
+		if w.Type.IsLocation() && w.HasElevation() && amount < 4 {
+      <div class="workout-card key-metric">
+        <div class="title">
+          @helpers.IconFor("elevation")
+          <div class="metric">{ i18n.T(ctx, "translation.Elevation") }</div>
+        </div>
+        <div class="value">
+					{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
+        </div>
+			  <div class="value-sub">
+			    ↓ { helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
+			  </div>
+      </div>
+      {{ amount = amount + 1 }}
+    }
+
+		if w.HasCalories() && amount < 4 {
+      <div class="workout-card key-metric">
+        <div class="title">
+          @helpers.IconFor("calories")
+          <div class="metric">
+						{ i18n.T(ctx, "translation.Est_calories_burned") }
+						<a
+							href="#"
+							title={ i18n.T(ctx, "translation.Estimated_based_on_the_activity") + " (" + helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) + " " + currentUser.PreferredUnits().Weight() + ")" }
+						>
+							@helpers.IconFor("info")
+						</a>
+          </div>
+        </div>
+        <div class="value">
+					{ helpers.HumanCalories (w.CaloriesBurned() ) }
+					
+        </div>
+      </div>
+      {{ amount = amount + 1 }}
+    }
+	</div>
+}

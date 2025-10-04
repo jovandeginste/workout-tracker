@@ -82,7 +82,7 @@ func (w *Workout) HasElevationData() bool {
 }
 
 func (w *Workout) HasPause() bool {
-	return w.PauseDuration() == 0
+	return w.PauseDuration() != 0
 }
 
 func (w *Workout) HasFile() bool {

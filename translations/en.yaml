@@ -127,6 +127,8 @@ en:
     temperature: Temperature
     Cancel: Cancel
     Circular: Circular
+    Climbs: Climbs
+    Climbs_detected: "%d climbs detected"
     Continue: Continue
     Copy_publicly_shareable_link: Copy link
     Create_a_new_account: Create a new account
@@ -169,6 +171,7 @@ en:
     Max_elevation: Max elevation
     Max_speed: Max speed
     Min_elevation: Min elevation
+    Moving_time: Moving time
     Name: Name
     Notes: Notes
     Other_users: Other users
@@ -184,6 +187,7 @@ en:
     Register: Register
     Repetitions: Repetitions
     Reset_changes: Reset changes
+    Route_segments: Route segments
     Show_map_in_full_width: Show map in full width
     Sign_in: Sign in
     Since: Since
