@@ -14,12 +14,13 @@ func (a *App) ReadConfiguration() error {
 
 	viper.SetDefault("bind", "[::]:8080")
 	viper.SetDefault("web_root", "")
-	viper.SetDefault("logging", "true")
-	viper.SetDefault("debug", "false")
+	viper.SetDefault("logging", true)
+	viper.SetDefault("debug", false)
 	viper.SetDefault("database_driver", "sqlite")
 	viper.SetDefault("dsn", "./database.db")
-	viper.SetDefault("registration_disabled", "false")
-	viper.SetDefault("socials_disabled", "false")
+	viper.SetDefault("registration_disabled", false)
+	viper.SetDefault("socials_disabled", false)
+	viper.SetDefault("worker_delay_seconds", 60)
 
 	for _, envVar := range []string{
 		"bind",
@@ -33,6 +34,7 @@ func (a *App) ReadConfiguration() error {
 		"dsn_file",
 		"registration_disabled",
 		"socials_disabled",
+		"worker_delay_seconds",
 	} {
 		if err := viper.BindEnv(envVar); err != nil {
 			return err

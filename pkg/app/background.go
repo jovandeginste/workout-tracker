@@ -23,15 +23,15 @@ var (
 
 const (
 	FileAddDelay                 = -1 * time.Minute
-	WorkerDelay                  = 5 * time.Second
 	workerRouteSegmentsBatchSize = 10
 	workerWorkoutsBatchSize      = 10
 )
 
 func (a *App) BackgroundWorker() {
+	a.Logger().Info("Background worker loop initialized", "delay_seconds", a.Config.WorkerDelaySeconds)
 	for {
 		a.bgLoop()
-		time.Sleep(WorkerDelay)
+		time.Sleep(time.Duration(a.Config.WorkerDelaySeconds) * time.Second)
 	}
 }
 
@@ -248,7 +248,7 @@ func (a *App) updateWorkout(l *slog.Logger) {
 
 	db := a.db.Preload("Data.Details").Preload("User")
 
-	q := db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(1000).Pluck("ID", &wID)
+	q := db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(workerWorkoutsBatchSize).Pluck("ID", &wID)
 	if err := q.Error; err != nil {
 		l.Error("Worker error: " + err.Error())
 	}

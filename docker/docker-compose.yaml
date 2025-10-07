@@ -10,7 +10,7 @@ services:
     networks:
       - workout-tracker
     environment:
-      - WT_JWT_ENCRYPTION_KEY_FILE=/run/secrets/jwt_encryption_key
+      WT_JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
     secrets:
       - jwt_encryption_key
 
@@ -90,7 +90,8 @@ services:
       - ../views:/app/views
       - ../translations:/app/translations
     environment:
-      - APP_ENV=development
+      APP_ENV: development
+      WT_WORKER_DELAY_SECONDS: 5
 
   app-workout-tracker-postgres:
     profiles:
