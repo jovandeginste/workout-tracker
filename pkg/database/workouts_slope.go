@@ -85,6 +85,36 @@ func NewDetector(kind string) *Detector {
 	}
 }
 
+// SmoothSlopeGrades computes a weighted average slope at each point.
+func SmoothSlopeGrades(points []MapPoint, windowMeters, minDist float64) {
+	n := len(points)
+
+	for i := range n {
+		centerDist := points[i].TotalDistance
+		var weightedSlopeSum, totalWeight float64
+
+		for j := range n {
+			distFromCenter := math.Abs(points[j].TotalDistance - centerDist)
+			if distFromCenter > windowMeters/2 || distFromCenter == 0 || distFromCenter < minDist {
+				continue
+			}
+
+			elevDiff := points[j].Elevation - points[i].Elevation
+			slope := (elevDiff / distFromCenter) * 100.0
+
+			weight := 1.0 / distFromCenter
+			weightedSlopeSum += slope * weight
+			totalWeight += weight
+		}
+
+		if totalWeight > 0 {
+			points[i].SlopeGrade = weightedSlopeSum / totalWeight
+		} else {
+			points[i].SlopeGrade = 0
+		}
+	}
+}
+
 // DetectSignificantSegments processes a slice of points to find climbs or descents.
 func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 	detector := NewDetector(kind)
@@ -92,6 +122,8 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 	if len(points) < 2 {
 		return nil
 	}
+
+	SmoothSlopeGrades(points, 300.0, 20.0)
 
 	// Start with the first point.
 	detector.currentSegmentPoints = append(detector.currentSegmentPoints, &points[0])
@@ -103,12 +135,7 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 		distDiff := currentPoint.TotalDistance - prevPoint.TotalDistance
 		elevDiff := (currentPoint.Elevation - prevPoint.Elevation)
 
-		var slope float64
-		if distDiff > 0 {
-			slope = (elevDiff / distDiff) * 100.0
-		}
-
-		currentPoint.SlopeGrade = slope
+		slope := currentPoint.SlopeGrade
 
 		// Adjust slope and elevation diff based on "kind" (climb or descent).
 		effectiveSlope := slope * detector.slopeSign
