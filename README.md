@@ -298,6 +298,7 @@ WT_DSN="./database.db"
 WT_REGISTRATION_DISABLED="false"
 WT_SOCIALS_DISABLED="false"
 WT_DEV="false"
+WT_WORKER_DELAY_SECONDS=60
 ```
 
 After starting the server, you can access it at <http://localhost:8080> (the

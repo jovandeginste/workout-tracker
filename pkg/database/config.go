@@ -23,14 +23,15 @@ type UserConfig struct {
 
 // EnvConfig are options that are read from the config file or environment only
 type EnvConfig struct {
-	Bind             string `mapstructure:"bind" gorm:"-"`               // Which address to bind to
-	WebRoot          string `mapstructure:"web_root" gorm:"-"`           // The web root path (relative to the bind address)
-	JWTEncryptionKey string `mapstructure:"jwt_encryption_key" gorm:"-"` // Encryption key for JWT
-	Dev              bool   `mapstructure:"dev" gorm:"-"`                // Development mode
-	DatabaseDriver   string `mapstructure:"database_driver" gorm:"-"`    // Which database driver to use
-	DSN              string `mapstructure:"dsn" gorm:"-"`                // Database DSN
-	Logging          bool   `mapstructure:"logging" gorm:"-"`            // Enable logging
-	Debug            bool   `mapstructure:"debug" gorm:"-"`              // Debug logging mode
+	Bind               string `mapstructure:"bind" gorm:"-"`                 // Which address to bind to
+	WebRoot            string `mapstructure:"web_root" gorm:"-"`             // The web root path (relative to the bind address)
+	JWTEncryptionKey   string `mapstructure:"jwt_encryption_key" gorm:"-"`   // Encryption key for JWT
+	Dev                bool   `mapstructure:"dev" gorm:"-"`                  // Development mode
+	DatabaseDriver     string `mapstructure:"database_driver" gorm:"-"`      // Which database driver to use
+	DSN                string `mapstructure:"dsn" gorm:"-"`                  // Database DSN
+	Logging            bool   `mapstructure:"logging" gorm:"-"`              // Enable logging
+	Debug              bool   `mapstructure:"debug" gorm:"-"`                // Debug logging mode
+	WorkerDelaySeconds int    `mapstructure:"worker_delay_seconds" gorm:"-"` // Time in seconds between worker runs
 
 	JWTEncryptionKeyFile string `mapstructure:"jwt_encryption_key_file" gorm:"-"` // File containing the encryption key for JWT
 	DSNFile              string `mapstructure:"dsn_file" gorm:"-"`                // File containing the database DSN
