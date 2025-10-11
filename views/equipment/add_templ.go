@@ -116,14 +116,14 @@ func Add() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label></td><td><input type=\"checkbox\" id=\"active\" name=\"active\" value=\"true\" checked=\"true\"></td></tr><tr><td></td><td><button type=\"submit\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label></td><td><input type=\"checkbox\" id=\"active\" name=\"active\" value=\"true\" checked=\"true\"></td></tr><tr><td></td><td><button class=\"button\" type=\"submit\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Add_equipment"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/add.templ`, Line: 57, Col: 72}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/add.templ`, Line: 57, Col: 87}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {

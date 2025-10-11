@@ -137,76 +137,6 @@ templ FullWorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
-			if w.HasFile() {
-				<tr>
-					<td>
-						@helpers.IconFor("file")
-					</td>
-					<th>{ i18n.T(ctx, "translation.File") }</th>
-					<td>
-						if len(w.Filename()) > 15 {
-							<abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
-						} else {
-							{ w.Filename() }
-						}
-					</td>
-				</tr>
-			}
-			<tr>
-				<td>
-					@helpers.IconFor("date")
-				</td>
-				<th>{ i18n.T(ctx, "translation.Date") }</th>
-				<td>
-					<a
-						href="#"
-						onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
-					>
-						@helpers.IconFor("timezone")
-					</a>
-					@partials.SnippetDate(w.Date)
-					<div id="timeinfo" class="hidden">
-						<ul>
-							<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>
-							<li>UTC: { helpers.InTimezone( w.Date, "UTC").String() }</li>
-							<li>{ w.Timezone() }: {  helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					@helpers.IconFor("location")
-				</td>
-				<th>{ i18n.T(ctx, "translation.Location") }</th>
-				<td>
-					@showLocked(w)
-					{ w.Address() }
-				</td>
-			</tr>
-			<tr>
-				<td>
-					@helpers.IconFor("source")
-				</td>
-				<th>{ i18n.T(ctx, "translation.Source") }</th>
-				<td>{ w.Creator() }</td>
-			</tr>
-			<tr>
-				<td>
-					@helpers.IconFor("workout")
-				</td>
-				<th>{ i18n.T(ctx, "translation.Type") }</th>
-				<td>
-					<span>
-						@helpers.IconFor(w.Type.String())
-						if w.HasCustomType() {
-							<i>{ w.CustomType }</i>
-						} else {
-							{ i18n.T(ctx, w.Type.StringT()) }
-						}
-					</span>
-				</td>
-			</tr>
 			if w.Type.IsRepetition() {
 				<tr>
 					<td>
@@ -240,34 +170,11 @@ templ FullWorkoutDetails(w *database.Workout) {
 			if w.Type.IsDuration() {
 				<tr>
 					<td>
-						@helpers.IconFor("duration")
-					</td>
-					<th>{ i18n.T(ctx, "translation.Total_duration") }</th>
-					<td class="whitespace-nowrap font-mono">
-						@showLocked(w)
-						{ helpers.HumanDuration(w.TotalDuration() ) }
-					</td>
-				</tr>
-				<tr>
-					<td>
 						@helpers.IconFor("pause")
 					</td>
 					<th>{ i18n.T(ctx, "translation.Time_paused") }</th>
 					<td class="whitespace-nowrap font-mono">
 						{ helpers.HumanDuration (w.PauseDuration() ) }
-					</td>
-				</tr>
-			}
-			if w.Type.IsDistance() {
-				<tr>
-					<td>
-						@helpers.IconFor("distance")
-					</td>
-					<th>{ i18n.T(ctx, "translation.Total_distance") }</th>
-					<td class="whitespace-nowrap font-mono">
-						@showLocked(w)
-						{ helpers.HumanDistance(ctx,w.TotalDistance() ) }
-						{ currentUser.PreferredUnits().Distance() }
 					</td>
 				</tr>
 			}
@@ -366,46 +273,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 							{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
 						</td>
 					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("up")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Total_up") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("down")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Total_down") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
 				}
-			}
-			if w.HasCalories() {
-				<tr>
-					<td>
-						@helpers.IconFor("calories")
-					</td>
-					<th>
-						{ i18n.T(ctx, "translation.Est_calories_burned") }
-						<a
-							href="#"
-							title={ i18n.T(ctx, "translation.Estimated_based_on_the_activity") }
-						>
-							@helpers.IconFor("info")
-						</a>
-					</th>
-					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanCalories (w.CaloriesBurned() ) }
-						({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
-						{ currentUser.PreferredUnits().Weight() })
-					</td>
-				</tr>
 			}
 			<tr>
 				<td>

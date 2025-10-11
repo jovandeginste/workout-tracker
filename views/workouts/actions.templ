@@ -4,16 +4,17 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"strconv"
 )
 
 templ Actions(w *database.Workout) {
 	{{
-	t := ""
+	t := "button"
 	if w.Locked {
-		t = "dangerous"
+		t = "button dangerous"
 	}
 	}}
-	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-toggle-lock", w.ID)) } method="post">
+	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-toggle-lock", w.ID)) } method="post" class="my-0">
 		<button class={ t } title={ i18n.T(ctx, "translation.LockWorkout") }>
 			<a>
 				if w.Locked {
@@ -24,97 +25,108 @@ templ Actions(w *database.Workout) {
 			</a>
 		</button>
 	</form>
-	if w.HasFile() {
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get">
-			<button class="download" title={ i18n.T(ctx, "translation.download") }>
-				<a>
-					@helpers.IconFor("download")
-				</a>
-			</button>
-		</form>
-	}
-	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-edit", w.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
-			<a>
-				@helpers.IconFor("edit")
-			</a>
-		</button>
-	</form>
-	if w.HasFile() {
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-refresh", w.ID)) } method="post">
-			<button title={ i18n.T(ctx, "translation.refresh") }>
-				<a>
-					@helpers.IconFor("refresh")
-				</a>
-			</button>
-		</form>
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID)) } method="get">
-			<button title={ i18n.T(ctx, "translation.create_route_segment") }>
-				<a>
-					@helpers.IconFor("route-segment")
-				</a>
-			</button>
-		</form>
-	}
-	<button
-		hx-get={ helpers.RouteFor(ctx, "workout-delete-confirm", w.ID) }
-		hx-target="#modal-container"
-		hx-swap="innerHTML"
-		class="dangerous"
-		title={ i18n.T(ctx, "translation.delete") }
-	>
-		@helpers.IconFor("delete")
-	</button>
-	<span class="share-actions">
-		<span title={ i18n.T(ctx, "translation.public_share") }>
-			@helpers.IconFor("share")
-		</span>
-		if w.PublicUUID != nil {
-			<form
-				onsubmit="copyToClipboard('public_uuid'); return false;"
-			>
-				<input
-					type="text"
-					name="public_uuid"
-					id="public_uuid"
-					data-notice={ i18n.T(ctx, "translation.Publicly_shareable_link_was_copied_to_clipboard") }
-					class="hidden"
-					value={ helpers.RouteFor(ctx, "share", w.PublicUUID) }
-				/>
-				<script>
-        var uuidText = document.getElementById("public_uuid");
-        uuidText.value = new URL(uuidText.value, document.location).href;
-      </script>
+	<div class="flex items-center">
+		<div class="actions">
+			<span class="share-actions">
+				<span title={ i18n.T(ctx, "translation.public_share") }>
+					@helpers.IconFor("share")
+				</span>
+				if w.PublicUUID != nil {
+					<form
+						onsubmit="copyToClipboard('public_uuid'); return false;"
+					>
+						<input
+							type="text"
+							name="public_uuid"
+							id="public_uuid"
+							data-notice={ i18n.T(ctx, "translation.Publicly_shareable_link_was_copied_to_clipboard") }
+							class="hidden"
+							value={ helpers.RouteFor(ctx, "share", w.PublicUUID) }
+						/>
+						<script>
+        		var uuidText = document.getElementById("public_uuid");
+        		uuidText.value = new URL(uuidText.value, document.location).href;
+      		</script>
+						<button
+							class="button share"
+							title={ i18n.T(ctx, "translation.Copy_publicly_shareable_link") }
+						>
+							<a>
+								@helpers.IconFor("copy")
+							</a>
+						</button>
+					</form>
+					<button
+						hx-post={ helpers.RouteFor(ctx, "workout-share-delete", w.ID) }
+						hx-target="body"
+						hx-headers='{"X-HTTP-Method-Override": "DELETE"}'
+						hx-swap="innerHTML"
+						class="button share dangerous"
+						title={ i18n.T(ctx, "translation.delete_public_share") }
+					>
+						@helpers.IconFor("delete")
+					</button>
+				}
 				<button
-					class="share"
-					title={ i18n.T(ctx, "translation.Copy_publicly_shareable_link") }
+					hx-post={ helpers.RouteFor(ctx, "workout-share", w.ID) }
+					hx-target="body"
+					hx-swap="innerHTML"
+					class="button share dangerous"
+					title={ i18n.T(ctx, "translation.Regenerate_publicly_shareable_link") }
 				>
-					<a>
-						@helpers.IconFor("copy")
-					</a>
+					@helpers.IconFor("generate-share")
 				</button>
-			</form>
-			<button
-				hx-post={ helpers.RouteFor(ctx, "workout-share-delete", w.ID) }
-				hx-target="body"
-				hx-headers='{"X-HTTP-Method-Override": "DELETE"}'
-				hx-swap="innerHTML"
-				class="share dangerous"
-				title={ i18n.T(ctx, "translation.delete_public_share") }
-			>
-				@helpers.IconFor("delete")
+			</span>
+		</div>
+		<!-- Dropdown Menu -->
+		<div class="dropdown relative ml-2">
+			<button class="toggle button pr-0" title="More actions">
+				<span class="icon-[fa6-solid--ellipsis-vertical]"></span>
 			</button>
-		}
-		<button
-			hx-post={ helpers.RouteFor(ctx, "workout-share", w.ID) }
-			hx-target="body"
-			hx-swap="innerHTML"
-			class="share dangerous"
-			title={ i18n.T(ctx, "translation.Regenerate_publicly_shareable_link") }
-		>
-			@helpers.IconFor("generate-share")
-		</button>
-	</span>
+			<div id={ "actions-dropdown-menu-" + strconv.FormatUint(w.ID, 10) } class="hidden dropdown-menu">
+				<div class="py-2">
+					<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-edit", w.ID)) } method="get" class="my-0">
+						<button class="menu-item">
+							@helpers.IconFor("edit")
+							<span class="ml-3">{ i18n.T(ctx, "translation.edit") }</span>
+						</button>
+					</form>
+					if w.HasFile() {
+						<hr class="my-2 border-gray-200 dark:border-neutral-800"/>
+						<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get" class="my-0">
+							<button class="menu-item">
+								@helpers.IconFor("download")
+								<span class="ml-3">{ i18n.T(ctx, "translation.download") }</span>
+							</button>
+						</form>
+						<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-refresh", w.ID)) } method="post" class="my-0">
+							<button class="menu-item">
+								@helpers.IconFor("refresh")
+								<span class="ml-3">{ i18n.T(ctx, "translation.refresh") }</span>
+							</button>
+						</form>
+						<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID)) } method="get" class="my-0">
+							<button class="menu-item">
+								@helpers.IconFor("route-segment")
+								<span class="ml-3">{ i18n.T(ctx, "translation.create_route_segment") }</span>
+							</button>
+						</form>
+					}
+					<hr class="my-2 border-gray-200 dark:border-neutral-800"/>
+					<button
+						hx-get={ helpers.RouteFor(ctx, "workout-delete-confirm", w.ID) }
+						hx-target="#modal-container"
+						hx-swap="innerHTML"
+						class="menu-item text-red-500 dark:text-red-400"
+						title={ i18n.T(ctx, "translation.delete") }
+					>
+						@helpers.IconFor("delete")
+						<span class="ml-3">{ i18n.T(ctx, "translation.delete") }</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="modal-container">
 		// Modal content will be loaded here
 	</div>
@@ -125,7 +137,7 @@ templ DeleteModal(w *database.Workout) {
 		<div class="window">
 			<div class="flex justify-end p-2">
 				<button
-					class="close-modal"
+					class="button close-modal"
 					hx-get={ helpers.RouteFor(ctx, "workouts", w.ID) }
 					hx-target="body"
 					hx-swap="innerHTML"
@@ -146,13 +158,13 @@ templ DeleteModal(w *database.Workout) {
 				<div class="flex">
 					<button
 						hx-post={ helpers.RouteFor(ctx, "workout-delete", w.ID) }
-						class="confirm"
+						class="button confirm"
 					>{ i18n.T(ctx, "translation.Continue") }</button>
 					<button
 						hx-get={ helpers.RouteFor(ctx, "workouts", w.ID) }
 						hx-target="body"
 						hx-swap="innerHTML"
-						class="cancel"
+						class="button cancel"
 					>{ i18n.T(ctx, "translation.Cancel") }</button>
 				</div>
 			</div>
