@@ -31,6 +31,7 @@ type EnvConfig struct {
 	DSN                string `mapstructure:"dsn" gorm:"-"`                  // Database DSN
 	Logging            bool   `mapstructure:"logging" gorm:"-"`              // Enable logging
 	Debug              bool   `mapstructure:"debug" gorm:"-"`                // Debug logging mode
+	Offline            bool   `mapstructure:"offline" gorm:"-"`              // Disable calls to external services
 	WorkerDelaySeconds int    `mapstructure:"worker_delay_seconds" gorm:"-"` // Time in seconds between worker runs
 
 	JWTEncryptionKeyFile string `mapstructure:"jwt_encryption_key_file" gorm:"-"` // File containing the encryption key for JWT
