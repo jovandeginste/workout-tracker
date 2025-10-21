@@ -82,9 +82,7 @@ func (a *App) Configure() error {
 		return err
 	}
 
-	if err := a.ConfigureGeocoder(); err != nil {
-		return err
-	}
+	a.ConfigureGeocoder()
 
 	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
 		return err
@@ -97,9 +95,13 @@ func (a *App) Configure() error {
 	return nil
 }
 
-func (a *App) ConfigureGeocoder() error {
+func (a *App) ConfigureGeocoder() {
+	if a.Config.Offline {
+		geocoder.ForceOffline()
+		return
+	}
+
 	geocoder.SetClient(a.logger, a.Version.UserAgent())
-	return nil
 }
 
 func (a *App) ConfigureDatabase() error {

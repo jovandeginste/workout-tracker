@@ -10,7 +10,7 @@ import (
 )
 
 func init() { //nolint:gochecknoinits
-	online = false
+	goOffline()
 }
 
 func defaultUser() *User {

@@ -17,8 +17,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var online = true
-
 const UnknownLocation = "(unknown location)"
 
 var correctAltitudeCreators = []string{
@@ -270,7 +268,7 @@ func (m *MapCenter) IsZero() bool {
 }
 
 func (m *MapCenter) Address() *geo.Address {
-	if !online || m.IsZero() {
+	if m.IsZero() {
 		return nil
 	}
 

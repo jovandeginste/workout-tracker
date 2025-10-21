@@ -30,12 +30,13 @@ var (
 )
 
 type client struct {
-	url         string
-	client      *retryablehttp.Client
-	logger      *slog.Logger
-	lastRequest time.Time
-	userAgent   string
-	m           sync.Mutex
+	url           string
+	alwaysOffline bool
+	client        *retryablehttp.Client
+	logger        *slog.Logger
+	lastRequest   time.Time
+	userAgent     string
+	m             sync.Mutex
 }
 
 type Query struct {
@@ -113,15 +114,21 @@ func (c *client) wait() {
 	time.Sleep(d)
 }
 
+func AllowOnline() {
+	c = nil
+}
+
+func ForceOffline() {
+	c = &client{
+		alwaysOffline: true,
+	}
+}
+
 func SetClient(l *slog.Logger, ua string) {
-	if c != nil {
+	if c != nil && c.alwaysOffline {
 		return
 	}
 
-	ResetClient(l, ua)
-}
-
-func ResetClient(l *slog.Logger, ua string) {
 	r := retryablehttp.NewClient()
 	r.RetryMax = RetryMax
 	r.RetryWaitMin = RetryWaitMin
@@ -139,6 +146,10 @@ func ResetClient(l *slog.Logger, ua string) {
 func search(a string) ([]Result, error) {
 	if c == nil {
 		return nil, ErrClientNotSet
+	}
+
+	if c.alwaysOffline {
+		return nil, nil
 	}
 
 	c.wait()
@@ -216,6 +227,10 @@ func Search(a string) ([]string, error) {
 func Reverse(q Query) (*geo.Address, error) {
 	if c == nil {
 		return nil, ErrClientNotSet
+	}
+
+	if c.alwaysOffline {
+		return nil, nil
 	}
 
 	c.wait()

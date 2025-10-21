@@ -3,12 +3,17 @@ package database
 import (
 	"testing"
 
+	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func init() { //nolint:gochecknoinits
-	online = false
+	goOffline()
+}
+
+func goOffline() {
+	geocoder.ForceOffline()
 }
 
 func defaultWorkout(t *testing.T) *Workout {

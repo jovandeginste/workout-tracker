@@ -299,7 +299,13 @@ WT_REGISTRATION_DISABLED="false"
 WT_SOCIALS_DISABLED="false"
 WT_DEV="false"
 WT_WORKER_DELAY_SECONDS=60
+WT_OFFLINE="false"
 ```
+
+> [!NOTE]  
+> Setting `WT_OFFLINE` to `true` runs the app without making external geocoding
+> requests (useful for offline environments or to avoid rate limits). In this
+> mode, geocoding functions return nil results.
 
 After starting the server, you can access it at <http://localhost:8080> (the
 default port). A login form is shown.
