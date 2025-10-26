@@ -1,0 +1,39 @@
+{
+  "name": "Workout Tracker Dev Container",
+  "build": {
+    "args": {
+      "NODE_VERSION": "${localEnv:NODE_VERSION}",
+      "GO_VERSION": "${localEnv:GO_VERSION}"
+    },
+    "context": "./../", // Set the build context to the root of the repository so that Dockerfile can access all files (e.g. package-lock.json)
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot-chat",
+        "github.copilot",
+        "github.vscode-github-actions",
+        "golang.Go",
+        "ms-vscode.makefile-tools",
+        "ms-vscode.powershell",
+        "ms-vscode.vscode-loc-en"
+      ],
+      "settings": {
+        "git.allowForcePush": true,
+        "locale": "en",
+        "powershell.developerTools.enableTelemetry": false,
+        "terminal.integrated.defaultProfile.linux": "pwsh",
+        "terminal.integrated.profiles.linux": {
+          "pwsh": {
+            "path": "/usr/bin/pwsh",
+            "args": [
+              "-NoLogo"
+            ]
+          }
+        },
+        "workbench.startupEditor": "none"
+      }
+    }
+  }
+}
