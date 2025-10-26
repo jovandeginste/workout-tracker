@@ -1,0 +1,94 @@
+name: Build Dev Container
+
+on:
+  workflow_dispatch:
+    inputs:
+      go_version:
+        description: "Go version to use (e.g., 1.24)."
+        required: true
+        default: "1.24"
+      node_version:
+        description: "Node.js version to use (e.g., 22)."
+        required: true
+        default: "22"
+  
+  push:
+    branches:
+      - "*"
+    paths:
+      - "go.mod"
+      - ".devcontainer/**"
+      - ".devcontainer-template/**"
+      - "frontend/package*.json"
+
+env:
+  DEFAULT_GO_VERSION: "1.24"
+  DEFAULT_NODE_VERSION: "22"
+
+jobs:
+  dev_container:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Assign default versions if inputs are empty
+        id: params
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace("${{ github.event.inputs.go_version }}")) {
+            # Extract Go version from go.mod
+            [regex]$pattern = "go (?<version>\d+(\.\d+)?(\.\d+)?)"
+            $goModFileContent = Get-Content "go.mod"
+            $matchResults = $pattern.match($goModFileContent)
+            if ($matchResults.Success) {
+              $goVersion = $matchResults.Groups["version"].Value
+              Write-Host "Extracted Go version from go.mod: $goVersion"
+              Write-Output "go_version=$goVersion" >> $env:GITHUB_OUTPUT
+            } else {
+              Write-Warning "Input 'go_version' is empty. Using fallback version: $env:DEFAULT_GO_VERSION"
+              Write-Output "go_version=$env:DEFAULT_GO_VERSION" >> $env:GITHUB_OUTPUT
+            }            
+          } else {
+            Write-Host "Using provided Go version: ${{ github.event.inputs.go_version }}"
+            Write-Output "go_version=${{ github.event.inputs.go_version }}" >> $env:GITHUB_OUTPUT
+          }
+
+          if ([string]::IsNullOrWhiteSpace("${{ github.event.inputs.node_version }}")) {
+            Write-Host "Input 'node_version' is empty. Using fallback version: $env:DEFAULT_NODE_VERSION"
+            Write-Output "node_version=$env:DEFAULT_NODE_VERSION" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Output "node_version=${{ github.event.inputs.node_version }}" >> $env:GITHUB_OUTPUT
+          }
+
+      - name: Print dev container build parameters
+        shell: pwsh
+        run: |
+          Write-Host "Go version: ${{ steps.params.outputs.go_version }}"
+          Write-Host "Node.js version: ${{ steps.params.outputs.node_version }}"
+
+      - name: Login to Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pre-build dev container image
+        uses: devcontainers/ci@v0.3
+        env:
+          GO_VERSION: ${{ steps.params.outputs.go_version }}
+          NODE_VERSION: ${{ steps.params.outputs.node_version }}
+        with:
+          imageName: ghcr.io/jovandeginste/workout-tracker-dev-container
+          cacheFrom: ghcr.io/jovandeginste/workout-tracker-dev-container
+          push: filter
+          refFilterForPush: refs/heads/${{ github.event.repository.default_branch }}
+          imageTag: latest
+          subFolder: .devcontainer-template
+          configFile: .devcontainer-template/.devcontainer.json
