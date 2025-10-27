@@ -101,12 +101,12 @@ dev-docker-clean:
 build: build-server build-docker screenshots
 meta: swagger screenshots changelog
 
-build-cli: build-frontend build-templates
+build-cli:
 	go build \
 			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 			-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
-build-server:
+build-server: build-frontend build-templates
 	go build \
 			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 			-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
