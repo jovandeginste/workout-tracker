@@ -143,8 +143,11 @@ test-templates:
 test-commands:
 	$(GO_TEST) ./cmd/...
 
+verify-templates:
+	$(TEMPL_COMMAND) fmt --fail -v .
+
 format-templates:
-	find . -type f -name '*.templ' -exec templ fmt -v {} \;
+	$(TEMPL_COMMAND) fmt -v .
 
 serve:
 	$(WT_OUTPUT_FILE)

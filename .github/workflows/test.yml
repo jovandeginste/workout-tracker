@@ -21,6 +21,9 @@ jobs:
         with:
           args: --check .
 
+      - name: Verify templ files are formatted
+        run: make verify-templates
+
       - name: Update templ files
         run: make build-templates
 
