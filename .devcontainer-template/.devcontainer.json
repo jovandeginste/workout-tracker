@@ -27,9 +27,7 @@
         "terminal.integrated.profiles.linux": {
           "pwsh": {
             "path": "/usr/bin/pwsh",
-            "args": [
-              "-NoLogo"
-            ]
+            "args": ["-NoLogo"]
           }
         },
         "workbench.startupEditor": "none"
