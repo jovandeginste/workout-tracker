@@ -732,7 +732,7 @@ func dailyHeightFtIn(m *database.Measurement) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "\" readonly=\"readonly\" required> <input size=\"2\" type=\"number\" name=\"ft\" id=\"ft\" value=\"0\" onchange=\"updateDailyHeight();\"> ft <input size=\"2\" type=\"number\" name=\"in\" id=\"in\" value=\"0\" onchange=\"updateDailyHeight();\"> in<script>readDailyHeight();</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "\" readonly=\"readonly\" required> <input size=\"2\" type=\"number\" name=\"ft\" id=\"ft\" value=\"0\" onchange=\"updateDailyHeight();\"> ft <input size=\"2\" type=\"number\" name=\"in\" id=\"in\" value=\"0\" onchange=\"updateDailyHeight();\"> in<script>\n\t\treadDailyHeight();\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -768,7 +768,7 @@ func dailyHeightCm(m *database.Measurement) templ.Component {
 		var templ_7745c5c3_Var38 string
 		templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanHeightSingle(ctx, m.Height))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/daily.templ`, Line: 227, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/daily.templ`, Line: 229, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var38))
 		if templ_7745c5c3_Err != nil {
@@ -807,7 +807,7 @@ func showIfAvailable(v float64, s string) templ.Component {
 			var templ_7745c5c3_Var40 string
 			templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.JoinStringErrs(s)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/daily.templ`, Line: 235, Col: 5}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/daily.templ`, Line: 237, Col: 5}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var40))
 			if templ_7745c5c3_Err != nil {
