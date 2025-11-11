@@ -9,7 +9,7 @@ import (
 
 templ Heatmap(workouts []*database.Workout) {
 	@partials.Page(partials.NewPageOptions()) {
-		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.css" } />
+		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.css" }/>
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.js" }></script>
 		<h2>
 			@helpers.IconFor(`heatmap`)
@@ -19,9 +19,9 @@ templ Heatmap(workouts []*database.Workout) {
 			<wt-heatmap
 				id="map"
 				class="border-2 border-black rounded-xl h-[600px] md:h-[800px] print:w-full print:h-[800px]"
-        api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
-        api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
-        i18n={ templ.JSONString(map[string]string{
+				api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
+				api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
+				i18n={ templ.JSONString(map[string]string{
           "streets": i18n.T(ctx, "translation.Streets"),
           "aerial":  i18n.T(ctx, "translation.Aerial"),
         }) }

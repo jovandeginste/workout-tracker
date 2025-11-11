@@ -54,19 +54,19 @@ templ Language() {
 		}
 	</select>
 	<script>
-    function changeLanguage(value) {
-      location.assign("?lang=" + value);
-    }
-  </script>
+		function changeLanguage(value) {
+			location.assign("?lang=" + value);
+		}
+	</script>
 }
 
 templ PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *database.UserPreferredUnits) {
-	{{ 	speedUnit := preferredUnits.Speed() }}
-	{{ 	speedFormatter := templatehelpers.HumanSpeedFor(speedUnit) }}
-	{{ 	primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit) }}
-	{{ 	tempoUnit := preferredUnits.Tempo() }}
-	{{ 	tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit) }}
-	{{ 	secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit) }}
+	{{ speedUnit := preferredUnits.Speed() }}
+	{{ speedFormatter := templatehelpers.HumanSpeedFor(speedUnit) }}
+	{{ primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit) }}
+	{{ tempoUnit := preferredUnits.Tempo() }}
+	{{ tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit) }}
+	{{ secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit) }}
 	if *wt == database.WorkoutTypeRunning {
 		<!-- Swap tempo and speed, so that tempo is primarily shown for running -->
 		<abbr title={ primaryText }>{ secondaryText }</abbr>

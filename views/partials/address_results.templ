@@ -7,17 +7,17 @@ var addressSetHandle = templ.NewOnceHandle()
 templ AddressResults(addresses []string) {
 	@addressSetHandle.Once() {
 		<script>
-      function setLocation(address) {
-        var l = document.getElementById("location");
-        if (!l) {
-          return;
-        }
+			function setLocation(address) {
+				var l = document.getElementById("location");
+				if (!l) {
+					return;
+				}
 
-        l.value = address.innerText;
-        l.focus();
-        l.setSelectionRange(0, 0);
-      }
-    </script>
+				l.value = address.innerText;
+				l.focus();
+				l.setSelectionRange(0, 0);
+			}
+		</script>
 	}
 	if len(addresses) > 0 {
 		<ul id="address-results" class="list-none">
