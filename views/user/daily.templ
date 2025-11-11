@@ -216,7 +216,9 @@ templ dailyHeightFtIn(m *database.Measurement) {
 	/>
 	<input size="2" type="number" name="ft" id="ft" value="0" onchange="updateDailyHeight();"/> ft
 	<input size="2" type="number" name="in" id="in" value="0" onchange="updateDailyHeight();"/> in
-	<script>readDailyHeight();</script>
+	<script>
+		readDailyHeight();
+	</script>
 }
 
 templ dailyHeightCm(m *database.Measurement) {

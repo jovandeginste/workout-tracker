@@ -45,7 +45,7 @@ func AddressResults(addresses []string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script>\n      function setLocation(address) {\n        var l = document.getElementById(\"location\");\n        if (!l) {\n          return;\n        }\n\n        l.value = address.innerText;\n        l.focus();\n        l.setSelectionRange(0, 0);\n      }\n    </script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script>\n\t\t\tfunction setLocation(address) {\n\t\t\t\tvar l = document.getElementById(\"location\");\n\t\t\t\tif (!l) {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tl.value = address.innerText;\n\t\t\t\tl.focus();\n\t\t\t\tl.setSelectionRange(0, 0);\n\t\t\t}\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

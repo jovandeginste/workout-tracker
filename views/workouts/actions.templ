@@ -82,9 +82,9 @@ templ Actions(w *database.Workout) {
 					value={ helpers.RouteFor(ctx, "share", w.PublicUUID) }
 				/>
 				<script>
-        var uuidText = document.getElementById("public_uuid");
-        uuidText.value = new URL(uuidText.value, document.location).href;
-      </script>
+					var uuidText = document.getElementById("public_uuid");
+					uuidText.value = new URL(uuidText.value, document.location).href;
+				</script>
 				<button
 					class="share"
 					title={ i18n.T(ctx, "translation.Copy_publicly_shareable_link") }

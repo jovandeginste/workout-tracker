@@ -13,9 +13,9 @@ type dataset struct {
 
 templ RouteSegmentMap(s *database.RouteSegment) {
 	{{ pu := helpers.PreferredUnitsToJSON(helpers.CurrentUser(ctx).PreferredUnits()) }}
-		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" } />
-		<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
-		{{
+	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" }/>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
+	{{
 	mapConfig := struct {
 		CenterLat     float64
 		CenterLng     float64
@@ -35,28 +35,27 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 		StreetsName:   i18n.T(ctx, "translation.Streets"),
 		AerialName:    i18n.T(ctx, "translation.Aerial"),
 	}
-data := map[string]*dataset{
-	"position": {
-		Label: "",
-		Data:  []any{},
-	},
-	"distance": {
-		Label: i18n.T(ctx, "translation.Distance"),
-		Data:  []any{},
-	},
-	"elevation": {
-		Label: i18n.T(ctx, "translation.Elevation"),
-		Data:  []any{},
-	},
-}
+	data := map[string]*dataset{
+		"position": {
+			Label: "",
+			Data:  []any{},
+		},
+		"distance": {
+			Label: i18n.T(ctx, "translation.Distance"),
+			Data:  []any{},
+		},
+		"elevation": {
+			Label: i18n.T(ctx, "translation.Elevation"),
+			Data:  []any{},
+		},
+	}
 
-for _, p := range s.Points {
-	data["position"].Data = append(data["position"].Data, []float64{p.Lat, p.Lng})
-	data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
-	data["elevation"].Data = append(data["elevation"].Data, p.Elevation)
-}
+	for _, p := range s.Points {
+		data["position"].Data = append(data["position"].Data, []float64{p.Lat, p.Lng})
+		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
+		data["elevation"].Data = append(data["elevation"].Data, p.Elevation)
+	}
 	}}
-
 	@templ.JSONScript("map-config", mapConfig)
 	@templ.JSONScript("workout-preferred-units", pu)
 	@templ.JSONScript("workout-data", data)

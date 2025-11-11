@@ -345,7 +345,7 @@ func Actions(w *database.Workout) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "\"><script>\n        var uuidText = document.getElementById(\"public_uuid\");\n        uuidText.value = new URL(uuidText.value, document.location).href;\n      </script><button class=\"share\" title=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "\"><script>\n\t\t\t\t\tvar uuidText = document.getElementById(\"public_uuid\");\n\t\t\t\t\tuuidText.value = new URL(uuidText.value, document.location).href;\n\t\t\t\t</script><button class=\"share\" title=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

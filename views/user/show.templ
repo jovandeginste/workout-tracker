@@ -51,16 +51,16 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 				</div>
 			</div>
 		}
-			<div class="inner-form recent-activity">
-				<h3>
-					@helpers.IconFor("workout")
-					{ i18n.T(ctx, "translation.Recent_activity") }
-				</h3>
-				<div class="sm:flex sm:flex-wrap justify-center">
-					for _, w := range recentWorkouts {
-						@workouts.Item(w)
-					}
-				</div>
+		<div class="inner-form recent-activity">
+			<h3>
+				@helpers.IconFor("workout")
+				{ i18n.T(ctx, "translation.Recent_activity") }
+			</h3>
+			<div class="sm:flex sm:flex-wrap justify-center">
+				for _, w := range recentWorkouts {
+					@workouts.Item(w)
+				}
 			</div>
+		</div>
 	}
 }

@@ -1,9 +1,9 @@
 package workouts
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
-	"github.com/invopop/ctxi18n/i18n"
 )
 
 templ ShowStats(w *database.Workout) {
@@ -19,7 +19,7 @@ translations := map[string]string{
 	"cadence":      i18n.T(ctx, "translation.Cadence"),
 	"averagespeed": i18n.T(ctx, "translation.Average_speed"),
 }
-}}
+	}}
 	<workout-stats
 		id="workout-stats"
 		color-mode={ helpers.CurrentUser(ctx).Profile.Theme }
