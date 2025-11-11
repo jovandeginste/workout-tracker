@@ -385,6 +385,32 @@ The path to POST to is: `/api/v1/import/fitotrack?api-key=${API_KEY}`
 
 ## Development
 
+### Dev Container
+
+#### Usage
+
+This project contains a
+[pre-built development container](https://containers.dev/guide/prebuild)
+`ghcr.io/jovandeginste/workout-tracker-dev-container:latest` (see
+`.devcontainer/devcontainer.json`). Inside the container, just run
+`make build-server serve`. After building the project when running it, the app
+port will be exposed automatically and you can access the app locally on your
+machine via http://localhost:8080/.
+
+#### Build
+
+For building the dev container locally, the variables `GO_VERSION` and
+`NODE_VERSION` must be set. Afterwards, the dev container can be built using the
+[Dev Container CLI](https://github.com/devcontainers/cli/) via
+`devcontainer build --workspace-folder ./.devcontainer-template/ --image-name ghcr.io/jovandeginste/workout-tracker-dev-container`.
+Here's a full example using PowerShell:
+
+```powershell
+$env:GO_VERSION="1.24.1"
+$env:NODE_VERSION="22"
+devcontainer build --workspace-folder ./.devcontainer-template/ --image-name ghcr.io/jovandeginste/workout-tracker-dev-container
+```
+
 ### Build and run it yourself
 
 - install go

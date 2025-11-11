@@ -1,0 +1,4 @@
+{
+  "name": "Workout Tracker Dev Container",
+  "image": "ghcr.io/jovandeginste/workout-tracker-dev-container:latest"
+}
