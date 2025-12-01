@@ -54,7 +54,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(finder.GetTimezoneName(116.6386, 40.0786))
+	fmt.Println(finder.GetTimezoneName(116.6386, 40.0786))  // In longitude-latitude order
 }
 ```
 
@@ -84,7 +84,7 @@ func main() {
 		panic(err)
 	}
 	finder, _ := tzf.NewFinderFromPB(input)
-	fmt.Println(finder.GetTimezoneName(116.6386, 40.0786))
+	fmt.Println(finder.GetTimezoneName(116.6386, 40.0786))  // In longitude-latitude order
 }
 ```
 
@@ -113,6 +113,7 @@ func init() {
 }
 
 func main() {
+	// In longitude-latitude order
 	fmt.Println(f.GetTimezoneName(116.3883, 39.9289))
 	fmt.Println(f.GetTimezoneName(-73.935242, 40.730610))
 }
@@ -265,3 +266,14 @@ ok  	github.com/ringsaturn/tzf	7.995s
 - <https://github.com/tidwall/geojson>
 - <https://github.com/jannikmi/timezonefinder>
 - <https://github.com/evansiroky/timezone-boundary-builder>
+
+## LICENSE
+
+This project is licensed under the [MIT license](./LICENSE) and
+[Anti CSDN License](./LICENSE_ANTI_CSDN.md)[^anti_csdn]. The data is licensed
+under the
+[ODbL license](https://github.com/ringsaturn/tzf-rel/blob/main/LICENSE), same as
+[`evansiroky/timezone-boundary-builder`](https://github.com/evansiroky/timezone-boundary-builder)
+
+[^anti_csdn]: This license is to prevent the use of this project by CSDN, has no
+    effect on other use cases.
