@@ -23,7 +23,7 @@ jobs:
       #
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.0
       - name: Set BUILD_TIME env
         run: echo BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ") >> ${GITHUB_ENV}
       - name: Set up QEMU
