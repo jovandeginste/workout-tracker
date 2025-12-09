@@ -29,6 +29,7 @@ var (
 		language.Norwegian,
 		language.Persian,
 		language.Polish,
+		language.Portuguese,
 		language.Russian,
 		language.SimplifiedChinese,
 		language.Spanish,
