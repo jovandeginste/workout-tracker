@@ -95,6 +95,9 @@ type (
 	// SuccessHook type is for reacting to request success
 	SuccessHook func(*Client, *Response)
 
+	// CloseHook type is for reacting to client closing
+	CloseHook func()
+
 	// RequestFunc type is for extended manipulation of the Request instance
 	RequestFunc func(*Request) *Request
 
@@ -137,6 +140,9 @@ type TransportSettings struct {
 
 	// MaxIdleConnsPerHost, default value is `runtime.GOMAXPROCS(0) + 1`.
 	MaxIdleConnsPerHost int
+
+	// MaxConnsPerHost, default value is no limit.
+	MaxConnsPerHost int
 
 	// DisableKeepAlives, default value is `false`.
 	DisableKeepAlives bool
@@ -215,6 +221,7 @@ type Client struct {
 	invalidHooks             []ErrorHook
 	panicHooks               []ErrorHook
 	successHooks             []SuccessHook
+	closeHooks               []CloseHook
 	contentTypeEncoders      map[string]ContentTypeEncoder
 	contentTypeDecoders      map[string]ContentTypeDecoder
 	contentDecompresserKeys  []string
@@ -835,6 +842,15 @@ func (c *Client) OnPanic(h ErrorHook) *Client {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 	c.panicHooks = append(c.panicHooks, h)
+	return c
+}
+
+// OnClose method adds a callback that will be run whenever the client is closed.
+// The hooks are executed in the order they were registered.
+func (c *Client) OnClose(h CloseHook) *Client {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+	c.closeHooks = append(c.closeHooks, h)
 	return c
 }
 
@@ -2208,7 +2224,7 @@ func (c *Client) Clone(ctx context.Context) *Client {
 	}
 	// clone cookies
 	if l := len(c.cookies); l > 0 {
-		cc.cookies = make([]*http.Cookie, l)
+		cc.cookies = make([]*http.Cookie, 0, l)
 		for _, cookie := range c.cookies {
 			cc.cookies = append(cc.cookies, cloneCookie(cookie))
 		}
@@ -2221,10 +2237,14 @@ func (c *Client) Clone(ctx context.Context) *Client {
 
 // Close method performs cleanup and closure activities on the client instance
 func (c *Client) Close() error {
+	// Execute close hooks first
+	c.onCloseHooks()
+
 	if c.LoadBalancer() != nil {
 		silently(c.LoadBalancer().Close())
 	}
 	close(c.certWatcherStopChan)
+
 	return nil
 }
 
@@ -2240,8 +2260,10 @@ func (c *Client) executeRequestMiddlewares(req *Request) (err error) {
 // Executes method executes the given `Request` object and returns
 // response or error.
 func (c *Client) execute(req *Request) (*Response, error) {
-	if err := c.circuitBreaker.allow(); err != nil {
-		return nil, err
+	if c.circuitBreaker != nil {
+		if err := c.circuitBreaker.allow(); err != nil {
+			return nil, err
+		}
 	}
 
 	if err := c.executeRequestMiddlewares(req); err != nil {
@@ -2268,7 +2290,9 @@ func (c *Client) execute(req *Request) (*Response, error) {
 		}
 	}
 	if resp != nil {
-		c.circuitBreaker.applyPolicies(resp)
+		if c.circuitBreaker != nil {
+			c.circuitBreaker.applyPolicies(resp)
+		}
 
 		response.Body = resp.Body
 		if err = response.wrapContentDecompresser(); err != nil {
@@ -2277,11 +2301,14 @@ func (c *Client) execute(req *Request) (*Response, error) {
 
 		response.wrapLimitReadCloser()
 	}
-	if req.ResponseBodyUnlimitedReads || req.Debug {
-		response.wrapCopyReadCloser()
 
-		if err = response.readAll(); err != nil {
-			return response, err
+	if !req.DoNotParseResponse {
+		if req.ResponseBodyUnlimitedReads || req.Debug {
+			response.wrapCopyReadCloser()
+
+			if err = response.readAll(); err != nil {
+				return response, err
+			}
 		}
 	}
 
@@ -2374,6 +2401,15 @@ func (c *Client) onInvalidHooks(req *Request, err error) {
 	defer c.lock.RUnlock()
 	for _, h := range c.invalidHooks {
 		h(req, err)
+	}
+}
+
+// Helper to run closeHooks hooks.
+func (c *Client) onCloseHooks() {
+	c.lock.RLock()
+	defer c.lock.RUnlock()
+	for _, h := range c.closeHooks {
+		h()
 	}
 }
 
