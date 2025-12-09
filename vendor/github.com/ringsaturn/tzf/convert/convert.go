@@ -19,8 +19,8 @@ type PolygonCoordinates [][][2]float64
 type MultiPolygonCoordinates []PolygonCoordinates
 
 type GeometryDefine struct {
-	Coordinates interface{} `json:"coordinates"`
-	Type        string      `json:"type"`
+	Coordinates any    `json:"coordinates"`
+	Type        string `json:"type"`
 }
 
 type PropertiesDefine struct {
