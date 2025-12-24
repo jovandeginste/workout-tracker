@@ -237,6 +237,10 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 		l.Error("Worker error: " + err.Error())
 	}
 
+	for _, rs := range routeSegmentsBatch {
+		a.worker.Submit(database.NewUpdateRouteSegmentAddressTask(rs.ID))
+	}
+
 	err := a.rematchRouteSegmentsToWorkouts(routeSegmentsBatch, l)
 	if err != nil {
 		l.Error("Worker errors during matching: " + err.Error())

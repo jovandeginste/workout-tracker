@@ -127,6 +127,8 @@ func (a *App) routeSegmentsRefreshHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
+	a.worker.Submit(database.NewUpdateRouteSegmentAddressTask(rs.ID))
+
 	a.addNoticeT(c, "translation.The_workout_s_has_been_refreshed", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("route-segment-show", c.Param("id")))

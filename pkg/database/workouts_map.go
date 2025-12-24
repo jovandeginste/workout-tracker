@@ -137,19 +137,7 @@ func (m *MapData) UpdateExtraMetrics() {
 	m.ExtraMetrics = metrics
 }
 
-func (m *MapData) UpdateAddress() {
-	if m.Address == nil && !m.Center.IsZero() {
-		m.Address = m.Center.Address()
-	}
-
-	if m.Address == nil && m.hasAddressString() {
-		return
-	}
-
-	m.AddressString = m.addressString()
-}
-
-func (m *MapData) hasAddressString() bool {
+func (m *MapData) HasAddressString() bool {
 	switch m.AddressString {
 	case "", UnknownLocation:
 		return false
@@ -158,27 +146,27 @@ func (m *MapData) hasAddressString() bool {
 	}
 }
 
-func (m *MapData) addressString() string {
-	if m.Address == nil {
+func GetAddressString(address *geo.Address) string {
+	if address == nil {
 		return UnknownLocation
 	}
 
 	r := ""
-	if m.Address.CountryCode != "" {
-		r += templatehelpers.CountryToFlag(m.Address.CountryCode) + " "
+	if address.CountryCode != "" {
+		r += templatehelpers.CountryToFlag(address.CountryCode) + " "
 	}
 
 	switch {
-	case m.Address.City != "":
-		r += m.Address.City
-	case m.Address.Street != "":
-		r += m.Address.Street
+	case address.City != "":
+		r += address.City
+	case address.Street != "":
+		r += address.Street
 	default:
-		return r + m.Address.FormattedAddress
+		return r + address.FormattedAddress
 	}
 
-	if shouldAddState(m.Address) {
-		r += ", " + m.Address.State
+	if shouldAddState(address) {
+		r += ", " + address.State
 	}
 
 	return r
@@ -411,7 +399,6 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		},
 	}
 
-	data.UpdateAddress()
 	data.UpdateExtraMetrics()
 	data.correctNaN()
 

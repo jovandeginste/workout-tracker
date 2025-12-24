@@ -9,7 +9,6 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/codingsince1985/geo-golang"
@@ -36,7 +35,6 @@ type client struct {
 	logger        *slog.Logger
 	lastRequest   time.Time
 	userAgent     string
-	m             sync.Mutex
 }
 
 type Query struct {
@@ -94,26 +92,6 @@ type Address struct {
 	Postcode      string `json:"postcode"`
 }
 
-func (c *client) wait() {
-	c.m.Lock()
-	defer func() {
-		c.lastRequest = time.Now()
-		c.m.Unlock()
-	}()
-
-	if c.lastRequest.IsZero() {
-		return
-	}
-
-	d := RequestInterval - time.Since(c.lastRequest)
-	if d < 0 {
-		return
-	}
-
-	c.logger.Warn("Rate limited - waiting " + d.String())
-	time.Sleep(d)
-}
-
 func AllowOnline() {
 	c = nil
 }
@@ -151,8 +129,6 @@ func search(a string) ([]Result, error) {
 	if c.alwaysOffline {
 		return nil, nil
 	}
-
-	c.wait()
 
 	q := struct {
 		Q              string `url:"q"`
@@ -232,8 +208,6 @@ func Reverse(q Query) (*geo.Address, error) {
 	if c.alwaysOffline {
 		return nil, nil
 	}
-
-	c.wait()
 
 	v, err := query.Values(q)
 	if err != nil {

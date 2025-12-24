@@ -306,7 +306,7 @@ func (w *Workout) Address() string {
 		return w.Data.AddressString
 	}
 
-	return w.Data.addressString()
+	return GetAddressString(w.Data.Address)
 }
 
 func (w *Workout) Distance() float64 {
@@ -638,7 +638,8 @@ func (w *Workout) setData(data *MapData) {
 		data.Address = w.Data.Address
 	}
 
-	data.UpdateAddress()
+	// FIXME: find a better place to call it
+	// data.UpdateAddress()
 	data.UpdateExtraMetrics()
 	data.CalculateSlopes()
 	data.correctNaN()

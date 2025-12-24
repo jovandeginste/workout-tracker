@@ -160,7 +160,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 		}
 
 		w.Data.Address = a
-		w.Data.UpdateAddress()
+		w.Data.AddressString = database.GetAddressString(a)
 	}
 
 	w.Data.UpdateExtraMetrics()
@@ -203,6 +203,8 @@ func (a *App) addWorkout(c echo.Context) error {
 	if err := a.db.Model(&workout).Association("Equipment").Replace(equipment); err != nil {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", workout.ID), err)
 	}
+
+	a.worker.Submit(database.NewUpdateMapDataAddressTask(workout.Data.ID))
 
 	a.addNoticeT(c, "translation.The_workout_s_has_been_created", workout.Name)
 
@@ -279,6 +281,7 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 
 		for _, w := range ws {
 			msg = append(msg, w.Name)
+			a.worker.Submit(database.NewUpdateMapDataAddressTask(w.Data.ID))
 		}
 	}
 

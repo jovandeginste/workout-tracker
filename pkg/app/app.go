@@ -12,6 +12,7 @@ import (
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
 	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/background"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/version"
@@ -34,6 +35,7 @@ type App struct {
 	translator     *i18n.Locale
 	Version        version.Version
 	Config         database.Config
+	worker         *background.Worker
 }
 
 func (a *App) jwtSecret() []byte {
@@ -92,7 +94,13 @@ func (a *App) Configure() error {
 		return err
 	}
 
+	a.ConfigureWorker()
+
 	return nil
+}
+
+func (a *App) ConfigureWorker() {
+	a.worker = background.NewWorker(a.logger, a.db)
 }
 
 func (a *App) ConfigureGeocoder() {
