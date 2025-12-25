@@ -5,6 +5,7 @@ import (
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/background"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
+	"golang.org/x/time/rate"
 	"gorm.io/gorm"
 )
 
@@ -12,6 +13,15 @@ const (
 	taskTypeUpdateMapDataAddress      background.TaskType = "updateMapDataAddress"
 	taskTypeUpdateRouteSegmentAddress background.TaskType = "updateRouteSegmentAddress"
 )
+
+func init() {
+	background.RegisterQueue(taskTypeUpdateMapDataAddress, background.RegisterOpts{
+		RateLimiter: rate.NewLimiter(1, 10),
+	})
+	background.RegisterQueue(taskTypeUpdateRouteSegmentAddress, background.RegisterOpts{
+		RateLimiter: rate.NewLimiter(1, 10),
+	})
+}
 
 type updateMapDataAddressTask struct {
 	mapDataID uint64
@@ -64,7 +74,7 @@ func (t *updateRouteSegmentAddressTask) Run(db *gorm.DB) error {
 	if err := db.First(&rs, t.id).Error; err != nil {
 		return err
 	}
-	if rs.Address != nil || rs.Center.IsZero() {
+	if rs.GeoAddress != nil || rs.Center.IsZero() {
 		return nil
 	}
 	addr, err := geocoder.Reverse(geocoder.Query{

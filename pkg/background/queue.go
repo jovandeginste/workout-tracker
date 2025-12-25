@@ -13,21 +13,37 @@ type queue struct {
 	rateLimiter *rate.Limiter
 }
 
+// queues will only be written in init function
+var queues map[TaskType]queue = make(map[TaskType]queue)
+
 type Worker struct {
-	queues map[TaskType]queue
 	logger *slog.Logger
 	db     *gorm.DB
 }
 
+type RegisterOpts struct {
+	BufferSize  *int // if nil, a default size 100 will be used
+	RateLimiter *rate.Limiter
+}
+
+func RegisterQueue(taskType TaskType, opts RegisterOpts) {
+	q := queue{
+		rateLimiter: opts.RateLimiter,
+	}
+	if opts.BufferSize != nil {
+		if *opts.BufferSize == 0 {
+			q.tasks = make(chan Task)
+		} else {
+			q.tasks = make(chan Task, *opts.BufferSize)
+		}
+	} else {
+		q.tasks = make(chan Task, 100)
+	}
+	queues[taskType] = q
+}
+
 func NewWorker(logger *slog.Logger, db *gorm.DB) *Worker {
 	return &Worker{
-		queues: map[TaskType]queue{
-			//TODO
-			"taskTypeUpdateMapDataAddress": {
-				tasks:       make(chan Task, 100),
-				rateLimiter: rate.NewLimiter(1, 10),
-			},
-		},
 		logger: logger,
 		db:     db,
 	}
@@ -35,7 +51,7 @@ func NewWorker(logger *slog.Logger, db *gorm.DB) *Worker {
 
 func (w *Worker) Run() {
 	ctx := context.Background()
-	for k, v := range w.queues {
+	for k, v := range queues {
 		go func() {
 			w.logger.Info("starting worker", "queue", k)
 			for {
@@ -57,5 +73,5 @@ func (w *Worker) Run() {
 
 // will block is wait queue is full
 func (w *Worker) Submit(t Task) {
-	w.queues[t.TaskType()].tasks <- t
+	queues[t.TaskType()].tasks <- t
 }
