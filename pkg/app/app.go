@@ -101,6 +101,7 @@ func (a *App) Configure() error {
 
 func (a *App) ConfigureWorker() {
 	a.worker = background.NewWorker(a.logger, a.db)
+	a.worker.Run()
 }
 
 func (a *App) ConfigureGeocoder() {

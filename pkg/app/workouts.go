@@ -245,6 +245,8 @@ func (a *App) workoutsUpdateHandler(c echo.Context) error {
 		return a.redirectWithError(c, a.echo.Reverse("workout-show", c.Param("id")), err)
 	}
 
+	a.worker.Submit(database.NewUpdateMapDataAddressTask(workout.Data.ID))
+
 	a.addNoticeT(c, "translation.The_workout_s_has_been_updated", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workout-show", c.Param("id")))

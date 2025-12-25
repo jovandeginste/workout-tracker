@@ -7,15 +7,23 @@ import (
 
 	"github.com/codingsince1985/geo-golang"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
-	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
-	"github.com/labstack/gommon/log"
 	"github.com/paulmach/orb"
 	"github.com/ringsaturn/tzf"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
 )
+
+var tzFinder tzf.F
+
+func init() {
+	var err error
+	tzFinder, err = tzf.NewDefaultFinder()
+	if err != nil {
+		panic(err)
+	}
+}
 
 const UnknownLocation = "(unknown location)"
 
@@ -236,13 +244,7 @@ func center(gpxContent *gpx.GPX) MapCenter {
 }
 
 func (m *MapCenter) updateTimezone() {
-	finder, err := tzf.NewDefaultFinder()
-	if err != nil {
-		m.TZ = time.UTC.String()
-		return
-	}
-
-	tz := finder.GetTimezoneName(m.Lng, m.Lat)
+	tz := tzFinder.GetTimezoneName(m.Lng, m.Lat)
 	if tz == "" {
 		m.TZ = time.UTC.String()
 		return
@@ -253,24 +255,6 @@ func (m *MapCenter) updateTimezone() {
 
 func (m *MapCenter) IsZero() bool {
 	return m.Lat == 0 && m.Lng == 0
-}
-
-func (m *MapCenter) Address() *geo.Address {
-	if m.IsZero() {
-		return nil
-	}
-
-	r, err := geocoder.Reverse(geocoder.Query{
-		Lat:    m.Lat,
-		Lon:    m.Lng,
-		Format: "json",
-	})
-	if err != nil {
-		log.Warn("Error performing reverse geocode: ", err)
-		return nil
-	}
-
-	return r
 }
 
 // allGPXPoints returns the first track segment's points
