@@ -1,6 +1,3 @@
-export GOBIN := $(shell pwd)/tmp/bin
-export PATH := $(GOBIN):$(PATH)
-
 GIT_REF ?= $(shell git symbolic-ref HEAD)
 GIT_REF_NAME ?= $(shell git branch --show-current)
 GIT_REF_TYPE ?= branch

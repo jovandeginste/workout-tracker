@@ -124,14 +124,6 @@ func (rs *RouteSegment) UpdateFromContent() error {
 
 	data := gpxAsMapData(gpxContent.GPX)
 
-	if !data.Center.IsZero() {
-		data.Address = data.Center.Address()
-
-		rs.GeoAddress = data.Address
-		rs.AddressString = data.addressString()
-		rs.Center = data.Center
-	}
-
 	rs.TotalDistance = data.TotalDistance
 	rs.MinElevation = data.MinElevation
 	rs.MaxElevation = data.MaxElevation
