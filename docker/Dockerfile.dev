@@ -5,8 +5,8 @@ RUN apk --no-cache add make
 WORKDIR /app
 
 COPY frontend ./frontend
-RUN cd frontend && \
-  npm ci
+RUN cd frontend \
+    && npm ci
 
 COPY Makefile ./
 COPY assets ./assets
@@ -23,7 +23,7 @@ ARG GIT_REF
 ARG GIT_REF_NAME
 ARG GIT_REF_TYPE
 
-RUN apk --no-cache add make
+RUN apk --no-cache add make git
 
 WORKDIR /app
 
