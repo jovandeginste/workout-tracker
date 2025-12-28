@@ -5,6 +5,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"html"
+	"strings"
 	"time"
 )
 
@@ -20,22 +21,30 @@ templ SnippetDate(date time.Time) {
 	}
 }
 
+templ printAll(messages []string) {
+	for _, m := range messages {
+		<span class="block sm:inline">
+			if strings.HasPrefix(m, "<!-- raw -->") {
+				@templ.Raw(m)
+			} else {
+				{ m }
+			}
+		</span>
+	}
+}
+
 templ Alerts() {
 	<div id="alerts" class="messages">
 		{{ ns := helpers.Notices(ctx) }}
 		if ns != nil {
 			<div class="notice" role="alert">
-				for _, n := range ns {
-					<span class="block sm:inline">{ n } </span>
-				}
+				@printAll(ns)
 			</div>
 		}
 		{{ es := helpers.Errors(ctx) }}
 		if es != nil {
 			<div class="alert" role="alert">
-				for _, e := range es {
-					<span class="block sm:inline">{ e } </span>
-				}
+				@printAll(es)
 			</div>
 		}
 	</div>

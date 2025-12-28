@@ -11,12 +11,12 @@ WT_DEBUG_OUTPUT_FILE ?= tmp/wt-debug
 
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
-TEMPL_PROXY_PORT=8090
-TEMPL_APP_PORT=8080
+TEMPL_PROXY_PORT = 8090
+TEMPL_APP_PORT = 8080
 TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
 TEMPL_COMMAND ?= go run github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
 
-GO_TEST=go test -short -count 1 -mod vendor -covermode=atomic
+GO_TEST = go test -short -count 1 -mod vendor -covermode=atomic
 
 BRANCH_NAME_DEPS ?= update-deps
 
@@ -40,7 +40,6 @@ clean:
 	rm -fv ./assets/output.css ./workout-tracker
 	rm -rf ./tmp/ ./node_modules/ ./assets/dist/
 
-
 watch/templ:
 	$(TEMPL_COMMAND) generate --watch \
 			--open-browser=false \
@@ -58,7 +57,7 @@ watch/server:
 			--build.exclude_unchanged  false \
 			--build.include_ext        "go,html,json,yaml" \
 			--build.stop_on_error      true \
-			--screen.clear_on_rebuild  false 
+			--screen.clear_on_rebuild  false
 
 watch/tailwind:
 	cd frontend && npm run watch:tw
@@ -71,7 +70,7 @@ dev-backend:
 	$(MAKE) watch/templ &
 	$(MAKE) watch/server
 
-dev: 
+dev:
 	echo "DEPRECATED: Use 'make dev-docker' instead"
 	$(MAKE) watch/templ &
 	$(MAKE) watch/server &
@@ -98,7 +97,7 @@ dev-docker-clean:
 			--profile dev-postgres \
 			down --remove-orphans --volumes
 
-build: build-server build-docker screenshots
+build: build-frontend build-templates build-server build-docker screenshots
 meta: swagger screenshots changelog
 
 build-cli:
@@ -106,7 +105,7 @@ build-cli:
 			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 			-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
-build-server: build-frontend build-templates
+build-server:
 	go build \
 			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
 			-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
@@ -156,7 +155,6 @@ test: test-go test-assets
 
 test-assets:
 	prettier --check .
-
 
 test-go: test-commands test-templates test-packages
 	golangci-lint run --allow-parallel-runners
