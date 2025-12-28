@@ -1,6 +1,8 @@
 package app
 
 import (
+	"context"
+	"html"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -11,6 +13,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/labstack/echo/v4"
 )
 
@@ -278,7 +281,7 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 		}
 
 		for _, w := range ws {
-			msg = append(msg, w.Name)
+			msg = append(msg, linkForWorkout(c.Request().Context(), w))
 		}
 	}
 
@@ -287,8 +290,14 @@ func (a *App) addWorkoutFromFile(c echo.Context) error {
 	}
 
 	if len(msg) > 0 {
-		a.addNoticeN(c, "notices.workouts_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
+		a.addNoticeNRaw(c, "notices.workouts_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
 	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("workouts"))
+}
+
+func linkForWorkout(ctx context.Context, w *database.Workout) string {
+	url := helpers.RouteFor(ctx, "workout-show", w.ID)
+	name := html.EscapeString(w.Name)
+	return `<a href="` + url + `">` + name + "</a>"
 }

@@ -28,6 +28,11 @@ func (a *App) addError(c echo.Context, e string) {
 	a.sessionManager.Put(c.Request().Context(), "errors", v)
 }
 
+func (a *App) addNoticeNRaw(c echo.Context, msg string, count int, vars ...any) {
+	// TODO: Convert the notification system to structs instead of strings
+	a.addNotice(c, "<!-- raw -->"+a.i18nN(c, msg, count, vars...))
+}
+
 func (a *App) addNoticeN(c echo.Context, msg string, count int, vars ...any) {
 	a.addNotice(c, a.i18nN(c, msg, count, vars...))
 }
