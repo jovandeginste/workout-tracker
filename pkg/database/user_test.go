@@ -350,6 +350,7 @@ func TestDatabaseUserWorkouts(t *testing.T) {
 	require.NoError(t, err)
 	assert.Len(t, workouts, 1)
 
+	w2_1.UpdateExtraMetrics()
 	assert.True(t, w2_1.HasElevation())
 	assert.True(t, w2_1.HasHeartRate())
 

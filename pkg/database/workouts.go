@@ -372,8 +372,6 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 		}
 
 		w.setContent(filename, g.Content)
-		w.UpdateAverages()
-		w.UpdateExtraMetrics()
 
 		workouts[i] = w
 	}
@@ -574,10 +572,6 @@ func (w *Workout) save(db *gorm.DB) error {
 		return ErrInvalidData
 	}
 
-	if w.HasFile() {
-		w.UpdateAverages()
-	}
-
 	if w.ID == 0 {
 		if err := db.Save(w).Error; err != nil {
 			return err
@@ -638,10 +632,7 @@ func (w *Workout) setData(data *MapData) {
 		data.Address = w.Data.Address
 	}
 
-	data.UpdateAddress()
-	data.UpdateExtraMetrics()
 	data.CalculateSlopes()
-	data.correctNaN()
 
 	w.Data = data
 }
@@ -726,6 +717,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 
 	w.UpdateAverages()
 	w.UpdateExtraMetrics()
+	w.Data.UpdateAddress()
 	w.Dirty = false
 
 	return w.Save(db)
