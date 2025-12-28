@@ -411,8 +411,6 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		},
 	}
 
-	data.UpdateAddress()
-	data.UpdateExtraMetrics()
 	data.correctNaN()
 
 	return data
