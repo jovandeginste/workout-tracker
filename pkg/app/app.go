@@ -87,6 +87,10 @@ func (a *App) Configure() error {
 
 	a.ConfigureGeocoder()
 
+	if err := database.InitTZFinder(); err != nil {
+		return err
+	}
+
 	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
 		return err
 	}

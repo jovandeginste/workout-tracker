@@ -2,16 +2,12 @@ package database
 
 import "github.com/ringsaturn/tzf"
 
-var (
-	tzFinder tzf.F
-	tzInit   = false
-)
+var tzFinder tzf.F
 
-func initTZFinder() {
-	if tzInit {
-		return
-	}
+func InitTZFinder() error {
+	var err error
 
-	tzFinder, _ = tzf.NewDefaultFinder()
-	tzInit = true
+	tzFinder, err = tzf.NewDefaultFinder()
+
+	return err
 }
