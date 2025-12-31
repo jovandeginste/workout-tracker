@@ -6,6 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"math"
 )
 
 templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnits) {
@@ -266,8 +267,14 @@ templ FullWorkoutDetails(w *database.Workout) {
 					<th>{ i18n.T(ctx, "translation.Total_distance") }</th>
 					<td class="whitespace-nowrap font-mono">
 						@showLocked(w)
-						{ helpers.HumanDistance(ctx,w.TotalDistance() ) }
+						{ helpers.HumanDistance(ctx,w.TotalDistance()) }
 						{ currentUser.PreferredUnits().Distance() }
+						if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance() / w.TotalDistance2D()) - 1) > 0.1 {
+							// Only print 2D distance if the difference is greater than 10%
+							(2D:
+							{ helpers.HumanDistance(ctx, w.TotalDistance2D()) }
+							{ currentUser.PreferredUnits().Distance() })
+						}
 					</td>
 				</tr>
 			}

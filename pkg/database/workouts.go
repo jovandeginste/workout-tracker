@@ -161,6 +161,14 @@ func (w *Workout) TotalDistance() float64 {
 	return w.Data.TotalDistance
 }
 
+func (w *Workout) TotalDistance2D() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.TotalDistance2D
+}
+
 func (w *Workout) Repetitions() int {
 	if w.Data == nil {
 		return 0
@@ -628,6 +636,7 @@ func (w *Workout) setData(data *MapData) {
 
 	if w.Locked {
 		data.TotalDistance = w.Data.TotalDistance
+		data.TotalDistance2D = w.Data.TotalDistance2D
 		data.TotalDuration = w.Data.TotalDuration
 		data.Address = w.Data.Address
 	}
