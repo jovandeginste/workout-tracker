@@ -23,9 +23,8 @@ var (
 )
 
 const (
-	FileAddDelay                 = -1 * time.Minute
-	workerRouteSegmentsBatchSize = 10
-	workerWorkoutsBatchSize      = 10
+	FileAddDelay            = -1 * time.Minute
+	workerWorkoutsBatchSize = 10
 )
 
 func (a *App) BackgroundWorker() {
@@ -195,37 +194,25 @@ func fileCanBeImported(p string, i os.FileInfo) bool {
 	return slices.Contains(converters.SupportedFileTypes, strings.ToLower(filepath.Ext(p)))
 }
 
-// For the given set of route segments, re-match against all workouts, marking the segments as clean after matching.
-func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegment, l *slog.Logger) error {
-	if len(routeSegments) == 0 {
-		l.Debug("rematchRouteSegmentsToWorkouts: no segments provided")
-		return nil
-	}
-
-	// Reset matches for each segment
-	for _, rs := range routeSegments {
-		rs.RouteSegmentMatches = []*database.RouteSegmentMatch{}
-	}
+// For the route segment, re-match against all workouts, marking the segments as clean after matching.
+func (a *App) rematchRouteSegmentToWorkouts(rs database.RouteSegment, l *slog.Logger) error {
+	rs.RouteSegmentMatches = []*database.RouteSegmentMatch{}
 
 	var workoutsBatch []*database.Workout
-	qw := a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).FindInBatches(&workoutsBatch, workerRouteSegmentsBatchSize, func(wtx *gorm.DB, batchNo int) error {
+	qw := a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).FindInBatches(&workoutsBatch, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
 		l.With("batch_no", batchNo).
-			With("route_segments_batch_size", len(routeSegments)).
 			With("workouts_batch_size", len(workoutsBatch)).
 			Debug("rematchRouteSegmentsToWorkouts start")
 
-		// Match this batch of workouts against the current batch of route segments
-		for _, rs := range routeSegments {
-			newMatches := rs.FindMatches(workoutsBatch)
-			rs.RouteSegmentMatches = append(rs.RouteSegmentMatches, newMatches...)
-			l.With("route_segment_id", rs.ID).
-				With("new_matches", len(newMatches)).
-				With("total_matches", len(rs.RouteSegmentMatches)).
-				Debug("Updating route segments")
-		}
+			// Match this batch of workouts against the current route segment
+		newMatches := rs.FindMatches(workoutsBatch)
+		rs.RouteSegmentMatches = append(rs.RouteSegmentMatches, newMatches...)
+		l.With("route_segment_id", rs.ID).
+			With("new_matches", len(newMatches)).
+			With("total_matches", len(rs.RouteSegmentMatches)).
+			Debug("Updating route segments")
 
 		l.With("batch_no", batchNo).
-			With("route_segments_batch_size", len(routeSegments)).
 			With("workouts_batch_size", len(workoutsBatch)).
 			Debug("rematchRouteSegmentsToWorkouts done")
 
@@ -233,104 +220,87 @@ func (a *App) rematchRouteSegmentsToWorkouts(routeSegments []*database.RouteSegm
 	})
 
 	if qw.Error != nil {
-		l.Error("Worker error fetching workouts: " + qw.Error.Error())
+		return qw.Error
 	}
 
-	// Mark all route segments as non-dirty and save matches
-	var errs error
+	// Mark route segment as non-dirty and save matches
+	rs.Dirty = false
 
-	for _, rs := range routeSegments {
-		rs.Dirty = false
-		if err := rs.Save(a.db); err != nil {
-			errs = errors.Join(errs, err)
-			l.Error("Worker error saving route segment: " + err.Error())
-		}
-	}
-
-	return errs
+	return rs.Save(a.db)
 }
 
 func (a *App) updateRouteSegments(l *slog.Logger) {
-	var routeSegmentsBatch []*database.RouteSegment
+	db := a.db.Preload("RouteSegmentMatches")
 
-	// Fetch next batch of dirty segments
-	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(workerRouteSegmentsBatchSize).Find(&routeSegmentsBatch)
-	if err := q.Error; err != nil {
+	rows, err := db.Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Rows()
+	if err != nil {
 		l.Error("Worker error", "error", err)
+		return
 	}
+	defer rows.Close()
 
-	a.workerPool.Go(func() {
-		l.With("route_segments_batch_size", len(routeSegmentsBatch)).
-			Info("updateRouteSegments batch")
+	for rows.Next() {
+		var rs database.RouteSegment
+		db.ScanRows(rows, &rs)
 
-		if err := a.rematchRouteSegmentsToWorkouts(routeSegmentsBatch, l); err != nil {
-			l.Error("Worker error during matching", "error", err)
-		}
-	})
+		a.workerPool.Go(func() {
+			l.With("route_segment_id", rs.ID).Info("Updating route segment")
+
+			if err := a.rematchRouteSegmentToWorkouts(rs, l); err != nil {
+				l.Error("Worker error during matching", "error", err)
+			}
+		})
+	}
 }
 
 func (a *App) updateWorkouts(l *slog.Logger) {
-	var wID []uint64
-
 	db := a.db.Preload("Data.Details").Preload("User")
 
-	q := db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Limit(workerWorkoutsBatchSize).Pluck("ID", &wID)
-	if err := q.Error; err != nil {
+	rows, err := db.Model(&database.Workout{}).Where(&database.Workout{Dirty: true}).Rows()
+	if err != nil {
 		l.Error("Worker error", "error", err)
+		return
 	}
+	defer rows.Close()
 
-	for i := range wID {
+	for rows.Next() {
+		var w database.Workout
+		db.ScanRows(rows, &w)
+
 		a.workerPool.Go(func() {
-			l.With("workout_id", wID[i]).Info("Updating workout")
+			l.With("workout_id", w.ID).Info("Updating workout")
 
-			if err := a.updateWorkoutByID(wID[i]); err != nil {
+			if err := w.UpdateData(a.db); err != nil {
 				l.Error("Worker error", "error", err)
 			}
 		})
 	}
 }
 
-func (a *App) updateWorkoutByID(i uint64) error {
-	w, err := database.GetWorkoutDetails(a.db, i)
-	if err != nil {
-		return err
-	}
-
-	return w.UpdateData(a.db)
-}
-
 func (a *App) updateAddresses(l *slog.Logger) {
-	var mID []uint64
-
-	q := a.db.Model(&database.MapData{}).
+	rows, err := a.db.Model(&database.MapData{}).
 		Where("center IS NOT NULL").Where("address_string", "").
-		Limit(workerWorkoutsBatchSize).Pluck("ID", &mID)
-	if err := q.Error; err != nil {
+		Rows()
+	if err != nil {
 		l.Error("Worker error", "error", err)
+		return
 	}
+	defer rows.Close()
 
-	for i := range mID {
+	for rows.Next() {
+		var md database.MapData
+		a.db.ScanRows(rows, &md)
+
 		a.workerPoolGeo.Go(func() {
-			wl := l.With("map_data_id", mID[i])
+			wl := l.With("map_data_id", md)
 			wl.Info("Updating workout address")
 
-			if err := a.updateAddressByID(mID[i]); err != nil {
+			md.UpdateAddress()
+			if err := md.Save(a.db); err != nil {
 				wl.Error("Worker error", "error", err)
 			}
 
 			wl.Info("Workout address updated")
 		})
 	}
-}
-
-func (a *App) updateAddressByID(id uint64) error {
-	var m database.MapData
-
-	if err := a.db.First(&m, id).Error; err != nil {
-		return err
-	}
-
-	m.UpdateAddress()
-
-	return m.Save(a.db)
 }
