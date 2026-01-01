@@ -76,9 +76,9 @@ func (a *App) autoImports(l *slog.Logger) {
 		l.Error(ErrWorker.Error() + ": " + err.Error())
 	}
 
-	for _, i := range uID {
-		a.workerPool.Submit(func() {
-			if err := a.autoImportForUser(l, i); err != nil {
+	for i := range uID {
+		a.workerPool.Go(func() {
+			if err := a.autoImportForUser(l, uID[i]); err != nil {
 				l.Error(ErrWorker.Error() + ": " + err.Error())
 			}
 		})
@@ -86,14 +86,10 @@ func (a *App) autoImports(l *slog.Logger) {
 }
 
 func (a *App) autoImportForUser(l *slog.Logger, userID uint64) error {
-	l = l.With("user_id", userID)
-
 	u, err := database.GetUserByID(a.db, userID)
 	if err != nil {
 		return err
 	}
-
-	userLogger := l.With("user", u.Username)
 
 	ok, err := u.Profile.CanImportFromDirectory()
 	if err != nil {
@@ -104,6 +100,7 @@ func (a *App) autoImportForUser(l *slog.Logger, userID uint64) error {
 		return nil
 	}
 
+	userLogger := l.With("user_id", userID).With("user", u.Username)
 	userLogger.Info("Importing from '" + u.Profile.AutoImportDirectory + "'")
 
 	// parse all files in the directory, non-recusive
@@ -258,17 +255,18 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 
 	// Fetch next batch of dirty segments
 	q := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).Where(&database.RouteSegment{Dirty: true}).Limit(workerRouteSegmentsBatchSize).Find(&routeSegmentsBatch)
-	l.With("route_segments_batch_size", len(routeSegmentsBatch)).
-		Info("updateRouteSegments batch")
-
 	if err := q.Error; err != nil {
 		l.Error("Worker error", "error", err)
 	}
 
-	err := a.rematchRouteSegmentsToWorkouts(routeSegmentsBatch, l)
-	if err != nil {
-		l.Error("Worker error during matching", "error", err)
-	}
+	a.workerPool.Go(func() {
+		l.With("route_segments_batch_size", len(routeSegmentsBatch)).
+			Info("updateRouteSegments batch")
+
+		if err := a.rematchRouteSegmentsToWorkouts(routeSegmentsBatch, l); err != nil {
+			l.Error("Worker error during matching", "error", err)
+		}
+	})
 }
 
 func (a *App) updateWorkouts(l *slog.Logger) {
@@ -281,18 +279,18 @@ func (a *App) updateWorkouts(l *slog.Logger) {
 		l.Error("Worker error", "error", err)
 	}
 
-	for _, i := range wID {
-		l.With("workout_id", i).Info("Updating workout")
+	for i := range wID {
+		a.workerPool.Go(func() {
+			l.With("workout_id", wID[i]).Info("Updating workout")
 
-		a.workerPool.Submit(func() {
-			if err := a.updateWorkout(i); err != nil {
+			if err := a.updateWorkoutByID(wID[i]); err != nil {
 				l.Error("Worker error", "error", err)
 			}
 		})
 	}
 }
 
-func (a *App) updateWorkout(i uint64) error {
+func (a *App) updateWorkoutByID(i uint64) error {
 	w, err := database.GetWorkoutDetails(a.db, i)
 	if err != nil {
 		return err
@@ -311,12 +309,12 @@ func (a *App) updateAddresses(l *slog.Logger) {
 		l.Error("Worker error", "error", err)
 	}
 
-	for _, i := range mID {
-		a.workerPoolGeo.Submit(func() {
-			wl := l.With("map_data_id", i)
+	for i := range mID {
+		a.workerPoolGeo.Go(func() {
+			wl := l.With("map_data_id", mID[i])
 			wl.Info("Updating workout address")
 
-			if err := a.updateAddress(i); err != nil {
+			if err := a.updateAddressByID(mID[i]); err != nil {
 				wl.Error("Worker error", "error", err)
 			}
 
@@ -325,7 +323,7 @@ func (a *App) updateAddresses(l *slog.Logger) {
 	}
 }
 
-func (a *App) updateAddress(id uint64) error {
+func (a *App) updateAddressByID(id uint64) error {
 	var m database.MapData
 
 	if err := a.db.First(&m, id).Error; err != nil {
