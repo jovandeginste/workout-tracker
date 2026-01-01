@@ -112,12 +112,13 @@ build-server:
 
 build-docker:
 	docker build \
-			-t workout-tracker --pull \
+			--tag workout-tracker --pull \
 			--build-arg BUILD_TIME="$(BUILD_TIME)" \
 			--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
 			--build-arg GIT_REF="$(GIT_REF)" \
 			--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
 			--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
+			--file ./docker/Dockerfile \
 			.
 
 swagger:
