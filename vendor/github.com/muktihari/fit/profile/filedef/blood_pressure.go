@@ -7,6 +7,7 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
+	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -30,7 +31,8 @@ var _ File = (*BloodPressure)(nil)
 
 // NewBloodPressure creates new BloodPressure File.
 func NewBloodPressure(mesgs ...proto.Message) *BloodPressure {
-	f := &BloodPressure{}
+	f := &BloodPressure{FileId: newFileId}
+	f.FileId.Type = typedef.FileBloodPressure
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -41,7 +43,7 @@ func NewBloodPressure(mesgs ...proto.Message) *BloodPressure {
 func (f *BloodPressure) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId = *mesgdef.NewFileId(&mesg)
+		f.FileId.Reset(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:

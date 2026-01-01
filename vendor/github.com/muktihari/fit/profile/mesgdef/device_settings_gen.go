@@ -67,23 +67,21 @@ func (m *DeviceSettings) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{1117105531807338551, 3326148608, 70368744177728, 0}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 175 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -127,132 +125,128 @@ func (m *DeviceSettings) Reset(mesg *proto.Message) {
 func (m *DeviceSettings) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 24)
 	mesg := proto.Message{Num: typedef.MesgNumDeviceSettings}
 
 	if m.ActiveTimeZone != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(m.ActiveTimeZone)
 		fields = append(fields, field)
 	}
 	if m.UtcOffset != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint32(m.UtcOffset)
 		fields = append(fields, field)
 	}
 	if m.TimeOffset != nil {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.SliceUint32(m.TimeOffset)
 		fields = append(fields, field)
 	}
 	if m.TimeMode != nil {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.SliceUint8(m.TimeMode)
 		fields = append(fields, field)
 	}
 	if m.TimeZoneOffset != nil {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.SliceInt8(m.TimeZoneOffset)
 		fields = append(fields, field)
 	}
 	if m.BacklightMode != typedef.BacklightModeInvalid {
-		field := fac.CreateField(mesg.Num, 12)
+		field := factory.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint8(byte(m.BacklightMode))
 		fields = append(fields, field)
 	}
 	if m.ActivityTrackerEnabled < 2 {
-		field := fac.CreateField(mesg.Num, 36)
+		field := factory.CreateField(mesg.Num, 36)
 		field.Value = proto.Bool(m.ActivityTrackerEnabled)
 		fields = append(fields, field)
 	}
 	if !m.ClockTime.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 39)
+		field := factory.CreateField(mesg.Num, 39)
 		field.Value = proto.Uint32(uint32(m.ClockTime.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.PagesEnabled != nil {
-		field := fac.CreateField(mesg.Num, 40)
+		field := factory.CreateField(mesg.Num, 40)
 		field.Value = proto.SliceUint16(m.PagesEnabled)
 		fields = append(fields, field)
 	}
 	if m.MoveAlertEnabled < 2 {
-		field := fac.CreateField(mesg.Num, 46)
+		field := factory.CreateField(mesg.Num, 46)
 		field.Value = proto.Bool(m.MoveAlertEnabled)
 		fields = append(fields, field)
 	}
 	if m.DateMode != typedef.DateModeInvalid {
-		field := fac.CreateField(mesg.Num, 47)
+		field := factory.CreateField(mesg.Num, 47)
 		field.Value = proto.Uint8(byte(m.DateMode))
 		fields = append(fields, field)
 	}
 	if m.DisplayOrientation != typedef.DisplayOrientationInvalid {
-		field := fac.CreateField(mesg.Num, 55)
+		field := factory.CreateField(mesg.Num, 55)
 		field.Value = proto.Uint8(byte(m.DisplayOrientation))
 		fields = append(fields, field)
 	}
 	if m.MountingSide != typedef.SideInvalid {
-		field := fac.CreateField(mesg.Num, 56)
+		field := factory.CreateField(mesg.Num, 56)
 		field.Value = proto.Uint8(byte(m.MountingSide))
 		fields = append(fields, field)
 	}
 	if m.DefaultPage != nil {
-		field := fac.CreateField(mesg.Num, 57)
+		field := factory.CreateField(mesg.Num, 57)
 		field.Value = proto.SliceUint16(m.DefaultPage)
 		fields = append(fields, field)
 	}
 	if m.AutosyncMinSteps != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 58)
+		field := factory.CreateField(mesg.Num, 58)
 		field.Value = proto.Uint16(m.AutosyncMinSteps)
 		fields = append(fields, field)
 	}
 	if m.AutosyncMinTime != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 59)
+		field := factory.CreateField(mesg.Num, 59)
 		field.Value = proto.Uint16(m.AutosyncMinTime)
 		fields = append(fields, field)
 	}
 	if m.LactateThresholdAutodetectEnabled < 2 {
-		field := fac.CreateField(mesg.Num, 80)
+		field := factory.CreateField(mesg.Num, 80)
 		field.Value = proto.Bool(m.LactateThresholdAutodetectEnabled)
 		fields = append(fields, field)
 	}
 	if m.BleAutoUploadEnabled < 2 {
-		field := fac.CreateField(mesg.Num, 86)
+		field := factory.CreateField(mesg.Num, 86)
 		field.Value = proto.Bool(m.BleAutoUploadEnabled)
 		fields = append(fields, field)
 	}
 	if m.AutoSyncFrequency != typedef.AutoSyncFrequencyInvalid {
-		field := fac.CreateField(mesg.Num, 89)
+		field := factory.CreateField(mesg.Num, 89)
 		field.Value = proto.Uint8(byte(m.AutoSyncFrequency))
 		fields = append(fields, field)
 	}
 	if m.AutoActivityDetect != typedef.AutoActivityDetectInvalid {
-		field := fac.CreateField(mesg.Num, 90)
+		field := factory.CreateField(mesg.Num, 90)
 		field.Value = proto.Uint32(uint32(m.AutoActivityDetect))
 		fields = append(fields, field)
 	}
 	if m.NumberOfScreens != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 94)
+		field := factory.CreateField(mesg.Num, 94)
 		field.Value = proto.Uint8(m.NumberOfScreens)
 		fields = append(fields, field)
 	}
 	if m.SmartNotificationDisplayOrientation != typedef.DisplayOrientationInvalid {
-		field := fac.CreateField(mesg.Num, 95)
+		field := factory.CreateField(mesg.Num, 95)
 		field.Value = proto.Uint8(byte(m.SmartNotificationDisplayOrientation))
 		fields = append(fields, field)
 	}
 	if m.TapInterface != typedef.SwitchInvalid {
-		field := fac.CreateField(mesg.Num, 134)
+		field := factory.CreateField(mesg.Num, 134)
 		field.Value = proto.Uint8(byte(m.TapInterface))
 		fields = append(fields, field)
 	}
 	if m.TapSensitivity != typedef.TapSensitivityInvalid {
-		field := fac.CreateField(mesg.Num, 174)
+		field := factory.CreateField(mesg.Num, 174)
 		field.Value = proto.Uint8(byte(m.TapSensitivity))
 		fields = append(fields, field)
 	}

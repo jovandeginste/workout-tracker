@@ -39,6 +39,7 @@ func NewWithCleanupInterval(db *gorm.DB, cleanupInterval time.Duration) (*GORMSt
 		return nil, err
 	}
 	if cleanupInterval > 0 {
+		g.stopCleanup = make(chan bool)
 		go g.startCleanup(cleanupInterval)
 	}
 	return g, nil
@@ -121,7 +122,6 @@ func (g *GORMStore) migrate() error {
 }
 
 func (g *GORMStore) startCleanup(interval time.Duration) {
-	g.stopCleanup = make(chan bool)
 	ticker := time.NewTicker(interval)
 	for {
 		select {

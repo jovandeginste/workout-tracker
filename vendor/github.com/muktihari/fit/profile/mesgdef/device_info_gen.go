@@ -61,23 +61,21 @@ func (m *DeviceInfo) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{4470869247, 0, 0, 2305843009213693952}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 254 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -112,107 +110,103 @@ func (m *DeviceInfo) Reset(mesg *proto.Message) {
 func (m *DeviceInfo) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 19)
 	mesg := proto.Message{Num: typedef.MesgNumDeviceInfo}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 253)
+		field := factory.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.DeviceIndex != typedef.DeviceIndexInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(uint8(m.DeviceIndex))
 		fields = append(fields, field)
 	}
 	if m.DeviceType != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(m.DeviceType)
 		fields = append(fields, field)
 	}
 	if m.Manufacturer != typedef.ManufacturerInvalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint16(uint16(m.Manufacturer))
 		fields = append(fields, field)
 	}
 	if m.SerialNumber != basetype.Uint32zInvalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint32(m.SerialNumber)
 		fields = append(fields, field)
 	}
 	if m.Product != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.Product)
 		fields = append(fields, field)
 	}
 	if m.SoftwareVersion != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint16(m.SoftwareVersion)
 		fields = append(fields, field)
 	}
 	if m.HardwareVersion != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint8(m.HardwareVersion)
 		fields = append(fields, field)
 	}
 	if m.CumOperatingTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 7)
+		field := factory.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint32(m.CumOperatingTime)
 		fields = append(fields, field)
 	}
 	if m.BatteryVoltage != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 10)
+		field := factory.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint16(m.BatteryVoltage)
 		fields = append(fields, field)
 	}
 	if m.BatteryStatus != typedef.BatteryStatusInvalid {
-		field := fac.CreateField(mesg.Num, 11)
+		field := factory.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint8(uint8(m.BatteryStatus))
 		fields = append(fields, field)
 	}
 	if m.SensorPosition != typedef.BodyLocationInvalid {
-		field := fac.CreateField(mesg.Num, 18)
+		field := factory.CreateField(mesg.Num, 18)
 		field.Value = proto.Uint8(byte(m.SensorPosition))
 		fields = append(fields, field)
 	}
 	if m.Descriptor != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 19)
+		field := factory.CreateField(mesg.Num, 19)
 		field.Value = proto.String(m.Descriptor)
 		fields = append(fields, field)
 	}
 	if m.AntTransmissionType != basetype.Uint8zInvalid {
-		field := fac.CreateField(mesg.Num, 20)
+		field := factory.CreateField(mesg.Num, 20)
 		field.Value = proto.Uint8(m.AntTransmissionType)
 		fields = append(fields, field)
 	}
 	if m.AntDeviceNumber != basetype.Uint16zInvalid {
-		field := fac.CreateField(mesg.Num, 21)
+		field := factory.CreateField(mesg.Num, 21)
 		field.Value = proto.Uint16(m.AntDeviceNumber)
 		fields = append(fields, field)
 	}
 	if m.AntNetwork != typedef.AntNetworkInvalid {
-		field := fac.CreateField(mesg.Num, 22)
+		field := factory.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint8(byte(m.AntNetwork))
 		fields = append(fields, field)
 	}
 	if m.SourceType != typedef.SourceTypeInvalid {
-		field := fac.CreateField(mesg.Num, 25)
+		field := factory.CreateField(mesg.Num, 25)
 		field.Value = proto.Uint8(byte(m.SourceType))
 		fields = append(fields, field)
 	}
 	if m.ProductName != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 27)
+		field := factory.CreateField(mesg.Num, 27)
 		field.Value = proto.String(m.ProductName)
 		fields = append(fields, field)
 	}
 	if m.BatteryLevel != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 32)
+		field := factory.CreateField(mesg.Num, 32)
 		field.Value = proto.Uint8(m.BatteryLevel)
 		fields = append(fields, field)
 	}
