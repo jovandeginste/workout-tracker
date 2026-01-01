@@ -1,6 +1,292 @@
 ## What's Changed
 
-- feat(stats): Allow users to customize displayed total statistics
+- chore(update): Update dependencies
+- fix(database): Correct slope percentage checks for climb categories, by
+  @jovandeginste, in
+  [#708](https://github.com/jovandeginste/workout-tracker/pull/708)
+- Revert "chore(deps): bump the all group across 1 directory with 12 updates",
+  by @jovandeginste, in
+  [#706](https://github.com/jovandeginste/workout-tracker/pull/706)
+- chore(deps): bump the all group across 1 directory with 12 updates, by
+  @jovandeginste, in
+  [#703](https://github.com/jovandeginste/workout-tracker/pull/703)
+  - Update templates with new version of templ, by @jovandeginste
+- refactor(slope): Improve slope calculation and visualization, by
+  @jovandeginste, in
+  [#704](https://github.com/jovandeginste/workout-tracker/pull/704)
+- feat(workout): Add support for 2D distance calculation and display, by
+  @jovandeginste, in
+  [#702](https://github.com/jovandeginste/workout-tracker/pull/702)
+- refactor(database): Defer metric and address updates until `UpdateData`, by
+  @jovandeginste, in
+  [#700](https://github.com/jovandeginste/workout-tracker/pull/700)
+- feat: Allow HTML content in notices, by @jovandeginste, in
+  [#699](https://github.com/jovandeginste/workout-tracker/pull/699)
+  - Fix dev environment via Makefile, by @jovandeginste
+- chore(deps-dev): bump js-yaml from 4.1.0 to 4.1.1 in /frontend in the
+  npm_and_yarn group across 1 directory, by @jovandeginste, in
+  [#686](https://github.com/jovandeginste/workout-tracker/pull/686)
+- chore(deps): bump golang.org/x/crypto from 0.42.0 to 0.45.0, by
+  @jovandeginste, in
+  [#687](https://github.com/jovandeginste/workout-tracker/pull/687)
+- Add support for Portuguese, by @jovandeginste, in
+  [#694](https://github.com/jovandeginste/workout-tracker/pull/694)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#689](https://github.com/jovandeginste/workout-tracker/pull/689)
+  - Translated using Weblate (Portuguese), by @SantosSi
+  - Added translation using Weblate (Portuguese), by @SantosSi
+- chore(deps): bump the all group across 1 directory with 2 updates, by
+  @jovandeginste, in
+  [#693](https://github.com/jovandeginste/workout-tracker/pull/693)
+- chore(deps): bump the all group with 3 updates, by @jovandeginste, in
+  [#688](https://github.com/jovandeginste/workout-tracker/pull/688)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#678](https://github.com/jovandeginste/workout-tracker/pull/678)
+  - Added translation using Weblate (Turkish (Ottoman))
+- Dev Container, by @jovandeginste, in
+  [#682](https://github.com/jovandeginste/workout-tracker/pull/682)
+  - Merge .editorconfig into .prettierrc, by @jovandeginste
+  - Re-format README, by @jovandeginste
+  - fix(build): Build frontend and templates when building `build-server`, by
+    @jovandeginste
+  - ci: build Dev Container on Go version or Node.js packages change, by @mu88
+  - build: provide Dev Container, by @mu88
+- chore(deps): bump golangci/golangci-lint-action from 8.0.0 to 9.0.0 in the all
+  group, by @jovandeginste, in
+  [#684](https://github.com/jovandeginste/workout-tracker/pull/684)
+- Verify if templates are actually formatted, by @jovandeginste, in
+  [#685](https://github.com/jovandeginste/workout-tracker/pull/685)
+  - Generate templ files after formatting, by @jovandeginste
+  - Format all templ files, by @jovandeginste
+  - Verify if templates are actually formatted, by @jovandeginste
+- feat(geocoder): Add offline mode configuration, by @jovandeginste, in
+  [#681](https://github.com/jovandeginste/workout-tracker/pull/681)
+- feat(worker): Allow custom worker delay time, by @jovandeginste, in
+  [#677](https://github.com/jovandeginste/workout-tracker/pull/677)
+- feat(workout) smooth slope values to filter outliers, by @jovandeginste, in
+  [#676](https://github.com/jovandeginste/workout-tracker/pull/676)
+  - feat(workout) smooth slope values to filter outliers, by @bastianjoel
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#673](https://github.com/jovandeginste/workout-tracker/pull/673)
+  - Translated using Weblate (Russian), by @sikmir
+- build(deps): Update Go and frontend dependencies, by @jovandeginste, in
+  [#672](https://github.com/jovandeginste/workout-tracker/pull/672)
+  - fix(deps): Run npm update in frontend directory, by @jovandeginste
+- fix(workout): fix fit file workout name date empty, by @bastianjoel, in
+  [#670](https://github.com/jovandeginste/workout-tracker/pull/670)
+- fix(workouts) fix workouts uploaded from zip file cannot be updated, by
+  @bastianjoel, in
+  [#669](https://github.com/jovandeginste/workout-tracker/pull/669)
+- feat(i18n): Add Spanish (es) localization, by @jovandeginste, in
+  [#668](https://github.com/jovandeginste/workout-tracker/pull/668)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#667](https://github.com/jovandeginste/workout-tracker/pull/667)
+  - Translated using Weblate (Spanish), by @Gogmaghog
+- feat(workout) Add workout chart distance x-axis, by @jovandeginste, in
+  [#647](https://github.com/jovandeginste/workout-tracker/pull/647)
+  - refactor(ui): Improve workout view headings and navigation placement, by
+    @jovandeginste
+  - feat(workout) Add workout chart distance x-axis, by @bastianjoel
+- refactor(geocoder): Externalize client config and improve initialization, by
+  @jovandeginste, in
+  [#666](https://github.com/jovandeginste/workout-tracker/pull/666)
+- feat(geocoder): Add automatic retries for HTTP requests, by @jovandeginste, in
+  [#665](https://github.com/jovandeginste/workout-tracker/pull/665)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#663](https://github.com/jovandeginste/workout-tracker/pull/663)
+  - Added translation using Weblate (Spanish)
+  - Translated using Weblate (German)
+  - Translated using Weblate (Chinese (Simplified Han script))
+  - Translated using Weblate (French), by @Flyingfufu
+- Improve slope detection, by @jovandeginste, in
+  [#661](https://github.com/jovandeginste/workout-tracker/pull/661)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#659](https://github.com/jovandeginste/workout-tracker/pull/659)
+  - Translated using Weblate (French), by @Flyingfufu
+- feat(location): Improve location handling and display for workouts, by
+  @jovandeginste, in
+  [#660](https://github.com/jovandeginste/workout-tracker/pull/660)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#656](https://github.com/jovandeginste/workout-tracker/pull/656)
+  - Translated using Weblate (German)
+  - Translated using Weblate (French), by @Flyingfufu
+- feat(workout): Display detected climbs on workout page, by @jovandeginste, in
+  [#655](https://github.com/jovandeginste/workout-tracker/pull/655)
+- fix(details): Show the lock correctly, by @jovandeginste, in
+  [#654](https://github.com/jovandeginste/workout-tracker/pull/654)
+- fix(database): Correct workout average update and map detail saving, by
+  @jovandeginste, in
+  [#653](https://github.com/jovandeginste/workout-tracker/pull/653)
+- feat(workouts_slope): Introduce climb numbering for slope detection, by
+  @jovandeginste, in
+  [#652](https://github.com/jovandeginste/workout-tracker/pull/652)
+- feat(workout): Add slope detection and visualization, by @jovandeginste, in
+  [#649](https://github.com/jovandeginste/workout-tracker/pull/649)
+- chore(deps): bump actions/setup-go from 5.5.0 to 6.0.0 in the all group, by
+  @jovandeginste, in
+  [#651](https://github.com/jovandeginste/workout-tracker/pull/651)
+- feat(workout): Implement workout lock feature, by @jovandeginste, in
+  [#648](https://github.com/jovandeginste/workout-tracker/pull/648)
+- feat(workout): Add support for custom workout types, by @jovandeginste, in
+  [#650](https://github.com/jovandeginste/workout-tracker/pull/650)
+- refactor(docker): Consolidate Docker Compose setup to use profiles, by
+  @jovandeginste, in
+  [#646](https://github.com/jovandeginste/workout-tracker/pull/646)
+- feat(workout) improve breakdown table, by @jovandeginste, in
+  [#632](https://github.com/jovandeginste/workout-tracker/pull/632)
+  - Breakdown table change requests, by @bastianjoel
+  - Update chart time format, by @bastianjoel
+  - Fix tempo unit not displayed, by @bastianjoel
+  - Update page template, by @bastianjoel
+  - Add missing map marker on chart hover, by @bastianjoel
+  - Improve breakdown table horizontal scrolling, by @bastianjoel
+  - Add lit localization, by @bastianjoel
+  - Fix prettier, by @bastianjoel
+  - Remove scrollIntoView, by @bastianjoel
+  - Reset map zoom, by @bastianjoel
+  - Switch workout chart to ChartJS, by @bastianjoel
+  - Custom interval size selection, by @bastianjoel
+  - Improve elevation column, by @bastianjoel
+  - Change options for dev build, by @bastianjoel
+  - Zoom in on chart, by @bastianjoel
+  - Implement breakdown component, by @bastianjoel
+  - Use lit, by @bastianjoel
+  - WIP: Move breakdown logic to web component, by @bastianjoel
+  - feat(workout) improve breakdown table, by @bastianjoel
+- feat(secrets): Add support for reading secrets from files, by @jovandeginste,
+  in [#645](https://github.com/jovandeginste/workout-tracker/pull/645)
+- Add generated templ files check to test workflow, by @jovandeginste, in
+  [#643](https://github.com/jovandeginste/workout-tracker/pull/643)
+  - Add generated templ files check to test workflow, by @bastianjoel
+- chore(deps): Update templ generated files to v0.3.943, by @jovandeginste, in
+  [#641](https://github.com/jovandeginste/workout-tracker/pull/641)
+- Update Dockerfile go version to `1.25.1`, by @jovandeginste, in
+  [#642](https://github.com/jovandeginste/workout-tracker/pull/642)
+  - Update Dockerfile go version to `1.25.1`, by @bastianjoel
+- refactor(workouts): Extract workout data preparation logic, by @jovandeginste,
+  in [#640](https://github.com/jovandeginste/workout-tracker/pull/640)
+  - fix(workouts): Add nil check for workout details, by @jovandeginste
+  - refactor(workouts): Extract workout data preparation logic, by
+    @jovandeginste
+- feat(equipment): Implement notes functionality, by @jovandeginste, in
+  [#639](https://github.com/jovandeginste/workout-tracker/pull/639)
+- fix(fit): Base the name of a workout on the local time, by @jovandeginste, in
+  [#637](https://github.com/jovandeginste/workout-tracker/pull/637)
+- chore(deps): bump the all group with 9 updates, by @jovandeginste, in
+  [#634](https://github.com/jovandeginste/workout-tracker/pull/634)
+- fix: heatmap config text in dark mode, by @jovandeginste, in
+  [#631](https://github.com/jovandeginste/workout-tracker/pull/631)
+  - fix: heatmap config text in dark mode, by @cjc7373
+- feat: user can control some options in heatmap, by @jovandeginste, in
+  [#623](https://github.com/jovandeginste/workout-tracker/pull/623)
+  - Add toggle to only show traces, by @jovandeginste
+  - run prettier, by @cjc7373
+  - feat: user can control some options in heatmap, by @cjc7373
+- chore(deps): bump github.com/go-viper/mapstructure/v2 from 2.3.0 to 2.4.0 in
+  the go_modules group, by @jovandeginste, in
+  [#629](https://github.com/jovandeginste/workout-tracker/pull/629)
+- Minor workout chart improvements, by @jovandeginste, in
+  [#626](https://github.com/jovandeginste/workout-tracker/pull/626)
+  - Improve workout chart, by @bastianjoel
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#627](https://github.com/jovandeginste/workout-tracker/pull/627)
+  - Translated using Weblate (Russian), by @yurtpage
+- fix(user-registration): Make sure user can not register as admin / active, by
+  @jovandeginste, in
+  [#625](https://github.com/jovandeginste/workout-tracker/pull/625)
+  - fix(ui): Keep the workout graph at 500px, by @jovandeginste
+  - fix(user-registration): Make sure user can not register as admin / active,
+    by @jovandeginste
+- Improve map performance, by @jovandeginste, in
+  [#624](https://github.com/jovandeginste/workout-tracker/pull/624)
+  - Add tooltips for start/end, by @bastianjoel
+  - Reduce workout page size, by @bastianjoel
+  - Improve map performance, by @bastianjoel
+- Update the README file with correct paths and base compose file, by
+  @jovandeginste, in
+  [#622](https://github.com/jovandeginste/workout-tracker/pull/622)
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#621](https://github.com/jovandeginste/workout-tracker/pull/621)
+  - Translated using Weblate (German)
+- Improve release workflow documentation, by @jovandeginste, in
+  [#612](https://github.com/jovandeginste/workout-tracker/pull/612)
+  - refactor(docker): Move Docker configuration to dedicated directory, by
+    @jovandeginste
+  - chore(i18n): Remove Crowdin configuration, by @jovandeginste
+  - Restructure docker-compose files to improve reuse, by @jovandeginste
+  - Re-order to get Dockerfiles more or less in sync, by @jovandeginste
+  - Fix the "native" building workflow (for now at least), by @jovandeginste
+  - Improve release workflow documentation, by @jovandeginste
+- chore(deps): bump golang from 1.24.1-alpine to 1.24.6-alpine, by
+  @jovandeginste, in
+  [#619](https://github.com/jovandeginste/workout-tracker/pull/619)
+- chore(deps): bump actions/checkout from 4 to 5 in the all group, by
+  @jovandeginste, in
+  [#618](https://github.com/jovandeginste/workout-tracker/pull/618)
+- feat(workout) improve workout detail chart, by @jovandeginste, in
+  [#617](https://github.com/jovandeginste/workout-tracker/pull/617)
+  - feat(workout) improve workout detail chart, by @bastianjoel
+- Translations update from Hosted Weblate, by @jovandeginste, in
+  [#613](https://github.com/jovandeginste/workout-tracker/pull/613)
+  - Translated using Weblate (Chinese (Simplified Han script))
+- Feat: Import workout type from GPX name field., by @jovandeginste, in
+  [#608](https://github.com/jovandeginste/workout-tracker/pull/608)
+  - Feat: Import workout type from GPX name field., by @thomasrenes
+- Feat: Add workout types inline-skating and horse-riding., by @jovandeginste,
+  in [#607](https://github.com/jovandeginste/workout-tracker/pull/607)
+  - Fix: Formatting., by @thomasrenes
+  - Feat: Add workout types inline-skating and horse-riding., by @thomasrenes
+- feat(stats) use weighted averages from MapData for stats, by @jovandeginste,
+  in [#606](https://github.com/jovandeginste/workout-tracker/pull/606)
+  - feat(stats) use weighted averages, by @bastianjoel
+  - refactor(stats) use averages from MapData, by @bastianjoel
+- feat(metrics) use enhanced speed readings from gpx files, by @jovandeginste,
+  in [#605](https://github.com/jovandeginste/workout-tracker/pull/605)
+  - feat(metrics) use enhanced speed readings from gpx files, by @bastianjoel
+- Improve development workflow, by @jovandeginste, in
+  [#547](https://github.com/jovandeginste/workout-tracker/pull/547)
+  - feat(dev): Standardize local development environments, by @jovandeginste
+  - Add sqlite dev setup, by @bastianjoel
+  - Fix build-frontend, by @bastianjoel
+  - Fix route segment create, by @bastianjoel
+  - Merge branch 'master' into docker-compose-dev-workflow, by @bastianjoel
+  - Review, by @bastianjoel
+  - Fix Dockerfile, by @bastianjoel
+  - Final cleanup, by @bastianjoel
+  - Heatmap, by @bastianjoel
+  - Statistics web component, by @bastianjoel
+  - Fix prettier, by @bastianjoel
+  - Merge branch 'master' into docker-compose-dev-workflow, by @bastianjoel
+  - Create route segments, by @bastianjoel
+  - Cleanup, by @bastianjoel
+  - Move workout map to web component, by @bastianjoel
+  - Run libraries directly, by @bastianjoel
+  - templ proxy, by @bastianjoel
+  - Merge branch 'master' into docker-compose-dev-workflow, by @bastianjoel
+  - Revert "Generate templ files with version from go.mod", by @bastianjoel
+  - Move workout stats into web component, by @bastianjoel
+  - Use postgres in docker setup, by @bastianjoel
+  - Use web component for profile_calendar, by @bastianjoel
+  - Fix embed test, by @bastianjoel
+  - Fix formatting, by @bastianjoel
+  - Generate templ files with version from go.mod, by @bastianjoel
+  - Pin docker image versions, by @bastianjoel
+  - Add docker compose dev workflow, by @bastianjoel
+
+## New Contributors
+
+- @SantosSi made their first contribution
+- @mu88 made their first contribution
+- @Gogmaghog made their first contribution
+- @Flyingfufu made their first contribution
+- @cjc7373 made their first contribution
+- @thomasrenes made their first contribution
+
+## What's Changed in v2.4.1
+
+- feat(stats): Allow users to customize displayed total statistics, by
+  @jovandeginste, in
+  [#611](https://github.com/jovandeginste/workout-tracker/pull/611)
 - Translations update from Hosted Weblate, by @jovandeginste, in
   [#604](https://github.com/jovandeginste/workout-tracker/pull/604)
   - Translated using Weblate (Russian), by @yurtpage
@@ -45,6 +331,9 @@
 - fix(ui): restore the recent activities section, by @jovandeginste, in
   [#585](https://github.com/jovandeginste/workout-tracker/pull/585)
   - fix(ui): restore the recent activities section, by @nicosomb
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.4.0...v2.4.1
 
 ## What's Changed in v2.4.0
 
@@ -1317,7 +1606,7 @@ https://github.com/jovandeginste/workout-tracker/compare/v0.14.3...v0.15.0
   [#144](https://github.com/jovandeginste/workout-tracker/pull/144)
 - Update fr.json, by @jovandeginste, in
   [#142](https://github.com/jovandeginste/workout-tracker/pull/142)
-  - Update fr.json, by @DavidHenryThoreau
+  - Update fr.json, by @s0rau
 - Improve docs for Docker, add non-root explanation, by @jovandeginste, in
   [#138](https://github.com/jovandeginste/workout-tracker/pull/138)
 
@@ -1331,12 +1620,12 @@ https://github.com/jovandeginste/workout-tracker/compare/v0.14.2...v0.14.3
 - Create fr.json, by @jovandeginste, in
   [#132](https://github.com/jovandeginste/workout-tracker/pull/132)
   - Merge pull request #1 from DavidHenryThoreau/DavidHenryThoreau-fr-translate,
-    by @DavidHenryThoreau
-  - Create fr.json, by @DavidHenryThoreau
+    by @s0rau
+  - Create fr.json, by @s0rau
 
 ## New Contributors
 
-- @DavidHenryThoreau made their first contribution
+- @s0rau made their first contribution
 
 **Full Changelog**:
 https://github.com/jovandeginste/workout-tracker/compare/v0.14.1...v0.14.2
