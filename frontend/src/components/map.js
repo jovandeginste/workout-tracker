@@ -214,18 +214,12 @@ class WtMap extends HTMLElement {
   getSlopeLayerGroup(polyLineProperties = {}) {
     const slopeLayerGroup = new L.featureGroup();
 
-    const slopes = this.workout.slope?.Data.filter((x) => x !== null);
-
-    const maxSlope = Math.max(...slopes);
-    const minSlope = Math.min(...slopes);
-
     let prevPoint;
     this.workout.position.Data.forEach((p, i) => {
       if (prevPoint) {
         const slope = this.workout.slope.Data[i] || 0;
-        const zScore = (slope - minSlope) / (maxSlope - minSlope);
 
-        polyLineProperties["color"] = this.getColor(zScore);
+        polyLineProperties["color"] = this.colorForSlope(slope);
         L.polyline([prevPoint, p], polyLineProperties).addTo(slopeLayerGroup);
       }
       prevPoint = p;
@@ -299,6 +293,8 @@ class WtMap extends HTMLElement {
           typeof val === "number" && val % 1 !== 0 ? val.toFixed(2) : val;
         if (field === "duration") {
           formattedVal = formatDuration(val);
+        } else if (field === "slope" && val !== null) {
+          formattedVal = Math.round(100 * val);
         } else if (field === "time" && val !== null) {
           formattedVal = new Date(val).toTimeString().substr(0, 5);
         }
@@ -378,6 +374,26 @@ class WtMap extends HTMLElement {
 
   updateSize() {
     this.map.invalidateSize(true);
+  }
+
+  colorForSlope(slope) {
+    // See https://github.com/alexgasconn/GPX-Analyzer/blob/bcf16608dda6c748d0fe6d87cd358ca8af4291e5/components/core/utils.py#L4
+    switch (true) {
+      case slope >= 0.18:
+        return "#8B0000"; // Dark Red
+      case slope >= 0.1:
+        return "#FF8C00"; // Dark Orange
+      case slope >= 0.02:
+        return "#FFFF00"; // Yellow
+      case slope >= 0.0:
+        return "#ADFF2F"; // GreenYellow
+      case slope >= -0.02:
+        return "#ADD8E6"; // LightBlue
+      case slope >= -0.1:
+        return "#0000FF"; // Blue
+      default:
+        return "#00008B"; // Dark Blue
+    }
   }
 }
 
