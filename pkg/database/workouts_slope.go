@@ -20,8 +20,8 @@ const (
 	StateEndDescent      = "END_DESCENT"
 
 	// Thresholds from Python code
-	StartClimbThreshold   float64 = 2.0
-	EndClimbThreshold     float64 = 1.0
+	StartClimbThreshold   float64 = 0.02
+	EndClimbThreshold     float64 = 0.01
 	MaxPauseLengthMeters  float64 = 200.0
 	MaxPauseDescentMeters float64 = 10.0
 	MinGain               float64 = 20.0
@@ -86,21 +86,20 @@ func NewDetector(kind string) *Detector {
 }
 
 // SmoothSlopeGrades computes a weighted average slope at each point.
-func SmoothSlopeGrades(points []MapPoint, windowMeters, minDist float64) {
-	n := len(points)
-
-	for i := range n {
+func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
+	for i := range points {
 		centerDist := points[i].TotalDistance2D
 		var weightedSlopeSum, totalWeight float64
 
-		for j := range n {
-			distFromCenter := math.Abs(points[j].TotalDistance2D - centerDist)
-			if distFromCenter > windowMeters/2 || distFromCenter == 0 || distFromCenter < minDist {
+		for j := range points {
+			distDiff := points[j].TotalDistance2D - centerDist
+			distFromCenter := math.Abs(distDiff)
+			if distFromCenter > windowMeters/2 || distFromCenter < MaxDeltaMeter/2 {
 				continue
 			}
 
 			elevDiff := points[j].Elevation - points[i].Elevation
-			slope := (elevDiff / distFromCenter) * 100.0
+			slope := elevDiff / distDiff
 
 			weight := 1.0 / distFromCenter
 			weightedSlopeSum += slope * weight
@@ -123,7 +122,7 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 		return nil
 	}
 
-	SmoothSlopeGrades(points, 300.0, 20.0)
+	SmoothSlopeGrades(points, 300.0)
 
 	// Start with the first point.
 	detector.currentSegmentPoints = append(detector.currentSegmentPoints, &points[0])
@@ -212,7 +211,7 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 	if length > MinLength && gain > MinGain {
 		avgSlope := 0.0
 		if length > 0 {
-			avgSlope = (gain / length) * 100
+			avgSlope = gain / length
 		}
 
 		endIdx := d.startIdx + len(segmentPoints) - 1
@@ -255,7 +254,7 @@ func ClassifyClimbCategory(length, slope float64) string {
 		return "Category 4"
 	case length >= 1000 && slope >= 2:
 		return "Category 5"
-	case length >= 5000 && slope >= 1:
+	case length >= 500 && slope >= 1:
 		return "Category 6"
 	default:
 		return "Uncategorized"
