@@ -46,17 +46,6 @@ Help and questions: [Github Discussions](https://github.com/labstack/echo/discus
 
 Click [here](https://github.com/sponsors/labstack) for more information on sponsorship.
 
-## Benchmarks
-
-Date: 2020/11/11<br>
-Source: https://github.com/vishr/web-framework-benchmark<br>
-Lower is better!
-
-<img src="https://i.imgur.com/qwPNQbl.png">
-<img src="https://i.imgur.com/s8yKQjx.png">
-
-The benchmarks above were run on an Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz
-
 ## [Guide](https://echo.labstack.com/guide)
 
 ### Installation
@@ -84,8 +73,8 @@ func main() {
   e := echo.New()
 
   // Middleware
-  e.Use(middleware.Logger())
-  e.Use(middleware.Recover())
+  e.Use(middleware.RequestLogger()) // use the default RequestLogger middleware with slog logger
+  e.Use(middleware.Recover()) // recover panics as errors for proper error handling
 
   // Routes
   e.GET("/", hello)

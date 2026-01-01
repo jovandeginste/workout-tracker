@@ -65,23 +65,21 @@ func (m *DiveSummary) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{63176703, 0, 0, 2305843009213693952}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 254 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -120,127 +118,123 @@ func (m *DiveSummary) Reset(mesg *proto.Message) {
 func (m *DiveSummary) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 23)
 	mesg := proto.Message{Num: typedef.MesgNumDiveSummary}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 253)
+		field := factory.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.ReferenceMesg != typedef.MesgNumInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint16(uint16(m.ReferenceMesg))
 		fields = append(fields, field)
 	}
 	if m.ReferenceIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint16(uint16(m.ReferenceIndex))
 		fields = append(fields, field)
 	}
 	if m.AvgDepth != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint32(m.AvgDepth)
 		fields = append(fields, field)
 	}
 	if m.MaxDepth != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint32(m.MaxDepth)
 		fields = append(fields, field)
 	}
 	if m.SurfaceInterval != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint32(m.SurfaceInterval)
 		fields = append(fields, field)
 	}
 	if m.StartCns != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint8(m.StartCns)
 		fields = append(fields, field)
 	}
 	if m.EndCns != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint8(m.EndCns)
 		fields = append(fields, field)
 	}
 	if m.StartN2 != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 7)
+		field := factory.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint16(m.StartN2)
 		fields = append(fields, field)
 	}
 	if m.EndN2 != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 8)
+		field := factory.CreateField(mesg.Num, 8)
 		field.Value = proto.Uint16(m.EndN2)
 		fields = append(fields, field)
 	}
 	if m.O2Toxicity != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 9)
+		field := factory.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint16(m.O2Toxicity)
 		fields = append(fields, field)
 	}
 	if m.DiveNumber != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 10)
+		field := factory.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint32(m.DiveNumber)
 		fields = append(fields, field)
 	}
 	if m.BottomTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 11)
+		field := factory.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint32(m.BottomTime)
 		fields = append(fields, field)
 	}
 	if m.AvgPressureSac != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 12)
+		field := factory.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint16(m.AvgPressureSac)
 		fields = append(fields, field)
 	}
 	if m.AvgVolumeSac != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 13)
+		field := factory.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint16(m.AvgVolumeSac)
 		fields = append(fields, field)
 	}
 	if m.AvgRmv != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 14)
+		field := factory.CreateField(mesg.Num, 14)
 		field.Value = proto.Uint16(m.AvgRmv)
 		fields = append(fields, field)
 	}
 	if m.DescentTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 15)
+		field := factory.CreateField(mesg.Num, 15)
 		field.Value = proto.Uint32(m.DescentTime)
 		fields = append(fields, field)
 	}
 	if m.AscentTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 16)
+		field := factory.CreateField(mesg.Num, 16)
 		field.Value = proto.Uint32(m.AscentTime)
 		fields = append(fields, field)
 	}
 	if m.AvgAscentRate != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 17)
+		field := factory.CreateField(mesg.Num, 17)
 		field.Value = proto.Int32(m.AvgAscentRate)
 		fields = append(fields, field)
 	}
 	if m.AvgDescentRate != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 22)
+		field := factory.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint32(m.AvgDescentRate)
 		fields = append(fields, field)
 	}
 	if m.MaxAscentRate != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 23)
+		field := factory.CreateField(mesg.Num, 23)
 		field.Value = proto.Uint32(m.MaxAscentRate)
 		fields = append(fields, field)
 	}
 	if m.MaxDescentRate != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 24)
+		field := factory.CreateField(mesg.Num, 24)
 		field.Value = proto.Uint32(m.MaxDescentRate)
 		fields = append(fields, field)
 	}
 	if m.HangTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 25)
+		field := factory.CreateField(mesg.Num, 25)
 		field.Value = proto.Uint32(m.HangTime)
 		fields = append(fields, field)
 	}

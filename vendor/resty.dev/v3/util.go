@@ -7,10 +7,12 @@ package resty
 
 import (
 	"bytes"
-	"crypto/md5"
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
+	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"io"
@@ -69,9 +71,74 @@ func (l *logger) output(format string, v ...any) {
 	l.l.Printf(format, v...)
 }
 
+//‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+// In Memory JSON & XML Marshal and Unmarshal using Go package
+//_____________________________________________________________
+
+var (
+	// InMemoryJSONMarshal function performs the JSON marshalling completely in memory.
+	//
+	//	c := resty.New()
+	//	defer c.Close()
+	//
+	//	c.AddContentTypeEncoder("application/json", resty.InMemoryJSONMarshal)
+	InMemoryJSONMarshal = func(w io.Writer, v any) error {
+		jsonData, err := json.Marshal(v)
+		if err != nil {
+			return err
+		}
+		_, err = w.Write(jsonData)
+		return err
+	}
+
+	// InMemoryJSONUnmarshal function performs the JSON unmarshalling completely in memory.
+	//
+	//	c := resty.New()
+	//	defer c.Close()
+	//
+	//	c.AddContentTypeDecoder("application/json", resty.InMemoryJSONUnmarshal)
+	InMemoryJSONUnmarshal = func(r io.Reader, v any) error {
+		byteData, err := io.ReadAll(r)
+		if err != nil {
+			return err
+		}
+		return json.Unmarshal(byteData, v)
+	}
+
+	// InMemoryXMLMarshal function performs the XML marshalling completely in memory.
+	//
+	//	c := resty.New()
+	//	defer c.Close()
+	//
+	//	c.AddContentTypeEncoder("application/xml", resty.InMemoryXMLMarshal)
+	InMemoryXMLMarshal = func(w io.Writer, v any) error {
+		xmlData, err := xml.Marshal(v)
+		if err != nil {
+			return err
+		}
+		_, err = w.Write(xmlData)
+		return err
+	}
+
+	// InMemoryJSONUnmarshal function performs the XML unmarshalling completely in memory.
+	//
+	//	c := resty.New()
+	//	defer c.Close()
+	//
+	//	c.AddContentTypeDecoder("application/xml", resty.InMemoryXMLUnmarshal)
+	InMemoryXMLUnmarshal = func(r io.Reader, v any) error {
+		byteData, err := io.ReadAll(r)
+		if err != nil {
+			return err
+		}
+		return xml.Unmarshal(byteData, v)
+	}
+)
+
 // credentials type is to hold an username and password information
 type credentials struct {
-	Username, Password string
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // Clone method returns clone of c.
@@ -371,7 +438,7 @@ func newGUID() string {
 	// Timestamp, 4 bytes, big endian
 	binary.BigEndian.PutUint32(b[:], uint32(time.Now().Unix()))
 
-	// Machine, first 3 bytes of md5(hostname)
+	// Machine, first 3 bytes of sha256.Sum256([]byte(hostname))
 	b[4], b[5], b[6] = machineID[0], machineID[1], machineID[2]
 
 	// Pid, 2 bytes, specs don't specify endianness, but we use big endian.
@@ -403,13 +470,12 @@ var osHostname = os.Hostname
 // readMachineID generates and returns a machine id.
 // If this function fails to get the hostname it will cause a runtime error.
 func readMachineID() []byte {
-	var sum [3]byte
-	id := sum[:]
+	const idSize = 3
+	id := make([]byte, idSize)
 
 	if hostname, err := osHostname(); err == nil {
-		hw := md5.New()
-		_, _ = hw.Write([]byte(hostname))
-		copy(id, hw.Sum(nil))
+		hash := sha256.Sum256([]byte(hostname))
+		copy(id, hash[:idSize])
 		return id
 	}
 

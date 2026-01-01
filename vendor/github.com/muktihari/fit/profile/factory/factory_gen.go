@@ -58,7 +58,7 @@ var ( // cache for CreateMesg method
 // using CreateField method.
 func (f *Factory) CreateMesg(num typedef.MesgNum) proto.Message {
 	once.Do(func() { // populate data for the first invocation.
-		protoMesgs = make([]proto.Message, 410)
+		protoMesgs = make([]proto.Message, 472)
 		var i int
 		var fieldBases *[256]*proto.FieldBase
 		for i, fieldBases = range mesgs {
@@ -101,7 +101,7 @@ func (f *Factory) CreateMesg(num typedef.MesgNum) proto.Message {
 	})
 
 	var mesg proto.Message
-	if num < 410 {
+	if num < 472 {
 		mesg = protoMesgs[num]
 	}
 	if mesg.Num != num {
@@ -123,7 +123,7 @@ func (f *Factory) CreateMesg(num typedef.MesgNum) proto.Message {
 // The returned field contains a pointer reference to FieldBase defined in the factory, so changing any value
 // declared in FieldBase is prohibited (except in the case of unknown field).
 func (f *Factory) CreateField(mesgNum typedef.MesgNum, num byte) proto.Field {
-	if mesgNum < 410 && mesgs[mesgNum] != nil {
+	if mesgNum < 472 && mesgs[mesgNum] != nil {
 		fieldBase := mesgs[mesgNum][num]
 		if fieldBase != nil {
 			return proto.Field{FieldBase: fieldBase}
@@ -157,7 +157,7 @@ func (f *Factory) RegisterMesg(mesg proto.Message) error {
 		return fmt.Errorf("mesg.Num %d is outside max range %d: %w",
 			mesg.Num, typedef.MesgNumMfgRangeMax, ErrRegisterForbidden)
 	}
-	if mesg.Num < 410 && mesgs[mesg.Num] != nil {
+	if mesg.Num < 472 && mesgs[mesg.Num] != nil {
 		return fmt.Errorf("mesg.Num %d is reserved for %q: %w",
 			mesg.Num, mesg.Num, ErrRegisterForbidden)
 	}
@@ -2471,6 +2471,15 @@ var mesgs = [...]*[256]*proto.FieldBase{
 		11: {Name: "awakenings_count", Num: 11, Type: profile.Uint8, BaseType: basetype.Uint8, Scale: 1},
 		14: {Name: "interruptions_score", Num: 14, Type: profile.Uint8, BaseType: basetype.Uint8, Scale: 1},
 		15: {Name: "average_stress_during_sleep", Num: 15, Type: profile.Uint16, BaseType: basetype.Uint16, Scale: 100},
+	},
+	mesgnum.SleepDisruptionSeverityPeriod: {
+		254: {Name: "message_index", Num: 254, Type: profile.MessageIndex, BaseType: basetype.Uint16, Scale: 1},
+		253: {Name: "timestamp", Num: 253, Type: profile.DateTime, BaseType: basetype.Uint32, Scale: 1},
+		0:   {Name: "severity", Num: 0, Type: profile.SleepDisruptionSeverity, BaseType: basetype.Enum, Scale: 1},
+	},
+	mesgnum.SleepDisruptionOvernightSeverity: {
+		253: {Name: "timestamp", Num: 253, Type: profile.DateTime, BaseType: basetype.Uint32, Scale: 1},
+		0:   {Name: "severity", Num: 0, Type: profile.SleepDisruptionSeverity, BaseType: basetype.Enum, Scale: 1},
 	},
 	mesgnum.SkinTempOvernight: {
 		253: {Name: "timestamp", Num: 253, Type: profile.DateTime, BaseType: basetype.Uint32, Scale: 1},

@@ -54,23 +54,21 @@ func (m *SplitSummary) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{16377, 8192, 0, 4611686018427387904}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 255 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -100,82 +98,78 @@ func (m *SplitSummary) Reset(mesg *proto.Message) {
 func (m *SplitSummary) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 14)
 	mesg := proto.Message{Num: typedef.MesgNumSplitSummary}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 254)
+		field := factory.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.SplitType != typedef.SplitTypeInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(byte(m.SplitType))
 		fields = append(fields, field)
 	}
 	if m.NumSplits != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint16(m.NumSplits)
 		fields = append(fields, field)
 	}
 	if m.TotalTimerTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint32(m.TotalTimerTime)
 		fields = append(fields, field)
 	}
 	if m.TotalDistance != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint32(m.TotalDistance)
 		fields = append(fields, field)
 	}
 	if m.AvgSpeed != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint32(m.AvgSpeed)
 		fields = append(fields, field)
 	}
 	if m.MaxSpeed != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 7)
+		field := factory.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint32(m.MaxSpeed)
 		fields = append(fields, field)
 	}
 	if m.TotalAscent != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 8)
+		field := factory.CreateField(mesg.Num, 8)
 		field.Value = proto.Uint16(m.TotalAscent)
 		fields = append(fields, field)
 	}
 	if m.TotalDescent != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 9)
+		field := factory.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint16(m.TotalDescent)
 		fields = append(fields, field)
 	}
 	if m.AvgHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 10)
+		field := factory.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint8(m.AvgHeartRate)
 		fields = append(fields, field)
 	}
 	if m.MaxHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 11)
+		field := factory.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint8(m.MaxHeartRate)
 		fields = append(fields, field)
 	}
 	if m.AvgVertSpeed != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 12)
+		field := factory.CreateField(mesg.Num, 12)
 		field.Value = proto.Int32(m.AvgVertSpeed)
 		fields = append(fields, field)
 	}
 	if m.TotalCalories != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 13)
+		field := factory.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint32(m.TotalCalories)
 		fields = append(fields, field)
 	}
 	if m.TotalMovingTime != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 77)
+		field := factory.CreateField(mesg.Num, 77)
 		field.Value = proto.Uint32(m.TotalMovingTime)
 		fields = append(fields, field)
 	}

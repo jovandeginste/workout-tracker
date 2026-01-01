@@ -51,23 +51,21 @@ func (m *CoursePoint) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{382, 0, 0, 4611686018427387904}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 255 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -91,52 +89,48 @@ func (m *CoursePoint) Reset(mesg *proto.Message) {
 func (m *CoursePoint) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 8)
 	mesg := proto.Message{Num: typedef.MesgNumCoursePoint}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 254)
+		field := factory.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.PositionLat != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Int32(m.PositionLat)
 		fields = append(fields, field)
 	}
 	if m.PositionLong != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Int32(m.PositionLong)
 		fields = append(fields, field)
 	}
 	if m.Distance != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint32(m.Distance)
 		fields = append(fields, field)
 	}
 	if m.Type != typedef.CoursePointInvalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint8(byte(m.Type))
 		fields = append(fields, field)
 	}
 	if m.Name != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.String(m.Name)
 		fields = append(fields, field)
 	}
 	if m.Favorite < 2 {
-		field := fac.CreateField(mesg.Num, 8)
+		field := factory.CreateField(mesg.Num, 8)
 		field.Value = proto.Bool(m.Favorite)
 		fields = append(fields, field)
 	}
