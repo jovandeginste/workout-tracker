@@ -7,7 +7,6 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
-	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -34,8 +33,7 @@ var _ File = (*Workout)(nil)
 
 // NewWorkout creates new Workout File.
 func NewWorkout(mesgs ...proto.Message) *Workout {
-	f := &Workout{FileId: newFileId}
-	f.FileId.Type = typedef.FileWorkout
+	f := &Workout{}
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -46,7 +44,7 @@ func NewWorkout(mesgs ...proto.Message) *Workout {
 func (f *Workout) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId.Reset(&mesg)
+		f.FileId = *mesgdef.NewFileId(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:

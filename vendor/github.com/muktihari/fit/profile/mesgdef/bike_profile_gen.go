@@ -72,21 +72,23 @@ func (m *BikeProfile) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{21852827156479, 0, 0, 4611686018427387904}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 255 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -134,168 +136,172 @@ func (m *BikeProfile) Reset(mesg *proto.Message) {
 func (m *BikeProfile) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 32)
 	mesg := proto.Message{Num: typedef.MesgNumBikeProfile}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 254)
+		field := fac.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.Name != basetype.StringInvalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.String(m.Name)
 		fields = append(fields, field)
 	}
 	if m.Sport != typedef.SportInvalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.Sport))
 		fields = append(fields, field)
 	}
 	if m.SubSport != typedef.SubSportInvalid {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint8(byte(m.SubSport))
 		fields = append(fields, field)
 	}
 	if m.Odometer != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint32(m.Odometer)
 		fields = append(fields, field)
 	}
 	if m.BikeSpdAntId != basetype.Uint16zInvalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.BikeSpdAntId)
 		fields = append(fields, field)
 	}
 	if m.BikeCadAntId != basetype.Uint16zInvalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint16(m.BikeCadAntId)
 		fields = append(fields, field)
 	}
 	if m.BikeSpdcadAntId != basetype.Uint16zInvalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint16(m.BikeSpdcadAntId)
 		fields = append(fields, field)
 	}
 	if m.BikePowerAntId != basetype.Uint16zInvalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint16(m.BikePowerAntId)
 		fields = append(fields, field)
 	}
 	if m.CustomWheelsize != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		field.Value = proto.Uint16(m.CustomWheelsize)
 		fields = append(fields, field)
 	}
 	if m.AutoWheelsize != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint16(m.AutoWheelsize)
 		fields = append(fields, field)
 	}
 	if m.BikeWeight != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint16(m.BikeWeight)
 		fields = append(fields, field)
 	}
 	if m.PowerCalFactor != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint16(m.PowerCalFactor)
 		fields = append(fields, field)
 	}
 	if m.AutoWheelCal < 2 {
-		field := factory.CreateField(mesg.Num, 12)
+		field := fac.CreateField(mesg.Num, 12)
 		field.Value = proto.Bool(m.AutoWheelCal)
 		fields = append(fields, field)
 	}
 	if m.AutoPowerZero < 2 {
-		field := factory.CreateField(mesg.Num, 13)
+		field := fac.CreateField(mesg.Num, 13)
 		field.Value = proto.Bool(m.AutoPowerZero)
 		fields = append(fields, field)
 	}
 	if m.Id != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 14)
+		field := fac.CreateField(mesg.Num, 14)
 		field.Value = proto.Uint8(m.Id)
 		fields = append(fields, field)
 	}
 	if m.SpdEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 15)
+		field := fac.CreateField(mesg.Num, 15)
 		field.Value = proto.Bool(m.SpdEnabled)
 		fields = append(fields, field)
 	}
 	if m.CadEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 16)
+		field := fac.CreateField(mesg.Num, 16)
 		field.Value = proto.Bool(m.CadEnabled)
 		fields = append(fields, field)
 	}
 	if m.SpdcadEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 17)
+		field := fac.CreateField(mesg.Num, 17)
 		field.Value = proto.Bool(m.SpdcadEnabled)
 		fields = append(fields, field)
 	}
 	if m.PowerEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 18)
+		field := fac.CreateField(mesg.Num, 18)
 		field.Value = proto.Bool(m.PowerEnabled)
 		fields = append(fields, field)
 	}
 	if m.CrankLength != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 19)
+		field := fac.CreateField(mesg.Num, 19)
 		field.Value = proto.Uint8(m.CrankLength)
 		fields = append(fields, field)
 	}
 	if m.Enabled < 2 {
-		field := factory.CreateField(mesg.Num, 20)
+		field := fac.CreateField(mesg.Num, 20)
 		field.Value = proto.Bool(m.Enabled)
 		fields = append(fields, field)
 	}
 	if m.BikeSpdAntIdTransType != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 21)
+		field := fac.CreateField(mesg.Num, 21)
 		field.Value = proto.Uint8(m.BikeSpdAntIdTransType)
 		fields = append(fields, field)
 	}
 	if m.BikeCadAntIdTransType != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 22)
+		field := fac.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint8(m.BikeCadAntIdTransType)
 		fields = append(fields, field)
 	}
 	if m.BikeSpdcadAntIdTransType != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 23)
+		field := fac.CreateField(mesg.Num, 23)
 		field.Value = proto.Uint8(m.BikeSpdcadAntIdTransType)
 		fields = append(fields, field)
 	}
 	if m.BikePowerAntIdTransType != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 24)
+		field := fac.CreateField(mesg.Num, 24)
 		field.Value = proto.Uint8(m.BikePowerAntIdTransType)
 		fields = append(fields, field)
 	}
 	if m.OdometerRollover != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 37)
+		field := fac.CreateField(mesg.Num, 37)
 		field.Value = proto.Uint8(m.OdometerRollover)
 		fields = append(fields, field)
 	}
 	if m.FrontGearNum != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 38)
+		field := fac.CreateField(mesg.Num, 38)
 		field.Value = proto.Uint8(m.FrontGearNum)
 		fields = append(fields, field)
 	}
 	if m.FrontGear != nil {
-		field := factory.CreateField(mesg.Num, 39)
+		field := fac.CreateField(mesg.Num, 39)
 		field.Value = proto.SliceUint8(m.FrontGear)
 		fields = append(fields, field)
 	}
 	if m.RearGearNum != basetype.Uint8zInvalid {
-		field := factory.CreateField(mesg.Num, 40)
+		field := fac.CreateField(mesg.Num, 40)
 		field.Value = proto.Uint8(m.RearGearNum)
 		fields = append(fields, field)
 	}
 	if m.RearGear != nil {
-		field := factory.CreateField(mesg.Num, 41)
+		field := fac.CreateField(mesg.Num, 41)
 		field.Value = proto.SliceUint8(m.RearGear)
 		fields = append(fields, field)
 	}
 	if m.ShimanoDi2Enabled < 2 {
-		field := factory.CreateField(mesg.Num, 44)
+		field := fac.CreateField(mesg.Num, 44)
 		field.Value = proto.Bool(m.ShimanoDi2Enabled)
 		fields = append(fields, field)
 	}

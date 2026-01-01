@@ -14,132 +14,130 @@ import (
 type MesgNum uint16
 
 const (
-	MesgNumFileId                           MesgNum = 0
-	MesgNumCapabilities                     MesgNum = 1
-	MesgNumDeviceSettings                   MesgNum = 2
-	MesgNumUserProfile                      MesgNum = 3
-	MesgNumHrmProfile                       MesgNum = 4
-	MesgNumSdmProfile                       MesgNum = 5
-	MesgNumBikeProfile                      MesgNum = 6
-	MesgNumZonesTarget                      MesgNum = 7
-	MesgNumHrZone                           MesgNum = 8
-	MesgNumPowerZone                        MesgNum = 9
-	MesgNumMetZone                          MesgNum = 10
-	MesgNumSport                            MesgNum = 12
-	MesgNumTrainingSettings                 MesgNum = 13
-	MesgNumGoal                             MesgNum = 15
-	MesgNumSession                          MesgNum = 18
-	MesgNumLap                              MesgNum = 19
-	MesgNumRecord                           MesgNum = 20
-	MesgNumEvent                            MesgNum = 21
-	MesgNumDeviceInfo                       MesgNum = 23
-	MesgNumWorkout                          MesgNum = 26
-	MesgNumWorkoutStep                      MesgNum = 27
-	MesgNumSchedule                         MesgNum = 28
-	MesgNumWeightScale                      MesgNum = 30
-	MesgNumCourse                           MesgNum = 31
-	MesgNumCoursePoint                      MesgNum = 32
-	MesgNumTotals                           MesgNum = 33
-	MesgNumActivity                         MesgNum = 34
-	MesgNumSoftware                         MesgNum = 35
-	MesgNumFileCapabilities                 MesgNum = 37
-	MesgNumMesgCapabilities                 MesgNum = 38
-	MesgNumFieldCapabilities                MesgNum = 39
-	MesgNumFileCreator                      MesgNum = 49
-	MesgNumBloodPressure                    MesgNum = 51
-	MesgNumSpeedZone                        MesgNum = 53
-	MesgNumMonitoring                       MesgNum = 55
-	MesgNumTrainingFile                     MesgNum = 72
-	MesgNumHrv                              MesgNum = 78
-	MesgNumAntRx                            MesgNum = 80
-	MesgNumAntTx                            MesgNum = 81
-	MesgNumAntChannelId                     MesgNum = 82
-	MesgNumLength                           MesgNum = 101
-	MesgNumMonitoringInfo                   MesgNum = 103
-	MesgNumPad                              MesgNum = 105
-	MesgNumSlaveDevice                      MesgNum = 106
-	MesgNumConnectivity                     MesgNum = 127
-	MesgNumWeatherConditions                MesgNum = 128
-	MesgNumWeatherAlert                     MesgNum = 129
-	MesgNumCadenceZone                      MesgNum = 131
-	MesgNumHr                               MesgNum = 132
-	MesgNumSegmentLap                       MesgNum = 142
-	MesgNumMemoGlob                         MesgNum = 145
-	MesgNumSegmentId                        MesgNum = 148
-	MesgNumSegmentLeaderboardEntry          MesgNum = 149
-	MesgNumSegmentPoint                     MesgNum = 150
-	MesgNumSegmentFile                      MesgNum = 151
-	MesgNumWorkoutSession                   MesgNum = 158
-	MesgNumWatchfaceSettings                MesgNum = 159
-	MesgNumGpsMetadata                      MesgNum = 160
-	MesgNumCameraEvent                      MesgNum = 161
-	MesgNumTimestampCorrelation             MesgNum = 162
-	MesgNumGyroscopeData                    MesgNum = 164
-	MesgNumAccelerometerData                MesgNum = 165
-	MesgNumThreeDSensorCalibration          MesgNum = 167
-	MesgNumVideoFrame                       MesgNum = 169
-	MesgNumObdiiData                        MesgNum = 174
-	MesgNumNmeaSentence                     MesgNum = 177
-	MesgNumAviationAttitude                 MesgNum = 178
-	MesgNumVideo                            MesgNum = 184
-	MesgNumVideoTitle                       MesgNum = 185
-	MesgNumVideoDescription                 MesgNum = 186
-	MesgNumVideoClip                        MesgNum = 187
-	MesgNumOhrSettings                      MesgNum = 188
-	MesgNumExdScreenConfiguration           MesgNum = 200
-	MesgNumExdDataFieldConfiguration        MesgNum = 201
-	MesgNumExdDataConceptConfiguration      MesgNum = 202
-	MesgNumFieldDescription                 MesgNum = 206
-	MesgNumDeveloperDataId                  MesgNum = 207
-	MesgNumMagnetometerData                 MesgNum = 208
-	MesgNumBarometerData                    MesgNum = 209
-	MesgNumOneDSensorCalibration            MesgNum = 210
-	MesgNumMonitoringHrData                 MesgNum = 211
-	MesgNumTimeInZone                       MesgNum = 216
-	MesgNumSet                              MesgNum = 225
-	MesgNumStressLevel                      MesgNum = 227
-	MesgNumMaxMetData                       MesgNum = 229
-	MesgNumDiveSettings                     MesgNum = 258
-	MesgNumDiveGas                          MesgNum = 259
-	MesgNumDiveAlarm                        MesgNum = 262
-	MesgNumExerciseTitle                    MesgNum = 264
-	MesgNumDiveSummary                      MesgNum = 268
-	MesgNumSpo2Data                         MesgNum = 269
-	MesgNumSleepLevel                       MesgNum = 275
-	MesgNumJump                             MesgNum = 285
-	MesgNumAadAccelFeatures                 MesgNum = 289
-	MesgNumBeatIntervals                    MesgNum = 290
-	MesgNumRespirationRate                  MesgNum = 297
-	MesgNumHsaAccelerometerData             MesgNum = 302
-	MesgNumHsaStepData                      MesgNum = 304
-	MesgNumHsaSpo2Data                      MesgNum = 305
-	MesgNumHsaStressData                    MesgNum = 306
-	MesgNumHsaRespirationData               MesgNum = 307
-	MesgNumHsaHeartRateData                 MesgNum = 308
-	MesgNumSplit                            MesgNum = 312
-	MesgNumSplitSummary                     MesgNum = 313
-	MesgNumHsaBodyBatteryData               MesgNum = 314
-	MesgNumHsaEvent                         MesgNum = 315
-	MesgNumClimbPro                         MesgNum = 317
-	MesgNumTankUpdate                       MesgNum = 319
-	MesgNumTankSummary                      MesgNum = 323
-	MesgNumSleepAssessment                  MesgNum = 346
-	MesgNumHrvStatusSummary                 MesgNum = 370
-	MesgNumHrvValue                         MesgNum = 371
-	MesgNumRawBbi                           MesgNum = 372
-	MesgNumDeviceAuxBatteryInfo             MesgNum = 375
-	MesgNumHsaGyroscopeData                 MesgNum = 376
-	MesgNumChronoShotSession                MesgNum = 387
-	MesgNumChronoShotData                   MesgNum = 388
-	MesgNumHsaConfigurationData             MesgNum = 389
-	MesgNumDiveApneaAlarm                   MesgNum = 393
-	MesgNumSkinTempOvernight                MesgNum = 398
-	MesgNumHsaWristTemperatureData          MesgNum = 409 // Message number for the HSA wrist temperature data message
-	MesgNumSleepDisruptionSeverityPeriod    MesgNum = 470
-	MesgNumSleepDisruptionOvernightSeverity MesgNum = 471
-	MesgNumMfgRangeMin                      MesgNum = 0xFF00 // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
-	MesgNumMfgRangeMax                      MesgNum = 0xFFFE // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
-	MesgNumInvalid                          MesgNum = 0xFFFF
+	MesgNumFileId                      MesgNum = 0
+	MesgNumCapabilities                MesgNum = 1
+	MesgNumDeviceSettings              MesgNum = 2
+	MesgNumUserProfile                 MesgNum = 3
+	MesgNumHrmProfile                  MesgNum = 4
+	MesgNumSdmProfile                  MesgNum = 5
+	MesgNumBikeProfile                 MesgNum = 6
+	MesgNumZonesTarget                 MesgNum = 7
+	MesgNumHrZone                      MesgNum = 8
+	MesgNumPowerZone                   MesgNum = 9
+	MesgNumMetZone                     MesgNum = 10
+	MesgNumSport                       MesgNum = 12
+	MesgNumTrainingSettings            MesgNum = 13
+	MesgNumGoal                        MesgNum = 15
+	MesgNumSession                     MesgNum = 18
+	MesgNumLap                         MesgNum = 19
+	MesgNumRecord                      MesgNum = 20
+	MesgNumEvent                       MesgNum = 21
+	MesgNumDeviceInfo                  MesgNum = 23
+	MesgNumWorkout                     MesgNum = 26
+	MesgNumWorkoutStep                 MesgNum = 27
+	MesgNumSchedule                    MesgNum = 28
+	MesgNumWeightScale                 MesgNum = 30
+	MesgNumCourse                      MesgNum = 31
+	MesgNumCoursePoint                 MesgNum = 32
+	MesgNumTotals                      MesgNum = 33
+	MesgNumActivity                    MesgNum = 34
+	MesgNumSoftware                    MesgNum = 35
+	MesgNumFileCapabilities            MesgNum = 37
+	MesgNumMesgCapabilities            MesgNum = 38
+	MesgNumFieldCapabilities           MesgNum = 39
+	MesgNumFileCreator                 MesgNum = 49
+	MesgNumBloodPressure               MesgNum = 51
+	MesgNumSpeedZone                   MesgNum = 53
+	MesgNumMonitoring                  MesgNum = 55
+	MesgNumTrainingFile                MesgNum = 72
+	MesgNumHrv                         MesgNum = 78
+	MesgNumAntRx                       MesgNum = 80
+	MesgNumAntTx                       MesgNum = 81
+	MesgNumAntChannelId                MesgNum = 82
+	MesgNumLength                      MesgNum = 101
+	MesgNumMonitoringInfo              MesgNum = 103
+	MesgNumPad                         MesgNum = 105
+	MesgNumSlaveDevice                 MesgNum = 106
+	MesgNumConnectivity                MesgNum = 127
+	MesgNumWeatherConditions           MesgNum = 128
+	MesgNumWeatherAlert                MesgNum = 129
+	MesgNumCadenceZone                 MesgNum = 131
+	MesgNumHr                          MesgNum = 132
+	MesgNumSegmentLap                  MesgNum = 142
+	MesgNumMemoGlob                    MesgNum = 145
+	MesgNumSegmentId                   MesgNum = 148
+	MesgNumSegmentLeaderboardEntry     MesgNum = 149
+	MesgNumSegmentPoint                MesgNum = 150
+	MesgNumSegmentFile                 MesgNum = 151
+	MesgNumWorkoutSession              MesgNum = 158
+	MesgNumWatchfaceSettings           MesgNum = 159
+	MesgNumGpsMetadata                 MesgNum = 160
+	MesgNumCameraEvent                 MesgNum = 161
+	MesgNumTimestampCorrelation        MesgNum = 162
+	MesgNumGyroscopeData               MesgNum = 164
+	MesgNumAccelerometerData           MesgNum = 165
+	MesgNumThreeDSensorCalibration     MesgNum = 167
+	MesgNumVideoFrame                  MesgNum = 169
+	MesgNumObdiiData                   MesgNum = 174
+	MesgNumNmeaSentence                MesgNum = 177
+	MesgNumAviationAttitude            MesgNum = 178
+	MesgNumVideo                       MesgNum = 184
+	MesgNumVideoTitle                  MesgNum = 185
+	MesgNumVideoDescription            MesgNum = 186
+	MesgNumVideoClip                   MesgNum = 187
+	MesgNumOhrSettings                 MesgNum = 188
+	MesgNumExdScreenConfiguration      MesgNum = 200
+	MesgNumExdDataFieldConfiguration   MesgNum = 201
+	MesgNumExdDataConceptConfiguration MesgNum = 202
+	MesgNumFieldDescription            MesgNum = 206
+	MesgNumDeveloperDataId             MesgNum = 207
+	MesgNumMagnetometerData            MesgNum = 208
+	MesgNumBarometerData               MesgNum = 209
+	MesgNumOneDSensorCalibration       MesgNum = 210
+	MesgNumMonitoringHrData            MesgNum = 211
+	MesgNumTimeInZone                  MesgNum = 216
+	MesgNumSet                         MesgNum = 225
+	MesgNumStressLevel                 MesgNum = 227
+	MesgNumMaxMetData                  MesgNum = 229
+	MesgNumDiveSettings                MesgNum = 258
+	MesgNumDiveGas                     MesgNum = 259
+	MesgNumDiveAlarm                   MesgNum = 262
+	MesgNumExerciseTitle               MesgNum = 264
+	MesgNumDiveSummary                 MesgNum = 268
+	MesgNumSpo2Data                    MesgNum = 269
+	MesgNumSleepLevel                  MesgNum = 275
+	MesgNumJump                        MesgNum = 285
+	MesgNumAadAccelFeatures            MesgNum = 289
+	MesgNumBeatIntervals               MesgNum = 290
+	MesgNumRespirationRate             MesgNum = 297
+	MesgNumHsaAccelerometerData        MesgNum = 302
+	MesgNumHsaStepData                 MesgNum = 304
+	MesgNumHsaSpo2Data                 MesgNum = 305
+	MesgNumHsaStressData               MesgNum = 306
+	MesgNumHsaRespirationData          MesgNum = 307
+	MesgNumHsaHeartRateData            MesgNum = 308
+	MesgNumSplit                       MesgNum = 312
+	MesgNumSplitSummary                MesgNum = 313
+	MesgNumHsaBodyBatteryData          MesgNum = 314
+	MesgNumHsaEvent                    MesgNum = 315
+	MesgNumClimbPro                    MesgNum = 317
+	MesgNumTankUpdate                  MesgNum = 319
+	MesgNumTankSummary                 MesgNum = 323
+	MesgNumSleepAssessment             MesgNum = 346
+	MesgNumHrvStatusSummary            MesgNum = 370
+	MesgNumHrvValue                    MesgNum = 371
+	MesgNumRawBbi                      MesgNum = 372
+	MesgNumDeviceAuxBatteryInfo        MesgNum = 375
+	MesgNumHsaGyroscopeData            MesgNum = 376
+	MesgNumChronoShotSession           MesgNum = 387
+	MesgNumChronoShotData              MesgNum = 388
+	MesgNumHsaConfigurationData        MesgNum = 389
+	MesgNumDiveApneaAlarm              MesgNum = 393
+	MesgNumSkinTempOvernight           MesgNum = 398
+	MesgNumHsaWristTemperatureData     MesgNum = 409    // Message number for the HSA wrist temperature data message
+	MesgNumMfgRangeMin                 MesgNum = 0xFF00 // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
+	MesgNumMfgRangeMax                 MesgNum = 0xFFFE // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
+	MesgNumInvalid                     MesgNum = 0xFFFF
 )
 
 func (m MesgNum) Uint16() uint16 { return uint16(m) }
@@ -391,10 +389,6 @@ func (m MesgNum) String() string {
 		return "skin_temp_overnight"
 	case MesgNumHsaWristTemperatureData:
 		return "hsa_wrist_temperature_data"
-	case MesgNumSleepDisruptionSeverityPeriod:
-		return "sleep_disruption_severity_period"
-	case MesgNumSleepDisruptionOvernightSeverity:
-		return "sleep_disruption_overnight_severity"
 	case MesgNumMfgRangeMin:
 		return "mfg_range_min"
 	case MesgNumMfgRangeMax:
@@ -652,10 +646,6 @@ func MesgNumFromString(s string) MesgNum {
 		return MesgNumSkinTempOvernight
 	case "hsa_wrist_temperature_data":
 		return MesgNumHsaWristTemperatureData
-	case "sleep_disruption_severity_period":
-		return MesgNumSleepDisruptionSeverityPeriod
-	case "sleep_disruption_overnight_severity":
-		return MesgNumSleepDisruptionOvernightSeverity
 	case "mfg_range_min":
 		return MesgNumMfgRangeMin
 	case "mfg_range_max":
@@ -792,8 +782,6 @@ func ListMesgNum() []MesgNum {
 		MesgNumDiveApneaAlarm,
 		MesgNumSkinTempOvernight,
 		MesgNumHsaWristTemperatureData,
-		MesgNumSleepDisruptionSeverityPeriod,
-		MesgNumSleepDisruptionOvernightSeverity,
 		MesgNumMfgRangeMin,
 		MesgNumMfgRangeMax,
 	}
@@ -1051,10 +1039,6 @@ func MesgNumRegister(v MesgNum, s string) error {
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumSkinTempOvernight", v)
 	case MesgNumHsaWristTemperatureData:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumHsaWristTemperatureData", v)
-	case MesgNumSleepDisruptionSeverityPeriod:
-		return fmt.Errorf("duplicate: %d is already exist for MesgNumSleepDisruptionSeverityPeriod", v)
-	case MesgNumSleepDisruptionOvernightSeverity:
-		return fmt.Errorf("duplicate: %d is already exist for MesgNumSleepDisruptionOvernightSeverity", v)
 	case MesgNumMfgRangeMin:
 		return fmt.Errorf("duplicate: %d is already exist for MesgNumMfgRangeMin", v)
 	case MesgNumMfgRangeMax:

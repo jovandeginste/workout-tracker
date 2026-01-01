@@ -7,7 +7,6 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
-	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -30,8 +29,7 @@ var _ File = (*Totals)(nil)
 
 // NewTotals creates new Totals File.
 func NewTotals(mesgs ...proto.Message) *Totals {
-	f := &Totals{FileId: newFileId}
-	f.FileId.Type = typedef.FileTotals
+	f := &Totals{}
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -42,7 +40,7 @@ func NewTotals(mesgs ...proto.Message) *Totals {
 func (f *Totals) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId.Reset(&mesg)
+		f.FileId = *mesgdef.NewFileId(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:
@@ -57,7 +55,7 @@ func (f *Totals) Add(mesg proto.Message) {
 
 // ToFIT converts Totals to proto.FIT. If options is nil, default options will be used.
 func (f *Totals) ToFIT(options *mesgdef.Options) proto.FIT {
-	var size = 1 // non slice fields
+	var size = 3 // non slice fields
 
 	size += len(f.Totals) + len(f.DeveloperDataIds) +
 		len(f.FieldDescriptions) + len(f.UnrelatedMessages)

@@ -54,21 +54,23 @@ func (m *Set) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{4089, 0, 0, 4611686018427387904}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 255 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -99,63 +101,67 @@ func (m *Set) Reset(mesg *proto.Message) {
 func (m *Set) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 11)
 	mesg := proto.Message{Num: typedef.MesgNumSet}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 254)
+		field := fac.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.Duration != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint32(m.Duration)
 		fields = append(fields, field)
 	}
 	if m.Repetitions != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint16(m.Repetitions)
 		fields = append(fields, field)
 	}
 	if m.Weight != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.Weight)
 		fields = append(fields, field)
 	}
 	if m.SetType != typedef.SetTypeInvalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint8(uint8(m.SetType))
 		fields = append(fields, field)
 	}
 	if !m.StartTime.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint32(uint32(m.StartTime.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.Category != nil {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.SliceUint16(m.Category)
 		fields = append(fields, field)
 	}
 	if m.CategorySubtype != nil {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		field.Value = proto.SliceUint16(m.CategorySubtype)
 		fields = append(fields, field)
 	}
 	if m.WeightDisplayUnit != typedef.FitBaseUnitInvalid {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint16(uint16(m.WeightDisplayUnit))
 		fields = append(fields, field)
 	}
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.WktStepIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint16(uint16(m.WktStepIndex))
 		fields = append(fields, field)
 	}

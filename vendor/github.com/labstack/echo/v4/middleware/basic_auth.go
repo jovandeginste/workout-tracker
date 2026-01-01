@@ -66,9 +66,6 @@ func BasicAuthWithConfig(config BasicAuthConfig) echo.MiddlewareFunc {
 		config.Realm = defaultRealm
 	}
 
-	// Pre-compute the quoted realm for WWW-Authenticate header (RFC 7617)
-	quotedRealm := strconv.Quote(config.Realm)
-
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			if config.Skipper(c) {
@@ -87,21 +84,27 @@ func BasicAuthWithConfig(config BasicAuthConfig) echo.MiddlewareFunc {
 				}
 
 				cred := string(b)
-				user, pass, ok := strings.Cut(cred, ":")
-				if ok {
-					// Verify credentials
-					valid, err := config.Validator(user, pass, c)
-					if err != nil {
-						return err
-					} else if valid {
-						return next(c)
+				for i := 0; i < len(cred); i++ {
+					if cred[i] == ':' {
+						// Verify credentials
+						valid, err := config.Validator(cred[:i], cred[i+1:], c)
+						if err != nil {
+							return err
+						} else if valid {
+							return next(c)
+						}
+						break
 					}
 				}
 			}
 
+			realm := defaultRealm
+			if config.Realm != defaultRealm {
+				realm = strconv.Quote(config.Realm)
+			}
+
 			// Need to return `401` for browsers to pop-up login box.
-			// Realm is case-insensitive, so we can use "basic" directly. See RFC 7617.
-			c.Response().Header().Set(echo.HeaderWWWAuthenticate, basic+" realm="+quotedRealm)
+			c.Response().Header().Set(echo.HeaderWWWAuthenticate, basic+" realm="+realm)
 			return echo.ErrUnauthorized
 		}
 	}

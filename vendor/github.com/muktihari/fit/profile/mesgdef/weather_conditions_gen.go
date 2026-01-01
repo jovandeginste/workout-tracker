@@ -59,21 +59,23 @@ func (m *WeatherConditions) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{32767, 0, 0, 2305843009213693952}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 254 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -105,88 +107,92 @@ func (m *WeatherConditions) Reset(mesg *proto.Message) {
 func (m *WeatherConditions) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 16)
 	mesg := proto.Message{Num: typedef.MesgNumWeatherConditions}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.WeatherReport != typedef.WeatherReportInvalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(byte(m.WeatherReport))
 		fields = append(fields, field)
 	}
 	if m.Temperature != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Int8(m.Temperature)
 		fields = append(fields, field)
 	}
 	if m.Condition != typedef.WeatherStatusInvalid {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint8(byte(m.Condition))
 		fields = append(fields, field)
 	}
 	if m.WindDirection != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint16(m.WindDirection)
 		fields = append(fields, field)
 	}
 	if m.WindSpeed != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.WindSpeed)
 		fields = append(fields, field)
 	}
 	if m.PrecipitationProbability != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint8(m.PrecipitationProbability)
 		fields = append(fields, field)
 	}
 	if m.TemperatureFeelsLike != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Int8(m.TemperatureFeelsLike)
 		fields = append(fields, field)
 	}
 	if m.RelativeHumidity != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(m.RelativeHumidity)
 		fields = append(fields, field)
 	}
 	if m.Location != basetype.StringInvalid {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		field.Value = proto.String(m.Location)
 		fields = append(fields, field)
 	}
 	if !m.ObservedAtTime.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint32(uint32(m.ObservedAtTime.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.ObservedLocationLat != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Int32(m.ObservedLocationLat)
 		fields = append(fields, field)
 	}
 	if m.ObservedLocationLong != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Int32(m.ObservedLocationLong)
 		fields = append(fields, field)
 	}
 	if m.DayOfWeek != typedef.DayOfWeekInvalid {
-		field := factory.CreateField(mesg.Num, 12)
+		field := fac.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint8(byte(m.DayOfWeek))
 		fields = append(fields, field)
 	}
 	if m.HighTemperature != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 13)
+		field := fac.CreateField(mesg.Num, 13)
 		field.Value = proto.Int8(m.HighTemperature)
 		fields = append(fields, field)
 	}
 	if m.LowTemperature != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 14)
+		field := fac.CreateField(mesg.Num, 14)
 		field.Value = proto.Int8(m.LowTemperature)
 		fields = append(fields, field)
 	}

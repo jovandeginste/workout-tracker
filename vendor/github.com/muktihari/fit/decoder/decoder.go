@@ -7,9 +7,9 @@ package decoder
 import (
 	"context"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
+	"slices"
 
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/kit/hash"
@@ -40,9 +40,6 @@ const (
 
 	// ErrMesgDefMissing will be returned if message definition for the incoming message data is missing.
 	ErrMesgDefMissing = errorString("message definition missing") // NOTE: Kept exported since it's used by RawDecoder
-
-	// ErrPeekNoFileId will only be returned by PeekFileId method when no FileId is found in the current FIT sequence.
-	ErrPeekNoFileId = errorString("peek no file_id")
 
 	errInvalidBaseType = errorString("invalid basetype")
 )
@@ -76,8 +73,8 @@ type Decoder struct {
 	localMessageDefinitions [proto.LocalMesgNumMask + 1]proto.MessageDefinition
 
 	// Developer Data Lookup
-	developerDataIndexSeen [4]uint64 // 256-bits bitmap for checking if DeveloperDataIndex has been seen.
-	fieldDescriptions      []*mesgdef.FieldDescription
+	developerDataIndexes []uint8
+	fieldDescriptions    []*mesgdef.FieldDescription
 }
 
 // Factory defines a contract that any Factory containing these method can be used by the Decoder.
@@ -204,14 +201,14 @@ func (d *Decoder) Reset(r io.Reader, opts ...Option) {
 	d.reset()
 	d.n = 0 // Must reset bytes counter since it's a full reset.
 
-	// We must cleanup everything on full reset in case users call `PeekFileId` but they
-	// do not continue to call `Decode` or `Discard` after that, we might have dirty state.
-	d.releaseTemporaryObjects()
-
 	// Reuse listeners' slices
-	clear(d.options.mesgListeners) // avoid memory leaks
+	for i := range d.options.mesgListeners {
+		d.options.mesgListeners[i] = nil // avoid memory leaks
+	}
 	mesgListeners := d.options.mesgListeners[:0]
-	clear(d.options.mesgDefListeners) // avoid memory leaks
+	for i := range d.options.mesgDefListeners {
+		d.options.mesgDefListeners[i] = nil // avoid memory leaks
+	}
 	mesgDefListeners := d.options.mesgDefListeners[:0]
 
 	d.options = defaultOptions()
@@ -235,20 +232,22 @@ func (d *Decoder) reset() {
 	d.messages = nil
 	d.crc = 0
 	d.fileId = nil
-	for i := range d.localMessageDefinitions {
-		d.localMessageDefinitions[i].Header = 0
-	}
-	clear(d.developerDataIndexSeen[:])
 }
 
 // releaseTemporaryObjects releases objects that being created during a single decode process
 // by stops referencing those objects so it can be garbage-collected on next GC cycle.
 func (d *Decoder) releaseTemporaryObjects() {
-	clear(d.fieldsArray[:])
-	clear(d.developerFieldsArray[:])
-	d.messages = nil
+	for i := range d.localMessageDefinitions {
+		d.localMessageDefinitions[i].Header = 0
+	}
+	d.fieldsArray = [255]proto.Field{}
+	d.developerFieldsArray = [255]proto.DeveloperField{}
 	d.fileId = nil
-	clear(d.fieldDescriptions)
+	d.messages = nil
+	d.developerDataIndexes = d.developerDataIndexes[:0]
+	for i := range d.fieldDescriptions {
+		d.fieldDescriptions[i] = nil
+	}
 	d.fieldDescriptions = d.fieldDescriptions[:0]
 }
 
@@ -274,7 +273,9 @@ func (d *Decoder) CheckIntegrity() (seq int, err error) {
 		// Check File Header Integrity
 		pos := d.n
 		if err = d.decodeFileHeaderOnce(); err != nil {
-			if desirableEOF(err, pos, d.n) {
+			if pos != 0 && pos == d.n && err == io.EOF {
+				// When EOF error occurs exactly after a sequence has been completed,
+				// make the error as nil, it means we have reached the desirable EOF.
 				err = nil
 			}
 			break
@@ -303,14 +304,6 @@ func (d *Decoder) CheckIntegrity() (seq int, err error) {
 	return seq, err
 }
 
-// Desirable EOF is when EOF error occurs exactly right after a sequence has been completed.
-func desirableEOF(err error, oldPos, newPos int64) bool {
-	if errors.Is(err, io.EOF) && oldPos != 0 && oldPos == newPos {
-		return true
-	}
-	return false
-}
-
 // discardMessages efficiently discards bytes used by messages.
 func (d *Decoder) discardMessages() (err error) {
 	for d.cur < d.fileHeader.DataSize {
@@ -325,45 +318,39 @@ func (d *Decoder) discardMessages() (err error) {
 // PeekFileHeader decodes only up to FileHeader (first 12-14 bytes) without decoding the whole reader.
 //
 // If we choose to continue, Decode picks up where this left then continue decoding next messages instead of starting from zero.
-func (d *Decoder) PeekFileHeader() (proto.FileHeader, error) {
+func (d *Decoder) PeekFileHeader() (*proto.FileHeader, error) {
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
-		return proto.FileHeader{}, fmt.Errorf("decode file header [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
-	return d.fileHeader, nil
+	return &d.fileHeader, nil
 }
 
 // PeekFileId decodes only up to FileId message without decoding the whole reader.
-// Peeking FileId involves decoding messages, so any existing message listeners will also be broadcast.
-// If we choose to continue, Decode picks up where this left then continue decoding next messages instead of starting from zero.
+// The FileId is expected to be present as the first message; however, we don't validate this,
+// as it's an edge case that occurs when a FIT file is poorly encoded.
 //
-// NOTE: The FileId is typically present as the first message, whether in a single FIT file or in each FIT sequence of
-// a chained FIT file. However, in a chained FIT file, there is a case where the FileId may only present in
-// the first sequence (an Activity File) followed by the next sequences which consist only HR messages.
-// Calling this method on those next sequences will return [ErrPeekNoFileId], indicating that the current sequence does not
-// have a FileId. Users can still continue by calling Decode or Discard.
+// If we choose to continue, Decode picks up where this left then continue decoding next messages instead of starting from zero.
 func (d *Decoder) PeekFileId() (*mesgdef.FileId, error) {
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
-		return nil, fmt.Errorf("decode file header [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
-	for d.fileId == nil && d.cur < d.fileHeader.DataSize {
+	for d.fileId == nil {
 		if d.err = d.decodeMessage(); d.err != nil {
-			return nil, fmt.Errorf("decode message [byte pos: %d]: %w", d.n, d.err)
+			return nil, d.err
 		}
-	}
-	if d.fileId == nil {
-		return nil, fmt.Errorf("peek file_id has reached the end of the sequence [byte pos: %d]: %w", d.n, ErrPeekNoFileId)
 	}
 	return d.fileId, nil
 }
 
 // Next checks whether next bytes are still a valid FIT File sequence. Return false when invalid or reach EOF.
 func (d *Decoder) Next() bool {
-	if d.n == 0 && d.err == nil {
+	if d.err != nil {
+		return false
+	}
+	if d.n == 0 {
 		return true
 	}
-	pos := d.n
-	d.err = d.decodeFileHeaderOnce()
-	return !desirableEOF(d.err, pos, d.n)
+	return d.decodeFileHeaderOnce() == nil
 }
 
 // Decode method decodes `r` into FIT data. One invocation will produce one valid FIT data or
@@ -378,14 +365,14 @@ func (d *Decoder) Next() bool {
 //	}
 func (d *Decoder) Decode() (*proto.FIT, error) {
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
-		return nil, fmt.Errorf("decode file header [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	defer d.releaseTemporaryObjects()
 	if d.err = d.decodeMessages(); d.err != nil {
-		return nil, fmt.Errorf("decode message [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	if d.err = d.decodeCRC(); d.err != nil {
-		return nil, fmt.Errorf("decode crc [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	fit := &proto.FIT{
 		FileHeader: d.fileHeader,
@@ -421,16 +408,15 @@ func (d *Decoder) Discard() error {
 	optionsShouldChecksum := d.options.shouldChecksum
 	d.options.shouldChecksum = false
 	defer func() { d.options.shouldChecksum = optionsShouldChecksum }()
-	d.releaseTemporaryObjects() // Since Discard is mostly called after `PeekFileId`
 
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
-		return fmt.Errorf("decode file header [byte pos: %d]: %w", d.n, d.err)
+		return d.err
 	}
 	if d.err = d.discardMessages(); d.err != nil {
-		return fmt.Errorf("discard message [byte pos: %d]: %w", d.n, d.err)
+		return d.err
 	}
 	if _, d.err = d.readN(2); d.err != nil { // Discard File CRC
-		return fmt.Errorf("discard crc [byte pos: %d]: %w", d.n, d.err)
+		return d.err
 	}
 	d.reset()
 	return d.err
@@ -438,13 +424,10 @@ func (d *Decoder) Discard() error {
 
 // decodeFileHeaderOnce invokes decodeFileHeader exactly once.
 func (d *Decoder) decodeFileHeaderOnce() error {
-	if d.err != nil {
-		return d.err
+	if d.fileHeader == (proto.FileHeader{}) && d.err == nil {
+		d.err = d.decodeFileHeader()
 	}
-	if d.fileHeader.Size != 0 {
-		return nil
-	}
-	return d.decodeFileHeader()
+	return d.err
 }
 
 // decodeFileHeader is only invoked through decodeFileHeaderOnce.
@@ -508,7 +491,7 @@ func (d *Decoder) decodeFileHeader() error {
 func (d *Decoder) decodeMessages() (err error) {
 	for d.cur < d.fileHeader.DataSize {
 		if err = d.decodeMessage(); err != nil {
-			return err
+			return fmt.Errorf("decodeMessage [byte pos: %d]: %w", d.n, err)
 		}
 	}
 	return nil
@@ -662,8 +645,8 @@ func (d *Decoder) decodeMessageData(header byte) (err error) {
 	switch mesg.Num {
 	case mesgnum.DeveloperDataId:
 		// These messages must occur before any related field description messages are written to the proto.
-		x := mesg.FieldValueByNum(fieldnum.DeveloperDataIdDeveloperDataIndex).Uint8()
-		d.developerDataIndexSeen[x>>6] |= 1 << (x & 63)
+		d.developerDataIndexes = append(d.developerDataIndexes,
+			mesg.FieldValueByNum(fieldnum.DeveloperDataIdDeveloperDataIndex).Uint8())
 	case mesgnum.FieldDescription:
 		// These messages must occur in the file before any related developer data is written to the proto.
 		d.fieldDescriptions = append(d.fieldDescriptions, mesgdef.NewFieldDescription(&mesg))
@@ -716,23 +699,29 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 			}
 		}
 
+		var (
+			baseType    = field.BaseType
+			profileType = field.Type
+			isArray     = field.Array
+		)
+
 		// Gracefully handle poorly encoded FIT file.
-		if n := field.BaseType.Size(); fieldDef.Size < n {
-			d.logField(mesg, fieldDef, "Size is less than expected. Add zero-padding so the value can be safely decoded")
-			var buf [8]byte
-			if mesgDef.Architecture == proto.LittleEndian {
-				copy(buf[:n], b)
-			} else {
-				copy(buf[n-fieldDef.Size:n], b)
-			}
-			b = buf[:n]
-		} else if fieldDef.Size > field.BaseType.Size() && !field.Array && field.BaseType != basetype.String {
+		if fieldDef.Size < baseType.Size() {
+			baseType = basetype.Uint8
+			profileType = profile.Uint8
+			isArray = true
+			d.logField(mesg, fieldDef, "Size is less than expected. Fallback: decode as byte(s) and convert the value")
+		} else if fieldDef.Size > baseType.Size() && !field.Array && baseType != basetype.String {
 			d.logField(mesg, fieldDef, "field.Array is false. Fallback: retrieve first array's value only")
 		}
 
-		field.Value, err = proto.UnmarshalValue(b, mesgDef.Architecture, field.BaseType, field.Type, field.Array)
+		field.Value, err = proto.UnmarshalValue(b, mesgDef.Architecture, baseType, profileType, isArray)
 		if err != nil {
 			return err
+		}
+
+		if baseType != field.BaseType { // Convert value
+			field.Value = convertBytesToValue(field.Value.SliceUint8(), mesgDef.Architecture, field.BaseType)
 		}
 
 		if field.Num == proto.FieldNumTimestamp && field.Value.Type() == proto.TypeUint32 {
@@ -755,7 +744,7 @@ func (d *Decoder) decodeFields(mesgDef *proto.MessageDefinition, mesg *proto.Mes
 	// Now that all fields has been decoded, we need to expand all components and accumulate the accumulable values.
 	for i := range mesg.Fields {
 		field := &mesg.Fields[i]
-		if subField := field.SubFieldSubstitution(mesg); subField != nil {
+		if subField := field.SubFieldSubtitution(mesg); subField != nil {
 			// Expand sub-field components as the main field components
 			d.expandComponents(mesg, field.Value, field.BaseType, subField.Components)
 			continue
@@ -781,21 +770,24 @@ func (d *Decoder) expandComponents(mesg *proto.Message, containingValue proto.Va
 		return
 	}
 
+	var componentField proto.Field
 	for i := range components {
 		component := &components[i]
 
+		componentField = d.options.factory.CreateField(mesg.Num, component.FieldNum)
+		componentField.IsExpandedField = true
+
 		// A component can only have max 32 bits value.
-		val, ok := vbits.Pull(component.Bits)
-		if !ok {
+		// If a field has only one component, expand it even if its value is zero
+		// e.g. speed (0) -> enhanced_speed (0).
+		val := vbits.Pull(component.Bits)
+		if val == 0 && len(components) > 1 {
 			break
 		}
 
 		if component.Accumulate {
 			val = d.accumulator.Accumulate(mesg.Num, component.FieldNum, val, component.Bits)
 		}
-
-		componentField := d.options.factory.CreateField(mesg.Num, component.FieldNum)
-		componentField.IsExpandedField = true
 
 		scaledValue := float64(val)/component.Scale - component.Offset
 		val = uint32((scaledValue + componentField.Offset) * componentField.Scale)
@@ -838,7 +830,7 @@ func (d *Decoder) expandComponents(mesg *proto.Message, containingValue proto.Va
 		// e.g. compressed_speed_distance -> (speed, distance), speed -> enhanced_speed.
 		//
 		// NOTE: We pass the 32 bits component's value to ensure we only expand this value.
-		if subField := componentField.SubFieldSubstitution(mesg); subField != nil {
+		if subField := componentField.SubFieldSubtitution(mesg); subField != nil {
 			d.expandComponents(mesg, value, componentField.BaseType, subField.Components)
 		} else {
 			d.expandComponents(mesg, value, componentField.BaseType, componentField.Components)
@@ -857,7 +849,7 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 
 		// NOTE: Currently, we allow missing DeveloperDataId message,
 		// we only use FieldDescription messages to decode developer data.
-		if x := devFieldDef.DeveloperDataIndex; (d.developerDataIndexSeen[x>>6]>>(x&63))&1 == 0 {
+		if !slices.Contains(d.developerDataIndexes, devFieldDef.DeveloperDataIndex) {
 			d.logf("mesg.Num: %d, developerFields[%d].Num: %d: missing developer data id with developer data index '%d'",
 				mesg.Num, i, devFieldDef.Num, devFieldDef.DeveloperDataIndex)
 		}
@@ -889,22 +881,20 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 				fieldDesc.FitBaseTypeId, errInvalidBaseType)
 		}
 
+		var (
+			baseType    = fieldDesc.FitBaseTypeId
+			profileType = profile.ProfileType(baseType & basetype.BaseTypeNumMask)
+			isArray     = devFieldDef.Size > baseType.Size() && devFieldDef.Size%baseType.Size() == 0
+		)
+
 		// Gracefully handle poorly encoded FIT file.
-		if n := fieldDesc.FitBaseTypeId.Size(); devFieldDef.Size < n {
+		if devFieldDef.Size < fieldDesc.FitBaseTypeId.Size() {
+			baseType = basetype.Uint8
+			profileType = profile.Uint8
+			isArray = true
 			d.logDeveloperField(mesg, devFieldDef, fieldDesc.FitBaseTypeId,
-				"Size is less than expected. Add zero-padding so the value can be safely decoded")
-
-			var buf [8]byte
-			if mesgDef.Architecture == proto.LittleEndian {
-				copy(buf[:n], b)
-			} else {
-				copy(buf[n-devFieldDef.Size:n], b)
-			}
-			b = buf[:n]
+				"Size is less than expected. Fallback: decode as byte(s) and convert the value")
 		}
-
-		profileType := profile.ProfileType(fieldDesc.FitBaseTypeId & basetype.BaseTypeNumMask)
-		isArray := devFieldDef.Size > fieldDesc.FitBaseTypeId.Size() && devFieldDef.Size%fieldDesc.FitBaseTypeId.Size() == 0
 
 		// NOTE: It seems there is no standard on utilizing Array field to handle []string in developer fields.
 		// Discussion: https://forums.garmin.com/developer/fit-sdk/f/discussion/355554/how-to-determine-developer-field-s-value-type-is-a-string-or-string
@@ -913,7 +903,11 @@ func (d *Decoder) decodeDeveloperFields(mesgDef *proto.MessageDefinition, mesg *
 		}
 
 		// SAFETY: Base type validity is checked. The only error is when base type is invalid.
-		val, _ := proto.UnmarshalValue(b, mesgDef.Architecture, fieldDesc.FitBaseTypeId, profileType, isArray)
+		val, _ := proto.UnmarshalValue(b, mesgDef.Architecture, baseType, profileType, isArray)
+
+		if baseType != fieldDesc.FitBaseTypeId { // Convert value
+			val = convertBytesToValue(val.SliceUint8(), mesgDef.Architecture, fieldDesc.FitBaseTypeId)
+		}
 
 		// NOTE: Decoder will not attempt to validate native data when both NativeMesgNum and NativeFieldNum are valid.
 		// Users need to handle this themselves due to the limited context available.
@@ -984,14 +978,14 @@ func (d *Decoder) DecodeWithContext(ctx context.Context) (*proto.FIT, error) {
 		ctx = context.Background()
 	}
 	if d.err = d.decodeFileHeaderOnce(); d.err != nil {
-		return nil, fmt.Errorf("decode file header [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	defer d.releaseTemporaryObjects()
 	if d.err = d.decodeMessagesWithContext(ctx); d.err != nil {
-		return nil, fmt.Errorf("decode message [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	if d.err = d.decodeCRC(); d.err != nil {
-		return nil, fmt.Errorf("decode crc [byte pos: %d]: %w", d.n, d.err)
+		return nil, d.err
 	}
 	fit := &proto.FIT{
 		FileHeader: d.fileHeader,
@@ -1009,7 +1003,7 @@ func (d *Decoder) decodeMessagesWithContext(ctx context.Context) (err error) {
 			return ctx.Err()
 		default:
 			if err = d.decodeMessage(); err != nil {
-				return err
+				return fmt.Errorf("decodeMessage [byte pos: %d]: %w", d.n, err)
 			}
 		}
 	}
@@ -1057,6 +1051,46 @@ func convertUint32ToValue(val uint32, baseType basetype.BaseType) proto.Value {
 		return proto.Float64(float64(val))
 	}
 	return proto.Value{}
+}
+
+// convertBytesToValue converts val in the form of byte or []byte into target baseType.
+// This is used for casting value of bad encoded FIT files where value takes fewer bytes
+// than specified in profile. Example:
+//   - 1 byte but for uint16, should have been 2 bytes
+//   - 3 bytes but for uint32, should have been 4 bytes
+func convertBytesToValue(b []uint8, arch byte, baseType basetype.BaseType) proto.Value {
+	var value uint64
+	if arch == proto.LittleEndian {
+		for i := range b {
+			value |= uint64(b[i]) << (i * 8)
+		}
+	} else {
+		n := len(b) - 1
+		for i := range b {
+			value |= uint64(b[i]) << ((n - i) * 8)
+		}
+	}
+
+	switch baseType { // only eligible for numeric type size > 1
+	case basetype.Sint16:
+		return proto.Int16(int16(value))
+	case basetype.Uint16, basetype.Uint16z:
+		return proto.Uint16(uint16(value))
+	case basetype.Sint32:
+		return proto.Int32(int32(value))
+	case basetype.Uint32, basetype.Uint32z:
+		return proto.Uint32(uint32(value))
+	case basetype.Sint64:
+		return proto.Int64(int64(value))
+	case basetype.Uint64, basetype.Uint64z:
+		return proto.Uint64(value)
+	case basetype.Float32:
+		return proto.Float32(float32(value))
+	case basetype.Float64:
+		return proto.Float64(float64(value))
+	default:
+		return proto.SliceUint8(b)
+	}
 }
 
 // valueAppend appends elem into slice. Elem must be has type element of
