@@ -20,7 +20,7 @@ import (
 )
 
 // Version # of resty
-const Version = "3.0.0-beta.1"
+const Version = "3.0.0-beta.6"
 
 // New method creates a new Resty client.
 func New() *Client {
@@ -125,6 +125,10 @@ func createTransport(dialer *net.Dialer, transportSettings *TransportSettings) *
 		t.MaxIdleConnsPerHost = transportSettings.MaxIdleConnsPerHost
 	} else {
 		t.MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) + 1
+	}
+
+	if transportSettings.MaxConnsPerHost > 0 {
+		t.MaxConnsPerHost = transportSettings.MaxConnsPerHost
 	}
 
 	//

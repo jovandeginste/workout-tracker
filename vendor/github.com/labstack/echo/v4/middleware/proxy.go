@@ -158,6 +158,7 @@ func proxyRaw(t *ProxyTarget, c echo.Context, config ProxyConfig) http.Handler {
 			c.Set("_error", echo.NewHTTPError(http.StatusBadGateway, fmt.Sprintf("proxy raw, dial error=%v, url=%s", err, t.URL)))
 			return
 		}
+		defer out.Close()
 
 		// Write header
 		err = r.Write(out)
@@ -168,15 +169,21 @@ func proxyRaw(t *ProxyTarget, c echo.Context, config ProxyConfig) http.Handler {
 
 		errCh := make(chan error, 2)
 		cp := func(dst io.Writer, src io.Reader) {
-			_, err = io.Copy(dst, src)
-			errCh <- err
+			_, copyErr := io.Copy(dst, src)
+			errCh <- copyErr
 		}
 
 		go cp(out, in)
 		go cp(in, out)
-		err = <-errCh
-		if err != nil && err != io.EOF {
-			c.Set("_error", fmt.Errorf("proxy raw, copy body error=%w, url=%s", err, t.URL))
+
+		// Wait for BOTH goroutines to complete
+		err1 := <-errCh
+		err2 := <-errCh
+
+		if err1 != nil && err1 != io.EOF {
+			c.Set("_error", fmt.Errorf("proxy raw, copy body error=%w, url=%s", err1, t.URL))
+		} else if err2 != nil && err2 != io.EOF {
+			c.Set("_error", fmt.Errorf("proxy raw, copy body error=%w, url=%s", err2, t.URL))
 		}
 	})
 }

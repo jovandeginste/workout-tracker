@@ -13,6 +13,8 @@ import (
 	"github.com/muktihari/fit/proto"
 )
 
+var newFileId = *mesgdef.NewFileId(nil)
+
 // File is an interface for defining common type file, any defined common file type should implement
 // the following methods to be able to work with Listener (and other building block in filedef package).
 type File interface {

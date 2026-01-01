@@ -7,6 +7,7 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
+	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -28,7 +29,8 @@ var _ File = (*Goals)(nil)
 
 // NewGoals creates new Goals File.
 func NewGoals(mesgs ...proto.Message) *Goals {
-	f := &Goals{}
+	f := &Goals{FileId: newFileId}
+	f.FileId.Type = typedef.FileGoals
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -39,7 +41,7 @@ func NewGoals(mesgs ...proto.Message) *Goals {
 func (f *Goals) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId = *mesgdef.NewFileId(&mesg)
+		f.FileId.Reset(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:

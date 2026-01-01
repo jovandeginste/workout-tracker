@@ -1,5 +1,226 @@
 # Changelog
 
+## v4.15.0 - 2026-01-01
+
+
+**Security**
+
+NB: **If your application relies on cross-origin or same-site (same subdomain) requests do not blindly push this version to production**
+
+
+The CSRF middleware now supports the [**Sec-Fetch-Site**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site) header as a modern, defense-in-depth approach to [CSRF
+protection](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#fetch-metadata-headers), implementing the OWASP-recommended Fetch Metadata API alongside the traditional token-based mechanism.
+
+**How it works:**
+
+Modern browsers automatically send the `Sec-Fetch-Site` header with all requests, indicating the relationship
+between the request origin and the target. The middleware uses this to make security decisions:
+
+- **`same-origin`** or **`none`**: Requests are allowed (exact origin match or direct user navigation)
+- **`same-site`**: Falls back to token validation (e.g., subdomain to main domain)
+- **`cross-site`**: Blocked by default with 403 error for unsafe methods (POST, PUT, DELETE, PATCH)
+
+For browsers that don't send this header (older browsers), the middleware seamlessly falls back to
+traditional token-based CSRF protection.
+
+**New Configuration Options:**
+- `TrustedOrigins []string`: Allowlist specific origins for cross-site requests (useful for OAuth callbacks, webhooks)
+- `AllowSecFetchSiteFunc func(echo.Context) (bool, error)`: Custom logic for same-site/cross-site request validation
+
+**Example:**
+  ```go
+  e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+      // Allow OAuth callbacks from trusted provider
+      TrustedOrigins: []string{"https://oauth-provider.com"},
+
+      // Custom validation for same-site requests
+      AllowSecFetchSiteFunc: func(c echo.Context) (bool, error) {
+          // Your custom authorization logic here
+          return validateCustomAuth(c), nil
+          // return true, err  // blocks request with error
+          // return true, nil  // allows CSRF request through
+          // return false, nil // falls back to legacy token logic
+      },
+  }))
+  ```
+PR: https://github.com/labstack/echo/pull/2858
+
+**Type-Safe Generic Parameter Binding**
+
+* Added generic functions for type-safe parameter extraction and context access by @aldas in https://github.com/labstack/echo/pull/2856
+
+  Echo now provides generic functions for extracting path, query, and form parameters with automatic type conversion,
+  eliminating manual string parsing and type assertions.
+
+  **New Functions:**
+  - Path parameters: `PathParam[T]`, `PathParamOr[T]`
+  - Query parameters: `QueryParam[T]`, `QueryParamOr[T]`, `QueryParams[T]`, `QueryParamsOr[T]`
+  - Form values: `FormParam[T]`, `FormParamOr[T]`, `FormParams[T]`, `FormParamsOr[T]`
+  - Context store: `ContextGet[T]`, `ContextGetOr[T]`
+
+  **Supported Types:**
+  Primitives (`bool`, `string`, `int`/`uint` variants, `float32`/`float64`), `time.Duration`, `time.Time`
+  (with custom layouts and Unix timestamp support), and custom types implementing `BindUnmarshaler`,
+  `TextUnmarshaler`, or `JSONUnmarshaler`.
+
+  **Example:**
+  ```go
+  // Before: Manual parsing
+  idStr := c.Param("id")
+  id, err := strconv.Atoi(idStr)
+
+  // After: Type-safe with automatic parsing
+  id, err := echo.PathParam[int](c, "id")
+
+  // With default values
+  page, err := echo.QueryParamOr[int](c, "page", 1)
+  limit, err := echo.QueryParamOr[int](c, "limit", 20)
+
+  // Type-safe context access (no more panics from type assertions)
+  user, err := echo.ContextGet[*User](c, "user")
+  ```
+  
+PR: https://github.com/labstack/echo/pull/2856
+
+
+
+**DEPRECATION NOTICE** Timeout Middleware Deprecated - Use ContextTimeout Instead
+
+The `middleware.Timeout` middleware has been **deprecated** due to fundamental architectural issues that cause
+data races. Use `middleware.ContextTimeout` or `middleware.ContextTimeoutWithConfig` instead.
+
+**Why is this being deprecated?**
+
+The Timeout middleware manipulates response writers across goroutine boundaries, which causes data races that
+cannot be reliably fixed without a complete architectural redesign. The middleware:
+
+- Swaps the response writer using `http.TimeoutHandler`
+- Must be the first middleware in the chain (fragile constraint)
+- Can cause races with other middleware (Logger, metrics, custom middleware)
+- Has been the source of multiple race condition fixes over the years
+
+**What should you use instead?**
+
+The `ContextTimeout` middleware (available since v4.12.0) provides timeout functionality using Go's standard
+context mechanism. It is:
+
+- Race-free by design
+- Can be placed anywhere in the middleware chain
+- Simpler and more maintainable
+- Compatible with all other middleware
+
+**Migration Guide:**
+
+```go
+// Before (deprecated):
+e.Use(middleware.Timeout())
+
+// After (recommended):
+e.Use(middleware.ContextTimeout(30 * time.Second))
+```
+
+**Important Behavioral Differences:**
+
+1. **Handler cooperation required**: With ContextTimeout, your handlers must check `context.Done()` for cooperative
+   cancellation. The old Timeout middleware would send a 503 response regardless of handler cooperation, but had
+   data race issues.
+
+2. **Error handling**: ContextTimeout returns errors through the standard error handling flow. Handlers that receive
+   `context.DeadlineExceeded` should handle it appropriately:
+
+```go
+e.GET("/long-task", func(c echo.Context) error {
+    ctx := c.Request().Context()
+
+    // Example: database query with context
+    result, err := db.QueryContext(ctx, "SELECT * FROM large_table")
+    if err != nil {
+        if errors.Is(err, context.DeadlineExceeded) {
+            // Handle timeout
+            return echo.NewHTTPError(http.StatusServiceUnavailable, "Request timeout")
+        }
+        return err
+    }
+
+    return c.JSON(http.StatusOK, result)
+})
+```
+
+3. **Background tasks**: For long-running background tasks, use goroutines with context:
+
+```go
+e.GET("/async-task", func(c echo.Context) error {
+    ctx := c.Request().Context()
+
+    resultCh := make(chan Result, 1)
+    errCh := make(chan error, 1)
+
+    go func() {
+        result, err := performLongTask(ctx)
+        if err != nil {
+            errCh <- err
+            return
+        }
+        resultCh <- result
+    }()
+
+    select {
+    case result := <-resultCh:
+        return c.JSON(http.StatusOK, result)
+    case err := <-errCh:
+        return err
+    case <-ctx.Done():
+        return echo.NewHTTPError(http.StatusServiceUnavailable, "Request timeout")
+    }
+})
+```
+
+**Enhancements**
+
+* Fixes by @aldas in https://github.com/labstack/echo/pull/2852
+* Generic functions by @aldas in https://github.com/labstack/echo/pull/2856
+* CRSF with Sec-Fetch-Site checks by @aldas in https://github.com/labstack/echo/pull/2858
+
+
+## v4.14.0 - 2025-12-11
+
+`middleware.Logger` has been deprecated. For request logging, use `middleware.RequestLogger` or
+`middleware.RequestLoggerWithConfig`.
+
+`middleware.RequestLogger` replaces `middleware.Logger`, offering comparable configuration while relying on the
+Go standard library’s new `slog` logger.
+
+The previous default output format was JSON. The new default follows the standard `slog` logger settings.
+To continue emitting request logs in JSON, configure `slog` accordingly:
+```go
+slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
+e.Use(middleware.RequestLogger())
+```
+
+
+**Security**
+
+* Logger middleware json string escaping and deprecation by @aldas in https://github.com/labstack/echo/pull/2849
+
+
+
+**Enhancements**
+
+* Update deps  by @aldas in https://github.com/labstack/echo/pull/2807
+* refactor to use reflect.TypeFor by @cuiweixie in https://github.com/labstack/echo/pull/2812
+* Use Go 1.25 in CI by @aldas in https://github.com/labstack/echo/pull/2810
+* Modernize context.go by replacing interface{} with any by @vishr in https://github.com/labstack/echo/pull/2822
+* Fix typo in SetParamValues comment by @vishr in https://github.com/labstack/echo/pull/2828
+* Fix typo in ContextTimeout middleware comment by @vishr in https://github.com/labstack/echo/pull/2827
+* Improve BasicAuth middleware: use strings.Cut and RFC compliance by @vishr in https://github.com/labstack/echo/pull/2825
+* Fix duplicate plus operator in router backtracking logic by @yuya-morimoto in https://github.com/labstack/echo/pull/2832
+* Replace custom private IP range check with built-in net.IP.IsPrivate by @kumapower17 in https://github.com/labstack/echo/pull/2835
+* Ensure proxy connection is closed in proxyRaw function(#2837) by @kumapower17 in https://github.com/labstack/echo/pull/2838
+* Update deps by @aldas in https://github.com/labstack/echo/pull/2843
+* Update golang.org/x/* deps by @aldas in https://github.com/labstack/echo/pull/2850
+
+
+
 ## v4.13.4 - 2025-05-22
 
 **Enhancements**

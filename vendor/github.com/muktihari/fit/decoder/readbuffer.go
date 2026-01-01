@@ -22,7 +22,7 @@ const (
 
 // readBuffer is a custom buffered reader that will automatically handle buffering, allowing us to
 // read bytes directly from the buffer without extra copying, unlike *bufio.Reader which requires us
-// to copy the bytes on every Read() method call. When using *bufio.reader we might receive fewer bytes
+// to copy the bytes on every Read() method call. When using *bufio.Reader we might receive fewer bytes
 // than requested, readBuffer returns exactly n requested bytes, otherwise, it returns an error.
 type readBuffer struct {
 	r io.Reader // reader provided by the client

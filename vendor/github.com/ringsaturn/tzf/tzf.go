@@ -238,7 +238,7 @@ func (f *Finder) GetTimezoneNames(lng float64, lat float64) ([]string, error) {
 		return nil, err
 	}
 	ret := []string{}
-	for i := 0; i < len(item); i++ {
+	for i := range item {
 		ret = append(ret, item[i].name)
 	}
 	slices.Sort(ret)

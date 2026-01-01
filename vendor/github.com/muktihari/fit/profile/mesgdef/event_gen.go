@@ -64,27 +64,24 @@ func (m *Event) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{31522719, 0, 0, 2305843009213693952}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 25 && mesg.Fields[i].IsExpandedField {
-				pos := mesg.Fields[i].Num / 8
-				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
+			if mesg.Fields[i].IsExpandedField && num < 25 {
+				state[num>>3] |= 1 << (num & 7)
 			}
-			if mesg.Fields[i].Num < 254 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -121,51 +118,47 @@ func (m *Event) Reset(mesg *proto.Message) {
 func (m *Event) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 19)
 	mesg := proto.Message{Num: typedef.MesgNumEvent}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 253)
+		field := factory.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.Event != typedef.EventInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(byte(m.Event))
 		fields = append(fields, field)
 	}
 	if m.EventType != typedef.EventTypeInvalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.EventType))
 		fields = append(fields, field)
 	}
 	if m.Data16 != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint16(m.Data16)
 		fields = append(fields, field)
 	}
 	if m.Data != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(3); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 3)
+			field := factory.CreateField(mesg.Num, 3)
 			field.Value = proto.Uint32(m.Data)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.EventGroup != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint8(m.EventGroup)
 		fields = append(fields, field)
 	}
 	if m.Score != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(7); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 7)
+			field := factory.CreateField(mesg.Num, 7)
 			field.Value = proto.Uint16(m.Score)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -173,7 +166,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.OpponentScore != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(8); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 8)
+			field := factory.CreateField(mesg.Num, 8)
 			field.Value = proto.Uint16(m.OpponentScore)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -181,7 +174,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.FrontGearNum != basetype.Uint8zInvalid {
 		if expanded := m.IsExpandedField(9); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 9)
+			field := factory.CreateField(mesg.Num, 9)
 			field.Value = proto.Uint8(m.FrontGearNum)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -189,7 +182,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.FrontGear != basetype.Uint8zInvalid {
 		if expanded := m.IsExpandedField(10); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 10)
+			field := factory.CreateField(mesg.Num, 10)
 			field.Value = proto.Uint8(m.FrontGear)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -197,7 +190,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.RearGearNum != basetype.Uint8zInvalid {
 		if expanded := m.IsExpandedField(11); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 11)
+			field := factory.CreateField(mesg.Num, 11)
 			field.Value = proto.Uint8(m.RearGearNum)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -205,30 +198,30 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.RearGear != basetype.Uint8zInvalid {
 		if expanded := m.IsExpandedField(12); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 12)
+			field := factory.CreateField(mesg.Num, 12)
 			field.Value = proto.Uint8(m.RearGear)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.DeviceIndex != typedef.DeviceIndexInvalid {
-		field := fac.CreateField(mesg.Num, 13)
+		field := factory.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint8(uint8(m.DeviceIndex))
 		fields = append(fields, field)
 	}
 	if m.ActivityType != typedef.ActivityTypeInvalid {
-		field := fac.CreateField(mesg.Num, 14)
+		field := factory.CreateField(mesg.Num, 14)
 		field.Value = proto.Uint8(byte(m.ActivityType))
 		fields = append(fields, field)
 	}
 	if !m.StartTimestamp.Before(datetime.Epoch()) {
-		field := fac.CreateField(mesg.Num, 15)
+		field := factory.CreateField(mesg.Num, 15)
 		field.Value = proto.Uint32(uint32(m.StartTimestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.RadarThreatLevelMax != typedef.RadarThreatLevelTypeInvalid {
 		if expanded := m.IsExpandedField(21); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 21)
+			field := factory.CreateField(mesg.Num, 21)
 			field.Value = proto.Uint8(byte(m.RadarThreatLevelMax))
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -236,7 +229,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.RadarThreatCount != basetype.Uint8Invalid {
 		if expanded := m.IsExpandedField(22); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 22)
+			field := factory.CreateField(mesg.Num, 22)
 			field.Value = proto.Uint8(m.RadarThreatCount)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -244,7 +237,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.RadarThreatAvgApproachSpeed != basetype.Uint8Invalid {
 		if expanded := m.IsExpandedField(23); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 23)
+			field := factory.CreateField(mesg.Num, 23)
 			field.Value = proto.Uint8(m.RadarThreatAvgApproachSpeed)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -252,7 +245,7 @@ func (m *Event) ToMesg(options *Options) proto.Message {
 	}
 	if m.RadarThreatMaxApproachSpeed != basetype.Uint8Invalid {
 		if expanded := m.IsExpandedField(24); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 24)
+			field := factory.CreateField(mesg.Num, 24)
 			field.Value = proto.Uint8(m.RadarThreatMaxApproachSpeed)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -581,11 +574,10 @@ func (m *Event) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 	default:
 		return false
 	}
-	pos := fieldNum / 8
-	bit := uint8(1) << (fieldNum - (8 * pos))
-	m.state[pos] &^= bit
 	if flag {
-		m.state[pos] |= bit
+		m.state[fieldNum>>3] |= 1 << (fieldNum & 7)
+	} else {
+		m.state[fieldNum>>3] &^= 1 << (fieldNum & 7)
 	}
 	return true
 }
@@ -593,10 +585,10 @@ func (m *Event) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 // IsExpandedField checks whether given fieldNum is a field generated through
 // a component expansion. Eligible for field number: 3, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24.
 func (m *Event) IsExpandedField(fieldNum byte) bool {
-	if fieldNum >= 25 {
+	switch fieldNum {
+	case 3, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24:
+	default:
 		return false
 	}
-	pos := fieldNum / 8
-	bit := uint8(1) << (fieldNum - (8 * pos))
-	return m.state[pos]&bit == bit
+	return (m.state[fieldNum>>3]>>(fieldNum&7))&1 == 1
 }
