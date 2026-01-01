@@ -147,7 +147,7 @@ curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiO
 
 Output should be
 ```bash
-*   Trying 127.0.0.1:8080...
+* Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
 > GET / HTTP/1.1
 > Host: localhost:8080

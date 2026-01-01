@@ -244,6 +244,7 @@ const (
 	ManufacturerTektroRacingProducts       Manufacturer = 333
 	ManufacturerDaradInnovationCorporation Manufacturer = 334
 	ManufacturerCycloptim                  Manufacturer = 335
+	ManufacturerRunna                      Manufacturer = 337
 	ManufacturerActigraphcorp              Manufacturer = 5759
 	ManufacturerInvalid                    Manufacturer = 0xFFFF
 )
@@ -714,6 +715,8 @@ func (m Manufacturer) String() string {
 		return "darad_innovation_corporation"
 	case ManufacturerCycloptim:
 		return "cycloptim"
+	case ManufacturerRunna:
+		return "runna"
 	case ManufacturerActigraphcorp:
 		return "actigraphcorp"
 	default:
@@ -1186,6 +1189,8 @@ func ManufacturerFromString(s string) Manufacturer {
 		return ManufacturerDaradInnovationCorporation
 	case "cycloptim":
 		return ManufacturerCycloptim
+	case "runna":
+		return ManufacturerRunna
 	case "actigraphcorp":
 		return ManufacturerActigraphcorp
 	default:
@@ -1427,6 +1432,7 @@ func ListManufacturer() []Manufacturer {
 		ManufacturerTektroRacingProducts,
 		ManufacturerDaradInnovationCorporation,
 		ManufacturerCycloptim,
+		ManufacturerRunna,
 		ManufacturerActigraphcorp,
 	}
 }

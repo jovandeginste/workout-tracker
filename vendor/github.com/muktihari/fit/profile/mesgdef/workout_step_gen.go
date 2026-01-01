@@ -59,23 +59,21 @@ func (m *WorkoutStep) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{7880703, 0, 0, 4611686018427387904}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 255 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -110,107 +108,103 @@ func (m *WorkoutStep) Reset(mesg *proto.Message) {
 func (m *WorkoutStep) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 19)
 	mesg := proto.Message{Num: typedef.MesgNumWorkoutStep}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 254)
+		field := factory.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.WktStepName != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.String(m.WktStepName)
 		fields = append(fields, field)
 	}
 	if m.DurationType != typedef.WktStepDurationInvalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.DurationType))
 		fields = append(fields, field)
 	}
 	if m.DurationValue != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint32(m.DurationValue)
 		fields = append(fields, field)
 	}
 	if m.TargetType != typedef.WktStepTargetInvalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint8(byte(m.TargetType))
 		fields = append(fields, field)
 	}
 	if m.TargetValue != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint32(m.TargetValue)
 		fields = append(fields, field)
 	}
 	if m.CustomTargetValueLow != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint32(m.CustomTargetValueLow)
 		fields = append(fields, field)
 	}
 	if m.CustomTargetValueHigh != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint32(m.CustomTargetValueHigh)
 		fields = append(fields, field)
 	}
 	if m.Intensity != typedef.IntensityInvalid {
-		field := fac.CreateField(mesg.Num, 7)
+		field := factory.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(byte(m.Intensity))
 		fields = append(fields, field)
 	}
 	if m.Notes != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 8)
+		field := factory.CreateField(mesg.Num, 8)
 		field.Value = proto.String(m.Notes)
 		fields = append(fields, field)
 	}
 	if m.Equipment != typedef.WorkoutEquipmentInvalid {
-		field := fac.CreateField(mesg.Num, 9)
+		field := factory.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint8(byte(m.Equipment))
 		fields = append(fields, field)
 	}
 	if m.ExerciseCategory != typedef.ExerciseCategoryInvalid {
-		field := fac.CreateField(mesg.Num, 10)
+		field := factory.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint16(uint16(m.ExerciseCategory))
 		fields = append(fields, field)
 	}
 	if m.ExerciseName != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 11)
+		field := factory.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint16(m.ExerciseName)
 		fields = append(fields, field)
 	}
 	if m.ExerciseWeight != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 12)
+		field := factory.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint16(m.ExerciseWeight)
 		fields = append(fields, field)
 	}
 	if m.WeightDisplayUnit != typedef.FitBaseUnitInvalid {
-		field := fac.CreateField(mesg.Num, 13)
+		field := factory.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint16(uint16(m.WeightDisplayUnit))
 		fields = append(fields, field)
 	}
 	if m.SecondaryTargetType != typedef.WktStepTargetInvalid {
-		field := fac.CreateField(mesg.Num, 19)
+		field := factory.CreateField(mesg.Num, 19)
 		field.Value = proto.Uint8(byte(m.SecondaryTargetType))
 		fields = append(fields, field)
 	}
 	if m.SecondaryTargetValue != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 20)
+		field := factory.CreateField(mesg.Num, 20)
 		field.Value = proto.Uint32(m.SecondaryTargetValue)
 		fields = append(fields, field)
 	}
 	if m.SecondaryCustomTargetValueLow != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 21)
+		field := factory.CreateField(mesg.Num, 21)
 		field.Value = proto.Uint32(m.SecondaryCustomTargetValueLow)
 		fields = append(fields, field)
 	}
 	if m.SecondaryCustomTargetValueHigh != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 22)
+		field := factory.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint32(m.SecondaryCustomTargetValueHigh)
 		fields = append(fields, field)
 	}

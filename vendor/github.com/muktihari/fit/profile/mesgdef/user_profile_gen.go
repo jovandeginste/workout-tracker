@@ -69,23 +69,21 @@ func (m *UserProfile) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{703695778447359, 0, 0, 4611686018427387904}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 255 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -141,117 +139,113 @@ func (m *UserProfile) Reset(mesg *proto.Message) {
 func (m *UserProfile) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 29)
 	mesg := proto.Message{Num: typedef.MesgNumUserProfile}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 254)
+		field := factory.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.FriendlyName != basetype.StringInvalid {
-		field := fac.CreateField(mesg.Num, 0)
+		field := factory.CreateField(mesg.Num, 0)
 		field.Value = proto.String(m.FriendlyName)
 		fields = append(fields, field)
 	}
 	if m.Gender != typedef.GenderInvalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.Gender))
 		fields = append(fields, field)
 	}
 	if m.Age != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint8(m.Age)
 		fields = append(fields, field)
 	}
 	if m.Height != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint8(m.Height)
 		fields = append(fields, field)
 	}
 	if m.Weight != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.Weight)
 		fields = append(fields, field)
 	}
 	if m.Language != typedef.LanguageInvalid {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint8(byte(m.Language))
 		fields = append(fields, field)
 	}
 	if m.ElevSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 6)
+		field := factory.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint8(byte(m.ElevSetting))
 		fields = append(fields, field)
 	}
 	if m.WeightSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 7)
+		field := factory.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(byte(m.WeightSetting))
 		fields = append(fields, field)
 	}
 	if m.RestingHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 8)
+		field := factory.CreateField(mesg.Num, 8)
 		field.Value = proto.Uint8(m.RestingHeartRate)
 		fields = append(fields, field)
 	}
 	if m.DefaultMaxRunningHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 9)
+		field := factory.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint8(m.DefaultMaxRunningHeartRate)
 		fields = append(fields, field)
 	}
 	if m.DefaultMaxBikingHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 10)
+		field := factory.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint8(m.DefaultMaxBikingHeartRate)
 		fields = append(fields, field)
 	}
 	if m.DefaultMaxHeartRate != basetype.Uint8Invalid {
-		field := fac.CreateField(mesg.Num, 11)
+		field := factory.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint8(m.DefaultMaxHeartRate)
 		fields = append(fields, field)
 	}
 	if m.HrSetting != typedef.DisplayHeartInvalid {
-		field := fac.CreateField(mesg.Num, 12)
+		field := factory.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint8(byte(m.HrSetting))
 		fields = append(fields, field)
 	}
 	if m.SpeedSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 13)
+		field := factory.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint8(byte(m.SpeedSetting))
 		fields = append(fields, field)
 	}
 	if m.DistSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 14)
+		field := factory.CreateField(mesg.Num, 14)
 		field.Value = proto.Uint8(byte(m.DistSetting))
 		fields = append(fields, field)
 	}
 	if m.PowerSetting != typedef.DisplayPowerInvalid {
-		field := fac.CreateField(mesg.Num, 16)
+		field := factory.CreateField(mesg.Num, 16)
 		field.Value = proto.Uint8(byte(m.PowerSetting))
 		fields = append(fields, field)
 	}
 	if m.ActivityClass != typedef.ActivityClassInvalid {
-		field := fac.CreateField(mesg.Num, 17)
+		field := factory.CreateField(mesg.Num, 17)
 		field.Value = proto.Uint8(byte(m.ActivityClass))
 		fields = append(fields, field)
 	}
 	if m.PositionSetting != typedef.DisplayPositionInvalid {
-		field := fac.CreateField(mesg.Num, 18)
+		field := factory.CreateField(mesg.Num, 18)
 		field.Value = proto.Uint8(byte(m.PositionSetting))
 		fields = append(fields, field)
 	}
 	if m.TemperatureSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 21)
+		field := factory.CreateField(mesg.Num, 21)
 		field.Value = proto.Uint8(byte(m.TemperatureSetting))
 		fields = append(fields, field)
 	}
 	if m.LocalId != typedef.UserLocalIdInvalid {
-		field := fac.CreateField(mesg.Num, 22)
+		field := factory.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint16(uint16(m.LocalId))
 		fields = append(fields, field)
 	}
@@ -263,43 +257,43 @@ func (m *UserProfile) ToMesg(options *Options) proto.Message {
 		basetype.ByteInvalid,
 		basetype.ByteInvalid,
 	} {
-		field := fac.CreateField(mesg.Num, 23)
+		field := factory.CreateField(mesg.Num, 23)
 		copied := m.GlobalId
 		field.Value = proto.SliceUint8(copied[:])
 		fields = append(fields, field)
 	}
 	if m.WakeTime != typedef.LocaltimeIntoDayInvalid {
-		field := fac.CreateField(mesg.Num, 28)
+		field := factory.CreateField(mesg.Num, 28)
 		field.Value = proto.Uint32(uint32(m.WakeTime))
 		fields = append(fields, field)
 	}
 	if m.SleepTime != typedef.LocaltimeIntoDayInvalid {
-		field := fac.CreateField(mesg.Num, 29)
+		field := factory.CreateField(mesg.Num, 29)
 		field.Value = proto.Uint32(uint32(m.SleepTime))
 		fields = append(fields, field)
 	}
 	if m.HeightSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 30)
+		field := factory.CreateField(mesg.Num, 30)
 		field.Value = proto.Uint8(byte(m.HeightSetting))
 		fields = append(fields, field)
 	}
 	if m.UserRunningStepLength != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 31)
+		field := factory.CreateField(mesg.Num, 31)
 		field.Value = proto.Uint16(m.UserRunningStepLength)
 		fields = append(fields, field)
 	}
 	if m.UserWalkingStepLength != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 32)
+		field := factory.CreateField(mesg.Num, 32)
 		field.Value = proto.Uint16(m.UserWalkingStepLength)
 		fields = append(fields, field)
 	}
 	if m.DepthSetting != typedef.DisplayMeasureInvalid {
-		field := fac.CreateField(mesg.Num, 47)
+		field := factory.CreateField(mesg.Num, 47)
 		field.Value = proto.Uint8(byte(m.DepthSetting))
 		fields = append(fields, field)
 	}
 	if m.DiveCount != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 49)
+		field := factory.CreateField(mesg.Num, 49)
 		field.Value = proto.Uint32(m.DiveCount)
 		fields = append(fields, field)
 	}

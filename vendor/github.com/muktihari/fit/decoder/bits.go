@@ -13,56 +13,63 @@ import (
 // Field's Value requiring expansion can hold up to 255 bytes (2040 bits) data, this is obviously
 // way more bits than Go's primitive value can handle.
 //
+// The size of a Value (in bits) is stored so we know when to stop if the caller requests more data than available.
+// A uint32 value has a size of 32 bits; [2]uint8 has a size of 16 bits. In general, [X]uintY is X * Y bits.
+//
+//   - makeBits(proto.Uint32(123)) -> bits{store: [32]uint64{123}; size: 32}
+//   - makeBits(proto.SliceUint8(make([]uint8, 255))) -> bits{store: [32]uint64{}; size: 2040}
+//
 // In Profile.xlsx v21.141, the biggest value for component expansion is "raw_bbi" message for
 // having 240 bits on "data" and the second is "hr" message for having 120 bits on "event_timestamp_12".
 type bits struct {
 	// We use array to avoid memory allocation. It's simple to maintain and more deterministic.
-	store [32]uint64
+	store [32]uint64 // Holds the bits value.
+	size  uint64     // Holds the number of bits in the store
 }
 
 // makeBits creates 2048 bits value from proto.Value.
 func makeBits(value proto.Value) (v bits, ok bool) {
 	switch value.Type() {
 	case proto.TypeInt8:
-		v.store[0] = uint64(value.Int8())
+		v.store[0], v.size = uint64(value.Int8()), 8
 	case proto.TypeUint8:
-		v.store[0] = uint64(value.Uint8())
+		v.store[0], v.size = uint64(value.Uint8()), 8
 	case proto.TypeInt16:
-		v.store[0] = uint64(value.Int16())
+		v.store[0], v.size = uint64(value.Int16()), 16
 	case proto.TypeUint16:
-		v.store[0] = uint64(value.Uint16())
+		v.store[0], v.size = uint64(value.Uint16()), 16
 	case proto.TypeInt32:
-		v.store[0] = uint64(value.Int32())
+		v.store[0], v.size = uint64(value.Int32()), 32
 	case proto.TypeUint32:
-		v.store[0] = uint64(value.Uint32())
+		v.store[0], v.size = uint64(value.Uint32()), 32
 	case proto.TypeInt64:
-		v.store[0] = uint64(value.Int64())
+		v.store[0], v.size = uint64(value.Int64()), 64
 	case proto.TypeUint64:
-		v.store[0] = value.Uint64()
+		v.store[0], v.size = value.Uint64(), 64
 	case proto.TypeFloat32:
-		v.store[0] = uint64(value.Float32())
+		v.store[0], v.size = uint64(value.Float32()), 32
 	case proto.TypeFloat64:
-		v.store[0] = uint64(value.Float64())
+		v.store[0], v.size = uint64(value.Float64()), 64
 	case proto.TypeSliceInt8:
-		v.store = storeFromSlice(value.SliceInt8(), 1)
+		bitsFromSlice(&v, value.SliceInt8(), 8)
 	case proto.TypeSliceUint8:
-		v.store = storeFromSlice(value.SliceUint8(), 1)
+		bitsFromSlice(&v, value.SliceUint8(), 8)
 	case proto.TypeSliceInt16:
-		v.store = storeFromSlice(value.SliceInt16(), 2)
+		bitsFromSlice(&v, value.SliceInt16(), 16)
 	case proto.TypeSliceUint16:
-		v.store = storeFromSlice(value.SliceUint16(), 2)
+		bitsFromSlice(&v, value.SliceUint16(), 16)
 	case proto.TypeSliceInt32:
-		v.store = storeFromSlice(value.SliceInt32(), 4)
+		bitsFromSlice(&v, value.SliceInt32(), 32)
 	case proto.TypeSliceUint32:
-		v.store = storeFromSlice(value.SliceUint32(), 4)
+		bitsFromSlice(&v, value.SliceUint32(), 32)
 	case proto.TypeSliceInt64:
-		v.store = storeFromSlice(value.SliceInt64(), 8)
+		bitsFromSlice(&v, value.SliceInt64(), 64)
 	case proto.TypeSliceUint64:
-		v.store = storeFromSlice(value.SliceUint64(), 8)
+		bitsFromSlice(&v, value.SliceUint64(), 64)
 	case proto.TypeSliceFloat32:
-		v.store = storeFromSlice(value.SliceFloat32(), 4)
+		bitsFromSlice(&v, value.SliceFloat32(), 32)
 	case proto.TypeSliceFloat64:
-		v.store = storeFromSlice(value.SliceFloat64(), 8)
+		bitsFromSlice(&v, value.SliceFloat64(), 64)
 	default:
 		return v, false
 	}
@@ -73,23 +80,29 @@ type numeric interface {
 	int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64 | float32 | float64
 }
 
-// storeFromSlice creates value store from given s (slice of supported numeric type).
-func storeFromSlice[S []E, E numeric](s S, bitsize uint8) (store [32]uint64) {
-	var index, pos uint8
-	for len(s) > 0 && index < 32 {
-		store[index] |= uint64(s[0]) << (pos * 8)
-		pos += bitsize
-		if pos == 8 {
-			index, pos = index+1, 0
-		}
-		s = s[1:]
+// bitsFromSlice creates bits value from given s (slice of supported numeric type).
+func bitsFromSlice[S []E, E numeric](v *bits, s S, bitsize int) {
+	for i := range s { // SAFETY: Decoder guarantees s <= 2040 bits.
+		x := i * bitsize
+		v.store[x>>6] |= uint64(s[i]) << (x & 63)
 	}
-	return store
+	v.size = uint64(len(s) * bitsize)
 }
 
 // Pull retrieves a value of the specified bit size from the value store and
 // the value store will be updated accordingly.
-func (v *bits) Pull(bitsize byte) (val uint32) {
+//
+// We allow pulling bits value as long as the store's size is not zero.
+// Let's say we have 16 bits left in the store, but the caller asks for 32 bits, we return that remaining 16 bits.
+func (v *bits) Pull(bitsize byte) (val uint32, ok bool) {
+	if v.size == 0 {
+		return 0, false
+	}
+
+	// Saturating subtraction to prevents underflow.
+	size := v.size - uint64(bitsize)
+	v.size = size &^ uint64(int64(size)>>63)
+
 	mask := uint64(1)<<bitsize - 1  // e.g. (1 << 8) - 1     = 255
 	val = uint32(v.store[0] & mask) // e.g. 0x27010E08 & 255 = 0x08
 	v.store[0] >>= bitsize          // e.g. 0x27010E08 >> 8  = 0x27010E
@@ -106,5 +119,5 @@ func (v *bits) Pull(bitsize byte) (val uint32) {
 		// e.g. 128 bits Layout After:  0x0000_0000_0000_00FF_FF00_0000_0027_010E
 	}
 
-	return val
+	return val, true
 }

@@ -51,27 +51,24 @@ func (m *SegmentPoint) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
-
 	if mesg != nil {
-		var n int
+		knownNums := [4]uint64{126, 0, 0, 4611686018427387904}
+		num, n := uint8(0), uint64(0)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
-				n++
-			}
+			num = mesg.Fields[i].Num
+			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			if mesg.Fields[i].Name == factory.NameUnknown {
+			num = mesg.Fields[i].Num
+			if (knownNums[num>>6]>>(num&63))&1 == 0 {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].Num < 7 && mesg.Fields[i].IsExpandedField {
-				pos := mesg.Fields[i].Num / 8
-				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
+			if mesg.Fields[i].IsExpandedField && num < 7 {
+				state[num>>3] |= 1 << (num & 7)
 			}
-			if mesg.Fields[i].Num < 255 {
-				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
-			}
+			vals[num] = mesg.Fields[i].Value
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -96,48 +93,44 @@ func (m *SegmentPoint) Reset(mesg *proto.Message) {
 func (m *SegmentPoint) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
-	} else if options.Factory == nil {
-		options.Factory = factory.StandardFactory()
 	}
-
-	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 7)
 	mesg := proto.Message{Num: typedef.MesgNumSegmentPoint}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := fac.CreateField(mesg.Num, 254)
+		field := factory.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.PositionLat != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 1)
+		field := factory.CreateField(mesg.Num, 1)
 		field.Value = proto.Int32(m.PositionLat)
 		fields = append(fields, field)
 	}
 	if m.PositionLong != basetype.Sint32Invalid {
-		field := fac.CreateField(mesg.Num, 2)
+		field := factory.CreateField(mesg.Num, 2)
 		field.Value = proto.Int32(m.PositionLong)
 		fields = append(fields, field)
 	}
 	if m.Distance != basetype.Uint32Invalid {
-		field := fac.CreateField(mesg.Num, 3)
+		field := factory.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint32(m.Distance)
 		fields = append(fields, field)
 	}
 	if m.Altitude != basetype.Uint16Invalid {
-		field := fac.CreateField(mesg.Num, 4)
+		field := factory.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint16(m.Altitude)
 		fields = append(fields, field)
 	}
 	if m.LeaderTime != nil {
-		field := fac.CreateField(mesg.Num, 5)
+		field := factory.CreateField(mesg.Num, 5)
 		field.Value = proto.SliceUint32(m.LeaderTime)
 		fields = append(fields, field)
 	}
 	if m.EnhancedAltitude != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(6); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := fac.CreateField(mesg.Num, 6)
+			field := factory.CreateField(mesg.Num, 6)
 			field.Value = proto.Uint32(m.EnhancedAltitude)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -369,11 +362,10 @@ func (m *SegmentPoint) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 	default:
 		return false
 	}
-	pos := fieldNum / 8
-	bit := uint8(1) << (fieldNum - (8 * pos))
-	m.state[pos] &^= bit
 	if flag {
-		m.state[pos] |= bit
+		m.state[fieldNum>>3] |= 1 << (fieldNum & 7)
+	} else {
+		m.state[fieldNum>>3] &^= 1 << (fieldNum & 7)
 	}
 	return true
 }
@@ -381,10 +373,10 @@ func (m *SegmentPoint) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 // IsExpandedField checks whether given fieldNum is a field generated through
 // a component expansion. Eligible for field number: 6.
 func (m *SegmentPoint) IsExpandedField(fieldNum byte) bool {
-	if fieldNum >= 7 {
+	switch fieldNum {
+	case 6:
+	default:
 		return false
 	}
-	pos := fieldNum / 8
-	bit := uint8(1) << (fieldNum - (8 * pos))
-	return m.state[pos]&bit == bit
+	return (m.state[fieldNum>>3]>>(fieldNum&7))&1 == 1
 }

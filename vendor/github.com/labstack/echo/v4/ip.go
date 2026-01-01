@@ -179,16 +179,6 @@ func newIPChecker(configs []TrustOption) *ipChecker {
 	return checker
 }
 
-// Go1.16+ added `ip.IsPrivate()` but until that use this implementation
-func isPrivateIPRange(ip net.IP) bool {
-	if ip4 := ip.To4(); ip4 != nil {
-		return ip4[0] == 10 ||
-			ip4[0] == 172 && ip4[1]&0xf0 == 16 ||
-			ip4[0] == 192 && ip4[1] == 168
-	}
-	return len(ip) == net.IPv6len && ip[0]&0xfe == 0xfc
-}
-
 func (c *ipChecker) trust(ip net.IP) bool {
 	if c.trustLoopback && ip.IsLoopback() {
 		return true
@@ -196,7 +186,7 @@ func (c *ipChecker) trust(ip net.IP) bool {
 	if c.trustLinkLocal && ip.IsLinkLocalUnicast() {
 		return true
 	}
-	if c.trustPrivateNet && isPrivateIPRange(ip) {
+	if c.trustPrivateNet && ip.IsPrivate() {
 		return true
 	}
 	for _, trustedRange := range c.trustExtraRanges {
@@ -219,8 +209,14 @@ func ExtractIPDirect() IPExtractor {
 }
 
 func extractIP(req *http.Request) string {
-	ra, _, _ := net.SplitHostPort(req.RemoteAddr)
-	return ra
+	host, _, err := net.SplitHostPort(req.RemoteAddr)
+	if err != nil {
+		if net.ParseIP(req.RemoteAddr) != nil {
+			return req.RemoteAddr
+		}
+		return ""
+	}
+	return host
 }
 
 // ExtractIPFromRealIPHeader extracts IP address using x-real-ip header.

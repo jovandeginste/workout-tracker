@@ -7,16 +7,16 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
+	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
 
-// MonitoringAB (Monitoring A and Monitoring B) files are used to store data that is logged over varying time intervals.
-// The two monitoring file formats are identical apart from supporting different conventions for file_id.number and the start of accumulating data values.
+// MonitoringA file is used to store data that is logged over varying time intervals.
 //
-// The FIT file_id.type = 15 for a monitoring_a file and
-// the FIT file_id.type = 32 for a monitoring_b file
-type MonitoringAB struct {
+// There are two monitoring files, MonitoringA and MonitoringB, which are identical apart from
+// supporting different conventions for file_id.number and the start of accumulating data values.
+type MonitoringA struct {
 	FileId mesgdef.FileId
 
 	// Developer Data Lookup
@@ -30,22 +30,23 @@ type MonitoringAB struct {
 	UnrelatedMessages []proto.Message
 }
 
-var _ File = (*MonitoringAB)(nil)
+var _ File = (*MonitoringA)(nil)
 
-// NewMonitoringAB creates new MonitoringAB File.
-func NewMonitoringAB(mesgs ...proto.Message) *MonitoringAB {
-	f := &MonitoringAB{}
+// NewMonitoringA creates new Monitoring A.
+func NewMonitoringA(mesgs ...proto.Message) *MonitoringA {
+	f := &MonitoringA{FileId: newFileId}
+	f.FileId.Type = typedef.FileMonitoringA
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
 	return f
 }
 
-// Add adds mesg to the MonitoringAB.
-func (f *MonitoringAB) Add(mesg proto.Message) {
+// Add adds mesg to the MonitoringA.
+func (f *MonitoringA) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId = *mesgdef.NewFileId(&mesg)
+		f.FileId.Reset(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:
@@ -62,8 +63,8 @@ func (f *MonitoringAB) Add(mesg proto.Message) {
 	}
 }
 
-// ToFIT converts MonitoringAB to proto.FIT. If options is nil, default options will be used.
-func (f *MonitoringAB) ToFIT(options *mesgdef.Options) proto.FIT {
+// ToFIT converts MonitoringA to proto.FIT. If options is nil, default options will be used.
+func (f *MonitoringA) ToFIT(options *mesgdef.Options) proto.FIT {
 	var size = 2 // non slice fields
 
 	size += len(f.Monitorings) + len(f.DeviceInfos) +

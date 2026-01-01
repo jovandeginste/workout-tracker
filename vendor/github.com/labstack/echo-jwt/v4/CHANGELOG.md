@@ -1,5 +1,14 @@
 # Changelog
 
+## v4.4.0 - 2025-11-20
+
+**Enhancements**
+
+* Revert 'Return HTTP status 400 if missing JWT' PR to return 401 [#39](https://github.com/labstack/echo-jwt/pull/39)
+* Updated dependencies [#39](https://github.com/labstack/echo-jwt/pull/39)
+* Return ErrJWTMissing, ErrJWTInvalid clones so error code could be changed more easily
+
+
 ## v4.3.1 - 2025-03-22
 
 **Security**
