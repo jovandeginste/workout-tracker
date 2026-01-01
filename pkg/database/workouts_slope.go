@@ -242,19 +242,19 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 
 func ClassifyClimbCategory(length, slope float64) string {
 	switch {
-	case length >= 10000 && slope >= 6:
+	case length >= 10000 && slope >= 0.06:
 		return "Hors Catégorie"
-	case length >= 8000 && slope >= 5:
+	case length >= 8000 && slope >= 0.05:
 		return "Category 1"
-	case length >= 5000 && slope >= 4:
+	case length >= 5000 && slope >= 0.04:
 		return "Category 2"
-	case length >= 3000 && slope >= 3:
+	case length >= 3000 && slope >= 0.03:
 		return "Category 3"
-	case length >= 2000 && slope >= 3:
+	case length >= 2000 && slope >= 0.03:
 		return "Category 4"
-	case length >= 1000 && slope >= 2:
+	case length >= 1000 && slope >= 0.02:
 		return "Category 5"
-	case length >= 500 && slope >= 1:
+	case length >= 500 && slope >= 0.01:
 		return "Category 6"
 	default:
 		return "Uncategorized"
