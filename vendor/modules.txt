@@ -5,7 +5,7 @@ filippo.io/edwards25519/field
 # github.com/KyleBanks/depth v1.2.1
 ## explicit
 github.com/KyleBanks/depth
-# github.com/a-h/templ v0.3.977
+# github.com/a-h/templ v0.3.943
 ## explicit; go 1.23.0
 github.com/a-h/templ
 github.com/a-h/templ/runtime
