@@ -20,6 +20,7 @@ type (
 		Start               time.Time     `json:"start"`                               // The start time of the workout
 		Stop                time.Time     `json:"stop"`                                // The stop time of the workout
 		TotalDistance       float64       `json:"totalDistance"`                       // The total distance of the workout
+		TotalDistance2D     float64       `json:"totalDistance2D"`                     // The total 2D distance of the workout
 		TotalDuration       time.Duration `json:"totalDuration"`                       // The total duration of the workout
 		MaxSpeed            float64       `json:"maxSpeed"`                            // The maximum speed of the workout
 		MaxCadence          float64       `json:"maxCadence"`                          // The maximum cadence of the workout

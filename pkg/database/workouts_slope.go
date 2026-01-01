@@ -90,11 +90,11 @@ func SmoothSlopeGrades(points []MapPoint, windowMeters, minDist float64) {
 	n := len(points)
 
 	for i := range n {
-		centerDist := points[i].TotalDistance
+		centerDist := points[i].TotalDistance2D
 		var weightedSlopeSum, totalWeight float64
 
 		for j := range n {
-			distFromCenter := math.Abs(points[j].TotalDistance - centerDist)
+			distFromCenter := math.Abs(points[j].TotalDistance2D - centerDist)
 			if distFromCenter > windowMeters/2 || distFromCenter == 0 || distFromCenter < minDist {
 				continue
 			}
@@ -132,7 +132,7 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 		prevPoint := &points[i-1]
 		currentPoint := &points[i]
 
-		distDiff := currentPoint.TotalDistance - prevPoint.TotalDistance
+		distDiff := currentPoint.TotalDistance2D - prevPoint.TotalDistance2D
 		elevDiff := (currentPoint.Elevation - prevPoint.Elevation)
 
 		slope := currentPoint.SlopeGrade
@@ -199,7 +199,7 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 		return
 	}
 
-	length := segmentPoints[len(segmentPoints)-1].TotalDistance - segmentPoints[0].TotalDistance
+	length := segmentPoints[len(segmentPoints)-1].TotalDistance2D - segmentPoints[0].TotalDistance2D
 
 	var gain float64
 	for i := 1; i < len(segmentPoints); i++ {
@@ -220,8 +220,8 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 
 		segment := Segment{
 			Type:          d.kind,
-			StartDistance: segmentPoints[0].TotalDistance,
-			EndDistance:   segmentPoints[len(segmentPoints)-1].TotalDistance,
+			StartDistance: segmentPoints[0].TotalDistance2D,
+			EndDistance:   segmentPoints[len(segmentPoints)-1].TotalDistance2D,
 			Length:        length,
 			StartIdx:      d.startIdx,
 			EndIdx:        endIdx,

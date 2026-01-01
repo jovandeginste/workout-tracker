@@ -89,15 +89,17 @@ type MapCenter struct {
 type MapPoint struct {
 	Time time.Time `json:"time"` // The time the point was recorded
 
-	ExtraMetrics  ExtraMetrics  `json:"extraMetrics"`  // Extra metrics at this point
-	Lat           float64       `json:"lat"`           // The latitude of the point
-	Lng           float64       `json:"lng"`           // The longitude of the point
-	Elevation     float64       `json:"elevation"`     // The elevation of the point
-	Distance      float64       `json:"distance"`      // The distance from the previous point
-	TotalDistance float64       `json:"totalDistance"` // The total distance of the workout up to this point
-	Duration      time.Duration `json:"duration"`      // The duration from the previous point
-	TotalDuration time.Duration `json:"totalDuration"` // The total duration of the workout up to this point
-	SlopeGrade    float64       `json:"slopeGrade"`    // The grade of the slope at this point
+	ExtraMetrics    ExtraMetrics  `json:"extraMetrics"`    // Extra metrics at this point
+	Lat             float64       `json:"lat"`             // The latitude of the point
+	Lng             float64       `json:"lng"`             // The longitude of the point
+	Elevation       float64       `json:"elevation"`       // The elevation of the point
+	Distance        float64       `json:"distance"`        // The distance from the previous point
+	Distance2D      float64       `json:"distance2D"`      // The 2D distance from the previous point
+	TotalDistance   float64       `json:"totalDistance"`   // The total distance of the workout up to this point
+	TotalDistance2D float64       `json:"totalDistance2D"` // The total 2D distance of the workout up to this point
+	Duration        time.Duration `json:"duration"`        // The duration from the previous point
+	TotalDuration   time.Duration `json:"totalDuration"`   // The total duration of the workout up to this point
+	SlopeGrade      float64       `json:"slopeGrade"`      // The grade of the slope at this point
 }
 
 func (m *MapCenter) ToOrbPoint() *orb.Point {
@@ -337,7 +339,11 @@ func gpxDate(gpxContent *gpx.GPX) *time.Time {
 	return gpxContent.Time
 }
 
-func distanceBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
+func distance2DBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
+	return p2.Distance2D(&p1)
+}
+
+func distance3DBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 	return p2.Distance3D(&p1)
 }
 
@@ -363,8 +369,8 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	}
 
 	var (
-		totalDistance, maxElevation, uphill, downhill, maxSpeed float64
-		totalDuration, pauseDuration                            time.Duration
+		totalDistance, totalDistance2D, maxElevation, uphill, downhill, maxSpeed float64
+		totalDuration, pauseDuration                                             time.Duration
 	)
 
 	minElevation := 100000.0 // This should be high enough for Earthly workouts
@@ -376,6 +382,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 			}
 
 			totalDistance += segment.Length3D()
+			totalDistance2D += segment.Length2D()
 			totalDuration += time.Duration(segment.Duration()) * time.Second
 			pauseDuration += (time.Duration(segment.MovingData().StoppedTime)) * time.Second
 			minElevation = min(minElevation, segment.ElevationBounds().MinElevation)
@@ -399,6 +406,7 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		Center:  mapCenter,
 		WorkoutData: converters.WorkoutData{
 			TotalDistance:       totalDistance,
+			TotalDistance2D:     totalDistance2D,
 			TotalDuration:       totalDuration,
 			MaxSpeed:            maxSpeed,
 			AverageSpeed:        totalDistance / totalDuration.Seconds(),
@@ -429,6 +437,10 @@ func (m *MapData) correctNaN() {
 		m.TotalDistance = 0
 	}
 
+	if math.IsNaN(m.TotalDistance2D) {
+		m.TotalDistance2D = 0
+	}
+
 	if math.IsNaN(m.TotalDown) {
 		m.TotalDown = 0
 	}
@@ -447,6 +459,7 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 	}
 
 	totalDist := 0.0
+	totalDist2D := 0.0
 	totalTime := 0.0
 	prevPoint := points[0]
 
@@ -458,15 +471,18 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		}
 
 		dist := 0.0
+		dist2D := 0.0
 		t := 0.0
 
 		if i > 0 {
-			dist = distanceBetween(prevPoint, pt)
+			dist = distance3DBetween(prevPoint, pt)
+			dist2D = distance2DBetween(prevPoint, pt)
 			t = pt.TimeDiff(&prevPoint)
 
 			prevPoint = pt
 
 			totalDist += dist
+			totalDist2D += dist2D
 			totalTime += t
 		}
 
@@ -475,15 +491,17 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 		extraMetrics.ParseGPXExtensions(pt.Extensions)
 
 		data.Details.Points = append(data.Details.Points, MapPoint{
-			Lat:           pt.Point.Latitude,
-			Lng:           pt.Point.Longitude,
-			Elevation:     pt.Elevation.Value(),
-			Time:          pt.Timestamp,
-			Distance:      dist,
-			TotalDistance: totalDist,
-			Duration:      time.Duration(t) * time.Second,
-			TotalDuration: time.Duration(totalTime) * time.Second,
-			ExtraMetrics:  extraMetrics,
+			Lat:             pt.Point.Latitude,
+			Lng:             pt.Point.Longitude,
+			Elevation:       pt.Elevation.Value(),
+			Time:            pt.Timestamp,
+			Distance:        dist,
+			Distance2D:      dist2D,
+			TotalDistance:   totalDist,
+			TotalDistance2D: totalDist2D,
+			Duration:        time.Duration(t) * time.Second,
+			TotalDuration:   time.Duration(totalTime) * time.Second,
+			ExtraMetrics:    extraMetrics,
 		})
 	}
 

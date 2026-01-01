@@ -9,18 +9,20 @@ import (
 )
 
 type BreakdownItem struct {
-	FirstPoint    *MapPoint     `json:"firstPoint"`    // First GPS point in this item
-	LastPoint     *MapPoint     `json:"lastPoint"`     // Last GPS point in this item
-	UnitName      string        `json:"unitName"`      // Unit name
-	UnitCount     float64       `json:"unitCount"`     // Count of the unit per item
-	Counter       int           `json:"counter"`       // Counter of this item in the list of items
-	Distance      float64       `json:"distance"`      // Distance in this item
-	TotalDistance float64       `json:"totalDistance"` // Total distance in all items up to and including this item
-	Duration      time.Duration `json:"duration"`      // Duration in this item
-	TotalDuration time.Duration `json:"totalDuration"` // Total duration in all items up to and including this item
-	Speed         float64       `json:"speed"`         // Speed in this item
-	IsBest        bool          `json:"isBest"`        // Whether this item is the best of the list
-	IsWorst       bool          `json:"isWorst"`       // Whether this item is the worst of the list
+	FirstPoint      *MapPoint     `json:"firstPoint"`      // First GPS point in this item
+	LastPoint       *MapPoint     `json:"lastPoint"`       // Last GPS point in this item
+	UnitName        string        `json:"unitName"`        // Unit name
+	UnitCount       float64       `json:"unitCount"`       // Count of the unit per item
+	Counter         int           `json:"counter"`         // Counter of this item in the list of items
+	Distance        float64       `json:"distance"`        // Distance in this item
+	Distance2D      float64       `json:"distance2D"`      // 2D distance in this item
+	TotalDistance   float64       `json:"totalDistance"`   // Total distance in all items up to and including this item
+	TotalDistance2D float64       `json:"totalDistance2D"` // Total 2D distance in all items up to and including this item
+	Duration        time.Duration `json:"duration"`        // Duration in this item
+	TotalDuration   time.Duration `json:"totalDuration"`   // Total duration in all items up to and including this item
+	Speed           float64       `json:"speed"`           // Speed in this item
+	IsBest          bool          `json:"isBest"`          // Whether this item is the best of the list
+	IsWorst         bool          `json:"isWorst"`         // Whether this item is the worst of the list
 
 	LocalTotalDistance string `json:"localTotalDistance,omitempty"` // Total distance in all items up to and including this item
 	LocalDistance      string `json:"localDistance,omitempty"`      // The total distance in the bucket, localized
@@ -130,6 +132,8 @@ func (w *Workout) statisticsWithUnit(count float64, unit string) []BreakdownItem
 
 		nextItem.Distance += p.Distance
 		nextItem.TotalDistance += p.Distance
+		nextItem.Distance2D += p.Distance2D
+		nextItem.TotalDistance2D += p.Distance2D
 
 		// m/s -> km/h, cut-off is speed less than 1 km/h
 		if p.AverageSpeed()*3.6 >= 1.0 {
