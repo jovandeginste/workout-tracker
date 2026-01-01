@@ -23,20 +23,20 @@ templ CreateRouteSegment(w *database.Workout) {
 			<div class="basis-1/2">
 				<div class="inner-form">
 					{{
-	type mapPoint struct {
-		Lat           float64 `json:"lat"`
-		Lng           float64 `json:"lng"`
-		TotalDistance float64 `json:"distance"`
-	}
+						type mapPoint struct {
+							Lat           float64 `json:"lat"`
+							Lng           float64 `json:"lng"`
+							TotalDistance float64 `json:"distance"`
+						}
 
-	points := []mapPoint{}
-	for _, p := range w.Details().Points {
-		points = append(points, mapPoint{
-			Lat:           p.Lat,
-			Lng:           p.Lng,
-			TotalDistance: p.TotalDistance,
-		})
-	}
+						points := []mapPoint{}
+						for _, p := range w.Details().Points {
+							points = append(points, mapPoint{
+								Lat:           p.Lat,
+								Lng:           p.Lng,
+								TotalDistance: p.TotalDistance,
+							})
+						}
 					}}
 					<create-route-segment-map
 						id="segment-map"
