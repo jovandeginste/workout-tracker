@@ -18,6 +18,3 @@ bench:
 dep-licenses:
 	go-licenses save ./ --save_path=THIRD_PARTY_LICENSES 
 	build_notice.sh
-
-modernize:
-	go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -fix=true ./...

@@ -88,13 +88,3 @@ func rewriteURL(rewriteRegex map[*regexp.Regexp]string, req *http.Request) error
 func DefaultSkipper(echo.Context) bool {
 	return false
 }
-
-func toMiddlewareOrPanic(config interface {
-	ToMiddleware() (echo.MiddlewareFunc, error)
-}) echo.MiddlewareFunc {
-	mw, err := config.ToMiddleware()
-	if err != nil {
-		panic(err)
-	}
-	return mw
-}

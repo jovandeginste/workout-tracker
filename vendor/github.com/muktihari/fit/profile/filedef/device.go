@@ -7,7 +7,6 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
-	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -33,8 +32,7 @@ var _ File = (*Device)(nil)
 
 // NewDevice creates new Device File.
 func NewDevice(mesgs ...proto.Message) *Device {
-	f := &Device{FileId: newFileId}
-	f.FileId.Type = typedef.FileDevice
+	f := &Device{}
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -45,7 +43,7 @@ func NewDevice(mesgs ...proto.Message) *Device {
 func (f *Device) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId.Reset(&mesg)
+		f.FileId = *mesgdef.NewFileId(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:

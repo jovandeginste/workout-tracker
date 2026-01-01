@@ -232,12 +232,9 @@ const (
 	HeaderXCorrelationID      = "X-Correlation-Id"
 	HeaderXRequestedWith      = "X-Requested-With"
 	HeaderServer              = "Server"
-
-	// HeaderOrigin request header indicates the origin (scheme, hostname, and port) that caused the request.
-	// See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin
-	HeaderOrigin       = "Origin"
-	HeaderCacheControl = "Cache-Control"
-	HeaderConnection   = "Connection"
+	HeaderOrigin              = "Origin"
+	HeaderCacheControl        = "Cache-Control"
+	HeaderConnection          = "Connection"
 
 	// Access control
 	HeaderAccessControlRequestMethod    = "Access-Control-Request-Method"
@@ -258,16 +255,11 @@ const (
 	HeaderContentSecurityPolicyReportOnly = "Content-Security-Policy-Report-Only"
 	HeaderXCSRFToken                      = "X-CSRF-Token"
 	HeaderReferrerPolicy                  = "Referrer-Policy"
-
-	// HeaderSecFetchSite fetch metadata request header indicates the relationship between a request initiator's
-	// origin and the origin of the requested resource.
-	// See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site
-	HeaderSecFetchSite = "Sec-Fetch-Site"
 )
 
 const (
 	// Version of Echo
-	Version = "4.15.0"
+	Version = "4.13.4"
 	website = "https://echo.labstack.com"
 	// http://patorjk.com/software/taag/#p=display&f=Small%20Slant&t=Echo
 	banner = `

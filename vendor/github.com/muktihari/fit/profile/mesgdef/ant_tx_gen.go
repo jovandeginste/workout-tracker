@@ -51,24 +51,27 @@ func (m *AntTx) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{31, 0, 0, 2305843009213693952}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].IsExpandedField && num < 5 {
-				state[num>>3] |= 1 << (num & 7)
+			if mesg.Fields[i].Num < 5 && mesg.Fields[i].IsExpandedField {
+				pos := mesg.Fields[i].Num / 8
+				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 254 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -92,34 +95,38 @@ func (m *AntTx) Reset(mesg *proto.Message) {
 func (m *AntTx) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 6)
 	mesg := proto.Message{Num: typedef.MesgNumAntTx}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.FractionalTimestamp != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint16(m.FractionalTimestamp)
 		fields = append(fields, field)
 	}
 	if m.MesgId != basetype.ByteInvalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(m.MesgId)
 		fields = append(fields, field)
 	}
 	if m.MesgData != nil {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.SliceUint8(m.MesgData)
 		fields = append(fields, field)
 	}
 	if m.ChannelNumber != basetype.Uint8Invalid {
 		if expanded := m.IsExpandedField(3); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 3)
+			field := fac.CreateField(mesg.Num, 3)
 			field.Value = proto.Uint8(m.ChannelNumber)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -127,7 +134,7 @@ func (m *AntTx) ToMesg(options *Options) proto.Message {
 	}
 	if m.Data != nil {
 		if expanded := m.IsExpandedField(4); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 4)
+			field := fac.CreateField(mesg.Num, 4)
 			field.Value = proto.SliceUint8(m.Data)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -236,10 +243,11 @@ func (m *AntTx) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 	default:
 		return false
 	}
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	m.state[pos] &^= bit
 	if flag {
-		m.state[fieldNum>>3] |= 1 << (fieldNum & 7)
-	} else {
-		m.state[fieldNum>>3] &^= 1 << (fieldNum & 7)
+		m.state[pos] |= bit
 	}
 	return true
 }
@@ -247,10 +255,10 @@ func (m *AntTx) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 // IsExpandedField checks whether given fieldNum is a field generated through
 // a component expansion. Eligible for field number: 3, 4.
 func (m *AntTx) IsExpandedField(fieldNum byte) bool {
-	switch fieldNum {
-	case 3, 4:
-	default:
+	if fieldNum >= 5 {
 		return false
 	}
-	return (m.state[fieldNum>>3]>>(fieldNum&7))&1 == 1
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	return m.state[pos]&bit == bit
 }

@@ -311,16 +311,16 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 }
 
 // AddCustomAttributes adds custom attributes to the request context.
-func AddCustomAttributes(c echo.Context, attrs ...slog.Attr) {
+func AddCustomAttributes(c echo.Context, attr slog.Attr) {
 	v := c.Get(customAttributesCtxKey)
 	if v == nil {
-		c.Set(customAttributesCtxKey, attrs)
+		c.Set(customAttributesCtxKey, []slog.Attr{attr})
 		return
 	}
 
-	switch vAttrs := v.(type) {
+	switch attrs := v.(type) {
 	case []slog.Attr:
-		c.Set(customAttributesCtxKey, append(vAttrs, attrs...))
+		c.Set(customAttributesCtxKey, append(attrs, attr))
 	}
 }
 

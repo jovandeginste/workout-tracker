@@ -8,7 +8,6 @@ package resty
 import (
 	"bufio"
 	"bytes"
-	"crypto/tls"
 	"errors"
 	"fmt"
 	"io"
@@ -41,7 +40,7 @@ type (
 	// EventOpenFunc is a callback function type used to receive notification
 	// when Resty establishes a connection with the server for the
 	// Server-Sent Events(SSE)
-	EventOpenFunc func(url string, respHdr http.Header)
+	EventOpenFunc func(url string)
 
 	// EventMessageFunc is a callback function type used to receive event details
 	// from the Server-Sent Events(SSE) stream
@@ -50,10 +49,6 @@ type (
 	// EventErrorFunc is a callback function type used to receive notification
 	// when an error occurs with [EventSource] processing
 	EventErrorFunc func(error)
-
-	// EventRequestFailureFunc is a callback function type used to receive event
-	// details from the Server-Sent Events(SSE) request failure
-	EventRequestFailureFunc func(err error, res *http.Response)
 
 	// Event struct represents the event details from the Server-Sent Events(SSE) stream
 	Event struct {
@@ -80,7 +75,6 @@ type (
 		maxBufSize       int
 		onOpen           EventOpenFunc
 		onError          EventErrorFunc
-		onRequestFailure EventRequestFailureFunc
 		onEvent          map[string]*callback
 		log              Logger
 		closed           bool
@@ -100,8 +94,8 @@ type (
 //		SetURL("https://sse.dev/test").
 //		OnMessage(
 //			func(e any) {
-//				event := e.(*Event)
-//				fmt.Println(event)
+//				e = e.(*Event)
+//				fmt.Println(e)
 //			},
 //			nil, // see method godoc
 //		)
@@ -163,66 +157,6 @@ func (es *EventSource) SetHeader(header, value string) *EventSource {
 func (es *EventSource) SetBody(body io.Reader) *EventSource {
 	es.body = body
 	return es
-}
-
-// TLSClientConfig method returns the [tls.Config] from underlying client transport
-// otherwise returns nil
-func (es *EventSource) TLSClientConfig() *tls.Config {
-	cfg, err := es.tlsConfig()
-	if err != nil {
-		es.Logger().Errorf("%v", err)
-	}
-	return cfg
-}
-
-// SetTLSClientConfig method sets TLSClientConfig for underlying client Transport.
-//
-// Values supported by https://pkg.go.dev/crypto/tls#Config can be configured.
-//
-//	// Disable SSL cert verification for local development
-//	es.SetTLSClientConfig(&tls.Config{
-//		InsecureSkipVerify: true
-//	})
-//
-// NOTE: This method overwrites existing [http.Transport.TLSClientConfig]
-func (es *EventSource) SetTLSClientConfig(tlsConfig *tls.Config) *EventSource {
-	es.lock.Lock()
-	defer es.lock.Unlock()
-
-	// TLSClientConfiger interface handling
-	if tc, ok := es.httpClient.Transport.(TLSClientConfiger); ok {
-		if err := tc.SetTLSClientConfig(tlsConfig); err != nil {
-			es.log.Errorf("%v", err)
-		}
-		return es
-	}
-
-	// default standard transport handling
-	if transport, ok := es.httpClient.Transport.(*http.Transport); ok {
-		transport.TLSClientConfig = tlsConfig
-	}
-
-	return es
-}
-
-// getting TLS client config if not exists then create one
-func (es *EventSource) tlsConfig() (*tls.Config, error) {
-	es.lock.Lock()
-	defer es.lock.Unlock()
-
-	if tc, ok := es.httpClient.Transport.(TLSClientConfiger); ok {
-		return tc.TLSClientConfig(), nil
-	}
-
-	transport, ok := es.httpClient.Transport.(*http.Transport)
-	if !ok {
-		return nil, ErrNotHttpTransportType
-	}
-
-	if transport.TLSClientConfig == nil {
-		transport.TLSClientConfig = &tls.Config{}
-	}
-	return transport.TLSClientConfig, nil
 }
 
 // AddHeader method adds a header and its value to the [EventSource] instance.
@@ -295,13 +229,6 @@ func (es *EventSource) SetMaxBufSize(bufSize int) *EventSource {
 	return es
 }
 
-// Logger method returns the logger instance used by the event source instance.
-func (es *EventSource) Logger() Logger {
-	es.lock.RLock()
-	defer es.lock.RUnlock()
-	return es.log
-}
-
 // SetLogger method sets given writer for logging
 //
 // Compliant to interface [resty.Logger]
@@ -348,30 +275,9 @@ func (es *EventSource) OnError(ef EventErrorFunc) *EventSource {
 	defer es.lock.Unlock()
 	if es.onError != nil {
 		es.log.Warnf("Overwriting an existing OnError callback from=%s to=%s",
-			functionName(es.onError), functionName(ef))
+			functionName(es.OnError), functionName(ef))
 	}
 	es.onError = ef
-	return es
-}
-
-// OnRequestFailure registered callback gets triggered when the HTTP request
-// failure while establishing a SSE connection.
-//
-//	es.OnRequestFailure(func(err error, res *http.Response) {
-//		fmt.Println("Error and response:", err, res)
-//	})
-//
-// Note:
-//   - Do not forget to close the HTTP response body.
-//   - HTTP response may be nil.
-func (es *EventSource) OnRequestFailure(ef EventRequestFailureFunc) *EventSource {
-	es.lock.Lock()
-	defer es.lock.Unlock()
-	if es.onRequestFailure != nil {
-		es.log.Warnf("Overwriting an existing OnRequestFailure callback from=%s to=%s",
-			functionName(es.onRequestFailure), functionName(ef))
-	}
-	es.onRequestFailure = ef
 	return es
 }
 
@@ -381,8 +287,8 @@ func (es *EventSource) OnRequestFailure(ef EventRequestFailureFunc) *EventSource
 //
 //	es.OnMessage(
 //		func(e any) {
-//			event := e.(*Event)
-//			fmt.Println("Event message", event)
+//			e = e.(*Event)
+//			fmt.Println("Event message", e)
 //		},
 //		nil,
 //	)
@@ -391,8 +297,8 @@ func (es *EventSource) OnRequestFailure(ef EventRequestFailureFunc) *EventSource
 //	// to do auto-unmarshal
 //	es.OnMessage(
 //		func(e any) {
-//			event := e.(*MyData)
-//			fmt.Println(event)
+//			e = e.(*MyData)
+//			fmt.Println(e)
 //		},
 //		MyData{},
 //	)
@@ -407,8 +313,8 @@ func (es *EventSource) OnMessage(ef EventMessageFunc, result any) *EventSource {
 //	es.AddEventListener(
 //		"friend_logged_in",
 //		func(e any) {
-//			event := e.(*Event)
-//			fmt.Println(event)
+//			e = e.(*Event)
+//			fmt.Println(e)
 //		},
 //		nil,
 //	)
@@ -418,8 +324,8 @@ func (es *EventSource) OnMessage(ef EventMessageFunc, result any) *EventSource {
 //	es.AddEventListener(
 //		"friend_logged_in",
 //		func(e any) {
-//			event := e.(*UserLoggedIn)
-//			fmt.Println(event)
+//			e = e.(*UserLoggedIn)
+//			fmt.Println(e)
 //		},
 //		UserLoggedIn{},
 //	)
@@ -444,8 +350,8 @@ func (es *EventSource) AddEventListener(eventName string, ef EventMessageFunc, r
 //		SetURL("https://sse.dev/test").
 //		OnMessage(
 //			func(e any) {
-//				event := e.(*Event)
-//				fmt.Println(event)
+//				e = e.(*Event)
+//				fmt.Println(e)
 //			},
 //			nil, // see method godoc
 //		)
@@ -479,7 +385,7 @@ func (es *EventSource) Get() error {
 		if err != nil {
 			return err
 		}
-		es.triggerOnOpen(res.Header.Clone())
+		es.triggerOnOpen()
 		if err := es.listenStream(res); err != nil {
 			return err
 		}
@@ -505,11 +411,11 @@ func (es *EventSource) isClosed() bool {
 	return es.closed
 }
 
-func (es *EventSource) triggerOnOpen(hdr http.Header) {
+func (es *EventSource) triggerOnOpen() {
 	es.lock.RLock()
 	defer es.lock.RUnlock()
 	if es.onOpen != nil {
-		es.onOpen(strings.Clone(es.url), hdr)
+		es.onOpen(strings.Clone(es.url))
 	}
 }
 
@@ -518,14 +424,6 @@ func (es *EventSource) triggerOnError(err error) {
 	defer es.lock.RUnlock()
 	if es.onError != nil {
 		es.onError(err)
-	}
-}
-
-func (es *EventSource) triggerOnRequestFailure(err error, res *http.Response) {
-	es.lock.RLock()
-	defer es.lock.RUnlock()
-	if es.onRequestFailure != nil {
-		es.onRequestFailure(err, res)
 	}
 }
 
@@ -590,9 +488,6 @@ func (es *EventSource) connect() (*http.Response, error) {
 				err = wrapErrors(fmt.Errorf("resty:sse: %v", rRes.Status()), doErr)
 			} else {
 				err = doErr
-			}
-			if err != nil {
-				es.triggerOnRequestFailure(err, resp)
 			}
 			break
 		}
@@ -690,16 +585,14 @@ func (es *EventSource) processEvent(scanner *bufio.Scanner) error {
 }
 
 func (es *EventSource) handleCallback(e *Event) {
+	es.lock.RLock()
+	defer es.lock.RUnlock()
+
 	eventName := e.Name
 	if len(eventName) == 0 {
 		eventName = defaultEventName
 	}
-
-	es.lock.RLock()
-	cb, found := es.onEvent[eventName]
-	es.lock.RUnlock()
-
-	if found {
+	if cb, found := es.onEvent[eventName]; found {
 		if cb.Result == nil {
 			cb.Func(e)
 			return
@@ -782,12 +675,8 @@ func trimHeader(size int, data []byte) []byte {
 		return data
 	}
 	data = data[size:]
-	if len(data) > 0 && data[0] == ' ' {
-		data = data[1:]
-	}
-	if len(data) > 0 && data[len(data)-1] == '\n' {
-		data = data[:len(data)-1]
-	}
+	data = bytes.TrimSpace(data)
+	data = bytes.TrimSuffix(data, []byte("\n"))
 	return data
 }
 

@@ -44,7 +44,7 @@ type Length struct {
 	AvgRespirationRate         uint8
 	MaxRespirationRate         uint8
 
-	state [3]uint8 // Used for tracking expanded fields.
+	state [4]uint8 // Used for tracking expanded fields.
 
 	UnknownFields   []proto.Field          // UnknownFields are fields that are exist but they are not defined in Profile.xlsx
 	DeveloperFields []proto.DeveloperField // DeveloperFields are custom data fields [Added since protocol version 2.0]
@@ -63,28 +63,31 @@ func NewLength(mesg *proto.Message) *Length {
 func (m *Length) Reset(mesg *proto.Message) {
 	var (
 		vals            [255]proto.Value
-		state           [3]uint8
+		state           [4]uint8
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{66854655, 0, 0, 6917529027641081856}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].IsExpandedField && num < 24 {
-				state[num>>3] |= 1 << (num & 7)
+			if mesg.Fields[i].Num < 24 && mesg.Fields[i].IsExpandedField {
+				pos := mesg.Fields[i].Num / 8
+				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 255 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -124,104 +127,108 @@ func (m *Length) Reset(mesg *proto.Message) {
 func (m *Length) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 22)
 	mesg := proto.Message{Num: typedef.MesgNumLength}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 254)
+		field := fac.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.Event != typedef.EventInvalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint8(byte(m.Event))
 		fields = append(fields, field)
 	}
 	if m.EventType != typedef.EventTypeInvalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.EventType))
 		fields = append(fields, field)
 	}
 	if !m.StartTime.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint32(uint32(m.StartTime.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.TotalElapsedTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint32(m.TotalElapsedTime)
 		fields = append(fields, field)
 	}
 	if m.TotalTimerTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint32(m.TotalTimerTime)
 		fields = append(fields, field)
 	}
 	if m.TotalStrokes != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.Uint16(m.TotalStrokes)
 		fields = append(fields, field)
 	}
 	if m.AvgSpeed != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint16(m.AvgSpeed)
 		fields = append(fields, field)
 	}
 	if m.SwimStroke != typedef.SwimStrokeInvalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(byte(m.SwimStroke))
 		fields = append(fields, field)
 	}
 	if m.AvgSwimmingCadence != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Uint8(m.AvgSwimmingCadence)
 		fields = append(fields, field)
 	}
 	if m.EventGroup != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint8(m.EventGroup)
 		fields = append(fields, field)
 	}
 	if m.TotalCalories != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint16(m.TotalCalories)
 		fields = append(fields, field)
 	}
 	if m.LengthType != typedef.LengthTypeInvalid {
-		field := factory.CreateField(mesg.Num, 12)
+		field := fac.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint8(byte(m.LengthType))
 		fields = append(fields, field)
 	}
 	if m.PlayerScore != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 18)
+		field := fac.CreateField(mesg.Num, 18)
 		field.Value = proto.Uint16(m.PlayerScore)
 		fields = append(fields, field)
 	}
 	if m.OpponentScore != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 19)
+		field := fac.CreateField(mesg.Num, 19)
 		field.Value = proto.Uint16(m.OpponentScore)
 		fields = append(fields, field)
 	}
 	if m.StrokeCount != nil {
-		field := factory.CreateField(mesg.Num, 20)
+		field := fac.CreateField(mesg.Num, 20)
 		field.Value = proto.SliceUint16(m.StrokeCount)
 		fields = append(fields, field)
 	}
 	if m.ZoneCount != nil {
-		field := factory.CreateField(mesg.Num, 21)
+		field := fac.CreateField(mesg.Num, 21)
 		field.Value = proto.SliceUint16(m.ZoneCount)
 		fields = append(fields, field)
 	}
 	if m.EnhancedAvgRespirationRate != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(22); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 22)
+			field := fac.CreateField(mesg.Num, 22)
 			field.Value = proto.Uint16(m.EnhancedAvgRespirationRate)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -229,19 +236,19 @@ func (m *Length) ToMesg(options *Options) proto.Message {
 	}
 	if m.EnhancedMaxRespirationRate != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(23); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 23)
+			field := fac.CreateField(mesg.Num, 23)
 			field.Value = proto.Uint16(m.EnhancedMaxRespirationRate)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.AvgRespirationRate != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 24)
+		field := fac.CreateField(mesg.Num, 24)
 		field.Value = proto.Uint8(m.AvgRespirationRate)
 		fields = append(fields, field)
 	}
 	if m.MaxRespirationRate != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 25)
+		field := fac.CreateField(mesg.Num, 25)
 		field.Value = proto.Uint8(m.MaxRespirationRate)
 		fields = append(fields, field)
 	}
@@ -561,10 +568,11 @@ func (m *Length) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 	default:
 		return false
 	}
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	m.state[pos] &^= bit
 	if flag {
-		m.state[fieldNum>>3] |= 1 << (fieldNum & 7)
-	} else {
-		m.state[fieldNum>>3] &^= 1 << (fieldNum & 7)
+		m.state[pos] |= bit
 	}
 	return true
 }
@@ -572,10 +580,10 @@ func (m *Length) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 // IsExpandedField checks whether given fieldNum is a field generated through
 // a component expansion. Eligible for field number: 22, 23.
 func (m *Length) IsExpandedField(fieldNum byte) bool {
-	switch fieldNum {
-	case 22, 23:
-	default:
+	if fieldNum >= 24 {
 		return false
 	}
-	return (m.state[fieldNum>>3]>>(fieldNum&7))&1 == 1
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	return m.state[pos]&bit == bit
 }

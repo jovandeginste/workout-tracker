@@ -130,24 +130,27 @@ func (m *Record) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{5764606990190788607, 18013290270358914040, 2050, 2305843009213693952}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			if mesg.Fields[i].IsExpandedField && num < 109 {
-				state[num>>3] |= 1 << (num & 7)
+			if mesg.Fields[i].Num < 109 && mesg.Fields[i].IsExpandedField {
+				pos := mesg.Fields[i].Num / 8
+				state[pos] |= 1 << (mesg.Fields[i].Num - (8 * pos))
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 254 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -257,44 +260,48 @@ func (m *Record) Reset(mesg *proto.Message) {
 func (m *Record) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 84)
 	mesg := proto.Message{Num: typedef.MesgNumRecord}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.PositionLat != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Int32(m.PositionLat)
 		fields = append(fields, field)
 	}
 	if m.PositionLong != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Int32(m.PositionLong)
 		fields = append(fields, field)
 	}
 	if m.Altitude != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint16(m.Altitude)
 		fields = append(fields, field)
 	}
 	if m.HeartRate != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint8(m.HeartRate)
 		fields = append(fields, field)
 	}
 	if m.Cadence != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint8(m.Cadence)
 		fields = append(fields, field)
 	}
 	if m.Distance != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(5); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 5)
+			field := fac.CreateField(mesg.Num, 5)
 			field.Value = proto.Uint32(m.Distance)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -302,14 +309,14 @@ func (m *Record) ToMesg(options *Options) proto.Message {
 	}
 	if m.Speed != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(6); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 6)
+			field := fac.CreateField(mesg.Num, 6)
 			field.Value = proto.Uint16(m.Speed)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.Power != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint16(m.Power)
 		fields = append(fields, field)
 	}
@@ -318,230 +325,230 @@ func (m *Record) ToMesg(options *Options) proto.Message {
 		basetype.ByteInvalid,
 		basetype.ByteInvalid,
 	} {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		copied := m.CompressedSpeedDistance
 		field.Value = proto.SliceUint8(copied[:])
 		fields = append(fields, field)
 	}
 	if m.Grade != basetype.Sint16Invalid {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Int16(m.Grade)
 		fields = append(fields, field)
 	}
 	if m.Resistance != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Uint8(m.Resistance)
 		fields = append(fields, field)
 	}
 	if m.TimeFromCourse != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Int32(m.TimeFromCourse)
 		fields = append(fields, field)
 	}
 	if m.CycleLength != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 12)
+		field := fac.CreateField(mesg.Num, 12)
 		field.Value = proto.Uint8(m.CycleLength)
 		fields = append(fields, field)
 	}
 	if m.Temperature != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 13)
+		field := fac.CreateField(mesg.Num, 13)
 		field.Value = proto.Int8(m.Temperature)
 		fields = append(fields, field)
 	}
 	if m.Speed1S != nil {
-		field := factory.CreateField(mesg.Num, 17)
+		field := fac.CreateField(mesg.Num, 17)
 		field.Value = proto.SliceUint8(m.Speed1S)
 		fields = append(fields, field)
 	}
 	if m.Cycles != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 18)
+		field := fac.CreateField(mesg.Num, 18)
 		field.Value = proto.Uint8(m.Cycles)
 		fields = append(fields, field)
 	}
 	if m.TotalCycles != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(19); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 19)
+			field := fac.CreateField(mesg.Num, 19)
 			field.Value = proto.Uint32(m.TotalCycles)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.CompressedAccumulatedPower != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 28)
+		field := fac.CreateField(mesg.Num, 28)
 		field.Value = proto.Uint16(m.CompressedAccumulatedPower)
 		fields = append(fields, field)
 	}
 	if m.AccumulatedPower != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(29); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 29)
+			field := fac.CreateField(mesg.Num, 29)
 			field.Value = proto.Uint32(m.AccumulatedPower)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.LeftRightBalance != typedef.LeftRightBalanceInvalid {
-		field := factory.CreateField(mesg.Num, 30)
+		field := fac.CreateField(mesg.Num, 30)
 		field.Value = proto.Uint8(uint8(m.LeftRightBalance))
 		fields = append(fields, field)
 	}
 	if m.GpsAccuracy != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 31)
+		field := fac.CreateField(mesg.Num, 31)
 		field.Value = proto.Uint8(m.GpsAccuracy)
 		fields = append(fields, field)
 	}
 	if m.VerticalSpeed != basetype.Sint16Invalid {
-		field := factory.CreateField(mesg.Num, 32)
+		field := fac.CreateField(mesg.Num, 32)
 		field.Value = proto.Int16(m.VerticalSpeed)
 		fields = append(fields, field)
 	}
 	if m.Calories != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 33)
+		field := fac.CreateField(mesg.Num, 33)
 		field.Value = proto.Uint16(m.Calories)
 		fields = append(fields, field)
 	}
 	if m.VerticalOscillation != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 39)
+		field := fac.CreateField(mesg.Num, 39)
 		field.Value = proto.Uint16(m.VerticalOscillation)
 		fields = append(fields, field)
 	}
 	if m.StanceTimePercent != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 40)
+		field := fac.CreateField(mesg.Num, 40)
 		field.Value = proto.Uint16(m.StanceTimePercent)
 		fields = append(fields, field)
 	}
 	if m.StanceTime != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 41)
+		field := fac.CreateField(mesg.Num, 41)
 		field.Value = proto.Uint16(m.StanceTime)
 		fields = append(fields, field)
 	}
 	if m.ActivityType != typedef.ActivityTypeInvalid {
-		field := factory.CreateField(mesg.Num, 42)
+		field := fac.CreateField(mesg.Num, 42)
 		field.Value = proto.Uint8(byte(m.ActivityType))
 		fields = append(fields, field)
 	}
 	if m.LeftTorqueEffectiveness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 43)
+		field := fac.CreateField(mesg.Num, 43)
 		field.Value = proto.Uint8(m.LeftTorqueEffectiveness)
 		fields = append(fields, field)
 	}
 	if m.RightTorqueEffectiveness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 44)
+		field := fac.CreateField(mesg.Num, 44)
 		field.Value = proto.Uint8(m.RightTorqueEffectiveness)
 		fields = append(fields, field)
 	}
 	if m.LeftPedalSmoothness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 45)
+		field := fac.CreateField(mesg.Num, 45)
 		field.Value = proto.Uint8(m.LeftPedalSmoothness)
 		fields = append(fields, field)
 	}
 	if m.RightPedalSmoothness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 46)
+		field := fac.CreateField(mesg.Num, 46)
 		field.Value = proto.Uint8(m.RightPedalSmoothness)
 		fields = append(fields, field)
 	}
 	if m.CombinedPedalSmoothness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 47)
+		field := fac.CreateField(mesg.Num, 47)
 		field.Value = proto.Uint8(m.CombinedPedalSmoothness)
 		fields = append(fields, field)
 	}
 	if m.Time128 != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 48)
+		field := fac.CreateField(mesg.Num, 48)
 		field.Value = proto.Uint8(m.Time128)
 		fields = append(fields, field)
 	}
 	if m.StrokeType != typedef.StrokeTypeInvalid {
-		field := factory.CreateField(mesg.Num, 49)
+		field := fac.CreateField(mesg.Num, 49)
 		field.Value = proto.Uint8(byte(m.StrokeType))
 		fields = append(fields, field)
 	}
 	if m.Zone != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 50)
+		field := fac.CreateField(mesg.Num, 50)
 		field.Value = proto.Uint8(m.Zone)
 		fields = append(fields, field)
 	}
 	if m.BallSpeed != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 51)
+		field := fac.CreateField(mesg.Num, 51)
 		field.Value = proto.Uint16(m.BallSpeed)
 		fields = append(fields, field)
 	}
 	if m.Cadence256 != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 52)
+		field := fac.CreateField(mesg.Num, 52)
 		field.Value = proto.Uint16(m.Cadence256)
 		fields = append(fields, field)
 	}
 	if m.FractionalCadence != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 53)
+		field := fac.CreateField(mesg.Num, 53)
 		field.Value = proto.Uint8(m.FractionalCadence)
 		fields = append(fields, field)
 	}
 	if m.TotalHemoglobinConc != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 54)
+		field := fac.CreateField(mesg.Num, 54)
 		field.Value = proto.Uint16(m.TotalHemoglobinConc)
 		fields = append(fields, field)
 	}
 	if m.TotalHemoglobinConcMin != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 55)
+		field := fac.CreateField(mesg.Num, 55)
 		field.Value = proto.Uint16(m.TotalHemoglobinConcMin)
 		fields = append(fields, field)
 	}
 	if m.TotalHemoglobinConcMax != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 56)
+		field := fac.CreateField(mesg.Num, 56)
 		field.Value = proto.Uint16(m.TotalHemoglobinConcMax)
 		fields = append(fields, field)
 	}
 	if m.SaturatedHemoglobinPercent != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 57)
+		field := fac.CreateField(mesg.Num, 57)
 		field.Value = proto.Uint16(m.SaturatedHemoglobinPercent)
 		fields = append(fields, field)
 	}
 	if m.SaturatedHemoglobinPercentMin != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 58)
+		field := fac.CreateField(mesg.Num, 58)
 		field.Value = proto.Uint16(m.SaturatedHemoglobinPercentMin)
 		fields = append(fields, field)
 	}
 	if m.SaturatedHemoglobinPercentMax != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 59)
+		field := fac.CreateField(mesg.Num, 59)
 		field.Value = proto.Uint16(m.SaturatedHemoglobinPercentMax)
 		fields = append(fields, field)
 	}
 	if m.DeviceIndex != typedef.DeviceIndexInvalid {
-		field := factory.CreateField(mesg.Num, 62)
+		field := fac.CreateField(mesg.Num, 62)
 		field.Value = proto.Uint8(uint8(m.DeviceIndex))
 		fields = append(fields, field)
 	}
 	if m.LeftPco != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 67)
+		field := fac.CreateField(mesg.Num, 67)
 		field.Value = proto.Int8(m.LeftPco)
 		fields = append(fields, field)
 	}
 	if m.RightPco != basetype.Sint8Invalid {
-		field := factory.CreateField(mesg.Num, 68)
+		field := fac.CreateField(mesg.Num, 68)
 		field.Value = proto.Int8(m.RightPco)
 		fields = append(fields, field)
 	}
 	if m.LeftPowerPhase != nil {
-		field := factory.CreateField(mesg.Num, 69)
+		field := fac.CreateField(mesg.Num, 69)
 		field.Value = proto.SliceUint8(m.LeftPowerPhase)
 		fields = append(fields, field)
 	}
 	if m.LeftPowerPhasePeak != nil {
-		field := factory.CreateField(mesg.Num, 70)
+		field := fac.CreateField(mesg.Num, 70)
 		field.Value = proto.SliceUint8(m.LeftPowerPhasePeak)
 		fields = append(fields, field)
 	}
 	if m.RightPowerPhase != nil {
-		field := factory.CreateField(mesg.Num, 71)
+		field := fac.CreateField(mesg.Num, 71)
 		field.Value = proto.SliceUint8(m.RightPowerPhase)
 		fields = append(fields, field)
 	}
 	if m.RightPowerPhasePeak != nil {
-		field := factory.CreateField(mesg.Num, 72)
+		field := fac.CreateField(mesg.Num, 72)
 		field.Value = proto.SliceUint8(m.RightPowerPhasePeak)
 		fields = append(fields, field)
 	}
 	if m.EnhancedSpeed != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(73); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 73)
+			field := fac.CreateField(mesg.Num, 73)
 			field.Value = proto.Uint32(m.EnhancedSpeed)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
@@ -549,162 +556,162 @@ func (m *Record) ToMesg(options *Options) proto.Message {
 	}
 	if m.EnhancedAltitude != basetype.Uint32Invalid {
 		if expanded := m.IsExpandedField(78); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 78)
+			field := fac.CreateField(mesg.Num, 78)
 			field.Value = proto.Uint32(m.EnhancedAltitude)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if m.BatterySoc != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 81)
+		field := fac.CreateField(mesg.Num, 81)
 		field.Value = proto.Uint8(m.BatterySoc)
 		fields = append(fields, field)
 	}
 	if m.MotorPower != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 82)
+		field := fac.CreateField(mesg.Num, 82)
 		field.Value = proto.Uint16(m.MotorPower)
 		fields = append(fields, field)
 	}
 	if m.VerticalRatio != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 83)
+		field := fac.CreateField(mesg.Num, 83)
 		field.Value = proto.Uint16(m.VerticalRatio)
 		fields = append(fields, field)
 	}
 	if m.StanceTimeBalance != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 84)
+		field := fac.CreateField(mesg.Num, 84)
 		field.Value = proto.Uint16(m.StanceTimeBalance)
 		fields = append(fields, field)
 	}
 	if m.StepLength != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 85)
+		field := fac.CreateField(mesg.Num, 85)
 		field.Value = proto.Uint16(m.StepLength)
 		fields = append(fields, field)
 	}
 	if m.CycleLength16 != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 87)
+		field := fac.CreateField(mesg.Num, 87)
 		field.Value = proto.Uint16(m.CycleLength16)
 		fields = append(fields, field)
 	}
 	if m.AbsolutePressure != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 91)
+		field := fac.CreateField(mesg.Num, 91)
 		field.Value = proto.Uint32(m.AbsolutePressure)
 		fields = append(fields, field)
 	}
 	if m.Depth != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 92)
+		field := fac.CreateField(mesg.Num, 92)
 		field.Value = proto.Uint32(m.Depth)
 		fields = append(fields, field)
 	}
 	if m.NextStopDepth != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 93)
+		field := fac.CreateField(mesg.Num, 93)
 		field.Value = proto.Uint32(m.NextStopDepth)
 		fields = append(fields, field)
 	}
 	if m.NextStopTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 94)
+		field := fac.CreateField(mesg.Num, 94)
 		field.Value = proto.Uint32(m.NextStopTime)
 		fields = append(fields, field)
 	}
 	if m.TimeToSurface != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 95)
+		field := fac.CreateField(mesg.Num, 95)
 		field.Value = proto.Uint32(m.TimeToSurface)
 		fields = append(fields, field)
 	}
 	if m.NdlTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 96)
+		field := fac.CreateField(mesg.Num, 96)
 		field.Value = proto.Uint32(m.NdlTime)
 		fields = append(fields, field)
 	}
 	if m.CnsLoad != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 97)
+		field := fac.CreateField(mesg.Num, 97)
 		field.Value = proto.Uint8(m.CnsLoad)
 		fields = append(fields, field)
 	}
 	if m.N2Load != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 98)
+		field := fac.CreateField(mesg.Num, 98)
 		field.Value = proto.Uint16(m.N2Load)
 		fields = append(fields, field)
 	}
 	if m.RespirationRate != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 99)
+		field := fac.CreateField(mesg.Num, 99)
 		field.Value = proto.Uint8(m.RespirationRate)
 		fields = append(fields, field)
 	}
 	if m.EnhancedRespirationRate != basetype.Uint16Invalid {
 		if expanded := m.IsExpandedField(108); !expanded || (expanded && options.IncludeExpandedFields) {
-			field := factory.CreateField(mesg.Num, 108)
+			field := fac.CreateField(mesg.Num, 108)
 			field.Value = proto.Uint16(m.EnhancedRespirationRate)
 			field.IsExpandedField = expanded
 			fields = append(fields, field)
 		}
 	}
 	if math.Float32bits(m.Grit) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 114)
+		field := fac.CreateField(mesg.Num, 114)
 		field.Value = proto.Float32(m.Grit)
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.Flow) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 115)
+		field := fac.CreateField(mesg.Num, 115)
 		field.Value = proto.Float32(m.Flow)
 		fields = append(fields, field)
 	}
 	if m.CurrentStress != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 116)
+		field := fac.CreateField(mesg.Num, 116)
 		field.Value = proto.Uint16(m.CurrentStress)
 		fields = append(fields, field)
 	}
 	if m.EbikeTravelRange != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 117)
+		field := fac.CreateField(mesg.Num, 117)
 		field.Value = proto.Uint16(m.EbikeTravelRange)
 		fields = append(fields, field)
 	}
 	if m.EbikeBatteryLevel != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 118)
+		field := fac.CreateField(mesg.Num, 118)
 		field.Value = proto.Uint8(m.EbikeBatteryLevel)
 		fields = append(fields, field)
 	}
 	if m.EbikeAssistMode != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 119)
+		field := fac.CreateField(mesg.Num, 119)
 		field.Value = proto.Uint8(m.EbikeAssistMode)
 		fields = append(fields, field)
 	}
 	if m.EbikeAssistLevelPercent != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 120)
+		field := fac.CreateField(mesg.Num, 120)
 		field.Value = proto.Uint8(m.EbikeAssistLevelPercent)
 		fields = append(fields, field)
 	}
 	if m.AirTimeRemaining != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 123)
+		field := fac.CreateField(mesg.Num, 123)
 		field.Value = proto.Uint32(m.AirTimeRemaining)
 		fields = append(fields, field)
 	}
 	if m.PressureSac != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 124)
+		field := fac.CreateField(mesg.Num, 124)
 		field.Value = proto.Uint16(m.PressureSac)
 		fields = append(fields, field)
 	}
 	if m.VolumeSac != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 125)
+		field := fac.CreateField(mesg.Num, 125)
 		field.Value = proto.Uint16(m.VolumeSac)
 		fields = append(fields, field)
 	}
 	if m.Rmv != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 126)
+		field := fac.CreateField(mesg.Num, 126)
 		field.Value = proto.Uint16(m.Rmv)
 		fields = append(fields, field)
 	}
 	if m.AscentRate != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 127)
+		field := fac.CreateField(mesg.Num, 127)
 		field.Value = proto.Int32(m.AscentRate)
 		fields = append(fields, field)
 	}
 	if m.Po2 != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 129)
+		field := fac.CreateField(mesg.Num, 129)
 		field.Value = proto.Uint8(m.Po2)
 		fields = append(fields, field)
 	}
 	if m.CoreTemperature != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 139)
+		field := fac.CreateField(mesg.Num, 139)
 		field.Value = proto.Uint16(m.CoreTemperature)
 		fields = append(fields, field)
 	}
@@ -2680,10 +2687,11 @@ func (m *Record) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 	default:
 		return false
 	}
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	m.state[pos] &^= bit
 	if flag {
-		m.state[fieldNum>>3] |= 1 << (fieldNum & 7)
-	} else {
-		m.state[fieldNum>>3] &^= 1 << (fieldNum & 7)
+		m.state[pos] |= bit
 	}
 	return true
 }
@@ -2691,10 +2699,10 @@ func (m *Record) MarkAsExpandedField(fieldNum byte, flag bool) (ok bool) {
 // IsExpandedField checks whether given fieldNum is a field generated through
 // a component expansion. Eligible for field number: 5, 6, 19, 29, 73, 78, 108.
 func (m *Record) IsExpandedField(fieldNum byte) bool {
-	switch fieldNum {
-	case 5, 6, 19, 29, 73, 78, 108:
-	default:
+	if fieldNum >= 109 {
 		return false
 	}
-	return (m.state[fieldNum>>3]>>(fieldNum&7))&1 == 1
+	pos := fieldNum / 8
+	bit := uint8(1) << (fieldNum - (8 * pos))
+	return m.state[pos]&bit == bit
 }

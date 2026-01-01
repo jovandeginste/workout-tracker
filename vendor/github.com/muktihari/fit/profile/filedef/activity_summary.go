@@ -7,7 +7,6 @@ package filedef
 import (
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/mesgdef"
-	"github.com/muktihari/fit/profile/typedef"
 	"github.com/muktihari/fit/profile/untyped/mesgnum"
 	"github.com/muktihari/fit/proto"
 )
@@ -31,8 +30,7 @@ var _ File = (*ActivitySummary)(nil)
 
 // NewActivitySummary creates new ActivitySummary File.
 func NewActivitySummary(mesgs ...proto.Message) *ActivitySummary {
-	f := &ActivitySummary{FileId: newFileId}
-	f.FileId.Type = typedef.FileActivitySummary
+	f := &ActivitySummary{}
 	for i := range mesgs {
 		f.Add(mesgs[i])
 	}
@@ -43,7 +41,7 @@ func NewActivitySummary(mesgs ...proto.Message) *ActivitySummary {
 func (f *ActivitySummary) Add(mesg proto.Message) {
 	switch mesg.Num {
 	case mesgnum.FileId:
-		f.FileId.Reset(&mesg)
+		f.FileId = *mesgdef.NewFileId(&mesg)
 	case mesgnum.DeveloperDataId:
 		f.DeveloperDataIds = append(f.DeveloperDataIds, mesgdef.NewDeveloperDataId(&mesg))
 	case mesgnum.FieldDescription:

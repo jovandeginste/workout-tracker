@@ -5,9 +5,6 @@
 package filedef
 
 import (
-	"maps"
-	"reflect"
-
 	"github.com/muktihari/fit/decoder"
 	"github.com/muktihari/fit/internal/sliceutil"
 	"github.com/muktihari/fit/profile/typedef"
@@ -31,41 +28,46 @@ type Listener struct {
 type FileSets = map[typedef.File]func() File
 
 type options struct {
-	fileSets      map[typedef.File]func() File
+	fileSets      [256]func() File
 	channelBuffer uint
 }
 
-var readOnlyFileSets = map[typedef.File]func() File{
-	typedef.FileActivity:        func() File { return new(Activity) },
-	typedef.FileActivitySummary: func() File { return new(ActivitySummary) },
-	typedef.FileBloodPressure:   func() File { return new(BloodPressure) },
-	typedef.FileCourse:          func() File { return new(Course) },
-	typedef.FileDevice:          func() File { return new(Device) },
-	typedef.FileGoals:           func() File { return new(Goals) },
-	typedef.FileMonitoringA:     func() File { return new(MonitoringA) },
-	typedef.FileMonitoringB:     func() File { return new(MonitoringB) },
-	typedef.FileMonitoringDaily: func() File { return new(MonitoringDaily) },
-	typedef.FileSchedules:       func() File { return new(Schedules) },
-	typedef.FileSegment:         func() File { return new(Segment) },
-	typedef.FileSegmentList:     func() File { return new(SegmentList) },
-	typedef.FileSettings:        func() File { return new(Settings) },
-	typedef.FileSport:           func() File { return new(Sport) },
-	typedef.FileTotals:          func() File { return new(Totals) },
-	typedef.FileWeight:          func() File { return new(Weight) },
-	typedef.FileWorkout:         func() File { return new(Workout) },
+func defaultFileSets() [256]func() File {
+	return [256]func() File{
+		typedef.FileActivity:        func() File { return NewActivity() },
+		typedef.FileActivitySummary: func() File { return NewActivitySummary() },
+		typedef.FileBloodPressure:   func() File { return NewBloodPressure() },
+		typedef.FileCourse:          func() File { return NewCourse() },
+		typedef.FileDevice:          func() File { return NewDevice() },
+		typedef.FileGoals:           func() File { return NewGoals() },
+		typedef.FileMonitoringA:     func() File { return NewMonitoringAB() },
+		typedef.FileMonitoringB:     func() File { return NewMonitoringAB() },
+		typedef.FileMonitoringDaily: func() File { return NewMonitoringDaily() },
+		typedef.FileSchedules:       func() File { return NewSchedules() },
+		typedef.FileSegment:         func() File { return NewSegment() },
+		typedef.FileSegmentList:     func() File { return NewSegmentList() },
+		typedef.FileSettings:        func() File { return NewSettings() },
+		typedef.FileSport:           func() File { return NewSport() },
+		typedef.FileTotals:          func() File { return NewTotals() },
+		typedef.FileWeight:          func() File { return NewWeight() },
+		typedef.FileWorkout:         func() File { return NewWorkout() },
+	}
 }
 
 func defaultOptions() options {
 	return options{
-		fileSets:      readOnlyFileSets,
+		fileSets:      defaultFileSets(),
 		channelBuffer: 128,
 	}
 }
 
-// PredefinedFileSet is a list of default filesets used in listener, it's exported so user can
-// append their own types and register it as an option.
+// PredefinedFileSet is a list of default filesets used in listener, it's exported so user can append their own types and register it as an option.
 func PredefinedFileSet() FileSets {
-	return maps.Clone(readOnlyFileSets)
+	m := make(map[typedef.File]func() File)
+	for i, v := range defaultFileSets() {
+		m[typedef.File(i)] = v
+	}
+	return m
 }
 
 // Option is Listener's option.
@@ -80,18 +82,17 @@ func WithChannelBuffer(size uint) Option {
 // that file type will be skipped. This will replace the default listener's filesets, if you intend to append your own
 // file types, please call PredefinedFileSet() and add your file type before using this option; or use WithFileFunc instead.
 func WithFileSets(fileSets FileSets) Option {
-	return func(o *options) { o.fileSets = fileSets }
+	return func(o *options) {
+		o.fileSets = [256]func() File{} // Clear all.
+		for file, fn := range fileSets {
+			o.fileSets[file] = fn
+		}
+	}
 }
 
 // WithFileFunc sets File with its File creator function. It overrides the default options.
 func WithFileFunc(f typedef.File, fn func() File) Option {
-	return func(o *options) {
-		// We must clone since we will assign new value, o.fileSets should no longer pointing to readOnlyFileSets.
-		if reflect.ValueOf(o.fileSets).Pointer() == reflect.ValueOf(readOnlyFileSets).Pointer() {
-			o.fileSets = maps.Clone(readOnlyFileSets)
-		}
-		o.fileSets[f] = fn
-	}
+	return func(o *options) { o.fileSets[f] = fn }
 }
 
 var _ decoder.MesgListener = (*Listener)(nil)
@@ -111,7 +112,6 @@ func NewListener(opts ...Option) *Listener {
 func (l *Listener) Reset(opts ...Option) {
 	l.Close()
 	prevChannelBuffer := l.options.channelBuffer
-
 	l.options = defaultOptions()
 	for i := range opts {
 		opts[i](&l.options)
@@ -151,7 +151,7 @@ func (l *Listener) loop() {
 
 func (l *Listener) processMesg(mesg proto.Message) {
 	if mesg.Num == mesgnum.FileId {
-		fileType := typedef.File(mesg.FieldValueByNum(fieldnum.FileIdType).Uint8())
+		fileType := mesg.FieldValueByNum(fieldnum.FileIdType).Uint8()
 		fn := l.options.fileSets[fileType]
 		if fn == nil {
 			return
