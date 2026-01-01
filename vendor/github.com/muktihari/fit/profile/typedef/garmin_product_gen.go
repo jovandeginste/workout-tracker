@@ -443,7 +443,6 @@ const (
 	GarminProductHrmFit                     GarminProduct = 4446
 	GarminProductMarqGen2Commander          GarminProduct = 4472
 	GarminProductLilyAthlete                GarminProduct = 4477 // aka the Lily 2 Active
-	GarminProductRallyX10                   GarminProduct = 4525 // Rally 110/210
 	GarminProductFenix8Solar                GarminProduct = 4532
 	GarminProductFenix8SolarLarge           GarminProduct = 4533
 	GarminProductFenix8Small                GarminProduct = 4534
@@ -456,25 +455,14 @@ const (
 	GarminProductInstinct3Amoled45Mm        GarminProduct = 4586
 	GarminProductInstinct3Amoled50Mm        GarminProduct = 4587
 	GarminProductDescentG2                  GarminProduct = 4588
-	GarminProductVenuX1                     GarminProduct = 4603
 	GarminProductHrm200                     GarminProduct = 4606
 	GarminProductVivoactive6                GarminProduct = 4625
-	GarminProductFenix8Pro                  GarminProduct = 4631
-	GarminProductEdge550                    GarminProduct = 4633
-	GarminProductEdge850                    GarminProduct = 4634
-	GarminProductVenu4                      GarminProduct = 4643
-	GarminProductVenu4s                     GarminProduct = 4644
 	GarminProductApproachs44                GarminProduct = 4647
-	GarminProductEdgeMtb                    GarminProduct = 4655
 	GarminProductApproachs50                GarminProduct = 4656
 	GarminProductFenixE                     GarminProduct = 4666
-	GarminProductBounce2                    GarminProduct = 4745
 	GarminProductInstinct3Solar50Mm         GarminProduct = 4759
 	GarminProductTactix8Amoled              GarminProduct = 4775
 	GarminProductTactix8Solar               GarminProduct = 4776
-	GarminProductD2Mach2                    GarminProduct = 4879
-	GarminProductInstinctCrossoverAmoled    GarminProduct = 4678
-	GarminProductD2AirX15                   GarminProduct = 4944
 	GarminProductSdm4                       GarminProduct = 10007 // SDM4 footpod
 	GarminProductEdgeRemote                 GarminProduct = 10014
 	GarminProductTacxTrainingAppWin         GarminProduct = 20533
@@ -1354,8 +1342,6 @@ func (g GarminProduct) String() string {
 		return "marq_gen2_commander"
 	case GarminProductLilyAthlete:
 		return "lily_athlete"
-	case GarminProductRallyX10:
-		return "rally_x10"
 	case GarminProductFenix8Solar:
 		return "fenix8_solar"
 	case GarminProductFenix8SolarLarge:
@@ -1380,44 +1366,22 @@ func (g GarminProduct) String() string {
 		return "instinct3_amoled_50mm"
 	case GarminProductDescentG2:
 		return "descent_g2"
-	case GarminProductVenuX1:
-		return "venu_x1"
 	case GarminProductHrm200:
 		return "hrm_200"
 	case GarminProductVivoactive6:
 		return "vivoactive6"
-	case GarminProductFenix8Pro:
-		return "fenix8_pro"
-	case GarminProductEdge550:
-		return "edge_550"
-	case GarminProductEdge850:
-		return "edge_850"
-	case GarminProductVenu4:
-		return "venu4"
-	case GarminProductVenu4s:
-		return "venu4s"
 	case GarminProductApproachs44:
 		return "approachS44"
-	case GarminProductEdgeMtb:
-		return "edge_mtb"
 	case GarminProductApproachs50:
 		return "approachS50"
 	case GarminProductFenixE:
 		return "fenix_e"
-	case GarminProductBounce2:
-		return "bounce2"
 	case GarminProductInstinct3Solar50Mm:
 		return "instinct3_solar_50mm"
 	case GarminProductTactix8Amoled:
 		return "tactix8_amoled"
 	case GarminProductTactix8Solar:
 		return "tactix8_solar"
-	case GarminProductD2Mach2:
-		return "d2_mach2"
-	case GarminProductInstinctCrossoverAmoled:
-		return "instinct_crossover_amoled"
-	case GarminProductD2AirX15:
-		return "d2_air_x15"
 	case GarminProductSdm4:
 		return "sdm4"
 	case GarminProductEdgeRemote:
@@ -2310,8 +2274,6 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductMarqGen2Commander
 	case "lily_athlete":
 		return GarminProductLilyAthlete
-	case "rally_x10":
-		return GarminProductRallyX10
 	case "fenix8_solar":
 		return GarminProductFenix8Solar
 	case "fenix8_solar_large":
@@ -2336,44 +2298,22 @@ func GarminProductFromString(s string) GarminProduct {
 		return GarminProductInstinct3Amoled50Mm
 	case "descent_g2":
 		return GarminProductDescentG2
-	case "venu_x1":
-		return GarminProductVenuX1
 	case "hrm_200":
 		return GarminProductHrm200
 	case "vivoactive6":
 		return GarminProductVivoactive6
-	case "fenix8_pro":
-		return GarminProductFenix8Pro
-	case "edge_550":
-		return GarminProductEdge550
-	case "edge_850":
-		return GarminProductEdge850
-	case "venu4":
-		return GarminProductVenu4
-	case "venu4s":
-		return GarminProductVenu4s
 	case "approachS44":
 		return GarminProductApproachs44
-	case "edge_mtb":
-		return GarminProductEdgeMtb
 	case "approachS50":
 		return GarminProductApproachs50
 	case "fenix_e":
 		return GarminProductFenixE
-	case "bounce2":
-		return GarminProductBounce2
 	case "instinct3_solar_50mm":
 		return GarminProductInstinct3Solar50Mm
 	case "tactix8_amoled":
 		return GarminProductTactix8Amoled
 	case "tactix8_solar":
 		return GarminProductTactix8Solar
-	case "d2_mach2":
-		return GarminProductD2Mach2
-	case "instinct_crossover_amoled":
-		return GarminProductInstinctCrossoverAmoled
-	case "d2_air_x15":
-		return GarminProductD2AirX15
 	case "sdm4":
 		return GarminProductSdm4
 	case "edge_remote":
@@ -2836,7 +2776,6 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductHrmFit,
 		GarminProductMarqGen2Commander,
 		GarminProductLilyAthlete,
-		GarminProductRallyX10,
 		GarminProductFenix8Solar,
 		GarminProductFenix8SolarLarge,
 		GarminProductFenix8Small,
@@ -2849,25 +2788,14 @@ func ListGarminProduct() []GarminProduct {
 		GarminProductInstinct3Amoled45Mm,
 		GarminProductInstinct3Amoled50Mm,
 		GarminProductDescentG2,
-		GarminProductVenuX1,
 		GarminProductHrm200,
 		GarminProductVivoactive6,
-		GarminProductFenix8Pro,
-		GarminProductEdge550,
-		GarminProductEdge850,
-		GarminProductVenu4,
-		GarminProductVenu4s,
 		GarminProductApproachs44,
-		GarminProductEdgeMtb,
 		GarminProductApproachs50,
 		GarminProductFenixE,
-		GarminProductBounce2,
 		GarminProductInstinct3Solar50Mm,
 		GarminProductTactix8Amoled,
 		GarminProductTactix8Solar,
-		GarminProductD2Mach2,
-		GarminProductInstinctCrossoverAmoled,
-		GarminProductD2AirX15,
 		GarminProductSdm4,
 		GarminProductEdgeRemote,
 		GarminProductTacxTrainingAppWin,

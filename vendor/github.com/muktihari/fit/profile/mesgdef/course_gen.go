@@ -43,21 +43,23 @@ func (m *Course) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{240, 0, 0, 0}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 8 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -77,28 +79,32 @@ func (m *Course) Reset(mesg *proto.Message) {
 func (m *Course) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 4)
 	mesg := proto.Message{Num: typedef.MesgNumCourse}
 
 	if m.Sport != typedef.SportInvalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint8(byte(m.Sport))
 		fields = append(fields, field)
 	}
 	if m.Name != basetype.StringInvalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.String(m.Name)
 		fields = append(fields, field)
 	}
 	if m.Capabilities != typedef.CourseCapabilitiesInvalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint32(uint32(m.Capabilities))
 		fields = append(fields, field)
 	}
 	if m.SubSport != typedef.SubSportInvalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(byte(m.SubSport))
 		fields = append(fields, field)
 	}

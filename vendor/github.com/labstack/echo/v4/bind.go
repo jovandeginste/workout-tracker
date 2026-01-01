@@ -13,7 +13,6 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // Binder is the interface that wraps the Bind method.
@@ -40,13 +39,6 @@ type bindMultipleUnmarshaler interface {
 }
 
 // BindPathParams binds path params to bindable object
-//
-// Time format support: time.Time fields can use `format` tags to specify custom parsing layouts.
-// Example: `param:"created" format:"2006-01-02T15:04"` for datetime-local format
-// Example: `param:"date" format:"2006-01-02"` for date format
-// Uses Go's standard time format reference time: Mon Jan 2 15:04:05 MST 2006
-// Works with form data, query parameters, and path parameters (not JSON body)
-// Falls back to default time.Time parsing if no format tag is specified
 func (b *DefaultBinder) BindPathParams(c Context, i interface{}) error {
 	names := c.ParamNames()
 	values := c.ParamValues()
@@ -270,8 +262,7 @@ func (b *DefaultBinder) bindData(destination interface{}, data map[string][]stri
 			continue
 		}
 
-		formatTag := typeField.Tag.Get("format")
-		if ok, err := unmarshalInputToField(typeField.Type.Kind(), inputValue[0], structField, formatTag); ok {
+		if ok, err := unmarshalInputToField(typeField.Type.Kind(), inputValue[0], structField); ok {
 			if err != nil {
 				return err
 			}
@@ -307,8 +298,7 @@ func (b *DefaultBinder) bindData(destination interface{}, data map[string][]stri
 
 func setWithProperType(valueKind reflect.Kind, val string, structField reflect.Value) error {
 	// But also call it here, in case we're dealing with an array of BindUnmarshalers
-	// Note: format tag not available in this context, so empty string is passed
-	if ok, err := unmarshalInputToField(valueKind, val, structField, ""); ok {
+	if ok, err := unmarshalInputToField(valueKind, val, structField); ok {
 		return err
 	}
 
@@ -365,7 +355,7 @@ func unmarshalInputsToField(valueKind reflect.Kind, values []string, field refle
 	return true, unmarshaler.UnmarshalParams(values)
 }
 
-func unmarshalInputToField(valueKind reflect.Kind, val string, field reflect.Value, formatTag string) (bool, error) {
+func unmarshalInputToField(valueKind reflect.Kind, val string, field reflect.Value) (bool, error) {
 	if valueKind == reflect.Ptr {
 		if field.IsNil() {
 			field.Set(reflect.New(field.Type().Elem()))
@@ -374,19 +364,6 @@ func unmarshalInputToField(valueKind reflect.Kind, val string, field reflect.Val
 	}
 
 	fieldIValue := field.Addr().Interface()
-
-	// Handle time.Time with custom format tag
-	if formatTag != "" {
-		if _, isTime := fieldIValue.(*time.Time); isTime {
-			t, err := time.Parse(formatTag, val)
-			if err != nil {
-				return true, err
-			}
-			field.Set(reflect.ValueOf(t))
-			return true, nil
-		}
-	}
-
 	switch unmarshaler := fieldIValue.(type) {
 	case BindUnmarshaler:
 		return true, unmarshaler.UnmarshalParam(val)
@@ -443,11 +420,11 @@ func setFloatField(value string, bitSize int, field reflect.Value) error {
 
 var (
 	// NOT supported by bind as you can NOT check easily empty struct being actual file or not
-	multipartFileHeaderType = reflect.TypeFor[multipart.FileHeader]()
+	multipartFileHeaderType = reflect.TypeOf(multipart.FileHeader{})
 	// supported by bind as you can check by nil value if file existed or not
-	multipartFileHeaderPointerType      = reflect.TypeFor[*multipart.FileHeader]()
-	multipartFileHeaderSliceType        = reflect.TypeFor[[]multipart.FileHeader]()
-	multipartFileHeaderPointerSliceType = reflect.TypeFor[[]*multipart.FileHeader]()
+	multipartFileHeaderPointerType      = reflect.TypeOf(&multipart.FileHeader{})
+	multipartFileHeaderSliceType        = reflect.TypeOf([]multipart.FileHeader(nil))
+	multipartFileHeaderPointerSliceType = reflect.TypeOf([]*multipart.FileHeader(nil))
 )
 
 func isFieldMultipartFile(field reflect.Type) (bool, error) {

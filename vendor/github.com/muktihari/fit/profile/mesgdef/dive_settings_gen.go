@@ -77,21 +77,23 @@ func (m *DiveSettings) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{242397216767, 0, 0, 6917529027641081856}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 255 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -142,183 +144,187 @@ func (m *DiveSettings) Reset(mesg *proto.Message) {
 func (m *DiveSettings) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 35)
 	mesg := proto.Message{Num: typedef.MesgNumDiveSettings}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 254)
+		field := fac.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.Name != basetype.StringInvalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.String(m.Name)
 		fields = append(fields, field)
 	}
 	if m.Model != typedef.TissueModelTypeInvalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Uint8(byte(m.Model))
 		fields = append(fields, field)
 	}
 	if m.GfLow != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Uint8(m.GfLow)
 		fields = append(fields, field)
 	}
 	if m.GfHigh != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint8(m.GfHigh)
 		fields = append(fields, field)
 	}
 	if m.WaterType != typedef.WaterTypeInvalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint8(byte(m.WaterType))
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.WaterDensity) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.Float32(m.WaterDensity)
 		fields = append(fields, field)
 	}
 	if m.Po2Warn != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint8(m.Po2Warn)
 		fields = append(fields, field)
 	}
 	if m.Po2Critical != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Uint8(m.Po2Critical)
 		fields = append(fields, field)
 	}
 	if m.Po2Deco != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		field.Value = proto.Uint8(m.Po2Deco)
 		fields = append(fields, field)
 	}
 	if m.SafetyStopEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Bool(m.SafetyStopEnabled)
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.BottomDepth) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Float32(m.BottomDepth)
 		fields = append(fields, field)
 	}
 	if m.BottomTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Uint32(m.BottomTime)
 		fields = append(fields, field)
 	}
 	if m.ApneaCountdownEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 12)
+		field := fac.CreateField(mesg.Num, 12)
 		field.Value = proto.Bool(m.ApneaCountdownEnabled)
 		fields = append(fields, field)
 	}
 	if m.ApneaCountdownTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 13)
+		field := fac.CreateField(mesg.Num, 13)
 		field.Value = proto.Uint32(m.ApneaCountdownTime)
 		fields = append(fields, field)
 	}
 	if m.BacklightMode != typedef.DiveBacklightModeInvalid {
-		field := factory.CreateField(mesg.Num, 14)
+		field := fac.CreateField(mesg.Num, 14)
 		field.Value = proto.Uint8(byte(m.BacklightMode))
 		fields = append(fields, field)
 	}
 	if m.BacklightBrightness != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 15)
+		field := fac.CreateField(mesg.Num, 15)
 		field.Value = proto.Uint8(m.BacklightBrightness)
 		fields = append(fields, field)
 	}
 	if m.BacklightTimeout != typedef.BacklightTimeoutInvalid {
-		field := factory.CreateField(mesg.Num, 16)
+		field := fac.CreateField(mesg.Num, 16)
 		field.Value = proto.Uint8(uint8(m.BacklightTimeout))
 		fields = append(fields, field)
 	}
 	if m.RepeatDiveInterval != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 17)
+		field := fac.CreateField(mesg.Num, 17)
 		field.Value = proto.Uint16(m.RepeatDiveInterval)
 		fields = append(fields, field)
 	}
 	if m.SafetyStopTime != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 18)
+		field := fac.CreateField(mesg.Num, 18)
 		field.Value = proto.Uint16(m.SafetyStopTime)
 		fields = append(fields, field)
 	}
 	if m.HeartRateSourceType != typedef.SourceTypeInvalid {
-		field := factory.CreateField(mesg.Num, 19)
+		field := fac.CreateField(mesg.Num, 19)
 		field.Value = proto.Uint8(byte(m.HeartRateSourceType))
 		fields = append(fields, field)
 	}
 	if m.HeartRateSource != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 20)
+		field := fac.CreateField(mesg.Num, 20)
 		field.Value = proto.Uint8(m.HeartRateSource)
 		fields = append(fields, field)
 	}
 	if m.TravelGas != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 21)
+		field := fac.CreateField(mesg.Num, 21)
 		field.Value = proto.Uint16(uint16(m.TravelGas))
 		fields = append(fields, field)
 	}
 	if m.CcrLowSetpointSwitchMode != typedef.CcrSetpointSwitchModeInvalid {
-		field := factory.CreateField(mesg.Num, 22)
+		field := fac.CreateField(mesg.Num, 22)
 		field.Value = proto.Uint8(byte(m.CcrLowSetpointSwitchMode))
 		fields = append(fields, field)
 	}
 	if m.CcrLowSetpoint != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 23)
+		field := fac.CreateField(mesg.Num, 23)
 		field.Value = proto.Uint8(m.CcrLowSetpoint)
 		fields = append(fields, field)
 	}
 	if m.CcrLowSetpointDepth != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 24)
+		field := fac.CreateField(mesg.Num, 24)
 		field.Value = proto.Uint32(m.CcrLowSetpointDepth)
 		fields = append(fields, field)
 	}
 	if m.CcrHighSetpointSwitchMode != typedef.CcrSetpointSwitchModeInvalid {
-		field := factory.CreateField(mesg.Num, 25)
+		field := fac.CreateField(mesg.Num, 25)
 		field.Value = proto.Uint8(byte(m.CcrHighSetpointSwitchMode))
 		fields = append(fields, field)
 	}
 	if m.CcrHighSetpoint != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 26)
+		field := fac.CreateField(mesg.Num, 26)
 		field.Value = proto.Uint8(m.CcrHighSetpoint)
 		fields = append(fields, field)
 	}
 	if m.CcrHighSetpointDepth != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 27)
+		field := fac.CreateField(mesg.Num, 27)
 		field.Value = proto.Uint32(m.CcrHighSetpointDepth)
 		fields = append(fields, field)
 	}
 	if m.GasConsumptionDisplay != typedef.GasConsumptionRateTypeInvalid {
-		field := factory.CreateField(mesg.Num, 29)
+		field := fac.CreateField(mesg.Num, 29)
 		field.Value = proto.Uint8(byte(m.GasConsumptionDisplay))
 		fields = append(fields, field)
 	}
 	if m.UpKeyEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 30)
+		field := fac.CreateField(mesg.Num, 30)
 		field.Value = proto.Bool(m.UpKeyEnabled)
 		fields = append(fields, field)
 	}
 	if m.DiveSounds != typedef.ToneInvalid {
-		field := factory.CreateField(mesg.Num, 35)
+		field := fac.CreateField(mesg.Num, 35)
 		field.Value = proto.Uint8(byte(m.DiveSounds))
 		fields = append(fields, field)
 	}
 	if m.LastStopMultiple != basetype.Uint8Invalid {
-		field := factory.CreateField(mesg.Num, 36)
+		field := fac.CreateField(mesg.Num, 36)
 		field.Value = proto.Uint8(m.LastStopMultiple)
 		fields = append(fields, field)
 	}
 	if m.NoFlyTimeMode != typedef.NoFlyTimeModeInvalid {
-		field := factory.CreateField(mesg.Num, 37)
+		field := fac.CreateField(mesg.Num, 37)
 		field.Value = proto.Uint8(byte(m.NoFlyTimeMode))
 		fields = append(fields, field)
 	}

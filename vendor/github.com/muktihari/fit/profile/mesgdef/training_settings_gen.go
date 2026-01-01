@@ -44,21 +44,23 @@ func (m *TrainingSettings) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{15032385536, 0, 33554432, 0}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 154 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -78,28 +80,32 @@ func (m *TrainingSettings) Reset(mesg *proto.Message) {
 func (m *TrainingSettings) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 4)
 	mesg := proto.Message{Num: typedef.MesgNumTrainingSettings}
 
 	if m.TargetDistance != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 31)
+		field := fac.CreateField(mesg.Num, 31)
 		field.Value = proto.Uint32(m.TargetDistance)
 		fields = append(fields, field)
 	}
 	if m.TargetSpeed != basetype.Uint16Invalid {
-		field := factory.CreateField(mesg.Num, 32)
+		field := fac.CreateField(mesg.Num, 32)
 		field.Value = proto.Uint16(m.TargetSpeed)
 		fields = append(fields, field)
 	}
 	if m.TargetTime != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 33)
+		field := fac.CreateField(mesg.Num, 33)
 		field.Value = proto.Uint32(m.TargetTime)
 		fields = append(fields, field)
 	}
 	if m.PreciseTargetSpeed != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 153)
+		field := fac.CreateField(mesg.Num, 153)
 		field.Value = proto.Uint32(m.PreciseTargetSpeed)
 		fields = append(fields, field)
 	}

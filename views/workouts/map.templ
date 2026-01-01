@@ -10,31 +10,31 @@ templ Map(w *database.Workout) {
 	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" }/>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 	{{
-		mapConfig := struct {
-			CenterLat     float64
-			CenterLng     float64
-			MinElevation  float64
-			MaxElevation  float64
-			MaxSpeed      float64
-			SpeedName     string
-			ElevationName string
-			SlopeName     string
-			StreetsName   string
-			AerialName    string
-			ShowElevation bool
-		}{
-			CenterLat:     w.Center().Lat,
-			CenterLng:     w.Center().Lng,
-			MinElevation:  w.MinElevation(),
-			MaxElevation:  w.MaxElevation(),
-			MaxSpeed:      w.MaxSpeed(),
-			SpeedName:     i18n.T(ctx, "translation.Average_speed"),
-			ElevationName: i18n.T(ctx, "translation.Elevation"),
-			SlopeName:     i18n.T(ctx, "translation.Slope"),
-			StreetsName:   i18n.T(ctx, "translation.Streets"),
-			AerialName:    i18n.T(ctx, "translation.Aerial"),
-			ShowElevation: true,
-		}
+	mapConfig := struct {
+		CenterLat     float64
+		CenterLng     float64
+		MinElevation  float64
+		MaxElevation  float64
+		MaxSpeed      float64
+		SpeedName     string
+		ElevationName string
+		SlopeName     string
+		StreetsName   string
+		AerialName    string
+		ShowElevation bool
+	}{
+		CenterLat:     w.Center().Lat,
+		CenterLng:     w.Center().Lng,
+		MinElevation:  w.MinElevation(),
+		MaxElevation:  w.MaxElevation(),
+		MaxSpeed:      w.MaxSpeed(),
+		SpeedName:     i18n.T(ctx, "translation.Average_speed"),
+		ElevationName: i18n.T(ctx, "translation.Elevation"),
+		SlopeName:     i18n.T(ctx, "translation.Slope"),
+		StreetsName:   i18n.T(ctx, "translation.Streets"),
+		AerialName:    i18n.T(ctx, "translation.Aerial"),
+		ShowElevation: true,
+	}
 	}}
 	<wt-map
 		id="workout-map"

@@ -11,9 +11,6 @@ func ReducePoints(points []*pb.Point) []*pb.Point {
 	if len(points) == 0 {
 		return points
 	}
-	if len(points) <= 100 {
-		return points
-	}
 	original := orb.LineString{}
 	for _, point := range points {
 		original = append(original, orb.Point{float64(point.Lng), float64(point.Lat)})

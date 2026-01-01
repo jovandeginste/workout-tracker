@@ -82,8 +82,7 @@ type Request struct {
 	credentials         *credentials
 	isMultiPart         bool
 	isFormData          bool
-	isContentLengthSet  bool
-	contentLength       int64
+	setContentLength    bool
 	jsonEscapeHTML      bool
 	ctx                 context.Context
 	ctxCancelFunc       context.CancelFunc
@@ -588,13 +587,16 @@ func (r *Request) SetMultipartBoundary(boundary string) *Request {
 	return r
 }
 
-// SetContentLength method sets the given content length value in the HTTP request.
+// SetContentLength method sets the current request's HTTP header `Content-Length` value.
 // By default, Resty won't set `Content-Length`.
 //
-//	client.R().SetContentLength(3486547657)
-func (r *Request) SetContentLength(v int64) *Request {
-	r.contentLength = v
-	r.isContentLengthSet = true
+// See [Client.SetContentLength]
+//
+//	client.R().SetContentLength(true)
+//
+// It overrides the value set at the client instance level.
+func (r *Request) SetContentLength(l bool) *Request {
+	r.setContentLength = l
 	return r
 }
 
@@ -1239,41 +1241,23 @@ func (r *Request) TraceInfo() TraceInfo {
 		return TraceInfo{}
 	}
 
-	ct.lock.RLock()
-	defer ct.lock.RUnlock()
-
 	ti := TraceInfo{
-		DNSLookup:      0,
-		TCPConnTime:    0,
-		ServerTime:     0,
+		DNSLookup:      ct.dnsDone.Sub(ct.dnsStart),
+		TLSHandshake:   ct.tlsHandshakeDone.Sub(ct.tlsHandshakeStart),
+		ServerTime:     ct.gotFirstResponseByte.Sub(ct.gotConn),
 		IsConnReused:   ct.gotConnInfo.Reused,
 		IsConnWasIdle:  ct.gotConnInfo.WasIdle,
 		ConnIdleTime:   ct.gotConnInfo.IdleTime,
 		RequestAttempt: r.Attempt,
 	}
 
-	if !ct.dnsStart.IsZero() && !ct.dnsDone.IsZero() {
-		ti.DNSLookup = ct.dnsDone.Sub(ct.dnsStart)
+	// Calculate the total time accordingly,
+	// when connection is reused
+	if ct.gotConnInfo.Reused {
+		ti.TotalTime = ct.endTime.Sub(ct.getConn)
+	} else {
+		ti.TotalTime = ct.endTime.Sub(ct.dnsStart)
 	}
-
-	if !ct.tlsHandshakeDone.IsZero() && !ct.tlsHandshakeStart.IsZero() {
-		ti.TLSHandshake = ct.tlsHandshakeDone.Sub(ct.tlsHandshakeStart)
-	}
-
-	if !ct.gotFirstResponseByte.IsZero() && !ct.gotConn.IsZero() {
-		ti.ServerTime = ct.gotFirstResponseByte.Sub(ct.gotConn)
-	}
-
-	// Calculate the total time accordingly when connection is reused,
-	// and DNS start and get conn time may be zero if the request is invalid.
-	// See issue #1016.
-	requestStartTime := r.Time
-	if ct.gotConnInfo.Reused && !ct.getConn.IsZero() {
-		requestStartTime = ct.getConn
-	} else if !ct.dnsStart.IsZero() {
-		requestStartTime = ct.dnsStart
-	}
-	ti.TotalTime = ct.endTime.Sub(requestStartTime)
 
 	// Only calculate on successful connections
 	if !ct.connectDone.IsZero() {
@@ -1536,11 +1520,6 @@ func (r *Request) Clone(ctx context.Context) *Request {
 	rr.FormData = cloneURLValues(r.FormData)
 	rr.QueryParams = cloneURLValues(r.QueryParams)
 	rr.PathParams = maps.Clone(r.PathParams)
-
-	// reset content length if not set by user
-	if !r.isContentLengthSet {
-		rr.contentLength = 0
-	}
 
 	// clone basic auth
 	if r.credentials != nil {

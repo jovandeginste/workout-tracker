@@ -54,21 +54,23 @@ func (m *DiveApneaAlarm) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{4095, 0, 0, 4611686018427387904}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 255 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -101,73 +103,77 @@ func (m *DiveApneaAlarm) Reset(mesg *proto.Message) {
 func (m *DiveApneaAlarm) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 13)
 	mesg := proto.Message{Num: typedef.MesgNumDiveApneaAlarm}
 
 	if m.MessageIndex != typedef.MessageIndexInvalid {
-		field := factory.CreateField(mesg.Num, 254)
+		field := fac.CreateField(mesg.Num, 254)
 		field.Value = proto.Uint16(uint16(m.MessageIndex))
 		fields = append(fields, field)
 	}
 	if m.Depth != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint32(m.Depth)
 		fields = append(fields, field)
 	}
 	if m.Time != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Int32(m.Time)
 		fields = append(fields, field)
 	}
 	if m.Enabled < 2 {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Bool(m.Enabled)
 		fields = append(fields, field)
 	}
 	if m.AlarmType != typedef.DiveAlarmTypeInvalid {
-		field := factory.CreateField(mesg.Num, 3)
+		field := fac.CreateField(mesg.Num, 3)
 		field.Value = proto.Uint8(byte(m.AlarmType))
 		fields = append(fields, field)
 	}
 	if m.Sound != typedef.ToneInvalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Uint8(byte(m.Sound))
 		fields = append(fields, field)
 	}
 	if m.DiveTypes != nil {
-		field := factory.CreateField(mesg.Num, 5)
+		field := fac.CreateField(mesg.Num, 5)
 		field.Value = proto.SliceUint8(m.DiveTypes)
 		fields = append(fields, field)
 	}
 	if m.Id != basetype.Uint32Invalid {
-		field := factory.CreateField(mesg.Num, 6)
+		field := fac.CreateField(mesg.Num, 6)
 		field.Value = proto.Uint32(m.Id)
 		fields = append(fields, field)
 	}
 	if m.PopupEnabled < 2 {
-		field := factory.CreateField(mesg.Num, 7)
+		field := fac.CreateField(mesg.Num, 7)
 		field.Value = proto.Bool(m.PopupEnabled)
 		fields = append(fields, field)
 	}
 	if m.TriggerOnDescent < 2 {
-		field := factory.CreateField(mesg.Num, 8)
+		field := fac.CreateField(mesg.Num, 8)
 		field.Value = proto.Bool(m.TriggerOnDescent)
 		fields = append(fields, field)
 	}
 	if m.TriggerOnAscent < 2 {
-		field := factory.CreateField(mesg.Num, 9)
+		field := fac.CreateField(mesg.Num, 9)
 		field.Value = proto.Bool(m.TriggerOnAscent)
 		fields = append(fields, field)
 	}
 	if m.Repeating < 2 {
-		field := factory.CreateField(mesg.Num, 10)
+		field := fac.CreateField(mesg.Num, 10)
 		field.Value = proto.Bool(m.Repeating)
 		fields = append(fields, field)
 	}
 	if m.Speed != basetype.Sint32Invalid {
-		field := factory.CreateField(mesg.Num, 11)
+		field := fac.CreateField(mesg.Num, 11)
 		field.Value = proto.Int32(m.Speed)
 		fields = append(fields, field)
 	}

@@ -47,21 +47,23 @@ func (m *SkinTempOvernight) Reset(mesg *proto.Message) {
 		unknownFields   []proto.Field
 		developerFields []proto.DeveloperField
 	)
+
 	if mesg != nil {
-		knownNums := [4]uint64{23, 0, 0, 2305843009213693952}
-		num, n := uint8(0), uint64(0)
+		var n int
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			n += (knownNums[num>>6]>>(num&63))&1 ^ 1
+			if mesg.Fields[i].Name == factory.NameUnknown {
+				n++
+			}
 		}
 		unknownFields = make([]proto.Field, 0, n)
 		for i := range mesg.Fields {
-			num = mesg.Fields[i].Num
-			if (knownNums[num>>6]>>(num&63))&1 == 0 {
+			if mesg.Fields[i].Name == factory.NameUnknown {
 				unknownFields = append(unknownFields, mesg.Fields[i])
 				continue
 			}
-			vals[num] = mesg.Fields[i].Value
+			if mesg.Fields[i].Num < 254 {
+				vals[mesg.Fields[i].Num] = mesg.Fields[i].Value
+			}
 		}
 		developerFields = mesg.DeveloperFields
 	}
@@ -82,33 +84,37 @@ func (m *SkinTempOvernight) Reset(mesg *proto.Message) {
 func (m *SkinTempOvernight) ToMesg(options *Options) proto.Message {
 	if options == nil {
 		options = defaultOptions
+	} else if options.Factory == nil {
+		options.Factory = factory.StandardFactory()
 	}
+
+	fac := options.Factory
 
 	fields := make([]proto.Field, 0, 5)
 	mesg := proto.Message{Num: typedef.MesgNumSkinTempOvernight}
 
 	if !m.Timestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 253)
+		field := fac.CreateField(mesg.Num, 253)
 		field.Value = proto.Uint32(uint32(m.Timestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if !m.LocalTimestamp.Before(datetime.Epoch()) {
-		field := factory.CreateField(mesg.Num, 0)
+		field := fac.CreateField(mesg.Num, 0)
 		field.Value = proto.Uint32(uint32(m.LocalTimestamp.Sub(datetime.Epoch()).Seconds()))
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.AverageDeviation) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 1)
+		field := fac.CreateField(mesg.Num, 1)
 		field.Value = proto.Float32(m.AverageDeviation)
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.Average7DayDeviation) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 2)
+		field := fac.CreateField(mesg.Num, 2)
 		field.Value = proto.Float32(m.Average7DayDeviation)
 		fields = append(fields, field)
 	}
 	if math.Float32bits(m.NightlyValue) != basetype.Float32Invalid {
-		field := factory.CreateField(mesg.Num, 4)
+		field := fac.CreateField(mesg.Num, 4)
 		field.Value = proto.Float32(m.NightlyValue)
 		fields = append(fields, field)
 	}

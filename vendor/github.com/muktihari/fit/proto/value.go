@@ -290,7 +290,7 @@ func (v Value) Uint64() uint64 {
 	return v.num
 }
 
-// Uint64z returns Value as uint64, if it's not a valid uint64 value, it returns basetype.Uint64zInvalid (0).
+// Uint64z returns Value as uint64, if it's not a valid uint64 value, it returns basetype.Uint64Invalid (0).
 func (v Value) Uint64z() uint64 {
 	if v.ptr != ptrUint64 {
 		return basetype.Uint64zInvalid

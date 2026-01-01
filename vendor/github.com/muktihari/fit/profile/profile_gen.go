@@ -226,7 +226,6 @@ const (
 	GasConsumptionRateType
 	TapSensitivity
 	RadarThreatLevelType
-	SleepDisruptionSeverity
 	MaxMetSpeedSource
 	MaxMetHeartRateSource
 	HrvStatus
@@ -660,8 +659,6 @@ func (p ProfileType) String() string {
 		return "tap_sensitivity"
 	case RadarThreatLevelType:
 		return "radar_threat_level_type"
-	case SleepDisruptionSeverity:
-		return "sleep_disruption_severity"
 	case MaxMetSpeedSource:
 		return "max_met_speed_source"
 	case MaxMetHeartRateSource:
@@ -1100,8 +1097,6 @@ func ProfileTypeFromString(s string) ProfileType {
 		return TapSensitivity
 	case "radar_threat_level_type":
 		return RadarThreatLevelType
-	case "sleep_disruption_severity":
-		return SleepDisruptionSeverity
 	case "max_met_speed_source":
 		return MaxMetSpeedSource
 	case "max_met_heart_rate_source":
@@ -1329,7 +1324,6 @@ func ListProfileType() []ProfileType {
 		GasConsumptionRateType,
 		TapSensitivity,
 		RadarThreatLevelType,
-		SleepDisruptionSeverity,
 		MaxMetSpeedSource,
 		MaxMetHeartRateSource,
 		HrvStatus,
@@ -1800,8 +1794,6 @@ func (p ProfileType) BaseType() basetype.BaseType {
 	case TapSensitivity:
 		return basetype.Enum
 	case RadarThreatLevelType:
-		return basetype.Enum
-	case SleepDisruptionSeverity:
 		return basetype.Enum
 	case MaxMetSpeedSource:
 		return basetype.Enum
