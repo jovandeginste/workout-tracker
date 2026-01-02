@@ -189,7 +189,6 @@ export class WorkoutStats extends LitElement {
     this.style.display = "block";
     return html`
         <div>
-          <div class="float-right">
             <nav>
               <a
                 href="#"
@@ -213,21 +212,10 @@ export class WorkoutStats extends LitElement {
                 ><span class="icon-[fa6-solid--road]"></span></a
             </nav>
           </div>
-          <h3>
-            <span>
-              <span class="icon-decoration icon-[fa6-solid--gauge]"></span>
-              ${msg("Average speed", { id: "translation.Average_speed" })}
-            </span>
-            /
-            <span>
-              <span class="icon-decoration icon-[fa6-solid--mountain]"></span>
-              ${msg("Elevation", { id: "translation.Elevation" })}
-            </span>
-          </h3>
-        </div>
         <div class="h-[300px] md:h-[400px]">
           <canvas></canvas>
-        </div>`;
+        </div>
+        `;
   }
 
   protected createRenderRoot() {

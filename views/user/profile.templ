@@ -199,6 +199,22 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
+						<label for="show_tabs">
+							{ i18n.T(ctx, "user.profile.show_tabs") }
+						</label>
+					</th>
+					<td>
+						<input
+							type="checkbox"
+							id="show_tabs"
+							name="show_tabs"
+							value="true"
+							checked?={ u.Profile.ShowTabs }
+						/>
+					</td>
+				</tr>
+				<tr>
+					<th>
 						<label for="socials_disabled">
 							{ i18n.T(ctx, "user.profile.disable_social_sharing_buttons") }
 						</label>

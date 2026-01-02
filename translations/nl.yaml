@@ -85,6 +85,7 @@ nl:
   settings:
     update: Instellingen bijwerken
   translation:
+    Climbs: Beklimmingen
     Latest_measurements: Laatste metingen
     Update_measurement: Meting aanpassen
     Steps: Stappen
@@ -260,6 +261,7 @@ nl:
     i_completed_a_workout_s: 'Ik heb een workout voltooid: %s.'
   user:
     profile:
+      show_tabs: Toon workout informatie in tabs
       disable_social_sharing_buttons: Knoppen uitschakelen om te delen via 
         sociale netwerken
       enable_api_access: API toegang inschakelen

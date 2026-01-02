@@ -107,3 +107,28 @@ globalThis.fullMap = function fullMap(map) {
 
   return false;
 };
+
+globalThis.showTab = function showTab(parentId, elemId) {
+  var parent = document.getElementById(parentId);
+  if (!parent) return;
+
+  var origSize = parent.offsetHeight;
+  if (parent.style.minHeight === "") {
+    parent.style.minHeight = origSize + "px";
+  }
+
+  parent.querySelectorAll(".tabbed-content .tab").forEach((element) => {
+    if (element.id === "tab-" + elemId) {
+      element.classList.add("selected");
+    } else if (element.id === "content-" + elemId) {
+      element.classList.add("selected");
+    } else {
+      element.classList.remove("selected");
+    }
+  });
+
+  // We only let the height increase, this avoids jarring transitions and
+  // scrolling
+  var newSize = parent.offsetHeight;
+  parent.style.minHeight = Math.max(origSize, newSize) + "px";
+};

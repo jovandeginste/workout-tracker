@@ -350,6 +350,40 @@
   .input-ellipsis {
     @apply text-ellipsis overflow-hidden w-full max-w-max whitespace-nowrap;
   }
+
+  .tabbed-content {
+    & > div {
+      @apply hidden print:block;
+      &.no_print {
+        @apply print:hidden;
+      }
+    }
+    h3 {
+      @apply mb-0 py-2 px-5 print:hidden;
+    }
+
+    input.tab {
+      @apply hidden;
+    }
+
+    label.tab {
+      @apply inline-block text-center rounded mb-5 mr-3 min-w-[100px] border;
+      @apply bg-neutral-300 border-neutral-500;
+      @apply hover:bg-indigo-300 hover:border-indigo-500;
+      @apply dark:bg-neutral-700 dark:border-neutral-500;
+      @apply dark:hover:bg-indigo-700 dark:hover:border-indigo-900;
+    }
+    label.selected {
+      @apply border-indigo-600 bg-indigo-500;
+      @apply dark:border-indigo-600 dark:bg-indigo-800;
+      h3 {
+        @apply text-white;
+      }
+    }
+    & > div.selected {
+      @apply block;
+    }
+  }
 }
 
 @tailwind components;

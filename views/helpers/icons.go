@@ -86,6 +86,7 @@ var iconMap = map[string]string{
 	"refresh":       "icon-[fa6-solid--arrows-rotate]",
 	"delete":        "icon-[fa6-solid--trash]",
 	"note":          "icon-[fa6-solid--quote-left]",
+	"breakdown":     "icon-[fa6-solid--table-cells]",
 	"users":         "icon-[fa6-solid--users]",
 	"user-signin":   "icon-[fa6-solid--right-to-bracket]",
 	"user-signout":  "icon-[fa6-solid--right-from-bracket]",
