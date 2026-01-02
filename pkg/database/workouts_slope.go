@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"math"
 	"slices"
+	"time"
 )
 
 // SlopeState represents the type of slope detected.
@@ -30,17 +31,18 @@ const (
 
 // Segment represents a detected climb or descent.
 type Segment struct {
-	Index         int     `json:"index"`
-	Type          string  `json:"type"`
-	StartDistance float64 `json:"start_km"`
-	EndDistance   float64 `json:"end_km"`
-	Elevation     float64 `json:"elev_gain,omitempty"`
-	ElevLoss      float64 `json:"elev_loss,omitempty"`
-	Length        float64 `json:"length_m"`
-	AvgSlope      float64 `json:"avg_slope"`
-	StartIdx      int     `json:"start_idx"`
-	EndIdx        int     `json:"end_idx"`
-	Category      string  `json:"category"`
+	Index         int           `json:"index"`
+	Type          string        `json:"type"`
+	StartDistance float64       `json:"start_km"`
+	EndDistance   float64       `json:"end_km"`
+	Elevation     float64       `json:"elev_gain,omitempty"`
+	ElevLoss      float64       `json:"elev_loss,omitempty"`
+	Length        float64       `json:"length_m"`
+	AvgSlope      float64       `json:"avg_slope"`
+	Duration      time.Duration `json:"duration"`
+	StartIdx      int           `json:"start_idx"`
+	EndIdx        int           `json:"end_idx"`
+	Category      string        `json:"category"`
 }
 
 // Detector holds the state for the segment detection process.
@@ -222,6 +224,7 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 			StartDistance: segmentPoints[0].TotalDistance2D,
 			EndDistance:   segmentPoints[len(segmentPoints)-1].TotalDistance2D,
 			Length:        length,
+			Duration:      segmentPoints[len(segmentPoints)-1].TotalDuration - segmentPoints[0].TotalDuration,
 			StartIdx:      d.startIdx,
 			EndIdx:        endIdx,
 			Category:      category,
