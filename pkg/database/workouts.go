@@ -307,7 +307,7 @@ func (w *Workout) Timezone() string {
 
 func (w *Workout) Address() string {
 	if w.Data == nil {
-		return ""
+		return UnknownLocation
 	}
 
 	if w.Data.AddressString != "" {
@@ -641,8 +641,6 @@ func (w *Workout) setData(data *MapData) {
 		data.Address = w.Data.Address
 	}
 
-	data.CalculateSlopes()
-
 	w.Data = data
 }
 
@@ -727,6 +725,8 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.UpdateAverages()
 	w.UpdateExtraMetrics()
 	w.Data.UpdateAddress()
+	w.Data.CalculateSlopes()
+
 	w.Dirty = false
 
 	return w.Save(db)

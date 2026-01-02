@@ -11,7 +11,6 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
 	"github.com/paulmach/orb"
-	"github.com/ringsaturn/tzf"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -139,12 +138,24 @@ func (m *MapData) UpdateExtraMetrics() {
 	m.ExtraMetrics = metrics
 }
 
+func addressIsUnset(a *geo.Address) bool {
+	if a == nil {
+		return true
+	}
+
+	if a.Country == "" {
+		return true
+	}
+
+	return false
+}
+
 func (m *MapData) UpdateAddress() {
-	if m.Address == nil && !m.Center.IsZero() {
+	if addressIsUnset(m.Address) && !m.Center.IsZero() {
 		m.Address = m.Center.Address()
 	}
 
-	if m.Address == nil && m.hasAddressString() {
+	if addressIsUnset(m.Address) && m.hasAddressString() {
 		return
 	}
 
@@ -161,7 +172,7 @@ func (m *MapData) hasAddressString() bool {
 }
 
 func (m *MapData) addressString() string {
-	if m.Address == nil {
+	if addressIsUnset(m.Address) {
 		return UnknownLocation
 	}
 
@@ -250,19 +261,15 @@ func center(gpxContent *gpx.GPX) MapCenter {
 }
 
 func (m *MapCenter) updateTimezone() {
-	finder, err := tzf.NewDefaultFinder()
-	if err != nil {
-		m.TZ = time.UTC.String()
-		return
+	m.TZ = ""
+
+	if tzFinder != nil {
+		m.TZ = tzFinder.GetTimezoneName(m.Lng, m.Lat)
 	}
 
-	tz := finder.GetTimezoneName(m.Lng, m.Lat)
-	if tz == "" {
+	if m.TZ == "" {
 		m.TZ = time.UTC.String()
-		return
 	}
-
-	m.TZ = tz
 }
 
 func (m *MapCenter) IsZero() bool {

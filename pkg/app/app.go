@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
+	"github.com/alitto/pond/v2"
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
 	"github.com/invopop/ctxi18n/i18n"
@@ -34,6 +35,8 @@ type App struct {
 	translator     *i18n.Locale
 	Version        version.Version
 	Config         database.Config
+	workerPool     pond.Pool
+	workerPoolGeo  pond.Pool
 }
 
 func (a *App) jwtSecret() []byte {
@@ -83,6 +86,10 @@ func (a *App) Configure() error {
 	}
 
 	a.ConfigureGeocoder()
+
+	if err := database.InitTZFinder(); err != nil {
+		return err
+	}
 
 	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
 		return err

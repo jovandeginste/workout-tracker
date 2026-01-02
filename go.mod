@@ -8,6 +8,7 @@ require (
 	github.com/a-h/templ v0.3.943
 	github.com/alexedwards/scs/gormstore v0.0.0-20251002162104-209de6e426de
 	github.com/alexedwards/scs/v2 v2.9.0
+	github.com/alitto/pond/v2 v2.6.0
 	github.com/anyappinc/fitbit v0.0.3
 	github.com/aquasecurity/table v1.11.0
 	github.com/biter777/countries v1.7.5
