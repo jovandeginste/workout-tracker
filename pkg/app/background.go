@@ -142,7 +142,7 @@ func moveImportFile(logger *slog.Logger, dir, path, statusDir string) error {
 	destDir := filepath.Join(dir, statusDir)
 
 	destPath := filepath.Join(destDir, filepath.Base(path))
-	logger.Info("Moving files", "src", path, "dst", destPath)
+	logger.Info("Moving file", "src", path, "dst", destPath)
 
 	// If destDir does not exist, create it
 	if _, err := os.Stat(destDir); errors.Is(err, os.ErrNotExist) {
@@ -234,10 +234,12 @@ func (a *App) rematchRouteSegmentToWorkouts(rs *database.RouteSegment, l *slog.L
 func (a *App) updateRouteSegments(l *slog.Logger) {
 	var rss []*database.RouteSegment
 
-	a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).
+	r := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).
 		Where(&database.RouteSegment{Dirty: true}).
 		FindInBatches(&rss, workerWorkoutsBatchSize, func(rtx *gorm.DB, batchNo int) error {
-			for _, rs := range rss {
+			for i := range rss {
+				rs := rss[i]
+
 				a.workerPool.Go(func() {
 					rl := l.With("route_segment_id", rs.ID)
 					rl.Info("Updating route segment")
@@ -250,15 +252,21 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 
 			return nil
 		})
+
+	if r.Error != nil {
+		l.Error("Error during batch query", "error", r.Error)
+	}
 }
 
 func (a *App) updateWorkouts(l *slog.Logger) {
 	var ws []*database.Workout
 
-	a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).
+	r := a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).
 		Where(&database.Workout{Dirty: true}).
 		FindInBatches(&ws, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
-			for _, w := range ws {
+			for i := range ws {
+				w := ws[i]
+
 				a.workerPool.Go(func() {
 					wl := l.With("workout_id", w.ID)
 					wl.Info("Updating workout")
@@ -271,15 +279,21 @@ func (a *App) updateWorkouts(l *slog.Logger) {
 
 			return nil
 		})
+
+	if r.Error != nil {
+		l.Error("Error during batch query", "error", r.Error)
+	}
 }
 
 func (a *App) updateAddresses(l *slog.Logger) {
 	var mds []*database.MapData
 
-	a.db.Model(&database.MapData{}).
+	r := a.db.Model(&database.MapData{}).
 		Where("center IS NOT NULL").Where("address_string", "").
 		FindInBatches(&mds, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
-			for _, md := range mds {
+			for i := range mds {
+				md := mds[i]
+
 				a.workerPoolGeo.Go(func() {
 					wl := l.With("workout_id", md.WorkoutID).With("map_data_id", md.ID)
 					wl.Info("Updating address")
@@ -293,4 +307,8 @@ func (a *App) updateAddresses(l *slog.Logger) {
 
 			return nil
 		})
+
+	if r.Error != nil {
+		l.Error("Error during batch query", "error", r.Error)
+	}
 }
