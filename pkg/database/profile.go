@@ -23,6 +23,7 @@ type Profile struct {
 	APIActive           bool        `form:"api_active" json:"api_active"`                       // Whether the user's API key is active
 	SocialsDisabled     bool        `form:"socials_disabled" json:"socials_disabled"`           // Whether social sharing buttons are disabled when viewing a workout
 	PreferFullDate      bool        `form:"prefer_full_date" json:"prefer_full_date"`           // Whether to show full dates in the workout details
+	ShowTabs            bool        `form:"show_tabs" json:"show_tabs"`                         // Whether to show tabs in web UI
 }
 
 type UserPreferredUnits struct {

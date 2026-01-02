@@ -261,7 +261,7 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 func (a *App) updateWorkouts(l *slog.Logger) {
 	var ws []*database.Workout
 
-	r := a.db.Preload("Data.Details").Preload("User").Model(&database.Workout{}).
+	r := a.db.Preload("GPX").Preload("Data.Details").Preload("User").Model(&database.Workout{}).
 		Where(&database.Workout{Dirty: true}).
 		FindInBatches(&ws, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
 			for i := range ws {

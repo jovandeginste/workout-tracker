@@ -86,6 +86,7 @@ en:
     average_slope: Average slope
     category: Category
   translation:
+    Climbs: Climbs
     Latest_measurements: Latest measurements
     Update_measurement: Update measurement
     Steps: Steps
@@ -265,6 +266,7 @@ en:
     i_completed_a_workout_s: "I completed a workout: '%s'."
   user:
     profile:
+      show_tabs: Show workout information in tabs
       your_settings: Your settings
       auto_import_directory: Auto import directory
       disable_social_sharing_buttons: Disable social sharing buttons

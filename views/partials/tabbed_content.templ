@@ -1,0 +1,107 @@
+package partials
+
+import (
+	"github.com/gosimple/slug"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+)
+
+type Tab struct {
+	ID          string
+	Icon        string
+	Name        string
+	Content     string
+	Show        bool
+	NoPrint     bool
+	ContentFunc func() templ.Component
+
+	groupName string
+	first     bool
+	showTabs  bool
+}
+
+func (t *Tab) setGroupName(name string) {
+	if name == "" {
+		name = "default"
+	}
+
+	t.groupName = name
+}
+
+func (t *Tab) setID() {
+	if t.ID == "" {
+		t.ID = slug.Make(t.Name)
+	}
+}
+func (t *Tab) GetID() string {
+	return t.groupName + "-" + t.ID
+}
+func (t *Tab) GetContent() templ.Component {
+	if t.Content != "" {
+		return templ.Raw(t.Content)
+	}
+
+	if t.ContentFunc != nil {
+		return t.ContentFunc()
+	}
+
+	return templ.Raw("[no content]")
+}
+
+templ TabbedContent(groupName string, tabs ...Tab) {
+	if len(tabs) == 0 {
+		return
+	}
+	{{ showTabs := helpers.CurrentUser(ctx).Profile.ShowTabs }}
+	{{ shown := false }}
+	for i := range tabs {
+		if !shown && tabs[i].Show {
+			{{ tabs[i].first = true }}
+			{{ shown = true }}
+		}
+		{{ tabs[i].setID() }}
+		{{ tabs[i].setGroupName(groupName) }}
+		{{ tabs[i].showTabs = showTabs }}
+	}
+	<div id={ groupName } class={ templ.KV("inner-form tabbed-content", showTabs) }>
+		if showTabs {
+			for _, t := range tabs {
+				@printLabel(&t)
+			}
+		}
+		for _, t := range tabs {
+			@printContent(&t)
+		}
+	</div>
+}
+
+templ printLabel(t *Tab) {
+	if t.Show {
+		<input type="radio" class="tab" checked?={ t.first } name={ "tabs-" + t.groupName } id={ t.GetID() } onchange="showTab(this.parentElement.id, this.id)"/>
+		<label class={ "tab", templ.KV("selected", t.first) } for={ t.GetID() } id={ "tab-" + t.GetID() }>
+			<h3>
+				@helpers.IconFor(t.Icon)
+				{ t.Name }
+			</h3>
+		</label>
+	}
+}
+
+templ printContent(t *Tab) {
+	if t.Show {
+		if !t.showTabs {
+			<div class="inner-form">
+				<h3>
+					@helpers.IconFor(t.Icon)
+					{ t.Name }
+				</h3>
+				@t.GetContent()
+			</div>
+		} else {
+			<div class={ "tab", templ.KV("selected", t.first), templ.KV("no_print", t.NoPrint) } id={ "content-" + t.GetID() }>
+				<div>
+					@t.GetContent()
+				</div>
+			</div>
+		}
+	}
+}
