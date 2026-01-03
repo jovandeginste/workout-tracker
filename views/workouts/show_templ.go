@@ -11,9 +11,9 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
-	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"math"
 )
 
 func Show(w *database.Workout) templ.Component {
@@ -588,15 +588,15 @@ func renderClimbs(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(templatehelpers.RoundFloat64(climb.AvgSlope))
+			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(math.Round(100 * climb.AvgSlope))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 153, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 153, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "%</td><td class=\"hidden sm:table-cell\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, " %</td><td class=\"hidden sm:table-cell\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
