@@ -3,9 +3,9 @@ package workouts
 import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
-	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
+	"math"
 )
 
 templ Show(w *database.Workout) {
@@ -150,7 +150,7 @@ templ renderClimbs(w *database.Workout) {
 						<td>{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
 						<td>{ helpers.HumanDuration(climb.Duration) }</td>
 						<td class="hidden lg:table-cell">{ helpers.HumanElevation(ctx, climb.Elevation) } { pu.Elevation() }</td>
-						<td>{ templatehelpers.RoundFloat64(climb.AvgSlope) }%</td>
+						<td>{ math.Round(100*climb.AvgSlope) } %</td>
 						<td class="hidden sm:table-cell">{ climb.Category }</td>
 					</tr>
 				}
