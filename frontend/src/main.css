@@ -97,7 +97,7 @@
   }
 
   h2 {
-    @apply text-xl md:text-2xl mb-5 mx-2 px-2;
+    @apply text-xl md:text-2xl mb-5 mr-2 pr-2;
     @apply text-zinc-800;
     @apply dark:text-zinc-200;
   }
@@ -129,7 +129,14 @@
     @apply dark:text-zinc-400;
   }
   .footer {
-    @apply flex justify-center gap-10;
+    @apply flex justify-between gap-3 text-base;
+    span {
+      @apply text-black;
+      @apply dark:text-white;
+    }
+    img {
+      @apply inline-block pr-1 h-4 align-baseline;
+    }
   }
   .footer a,
   .content a {
@@ -158,9 +165,19 @@
       }
     }
     h1 {
-      @apply text-xl md:text-3xl border-b-2 md:border-b-0 mb-3 md:mb-0 pb-3 md:pb-0;
-      @apply text-black border-neutral-500;
-      @apply dark:text-white dark:border-neutral-500;
+      @apply border-b-2 md:border-b-0 mb-3 md:mb-0 pb-3 md:pb-0;
+      @apply border-neutral-500;
+      @apply dark:border-neutral-500;
+      a {
+        span {
+          @apply text-xl md:text-3xl;
+          @apply text-black;
+          @apply dark:text-white;
+        }
+        img {
+          @apply inline-block pr-1 h-4 md:h-6 align-baseline;
+        }
+      }
     }
   }
   .actions {

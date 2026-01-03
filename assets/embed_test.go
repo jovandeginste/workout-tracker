@@ -7,7 +7,7 @@ import (
 )
 
 func TestEmbedded(t *testing.T) {
-	c, err := FS().Open("dumbbell.png")
+	c, err := FS().Open("logo.png")
 	require.NoError(t, err)
 
 	s, err := c.Stat()

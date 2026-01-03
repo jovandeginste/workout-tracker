@@ -8,7 +8,8 @@ workout-tracker.yaml
 /workout-tracker
 coverage.out
 /assets/*
-!/assets/dumbbell.png
+!/assets/logo.png
+!/assets/logo-small.png
 !/assets/*.go
 .aider*
 *_templ.txt

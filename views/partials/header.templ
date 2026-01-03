@@ -8,7 +8,12 @@ import (
 templ Header() {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<div class="menu md:flex md:flex-wrap gap-4">
-		<h1><a href={ templ.SafeURL(helpers.RouteFor(ctx, "dashboard")) }>Workout Tracker</a> </h1>
+		<h1>
+			<a href={ templ.SafeURL(helpers.RouteFor(ctx, "dashboard")) }>
+				<img src={ helpers.RouteFor(ctx, "assets") + "/logo.png" } alt="Workout Tracker"/>
+				<span>Workout Tracker</span>
+			</a>
+		</h1>
 		if currentUser.IsActive() {
 			<div class="grow flex flex-wrap">
 				<div class="grow flex flex-wrap justify-start">
