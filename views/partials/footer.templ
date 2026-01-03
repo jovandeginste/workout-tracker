@@ -6,7 +6,8 @@ templ Footer() {
 	{{ v := helpers.Version(ctx) }}
 	<div class="footer">
 		<div>
-			Workout Tracker,
+			<img src={ helpers.RouteFor(ctx, "assets") + "/logo.png" } alt="Workout Tracker"/>
+			<span class="hidden sm:contents">Workout Tracker</span>
 			<a
 				target="_blank"
 				title={ "Build time: " + v.BuildTime }
@@ -15,23 +16,25 @@ templ Footer() {
 				{ v.PrettyVersion() }
 			</a>
 		</div>
-		<div>
-			<a
-				target="_blank"
-				href="https://github.com/jovandeginste/workout-tracker"
-			>
-				@helpers.IconFor("github")
-				GitHub
-			</a>
-		</div>
-		<div>
-			<a
-				target="_blank"
-				href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
-			>
-				@helpers.IconFor("changelog")
-				Changelog
-			</a>
+		<div class="flex gap-3 justify-end">
+			<div>
+				<a
+					target="_blank"
+					href="https://github.com/jovandeginste/workout-tracker"
+				>
+					@helpers.IconFor("github")
+					GitHub
+				</a>
+			</div>
+			<div>
+				<a
+					target="_blank"
+					href={ templ.SafeURL("https://github.com/jovandeginste/workout-tracker/tree/" + v.Sha + "/CHANGELOG.md") }
+				>
+					@helpers.IconFor("changelog")
+					Changelog
+				</a>
+			</div>
 		</div>
 	</div>
 }

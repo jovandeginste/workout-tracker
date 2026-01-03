@@ -36,9 +36,9 @@ func Head() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 templ.SafeURL
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(helpers.RouteFor(ctx, "assets") + "/dumbbell.png")
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(helpers.RouteFor(ctx, "assets") + "/logo-small.png")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/head.templ`, Line: 9, Col: 91}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/head.templ`, Line: 9, Col: 93}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

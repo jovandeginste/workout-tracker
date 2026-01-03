@@ -10,12 +10,15 @@ templ Login() {
 	@partials.Page(partials.NewPageOptions()) {
 		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 			<div>
-				<div class="inner-form">
-					<h2>
-						@helpers.IconFor("welcome")
-						{ i18n.T(ctx, "translation.Welcome") }
-					</h2>
-					@templ.Raw(helpers.MarkdownToHTML(i18n.T(ctx, "translation.HelpTranslating")))
+				<div class="inner-form flex flex-wrap justify-between">
+					<div>
+						<h2>
+							@helpers.IconFor("welcome")
+							{ i18n.T(ctx, "translation.Welcome") }
+						</h2>
+						@templ.Raw(helpers.MarkdownToHTML(i18n.T(ctx, "translation.HelpTranslating")))
+					</div>
+					<img class="p-3" src={ helpers.RouteFor(ctx, "assets") + "/logo.png" } alt="Workout Tracker"/>
 				</div>
 			</div>
 			<div>
