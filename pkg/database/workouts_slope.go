@@ -7,18 +7,38 @@ import (
 	"time"
 )
 
-// SlopeState represents the type of slope detected.
-type SlopeState string
+type (
+	// SlopeState represents the type of slope detected.
+	SlopeState string
+	// SlopeKind represents the type of slope detected (climb or descent).
+	SlopeKind string
+	// SlopeState represents the category of the climb.
+	Category string
+)
 
 const (
-	// State machine states for the detector logic.
-	StateSearching       = "SEARCHING"
-	StateInSegment       = "IN_SEGMENT"
-	StateEvaluatingPause = "EVALUATING_PAUSE"
-	StateStartClimb      = "START_CLIMB"
-	StateEndClimb        = "END_CLIMB"
-	StateStartDescent    = "START_DESCENT"
-	StateEndDescent      = "END_DESCENT"
+	// State machine states for the detector logic
+	StateSearching       SlopeState = "SEARCHING"
+	StateInSegment       SlopeState = "IN_SEGMENT"
+	StateEvaluatingPause SlopeState = "EVALUATING_PAUSE"
+	StateStartClimb      SlopeState = "START_CLIMB"
+	StateEndClimb        SlopeState = "END_CLIMB"
+	StateStartDescent    SlopeState = "START_DESCENT"
+	StateEndDescent      SlopeState = "END_DESCENT"
+
+	// Kindes of slope
+	SlopeKindClimb   SlopeKind = "climb"
+	SlopeKindDescent SlopeKind = "descent"
+
+	// Climb categories
+	CategoryHorsCategorie Category = "Hors Catégorie"
+	Category1             Category = "Category 1"
+	Category2             Category = "Category 2"
+	Category3             Category = "Category 3"
+	Category4             Category = "Category 4"
+	Category5             Category = "Category 5"
+	Category6             Category = "Category 6"
+	CategoryUncategorized Category = "Uncategorized"
 
 	// Thresholds from Python code
 	StartClimbThreshold   float64 = 0.02
@@ -31,27 +51,30 @@ const (
 
 // Segment represents a detected climb or descent.
 type Segment struct {
-	Index         int           `json:"index"`
-	Type          string        `json:"type"`
-	StartDistance float64       `json:"start_km"`
-	EndDistance   float64       `json:"end_km"`
-	Elevation     float64       `json:"elev_gain,omitempty"`
-	ElevLoss      float64       `json:"elev_loss,omitempty"`
-	Length        float64       `json:"length_m"`
-	AvgSlope      float64       `json:"avg_slope"`
-	Duration      time.Duration `json:"duration"`
-	StartIdx      int           `json:"start_idx"`
-	EndIdx        int           `json:"end_idx"`
-	Category      string        `json:"category"`
+	Index    int           `json:"index"`
+	Type     SlopeKind     `json:"type"`
+	StartIdx int           `json:"start_idx"`
+	Start    MapPoint      `json:"start"`
+	EndIdx   int           `json:"end_idx"`
+	End      MapPoint      `json:"end"`
+	Gain     float64       `json:"gain,omitempty"`
+	Length   float64       `json:"length_m"`
+	AvgSlope float64       `json:"avg_slope"`
+	Duration time.Duration `json:"duration"`
+	Category Category      `json:"category"`
+}
+
+func (s *Segment) IsClimb() bool {
+	return s.Type == SlopeKindClimb
 }
 
 // Detector holds the state for the segment detection process.
 type Detector struct {
 	segments  []Segment
-	kind      string
+	kind      SlopeKind
 	slopeSign float64
+	state     SlopeState
 
-	state                string
 	currentSegmentPoints []*MapPoint
 
 	startIdx      int
@@ -62,21 +85,21 @@ type Detector struct {
 
 // CalculateSlopes processes a slice of MapPoints and returns a slice of ClimbDetection.
 func (m *MapData) CalculateSlopes() {
-	climbs := DetectSignificantSegments(m.Details.Points, "climb")
-	descents := DetectSignificantSegments(m.Details.Points, "descent")
+	climbs := DetectSignificantSegments(m.Details.Points, SlopeKindClimb)
+	descents := DetectSignificantSegments(m.Details.Points, SlopeKindDescent)
 
 	climbs = append(climbs, descents...)
 	slices.SortFunc(climbs, func(a, b Segment) int {
-		return cmp.Compare(a.StartDistance, b.StartDistance)
+		return cmp.Compare(a.Start.TotalDistance, b.Start.TotalDistance)
 	})
 
 	m.Climbs = climbs
 }
 
-// NewDetector initializes a new Detector for a given kind ("climb" or "descent").
-func NewDetector(kind string) *Detector {
+// NewDetector initializes a new Detector for a given kind.
+func NewDetector(kind SlopeKind) *Detector {
 	slopeSign := 1.0
-	if kind != "climb" {
+	if kind != SlopeKindClimb {
 		slopeSign = -1.0
 	}
 
@@ -90,11 +113,11 @@ func NewDetector(kind string) *Detector {
 // SmoothSlopeGrades computes a weighted average slope at each point.
 func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
 	for i := range points {
-		centerDist := points[i].TotalDistance2D
+		centerDist := points[i].TotalDistance
 		var weightedSlopeSum, totalWeight float64
 
 		for j := range points {
-			distDiff := points[j].TotalDistance2D - centerDist
+			distDiff := points[j].TotalDistance - centerDist
 			distFromCenter := math.Abs(distDiff)
 			if distFromCenter > windowMeters/2 || distFromCenter < MaxDeltaMeter/2 {
 				continue
@@ -117,7 +140,7 @@ func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
 }
 
 // DetectSignificantSegments processes a slice of points to find climbs or descents.
-func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
+func DetectSignificantSegments(points []MapPoint, kind SlopeKind) []Segment {
 	detector := NewDetector(kind)
 
 	if len(points) < 2 {
@@ -133,7 +156,7 @@ func DetectSignificantSegments(points []MapPoint, kind string) []Segment {
 		prevPoint := &points[i-1]
 		currentPoint := &points[i]
 
-		distDiff := currentPoint.TotalDistance2D - prevPoint.TotalDistance2D
+		distDiff := currentPoint.TotalDistance - prevPoint.TotalDistance
 		elevDiff := (currentPoint.Elevation - prevPoint.Elevation)
 
 		slope := currentPoint.SlopeGrade
@@ -200,66 +223,67 @@ func (d *Detector) validateAndAppendSegment(segmentPoints []*MapPoint) {
 		return
 	}
 
-	length := segmentPoints[len(segmentPoints)-1].TotalDistance2D - segmentPoints[0].TotalDistance2D
+	start := segmentPoints[0]
+	end := segmentPoints[len(segmentPoints)-1]
 
-	var gain float64
+	var length, gain float64
+	var duration time.Duration
+
 	for i := 1; i < len(segmentPoints); i++ {
+		length += segmentPoints[i].Distance
+		duration += segmentPoints[i].Duration
+
 		elevDiff := segmentPoints[i].Elevation - segmentPoints[i-1].Elevation
-		if (d.kind == "climb" && elevDiff > 0) || (d.kind == "descent" && elevDiff < 0) {
+		if (d.kind == SlopeKindClimb && elevDiff > 0) || (d.kind == SlopeKindDescent && elevDiff < 0) {
 			gain += math.Abs(elevDiff)
 		}
 	}
 
-	if length > MinLength && gain > MinGain {
-		avgSlope := 0.0
-		if length > 0 {
-			avgSlope = gain / length
-		}
-
-		endIdx := d.startIdx + len(segmentPoints) - 1
-		category := ClassifyClimbCategory(length, avgSlope)
-
-		segment := Segment{
-			Type:          d.kind,
-			StartDistance: segmentPoints[0].TotalDistance2D,
-			EndDistance:   segmentPoints[len(segmentPoints)-1].TotalDistance2D,
-			Length:        length,
-			Duration:      segmentPoints[len(segmentPoints)-1].TotalDuration - segmentPoints[0].TotalDuration,
-			StartIdx:      d.startIdx,
-			EndIdx:        endIdx,
-			Category:      category,
-			Index:         len(d.segments) + 1,
-		}
-
-		if d.kind == "climb" {
-			segment.AvgSlope = avgSlope
-			segment.Elevation = gain
-		} else {
-			segment.AvgSlope = -avgSlope
-			segment.Elevation = -gain
-		}
-
-		d.segments = append(d.segments, segment)
+	if length <= MinLength || gain <= MinGain {
+		return
 	}
+
+	avgSlope := gain / length
+
+	cat := CategoryUncategorized
+	if d.kind == SlopeKindClimb {
+		cat = ClassifyClimbCategory(length, avgSlope)
+	}
+
+	segment := Segment{
+		Index:    len(d.segments) + 1,
+		StartIdx: d.startIdx,
+		EndIdx:   d.startIdx + len(segmentPoints) - 1,
+		Category: cat,
+		Type:     d.kind,
+		Length:   length,
+		AvgSlope: avgSlope,
+		Gain:     gain,
+		Start:    *start,
+		End:      *end,
+		Duration: duration,
+	}
+
+	d.segments = append(d.segments, segment)
 }
 
-func ClassifyClimbCategory(length, slope float64) string {
+func ClassifyClimbCategory(length, slope float64) Category {
 	switch {
 	case length >= 10000 && slope >= 0.06:
-		return "Hors Catégorie"
+		return CategoryHorsCategorie
 	case length >= 8000 && slope >= 0.05:
-		return "Category 1"
+		return Category1
 	case length >= 5000 && slope >= 0.04:
-		return "Category 2"
+		return Category2
 	case length >= 3000 && slope >= 0.03:
-		return "Category 3"
+		return Category3
 	case length >= 2000 && slope >= 0.03:
-		return "Category 4"
+		return Category4
 	case length >= 1000 && slope >= 0.02:
-		return "Category 5"
+		return Category5
 	case length >= 500 && slope >= 0.01:
-		return "Category 6"
+		return Category6
 	default:
-		return "Uncategorized"
+		return CategoryUncategorized
 	}
 }

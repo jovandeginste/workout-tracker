@@ -78,13 +78,14 @@ en:
   settings:
     update: Update settings
   climb:
-    distance: Climb distance
-    start: Start distance
+    distance: Distance
+    start: Start
     type_descent: 'Descent #%d'
     type_climb: 'Climb #%d'
-    elevation_gain_loss: Elevation gain/loss
-    average_slope: Average slope
-    category: Category
+    elevation_gain: Gain
+    elevation_loss: Loss
+    average_slope: Avg. slope
+    category: Cat.
   translation:
     Climbs: Climbs
     Latest_measurements: Latest measurements

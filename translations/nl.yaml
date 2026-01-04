@@ -19,13 +19,14 @@ nl:
       other: '%{count} nieuwe route segmenten werden toegevoegd: %{list} - we zoeken
         op de achtergrond naar matches'
   climb:
-    distance: Klimafstand
-    start: Startafstand
-    type_descent: 'Afdaling #%d'
+    distance: Afstand
+    start: Start
+    type_descent: 'Afd. #%d'
     type_climb: 'Klim #%d'
-    elevation_gain_loss: Stijging/afdaling
-    average_slope: Gemiddelde hellingsgraad
-    category: Categorie
+    elevation_gain: Stijging
+    elevation_loss: Daling
+    average_slope: Gem. helling
+    category: Cat.
   misc:
     years_1: 1 jaar
     years_10: 10 jaar
