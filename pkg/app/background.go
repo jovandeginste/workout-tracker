@@ -75,7 +75,9 @@ func (a *App) autoImports(l *slog.Logger) {
 		l.Error(ErrWorker.Error() + ": " + err.Error())
 	}
 
-	for i := range uID {
+	for idx := range uID {
+		i := idx
+
 		a.workerPool.Go(func() {
 			if err := a.autoImportForUser(l, uID[i]); err != nil {
 				l.Error(ErrWorker.Error() + ": " + err.Error())
@@ -232,83 +234,100 @@ func (a *App) rematchRouteSegmentToWorkouts(rs *database.RouteSegment, l *slog.L
 }
 
 func (a *App) updateRouteSegments(l *slog.Logger) {
-	var rss []*database.RouteSegment
+	var rsIDs []uint64
 
-	r := a.db.Preload("RouteSegmentMatches").Model(&database.RouteSegment{}).
+	r := a.db.Model(&database.RouteSegment{}).
 		Where(&database.RouteSegment{Dirty: true}).
-		FindInBatches(&rss, workerWorkoutsBatchSize, func(rtx *gorm.DB, batchNo int) error {
-			for i := range rss {
-				rs := rss[i]
-
-				a.workerPool.Go(func() {
-					rl := l.With("route_segment_id", rs.ID)
-					rl.Info("Updating route segment")
-
-					if err := a.rematchRouteSegmentToWorkouts(rs, rl); err != nil {
-						rl.Error("Error during matching", "error", err)
-					}
-				})
-			}
-
-			return nil
-		})
-
+		Pluck("ID", &rsIDs)
 	if r.Error != nil {
 		l.Error("Error during batch query", "error", r.Error)
+	}
+
+	for idx := range rsIDs {
+		i := idx
+
+		a.workerPool.Go(func() {
+			rs, err := database.GetRouteSegment(a.db, rsIDs[i])
+			if err != nil {
+				l.Error("Error during batch query", "error", err)
+				return
+			}
+
+			if !rs.Dirty {
+				return
+			}
+
+			rl := l.With("route_segment_id", rs.ID)
+			rl.Info("Updating route segment")
+
+			if err := a.rematchRouteSegmentToWorkouts(rs, rl); err != nil {
+				rl.Error("Error during matching", "error", err)
+			}
+		})
 	}
 }
 
 func (a *App) updateWorkouts(l *slog.Logger) {
-	var ws []*database.Workout
+	var wIDs []uint64
 
-	r := a.db.Preload("GPX").Preload("Data.Details").Preload("User").Model(&database.Workout{}).
+	r := a.db.Model(&database.Workout{}).
 		Where(&database.Workout{Dirty: true}).
-		FindInBatches(&ws, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
-			for i := range ws {
-				w := ws[i]
-
-				a.workerPool.Go(func() {
-					wl := l.With("workout_id", w.ID)
-					wl.Info("Updating workout")
-
-					if err := w.UpdateData(a.db); err != nil {
-						wl.Error("Error during data update", "error", err)
-					}
-				})
-			}
-
-			return nil
-		})
-
+		Pluck("ID", &wIDs)
 	if r.Error != nil {
 		l.Error("Error during batch query", "error", r.Error)
+	}
+
+	for idx := range wIDs {
+		i := idx
+
+		a.workerPool.Go(func() {
+			w, err := database.GetWorkoutDetails(a.db, wIDs[i])
+			if err != nil {
+				l.Error("Error during batch query", "error", err)
+				return
+			}
+
+			if !w.Dirty {
+				return
+			}
+
+			wl := l.With("workout_id", w.ID)
+			wl.Info("Updating workout")
+
+			if err := w.UpdateData(a.db); err != nil {
+				wl.Error("Error during data update", "error", err)
+			}
+		})
 	}
 }
 
 func (a *App) updateAddresses(l *slog.Logger) {
-	var mds []*database.MapData
+	var mdIDs []uint64
 
 	r := a.db.Model(&database.MapData{}).
 		Where("center IS NOT NULL").Where("address_string", "").
-		FindInBatches(&mds, workerWorkoutsBatchSize, func(wtx *gorm.DB, batchNo int) error {
-			for i := range mds {
-				md := mds[i]
-
-				a.workerPoolGeo.Go(func() {
-					wl := l.With("workout_id", md.WorkoutID).With("map_data_id", md.ID)
-					wl.Info("Updating address")
-
-					md.UpdateAddress()
-					if err := md.Save(a.db); err != nil {
-						wl.Error("Error during address update", "error", err)
-					}
-				})
-			}
-
-			return nil
-		})
-
+		Pluck("ID", &mdIDs)
 	if r.Error != nil {
 		l.Error("Error during batch query", "error", r.Error)
+	}
+
+	for idx := range mdIDs {
+		i := idx
+
+		a.workerPoolGeo.Go(func() {
+			md, err := database.GetMapData(a.db, mdIDs[i])
+			if err != nil {
+				l.Error("Error during batch query", "error", err)
+				return
+			}
+
+			wl := l.With("workout_id", md.WorkoutID).With("map_data_id", md.ID)
+			wl.Info("Updating address")
+
+			md.UpdateAddress()
+			if err := md.Save(a.db); err != nil {
+				wl.Error("Error during address update", "error", err)
+			}
+		})
 	}
 }

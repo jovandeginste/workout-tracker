@@ -163,7 +163,7 @@ generate-screenshots: build-server
 	export WT_BIND=[::]:8180 WT_DSN=./tmp/screenshots.db; \
 			$(WT_OUTPUT_FILE) & \
 			export SERVER_PID=$$!; \
-			sleep 1; \
+			sleep 3; \
 			K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js; \
 			kill $${SERVER_PID}
 

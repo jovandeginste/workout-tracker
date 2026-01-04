@@ -97,6 +97,7 @@ func (u UserPreferredUnits) Speed() string {
 
 func (p *Profile) ResetBools() {
 	p.PreferFullDate = false
+	p.ShowTabs = false
 	p.APIActive = false
 	p.SocialsDisabled = false
 }

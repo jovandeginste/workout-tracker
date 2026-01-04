@@ -86,12 +86,6 @@ export default async function () {
     await page.goto("http://localhost:8180/statistics");
     await page.screenshot({ path: "docs/statistics.png", fullPage: true });
 
-    await page.goto("http://localhost:8180/workouts/249");
-    await page.screenshot({
-      path: "docs/single_workout-dark.png",
-      fullPage: true,
-    });
-
     await page.goto("http://localhost:8180/workouts/add");
     await page.screenshot({ path: "docs/upload_workouts.png", fullPage: true });
 
@@ -106,12 +100,22 @@ export default async function () {
     });
 
     await page.emulateMedia({
+      colorScheme: "dark",
+    });
+    await page.setViewportSize({
+      width: 2000,
+      height: 1500,
+    });
+    await page.goto("http://localhost:8180/workouts/487");
+    await page.screenshot({
+      path: "docs/single_workout-dark.png",
+    });
+    await page.emulateMedia({
       colorScheme: "light",
     });
-    await page.goto("http://localhost:8180/workouts/249");
+    await page.goto("http://localhost:8180/workouts/487");
     await page.screenshot({
       path: "docs/single_workout-light.png",
-      fullPage: true,
     });
 
     // Create screenshots for responsive view
@@ -126,7 +130,7 @@ export default async function () {
     await page.goto("http://localhost:8180/");
     await page.screenshot({ path: "docs/dashboard-responsive.png" });
 
-    await page.goto("http://localhost:8180/workouts/249");
+    await page.goto("http://localhost:8180/workouts/487");
     await page.screenshot({ path: "docs/single_workout-responsive.png" });
 
     await page.goto("http://localhost:8180/statistics");
