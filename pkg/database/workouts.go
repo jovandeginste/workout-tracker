@@ -525,6 +525,16 @@ func GetWorkoutByUUID(db *gorm.DB, u uuid.UUID) (*Workout, error) {
 	return &w, nil
 }
 
+func GetMapData(db *gorm.DB, id uint64) (*MapData, error) {
+	var md MapData
+
+	if err := db.First(&md, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &md, nil
+}
+
 func GetWorkout(db *gorm.DB, id uint64) (*Workout, error) {
 	var w Workout
 
