@@ -10,16 +10,6 @@
       <trans-unit id="translation.Total_down">
         <source>Total down</source>
       </trans-unit>
-      <trans-unit id="translation.Average_speed">
-        <source>Average speed</source>
-        <target>Ortalama hız</target>
-      </trans-unit>
-      <trans-unit id="translation.Elevation">
-        <source>Elevation</source>
-      </trans-unit>
-<trans-unit id="translation.Breakdown">
-  <source>Breakdown</source>
-</trans-unit>
     </body>
   </file>
 </xliff>
