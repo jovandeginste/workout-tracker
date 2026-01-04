@@ -1,6 +1,47 @@
 ## What's Changed
 
-- chore(update): Update dependencies
+- fix(background): Fix background task batch processing (again), by
+  @jovandeginste, in
+  [#716](https://github.com/jovandeginste/workout-tracker/pull/716)
+  - chore(screenshot): Update all screenshots, by @jovandeginste
+  - fix(profile): Reset `ShowTabs` when resetting profile boolean settings, by
+    @jovandeginste
+  - chore(i18n): Remove unused translation keys, by @jovandeginste
+  - fix(background): Fix background task batch processing (again), by
+    @jovandeginste
+- fix(climb): Fix average climb slope rendering, by @jovandeginste, in
+  [#715](https://github.com/jovandeginste/workout-tracker/pull/715)
+- feat(assets): Introduce application logos and update UI elements, by
+  @jovandeginste, in
+  [#714](https://github.com/jovandeginste/workout-tracker/pull/714)
+- feat: Implement tabbed content view for workout details, by @jovandeginste, in
+  [#713](https://github.com/jovandeginste/workout-tracker/pull/713)
+  - Final fix of the workout update routine, by @jovandeginste
+  - style(ui): Improve responsiveness of workout climb table, by @jovandeginste
+  - feat: Implement tabbed content view for workout details, by @jovandeginste
+- fix(background): Correct variable scoping and add error logging for batch
+  queries, by @jovandeginste, in
+  [#712](https://github.com/jovandeginste/workout-tracker/pull/712)
+- fix(background): Fix background job and improve logging structure, by
+  @jovandeginste, in
+  [#711](https://github.com/jovandeginste/workout-tracker/pull/711)
+- build: let Git handle line-endings, by @jovandeginste, in
+  [#683](https://github.com/jovandeginste/workout-tracker/pull/683)
+  - build: let Git handle line-endings, by @mu88
+- feat(background): Use worker pools to replace background loop, by
+  @jovandeginste, in
+  [#701](https://github.com/jovandeginste/workout-tracker/pull/701)
+  - refactor(worker): Simplify background worker processing, by @jovandeginste
+  - Fix and improve background pool logic, by @jovandeginste
+  - Perform early (one-time) init of timezone finder, by @jovandeginste
+  - feat(background): Use worker pools to replace background loop, by
+    @jovandeginste
+- fix(deps): Downgrade templ to v0.3.943, by @jovandeginste, in
+  [#710](https://github.com/jovandeginste/workout-tracker/pull/710)
+- chore(update): Update dependencies, by @jovandeginste, in
+  [#709](https://github.com/jovandeginste/workout-tracker/pull/709)
+  - Reformat all templates, by @jovandeginste
+  - chore(update): Update dependencies, by @jovandeginste
 - fix(database): Correct slope percentage checks for climb categories, by
   @jovandeginste, in
   [#708](https://github.com/jovandeginste/workout-tracker/pull/708)
