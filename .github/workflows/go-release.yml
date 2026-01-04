@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: make install-deps
 
-      - name: Build Tailwind CSS output
-        run: make build-dist build-tw
+      - name: Build frontend
+        run: make build-frontend
 
       - uses: wangyoucao577/go-release-action@v1
         with:
