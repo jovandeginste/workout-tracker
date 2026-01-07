@@ -251,6 +251,10 @@ ru:
     enhanced_speed: Улучшенная скорость
     temperature: Температура
     Slope: Уклон
+    WorkoutAttributeLocked: Этот атрибут заблокирован от автоматических 
+      обновлений
+    WorkoutLocked: Атрибуты тренировки «%s» теперь заблокированы
+    WorkoutUnLocked: Атрибуты тренировки «%s» теперь разблокированы
   user:
     profile:
       time_zone: Часовой пояс
