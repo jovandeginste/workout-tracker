@@ -157,15 +157,19 @@ test-assets:
 test-go: test-commands test-templates test-packages
 	golangci-lint run --allow-parallel-runners
 
-screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n
+screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n track-gif
 
-generate-screenshots: build-server
+generate-track-frames: build-server
 	export WT_BIND=[::]:8180 WT_DSN=./tmp/screenshots.db; \
 			$(WT_OUTPUT_FILE) & \
 			export SERVER_PID=$$!; \
 			sleep 3; \
-			K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js; \
+			K6_BROWSER_ARGS="force-dark-mode" k6 run track.js; \
 			kill $${SERVER_PID}
+
+track-gif: generate-track-frames
+	magick convert -delay 50 -loop 0 docs/track-frame-*.png docs/track.gif
+	rm docs/track-frame-*.png
 
 screenshots-i18n:
 	magick convert -delay 400 docs/profile-*.png docs/profile.gif
