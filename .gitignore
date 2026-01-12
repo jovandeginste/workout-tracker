@@ -1,16 +1,28 @@
+# IDEs
 .idea/
+.vscode/
+
+# Local configuration and data
 tmp/
 data/
 *.db
 *.db-journal
-node_modules/
 workout-tracker.yaml
 /workout-tracker
 coverage.out
+
+# Dependencies
+node_modules/
+vendor/
+
+# Generated assets
 /assets/*
 !/assets/logo.png
 !/assets/logo-small.png
 !/assets/*.go
-.aider*
 *_templ.txt
 /frontend/src/generated
+
+# Tooling
+.aider*
+.direnv/
