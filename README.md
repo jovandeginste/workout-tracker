@@ -244,11 +244,10 @@ Details of a workout, with:
 
 ![](docs/profile.gif)
 
+- Support for multiple languages (English, Dutch, German, Spanish, French, Italian, and many more)
 - Switch between (supported) languages
-  - Please help translate via
-    [Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+  - Please help translate via [Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
 - Use the language configured in the browser (default)
-- Very limited amount of languages supported for now :smile:
 - Re-calculate all previously uploaded workouts (useful while developing)
 
 ### Responsive design
@@ -428,14 +427,20 @@ repository.
 
 You need to install Golang and npm.
 
+Alternatively, if you use [Nix](https://nixos.org/), you can use the provided flake:
+
+```bash
+nix develop
+# or with direnv
+direnv allow
+```
+
 Because I keep forgetting how to build every component, I created a Makefile.
 
 ```bash
 # Make everything. This is also the default target.
 make all # Run tests and build all components
 
-# Install system dependencies
-make install-dev-deps
 # Install Javascript libraries
 make install-deps
 
@@ -449,7 +454,8 @@ make build-frontend # Builds the frontend assets
 make build-templates # Builds the templ templates
 make build-server # Builds the web server (includes build-templates)
 make build-docker # Performs all builds inside Docker containers, creates a Docker image
-make build-swagger # Generates swagger docs
+make swagger # Generates swagger docs
+make track-gif # Generates animated track demonstration (docs/track.gif)
 
 
 
@@ -482,10 +488,11 @@ database storage is a single SQLite file.
   - [gpxgo](github.com/tkrajina/gpxgo)
   - [Echo](https://echo.labstack.com/)
   - [Gorm](https://gorm.io)
-  - [Spreak](https://github.com/vorlif/spreak)
+  - [ctxi18n](https://github.com/invopop/ctxi18n)
   - [templ](https://templ.guide/)
   - [HTMX](https://htmx.org/)
 - HTML, CSS and JS
+  - [Lit](https://lit.dev/)
   - [Tailwind CSS](https://tailwindcss.com/)
   - [Iconify Design](https://iconify.design/)
   - [FullCalendar](https://fullcalendar.io/)

@@ -22,6 +22,9 @@ Welcome to the Workout Tracker repository. This guide provides essential informa
 - **Docker Compose**: `make dev-docker` (Starts PostgreSQL and the app)
 - **Cleanup**: `make dev-docker-clean`
 
+### Visuals
+- **Track Animation**: `make track-gif` (Generates `docs/track.gif` using k6 and ImageMagick)
+
 ---
 
 ## 🏗 Code Organization
@@ -34,6 +37,10 @@ Welcome to the Workout Tracker repository. This guide provides essential informa
 - `views/`: UI components using **a-h/templ**.
 - `frontend/`: Frontend source code (Lit components, TypeScript, Tailwind CSS).
 - `assets/`: Generated static assets (JS/CSS).
+
+### Tools
+- **Nix**: Use `nix develop` or `direnv allow` for a pre-configured environment.
+- **Swagger**: Run `make swagger` to update documentation.
 
 ---
 
