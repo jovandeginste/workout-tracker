@@ -1,0 +1,15 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "permissions": {
+    "allowed_tools": [
+      "view",
+      "ls",
+      "grep",
+      "edit",
+      "multiedit",
+      "agentic_fetch",
+      "write",
+      "mcp_context7_get-library-doc"
+    ]
+  }
+}
