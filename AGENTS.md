@@ -66,6 +66,7 @@ Welcome to the Workout Tracker repository. This guide provides essential informa
   - Prefer `pkg/app/api_handlers_test.go` style for integration tests.
   - Use `test-short` flag for quick iterations.
 - **Mocking**: The project uses `configuredApp(t)` in tests to provide a ready-to-use application instance with an in-memory database.
+- **Git Commits**: Use conventional commit format. Use `git commit --verbose --signoff --gpg-sign`.
 
 ---
 
