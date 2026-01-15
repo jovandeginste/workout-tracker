@@ -244,9 +244,11 @@ Details of a workout, with:
 
 ![](docs/profile.gif)
 
-- Support for multiple languages (English, Dutch, German, Spanish, French, Italian, and many more)
+- Support for multiple languages (English, Dutch, German, Spanish, French,
+  Italian, and many more)
 - Switch between (supported) languages
-  - Please help translate via [Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+  - Please help translate via
+    [Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
 - Use the language configured in the browser (default)
 - Re-calculate all previously uploaded workouts (useful while developing)
 
@@ -427,7 +429,8 @@ repository.
 
 You need to install Golang and npm.
 
-Alternatively, if you use [Nix](https://nixos.org/), you can use the provided flake:
+Alternatively, if you use [Nix](https://nixos.org/), you can use the provided
+flake:
 
 ```bash
 nix develop
