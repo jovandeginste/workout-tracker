@@ -41,6 +41,9 @@ en:
     auto: auto-detect
     unknown: unknown
     cycling: cycling
+    mountain-biking: mountain biking
+    alpine-climbing: alpine climbing
+    mountaineering: mountaineering
     e-cycling: e-cycling
     horse-riding: horse riding
     inline-skating: inline skating
