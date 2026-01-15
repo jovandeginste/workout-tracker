@@ -34,7 +34,7 @@ export default async function () {
     await page.goto("http://localhost:8180/workouts/487");
 
     // Wait for the map to be rendered
-    const mapElement = await page.waitForSelector("wt-map#workout-map");
+    await page.waitForSelector("wt-map#workout-map");
 
     // Give leaflet some time to initialize tiles and layers
     sleep(2);
@@ -52,11 +52,10 @@ export default async function () {
     const numFrames = 20;
     const step = Math.max(1, Math.floor(positions.length / numFrames));
 
-    // Ensure the docs directory exists (managed by the test runner usually, but good for local)
+    // Ensure the tmp directory exists (managed by the test runner usually, but good for local)
     // We'll save individual frames which will later be combined into a gif using imagemagick
     for (let i = 0; i < numFrames; i++) {
       const pointIdx = Math.min(i * step, positions.length - 1);
-      const point = positions[pointIdx];
 
       // We use page.evaluate to call the setMarker method on our custom element
       // This triggers the internal hover logic of the wt-map component
@@ -79,7 +78,7 @@ export default async function () {
       }, pointIdx);
 
       await page.screenshot({
-        path: `docs/track-frame-${String(i).padStart(3, "0")}.png`,
+        path: `tmp/track-frame-${String(i).padStart(3, "0")}.png`,
       });
       sleep(0.1);
     }
