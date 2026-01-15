@@ -26,7 +26,12 @@ templ Form(w *database.Workout) {
 		</tr>
 	}
 	<tr>
-		<td><label for="name">{ i18n.T(ctx, "translation.Name") }</label></td>
+		<td>
+			<label for="name">
+				@helpers.IconFor(w.Type.String())
+				{ i18n.T(ctx, "translation.Name") }
+			</label>
+		</td>
 		<td>
 			<input
 				type="text"
