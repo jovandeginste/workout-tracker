@@ -79,11 +79,7 @@ templ userSettings(u *database.User) {
 								readonly
 							/>
 							<span>
-								<form
-									class="flex flex-wrap items-center"
-									method="post"
-									action={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile-reset-api-key")) }
-								>
+								<div class="flex flex-wrap items-center">
 									<button
 										type="button"
 										class="edit"
@@ -102,10 +98,14 @@ templ userSettings(u *database.User) {
 									<button
 										class="dangerous"
 										title={ i18n.T(ctx, "user.profile.generate_a_new_api_key") }
+										type="button"
+										hx-post={ helpers.RouteFor(ctx, "user-profile-reset-api-key") }
+										hx-target="body"
+										hx-swap="innerHTML"
 									>
 										@helpers.IconFor("refresh")
 									</button>
-								</form>
+								</div>
 							</span>
 						}
 					</td>
