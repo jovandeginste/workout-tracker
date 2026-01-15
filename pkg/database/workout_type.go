@@ -10,24 +10,27 @@ type (
 )
 
 const (
-	WorkoutTypeUnknown       WorkoutType = "unknown"
-	WorkoutTypeAutoDetect    WorkoutType = "auto"
-	WorkoutTypeRunning       WorkoutType = "running"
-	WorkoutTypeCycling       WorkoutType = "cycling"
-	WorkoutTypeECycling      WorkoutType = "e-cycling"
-	WorkoutTypeHorseRiding   WorkoutType = "horse-riding"
-	WorkoutTypeInlineSkating WorkoutType = "inline-skating"
-	WorkoutTypeWalking       WorkoutType = "walking"
-	WorkoutTypeSkiing        WorkoutType = "skiing"
-	WorkoutTypeSnowboarding  WorkoutType = "snowboarding"
-	WorkoutTypeSwimming      WorkoutType = "swimming"
-	WorkoutTypeKayaking      WorkoutType = "kayaking"
-	WorkoutTypeGolfing       WorkoutType = "golfing"
-	WorkoutTypeHiking        WorkoutType = "hiking"
-	WorkoutTypePushups       WorkoutType = "push-ups"
-	WorkoutTypeWeightLifting WorkoutType = "weight-lifting"
-	WorkoutTypeRowing        WorkoutType = "rowing"
-	WorkoutTypeOther         WorkoutType = "other"
+	WorkoutTypeUnknown        WorkoutType = "unknown"
+	WorkoutTypeAutoDetect     WorkoutType = "auto"
+	WorkoutTypeRunning        WorkoutType = "running"
+	WorkoutTypeCycling        WorkoutType = "cycling"
+	WorkoutTypeMountainBiking WorkoutType = "mountain-biking"
+	WorkoutTypeAlpineClimbing WorkoutType = "alpine-climbing"
+	WorkoutTypeMountaineering WorkoutType = "mountaineering"
+	WorkoutTypeECycling       WorkoutType = "e-cycling"
+	WorkoutTypeHorseRiding    WorkoutType = "horse-riding"
+	WorkoutTypeInlineSkating  WorkoutType = "inline-skating"
+	WorkoutTypeWalking        WorkoutType = "walking"
+	WorkoutTypeSkiing         WorkoutType = "skiing"
+	WorkoutTypeSnowboarding   WorkoutType = "snowboarding"
+	WorkoutTypeSwimming       WorkoutType = "swimming"
+	WorkoutTypeKayaking       WorkoutType = "kayaking"
+	WorkoutTypeGolfing        WorkoutType = "golfing"
+	WorkoutTypeHiking         WorkoutType = "hiking"
+	WorkoutTypePushups        WorkoutType = "push-ups"
+	WorkoutTypeWeightLifting  WorkoutType = "weight-lifting"
+	WorkoutTypeRowing         WorkoutType = "rowing"
+	WorkoutTypeOther          WorkoutType = "other"
 
 	WorkoutTypeClassLocation   = "location"
 	WorkoutTypeClassDistance   = "distance"
@@ -44,19 +47,22 @@ type WorkoutTypeConfiguration struct {
 }
 
 var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
-	WorkoutTypeRunning:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeCycling:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeECycling:      {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeHorseRiding:   {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeInlineSkating: {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeWalking:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSkiing:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSnowboarding:  {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSwimming:      {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeKayaking:      {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeRowing:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeGolfing:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeHiking:        {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeCycling:        {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeMountainBiking: {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeAlpineClimbing: {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeMountaineering: {Location: true, Distance: true, Repetition: false, Weight: true},
+	WorkoutTypeECycling:       {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeHorseRiding:    {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeInlineSkating:  {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeWalking:        {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeSwimming:       {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeKayaking:       {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeGolfing:        {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeHiking:         {Location: true, Distance: true, Repetition: false, Weight: false},
 
 	WorkoutTypePushups:       {Location: false, Distance: false, Repetition: true, Weight: false},
 	WorkoutTypeWeightLifting: {Location: false, Distance: false, Repetition: true, Weight: true},
