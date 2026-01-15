@@ -6,6 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v4"
+	"github.com/stackus/hxgo/hxecho"
 )
 
 func (a *App) addRoutesSelf(e *echo.Group) {
@@ -82,6 +83,11 @@ func (a *App) userProfileResetAPIKeyHandler(c echo.Context) error {
 	}
 
 	a.addNoticeT(c, "translation.API_key_updated")
+
+	if hxecho.IsHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", a.echo.Reverse("user-profile"))
+		return c.String(http.StatusFound, "ok")
+	}
 
 	return c.Redirect(http.StatusFound, a.echo.Reverse("user-profile"))
 }
