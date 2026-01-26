@@ -403,18 +403,20 @@ func (w *Workout) setContent(filename string, content []byte) {
 }
 
 func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
-	switch strings.ToLower(gpxType) {
+	switch strings.ReplaceAll(strings.ToLower(gpxType), "-", "") {
 	case "running", "run":
 		return WorkoutTypeRunning, true
 	case "walking", "walk":
 		return WorkoutTypeWalking, true
 	case "cycling", "cycle":
 		return WorkoutTypeCycling, true
+	case "ebike", "ecycling":
+		return WorkoutTypeECycling, true
 	case "snowboarding":
 		return WorkoutTypeSnowboarding, true
-	case "horse-riding", "horseback-riding":
+	case "horseriding", "horsebackriding":
 		return WorkoutTypeHorseRiding, true
-	case "inline-skating", "skating", "skate":
+	case "inlineskating", "skating", "skate":
 		return WorkoutTypeInlineSkating, true
 	case "skiing":
 		return WorkoutTypeSkiing, true
@@ -426,7 +428,7 @@ func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypeGolfing, true
 	case "hiking":
 		return WorkoutTypeHiking, true
-	case "push-ups":
+	case "pushups":
 		return WorkoutTypePushups, true
 	case "rowing":
 		return WorkoutTypeRowing, true
