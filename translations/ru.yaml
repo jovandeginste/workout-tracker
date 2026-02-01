@@ -296,3 +296,4 @@ ru:
   climb:
     category: Категория
     average_slope: Средний уклон
+    elevation_gain_loss: Набор/сброс высоты
