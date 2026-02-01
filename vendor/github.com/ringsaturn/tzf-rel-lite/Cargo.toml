@@ -1,6 +1,6 @@
 [package]
 name = "tzf-rel-lite"
-version = "0.0.2025-b2"
+version = "0.0.2025-c"
 edition = "2021"
 license = "ODbL-1.0"
 description = "Probuf based binary timezone data version distribution for tzf-rs"

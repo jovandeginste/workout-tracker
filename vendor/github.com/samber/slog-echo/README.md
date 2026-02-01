@@ -102,6 +102,7 @@ type Config struct {
 	WithResponseHeader bool
 	WithSpanID         bool
 	WithTraceID        bool
+	WithClientIP       bool
 
 	Filters []Filter
 }

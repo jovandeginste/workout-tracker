@@ -1,11 +1,11 @@
 module github.com/jovandeginste/workout-tracker/v2
 
-go 1.24.1
+go 1.25
 
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
-	github.com/a-h/templ v0.3.943
+	github.com/a-h/templ v0.3.977
 	github.com/alexedwards/scs/gormstore v0.0.0-20251002162104-209de6e426de
 	github.com/alexedwards/scs/v2 v2.9.0
 	github.com/alitto/pond/v2 v2.6.0
@@ -19,7 +19,7 @@ require (
 	github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
 	github.com/glebarez/sqlite v1.11.0
 	github.com/go-gorm/caches/v4 v4.0.5
-	github.com/golang-jwt/jwt/v5 v5.3.0
+	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a
 	github.com/google/go-querystring v1.2.0
 	github.com/google/uuid v1.6.0
@@ -32,11 +32,11 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/mattn/go-isatty v0.0.20
 	github.com/microcosm-cc/bluemonday v1.0.27
-	github.com/muktihari/fit v0.26.1
+	github.com/muktihari/fit v0.27.1
 	github.com/orandin/slog-gorm v1.4.0
 	github.com/paulmach/orb v0.12.0
-	github.com/ringsaturn/tzf v1.0.2
-	github.com/samber/slog-echo v1.18.0
+	github.com/ringsaturn/tzf v1.0.3
+	github.com/samber/slog-echo v1.19.1
 	github.com/sersh88/timeago v1.0.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spazzymoto/echo-scs-session v1.0.0
@@ -48,8 +48,8 @@ require (
 	github.com/swaggo/swag v1.16.6
 	github.com/tkrajina/gpxgo v1.4.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.46.0
-	golang.org/x/text v0.32.0
+	golang.org/x/crypto v0.47.0
+	golang.org/x/text v0.33.0
 	gorm.io/datatypes v1.2.7
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/driver/postgres v1.6.0
@@ -98,7 +98,7 @@ require (
 	github.com/philhofer/vec v0.0.0-20140421144027-536fc796d369 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
-	github.com/ringsaturn/tzf-rel-lite v0.0.2025-b2 // indirect
+	github.com/ringsaturn/tzf-rel-lite v0.0.2025-c // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/sagikazarmark/locafero v0.12.0 // indirect
 	github.com/samber/lo v1.52.0 // indirect
@@ -120,8 +120,8 @@ require (
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/oauth2 v0.34.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/term v0.38.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/term v0.39.0 // indirect
 	golang.org/x/time v0.14.0 // indirect
 	golang.org/x/tools v0.40.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
