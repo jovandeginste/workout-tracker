@@ -1,6 +1,8 @@
 package database
 
 import (
+	"strings"
+
 	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 )
@@ -40,16 +42,20 @@ func getGPXExtensionKeyValue(n *gpx.ExtensionNode) (string, float64) {
 }
 
 func standardExtensionName(name string) string {
+	name = strings.ToLower(name)
+	name = strings.TrimPrefix(name, "gpxdata:")
+	name = strings.TrimPrefix(name, "ns3:")
+
 	switch name {
 	case "course":
 		return "heading"
-	case "hAcc": // horizontal accuracy estimate [mm]
+	case "hacc": // horizontal accuracy estimate [mm]
 		return "horizontal-accuracy"
-	case "vAcc": // vertical accuracy estimate [mm]
+	case "vacc": // vertical accuracy estimate [mm]
 		return "vertical-accuracy"
-	case "ns3:hr", "hr", "heartrate":
+	case "hr", "heartrate":
 		return "heart-rate"
-	case "ns3:cad", "cad":
+	case "cad":
 		return "cadence"
 	case "atemp", "temp":
 		return "temperature"
