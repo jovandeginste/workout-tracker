@@ -10,8 +10,7 @@ THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
 TEMPL_PROXY_PORT = 8090
 TEMPL_APP_PORT = 8080
-TEMPL_VERSION ?= $(shell grep "github.com/a-h/templ" go.mod | awk '{print $$2}')
-TEMPL_COMMAND ?= go run github.com/a-h/templ/cmd/templ@$(TEMPL_VERSION)
+TEMPL_COMMAND ?= go tool templ
 
 GO_TEST = go test -short -count 1 -mod vendor -covermode=atomic
 
@@ -22,7 +21,7 @@ BRANCH_NAME_DEPS ?= update-deps
 all: clean install-deps test build
 
 release-patch release-minor release-major:
-	$(MAKE) release VERSION=$(shell go run github.com/mdomke/git-semver/v6@latest -target $(subst release-,,$@))
+	$(MAKE) release VERSION=$(shell go tool git-semver -target $(subst release-,,$@))
 
 release:
 	git tag -s -a $(VERSION) -m "Release $(VERSION)"
@@ -45,7 +44,7 @@ watch/templ:
 			--proxybind="0.0.0.0"
 
 watch/server:
-	go run github.com/air-verse/air@latest \
+	go tool air \
 			--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
 			--build.cmd                "make build-server notify-proxy" \
 			--build.delay              1000 \
@@ -119,7 +118,7 @@ build-docker:
 			.
 
 swagger:
-	go run github.com/swaggo/swag/cmd/swag@latest init \
+	go tool swag init \
 			--parseDependency \
 			--dir ./pkg/app/,./pkg/database/,./vendor/gorm.io/gorm/,./vendor/github.com/codingsince1985/geo-golang/ \
 			--generalInfo api_handlers.go
