@@ -23,7 +23,7 @@ ARG GIT_REF
 ARG GIT_REF_NAME
 ARG GIT_REF_TYPE
 
-RUN apk --no-cache add make git
+RUN apk --no-cache add make git curl
 
 WORKDIR /app
 

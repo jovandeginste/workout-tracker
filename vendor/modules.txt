@@ -79,7 +79,7 @@ github.com/a-h/templ/parser/v2/goexpression
 github.com/a-h/templ/parser/v2/visitor
 github.com/a-h/templ/runtime
 github.com/a-h/templ/safehtml
-# github.com/air-verse/air v1.64.4
+# github.com/air-verse/air v1.64.5
 ## explicit; go 1.25
 github.com/air-verse/air
 github.com/air-verse/air/runner
