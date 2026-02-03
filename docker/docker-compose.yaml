@@ -13,6 +13,12 @@ services:
       WT_JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
     secrets:
       - jwt_encryption_key
+    healthcheck:
+      test: ["CMD", "curl", "-sSLf", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   db-postgres:
     profiles:

@@ -42,6 +42,21 @@ func defaultUser(db *gorm.DB) *database.User {
 	return u
 }
 
+func TestRoute_HealthCheck(t *testing.T) {
+	t.Run("should pass health check", func(t *testing.T) {
+		a := configuredApp(t)
+		e := a.echo
+
+		req := httptest.NewRequest(http.MethodGet, e.Reverse("health"), nil)
+		rec := httptest.NewRecorder()
+
+		a.echo.ServeHTTP(rec, req)
+
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, "OK", rec.Body.String())
+	})
+}
+
 func TestRoute_UserRender(t *testing.T) {
 	t.Run("should render for the user", func(t *testing.T) {
 		a := configuredApp(t)
