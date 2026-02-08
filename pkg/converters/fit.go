@@ -48,14 +48,16 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 	for _, r := range act.Records {
 		p := &gpx.GPXPoint{
 			Timestamp: r.Timestamp,
-			Point: gpx.Point{
-				Latitude:  semicircles.ToDegrees(r.PositionLat),
-				Longitude: semicircles.ToDegrees(r.PositionLong),
-			},
 		}
 
-		if math.IsNaN(p.Latitude) || math.IsNaN(p.Longitude) {
-			continue
+		lat := semicircles.ToDegrees(r.PositionLat)
+		lon := semicircles.ToDegrees(r.PositionLong)
+
+		if !math.IsNaN(lat) && !math.IsNaN(lon) {
+			p.Point = gpx.Point{
+				Latitude:  lat,
+				Longitude: lon,
+			}
 		}
 
 		if r.EnhancedAltitude != math.MaxUint32 {
@@ -79,6 +81,10 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 
 		if r.Temperature != math.MaxInt8 {
 			gpxExtensionData["temperature"] = cast.ToString(r.Temperature)
+		}
+
+		if r.Distance != math.MaxUint32 {
+			gpxExtensionData["distance"] = cast.ToString(r.DistanceScaled())
 		}
 
 		for key, value := range gpxExtensionData {

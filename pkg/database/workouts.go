@@ -734,8 +734,8 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
-	w.UpdateAverages()
 	w.UpdateExtraMetrics()
+	w.UpdateAverages()
 	w.Data.UpdateAddress()
 	w.Data.CalculateSlopes()
 
