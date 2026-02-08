@@ -763,11 +763,27 @@ func (w *Workout) RepetitionFrequencyPerMinute() float64 {
 	return float64(w.Data.TotalRepetitions) / w.Duration().Minutes()
 }
 
+func (w *Workout) HasCaloriesEstimate() bool {
+	if w.Data != nil && w.Data.TotalCalories > 0 {
+		return false
+	}
+
+	return w.Type.IsDuration()
+}
+
 func (w *Workout) HasCalories() bool {
+	if w.Data != nil && w.Data.TotalCalories > 0 {
+		return true
+	}
+
 	return w.Type.IsDuration()
 }
 
 func (w *Workout) CaloriesBurned() float64 {
+	if w.Data != nil && w.Data.TotalCalories > 0 {
+		return w.Data.TotalCalories
+	}
+
 	if !w.Type.IsDuration() {
 		return 0
 	}

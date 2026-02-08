@@ -409,18 +409,24 @@ templ FullWorkoutDetails(w *database.Workout) {
 						@helpers.IconFor("calories")
 					</td>
 					<th>
-						{ i18n.T(ctx, "translation.Est_calories_burned") }
-						<a
-							href="#"
-							title={ i18n.T(ctx, "translation.Estimated_based_on_the_activity") }
-						>
-							@helpers.IconFor("info")
-						</a>
+						if w.HasCaloriesEstimate() {
+							{ i18n.T(ctx, "translation.Est_calories_burned") }
+							<a
+								href="#"
+								title={ i18n.T(ctx, "translation.Estimated_based_on_the_activity") }
+							>
+								@helpers.IconFor("info")
+							</a>
+						} else {
+							{ i18n.T(ctx, "translation.Calories_burned") }
+						}
 					</th>
 					<td class="whitespace-nowrap font-mono">
 						{ helpers.HumanCalories (w.CaloriesBurned() ) }
-						({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
-						{ currentUser.PreferredUnits().Weight() })
+						if w.HasCaloriesEstimate() {
+							({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
+							{ currentUser.PreferredUnits().Weight() })
+						}
 					</td>
 				</tr>
 			}
