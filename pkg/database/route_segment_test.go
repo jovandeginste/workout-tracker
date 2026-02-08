@@ -11,14 +11,14 @@ func TestRouteSegment_Parse(t *testing.T) {
 		rs, err := NewRouteSegment("", "meer.gpx", []byte(meer))
 		assert.NoError(t, err)
 		assert.NotNil(t, rs)
-		assert.Greater(t, rs.TotalDistance, 1800.0)
+		assert.InDelta(t, 1850.0, rs.TotalDistance, 40)
 	}
 
 	{
 		rs, err := NewRouteSegment("", "finsepiste.gpx", []byte(finsepiste))
 		assert.NoError(t, err)
 		assert.NotNil(t, rs)
-		assert.Greater(t, rs.TotalDistance, 900.0)
+		assert.InDelta(t, 970.0, rs.TotalDistance, 10)
 	}
 }
 

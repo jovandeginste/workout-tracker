@@ -38,6 +38,14 @@ func normalizeDegrees(val float64) float64 {
 }
 
 func correctAltitude(creator string, lat, long, alt float64) float64 {
+	if math.IsNaN(lat) || math.IsNaN(long) {
+		return 0
+	}
+
+	if alt == 0 {
+		return 0
+	}
+
 	if !creatorNeedsCorrection(creator) {
 		return alt
 	}
@@ -241,18 +249,25 @@ func center(gpxContent *gpx.GPX) MapCenter {
 		return MapCenter{}
 	}
 
-	lat, lng := 0.0, 0.0
+	var lat, lng, tot float64
 
 	for _, pt := range points {
+		if !pointHasLocation(&pt) {
+			continue
+		}
+
 		lat += pt.Point.Latitude
 		lng += pt.Point.Longitude
+		tot++
 	}
 
-	size := float64(len(points))
+	if tot == 0 {
+		return MapCenter{}
+	}
 
 	mc := MapCenter{
-		Lat: lat / size,
-		Lng: lng / size,
+		Lat: lat / tot,
+		Lng: lng / tot,
 	}
 
 	mc.updateTimezone()
@@ -305,10 +320,6 @@ func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
 	for _, track := range gpxContent.Tracks {
 		for _, segment := range track.Segments {
 			for _, p := range segment.Points {
-				if !pointHasDistance(p) {
-					continue
-				}
-
 				points = append(points, p)
 			}
 		}
@@ -317,12 +328,16 @@ func allGPXPoints(gpxContent *gpx.GPX) []gpx.GPXPoint {
 	return points
 }
 
-func pointHasDistance(p gpx.GPXPoint) bool {
-	if math.IsNaN(p.Latitude) || math.IsNaN(p.Longitude) {
-		return false
+func totalDistanceFromExtraMetrics(p *gpx.GPXPoint) float64 {
+	extraMetrics := ExtraMetrics{}
+	extraMetrics.ParseGPXExtensions(p.Extensions)
+
+	d, ok := extraMetrics["distance"]
+	if !ok || d <= 0 {
+		return 0
 	}
 
-	return true
+	return d
 }
 
 // Determines the date to use for the workout
@@ -376,8 +391,8 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	}
 
 	var (
-		totalDistance, totalDistance2D, maxElevation, uphill, downhill, maxSpeed float64
-		totalDuration, pauseDuration                                             time.Duration
+		maxElevation, uphill, downhill, maxSpeed float64
+		pauseDuration                            time.Duration
 	)
 
 	minElevation := 100000.0 // This should be high enough for Earthly workouts
@@ -388,16 +403,12 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 				continue
 			}
 
-			totalDistance += segment.Length3D()
-			totalDistance2D += segment.Length2D()
-			totalDuration += time.Duration(segment.Duration()) * time.Second
 			pauseDuration += (time.Duration(segment.MovingData().StoppedTime)) * time.Second
 			minElevation = min(minElevation, segment.ElevationBounds().MinElevation)
 			maxElevation = max(maxElevation, segment.ElevationBounds().MaxElevation)
 			uphill += segment.UphillDownhill().Uphill
 			downhill += segment.UphillDownhill().Downhill
 			maxSpeed = max(maxSpeed, maxSpeedForSegment(segment))
-			pauseDuration += time.Duration(segment.MovingData().StoppedTime)
 		}
 	}
 
@@ -412,17 +423,12 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		Creator: gpxContent.Creator,
 		Center:  mapCenter,
 		WorkoutData: converters.WorkoutData{
-			TotalDistance:       totalDistance,
-			TotalDistance2D:     totalDistance2D,
-			TotalDuration:       totalDuration,
-			MaxSpeed:            maxSpeed,
-			AverageSpeed:        totalDistance / totalDuration.Seconds(),
-			AverageSpeedNoPause: totalDistance / (totalDuration - pauseDuration).Seconds(),
-			PauseDuration:       pauseDuration,
-			MinElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
-			MaxElevation:        correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
-			TotalUp:             uphill,
-			TotalDown:           downhill,
+			MaxSpeed:      maxSpeed,
+			PauseDuration: pauseDuration,
+			MinElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
+			MaxElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
+			TotalUp:       uphill,
+			TotalDown:     downhill,
 		},
 	}
 
@@ -461,58 +467,106 @@ func gpxAsMapData(gpxContent *gpx.GPX) *MapData {
 	data := createMapData(gpxContent)
 
 	points := allGPXPoints(gpxContent)
-	if len(points) == 0 {
+	if len(points) < 2 {
 		return data
 	}
 
-	totalDist := 0.0
-	totalDist2D := 0.0
-	totalTime := 0.0
-	prevPoint := points[0]
+	var (
+		totalDist, totalDist2D, maxSpeed float64
+		totalTime                        time.Duration
+	)
 
+	var prevPt *gpx.GPXPoint
 	data.Details = &MapDataDetails{}
 
-	for i, pt := range points {
-		if !pointHasDistance(pt) {
-			continue
+	for _, pt := range points {
+		newPoint := MapPoint{
+			Elevation: pt.Elevation.Value(),
+			Time:      pt.Timestamp,
 		}
 
-		dist := 0.0
-		dist2D := 0.0
-		t := 0.0
+		validGPS := pointHasLocation(&pt)
 
-		if i > 0 {
-			dist = distance3DBetween(prevPoint, pt)
-			dist2D = distance2DBetween(prevPoint, pt)
-			t = pt.TimeDiff(&prevPoint)
+		if validGPS {
+			newPoint.Lat = pt.Point.Latitude
+			newPoint.Lng = pt.Point.Longitude
+		}
 
-			prevPoint = pt
+		if prevPt != nil {
+			if validGPS && pointHasLocation(prevPt) {
+				newPoint.Distance = distance3DBetween(*prevPt, pt)
+				newPoint.Distance2D = distance2DBetween(*prevPt, pt)
+			} else {
+				newPoint.Distance = totalDistanceFromExtraMetrics(&pt) - totalDist
+				if newPoint.Distance < 0 {
+					newPoint.Distance = 0
+				}
 
-			totalDist += dist
-			totalDist2D += dist2D
-			totalTime += t
+				newPoint.Distance2D = newPoint.Distance
+			}
+
+			newPoint.Duration = time.Duration(pt.TimeDiff(prevPt)) * time.Second
+
+			totalDist += newPoint.Distance
+			totalDist2D += newPoint.Distance2D
+			totalTime += newPoint.Duration
+		}
+
+		newPoint.TotalDistance = totalDist
+		newPoint.TotalDistance2D = totalDist2D
+		newPoint.TotalDuration = totalTime
+
+		speed := newPoint.AverageSpeed()
+		if speed > maxSpeed {
+			maxSpeed = speed
 		}
 
 		extraMetrics := ExtraMetrics{}
-		extraMetrics.Set("elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
+
+		if validGPS && pt.Elevation.NotNull() {
+			extraMetrics.Set("elevation", correctAltitude(gpxContent.Creator, pt.Point.Latitude, pt.Point.Longitude, pt.Elevation.Value()))
+		}
+
 		extraMetrics.ParseGPXExtensions(pt.Extensions)
 
-		data.Details.Points = append(data.Details.Points, MapPoint{
-			Lat:             pt.Point.Latitude,
-			Lng:             pt.Point.Longitude,
-			Elevation:       pt.Elevation.Value(),
-			Time:            pt.Timestamp,
-			Distance:        dist,
-			Distance2D:      dist2D,
-			TotalDistance:   totalDist,
-			TotalDistance2D: totalDist2D,
-			Duration:        time.Duration(t) * time.Second,
-			TotalDuration:   time.Duration(totalTime) * time.Second,
-			ExtraMetrics:    extraMetrics,
-		})
+		newPoint.ExtraMetrics = extraMetrics
+		prevPt = &pt
+
+		data.Details.Points = append(data.Details.Points, newPoint)
+	}
+
+	data.TotalDistance = totalDist
+	data.TotalDistance2D = totalDist2D
+	data.TotalDuration = totalTime
+	data.MaxSpeed = maxSpeed
+
+	if totalTime > 0 {
+		data.AverageSpeed = totalDist / totalTime.Seconds()
+
+		pdDiff := totalTime - data.PauseDuration
+		if pdDiff > 0 {
+			data.AverageSpeedNoPause = totalDist / pdDiff.Seconds()
+		}
 	}
 
 	data.correctNaN()
+	data.UpdateExtraMetrics()
 
 	return data
+}
+
+func pointHasLocation(pt *gpx.GPXPoint) bool {
+	if pt == nil {
+		return false
+	}
+
+	if math.IsNaN(pt.Latitude) || math.IsNaN(pt.Longitude) {
+		return false
+	}
+
+	if pt.Latitude == 0 && pt.Longitude == 0 {
+		return false
+	}
+
+	return true
 }

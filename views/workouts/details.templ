@@ -249,15 +249,17 @@ templ FullWorkoutDetails(w *database.Workout) {
 						{ helpers.HumanDuration(w.TotalDuration() ) }
 					</td>
 				</tr>
-				<tr>
-					<td>
-						@helpers.IconFor("pause")
-					</td>
-					<th>{ i18n.T(ctx, "translation.Time_paused") }</th>
-					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanDuration (w.PauseDuration() ) }
-					</td>
-				</tr>
+				if w.PauseDuration() > 0 {
+					<tr>
+						<td>
+							@helpers.IconFor("pause")
+						</td>
+						<th>{ i18n.T(ctx, "translation.Time_paused") }</th>
+						<td class="whitespace-nowrap font-mono">
+							{ helpers.HumanDuration (w.PauseDuration() ) }
+						</td>
+					</tr>
+				}
 			}
 			if w.Type.IsDistance() {
 				<tr>
@@ -355,42 +357,50 @@ templ FullWorkoutDetails(w *database.Workout) {
 			}
 			if w.Type.IsLocation() {
 				if w.HasElevation() {
-					<tr>
-						<td>
-							@helpers.IconFor("elevation")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Min_elevation") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("elevation")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Max_elevation") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("up")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Total_up") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("down")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Total_down") }</th>
-						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
-						</td>
-					</tr>
+					if w.MinElevation() != 0 {
+						<tr>
+							<td>
+								@helpers.IconFor("elevation")
+							</td>
+							<th>{ i18n.T(ctx, "translation.Min_elevation") }</th>
+							<td class="whitespace-nowrap font-mono">
+								{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
+							</td>
+						</tr>
+					}
+					if w.MaxElevation() != 0 {
+						<tr>
+							<td>
+								@helpers.IconFor("elevation")
+							</td>
+							<th>{ i18n.T(ctx, "translation.Max_elevation") }</th>
+							<td class="whitespace-nowrap font-mono">
+								{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
+							</td>
+						</tr>
+					}
+					if w.TotalUp() != 0 {
+						<tr>
+							<td>
+								@helpers.IconFor("up")
+							</td>
+							<th>{ i18n.T(ctx, "translation.Total_up") }</th>
+							<td class="whitespace-nowrap font-mono">
+								{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
+							</td>
+						</tr>
+					}
+					if w.TotalDown() != 0 {
+						<tr>
+							<td>
+								@helpers.IconFor("down")
+							</td>
+							<th>{ i18n.T(ctx, "translation.Total_down") }</th>
+							<td class="whitespace-nowrap font-mono">
+								{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
+							</td>
+						</tr>
+					}
 				}
 			}
 			if w.HasCalories() {
