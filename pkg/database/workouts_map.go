@@ -11,6 +11,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/labstack/gommon/log"
 	"github.com/paulmach/orb"
+	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 	"github.com/westphae/geomag/pkg/egm96"
 	"gorm.io/gorm"
@@ -432,9 +433,17 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 		},
 	}
 
+	addExtraMetrics(gpxContent, &data.WorkoutData)
+
 	data.correctNaN()
 
 	return data
+}
+
+func addExtraMetrics(gpxContent *gpx.GPX, data *converters.WorkoutData) {
+	if tc, ok := gpxContent.Extensions.GetNode(gpx.AnyNamespace, "total-calories"); ok {
+		data.TotalCalories = cast.ToFloat64(tc.Data)
+	}
 }
 
 func (m *MapData) correctNaN() {

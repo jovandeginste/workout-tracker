@@ -34,6 +34,7 @@ type (
 		TotalDown           float64       `json:"totalDown"`                           // The total distance down of the workout
 		TotalRepetitions    int           `json:"totalRepetitions"`                    // The number of repetitions of the workout
 		TotalWeight         float64       `json:"totalWeight"`                         // The weight of the workout
+		TotalCalories       float64       `json:"totalCalories"`                       // The total calories of the workout
 		ExtraMetrics        []string      `gorm:"serializer:json" json:"extraMetrics"` // Extra metrics available
 	}
 )

@@ -10,6 +10,7 @@ import (
 	"github.com/muktihari/fit/decoder"
 	"github.com/muktihari/fit/kit/semicircles"
 	"github.com/muktihari/fit/profile/filedef"
+	"github.com/muktihari/fit/profile/mesgdef"
 	"github.com/spf13/cast"
 	"github.com/tkrajina/gpxgo/gpx"
 )
@@ -40,6 +41,12 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 		Creator: act.FileId.Manufacturer.String(),
 	}
 
+	if act.Sessions[0].TotalCalories != math.MaxUint16 {
+		gpxFile.Extensions.Nodes = append(gpxFile.Extensions.Nodes, gpx.ExtensionNode{
+			XMLName: xml.Name{Local: "total-calories"}, Data: cast.ToString(act.Sessions[0].TotalCalories),
+		})
+	}
+
 	gpxFile.AppendTrack(&gpx.GPXTrack{
 		Name: act.Sessions[0].SportProfileName,
 		Type: act.Sessions[0].Sport.String(),
@@ -64,29 +71,7 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 			p.Elevation = *gpx.NewNullableFloat64(r.EnhancedAltitudeScaled())
 		}
 
-		gpxExtensionData := map[string]string{}
-		if r.Cadence != math.MaxUint8 {
-			gpxExtensionData["cadence"] = cast.ToString(r.Cadence)
-		}
-
-		if r.HeartRate != math.MaxUint8 {
-			gpxExtensionData["heart-rate"] = cast.ToString(r.HeartRate)
-		}
-
-		if r.EnhancedSpeed != math.MaxUint32 {
-			gpxExtensionData["speed"] = cast.ToString(r.EnhancedSpeedScaled())
-		} else if r.Speed != math.MaxUint16 {
-			gpxExtensionData["speed"] = cast.ToString(r.SpeedScaled())
-		}
-
-		if r.Temperature != math.MaxInt8 {
-			gpxExtensionData["temperature"] = cast.ToString(r.Temperature)
-		}
-
-		if r.Distance != math.MaxUint32 {
-			gpxExtensionData["distance"] = cast.ToString(r.DistanceScaled())
-		}
-
+		gpxExtensionData := getGPXExtensionData(r)
 		for key, value := range gpxExtensionData {
 			p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
 				XMLName: xml.Name{Local: key}, Data: value,
@@ -97,4 +82,36 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 	}
 
 	return gpxFile, nil
+}
+
+func getGPXExtensionData(r *mesgdef.Record) map[string]string {
+	gpxExtensionData := map[string]string{}
+
+	if r.Cadence != math.MaxUint8 {
+		gpxExtensionData["cadence"] = cast.ToString(r.Cadence)
+	}
+
+	if r.HeartRate != math.MaxUint8 {
+		gpxExtensionData["heart-rate"] = cast.ToString(r.HeartRate)
+	}
+
+	if r.EnhancedSpeed != math.MaxUint32 {
+		gpxExtensionData["speed"] = cast.ToString(r.EnhancedSpeedScaled())
+	} else if r.Speed != math.MaxUint16 {
+		gpxExtensionData["speed"] = cast.ToString(r.SpeedScaled())
+	}
+
+	if r.Temperature != math.MaxInt8 {
+		gpxExtensionData["temperature"] = cast.ToString(r.Temperature)
+	}
+
+	if r.Distance != math.MaxUint32 {
+		gpxExtensionData["distance"] = cast.ToString(r.DistanceScaled())
+	}
+
+	if r.Calories != math.MaxUint16 {
+		gpxExtensionData["calories"] = cast.ToString(r.Calories)
+	}
+
+	return gpxExtensionData
 }
