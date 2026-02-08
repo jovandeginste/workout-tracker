@@ -61,7 +61,12 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 			s = p.AverageSpeed()
 		}
 
-		data["position"].Data = append(data["position"].Data, []float64{p.Lat, p.Lng})
+		if p.Lat != 0 || p.Lng != 0 {
+			data["position"].Data = append(data["position"].Data, []float64{p.Lat, p.Lng})
+		} else {
+			data["position"].Data = append(data["position"].Data, nil)
+		}
+
 		data["time"].Data = append(data["time"].Data, p.Time)
 		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
 		data["duration"].Data = append(data["duration"].Data, p.TotalDuration.Seconds())

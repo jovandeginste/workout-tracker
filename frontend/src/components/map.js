@@ -96,8 +96,11 @@ class WtMap extends HTMLElement {
 
     const elevationLayerGroup = new L.featureGroup();
 
-    const positions = this.workout.position.Data;
-    positions.forEach((p, i) => {
+    this.workout.position.Data.forEach((p, i) => {
+      if (p === null) {
+        return;
+      }
+
       if (prevPoint) {
         const elevation = this.workout.elevation.Data[i] || 0;
         // Add invisible point to map to allow fitBounds to work
@@ -133,40 +136,44 @@ class WtMap extends HTMLElement {
       elevationLayerGroup.addTo(map);
     }
 
-    let last = positions[positions.length - 1];
-    this.trackGroup.addLayer(
-      L.circleMarker(last, {
-        color: "red",
-        fill: true,
-        fillColor: "red",
-        fillOpacity: 1,
-        radius: 6,
-      })
-        .addTo(map)
-        .bindTooltip(this.getTooltip(positions.length - 1)),
-    );
+    const positions = this.workout.position.Data.filter((x) => x !== null);
 
-    let first = positions[0];
-    this.trackGroup.addLayer(
-      L.circleMarker(first, {
-        color: "green",
-        fill: true,
-        fillColor: "green",
-        fillOpacity: 1,
-        radius: 6,
-      })
-        .addTo(map)
-        .bindTooltip(this.getTooltip(0)),
-    );
+    if (positions.length > 0) {
+      let last = positions[positions.length - 1];
+      this.trackGroup.addLayer(
+        L.circleMarker(last, {
+          color: "red",
+          fill: true,
+          fillColor: "red",
+          fillOpacity: 1,
+          radius: 6,
+        })
+          .addTo(map)
+          .bindTooltip(this.getTooltip(positions.length - 1)),
+      );
 
-    if (!this.hoverMarker) {
-      this.hoverMarker = L.circleMarker(first, {
-        color: "blue",
-        radius: 8,
-      });
+      let first = positions[0];
+      this.trackGroup.addLayer(
+        L.circleMarker(first, {
+          color: "green",
+          fill: true,
+          fillColor: "green",
+          fillOpacity: 1,
+          radius: 6,
+        })
+          .addTo(map)
+          .bindTooltip(this.getTooltip(0)),
+      );
+
+      if (!this.hoverMarker) {
+        this.hoverMarker = L.circleMarker(first, {
+          color: "blue",
+          radius: 8,
+        });
+      }
+
+      this.hoverMarker.addTo(map); // Adding marker to the map
     }
-
-    this.hoverMarker.addTo(map); // Adding marker to the map
 
     const overlays = {
       [this.config.elevationName]: elevationLayerGroup,
@@ -215,7 +222,12 @@ class WtMap extends HTMLElement {
     const slopeLayerGroup = new L.featureGroup();
 
     let prevPoint;
-    this.workout.position.Data.forEach((p, i) => {
+    const positions = this.workout.position.Data;
+    positions.forEach((p, i) => {
+      if (p === null) {
+        return;
+      }
+
       if (prevPoint) {
         const slope = this.workout.slope.Data[i] || 0;
 
@@ -246,6 +258,9 @@ class WtMap extends HTMLElement {
 
     let prevPoint;
     this.workout.position.Data.forEach((p, i) => {
+      if (p === null) {
+        return;
+      }
       if (prevPoint) {
         const speed = this.workout.speed.Data[i] || null;
         if (speed === null || speed < 0.1) {
@@ -346,7 +361,11 @@ class WtMap extends HTMLElement {
   setSegment(_title, data) {
     this.segmentLayerGroup.clearLayers();
 
-    const positions = data["position"];
+    const positions = data.position.filter((p) => p !== null);
+    if (positions.length < 2) {
+      return;
+    }
+
     for (let i = 1; i < positions.length; i++) {
       L.polyline([positions[i - 1], positions[i]], {
         color: "red",
