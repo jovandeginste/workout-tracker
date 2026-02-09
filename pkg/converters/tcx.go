@@ -66,17 +66,21 @@ func tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 		Timestamp: t.Time,
 	}
 
-	if t.HR != 0 {
-		p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-			XMLName: xml.Name{Local: "heart-rate"}, Data: cast.ToString(t.HR),
-		})
-	}
-
-	if t.Cad != 0 {
-		p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
-			XMLName: xml.Name{Local: "cadence"}, Data: cast.ToString(t.Cad),
-		})
-	}
+	setIfNotZero(p, "cadence", t.Cad)
+	setIfNotZero(p, "distance", t.Dist)
+	setIfNotZero(p, "heart-rate", t.HR)
+	setIfNotZero(p, "power", t.Power)
+	setIfNotZero(p, "speed", t.Speed)
 
 	return p
+}
+
+func setIfNotZero(p *gpx.GPXPoint, key string, value float64) {
+	if value == 0 {
+		return
+	}
+
+	p.Extensions.Nodes = append(p.Extensions.Nodes, gpx.ExtensionNode{
+		XMLName: xml.Name{Local: key}, Data: cast.ToString(value),
+	})
 }

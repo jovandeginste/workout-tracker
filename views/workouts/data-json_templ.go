@@ -26,6 +26,7 @@ func translationMap(ctx context.Context) map[string]string {
 		"distance":     i18n.T(ctx, "translation.Distance"),
 		"duration":     i18n.T(ctx, "translation.Duration"),
 		"calories":     i18n.T(ctx, "translation.Calories"),
+		"power":        i18n.T(ctx, "translation.Power"),
 		"heart-rate":   i18n.T(ctx, "translation.Heart_rate"),
 		"temperature":  i18n.T(ctx, "translation.temperature"),
 		"speed":        i18n.T(ctx, "translation.Speed"),

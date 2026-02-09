@@ -38,6 +38,14 @@ func (u UserPreferredUnits) Tempo() string {
 	return "min/" + u.Distance()
 }
 
+func (u UserPreferredUnits) Power() string {
+	return "W"
+}
+
+func (u UserPreferredUnits) Calories() string {
+	return "kcal"
+}
+
 func (u UserPreferredUnits) HeartRate() string {
 	return "bpm"
 }

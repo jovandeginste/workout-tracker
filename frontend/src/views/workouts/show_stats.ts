@@ -393,6 +393,18 @@ export class WorkoutStats extends LitElement {
         hiddenByDefault: true,
         yaxis: { min: 0 },
       },
+      calories: {
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.calories}`,
+        formatterYaxis: true,
+        hiddenByDefault: true,
+        yaxis: { min: 0 },
+      },
+      power: {
+        formatter: (val) => `${val ?? "-"} ${this.preferredUnits.power}`,
+        formatterYaxis: true,
+        hiddenByDefault: true,
+        yaxis: { min: 0 },
+      },
       temperature: {
         formatter: (val) =>
           `${val ?? "-"} ${this.preferredUnits.temperature || "°C"}`,

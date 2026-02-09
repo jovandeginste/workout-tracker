@@ -15,8 +15,12 @@ func HumanCadence(cad float64) string {
 	return RoundFloat64(cad)
 }
 
-func HumanCaloriesKcal(cal float64) string {
-	return RoundFloat64(cal) + " kcal"
+func HumanPower(pow float64) string {
+	return RoundFloat64(pow)
+}
+
+func HumanCalories(cal float64) string {
+	return RoundFloat64(cal)
 }
 
 func NumericDuration(d time.Duration) float64 {

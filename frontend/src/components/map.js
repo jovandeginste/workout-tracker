@@ -295,6 +295,8 @@ class WtMap extends HTMLElement {
       elevation: this.preferredUnits.elevation,
       "heart-rate": this.preferredUnits.heartRate,
       cadence: this.preferredUnits.cadence,
+      calories: this.preferredUnits.calories,
+      power: this.preferredUnits.power,
       temperature: this.preferredUnits.temperature,
       slope: "%",
     };

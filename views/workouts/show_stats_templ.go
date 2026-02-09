@@ -39,6 +39,7 @@ func ShowStats(w *database.Workout) templ.Component {
 			"distance":     i18n.T(ctx, "translation.Distance"),
 			"duration":     i18n.T(ctx, "translation.Duration"),
 			"calories":     i18n.T(ctx, "translation.Calories"),
+			"power":        i18n.T(ctx, "translation.Power"),
 			"heart-rate":   i18n.T(ctx, "translation.Heart_rate"),
 			"temperature":  i18n.T(ctx, "translation.temperature"),
 			"speed":        i18n.T(ctx, "translation.Speed"),
@@ -53,7 +54,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.CurrentUser(ctx).Profile.Theme)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 25, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 26, Col: 53}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -66,7 +67,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.Timezone(ctx))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 29, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 30, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -79,7 +80,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.Language(ctx))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 30, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 31, Col: 30}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -92,7 +93,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(translations))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 31, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 32, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -105,7 +106,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 33, Col: 80}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 34, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
