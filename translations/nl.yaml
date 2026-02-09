@@ -51,12 +51,14 @@ nl:
       einde van een workout
   sports:
     cycling: fietsen
+    indoor-cycling: indoor fietsen
     golfing: golfen
     hiking: trekken
     horse-riding: paardrijden
     inline-skating: skaten
     push-ups: push-ups
     running: lopen
+    indoor-running: indoor lopen
     skiing: skiën
     snowboarding: snowboarden
     swimming: zwemmen

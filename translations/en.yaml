@@ -41,6 +41,7 @@ en:
     auto: auto-detect
     unknown: unknown
     cycling: cycling
+    indoor-cycling: indoor cycling
     mountain-biking: mountain biking
     alpine-climbing: alpine climbing
     mountaineering: mountaineering
@@ -51,6 +52,7 @@ en:
     hiking: hiking
     push-ups: push-ups
     running: running
+    indoor-running: indoor running
     skiing: skiing
     snowboarding: snowboarding
     swimming: swimming
