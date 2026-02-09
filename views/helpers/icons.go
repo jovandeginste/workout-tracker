@@ -54,6 +54,7 @@ var iconMap = map[string]string{
 	"mountain-biking": "icon-[emojione-monotone--person-mountain-biking]",
 	"e-cycling":       "icon-[material-symbols--electric-bike-outline]",
 	"running":         "icon-[fa6-solid--person-running]",
+	"indoor-running":  "icon-[solar--treadmill-round-bold]",
 	"walking":         "icon-[fa6-solid--person-walking]",
 	"swimming":        "icon-[fa6-solid--person-swimming]",
 	"inline-skating":  "icon-[map--inline-skating]",
