@@ -31,8 +31,12 @@ func HumanCadence(d float64) string {
 	return templatehelpers.HumanCadence(d)
 }
 
+func HumanPower(d float64) string {
+	return templatehelpers.HumanPower(d)
+}
+
 func HumanCalories(d float64) string {
-	return templatehelpers.HumanCaloriesKcal(d)
+	return templatehelpers.HumanCalories(d)
 }
 
 func HumanWeight(ctx context.Context, d float64) string {

@@ -115,7 +115,6 @@ en:
     The_shareable_link_is_deleted_for_the_workout_s: The shareable link is deleted for the workout '%s'
     delete_public_share: Delete link
     Autodetect: Auto-detect
-    Average_cadence: Average cadence
     WorkoutAttributeLocked: This attribute is locked from automatic updates
     WorkoutLocked: The attributes of workout '%s' are now locked
     WorkoutUnLocked: The attributes of workout '%s' are now unlocked
@@ -128,6 +127,8 @@ en:
     Bidirectional: Bidirectional
     Breakdown: Breakdown
     Cadence: Cadence
+    cadence: Cadence
+    Cadence_avg_max: Cadence (avg/max)
     enhanced_speed: Enhanced speed
     temperature: Temperature
     Cancel: Cancel
@@ -147,7 +148,7 @@ en:
     Duration: Duration
     Elevation: Elevation
     End: End
-    Est_calories_burned: Est. calories burned
+    Est_calories_burned: Calories burned (est)
     Calories_burned: Calories burned
     Estimated_based_on_the_activity: Estimated based on the activity and your last
       recorded weight
@@ -156,6 +157,7 @@ en:
     Filter: Filter
     Heading: Heading
     Heart_rate: Heart rate
+    heart-rate: Heart rate
     HelpTranslating: |
       We'd love your help translating!
 
@@ -171,7 +173,6 @@ en:
     Manual: Manual
     Matches: Matches
     Matching_route_segments: Matching route segments
-    Max_cadence: Max cadence
     Max_elevation: Max elevation
     Max_speed: Max speed
     Min_elevation: Min elevation
@@ -246,6 +247,9 @@ en:
     workouts: workouts
     Accuracy: Accuracy
     Calories: Calories
+    Power: Power
+    power: Power
+    Power_avg_max: Power (avg/max)
     ascending: ascending
     descending: descending
     Total_weight: Total weight

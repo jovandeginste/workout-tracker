@@ -249,6 +249,22 @@ func (w *Workout) MaxSpeed() float64 {
 	return w.Data.MaxSpeed
 }
 
+func (w *Workout) AveragePower() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.AveragePower
+}
+
+func (w *Workout) MaxPower() float64 {
+	if w.Data == nil {
+		return 0
+	}
+
+	return w.Data.MaxPower
+}
+
 func (w *Workout) MaxCadence() float64 {
 	if w.Data == nil {
 		return 0
@@ -663,6 +679,7 @@ func (w *Workout) UpdateAverages() {
 
 	w.calculateAverageSpeeds()
 	w.calculateCadence()
+	w.calculatePower()
 }
 
 func (w *Workout) calculateAverageSpeeds() {
@@ -681,6 +698,35 @@ func (w *Workout) calculateAverageSpeeds() {
 	}
 
 	w.Data.AverageSpeedNoPause = w.Data.TotalDistance / (w.Data.TotalDuration - w.Data.PauseDuration).Seconds()
+}
+
+func (w *Workout) calculatePower() {
+	w.Data.MaxPower = 0
+	w.Data.AveragePower = 0
+
+	if !w.HasPower() {
+		return
+	}
+
+	trackedFor := time.Duration(0)
+	avgPower := 0.0
+
+	for _, p := range w.Data.Details.Points {
+		c, ok := p.ExtraMetrics["power"]
+		if !ok {
+			continue
+		}
+
+		w.Data.MaxPower = max(w.Data.MaxPower, c)
+		avgPower += c * p.Duration.Seconds()
+		trackedFor += p.Duration
+	}
+
+	if trackedFor.Seconds() == 0 {
+		return
+	}
+
+	w.Data.AveragePower = avgPower / trackedFor.Seconds()
 }
 
 func (w *Workout) calculateCadence() {
@@ -805,6 +851,10 @@ func (w *Workout) HasEnhancedSpeed() bool {
 
 func (w *Workout) HasTemperature() bool {
 	return w.HasExtraMetric("temperature")
+}
+
+func (w *Workout) HasPower() bool {
+	return w.HasExtraMetric("power")
 }
 
 func (w *Workout) HasCadence() bool {

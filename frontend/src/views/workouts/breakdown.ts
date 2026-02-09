@@ -64,6 +64,14 @@ export class WorkoutBreakdown extends LitElement {
       unit: "",
       displayFor: ["xl"],
     },
+    calories: {
+      unit: "",
+      displayFor: ["xl"],
+    },
+    power: {
+      unit: "",
+      displayFor: ["xl"],
+    },
     temperature: {
       unit: "",
       displayFor: ["xl"],
@@ -83,6 +91,8 @@ export class WorkoutBreakdown extends LitElement {
       this.availableMetrics["heart-rate"].unit =
         this.preferredUnits.heartRate || "";
       this.availableMetrics.cadence.unit = this.preferredUnits.cadence || "";
+      this.availableMetrics.calories.unit = this.preferredUnits.calories || "";
+      this.availableMetrics.power.unit = this.preferredUnits.power || "";
       this.availableMetrics.temperature.unit =
         this.preferredUnits.temperature || "";
     }

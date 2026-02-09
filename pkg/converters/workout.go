@@ -24,9 +24,11 @@ type (
 		TotalDuration       time.Duration `json:"totalDuration"`                       // The total duration of the workout
 		MaxSpeed            float64       `json:"maxSpeed"`                            // The maximum speed of the workout
 		MaxCadence          float64       `json:"maxCadence"`                          // The maximum cadence of the workout
+		MaxPower            float64       `json:"maxPower"`                            // The maximum power of the workout
 		AverageSpeed        float64       `json:"averageSpeed"`                        // The average speed of the workout
 		AverageSpeedNoPause float64       `json:"averageSpeedNoPause"`                 // The average speed of the workout without pausing
 		AverageCadence      float64       `json:"averageCadence"`                      // The average cadence of the workout
+		AveragePower        float64       `json:"averagePower"`                        // The average power of the workout
 		PauseDuration       time.Duration `json:"pauseDuration"`                       // The total pause duration of the workout
 		MinElevation        float64       `json:"minElevation"`                        // The minimum elevation of the workout
 		MaxElevation        float64       `json:"maxElevation"`                        // The maximum elevation of the workout

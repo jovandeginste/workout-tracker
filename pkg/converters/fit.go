@@ -113,5 +113,9 @@ func getGPXExtensionData(r *mesgdef.Record) map[string]string {
 		gpxExtensionData["calories"] = cast.ToString(r.Calories)
 	}
 
+	if r.Power != math.MaxUint16 {
+		gpxExtensionData["power"] = cast.ToString(r.Power)
+	}
+
 	return gpxExtensionData
 }

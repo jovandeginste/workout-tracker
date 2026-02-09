@@ -27,6 +27,7 @@ var iconMap = map[string]string{
 	"timezone":    "icon-[material-symbols--map]",
 	"pause":       "icon-[fa6-regular--hourglass]",
 	"calories":    "icon-[fa6-solid--fire]",
+	"power":       "icon-[mdi--lightning-bolt]",
 	"steps":       "icon-[ion--footsteps]",
 	"scale":       "icon-[ion--scale]",
 	"height":      "icon-[mdi--human-male-height]",

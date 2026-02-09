@@ -337,18 +337,10 @@ templ FullWorkoutDetails(w *database.Workout) {
 						<td>
 							@helpers.IconFor("cadence")
 						</td>
-						<th>{ i18n.T(ctx, "translation.Average_cadence") }</th>
+						<th>{ i18n.T(ctx, "translation.Cadence_avg_max") }</th>
 						<td class="whitespace-nowrap font-mono">
 							{ helpers.HumanCadence (w.AverageCadence()) }
-							{ currentUser.PreferredUnits().Cadence() }
-						</td>
-					</tr>
-					<tr>
-						<td>
-							@helpers.IconFor("cadence")
-						</td>
-						<th>{ i18n.T(ctx, "translation.Max_cadence") }</th>
-						<td class="whitespace-nowrap font-mono">
+							{ currentUser.PreferredUnits().Cadence() } /
 							{ helpers.HumanCadence (w.MaxCadence()) }
 							{ currentUser.PreferredUnits().Cadence() }
 						</td>
@@ -423,10 +415,25 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</th>
 					<td class="whitespace-nowrap font-mono">
 						{ helpers.HumanCalories (w.CaloriesBurned() ) }
+						{ currentUser.PreferredUnits().Calories() }
 						if w.HasCaloriesEstimate() {
 							({ helpers.HumanWeight(ctx, w.User.WeightAt(w.Date)) }
 							{ currentUser.PreferredUnits().Weight() })
 						}
+					</td>
+				</tr>
+			}
+			if w.HasPower() {
+				<tr>
+					<td>
+						@helpers.IconFor("power")
+					</td>
+					<th>{ i18n.T(ctx, "translation.Power_avg_max") }</th>
+					<td class="whitespace-nowrap font-mono">
+						{ helpers.HumanPower (w.AveragePower()) }
+						{ currentUser.PreferredUnits().Power() } /
+						{ helpers.HumanPower (w.MaxPower()) }
+						{ currentUser.PreferredUnits().Power() }
 					</td>
 				</tr>
 			}
@@ -452,34 +459,9 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<td>{ i18n.T(ctx, "translation.Extra_metrics") }</td>
 					<td class="flex flex-wrap gap-1">
-						if w.HasHeartRate() {
-							<div title={ i18n.T(ctx, "translation.Heart_rate") }>
-								@helpers.IconFor("heart-rate")
-							</div>
-						}
-						if w.HasCadence() {
-							<div title={ i18n.T(ctx, "translation.Cadence") }>
-								@helpers.IconFor("cadence")
-							</div>
-						}
-						if w.HasEnhancedSpeed() {
-							<div title={ i18n.T(ctx, "translation.enhanced_speed") }>
-								@helpers.IconFor("speed")
-							</div>
-						}
-						if w.HasTemperature() {
-							<div title={ i18n.T(ctx, "translation.temperature") }>
-								@helpers.IconFor("temperature")
-							</div>
-						}
-						if w.HasHeading() {
-							<div title={ i18n.T(ctx, "translation.Heading") }>
-								@helpers.IconFor("heading")
-							</div>
-						}
-						if w.HasAccuracy() {
-							<div title={ i18n.T(ctx, "translation.Accuracy") }>
-								@helpers.IconFor("accuracy")
+						for _, m := range w.Data.ExtraMetrics {
+							<div title={ i18n.T(ctx, "translation."+m) }>
+								@helpers.IconFor(m)
 							</div>
 						}
 					</td>

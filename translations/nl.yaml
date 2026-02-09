@@ -120,6 +120,8 @@ nl:
     Bidirectional: Bidirectioneel
     Breakdown: Uitsplitsing
     Cadence: Cadans
+    cadence: Cadans
+    Cadence_avg_max: Cadans (gem/max)
     Cancel: Annuleren
     Circular: Rondtoer
     Continue: Doorgaan
@@ -139,7 +141,7 @@ nl:
     Duration: Duur
     Elevation: Hoogte
     End: Einde
-    Est_calories_burned: Geschat verbruik calorieën
+    Est_calories_burned: Verbruik calorieën (geschat)
     Calories_burned: Verbruik calorieën
     Estimated_based_on_the_activity: Geschat op basis van de activiteit en je 
       laatst gekende gewicht
@@ -148,6 +150,7 @@ nl:
     Filter: Filter
     Heading: Koers
     Heart_rate: Hartslag
+    heart-rate: Hartslag
     it_took_me_s_to_go_s_i_averaged_s: Het duurde %s om %s te bereiken. Ik 
       haalde gemiddeld %s.
     Last: Laatste
@@ -236,6 +239,9 @@ nl:
     workouts: workouts
     Accuracy: Nauwkeurigheid
     Calories: Calorieën
+    Power: Vermogen
+    power: Vermogen
+    Power_avg_max: Vermogen (gem/max)
     ascending: oplopend
     descending: aflopend
     Total_weight: Totaal gewicht

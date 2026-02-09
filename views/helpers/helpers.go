@@ -88,6 +88,8 @@ func PreferredUnitsToJSON(units *database.UserPreferredUnits) map[string]string 
 		"cadence":     units.Cadence(),
 		"temperature": units.Temperature(),
 		"tempo":       units.Tempo(),
+		"power":       units.Power(),
+		"calories":    units.Calories(),
 	}
 }
 
