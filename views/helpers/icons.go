@@ -50,6 +50,7 @@ var iconMap = map[string]string{
 
 	// Sport Icons
 	"cycling":         "icon-[material-symbols--pedal-bike-outline]",
+	"indoor-cycling":  "icon-[healthicons--exercise-bicycle]",
 	"mountain-biking": "icon-[emojione-monotone--person-mountain-biking]",
 	"e-cycling":       "icon-[material-symbols--electric-bike-outline]",
 	"running":         "icon-[fa6-solid--person-running]",
