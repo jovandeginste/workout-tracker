@@ -76,6 +76,23 @@ information for AI agents to work effectively on this codebase.
 - Backend uses `github.com/invopop/ctxi18n`.
 - Translations are in `translations/*.yaml`.
 - Frontend has its own localization in `frontend/src/generated/locales/`.
+- **New Workout Types**: When adding a new workout type, only add English
+  (`en.yaml`) and Dutch (`nl.yaml`) translations. Other languages are handled
+  via Weblate.
+
+### Adding New Workout Types
+
+To add a new workout type, follow these steps:
+
+1.  **Define Constant**: Add a new `WorkoutType` constant in
+    `pkg/database/workout_type.go`.
+2.  **Configure**: Add it to `workoutTypeConfigs` in
+    `pkg/database/workout_type.go` (define distance, location, etc.).
+3.  **Translations**: Add keys to `translations/en.yaml` and
+    `translations/nl.yaml` (En/Nl only).
+4.  **Parsing**: Update `workoutTypeFromData` in `pkg/database/workouts.go` to
+    parse string aliases.
+5.  **Icons**: Add a mapping in `views/helpers/icons.go` (use Iconify format).
 
 ---
 

@@ -418,39 +418,50 @@ func (w *Workout) setContent(filename string, content []byte) {
 	}
 }
 
+var workoutTypeAliases = map[string]WorkoutType{
+	"abs":             WorkoutTypeCore,
+	"badminton":       WorkoutTypeBadminton,
+	"core":            WorkoutTypeCore,
+	"cycle":           WorkoutTypeCycling,
+	"cycling":         WorkoutTypeCycling,
+	"dance":           WorkoutTypeDancing,
+	"dancing":         WorkoutTypeDancing,
+	"ebike":           WorkoutTypeECycling,
+	"ecycling":        WorkoutTypeECycling,
+	"football":        WorkoutTypeFootball,
+	"golfing":         WorkoutTypeGolfing,
+	"hiking":          WorkoutTypeHiking,
+	"horsebackriding": WorkoutTypeHorseRiding,
+	"horseriding":     WorkoutTypeHorseRiding,
+	"iceskating":      WorkoutTypeIceSkating,
+	"inlineskating":   WorkoutTypeInlineSkating,
+	"kayaking":        WorkoutTypeKayaking,
+	"pingpong":        WorkoutTypeTableTennis,
+	"pushups":         WorkoutTypePushups,
+	"rowing":          WorkoutTypeRowing,
+	"running":         WorkoutTypeRunning,
+	"run":             WorkoutTypeRunning,
+	"situps":          WorkoutTypeSitups,
+	"skate":           WorkoutTypeInlineSkating,
+	"skating":         WorkoutTypeInlineSkating,
+	"skiing":          WorkoutTypeSkiing,
+	"snowboarding":    WorkoutTypeSnowboarding,
+	"soccer":          WorkoutTypeFootball,
+	"squats":          WorkoutTypeSquats,
+	"swimming":        WorkoutTypeSwimming,
+	"tabletennis":     WorkoutTypeTableTennis,
+	"tennis":          WorkoutTypeTennis,
+	"walking":         WorkoutTypeWalking,
+	"walk":            WorkoutTypeWalking,
+}
+
 func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
-	switch strings.ReplaceAll(strings.ToLower(gpxType), "-", "") {
-	case "running", "run":
-		return WorkoutTypeRunning, true
-	case "walking", "walk":
-		return WorkoutTypeWalking, true
-	case "cycling", "cycle":
-		return WorkoutTypeCycling, true
-	case "ebike", "ecycling":
-		return WorkoutTypeECycling, true
-	case "snowboarding":
-		return WorkoutTypeSnowboarding, true
-	case "horseriding", "horsebackriding":
-		return WorkoutTypeHorseRiding, true
-	case "inlineskating", "skating", "skate":
-		return WorkoutTypeInlineSkating, true
-	case "skiing":
-		return WorkoutTypeSkiing, true
-	case "swimming":
-		return WorkoutTypeSwimming, true
-	case "kayaking":
-		return WorkoutTypeKayaking, true
-	case "golfing":
-		return WorkoutTypeGolfing, true
-	case "hiking":
-		return WorkoutTypeHiking, true
-	case "pushups":
-		return WorkoutTypePushups, true
-	case "rowing":
-		return WorkoutTypeRowing, true
-	default:
-		return WorkoutTypeAutoDetect, false
+	normalized := strings.ReplaceAll(strings.ToLower(gpxType), "-", "")
+	if wt, ok := workoutTypeAliases[normalized]; ok {
+		return wt, true
 	}
+
+	return WorkoutTypeAutoDetect, false
 }
 
 func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX, dataName string) WorkoutType {

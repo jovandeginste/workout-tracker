@@ -67,8 +67,17 @@ var iconMap = map[string]string{
 	"mountaineering":  "icon-[fluent--mountain-trail-24-filled]",
 	"horse-riding":    "icon-[mdi--horse-human]",
 	"push-ups":        "icon-[hugeicons--push-up-bar]",
+	"sit-ups":         "icon-[healthicons--exercise]",
+	"squats":          "icon-[hugeicons--workout-squats]",
 	"weight-lifting":  "icon-[fa6-solid--dumbbell]",
 	"rowing":          "icon-[material-symbols--rowing]",
+	"table-tennis":    "icon-[fa6-solid--table-tennis-paddle-ball]",
+	"tennis":          "icon-[ion--tennisball]",
+	"ice-skating":     "icon-[fa6-solid--person-skating]",
+	"badminton":       "icon-[icon-park-outline--badminton]",
+	"football":        "icon-[fa6-regular--futbol]",
+	"core":            "icon-[mdi--human-handsup]",
+	"dancing":         "icon-[mdi--dance-ballroom]",
 	"other":           "icon-[fa6-solid--question]",
 
 	// Page Icons
