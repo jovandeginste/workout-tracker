@@ -448,6 +448,20 @@ func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
 		return WorkoutTypePushups, true
 	case "rowing":
 		return WorkoutTypeRowing, true
+	case "tabletennis", "pingpong":
+		return WorkoutTypeTableTennis, true
+	case "tennis":
+		return WorkoutTypeTennis, true
+	case "iceskating":
+		return WorkoutTypeIceSkating, true
+	case "badminton":
+		return WorkoutTypeBadminton, true
+	case "football", "soccer":
+		return WorkoutTypeFootball, true
+	case "core", "abs":
+		return WorkoutTypeCore, true
+	case "dancing", "dance":
+		return WorkoutTypeDancing, true
 	default:
 		return WorkoutTypeAutoDetect, false
 	}

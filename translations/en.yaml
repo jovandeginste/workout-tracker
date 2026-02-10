@@ -51,6 +51,8 @@ en:
     golfing: golfing
     hiking: hiking
     push-ups: push-ups
+    sit-ups: sit-ups
+    squats: squats
     running: running
     indoor-running: indoor running
     skiing: skiing
@@ -60,6 +62,13 @@ en:
     weight-lifting: weight lifting
     kayaking: kayaking
     rowing: rowing
+    table-tennis: table tennis
+    tennis: tennis
+    ice-skating: ice skating
+    badminton: badminton
+    football: football
+    core: core
+    dancing: dancing
     other: other
   menu:
     Measurements: Measurements

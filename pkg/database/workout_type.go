@@ -30,8 +30,17 @@ const (
 	WorkoutTypeGolfing        WorkoutType = "golfing"
 	WorkoutTypeHiking         WorkoutType = "hiking"
 	WorkoutTypePushups        WorkoutType = "push-ups"
+	WorkoutTypeSitups         WorkoutType = "sit-ups"
+	WorkoutTypeSquats         WorkoutType = "squats"
+	WorkoutTypeCore           WorkoutType = "core"
 	WorkoutTypeWeightLifting  WorkoutType = "weight-lifting"
 	WorkoutTypeRowing         WorkoutType = "rowing"
+	WorkoutTypeTableTennis    WorkoutType = "table-tennis"
+	WorkoutTypeTennis         WorkoutType = "tennis"
+	WorkoutTypeIceSkating     WorkoutType = "ice-skating"
+	WorkoutTypeBadminton      WorkoutType = "badminton"
+	WorkoutTypeFootball       WorkoutType = "football"
+	WorkoutTypeDancing        WorkoutType = "dancing"
 	WorkoutTypeOther          WorkoutType = "other"
 
 	WorkoutTypeClassLocation   = "location"
@@ -67,8 +76,18 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeGolfing:        {Location: true, Distance: true, Repetition: false, Weight: false},
 	WorkoutTypeHiking:         {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeTennis:         {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeIceSkating:     {Location: true, Distance: true, Repetition: false, Weight: false},
+	WorkoutTypeFootball:       {Location: true, Distance: true, Repetition: false, Weight: false},
+
+	WorkoutTypeTableTennis: {Location: false, Distance: false, Repetition: false, Weight: false},
+	WorkoutTypeBadminton:   {Location: false, Distance: false, Repetition: false, Weight: false},
+	WorkoutTypeDancing:     {Location: false, Distance: false, Repetition: false, Weight: false},
 
 	WorkoutTypePushups:       {Location: false, Distance: false, Repetition: true, Weight: false},
+	WorkoutTypeSitups:        {Location: false, Distance: false, Repetition: true, Weight: false},
+	WorkoutTypeSquats:        {Location: false, Distance: false, Repetition: true, Weight: true},
+	WorkoutTypeCore:          {Location: false, Distance: false, Repetition: true, Weight: false},
 	WorkoutTypeWeightLifting: {Location: false, Distance: false, Repetition: true, Weight: true},
 
 	WorkoutTypeOther: {Location: true, Distance: true, Repetition: true, Weight: true},
