@@ -1,5 +1,70 @@
 ## What's Changed
 
+- Merge pull request #747 from jovandeginste/more-wo-types
+- Add maps for sit-ups and squats (and sort the list)
+- Reformat AGENTS.md
+- refactor(workouts): use map for workout type aliases
+- feat(workout-types): add more workout types
+- Merge pull request #745 from
+  jovandeginste/dependabot/go_modules/github.com/go-git/go-git/v5-5.16.5
+- Merge pull request #744 from jovandeginste/wt-indoor-cycling
+- feat(workout-type): Add new workout type "indoor running"
+- feat(workout-type): Add new workout type "indoor cycling"
+- Merge pull request #743 from jovandeginste/parse-power
+- feat: Add support for Power metric
+- Merge pull request #742 from jovandeginste/fix-nil-pos
+- Filter nil-positions when drawing points on the map
+- Merge pull request #741 from jovandeginste/calories
+- Add calories and total calories from fit files
+- Merge pull request #740 from jovandeginste/prevent-duplication
+- Fix collision of extra distance data
+- Merge pull request #738 from jovandeginste/improve-no-gps
+- Add support for workouts with distance, but without GPS
+- Merge pull request #736 from jovandeginste/docker-health
+- feat(health): Implement application and container health checks
+- Merge pull request #730 from
+  jovandeginste/dependabot/github_actions/all-e6ee9d7de3
+- Merge pull request #734 from jovandeginste/bump-templ
+- Bump templ to v0.3.960
+- Merge pull request #733 from
+  jovandeginste/dependabot/go_modules/all-ad32bd8024
+- fix: use go tool
+- Merge pull request #732 from jovandeginste/weblate
+- Translated using Weblate (Russian)
+- Merge pull request #731 from jovandeginste/trim-gpxdata
+- fix(gpx): Standardize GPX extension names more robustly
+- Merge pull request #729 from jovandeginste/ebike
+- fix(database): Support e-cycling and improve workout type matching
+- Merge pull request #726 from jovandeginste/wo-icon-create
+- Show workout icon when creating a manual workout
+- Merge pull request #725 from jovandeginste/extra-workout-types
+- feat: Add extra workout types
+- Merge pull request #724 from jovandeginste/fix-rotate-api
+- fix: make reset api key button HTMX
+- Merge pull request #720 from jovandeginste/weblate
+- Translated using Weblate (Russian)
+- Merge pull request #723 from jovandeginste/dev-improvements
+- Incorporate suggestions from AI
+- docs: wrap long lines in docs and track script
+- docs: synchronize and update project documentation
+- feat: add automated track animation generation
+- docs: update agent guide with commit conventions
+- chore: add agent guide and session configuration
+- build: add Nix flake and direnv configuration
+- Merge pull request #719 from jovandeginste/ref-slope
+- refactor(workouts): Improve climb detection logic and display
+
+## What's Changed in v2.5.1
+
+- Merge pull request #718 from jovandeginste/fix-release
+- chore(release): Update CI to use unified frontend build target
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.5.0...v2.5.1
+
+## What's Changed in v2.5.0
+
+- Merge pull request #717 from jovandeginste/update-changelog
 - fix(background): Fix background task batch processing (again), by
   @jovandeginste, in
   [#716](https://github.com/jovandeginste/workout-tracker/pull/716)
@@ -322,6 +387,9 @@
 - @Flyingfufu made their first contribution
 - @cjc7373 made their first contribution
 - @thomasrenes made their first contribution
+
+**Full Changelog**:
+https://github.com/jovandeginste/workout-tracker/compare/v2.4.1...v2.5.0
 
 ## What's Changed in v2.4.1
 
