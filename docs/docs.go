@@ -735,6 +735,9 @@ const docTemplate = `{
         "app.ManualWorkout": {
             "type": "object",
             "properties": {
+                "custom_type": {
+                    "type": "string"
+                },
                 "date": {
                     "type": "string"
                 },
@@ -813,6 +816,10 @@ const docTemplate = `{
                     "description": "Distance in this item",
                     "type": "number"
                 },
+                "distance2D": {
+                    "description": "2D distance in this item",
+                    "type": "number"
+                },
                 "duration": {
                     "description": "Duration in this item",
                     "type": "integer"
@@ -871,6 +878,10 @@ const docTemplate = `{
                 },
                 "totalDistance": {
                     "description": "Total distance in all items up to and including this item",
+                    "type": "number"
+                },
+                "totalDistance2D": {
+                    "description": "Total 2D distance in all items up to and including this item",
                     "type": "number"
                 },
                 "totalDuration": {
@@ -985,6 +996,29 @@ const docTemplate = `{
                 }
             }
         },
+        "database.Category": {
+            "type": "string",
+            "enum": [
+                "Hors Catégorie",
+                "Category 1",
+                "Category 2",
+                "Category 3",
+                "Category 4",
+                "Category 5",
+                "Category 6",
+                "Uncategorized"
+            ],
+            "x-enum-varnames": [
+                "CategoryHorsCategorie",
+                "Category1",
+                "Category2",
+                "Category3",
+                "Category4",
+                "Category5",
+                "Category6",
+                "CategoryUncategorized"
+            ]
+        },
         "database.DurationRecord": {
             "type": "object",
             "properties": {
@@ -1028,6 +1062,10 @@ const docTemplate = `{
                 },
                 "name": {
                     "description": "The name of the gear",
+                    "type": "string"
+                },
+                "notes": {
+                    "description": "The notes associated with the equipment, in markdown",
                     "type": "string"
                 },
                 "updatedAt": {
@@ -1144,6 +1182,10 @@ const docTemplate = `{
                     "description": "The average cadence of the workout",
                     "type": "number"
                 },
+                "averagePower": {
+                    "description": "The average power of the workout",
+                    "type": "number"
+                },
                 "averageSpeed": {
                     "description": "The average speed of the workout",
                     "type": "number"
@@ -1159,6 +1201,13 @@ const docTemplate = `{
                             "$ref": "#/definitions/database.MapCenter"
                         }
                     ]
+                },
+                "climbs": {
+                    "description": "Auto-detected climbs",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.Segment"
+                    }
                 },
                 "createdAt": {
                     "type": "string"
@@ -1193,6 +1242,10 @@ const docTemplate = `{
                     "description": "The maximum elevation of the workout",
                     "type": "number"
                 },
+                "maxPower": {
+                    "description": "The maximum power of the workout",
+                    "type": "number"
+                },
                 "maxSpeed": {
                     "description": "The maximum speed of the workout",
                     "type": "number"
@@ -1217,8 +1270,16 @@ const docTemplate = `{
                     "description": "The stop time of the workout",
                     "type": "string"
                 },
+                "totalCalories": {
+                    "description": "The total calories of the workout",
+                    "type": "number"
+                },
                 "totalDistance": {
                     "description": "The total distance of the workout",
+                    "type": "number"
+                },
+                "totalDistance2D": {
+                    "description": "The total 2D distance of the workout",
                     "type": "number"
                 },
                 "totalDown": {
@@ -1286,6 +1347,10 @@ const docTemplate = `{
                     "description": "The distance from the previous point",
                     "type": "number"
                 },
+                "distance2D": {
+                    "description": "The 2D distance from the previous point",
+                    "type": "number"
+                },
                 "duration": {
                     "description": "The duration from the previous point",
                     "type": "integer"
@@ -1310,12 +1375,20 @@ const docTemplate = `{
                     "description": "The longitude of the point",
                     "type": "number"
                 },
+                "slopeGrade": {
+                    "description": "The grade of the slope at this point",
+                    "type": "number"
+                },
                 "time": {
                     "description": "The time the point was recorded",
                     "type": "string"
                 },
                 "totalDistance": {
                     "description": "The total distance of the workout up to this point",
+                    "type": "number"
+                },
+                "totalDistance2D": {
+                    "description": "The total 2D distance of the workout up to this point",
                     "type": "number"
                 },
                 "totalDuration": {
@@ -1390,6 +1463,10 @@ const docTemplate = `{
                             "$ref": "#/definitions/database.UserPreferredUnits"
                         }
                     ]
+                },
+                "show_tabs": {
+                    "description": "Whether to show tabs in web UI",
+                    "type": "boolean"
                 },
                 "socials_disabled": {
                     "description": "Whether social sharing buttons are disabled when viewing a workout",
@@ -1561,6 +1638,55 @@ const docTemplate = `{
                 }
             }
         },
+        "database.Segment": {
+            "type": "object",
+            "properties": {
+                "avg_slope": {
+                    "type": "number"
+                },
+                "category": {
+                    "$ref": "#/definitions/database.Category"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "end": {
+                    "$ref": "#/definitions/database.MapPoint"
+                },
+                "end_idx": {
+                    "type": "integer"
+                },
+                "gain": {
+                    "type": "number"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "length_m": {
+                    "type": "number"
+                },
+                "start": {
+                    "$ref": "#/definitions/database.MapPoint"
+                },
+                "start_idx": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/database.SlopeKind"
+                }
+            }
+        },
+        "database.SlopeKind": {
+            "type": "string",
+            "enum": [
+                "climb",
+                "descent"
+            ],
+            "x-enum-varnames": [
+                "SlopeKindClimb",
+                "SlopeKindDescent"
+            ]
+        },
         "database.Statistics": {
             "type": "object",
             "properties": {
@@ -1654,6 +1780,10 @@ const docTemplate = `{
                 "createdAt": {
                     "type": "string"
                 },
+                "custom_type": {
+                    "description": "The type of the workout, custom",
+                    "type": "string"
+                },
                 "data": {
                     "description": "The map data associated with the workout",
                     "allOf": [
@@ -1687,6 +1817,10 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "locked": {
+                    "description": "Whether the workout's main attributes should be auto-updated",
+                    "type": "boolean"
                 },
                 "name": {
                     "description": "The name of the workout",
@@ -1818,6 +1952,11 @@ const docTemplate = `{
                 "auto",
                 "running",
                 "cycling",
+                "indoor-cycling",
+                "indoor-running",
+                "mountain-biking",
+                "alpine-climbing",
+                "mountaineering",
                 "e-cycling",
                 "horse-riding",
                 "inline-skating",
@@ -1829,8 +1968,17 @@ const docTemplate = `{
                 "golfing",
                 "hiking",
                 "push-ups",
+                "sit-ups",
+                "squats",
+                "core",
                 "weight-lifting",
                 "rowing",
+                "table-tennis",
+                "tennis",
+                "ice-skating",
+                "badminton",
+                "football",
+                "dancing",
                 "other"
             ],
             "x-enum-varnames": [
@@ -1838,6 +1986,11 @@ const docTemplate = `{
                 "WorkoutTypeAutoDetect",
                 "WorkoutTypeRunning",
                 "WorkoutTypeCycling",
+                "WorkoutTypeIndoorCycling",
+                "WorkoutTypeIndoorRunning",
+                "WorkoutTypeMountainBiking",
+                "WorkoutTypeAlpineClimbing",
+                "WorkoutTypeMountaineering",
                 "WorkoutTypeECycling",
                 "WorkoutTypeHorseRiding",
                 "WorkoutTypeInlineSkating",
@@ -1849,8 +2002,17 @@ const docTemplate = `{
                 "WorkoutTypeGolfing",
                 "WorkoutTypeHiking",
                 "WorkoutTypePushups",
+                "WorkoutTypeSitups",
+                "WorkoutTypeSquats",
+                "WorkoutTypeCore",
                 "WorkoutTypeWeightLifting",
                 "WorkoutTypeRowing",
+                "WorkoutTypeTableTennis",
+                "WorkoutTypeTennis",
+                "WorkoutTypeIceSkating",
+                "WorkoutTypeBadminton",
+                "WorkoutTypeFootball",
+                "WorkoutTypeDancing",
                 "WorkoutTypeOther"
             ]
         },
