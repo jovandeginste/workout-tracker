@@ -1,0 +1,43 @@
+package route_segments
+
+import (
+	"time"
+
+	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+)
+
+type trendDataPoint struct {
+	Date  string `json:"date"`
+	Speed string `json:"speed"`
+}
+
+templ ShowStats(s *database.RouteSegment) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	{{ pu := currentUser.PreferredUnits() }}
+	{{
+		var trendData []trendDataPoint
+		for _, m := range s.RouteSegmentMatches {
+			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
+				trendData = append(trendData, trendDataPoint{
+					Date:  m.Workout.Date.Format(time.RFC3339),
+					Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+				})
+			}
+		}
+	}}
+	{{
+		translations := map[string]string{
+			"averageSpeed": i18n.T(ctx, "translation.Average_speed"),
+			"speedUnit":    pu.Speed(),
+		}
+	}}
+	<route-segment-stats
+		data={ templ.JSONString(trendData) }
+		translations={ templ.JSONString(translations) }
+		color-mode={ currentUser.Profile.Theme }
+		lang={ helpers.Language(ctx) }
+	></route-segment-stats>
+	<script src={ helpers.RouteFor(ctx, "assets") + "/views/route_segments/show_stats.js" } type="module"></script>
+}
