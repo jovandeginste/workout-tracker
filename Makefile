@@ -38,6 +38,7 @@ clean:
 
 watch/templ:
 	$(TEMPL_COMMAND) generate --watch \
+			--include-version=false \
 			--open-browser=false \
 			--proxy="http://localhost:$(TEMPL_APP_PORT)" \
 			--proxyport="$(TEMPL_PROXY_PORT)" \
@@ -60,6 +61,7 @@ watch/tailwind:
 
 notify-proxy:
 	$(TEMPL_COMMAND) generate \
+			--include-version=false \
 			--notify-proxy --proxyport=$(TEMPL_PROXY_PORT)
 
 dev-backend:
@@ -128,7 +130,8 @@ build-frontend: install-deps
 	cd frontend && npm run build
 
 build-templates:
-	$(TEMPL_COMMAND) generate
+	$(TEMPL_COMMAND) generate \
+			--include-version=false
 
 test-packages:
 	$(GO_TEST) ./pkg/...
