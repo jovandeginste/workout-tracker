@@ -68,6 +68,12 @@ export class WorkoutStats extends LitElement {
   })
   translations = null;
 
+  private isDark(): boolean {
+    if (this.colorMode === "dark") return true;
+    if (this.colorMode === "light") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
   private timeLabels: number[] = [];
 
   public constructor() {
@@ -224,6 +230,9 @@ export class WorkoutStats extends LitElement {
 
   private getChartOptions(): ChartOptions {
     const metricSettings = this.getMetricSettings();
+    const dark = this.isDark();
+    const fgColor = dark ? "#e4e4e7" : "#27272a";
+    const gridColor = dark ? "#3f3f46" : "#d4d4d8";
     return {
       maintainAspectRatio: false,
       animation: false,
@@ -246,6 +255,7 @@ export class WorkoutStats extends LitElement {
                   ],
                 ),
           ticks: {
+            color: fgColor,
             callback: (val: number) => {
               if (this.type === "distance") {
                 return `${val % 1 ? val.toFixed(1) : val} ${
@@ -256,6 +266,7 @@ export class WorkoutStats extends LitElement {
               return new Date(val as number).toTimeString().substr(0, 5);
             },
           },
+          grid: { color: gridColor },
         },
         ...Object.fromEntries(
           Object.keys(metricSettings)
@@ -271,6 +282,7 @@ export class WorkoutStats extends LitElement {
                   position: "left",
                   ...metricSettings[metric].yaxis,
                   ticks: {
+                    color: fgColor,
                     callback: (val) => {
                       const settings = metricSettings[metric];
                       if (settings.formatterYaxis) {
@@ -281,6 +293,7 @@ export class WorkoutStats extends LitElement {
                       return val;
                     },
                   },
+                  grid: { color: gridColor },
                 },
               ];
             })
@@ -314,6 +327,7 @@ export class WorkoutStats extends LitElement {
         },
         legend: {
           display: true,
+          labels: { color: fgColor },
           onClick: (e, legendItem, legend) => {
             const meta = legend.chart.getDatasetMeta(legendItem.datasetIndex);
             meta.hidden = meta.hidden === null ? !legendItem.hidden : null;

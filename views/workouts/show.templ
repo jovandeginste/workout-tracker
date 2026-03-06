@@ -93,7 +93,7 @@ templ renderDetails(w *database.Workout) {
 }
 
 templ renderBreakdown(w *database.Workout) {
-	<div class="print:w-full overflow-y-auto">
+	<div class="print:w-full overflow-y-auto max-h-[300px] sm:max-h-[400px] md:max-h-[600px] print:max-h-[600px]">
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
 		<workout-breakdown
 			map-id="workout-map"
@@ -118,7 +118,7 @@ templ renderNotes(w *database.Workout) {
 
 templ renderClimbs(w *database.Workout) {
 	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<div class="print:w-full overflow-y-auto">
+	<div class="print:w-full overflow-y-auto max-h-[300px] sm:max-h-[400px] md:max-h-[600px] print:max-h-[600px]">
 		<table>
 			<thead>
 				<tr class="climb-header">

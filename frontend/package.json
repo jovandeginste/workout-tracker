@@ -16,6 +16,7 @@
     "apexcharts": "^3.48.0",
     "chart.js": "^4.5.0",
     "chartjs-adapter-date-fns": "^3.0.0",
+    "chartjs-plugin-trendline": "^3.2.4",
     "chartjs-plugin-zoom": "^2.2.0",
     "date-fns": "^4.1.0",
     "fullcalendar": "^6.1.11",

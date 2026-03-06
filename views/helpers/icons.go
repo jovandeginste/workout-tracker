@@ -96,6 +96,7 @@ var iconMap = map[string]string{
 	"route-segment-add": "icon-[fa6-solid--circle-plus]",
 	"heatmap":           "icon-[fa6-solid--fire]",
 	"changelog":         "icon-[mdi--clipboard-check]",
+	"trend":             "icon-[mdi--trending-up]",
 
 	// Utility Icons
 	"close":         "icon-[fa6-solid--xmark]",
