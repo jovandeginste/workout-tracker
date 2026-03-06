@@ -7,10 +7,10 @@ toolchain go1.25.3
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
 require (
-	github.com/a-h/templ v0.3.960
+	github.com/a-h/templ v0.3.1001
 	github.com/alexedwards/scs/gormstore v0.0.0-20251002162104-209de6e426de
 	github.com/alexedwards/scs/v2 v2.9.0
-	github.com/alitto/pond/v2 v2.6.0
+	github.com/alitto/pond/v2 v2.7.0
 	github.com/anyappinc/fitbit v0.0.3
 	github.com/aquasecurity/table v1.11.0
 	github.com/biter777/countries v1.7.5
@@ -29,16 +29,16 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/invopop/ctxi18n v0.9.0
 	github.com/labstack/echo-jwt/v4 v4.4.0
-	github.com/labstack/echo/v4 v4.15.0
+	github.com/labstack/echo/v4 v4.15.1
 	github.com/labstack/gommon v0.4.2
-	github.com/lmittmann/tint v1.1.2
+	github.com/lmittmann/tint v1.1.3
 	github.com/mattn/go-isatty v0.0.20
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/muktihari/fit v0.27.1
 	github.com/orandin/slog-gorm v1.4.0
 	github.com/paulmach/orb v0.12.0
 	github.com/ringsaturn/tzf v1.0.3
-	github.com/samber/slog-echo v1.19.1
+	github.com/samber/slog-echo v1.21.0
 	github.com/sersh88/timeago v1.0.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spazzymoto/echo-scs-session v1.0.0
@@ -50,8 +50,8 @@ require (
 	github.com/swaggo/swag v1.16.6
 	github.com/tkrajina/gpxgo v1.4.0
 	github.com/westphae/geomag v1.0.2
-	golang.org/x/crypto v0.47.0
-	golang.org/x/text v0.33.0
+	golang.org/x/crypto v0.48.0
+	golang.org/x/text v0.34.0
 	gorm.io/datatypes v1.2.7
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/driver/postgres v1.6.0
@@ -155,8 +155,8 @@ require (
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/oauth2 v0.34.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/term v0.39.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/term v0.40.0 // indirect
 	golang.org/x/time v0.14.0 // indirect
 	golang.org/x/tools v0.41.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect

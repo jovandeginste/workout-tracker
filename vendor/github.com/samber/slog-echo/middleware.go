@@ -52,6 +52,7 @@ type Config struct {
 	WithSpanID         bool
 	WithTraceID        bool
 	WithClientIP       bool
+	WithCustomMessage  func(c echo.Context, err error) string
 
 	Filters []Filter
 }
@@ -90,6 +91,7 @@ func DefaultConfig() Config {
 		WithSpanID:         false,
 		WithTraceID:        false,
 		WithClientIP:       true,
+		WithCustomMessage:  nil,
 
 		Filters: []Filter{},
 	}
@@ -176,7 +178,7 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 					slog.String("ip", ip),
 				)
 			}
-	
+
 			responseAttributes = append(responseAttributes,
 				slog.Time("time", end.UTC()),
 				slog.Duration("latency", latency),
@@ -302,6 +304,10 @@ func NewWithConfig(logger *slog.Logger, config Config) echo.MiddlewareFunc {
 				if httpErr.Internal != nil {
 					attributes = append(attributes, slog.String("internal", httpErr.Internal.Error()))
 				}
+			}
+
+			if config.WithCustomMessage != nil {
+				msg = config.WithCustomMessage(c, errMsg)
 			}
 
 			logger.LogAttrs(c.Request().Context(), level, msg, attributes...)

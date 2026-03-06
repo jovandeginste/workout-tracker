@@ -42,7 +42,7 @@ github.com/ProtonMail/go-crypto/openpgp/x448
 # github.com/a-h/parse v0.0.0-20250122154542-74294addb73e
 ## explicit; go 1.18
 github.com/a-h/parse
-# github.com/a-h/templ v0.3.960
+# github.com/a-h/templ v0.3.1001
 ## explicit; go 1.23.0
 github.com/a-h/templ
 github.com/a-h/templ/cmd/templ
@@ -90,7 +90,7 @@ github.com/alexedwards/scs/gormstore
 ## explicit; go 1.12
 github.com/alexedwards/scs/v2
 github.com/alexedwards/scs/v2/memstore
-# github.com/alitto/pond/v2 v2.6.0
+# github.com/alitto/pond/v2 v2.7.0
 ## explicit; go 1.20
 github.com/alitto/pond/v2
 github.com/alitto/pond/v2/internal/future
@@ -410,7 +410,7 @@ github.com/kevinburke/ssh_config
 # github.com/labstack/echo-jwt/v4 v4.4.0
 ## explicit; go 1.24.0
 github.com/labstack/echo-jwt/v4
-# github.com/labstack/echo/v4 v4.15.0
+# github.com/labstack/echo/v4 v4.15.1
 ## explicit; go 1.24.0
 github.com/labstack/echo/v4
 github.com/labstack/echo/v4/middleware
@@ -419,7 +419,7 @@ github.com/labstack/echo/v4/middleware
 github.com/labstack/gommon/bytes
 github.com/labstack/gommon/color
 github.com/labstack/gommon/log
-# github.com/lmittmann/tint v1.1.2
+# github.com/lmittmann/tint v1.1.3
 ## explicit; go 1.21
 github.com/lmittmann/tint
 # github.com/mattn/go-colorable v0.1.14
@@ -526,7 +526,7 @@ github.com/samber/lo/internal/constraints
 github.com/samber/lo/internal/xrand
 github.com/samber/lo/internal/xtime
 github.com/samber/lo/mutable
-# github.com/samber/slog-echo v1.19.1
+# github.com/samber/slog-echo v1.21.0
 ## explicit; go 1.21
 github.com/samber/slog-echo
 # github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3
@@ -642,7 +642,7 @@ go.opentelemetry.io/otel/trace/internal/telemetry
 # go.yaml.in/yaml/v3 v3.0.4
 ## explicit; go 1.16
 go.yaml.in/yaml/v3
-# golang.org/x/crypto v0.47.0
+# golang.org/x/crypto v0.48.0
 ## explicit; go 1.24.0
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
@@ -697,17 +697,17 @@ golang.org/x/oauth2/internal
 ## explicit; go 1.24.0
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.40.0
+# golang.org/x/sys v0.41.0
 ## explicit; go 1.24.0
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.39.0
+# golang.org/x/term v0.40.0
 ## explicit; go 1.24.0
 golang.org/x/term
-# golang.org/x/text v0.33.0
+# golang.org/x/text v0.34.0
 ## explicit; go 1.24.0
 golang.org/x/text/cases
 golang.org/x/text/encoding
