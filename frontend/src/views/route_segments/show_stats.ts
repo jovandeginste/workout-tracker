@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import {
   Chart,
   ScatterController,
+  LineElement,
   PointElement,
   LinearScale,
   TimeScale,
@@ -10,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+import pluginTrendlineLinear from "chartjs-plugin-trendline";
 import { localized } from "@lit/localize";
 import { initLocalize } from "../../locale.js";
 
@@ -23,6 +25,7 @@ interface TrendDataPoint {
 interface Translations {
   averageSpeed: string;
   speedUnit: string;
+  trend: string;
 }
 
 @customElement("route-segment-stats")
@@ -52,11 +55,13 @@ export class RouteSegmentStats extends LitElement {
     super();
     Chart.register(
       ScatterController,
+      LineElement,
       PointElement,
       LinearScale,
       TimeScale,
       Tooltip,
       Legend,
+      pluginTrendlineLinear,
     );
   }
 
@@ -82,8 +87,17 @@ export class RouteSegmentStats extends LitElement {
     const speedUnit = this.translations?.speedUnit || "";
     const dark = this.isDark();
     const dotColor = dark ? "#fef3c7" : "#b45309";
+    const trendColor = dark ? "#fbbf24" : "#d97706";
     const fgColor = dark ? "#e4e4e7" : "#27272a";
     const gridColor = dark ? "#3f3f46" : "#d4d4d8";
+
+    const scatterData = this.data
+      .map((d) => ({
+        x: new Date(d.date).valueOf(),
+        y: parseFloat(d.speed),
+      }))
+      .filter((d) => !isNaN(d.y))
+      .sort((a, b) => a.x - b.x);
 
     this.chart = new Chart(canvas, {
       type: "scatter",
@@ -93,13 +107,14 @@ export class RouteSegmentStats extends LitElement {
             label: this.translations?.averageSpeed || "Average speed",
             backgroundColor: dotColor,
             borderColor: dotColor,
-            data: this.data
-              .map((d) => ({
-                x: new Date(d.date).valueOf(),
-                y: parseFloat(d.speed),
-              }))
-              .filter((d) => !isNaN(d.y)),
-          },
+            data: scatterData,
+            trendlineLinear: {
+              colorMin: trendColor,
+              colorMax: trendColor,
+              width: 2,
+              lineStyle: "solid",
+            },
+          } as never,
         ],
       },
       options: {
@@ -115,7 +130,7 @@ export class RouteSegmentStats extends LitElement {
           y: {
             ticks: {
               color: fgColor,
-              callback: (val) => `${val} ${speedUnit}`,
+              callback: (val) => `${Number(val).toFixed(1)} ${speedUnit}`,
             },
             grid: { color: gridColor },
           },
@@ -125,7 +140,7 @@ export class RouteSegmentStats extends LitElement {
           tooltip: {
             callbacks: {
               label: (item) =>
-                `${(item.raw as { y: number }).y.toFixed(2)} ${speedUnit}`,
+                `${(item.raw as { y: number }).y.toFixed(1)} ${speedUnit}`,
               title: (items) =>
                 new Date(items[0].parsed.x).toLocaleDateString(),
             },

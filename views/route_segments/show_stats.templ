@@ -31,6 +31,7 @@ templ ShowStats(s *database.RouteSegment) {
 		translations := map[string]string{
 			"averageSpeed": i18n.T(ctx, "translation.Average_speed"),
 			"speedUnit":    pu.Speed(),
+			"trend":        i18n.T(ctx, "translation.Personal_trend"),
 		}
 	}}
 	<route-segment-stats
