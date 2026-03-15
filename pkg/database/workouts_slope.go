@@ -84,16 +84,21 @@ type Detector struct {
 }
 
 // CalculateSlopes processes a slice of MapPoints and returns a slice of ClimbDetection.
-func (m *MapData) CalculateSlopes() {
-	climbs := DetectSignificantSegments(m.Details.Points, SlopeKindClimb)
-	descents := DetectSignificantSegments(m.Details.Points, SlopeKindDescent)
+func (m *MapData) CalculateSlopes(wt WorkoutType) {
+	slopes := make([]Segment, 0)
 
-	climbs = append(climbs, descents...)
-	slices.SortFunc(climbs, func(a, b Segment) int {
+	if wt.AreClimbsRelevant() {
+		climbs := DetectSignificantSegments(m.Details.Points, SlopeKindClimb, wt)
+		slopes = append(slopes, climbs...)
+	}
+	descents := DetectSignificantSegments(m.Details.Points, SlopeKindDescent, wt)
+	slopes = append(slopes, descents...)
+
+	slices.SortFunc(slopes, func(a, b Segment) int {
 		return cmp.Compare(a.Start.TotalDistance, b.Start.TotalDistance)
 	})
 
-	m.Climbs = climbs
+	m.Climbs = slopes
 }
 
 // NewDetector initializes a new Detector for a given kind.
@@ -111,7 +116,7 @@ func NewDetector(kind SlopeKind) *Detector {
 }
 
 // SmoothSlopeGrades computes a weighted average slope at each point.
-func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
+func SmoothSlopeGrades(points []MapPoint, windowMeters float64, maxDeltaMeter float64) {
 	for i := range points {
 		centerDist := points[i].TotalDistance
 		var weightedSlopeSum, totalWeight float64
@@ -119,7 +124,7 @@ func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
 		for j := range points {
 			distDiff := points[j].TotalDistance - centerDist
 			distFromCenter := math.Abs(distDiff)
-			if distFromCenter > windowMeters/2 || distFromCenter < MaxDeltaMeter/2 {
+			if distFromCenter > windowMeters/2 || distFromCenter < maxDeltaMeter/2 {
 				continue
 			}
 
@@ -140,14 +145,14 @@ func SmoothSlopeGrades(points []MapPoint, windowMeters float64) {
 }
 
 // DetectSignificantSegments processes a slice of points to find climbs or descents.
-func DetectSignificantSegments(points []MapPoint, kind SlopeKind) []Segment {
+func DetectSignificantSegments(points []MapPoint, kind SlopeKind, wt WorkoutType) []Segment {
 	detector := NewDetector(kind)
 
 	if len(points) < 2 {
 		return nil
 	}
 
-	SmoothSlopeGrades(points, 300.0)
+	SmoothSlopeGrades(points, 300.0, wt.MaxDeltaMeter())
 
 	// Start with the first point.
 	detector.currentSegmentPoints = append(detector.currentSegmentPoints, &points[0])
@@ -286,4 +291,12 @@ func ClassifyClimbCategory(length, slope float64) Category {
 	default:
 		return CategoryUncategorized
 	}
+}
+
+func (s *Segment) AverageSpeed() float64 {
+	if s.Duration == 0 {
+		return 0
+	}
+
+	return s.Length / s.Duration.Seconds()
 }
