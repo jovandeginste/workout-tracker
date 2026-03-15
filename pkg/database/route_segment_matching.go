@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-// MaxDeltaMeter is the maximum distance in meters that a point can be away from
-// the route segment
-const MaxDeltaMeter = 20.0
-
 // MaxTotalDistanceFraction is the maximum percentage of the total distance of
 // the route segment that can be exceeded by the total distance matching part of
 // the route (1.0 = 100%)
@@ -113,7 +109,7 @@ func (rs *RouteSegment) Match(workout *Workout) *RouteSegmentMatch {
 		return nil
 	}
 
-	sp := rs.StartingPoints(workout.Data.Details.Points)
+	sp := rs.StartingPoints(workout, workout.Data.Details.Points)
 	if len(sp) == 0 {
 		return nil
 	}
@@ -153,6 +149,7 @@ func (rs *RouteSegment) Match(workout *Workout) *RouteSegmentMatch {
 func (rs *RouteSegment) MatchSegment(workout *Workout, start int, forward bool) (int, bool) {
 	workoutLength := len(workout.Data.Details.Points)
 	segmentLength := len(rs.Points)
+	maxDeltaMeter := workout.Type.MaxDeltaMeter()
 
 	cur := 0
 	if !forward {
@@ -163,7 +160,7 @@ func (rs *RouteSegment) MatchSegment(workout *Workout, start int, forward bool) 
 		index := (start + i) % workoutLength
 
 		d := rs.Points[cur].DistanceTo(&workout.Data.Details.Points[index])
-		if d > MaxDeltaMeter {
+		if d > maxDeltaMeter {
 			continue
 		}
 
@@ -191,14 +188,15 @@ func (rs *RouteSegment) MatchSegment(workout *Workout, start int, forward bool) 
 
 // StartingPoints finds all points that are closer than MaxDeltaMeter to the
 // segment's starting point
-func (rs *RouteSegment) StartingPoints(points []MapPoint) []int {
+func (rs *RouteSegment) StartingPoints(workout *Workout, points []MapPoint) []int {
 	var r []int
 
+	maxDeltaMeter := workout.Type.MaxDeltaMeter()
 	start := rs.Points[0]
 
 	for i, p := range points {
 		d := start.DistanceTo(&p)
-		if d < MaxDeltaMeter {
+		if d < maxDeltaMeter {
 			r = append(r, i)
 		}
 	}

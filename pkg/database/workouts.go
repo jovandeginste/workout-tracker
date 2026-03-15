@@ -794,7 +794,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.UpdateExtraMetrics()
 	w.UpdateAverages()
 	w.Data.UpdateAddress()
-	w.Data.CalculateSlopes()
+	w.Data.CalculateSlopes(w.Type)
 
 	w.Dirty = false
 

@@ -201,3 +201,23 @@ func (wt WorkoutType) IsLocation() bool {
 func AsWorkoutType(s string) WorkoutType {
 	return WorkoutType(s)
 }
+
+// MaxDeltaMeter is the maximum distance in meters that a point can be away from
+// the route segment for route segment matching
+func (wt WorkoutType) MaxDeltaMeter() float64 {
+	switch wt {
+	case WorkoutTypeSkiing:
+	case WorkoutTypeSnowboarding:
+		return 120.0
+	}
+	return 20.0
+}
+
+func (wt WorkoutType) AreClimbsRelevant() bool {
+	switch wt {
+	case WorkoutTypeSkiing:
+	case WorkoutTypeSnowboarding:
+		return false
+	}
+	return true
+}
