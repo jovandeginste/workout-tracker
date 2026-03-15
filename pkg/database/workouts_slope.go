@@ -297,3 +297,11 @@ func ClassifyClimbCategory(length, slope float64) Category {
 		return CategoryUncategorized
 	}
 }
+
+func (s *Segment) AverageSpeed() float64 {
+	if s.Duration == 0 {
+		return 0
+	}
+
+	return s.Length / s.Duration.Seconds()
+}
