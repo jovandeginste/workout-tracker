@@ -44,9 +44,27 @@ func (sc *StatConfig) GetBucketString(sqlDialect string) string {
 func (sc *StatConfig) GetDayBucketFormatExpression(sqlDialect string) string {
 	switch sqlDialect {
 	case postgresDialect:
-		return "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket"
+		switch sc.Per {
+		case "year":
+			return "min(to_char(date_trunc('year', workouts.date), 'YYYY-MM-DD')) as bucket"
+		case "week":
+			return "min(to_char(date_trunc('week', workouts.date), 'YYYY-MM-DD')) as bucket"
+		case "day":
+			return "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket"
+		default:
+			return "min(to_char(date_trunc('month', workouts.date), 'YYYY-MM-DD')) as bucket"
+		}
 	default:
-		return "min(strftime('%Y-%m-%d', workouts.date)) as bucket"
+		switch sc.Per {
+		case "year":
+			return "min(strftime('%Y-01-01', workouts.date)) as bucket"
+		case "week":
+			return "min(date(workouts.date, '-6 days', 'weekday 1')) as bucket"
+		case "day":
+			return "min(strftime('%Y-%m-%d', workouts.date)) as bucket"
+		default:
+			return "min(strftime('%Y-%m-01', workouts.date)) as bucket"
+		}
 	}
 }
 
