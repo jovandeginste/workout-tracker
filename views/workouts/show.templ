@@ -173,7 +173,7 @@ templ renderClimbs(w *database.Workout) {
 						<td class="text-right">
 							{ math.Round(100*climb.AvgSlope) } %
 						</td>
-						<td class="text-right">{ helpers.HumanSpeed (ctx, climb.Length / climb.Duration.Seconds() ) } { pu.Speed() }</td>
+						<td class="text-right">{ helpers.HumanSpeed (ctx, climb.AverageSpeed() ) } { pu.Speed() }</td>
 						<td class="hidden sm:table-cell">{ climb.Category }</td>
 					</tr>
 				}
