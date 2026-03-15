@@ -27,7 +27,7 @@ func TestWorkoutType_Collections(t *testing.T) {
 	}
 }
 
-func TestWorkout_SnowboardingSkiing(t *testing.T) {
+func TestWorkoutType_SnowboardingSkiing(t *testing.T) {
 	assert.False(t, WorkoutTypeSnowboarding.AreClimbsRelevant())
 	assert.False(t, WorkoutTypeSkiing.AreClimbsRelevant())
 	assert.True(t, WorkoutTypeSnowboarding.AreDescentsRelevant())

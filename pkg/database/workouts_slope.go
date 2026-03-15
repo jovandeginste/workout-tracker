@@ -83,7 +83,7 @@ type Detector struct {
 	pauseDescent  float64
 }
 
-// CalculateSlopes processes a slice of MapPoints and returns a slice of ClimbDetection.
+// CalculateSlopes analyzes the workout points and populates m.Climbs with detected slope segments.
 func (m *MapData) CalculateSlopes(wt WorkoutType) {
 	slopes := make([]Segment, 0)
 
