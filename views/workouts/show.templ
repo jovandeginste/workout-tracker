@@ -123,33 +123,37 @@ templ renderClimbs(w *database.Workout) {
 			<thead>
 				<tr class="climb-header">
 					<th></th>
-					<th class="hidden md:table-cell">
+					<th class="hidden md:table-cell text-right">
 						@helpers.IconFor("location")
 						{ i18n.T(ctx, "climb.start") }
 					</th>
-					<th>
+					<th class="text-right">
 						@helpers.IconFor("distance")
 						{ i18n.T(ctx, "climb.distance") }
 					</th>
-					<th>
+					<th class="text-right">
 						@helpers.IconFor("duration")
 						{ i18n.T(ctx, "translation.Duration") }
 					</th>
-					<th class="hidden lg:table-cell">
+					<th class="hidden lg:table-cell text-right">
 						@helpers.IconFor("gain")
 						{ i18n.T(ctx, "climb.elevation_gain") } / { i18n.T(ctx, "climb.elevation_loss") }
 					</th>
-					<th>
+					<th class="text-right">
 						@helpers.IconFor("slope")
 						{ i18n.T(ctx, "climb.average_slope") }
 					</th>
-					<th class="hidden sm:table-cell">
+					<th class="hidden sm:table-cell text-right">
+						@helpers.IconFor("speed")
+							{ i18n.T(ctx, "translation.Average_speed") }
+					</th>
+					<th class="hidden sm:table-cell text-right">
 						@helpers.IconFor("slope_cat")
 						{ i18n.T(ctx, "climb.category") }
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="font-mono">
 				for _, climb := range w.Data.Climbs {
 					<tr>
 						<td class="flex flex-wrap">
@@ -162,13 +166,14 @@ templ renderClimbs(w *database.Workout) {
 								{ i18n.T(ctx, "climb.type_"+string(climb.Type), climb.Index) }
 							</span>
 						</td>
-						<td class="hidden md:table-cell">{ helpers.HumanDistance(ctx, climb.Start.TotalDistance) } { pu.Distance() }</td>
-						<td>{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
-						<td>{ helpers.HumanDuration(climb.Duration) }</td>
-						<td class="hidden lg:table-cell">{ helpers.HumanElevation(ctx, climb.Gain) } { pu.Elevation() }</td>
-						<td>
+						<td class="hidden md:table-cell text-right">{ helpers.HumanDistance(ctx, climb.Start.TotalDistance) } { pu.Distance() }</td>
+						<td class="text-right">{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
+						<td class="text-right">{ helpers.HumanDuration(climb.Duration) }</td>
+						<td class="hidden lg:table-cell text-right">{ helpers.HumanElevation(ctx, climb.Gain) } { pu.Elevation() }</td>
+						<td class="text-right">
 							{ math.Round(100*climb.AvgSlope) } %
 						</td>
+						<td class="text-right">{ helpers.HumanSpeed (ctx, climb.Length / climb.Duration.Seconds() ) } { pu.Speed() }</td>
 						<td class="hidden sm:table-cell">{ climb.Category }</td>
 					</tr>
 				}
