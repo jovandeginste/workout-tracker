@@ -51,46 +51,48 @@ const (
 )
 
 type WorkoutTypeConfiguration struct {
-	Location   bool
-	Distance   bool
-	Repetition bool
-	Weight     bool
+	Location            bool
+	Distance            bool
+	Repetition          bool
+	Weight              bool
+	AreClimbsRelevant   bool
+	AreDescentsRelevant bool
+	MaxDeltaMeter       float64
 }
 
+const DefaultMaxDeltaMeter = 20.0
+
 var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
-	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeCycling:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeIndoorCycling:  {Location: false, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeIndoorRunning:  {Location: false, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeMountainBiking: {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeAlpineClimbing: {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeMountaineering: {Location: true, Distance: true, Repetition: false, Weight: true},
-	WorkoutTypeECycling:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeHorseRiding:    {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeInlineSkating:  {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeWalking:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeSwimming:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeKayaking:       {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeGolfing:        {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeHiking:         {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeTennis:         {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeIceSkating:     {Location: true, Distance: true, Repetition: false, Weight: false},
-	WorkoutTypeFootball:       {Location: true, Distance: true, Repetition: false, Weight: false},
-
-	WorkoutTypeTableTennis: {Location: false, Distance: false, Repetition: false, Weight: false},
-	WorkoutTypeBadminton:   {Location: false, Distance: false, Repetition: false, Weight: false},
-	WorkoutTypeDancing:     {Location: false, Distance: false, Repetition: false, Weight: false},
-
-	WorkoutTypePushups:       {Location: false, Distance: false, Repetition: true, Weight: false},
-	WorkoutTypeSitups:        {Location: false, Distance: false, Repetition: true, Weight: false},
-	WorkoutTypeSquats:        {Location: false, Distance: false, Repetition: true, Weight: true},
-	WorkoutTypeCore:          {Location: false, Distance: false, Repetition: true, Weight: false},
-	WorkoutTypeWeightLifting: {Location: false, Distance: false, Repetition: true, Weight: true},
-
-	WorkoutTypeOther: {Location: true, Distance: true, Repetition: true, Weight: true},
+	WorkoutTypeAlpineClimbing: {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeBadminton:      {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeCore:           {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeCycling:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeDancing:        {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeECycling:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeFootball:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeGolfing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeHiking:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeHorseRiding:    {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeIceSkating:     {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeIndoorCycling:  {Location: false, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeIndoorRunning:  {Location: false, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeInlineSkating:  {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeKayaking:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeMountainBiking: {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeMountaineering: {Location: true, Distance: true, Repetition: false, Weight: true, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeOther:          {Location: true, Distance: true, Repetition: true, Weight: true, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypePushups:        {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeSitups:         {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
+	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
+	WorkoutTypeSquats:         {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeSwimming:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeTableTennis:    {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeTennis:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeWalking:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeWeightLifting:  {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
 }
 
 var (
@@ -200,4 +202,18 @@ func (wt WorkoutType) IsLocation() bool {
 
 func AsWorkoutType(s string) WorkoutType {
 	return WorkoutType(s)
+}
+
+// MaxDeltaMeter is the maximum distance in meters that a point can be away from
+// the route segment for route segment matching
+func (wt WorkoutType) MaxDeltaMeter() float64 {
+	return workoutTypeConfigs[wt].MaxDeltaMeter
+}
+
+func (wt WorkoutType) AreClimbsRelevant() bool {
+	return workoutTypeConfigs[wt].AreClimbsRelevant
+}
+
+func (wt WorkoutType) AreDescentsRelevant() bool {
+	return workoutTypeConfigs[wt].AreDescentsRelevant
 }

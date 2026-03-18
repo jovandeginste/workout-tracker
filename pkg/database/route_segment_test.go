@@ -61,7 +61,7 @@ func TestRouteSegment_StartingPoints_NoMatch(t *testing.T) {
 	assert.Len(t, w, 1)
 
 	w1 := w[0]
-	sp := rs.StartingPoints(w1.Data.Details.Points)
+	sp := rs.StartingPoints(w1)
 	assert.Empty(t, sp)
 }
 
@@ -74,11 +74,12 @@ func TestRouteSegment_StartingPoints_Match(t *testing.T) {
 	assert.Len(t, w, 1)
 
 	w1 := w[0]
-	sp := rs.StartingPoints(w1.Data.Details.Points)
+	sp := rs.StartingPoints(w1)
 	assert.NotEmpty(t, sp)
+	maxDeltaMeter := w1.Type.MaxDeltaMeter()
 
 	for _, p := range sp {
-		assert.Less(t, rs.Points[0].DistanceTo(&w1.Data.Details.Points[p]), MaxDeltaMeter)
+		assert.Less(t, rs.Points[0].DistanceTo(&w1.Data.Details.Points[p]), maxDeltaMeter)
 	}
 }
 
@@ -91,7 +92,7 @@ func TestRouteSegment_StartingPoints_MatchSegment(t *testing.T) {
 	assert.Len(t, w, 1)
 
 	w1 := w[0]
-	sp := rs.StartingPoints(w1.Data.Details.Points)
+	sp := rs.StartingPoints(w1)
 	assert.NotEmpty(t, sp)
 
 	{

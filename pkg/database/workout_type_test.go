@@ -26,3 +26,14 @@ func TestWorkoutType_Collections(t *testing.T) {
 		assert.Contains(t, DistanceWorkoutTypes(), wt)
 	}
 }
+
+func TestWorkoutType_SnowboardingSkiing(t *testing.T) {
+	assert.False(t, WorkoutTypeSnowboarding.AreClimbsRelevant())
+	assert.False(t, WorkoutTypeSkiing.AreClimbsRelevant())
+	assert.True(t, WorkoutTypeSnowboarding.AreDescentsRelevant())
+	assert.True(t, WorkoutTypeSkiing.AreDescentsRelevant())
+	assert.True(t, WorkoutTypeCycling.AreClimbsRelevant() && WorkoutTypeCycling.AreDescentsRelevant())
+	assert.True(t, WorkoutTypeSnowboarding.MaxDeltaMeter() > 100)
+	assert.True(t, WorkoutTypeSkiing.MaxDeltaMeter() > 100)
+	assert.True(t, WorkoutTypeCycling.MaxDeltaMeter() < 100)
+}
