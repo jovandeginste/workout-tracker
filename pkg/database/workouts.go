@@ -421,6 +421,7 @@ func (w *Workout) setContent(filename string, content []byte) {
 var workoutTypeAliases = map[string]WorkoutType{
 	"abs":             WorkoutTypeCore,
 	"badminton":       WorkoutTypeBadminton,
+	"chinups":         WorkoutTypeChinUps,
 	"core":            WorkoutTypeCore,
 	"cycle":           WorkoutTypeCycling,
 	"cycling":         WorkoutTypeCycling,
@@ -437,6 +438,8 @@ var workoutTypeAliases = map[string]WorkoutType{
 	"inlineskating":   WorkoutTypeInlineSkating,
 	"kayaking":        WorkoutTypeKayaking,
 	"pingpong":        WorkoutTypeTableTennis,
+	"planking":        WorkoutTypePlanking,
+	"pullups":         WorkoutTypePullUps,
 	"pushups":         WorkoutTypePushups,
 	"rowing":          WorkoutTypeRowing,
 	"running":         WorkoutTypeRunning,
