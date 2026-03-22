@@ -152,7 +152,9 @@ export class RouteSegmentStats extends LitElement {
 
   public render(): TemplateResult {
     this.style.display = "block";
-    return html`<div class="h-full"><canvas></canvas></div>`;
+    this.style.width = "100%";
+    this.style.height = "100%";
+    return html`<canvas></canvas>`;
   }
 
   protected createRenderRoot() {

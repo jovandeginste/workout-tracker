@@ -294,7 +294,7 @@ func Show(s *database.RouteSegment) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</tbody></table></div></div></div><div class=\"inner-form h-[300px] md:h-[500px] print:hidden\"><h3>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</tbody></table></div></div></div><div class=\"inner-form h-[300px] md:h-[500px] print:hidden grid grid-rows-[auto_1fr] overflow-hidden\"><h3>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
