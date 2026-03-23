@@ -2,6 +2,7 @@ package app
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/a-h/templ"
@@ -45,7 +46,9 @@ func (cqp calendarQueryParams) SetStart(db *gorm.DB) *gorm.DB {
 		return db
 	}
 
-	start, err := time.ParseInLocation(calTS, *cqp.Start, cqp.tz)
+	s := strings.TrimSuffix(*cqp.Start, "Z")
+
+	start, err := time.ParseInLocation(calTS, s, cqp.tz)
 	if err != nil {
 		return db
 	}
@@ -58,7 +61,9 @@ func (cqp calendarQueryParams) SetEnd(db *gorm.DB) *gorm.DB {
 		return db
 	}
 
-	end, err := time.ParseInLocation(calTS, *cqp.End, cqp.tz)
+	e := strings.TrimSuffix(*cqp.End, "Z")
+
+	end, err := time.ParseInLocation(calTS, e, cqp.tz)
 	if err != nil {
 		return db
 	}
