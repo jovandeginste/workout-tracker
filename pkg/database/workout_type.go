@@ -40,6 +40,7 @@ const (
 	WorkoutTypeRowing         WorkoutType = "rowing"
 	WorkoutTypeTableTennis    WorkoutType = "table-tennis"
 	WorkoutTypeTennis         WorkoutType = "tennis"
+	WorkoutTypeSailing        WorkoutType = "sailing"
 	WorkoutTypeIceSkating     WorkoutType = "ice-skating"
 	WorkoutTypeBadminton      WorkoutType = "badminton"
 	WorkoutTypeFootball       WorkoutType = "football"
@@ -90,6 +91,7 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypePushups:        {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeSailing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeSitups:         {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
 	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},

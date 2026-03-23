@@ -74,6 +74,7 @@ var iconMap = map[string]string{
 	"squats":          "icon-[hugeicons--workout-squats]",
 	"weight-lifting":  "icon-[fa6-solid--dumbbell]",
 	"rowing":          "icon-[material-symbols--rowing]",
+	"sailing":         "icon-[fa6-solid--sailboat]",
 	"table-tennis":    "icon-[fa6-solid--table-tennis-paddle-ball]",
 	"tennis":          "icon-[ion--tennisball]",
 	"ice-skating":     "icon-[fa6-solid--person-skating]",

@@ -16,6 +16,7 @@ func TestWorkoutType_IsDistance(t *testing.T) {
 	assert.True(t, WorkoutTypeRunning.IsDistance())
 	assert.True(t, WorkoutTypeCycling.IsDistance())
 	assert.True(t, WorkoutTypeWalking.IsDistance())
+	assert.True(t, WorkoutTypeSailing.IsDistance())
 
 	assert.False(t, WorkoutTypeAutoDetect.IsDistance())
 }
