@@ -23,6 +23,7 @@ var correctAltitudeCreators = []string{
 	"garmin", "Garmin", "Garmin Connect",
 	"Apple Watch", "Open GPX Tracker for iOS",
 	"StravaGPX iPhone", "StravaGPX",
+	"suunto",
 	"Workout Tracker",
 }
 

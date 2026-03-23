@@ -9,7 +9,6 @@ import (
 
 templ Show(s *database.RouteSegment) {
 	@partials.Page(partials.NewPageOptions()) {
-		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
 		<div class="gap-4">
 			<span class="float-right actions">
 				if s.Dirty {
@@ -63,13 +62,15 @@ templ Show(s *database.RouteSegment) {
 											</a>
 										</td>
 										<td class="whitespace-nowrap font-mono lg:hidden 3xl:table-cell">
-											{ helpers.HumanDistance(ctx, m.Distance) } { preferredUnits.Distance() }
+											{ helpers.HumanDistanceForWorkout(ctx, m.Workout, m.Distance) }
+											{ helpers.DistanceUnitForWorkout(ctx, m.Workout) }
 										</td>
 										<td class="whitespace-nowrap font-mono">
 											{ helpers.HumanDuration(m.Duration) }
 										</td>
 										<td class="whitespace-nowrap font-mono">
-											{ helpers.HumanTempo(ctx, m.AverageSpeed()) } { preferredUnits.Tempo() }
+											{ helpers.HumanTempoForWorkout(ctx, m.Workout, m.AverageSpeed()) }
+											{ helpers.TempoUnitForWorkout(ctx, m.Workout) }
 										</td>
 									</tr>
 								}

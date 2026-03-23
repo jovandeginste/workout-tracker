@@ -106,7 +106,7 @@ templ renderBreakdown(w *database.Workout) {
 
 templ renderRouteSegments(w *database.Workout) {
 	<div class="pagebreak basis-1/2 2xl:basis-1/3 print:w-full overflow-y-auto">
-		@RouteSegments(w.RouteSegmentMatches)
+		@RouteSegments(w, w.RouteSegmentMatches)
 	</div>
 }
 
@@ -166,14 +166,23 @@ templ renderClimbs(w *database.Workout) {
 								{ i18n.T(ctx, "climb.type_"+string(climb.Type), climb.Index) }
 							</span>
 						</td>
-						<td class="hidden md:table-cell text-right">{ helpers.HumanDistance(ctx, climb.Start.TotalDistance) } { pu.Distance() }</td>
-						<td class="text-right">{ helpers.HumanDistance(ctx, climb.Length) } { pu.Distance() }</td>
+						<td class="hidden md:table-cell text-right">
+							{ helpers.HumanDistanceForWorkout(ctx, w, climb.Start.TotalDistance) }
+							{ helpers.DistanceUnitForWorkout(ctx, w) }
+						</td>
+						<td class="text-right">
+							{ helpers.HumanDistanceForWorkout(ctx, w, climb.Length) }
+							{ helpers.DistanceUnitForWorkout(ctx, w) }
+						</td>
 						<td class="text-right">{ helpers.HumanDuration(climb.Duration) }</td>
 						<td class="hidden lg:table-cell text-right">{ helpers.HumanElevation(ctx, climb.Gain) } { pu.Elevation() }</td>
 						<td class="text-right">
 							{ math.Round(100*climb.AvgSlope) } %
 						</td>
-						<td class="text-right">{ helpers.HumanSpeed (ctx, climb.AverageSpeed() ) } { pu.Speed() }</td>
+						<td class="text-right">
+							{ helpers.HumanSpeedForWorkout(ctx, w, climb.AverageSpeed() ) }
+							{ helpers.SpeedUnitForWorkout(ctx, w) }
+						</td>
 						<td class="hidden sm:table-cell">{ climb.Category }</td>
 					</tr>
 				}

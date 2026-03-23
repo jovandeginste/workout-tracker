@@ -42,8 +42,8 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		currentUser := helpers.CurrentUser(ctx)
-		pu := currentUser.PreferredUnits()
 		var trendData []trendDataPoint
+		speedUnit := currentUser.PreferredUnits().Speed()
 		for _, m := range s.RouteSegmentMatches {
 			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
 				trendData = append(trendData, trendDataPoint{
@@ -54,7 +54,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		}
 		translations := map[string]string{
 			"averageSpeed": i18n.T(ctx, "translation.Average_speed"),
-			"speedUnit":    pu.Speed(),
+			"speedUnit":    speedUnit,
 			"trend":        i18n.T(ctx, "translation.Personal_trend"),
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<route-segment-stats data=\"")

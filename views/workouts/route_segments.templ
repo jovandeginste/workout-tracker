@@ -6,8 +6,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 )
 
-templ RouteSegments(segments []*database.RouteSegmentMatch) {
-	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+templ RouteSegments(w *database.Workout, segments []*database.RouteSegmentMatch) {
 	<table>
 		<thead>
 			<tr>
@@ -27,14 +26,17 @@ templ RouteSegments(segments []*database.RouteSegmentMatch) {
 						</a>
 					</td>
 					<td>
-						{ helpers.HumanDistance(ctx, s.Distance) } { pu.Distance() }
+						{ helpers.HumanDistanceForWorkout(ctx, w, s.Distance) }
+						{ helpers.DistanceUnitForWorkout(ctx, w) }
 					</td>
 					<td>{ helpers.HumanDuration(s.Duration) }</td>
 					<td>
-						{ helpers.HumanSpeed(ctx, s.AverageSpeed()) } { pu.Speed() }
+						{ helpers.HumanSpeedForWorkout(ctx, w, s.AverageSpeed()) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
 					</td>
 					<td>
-						{ helpers.HumanTempo(ctx, s.AverageSpeed()) } { pu.Tempo() }
+						{ helpers.HumanTempoForWorkout(ctx, w, s.AverageSpeed()) }
+						{ helpers.TempoUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 			}

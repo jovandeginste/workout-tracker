@@ -38,3 +38,9 @@ func TestWorkoutType_SnowboardingSkiing(t *testing.T) {
 	assert.True(t, WorkoutTypeSkiing.MaxDeltaMeter() > 100)
 	assert.True(t, WorkoutTypeCycling.MaxDeltaMeter() < 100)
 }
+
+func TestWorkoutType_IsNautical(t *testing.T) {
+	assert.True(t, WorkoutTypeSailing.IsNautical())
+	assert.False(t, WorkoutTypeRunning.IsNautical())
+	assert.False(t, WorkoutTypeCycling.IsNautical())
+}

@@ -13,7 +13,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 )
 
-func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
+func RouteSegments(w *database.Workout, segments []*database.RouteSegmentMatch) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -34,7 +34,6 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		pu := helpers.CurrentUser(ctx).PreferredUnits()
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<table><thead><tr><th>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -42,7 +41,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Name"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 14, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 13, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -55,7 +54,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Distance"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 15, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 14, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -68,7 +67,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Duration"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 16, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 15, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -81,7 +80,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Speed"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 17, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 16, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -94,7 +93,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Tempo"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 18, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 17, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -112,7 +111,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 			var templ_7745c5c3_Var7 templ.SafeURL
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(helpers.RouteFor(ctx, "route-segment-show", s.RouteSegment.ID)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 25, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 24, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -125,7 +124,7 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(s.RouteSegment.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 26, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 25, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -136,9 +135,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanDistance(ctx, s.Distance))
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanDistanceForWorkout(ctx, w, s.Distance))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 30, Col: 46}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 29, Col: 59}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -149,9 +148,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(pu.Distance())
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.DistanceUnitForWorkout(ctx, w))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 30, Col: 64}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 30, Col: 46}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -175,9 +174,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
-			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanSpeed(ctx, s.AverageSpeed()))
+			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanSpeedForWorkout(ctx, w, s.AverageSpeed()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 34, Col: 49}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 34, Col: 62}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -188,9 +187,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
-			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(pu.Speed())
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.SpeedUnitForWorkout(ctx, w))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 34, Col: 64}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 35, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -201,9 +200,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var14 string
-			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanTempo(ctx, s.AverageSpeed()))
+			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanTempoForWorkout(ctx, w, s.AverageSpeed()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 37, Col: 49}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 38, Col: 62}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -214,9 +213,9 @@ func RouteSegments(segments []*database.RouteSegmentMatch) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var15 string
-			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(pu.Tempo())
+			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.TempoUnitForWorkout(ctx, w))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 37, Col: 64}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/route_segments.templ`, Line: 39, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {

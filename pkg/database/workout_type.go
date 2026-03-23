@@ -62,6 +62,7 @@ type WorkoutTypeConfiguration struct {
 	AreClimbsRelevant   bool
 	AreDescentsRelevant bool
 	MaxDeltaMeter       float64
+	Nautical            bool
 }
 
 const DefaultMaxDeltaMeter = 20.0
@@ -91,7 +92,7 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypePushups:        {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeSailing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
+	WorkoutTypeSailing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter, Nautical: true},
 	WorkoutTypeSitups:         {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
 	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
 	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
@@ -224,4 +225,8 @@ func (wt WorkoutType) AreClimbsRelevant() bool {
 
 func (wt WorkoutType) AreDescentsRelevant() bool {
 	return workoutTypeConfigs[wt].AreDescentsRelevant
+}
+
+func (wt WorkoutType) IsNautical() bool {
+	return workoutTypeConfigs[wt].Nautical
 }
