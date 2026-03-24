@@ -31,6 +31,11 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 		g.Creator = "TCX importer"
 	}
 
+	g.AppendTrack(&gpx.GPXTrack{
+		Name: t.Acts.Act[0].Id.String(),
+		Type: t.Acts.Act[0].Sport,
+	})
+
 	for _, a := range t.Acts.Act {
 		for _, l := range a.Laps {
 			for _, p := range l.Trk.Pt {
@@ -52,8 +57,7 @@ func tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 		return nil
 	}
 
-	if t.Time.IsZero() ||
-		(t.Lat == 0 && t.Long == 0) {
+	if t.Time.IsZero() {
 		return nil
 	}
 
