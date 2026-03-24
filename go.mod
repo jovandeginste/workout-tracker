@@ -178,3 +178,5 @@ tool (
 	github.com/mdomke/git-semver/v6
 	github.com/swaggo/swag/cmd/swag
 )
+
+replace github.com/galeone/tcx => github.com/jovandeginste/tcx v0.0.0-20260324124628-5ba45eaf04f3

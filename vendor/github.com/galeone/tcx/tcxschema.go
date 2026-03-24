@@ -16,6 +16,11 @@ type Trackpoint struct {
 	Cad   float64 `xml:"Cadence,omitempty"`
 	Speed float64 `xml:"Extensions>TPX>Speed,omitempty"`
 	Power float64 `xml:"Extensions>TPX>Watts,omitempty"`
+
+	StrokeType   string  `xml:"Extensions>TPX>StrokeType,omitempty"`
+	StrokeCount  float64 `xml:"Extensions>TPX>StrokeCount,omitempty"`
+	SwimDistance float64 `xml:"Extensions>TPX>SwimDistance,omitempty"`
+	Swolf        float64 `xml:"Extensions>TPX>Swolf,omitempty"`
 }
 
 type Lap struct {

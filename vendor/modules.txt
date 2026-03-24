@@ -187,7 +187,7 @@ github.com/fsnotify/fsnotify/internal
 # github.com/fsouza/slognil v0.4.3
 ## explicit; go 1.24.0
 github.com/fsouza/slognil
-# github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884
+# github.com/galeone/tcx v1.0.1-0.20230114151622-8168e1e47884 => github.com/jovandeginste/tcx v0.0.0-20260324124628-5ba45eaf04f3
 ## explicit; go 1.19
 github.com/galeone/tcx
 # github.com/glebarez/go-sqlite v1.22.0
@@ -868,3 +868,4 @@ resty.dev/v3
 # sigs.k8s.io/yaml v1.3.0
 ## explicit; go 1.12
 sigs.k8s.io/yaml
+# github.com/galeone/tcx => github.com/jovandeginste/tcx v0.0.0-20260324124628-5ba45eaf04f3
