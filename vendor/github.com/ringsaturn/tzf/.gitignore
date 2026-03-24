@@ -1,4 +1,0 @@
-data/*.json
-data/*.bin
-cmd/reducePolygon/reducePolygon
-cmd/tzjson2pb/tzjson2pb
