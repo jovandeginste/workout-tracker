@@ -9,6 +9,10 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
+type tcxConverter struct {
+	totalDistance float64
+}
+
 func ParseTCX(content []byte) (*gpx.GPX, error) {
 	var t tcx.TCXDB
 
@@ -36,10 +40,12 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 		Type: t.Acts.Act[0].Sport,
 	})
 
+	tc := tcxConverter{}
+
 	for _, a := range t.Acts.Act {
 		for _, l := range a.Laps {
 			for _, p := range l.Trk.Pt {
-				gpxP := tcxPtToGPXPt(&p)
+				gpxP := tc.tcxPtToGPXPt(&p)
 				if gpxP == nil {
 					continue
 				}
@@ -52,7 +58,7 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 	return g, nil
 }
 
-func tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
+func (tc *tcxConverter) tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 	if t == nil {
 		return nil
 	}
@@ -75,6 +81,11 @@ func tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 	setIfNotZero(p, "heart-rate", t.HR)
 	setIfNotZero(p, "power", t.Power)
 	setIfNotZero(p, "speed", t.Speed)
+
+	if t.Dist == 0 && t.SwimDistance > 0 {
+		tc.totalDistance += t.SwimDistance
+		setIfNotZero(p, "distance", tc.totalDistance)
+	}
 
 	return p
 }
