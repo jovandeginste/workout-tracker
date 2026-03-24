@@ -44,6 +44,10 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 
 	for _, a := range t.Acts.Act {
 		for _, l := range a.Laps {
+			if l.Trk == nil {
+				continue
+			}
+
 			for _, p := range l.Trk.Pt {
 				gpxP := tc.tcxPtToGPXPt(&p)
 				if gpxP == nil {
