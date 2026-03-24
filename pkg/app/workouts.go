@@ -166,6 +166,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	}
 
 	w.Data.UpdateExtraMetrics()
+	w.UpdateAverages()
 }
 
 func (a *App) addWorkout(c echo.Context) error {
