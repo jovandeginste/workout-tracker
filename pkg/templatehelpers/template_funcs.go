@@ -93,6 +93,8 @@ func HumanDistanceFor(unit string) func(float64) string {
 	switch unit {
 	case "mi":
 		return HumanDistanceMile
+	case "nm":
+		return HumanDistanceNM
 	default:
 		return HumanDistanceKM
 	}
@@ -102,6 +104,8 @@ func HumanSpeedFor(unit string) func(float64) string {
 	switch unit {
 	case "mph":
 		return HumanSpeedMilePH
+	case "kn":
+		return HumanSpeedKnots
 	default:
 		return HumanSpeedKPH
 	}
@@ -111,6 +115,8 @@ func HumanTempoFor(unit string) func(float64) string {
 	switch unit {
 	case "min/mi", "mi":
 		return HumanTempoMile
+	case "min/nm", "nm":
+		return HumanTempoNM
 	default:
 		return HumanTempoKM
 	}
@@ -140,6 +146,8 @@ func DistanceToDatabase(v float64, unit string) float64 {
 		return v * MeterPerMile
 	case "m":
 		return v
+	case "nm":
+		return v * MeterPerNM
 	default:
 		return v * MeterPerKM
 	}

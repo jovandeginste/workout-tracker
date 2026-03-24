@@ -16,6 +16,7 @@ func TestWorkoutType_IsDistance(t *testing.T) {
 	assert.True(t, WorkoutTypeRunning.IsDistance())
 	assert.True(t, WorkoutTypeCycling.IsDistance())
 	assert.True(t, WorkoutTypeWalking.IsDistance())
+	assert.True(t, WorkoutTypeSailing.IsDistance())
 
 	assert.False(t, WorkoutTypeAutoDetect.IsDistance())
 }
@@ -36,4 +37,10 @@ func TestWorkoutType_SnowboardingSkiing(t *testing.T) {
 	assert.True(t, WorkoutTypeSnowboarding.MaxDeltaMeter() > 100)
 	assert.True(t, WorkoutTypeSkiing.MaxDeltaMeter() > 100)
 	assert.True(t, WorkoutTypeCycling.MaxDeltaMeter() < 100)
+}
+
+func TestWorkoutType_IsNautical(t *testing.T) {
+	assert.True(t, WorkoutTypeSailing.IsNautical())
+	assert.False(t, WorkoutTypeRunning.IsNautical())
+	assert.False(t, WorkoutTypeCycling.IsNautical())
 }

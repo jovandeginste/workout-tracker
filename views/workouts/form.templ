@@ -125,10 +125,12 @@ templ Form(w *database.Workout) {
 					type="text"
 					name="distance"
 					id="distance"
-					value={ helpers.HumanDistance(ctx, w.Distance()) }
+					value={ helpers.HumanDistanceForWorkout(ctx, w, w.Distance()) }
 					required
 				/>
-				<span>{ preferredUnits.Distance() }</span>
+				<span>
+					{ helpers.DistanceUnitForWorkout(ctx, w) }
+				</span>
 			</td>
 		</tr>
 	}

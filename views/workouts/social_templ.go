@@ -18,7 +18,8 @@ import (
 )
 
 func workoutDataTitle(ctx context.Context, w *database.Workout) string {
-	preferredUnits := helpers.CurrentUser(ctx).PreferredUnits()
+	dist := helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) + " " + helpers.DistanceUnitForWorkout(ctx, w)
+	speed := helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) + " " + helpers.SpeedUnitForWorkout(ctx, w)
 
 	return i18n.T(
 		ctx,
@@ -28,8 +29,8 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 		ctx,
 		`translation.it_took_me_s_to_go_s_i_averaged_s`,
 		helpers.HumanDuration(w.TotalDuration()),
-		helpers.HumanDistance(ctx, w.TotalDistance())+" "+preferredUnits.Distance(),
-		helpers.HumanSpeed(ctx, w.AverageSpeed())+" "+preferredUnits.Speed(),
+		dist,
+		speed,
 	)
 }
 func workoutDataTags(ctx context.Context, w *database.Workout) string {
@@ -76,7 +77,7 @@ func Social(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(workoutDataTitle(ctx, w))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 48, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 49, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -89,7 +90,7 @@ func Social(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(workoutDataTags(ctx, w))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 49, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/social.templ`, Line: 50, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

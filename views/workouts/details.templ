@@ -13,7 +13,8 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 	@helpers.IconFor(w.Type.String())
 	switch  {
 		case w.Type.IsDistance():
-			{ helpers.HumanDistance(ctx, w.Distance()) } { preferredUnits.Distance() }
+			{ helpers.HumanDistanceForWorkout(ctx, w, w.Distance()) }
+			{ helpers.DistanceUnitForWorkout(ctx, w) }
 		case w.Type.IsWeight():
 			{ helpers.HumanWeight(ctx, w.Weight()) } { preferredUnits.Weight() }
 		case w.Type.IsRepetition():
@@ -115,8 +116,8 @@ templ Details(w *database.Workout) {
 					</td>
 					<td class="whitespace-nowrap font-mono">
 						@showLocked(w)
-						{ helpers.HumanDistance (ctx, w.TotalDistance()) }
-						{ currentUser.PreferredUnits().Distance() }
+						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
+						{ helpers.DistanceUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 			}
@@ -126,7 +127,8 @@ templ Details(w *database.Workout) {
 						@helpers.IconFor("speed")
 					</td>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanSpeed (ctx, w.AverageSpeed() ) } { currentUser.PreferredUnits().Speed() }
+						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed() ) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 			}
@@ -269,13 +271,13 @@ templ FullWorkoutDetails(w *database.Workout) {
 					<th>{ i18n.T(ctx, "translation.Total_distance") }</th>
 					<td class="whitespace-nowrap font-mono">
 						@showLocked(w)
-						{ helpers.HumanDistance(ctx,w.TotalDistance()) }
-						{ currentUser.PreferredUnits().Distance() }
+						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
+						{ helpers.DistanceUnitForWorkout(ctx, w) }
 						if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance() / w.TotalDistance2D()) - 1) > 0.1 {
 							// Only print 2D distance if the difference is greater than 10%
 							(2D:
-							{ helpers.HumanDistance(ctx, w.TotalDistance2D()) }
-							{ currentUser.PreferredUnits().Distance() })
+							{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance2D()) }
+							{ helpers.DistanceUnitForWorkout(ctx, w) })
 						}
 					</td>
 				</tr>
@@ -287,7 +289,8 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "translation.Average_speed") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanSpeed (ctx,w.AverageSpeed()) } { currentUser.PreferredUnits().Speed() }
+						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 				if w.PauseDuration() != 0 {
@@ -297,8 +300,8 @@ templ FullWorkoutDetails(w *database.Workout) {
 						</td>
 						<th>{ i18n.T(ctx, "translation.Average_speed_no_pause") }</th>
 						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanSpeed (ctx,w.AverageSpeedNoPause() ) }
-							{ currentUser.PreferredUnits().Speed() }
+							{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
+							{ helpers.SpeedUnitForWorkout(ctx, w) }
 						</td>
 					</tr>
 				}
@@ -308,7 +311,8 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "translation.Average_tempo") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanTempo (ctx,w.AverageSpeed() ) } { currentUser.PreferredUnits().Tempo() }
+						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeed() ) }
+						{ helpers.TempoUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 				if  w.PauseDuration()!= 0 {
@@ -318,8 +322,8 @@ templ FullWorkoutDetails(w *database.Workout) {
 						</td>
 						<th>{ i18n.T(ctx, "translation.Average_tempo_no_pause") }</th>
 						<td class="whitespace-nowrap font-mono">
-							{ helpers.HumanTempo (ctx,w.AverageSpeedNoPause()) }
-							{ currentUser.PreferredUnits().Tempo() }
+							{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
+							{ helpers.TempoUnitForWorkout(ctx, w) }
 						</td>
 					</tr>
 				}
@@ -329,7 +333,8 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 					<th>{ i18n.T(ctx, "translation.Max_speed") }</th>
 					<td class="whitespace-nowrap font-mono">
-						{ helpers.HumanSpeed (ctx,w.MaxSpeed()) } { currentUser.PreferredUnits().Speed() }
+						{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
 				if w.HasCadence() {

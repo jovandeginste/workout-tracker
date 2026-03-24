@@ -21,8 +21,8 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsDistance() {
 			<div class="font-mono" title={ i18n.T(ctx, "translation.Distance") }>
 				@helpers.IconFor("distance")
-				{ helpers.HumanDistance(ctx, w.TotalDistance()) }
-				{ preferredUnits.Distance() }
+				{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
+				{ helpers.DistanceUnitForWorkout(ctx, w) }
 			</div>
 		}
 		if w.Type.IsDuration() {

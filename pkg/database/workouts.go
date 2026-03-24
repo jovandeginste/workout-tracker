@@ -444,6 +444,8 @@ var workoutTypeAliases = map[string]WorkoutType{
 	"rowing":          WorkoutTypeRowing,
 	"running":         WorkoutTypeRunning,
 	"run":             WorkoutTypeRunning,
+	"sailing":         WorkoutTypeSailing,
+	"sail":            WorkoutTypeSailing,
 	"situps":          WorkoutTypeSitups,
 	"skate":           WorkoutTypeInlineSkating,
 	"skating":         WorkoutTypeInlineSkating,

@@ -76,10 +76,10 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 		}
 
 		data["time"].Data = append(data["time"].Data, p.Time)
-		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistance(ctx, p.TotalDistance))
+		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistanceForWorkout(ctx, w, p.TotalDistance))
 		data["duration"].Data = append(data["duration"].Data, p.TotalDuration.Seconds())
 		data["slope"].Data = append(data["slope"].Data, p.SlopeGrade)
-		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeed(ctx, s)))
+		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeedForWorkout(ctx, w, s)))
 
 		for _, m := range w.Data.ExtraMetrics {
 			switch m {
@@ -118,6 +118,11 @@ func DataJson(w *database.Workout) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		pu := helpers.PreferredUnitsToJSON(helpers.CurrentUser(ctx).PreferredUnits())
+		if w.Type.IsNautical() {
+			pu["distance"] = "nm"
+			pu["speed"] = "kn"
+			pu["tempo"] = "min/nm"
+		}
 		data := labelMap(ctx, w)
 		addDetails(ctx, data, w)
 		templ_7745c5c3_Err = templ.JSONScript("workout-preferred-units", pu).Render(ctx, templ_7745c5c3_Buffer)
