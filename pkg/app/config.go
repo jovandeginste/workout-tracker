@@ -17,6 +17,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetDefault("logging", true)
 	viper.SetDefault("debug", false)
 	viper.SetDefault("offline", false)
+	viper.SetDefault("compress", true)
 	viper.SetDefault("database_driver", "sqlite")
 	viper.SetDefault("dsn", "./database.db")
 	viper.SetDefault("registration_disabled", false)
@@ -30,6 +31,7 @@ func (a *App) ReadConfiguration() error {
 		"jwt_encryption_key_file",
 		"logging",
 		"offline",
+		"compress",
 		"debug",
 		"database_driver",
 		"dsn",

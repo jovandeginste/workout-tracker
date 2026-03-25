@@ -36,7 +36,6 @@ func newEcho(logger *slog.Logger) *echo.Echo {
 	e.Use(middleware.Recover())
 	e.Use(middleware.Secure())
 	e.Use(middleware.CORS())
-	e.Use(middleware.Gzip())
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
 		Getter: middleware.MethodFromHeader(echo.HeaderXHTTPMethodOverride),
@@ -58,6 +57,10 @@ func (a *App) ConfigureWebserver() error {
 
 	if a.sessionManager.Store, err = gormstore.New(a.db); err != nil {
 		return err
+	}
+
+	if a.Config.Compress {
+		e.Use(middleware.Gzip())
 	}
 
 	e.Use(session.LoadAndSave(a.sessionManager))

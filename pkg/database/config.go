@@ -32,6 +32,7 @@ type EnvConfig struct {
 	Logging            bool   `mapstructure:"logging" gorm:"-"`              // Enable logging
 	Debug              bool   `mapstructure:"debug" gorm:"-"`                // Debug logging mode
 	Offline            bool   `mapstructure:"offline" gorm:"-"`              // Disable calls to external services
+	Compress           bool   `mapstructure:"compress" gorm:"-"`             // Enable gzip compression
 	WorkerDelaySeconds int    `mapstructure:"worker_delay_seconds" gorm:"-"` // Time in seconds between worker runs
 
 	JWTEncryptionKeyFile string `mapstructure:"jwt_encryption_key_file" gorm:"-"` // File containing the encryption key for JWT
