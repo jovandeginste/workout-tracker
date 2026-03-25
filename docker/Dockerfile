@@ -29,14 +29,13 @@ RUN go mod download
 
 COPY cmd ./cmd
 COPY pkg ./pkg
-COPY vendor ./vendor
 COPY views ./views
 COPY assets ./assets
 COPY translations ./translations
 COPY --from=frontend /app/assets ./assets
 
 ENV CGO_ENABLED=0
-RUN go build \
+RUN go mod vendor && go build \
     -ldflags "-X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}' -X 'main.gitRef=${GIT_REF}' -X 'main.gitRefName=${GIT_REF_NAME}' -X 'main.gitRefType=${GIT_REF_TYPE}'" \
     -o /commands/ ./cmd/...
 
