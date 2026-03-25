@@ -46,7 +46,7 @@ watch/templ:
 
 watch/server:
 	go tool air \
-			--build.full_bin           "APP_ENV=development $(WT_OUTPUT_FILE)" \
+			--build.full_bin           "APP_ENV=development WT_COMPRESS=0 $(WT_OUTPUT_FILE)" \
 			--build.cmd                "make build-server notify-proxy" \
 			--build.delay              1000 \
 			--build.exclude_dir        "assets,docs,testdata,tmp,vendor" \
