@@ -418,7 +418,8 @@ devcontainer build --workspace-folder ./.devcontainer-template/ --image-name ghc
 - clone the repository
 
 ```bash
-go build ./
+go mod vendor
+go build -o workout-tracker ./cmd/workout-tracker/
 ./workout-tracker
 ```
 
