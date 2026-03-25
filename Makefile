@@ -77,13 +77,13 @@ dev:
 
 dev-docker: dev-docker-postgres
 
-dev-docker-postgres:
+dev-docker-postgres: go-vendor
 	docker compose \
 			--project-directory ./docker/ \
 			--profile dev-postgres \
 			up --build
 
-dev-docker-sqlite:
+dev-docker-sqlite: go-vendor
 	docker compose \
 			--project-directory ./docker/ \
 			--profile dev-sqlite \
@@ -208,6 +208,9 @@ screenshots-responsive:
 			-geometry +5+5 \
 			-background none \
 			docs/dashboard-responsive.png docs/single_workout-responsive.png docs/statistics-responsive.png docs/responsive.png
+
+go-vendor:
+	go mod vendor
 
 go-cover:
 	go test -short -count 1 -mod vendor -covermode=atomic -coverprofile=coverage.out ./...
