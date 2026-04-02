@@ -101,7 +101,7 @@ func (m *ManualWorkout) ToDistance() *float64 {
 		return nil
 	}
 
-	d := templatehelpers.DistanceToDatabase(*m.Distance, m.units.Distance())
+	d := templatehelpers.DistanceToDatabase(*m.Distance, m.units.Distance(m.Type))
 
 	return &d
 }

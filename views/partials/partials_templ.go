@@ -380,10 +380,10 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		speedUnit := preferredUnits.Speed()
+		speedUnit := preferredUnits.Speed(wt)
 		speedFormatter := templatehelpers.HumanSpeedFor(speedUnit)
 		primaryText := html.EscapeString(speedFormatter(v) + " " + speedUnit)
-		tempoUnit := preferredUnits.Tempo()
+		tempoUnit := preferredUnits.Tempo(wt)
 		tempoFormatter := templatehelpers.HumanTempoFor(tempoUnit)
 		secondaryText := html.EscapeString(tempoFormatter(v) + " " + tempoUnit)
 		if *wt == database.WorkoutTypeRunning {

@@ -166,7 +166,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 			}
 		}
 
-		result.Localize(units)
+		result.Localize(units, &result.WorkoutType)
 
 		r.Buckets[result.WorkoutType].Buckets[result.Bucket] = result
 	}

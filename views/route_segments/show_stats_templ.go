@@ -43,7 +43,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		currentUser := helpers.CurrentUser(ctx)
 		var trendData []trendDataPoint
-		speedUnit := currentUser.PreferredUnits().Speed()
+		speedUnit := currentUser.PreferredUnits().Speed(nil)
 		for _, m := range s.RouteSegmentMatches {
 			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
 				trendData = append(trendData, trendDataPoint{

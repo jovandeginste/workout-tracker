@@ -23,10 +23,10 @@ templ profilePreferredUnits() {
 					</th>
 					<td>
 						<select class="input-ellipsis" id="speed" name="speed">
-							<option value="kph" selected?={ pu.Speed() == "kph" }>
+							<option value="kph" selected?={ pu.Speed(nil) == "kph" }>
 								{ i18n.T(ctx, "units.kilometers_per_hour") }
 							</option>
-							<option value="mph" selected?={ pu.Speed() == "mph" }>
+							<option value="mph" selected?={ pu.Speed(nil) == "mph" }>
 								{ i18n.T(ctx, "units.miles_per_hour") }
 							</option>
 						</select>
@@ -41,10 +41,10 @@ templ profilePreferredUnits() {
 					</th>
 					<td>
 						<select class="input-ellipsis" id="distance" name="distance">
-							<option value="km" selected?={ pu.Distance() == "km" }>
+							<option value="km" selected?={ pu.Distance(nil) == "km" }>
 								{ i18n.T(ctx, "units.kilometers") }
 							</option>
-							<option value="mi" selected?={ pu.Distance() == "mi" }>
+							<option value="mi" selected?={ pu.Distance(nil) == "mi" }>
 								{ i18n.T(ctx, "units.miles") }
 							</option>
 						</select>

@@ -39,6 +39,9 @@ type (
 		LocalAverageSpeed        string `json:"localAverageSpeed,omitempty"`        // The average speed in the bucket, localized
 		LocalAverageSpeedNoPause string `json:"localAverageSpeedNoPause,omitempty"` // The average speed without pause in the bucket, localized
 		LocalMaxSpeed            string `json:"localMaxSpeed,omitempty"`            // The max speed in the bucket, localized
+		DistanceUnit             string `json:"distanceUnit,omitempty"`             // The distance unit for this bucket
+		SpeedUnit                string `json:"speedUnit,omitempty"`                // The speed unit for this bucket
+		IsNautical               bool   `json:"isNautical"`                         // Whether the workout is nautical
 
 		DurationSeconds float64 `json:"durationSeconds,omitempty"` // The total duration in the bucket, in seconds
 	}
@@ -70,12 +73,18 @@ type (
 	}
 )
 
-func (b *Bucket) Localize(units *UserPreferredUnits) {
-	b.LocalDistance = templatehelpers.HumanDistanceFor(units.Distance())(b.Distance)
+func (b *Bucket) Localize(units *UserPreferredUnits, wt *WorkoutType) {
+	if wt == nil {
+		wt = &b.WorkoutType
+	}
+	b.LocalDistance = templatehelpers.HumanDistanceFor(units.Distance(wt))(b.Distance)
 	b.LocalUp = templatehelpers.HumanElevationFor(units.Elevation())(b.Up)
 	b.LocalDuration = templatehelpers.HumanDuration(b.Duration)
-	b.LocalAverageSpeed = templatehelpers.HumanSpeedFor(units.Distance())(b.AverageSpeed)
-	b.LocalAverageSpeedNoPause = templatehelpers.HumanSpeedFor(units.Distance())(b.AverageSpeedNoPause)
-	b.LocalMaxSpeed = templatehelpers.HumanSpeedFor(units.Distance())(b.MaxSpeed)
+	b.LocalAverageSpeed = templatehelpers.HumanSpeedFor(units.Speed(wt))(b.AverageSpeed)
+	b.LocalAverageSpeedNoPause = templatehelpers.HumanSpeedFor(units.Speed(wt))(b.AverageSpeedNoPause)
+	b.LocalMaxSpeed = templatehelpers.HumanSpeedFor(units.Speed(wt))(b.MaxSpeed)
+	b.DistanceUnit = units.Distance(wt)
+	b.SpeedUnit = units.Speed(wt)
+	b.IsNautical = wt.IsNautical()
 	b.DurationSeconds = b.Duration.Seconds()
 }

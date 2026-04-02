@@ -34,12 +34,12 @@ type BreakdownItem struct {
 	TotalDurationSeconds float64 `json:"totalDurationSeconds,omitempty"` // The total duration in the bucket, in seconds
 }
 
-func (bi *BreakdownItem) Localize(units *UserPreferredUnits) {
-	bi.LocalTotalDistance = templatehelpers.HumanDistanceFor(units.Distance())(bi.TotalDistance)
+func (bi *BreakdownItem) Localize(units *UserPreferredUnits, wt *WorkoutType) {
+	bi.LocalTotalDistance = templatehelpers.HumanDistanceFor(units.Distance(wt))(bi.TotalDistance)
 	bi.TotalDurationSeconds = bi.TotalDuration.Seconds()
 
-	bi.LocalDistance = templatehelpers.HumanDistanceFor(units.Distance())(bi.Distance)
-	bi.LocalAverageSpeed = templatehelpers.HumanSpeedFor(units.Distance())(bi.Speed)
+	bi.LocalDistance = templatehelpers.HumanDistanceFor(units.Distance(wt))(bi.Distance)
+	bi.LocalAverageSpeed = templatehelpers.HumanSpeedFor(units.Speed(wt))(bi.Speed)
 
 	bi.LocalElevation = templatehelpers.HumanElevationFor(units.Elevation())(bi.FirstPoint.ExtraMetrics.Get("elevation"))
 	bi.LocalHeartRate = fmt.Sprintf("%.0f", bi.FirstPoint.ExtraMetrics.Get("heart-rate"))

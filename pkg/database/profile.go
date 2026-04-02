@@ -34,8 +34,12 @@ type UserPreferredUnits struct {
 	HeightRaw    string `form:"height" json:"height"`       // The user's preferred height unit
 }
 
-func (u UserPreferredUnits) Tempo() string {
-	return "min/" + u.Distance()
+func (u UserPreferredUnits) Tempo(wt *WorkoutType) string {
+	if wt != nil && wt.IsNautical() {
+		return "min/nm"
+	}
+
+	return "min/" + u.Distance(wt)
 }
 
 func (u UserPreferredUnits) Power() string {
@@ -85,7 +89,11 @@ func (u UserPreferredUnits) Weight() string {
 	}
 }
 
-func (u UserPreferredUnits) Distance() string {
+func (u UserPreferredUnits) Distance(wt *WorkoutType) string {
+	if wt != nil && wt.IsNautical() {
+		return "nm"
+	}
+
 	switch u.DistanceRaw {
 	case "mi":
 		return "mi"
@@ -94,7 +102,11 @@ func (u UserPreferredUnits) Distance() string {
 	}
 }
 
-func (u UserPreferredUnits) Speed() string {
+func (u UserPreferredUnits) Speed(wt *WorkoutType) string {
+	if wt != nil && wt.IsNautical() {
+		return "kn"
+	}
+
 	switch u.SpeedRaw {
 	case "mph":
 		return "mph"
