@@ -424,14 +424,17 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 	data := &MapData{
 		Creator: gpxContent.Creator,
 		Center:  mapCenter,
-		WorkoutData: converters.WorkoutData{
+	}
+
+	if !mapCenter.IsZero() {
+		data.WorkoutData = converters.WorkoutData{
 			MaxSpeed:      maxSpeed,
 			PauseDuration: pauseDuration,
 			MinElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, minElevation),
 			MaxElevation:  correctAltitude(gpxContent.Creator, mapCenter.Lat, mapCenter.Lng, maxElevation),
 			TotalUp:       uphill,
 			TotalDown:     downhill,
-		},
+		}
 	}
 
 	addExtraMetrics(gpxContent, &data.WorkoutData)
