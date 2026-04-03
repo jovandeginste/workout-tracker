@@ -24,17 +24,24 @@ templ CreateRouteSegment(w *database.Workout) {
 				<div class="inner-form">
 					{{
 						type mapPoint struct {
-							Lat           float64 `json:"lat"`
-							Lng           float64 `json:"lng"`
-							TotalDistance float64 `json:"distance"`
+							Lat           *float64 `json:"lat"`
+							Lng           *float64 `json:"lng"`
+							TotalDistance *float64 `json:"distance"`
 						}
 
 						points := []mapPoint{}
 						for _, p := range w.Details().Points {
+							if p.IsZero() {
+								if len(points) > 0 {
+									points = append(points, points[len(points)-1])
+								}
+								continue
+							}
+
 							points = append(points, mapPoint{
-								Lat:           p.Lat,
-								Lng:           p.Lng,
-								TotalDistance: p.TotalDistance,
+								Lat:           &p.Lat,
+								Lng:           &p.Lng,
+								TotalDistance: &p.TotalDistance,
 							})
 						}
 					}}
@@ -74,7 +81,7 @@ templ CreateRouteSegment(w *database.Workout) {
 										id="start"
 										name="start"
 										min="1"
-										max={ helpers.A2S(len(w.Details().Points)) }
+										max={ helpers.A2S(len(points)) }
 										value="1"
 										oninput="getElementById('segment-map').updateStart()"
 									/>
@@ -90,8 +97,8 @@ templ CreateRouteSegment(w *database.Workout) {
 										id="end"
 										name="end"
 										min="1"
-										max={ helpers.A2S(len(w.Details().Points)) }
-										value={ helpers.A2S(len(w.Details().Points)) }
+										max={ helpers.A2S(len(points)) }
+										value={ helpers.A2S(len(points)) }
 										oninput="getElementById('segment-map').updateEnd()"
 									/>
 									<span id="end-show"></span>
@@ -115,6 +122,17 @@ templ CreateRouteSegment(w *database.Workout) {
 							</tr>
 						</tfoot>
 					</table>
+					<script>
+						const urlParams = new URLSearchParams(window.location.search);
+						const start = urlParams.get("start");
+						if (start) {
+						  document.getElementById("start").value = start;
+						}
+						const end = urlParams.get("end");
+						if (end) {
+						  document.getElementById("end").value = end;
+						}
+					</script>
 				</form>
 			</div>
 		</div>

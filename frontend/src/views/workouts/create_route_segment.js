@@ -19,7 +19,7 @@ class CreateRouteSegmentMap extends HTMLElement {
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      this.updateInfo();
+      this.updateAll();
     });
   }
 
@@ -91,7 +91,7 @@ class CreateRouteSegmentMap extends HTMLElement {
 
     document.getElementById("start-show").textContent = start;
     this.startMarker.setLatLng(
-      new L.LatLng(this.points[start].lat, this.points[start].lng),
+      new L.LatLng(this.points[start - 1].lat, this.points[start - 1].lng),
     );
 
     if (start > end) {
@@ -136,7 +136,7 @@ class CreateRouteSegmentMap extends HTMLElement {
     const start = Number(document.getElementById("start").value);
     const end = Number(document.getElementById("end").value);
 
-    const d = this.points[end - 1].distance - this.points[start].distance;
+    const d = this.points[end - 1].distance - this.points[start - 1].distance;
     document.getElementById("distance-show").textContent = d.toFixed(2) + " m";
   }
 

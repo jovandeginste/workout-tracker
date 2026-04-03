@@ -106,6 +106,7 @@ en:
     category: Cat.
   translation:
     Climbs: Climbs
+    Create_route_segment_from_climb: Create route segment from this segment
     Latest_measurements: Latest measurements
     Update_measurement: Update measurement
     Steps: Steps

@@ -103,6 +103,7 @@ nl:
     update: Instellingen bijwerken
   translation:
     Climbs: Beklimmingen
+    Create_route_segment_from_climb: Maak route segment van dit segment
     Latest_measurements: Laatste metingen
     Update_measurement: Meting aanpassen
     Steps: Stappen
