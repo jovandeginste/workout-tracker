@@ -85,6 +85,7 @@ func (tc *tcxConverter) tcxPtToGPXPt(t *tcx.Trackpoint) *gpx.GPXPoint {
 	setIfNotZero(p, "heart-rate", t.HR)
 	setIfNotZero(p, "power", t.Power)
 	setIfNotZero(p, "speed", t.Speed)
+	setIfNotZero(p, "strokes", t.StrokeCount)
 
 	if t.Dist == 0 && t.SwimDistance > 0 {
 		tc.totalDistance += t.SwimDistance
