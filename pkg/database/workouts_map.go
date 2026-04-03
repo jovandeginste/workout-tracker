@@ -119,6 +119,10 @@ func (m *MapPoint) ToOrbPoint() *orb.Point {
 	return &orb.Point{m.Lng, m.Lat}
 }
 
+func (m *MapPoint) IsZero() bool {
+	return m.Lat == 0 && m.Lng == 0
+}
+
 func (d *MapDataDetails) Save(db *gorm.DB) error {
 	return db.Save(d).Error
 }
