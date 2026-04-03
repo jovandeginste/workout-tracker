@@ -36,7 +36,7 @@ templ Show(e *database.Equipment) {
 								</td>
 								<th>{ i18n.T(ctx, "translation.Total_distance") }</th>
 								<td>
-									{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance() }
+									{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
 								</td>
 							</tr>
 							<tr>

@@ -81,13 +81,13 @@ func OrderByOptions() []TranslatedKey {
 
 func PreferredUnitsToJSON(units *database.UserPreferredUnits) map[string]string {
 	return map[string]string{
-		"distance":    units.Distance(),
-		"speed":       units.Speed(),
+		"distance":    units.Distance(nil),
+		"speed":       units.Speed(nil),
 		"elevation":   units.Elevation(),
 		"heartRate":   units.HeartRate(),
 		"cadence":     units.Cadence(),
 		"temperature": units.Temperature(),
-		"tempo":       units.Tempo(),
+		"tempo":       units.Tempo(nil),
 		"power":       units.Power(),
 		"calories":    units.Calories(),
 	}

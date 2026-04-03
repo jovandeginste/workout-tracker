@@ -80,7 +80,7 @@ templ details(s *database.RouteSegment) {
 				</td>
 				<th>{ i18n.T(ctx, "translation.Total_distance") }</th>
 				<td class="whitespace-nowrap font-mono">
-					{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance() }
+					{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance(nil) }
 				</td>
 			</tr>
 			<tr>

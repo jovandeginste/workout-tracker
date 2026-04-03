@@ -17,57 +17,57 @@ func HumanElevation(ctx context.Context, d float64) string {
 }
 
 func HumanDistance(ctx context.Context, d float64) string {
-	return templatehelpers.HumanDistanceFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+	return templatehelpers.HumanDistanceFor(CurrentUser(ctx).PreferredUnits().Distance(nil))(d)
 }
 
 func HumanDistanceForWorkout(ctx context.Context, w *database.Workout, d float64) string {
-	if w != nil && w.Type.IsNautical() {
-		return templatehelpers.HumanDistanceNM(d)
+	if w != nil {
+		return templatehelpers.HumanDistanceFor(CurrentUser(ctx).PreferredUnits().Distance(&w.Type))(d)
 	}
 	return HumanDistance(ctx, d)
 }
 
 func DistanceUnitForWorkout(ctx context.Context, w *database.Workout) string {
-	if w != nil && w.Type.IsNautical() {
-		return "nm"
+	if w != nil {
+		return CurrentUser(ctx).PreferredUnits().Distance(&w.Type)
 	}
-	return CurrentUser(ctx).PreferredUnits().Distance()
+	return CurrentUser(ctx).PreferredUnits().Distance(nil)
 }
 
 func HumanTempo(ctx context.Context, d float64) string {
-	return templatehelpers.HumanTempoFor(CurrentUser(ctx).PreferredUnits().Distance())(d)
+	return templatehelpers.HumanTempoFor(CurrentUser(ctx).PreferredUnits().Distance(nil))(d)
 }
 
 func HumanTempoForWorkout(ctx context.Context, w *database.Workout, d float64) string {
-	if w != nil && w.Type.IsNautical() {
-		return templatehelpers.HumanTempoNM(d)
+	if w != nil {
+		return templatehelpers.HumanTempoFor(CurrentUser(ctx).PreferredUnits().Tempo(&w.Type))(d)
 	}
 	return HumanTempo(ctx, d)
 }
 
 func TempoUnitForWorkout(ctx context.Context, w *database.Workout) string {
-	if w != nil && w.Type.IsNautical() {
-		return "min/nm"
+	if w != nil {
+		return CurrentUser(ctx).PreferredUnits().Tempo(&w.Type)
 	}
-	return CurrentUser(ctx).PreferredUnits().Tempo()
+	return CurrentUser(ctx).PreferredUnits().Tempo(nil)
 }
 
 func HumanSpeed(ctx context.Context, d float64) string {
-	return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed())(d)
+	return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed(nil))(d)
 }
 
 func HumanSpeedForWorkout(ctx context.Context, w *database.Workout, d float64) string {
-	if w != nil && w.Type.IsNautical() {
-		return templatehelpers.HumanSpeedKnots(d)
+	if w != nil {
+		return templatehelpers.HumanSpeedFor(CurrentUser(ctx).PreferredUnits().Speed(&w.Type))(d)
 	}
 	return HumanSpeed(ctx, d)
 }
 
 func SpeedUnitForWorkout(ctx context.Context, w *database.Workout) string {
-	if w != nil && w.Type.IsNautical() {
-		return "kn"
+	if w != nil {
+		return CurrentUser(ctx).PreferredUnits().Speed(&w.Type)
 	}
-	return CurrentUser(ctx).PreferredUnits().Speed()
+	return CurrentUser(ctx).PreferredUnits().Speed(nil)
 }
 
 func HumanCadence(d float64) string {
