@@ -18,6 +18,7 @@ var iconMap = map[string]string{
 	"repetitions": "icon-[fa6-solid--calculator]",
 	"weight":      "icon-[fa6-solid--weight-hanging]",
 	"heart-rate":  "icon-[fa6-solid--heart-pulse]",
+	"strokes":     "icon-[fa6-solid--person-swimming]",
 	"cadence":     "icon-[fa6-solid--stopwatch]",
 	"temperature": "icon-[fa6-solid--temperature-high]",
 	"heading":     "icon-[fa6-solid--compass]",
