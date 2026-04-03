@@ -713,7 +713,6 @@ func (w *Workout) calculateAverageSpeeds() {
 	w.Data.AverageSpeed = w.Data.TotalDistance / w.Data.TotalDuration.Seconds()
 
 	if w.Data.TotalDuration == w.Data.PauseDuration {
-		w.Data.AverageSpeedNoPause = w.Data.AverageSpeed
 		return
 	}
 
