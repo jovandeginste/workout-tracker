@@ -2,6 +2,7 @@ package database
 
 import (
 	"testing"
+	"time"
 
 	"github.com/fsouza/slognil"
 	"github.com/stretchr/testify/assert"
@@ -303,6 +304,25 @@ func TestDatabaseProfileSave(t *testing.T) {
 	u, err = GetUser(db, "username")
 	require.NoError(t, err)
 	assert.Equal(t, "de", u.Profile.Language)
+}
+
+func TestUser_WeightAtUsesLatestMeasurement(t *testing.T) {
+	db := createMemoryDB(t)
+	u := defaultUser()
+	require.NoError(t, u.Create(db))
+	u.SetDB(db)
+
+	base := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+
+	m1 := u.NewMeasurement(base)
+	m1.Weight = 80
+	require.NoError(t, m1.Save(db))
+
+	m2 := u.NewMeasurement(base.AddDate(0, 0, 1))
+	m2.Weight = 75
+	require.NoError(t, m2.Save(db))
+
+	assert.Equal(t, 75.0, u.WeightAt(base.AddDate(0, 0, 1)))
 }
 
 func TestDatabaseUserWorkouts(t *testing.T) {
