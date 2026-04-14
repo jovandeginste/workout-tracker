@@ -475,6 +475,7 @@ func (u *User) measurementAt(key string, d time.Time) float64 {
 		Where("date <= ?", datatypes.Date(d)).
 		Where("? > ?", key, 0).
 		Order("date DESC").
+		Limit(1).
 		Pluck(key, &w)
 
 	if err := q.Error; err != nil {
