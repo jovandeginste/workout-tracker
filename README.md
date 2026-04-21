@@ -370,14 +370,17 @@ EOF
 The generic upload endpoint takes the recording as body. Prepend the path with
 `@` to tell `curl` to read the data from a file:
 
-GPX:
+If you are uploading a GPX file (default):
+
 ```bash
 curl -sSL -H "Authorization: bearer your-api-key" \
   http://localhost:8080/api/v1/import/generic \
   --data @path/to/recorded.gpx
 ```
 
-FIT:
+If you upload FIT files or other file types, including GPX, include a query
+paramter `name`:
+
 ```bash
 curl -sSL -H "Authorization: bearer your-api-key" \
   http://localhost:8080/api/v1/import/generic?name=recorded.fit \
