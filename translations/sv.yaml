@@ -2,3 +2,15 @@
 sv:
   translation:
     Welcome: Välkommen!
+  alerts:
+    something_wrong: 'Något gick fel: %{message}'
+    workouts_added:
+      one: 'Ett problem uppstod vid skapat träningspass: %{list}'
+      other: 'Ett eller flera problem uppstod vid skapat träningspass: %{list}'
+    route_segments_added:
+      one: 'Ett problem uppstod vid skapad rutt: %{list}'
+      other: 'Ett eller flera problem uppstod vid skapad rutt: %{list}'
+  notices:
+    workouts_added:
+      one: '%{list} tillagt'
+      other: '%{count} %{list} tillagda'
