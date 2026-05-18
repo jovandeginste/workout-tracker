@@ -17,7 +17,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             # Go development
-            go_1_24
+            go_1_26
             templ
             air
             golangci-lint
