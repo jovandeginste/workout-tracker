@@ -33,6 +33,7 @@ var (
 		language.Russian,
 		language.SimplifiedChinese,
 		language.Spanish,
+		language.Swedish,
 		language.Turkish,
 	}
 )
