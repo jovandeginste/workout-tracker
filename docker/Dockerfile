@@ -15,7 +15,7 @@ COPY translations ./translations
 
 RUN make build-frontend
 
-FROM golang:1.25.1-alpine AS backend
+FROM golang:1.26.2-alpine AS backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF

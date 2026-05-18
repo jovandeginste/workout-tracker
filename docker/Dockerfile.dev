@@ -16,7 +16,7 @@ COPY translations ./translations
 WORKDIR /app/frontend
 ENTRYPOINT ["npm", "run", "dev"]
 
-FROM golang:1.25.1-alpine AS builder-backend
+FROM golang:1.26.2-alpine AS builder-backend
 ARG BUILD_TIME
 ARG GIT_COMMIT
 ARG GIT_REF

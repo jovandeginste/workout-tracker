@@ -1,8 +1,6 @@
 module github.com/jovandeginste/workout-tracker/v2
 
-go 1.25.0
-
-toolchain go1.25.3
+go 1.26.2
 
 replace github.com/anyappinc/fitbit v0.0.3 => github.com/jovandeginste/fitbit v0.0.4-0.20250213164811-b0b3b27c3a84
 
