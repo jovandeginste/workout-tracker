@@ -18,6 +18,7 @@ export function initLocalize() {
         pl: () => import("./generated/locales/pl"),
         "pt-BR": () => import("./generated/locales/pt-BR"),
         ru: () => import("./generated/locales/ru"),
+        sv: () => import("./generated/locales/sv"),
         tr: () => import("./generated/locales/tr"),
         "zh-Hans": () => import("./generated/locales/zh-Hans"),
       })[locale](),
