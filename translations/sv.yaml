@@ -1,7 +1,5 @@
 ---
 sv:
-  translation:
-    Welcome: Välkommen!
   alerts:
     something_wrong: 'Något gick fel: %{message}'
     workouts_added:
@@ -14,3 +12,97 @@ sv:
     workouts_added:
       one: '%{list} tillagt'
       other: '%{count} %{list} tillagda'
+    route_segments_added:
+      one: '%{list} rutt tillagd - letar efter matchning i bakgrunden'
+      other: '%{count} %{list} ruttar tillagda - letar efter matchning i bakgrunden'
+  misc:
+    month_1: 1 månad
+    years_1: 1 år
+    years_10: 10 år
+    day_15: 15 dagar
+    years_2: 2 år
+    month_3: 3 månader
+    years_5: 5 år
+    month_6: 6 månader
+    day_7: 7 dagar
+    forever: Evighet
+    day: Dag
+    month: Månad
+    equipment: Utrustning
+    route_segment: Rutt alternativ
+    workout: Träningspass
+    convert_from_not_yet_supported_file_format: Konvertera från ett filformat som ännu inte är tillgängligt
+    remove_the_beginning_or_the_ending_of_a_workout: Slutet på träningspasset
+  sports:
+    auto: Hitta automatiskt
+    unknown: Okänd
+    cycling: Cykling
+    e-cycling: El-cyckling
+    horse-riding: Häst ridning
+    inline-skating: Inlines
+    golfing: Golf
+    hiking: Vandring
+    push-ups: Armhävningar
+    running: Löpning
+    skiing: Skridskor
+    snowboarding: Snowboard
+    swimming: Simmning
+    walking: Gång
+    weight-lifting: Tyngdlyftning
+    kayaking: Kajak
+    rowing: Rodd
+    other: Annat
+  menu:
+    Measurements: Mått
+    Heatmap: Karta
+    Dashboard: Översikt
+    Equipment: Utrustning
+    route_segments: Rutt alternativ
+    Statistics: Statistik
+    Workouts: Träningspass
+  units:
+    feet: Fot
+    kilograms: Kilogram
+    kilometers: Kilometer
+    meters: Meter
+    miles: Mile
+    pounds: Pund
+    inch: Tum
+    centimeter: Centimeter
+    kilometers_per_hour: Kilometer i timmen
+    miles_per_hour: Miles per hour
+  settings:
+    update: Spara inställningar
+  climb:
+    distance: Klättringsdistans
+    start: Start distans
+    type_climb: 'Klättrat #%d'
+    elevation_gain_loss: Höjd upp/ner
+    average_slope: Medel lutning
+    category: Kategori
+  translation:
+    Welcome: Välkommen!
+    Latest_measurements: Senast mätning
+    Update_measurement: Uppdatera mätning
+    Steps: Steg
+    Regenerate_publicly_shareable_link: Skapa ny länk
+    API_key_updated: API nyckel uppdaterad
+    Actions: Alternativ
+    Active: Aktiv
+    Add_a_workout: Lägg till träningspass
+    Add_equipment: Lägg till utrustning
+    Add_route_segment: Lägg till rutt alternativ
+    Add_workout: Skapa träningspass
+    Add_workouts: Lägg till träningspass
+    Admin: Admin
+    Aerial: Flygtid
+    All: Alla
+    Slope: Backe
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Alla träningspass uppdateras...
+    Application_settings: Inställningar
+    Are_you_sure_you_want_to_delete_this_s: Vill du radera %s?
+    The_workout_s_now_has_a_shareable_link: Träningspasset '%s' har nu en delbar länk
+    The_shareable_link_is_deleted_for_the_workout_s: Den delade länken för '%s' är nu borttagen
+    delete_public_share: Ta bort länk
+    Autodetect: Hitta automatiskt
+    Average_cadence: Medel steglängd
