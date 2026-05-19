@@ -238,6 +238,7 @@ zh-Hans:
     WorkoutLocked: 锻炼 '%s' 的属性现已锁定
     WorkoutUnLocked: 锻炼 '%s' 的属性现已解锁
     LockWorkout: 锁定或解锁此锻炼的属性，禁止自动更新。
+    Breakdown: ''
   user:
     profile:
       your_settings: 您的设置
