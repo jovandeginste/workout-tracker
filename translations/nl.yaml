@@ -63,6 +63,10 @@ nl:
     weight-lifting: gewichtheffen
     e-cycling: e-fietsen
     kayaking: kajakken
+    rowing: ''
+    unknown: ''
+    other: ''
+    auto: ''
   menu:
     Dashboard: Dashboard
     Equipment: Materiaal
@@ -260,6 +264,14 @@ nl:
       aanpassen voor je ze hier uploadt:'
     Try_one_of_these_sites: 'Probeer één van volgende sites:'
     i_completed_a_workout_s: 'Ik heb een workout voltooid: %s.'
+    The_workout_s_now_has_a_shareable_link: ''
+    delete_public_share: ''
+    Average_cadence: ''
+    Max_cadence: ''
+    enhanced_speed: ''
+    public_share: ''
+    HelpTranslating: ''
+    The_shareable_link_is_deleted_for_the_workout_s: ''
   user:
     profile:
       disable_social_sharing_buttons: Knoppen uitschakelen om te delen via 
@@ -288,3 +300,5 @@ nl:
     update: Workout bijwerken
   equipment:
     update: Materiaal bijwerken
+  route_segment:
+    update: ''
