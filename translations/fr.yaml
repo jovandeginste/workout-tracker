@@ -284,6 +284,7 @@ fr:
     LockWorkout: Verrouiller ou déverrouiller les attributs de cet entraînement 
       des mises à jour automatiques.
     enhanced_speed: Vitesse améliorée
+    Breakdown: ''
   user:
     profile:
       auto_import_directory: Répertoire d'imporation automatique
