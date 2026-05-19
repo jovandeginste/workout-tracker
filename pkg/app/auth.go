@@ -39,6 +39,8 @@ func (a *App) setTokenCookie(t string, exp time.Time, c echo.Context) {
 	cookie := new(http.Cookie)
 	cookie.Path = "/"
 	cookie.HttpOnly = true
+	cookie.Secure = true
+	cookie.SameSite = http.SameSiteLaxMode
 	cookie.Name = "token"
 	cookie.Value = t
 	cookie.Expires = exp

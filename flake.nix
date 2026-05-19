@@ -17,14 +17,14 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             # Go development
-            go_1_26
+            go
             templ
             air
             golangci-lint
             go-swag
             k6
             imagemagick
-            nodePackages.prettier
+            prettier
 
             # DB (optional, but good to have CLI tools)
             postgresql_16
