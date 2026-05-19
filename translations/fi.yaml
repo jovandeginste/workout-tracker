@@ -3,10 +3,17 @@ fi:
     workouts_added:
       one: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
       other: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
+    something_wrong: ''
+    route_segments_added:
+      one: ''
+      other: ''
   notices:
     workouts_added:
       one: 'Lisätty %{count} uutta harjoitusta: %{list}'
       other: 'Lisätty %{count} uutta harjoitusta: %{list}'
+    route_segments_added:
+      one: ''
+      other: ''
   misc:
     day_1: 1 päivä
     month_1: 1 kuukausi
@@ -23,6 +30,10 @@ fi:
     equipment: välineet
     route_segment: reittiosuus
     workout: harjoitus
+    remove_the_beginning_or_the_ending_of_a_workout: ''
+    convert_from_not_yet_supported_file_format: ''
+    split_files_with_multiple_tracks: ''
+    forever: ''
   sports:
     cycling: pyöräily
     e-cycling: sähköpyöräily
@@ -36,6 +47,12 @@ fi:
     kayaking: melonta
     walking: kävely
     weight-lifting: painonnosto
+    rowing: ''
+    unknown: ''
+    inline-skating: ''
+    other: ''
+    horse-riding: ''
+    auto: ''
   menu:
     Heatmap: Lämpökartta
     Dashboard: Kojelauta
@@ -53,6 +70,8 @@ fi:
     pounds: paunat
     kilometers_per_hour: kilometriä tunnissa
     miles_per_hour: mailia tunnissa
+    inch: ''
+    centimeter: ''
   settings:
     update: Päivitä asetukset
   translation:
@@ -192,6 +211,42 @@ fi:
     i_completed_a_workout_s: 'Suoritin harjoituksen: %s.'
     Are_you_sure: Oletko varma?
     Accuracy: Tarkkuus
+    Breakdown: ''
+    Steps: ''
+    Slope: ''
+    The_equipment_s_has_been_deleted: ''
+    WorkoutLocked: ''
+    Calories: ''
+    WorkoutAttributeLocked: ''
+    Height: ''
+    The_workout_s_now_has_a_shareable_link: ''
+    Update: ''
+    temperature: ''
+    The_workout_s_has_been_updated: ''
+    delete_public_share: ''
+    You_can_edit_your_GPX_files_before_uploading_them_here: ''
+    Average_cadence: ''
+    These_settings_may_be_overwritten_by: ''
+    The_workout_s_has_been_deleted: ''
+    Max_cadence: ''
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: ''
+    Heading: ''
+    The_user_s_has_been_deleted: ''
+    WorkoutUnLocked: ''
+    The_equipment_s_has_been_updated: ''
+    Update_measurement: ''
+    The_user_s_has_been_updated: ''
+    LockWorkout: ''
+    enhanced_speed: ''
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: ''
+    The_route_segment_s_has_been_updated: ''
+    No_measurements_found: ''
+    public_share: ''
+    Try_one_of_these_sites: ''
+    HelpTranslating: ''
+    Latest_measurements: ''
+    The_workout_s_has_been_created: ''
+    The_shareable_link_is_deleted_for_the_workout_s: ''
   equipment:
     update: Päivitä välineet
   user:
@@ -214,6 +269,18 @@ fi:
       copy_to_clipboard: Kopioi leikepöydälle
       generate_a_new_api_key: Luo uusi API-avain
       show_hide: näytä/piilota
+      totals_to_show_on_dashboard: ''
+      your_settings: ''
     update: Päivitä käyttäjä
   workout:
     update: Päivitä harjoitus
+  route_segment:
+    update: ''
+  climb:
+    category: ''
+    type_climb: ''
+    elevation_gain_loss: ''
+    average_slope: ''
+    distance: ''
+    type_descent: ''
+    start: ''
