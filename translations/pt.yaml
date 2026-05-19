@@ -1,6 +1,14 @@
 pt:
   alerts:
     something_wrong: 'Algo deu errado: %{message}'
+    route_segments_added:
+      one: ''
+      many: ''
+      other: ''
+    workouts_added:
+      one: ''
+      many: ''
+      other: ''
   misc:
     month_1: 1 mês
     years_1: 1 ano
@@ -37,6 +45,10 @@ pt:
     kayaking: caiaque
     rowing: remo
     other: outro
+    unknown: ''
+    inline-skating: ''
+    horse-riding: ''
+    auto: ''
   menu:
     Measurements: Medições
     Heatmap: Mapa de calor
@@ -226,6 +238,23 @@ pt:
       GPX antes de enviá-los aqui:'
     Try_one_of_these_sites: 'Experimente um destes sites:'
     i_completed_a_workout_s: "Concluí um treino: '%s'."
+    Breakdown: ''
+    Username: ''
+    Slope: ''
+    WorkoutLocked: ''
+    Regenerate_publicly_shareable_link: ''
+    WorkoutAttributeLocked: ''
+    temperature: ''
+    User: ''
+    delete_public_share: ''
+    Average_cadence: ''
+    Max_cadence: ''
+    Copy_publicly_shareable_link: ''
+    WorkoutUnLocked: ''
+    LockWorkout: ''
+    enhanced_speed: ''
+    public_share: ''
+    The_shareable_link_is_deleted_for_the_workout_s: ''
   user:
     profile:
       your_settings: As suas configurações
@@ -255,3 +284,20 @@ pt:
     update: Atualizar segmento de rota
   equipment:
     update: Atualizar equipamento
+  climb:
+    category: ''
+    type_climb: ''
+    elevation_gain_loss: ''
+    average_slope: ''
+    distance: ''
+    type_descent: ''
+    start: ''
+  notices:
+    workouts_added:
+      one: ''
+      many: ''
+      other: ''
+    route_segments_added:
+      one: ''
+      many: ''
+      other: ''
