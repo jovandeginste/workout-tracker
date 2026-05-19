@@ -3,19 +3,23 @@ pt-BR:
     something_wrong: 'Algo deu errado: %{message}'
     workouts_added:
       one: 'Encontrado 1 problema ao adicionar treinos: %{list}'
-      other: 'Encontrados %{count} problemas ao adicionar treinos: %{list}'
+      many: 'Encontrados %{count} problemas ao adicionar treinos: %{list}'
+      other:
     route_segments_added:
       one: 'Encontrado 1 problema ao adicionar segmento de rota: %{list}'
-      other: 'Encontrados %{count} problemas ao adicionar segmentos de rota: %{list}'
+      many: 'Encontrados %{count} problemas ao adicionar segmentos de rota: %{list}'
+      other:
   notices:
     workouts_added:
       one: 'Adicionado um novo treino: %{list}'
-      other: 'Adicionados %{count} novos treinos: %{list}'
+      many: 'Adicionados %{count} novos treinos: %{list}'
+      other:
     route_segments_added:
       one: 'Adicionado 1 novo segmento de rota: %{list} - buscamos correspondências
         em segundo plano'
-      other: 'Adicionados %{count} novos segmentos de rota: %{list} - buscamos correspondências
+      many: 'Adicionados %{count} novos segmentos de rota: %{list} - buscamos correspondências
         em segundo plano'
+      other:
   misc:
     month_1: 1 mês
     years_1: 1 ano
@@ -52,6 +56,10 @@ pt-BR:
     kayaking: caiaque
     rowing: remo
     other: outro
+    unknown: ''
+    inline-skating: ''
+    horse-riding: ''
+    auto: ''
   menu:
     Measurements: Medições
     Heatmap: Mapa de calor
@@ -247,6 +255,19 @@ pt-BR:
       arquivos GPX antes de enviá-los aqui:'
     Try_one_of_these_sites: 'Experimente um destes sites:'
     i_completed_a_workout_s: "Concluí um treino: '%s'."
+    Breakdown: ''
+    Slope: ''
+    WorkoutLocked: ''
+    WorkoutAttributeLocked: ''
+    temperature: ''
+    delete_public_share: ''
+    Average_cadence: ''
+    Max_cadence: ''
+    WorkoutUnLocked: ''
+    LockWorkout: ''
+    enhanced_speed: ''
+    public_share: ''
+    The_shareable_link_is_deleted_for_the_workout_s: ''
   user:
     profile:
       your_settings: Suas configurações
@@ -276,3 +297,11 @@ pt-BR:
     update: Atualizar segmento de rota
   equipment:
     update: Atualizar equipamento
+  climb:
+    category: ''
+    type_climb: ''
+    elevation_gain_loss: ''
+    average_slope: ''
+    distance: ''
+    type_descent: ''
+    start: ''
