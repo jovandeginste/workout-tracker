@@ -18,10 +18,10 @@ pt:
     route_segment: segmento de rota
     workout: treino
     split_files_with_multiple_tracks: dividir ficheiros com múltiplas trilhas
-    convert_from_not_yet_supported_file_format: converter de formato de ficheiro 
+    convert_from_not_yet_supported_file_format: converter de formato de ficheiro
       ainda-não-suportado
-    remove_the_beginning_or_the_ending_of_a_workout: remover o início ou o fim de 
-      um treino
+    remove_the_beginning_or_the_ending_of_a_workout: remover o início ou o fim 
+      de um treino
   sports:
     cycling: ciclismo
     e-cycling: ciclismo elétrico
@@ -73,10 +73,11 @@ pt:
     Admin: Administrador
     Aerial: Vista aérea
     All: Todos
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Todos os treinos serão 
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Todos os treinos serão
       atualizados nos próximos minutos.
     Application_settings: Configurações da aplicação
-    Are_you_sure_you_want_to_delete_this_s: Tem certeza que deseja apagar este %s?
+    Are_you_sure_you_want_to_delete_this_s: Tem certeza que deseja apagar este 
+      %s?
     The_workout_s_now_has_a_shareable_link: O treino '%s' agora tem uma ligação 
       partilhável
     Autodetect: Detetar automaticamente
@@ -113,7 +114,7 @@ pt:
     Heart_rate: Frequência cardíaca
     HelpTranslating: "Adoraríamos a sua ajuda a traduzir!\n\nPor favor, ajude a traduzir
       [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)\n"
-    it_took_me_s_to_go_s_i_averaged_s: Levei %s para percorrer %s. A minha média 
+    it_took_me_s_to_go_s_i_averaged_s: Levei %s para percorrer %s. A minha média
       foi %s.
     Last: Último
     Leave_blank_to_keep_current_password: Deixe em branco para manter a 
@@ -206,15 +207,17 @@ pt:
     The_equipment_s_has_been_deleted: O equipamento '%s' foi apagado.
     The_equipment_s_has_been_updated: O equipamento '%s' foi atualizado.
     You_can_find_inspiration_here: 'Pode encontrar inspiração aqui:'
-    The_workout_s_will_be_refreshed_soon: O treino '%s' será atualizado em breve…
+    The_workout_s_will_be_refreshed_soon: O treino '%s' será atualizado em 
+      breve…
     The_workout_s_has_been_created: O treino '%s' foi criado.
     The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
-      O segmento de rota '%s' foi criado - pesquisamos correspondências em segundo
-      plano.
-    The_route_segment_s_has_been_updated: O segmento de rota '%s' foi atualizado.
+      O segmento de rota '%s' foi criado - pesquisamos correspondências em 
+      segundo plano.
+    The_route_segment_s_has_been_updated: O segmento de rota '%s' foi 
+      atualizado.
     Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
-      Iniciar pesquisa em segundo plano por treinos correspondentes ao segmento de
-      rota '%s'.
+      Iniciar pesquisa em segundo plano por treinos correspondentes ao segmento 
+      de rota '%s'.
     No_measurements_found: Nenhuma medição encontrada
     Update: Atualizar
     Height: Altura
@@ -227,7 +230,8 @@ pt:
     profile:
       your_settings: As suas configurações
       auto_import_directory: Diretório de importação automática
-      disable_social_sharing_buttons: Desativar botões de compartilhamento social
+      disable_social_sharing_buttons: Desativar botões de compartilhamento 
+        social
       enable_api_access: Ativar acesso à API
       Language: Idioma
       preferred_units: Unidades preferidas
