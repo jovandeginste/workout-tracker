@@ -251,6 +251,9 @@ ru:
     enhanced_speed: Улучшенная скорость
     temperature: Температура
     Slope: Уклон
+    WorkoutLocked: ''
+    WorkoutAttributeLocked: ''
+    WorkoutUnLocked: ''
   user:
     profile:
       time_zone: Часовой пояс
@@ -292,3 +295,4 @@ ru:
   climb:
     category: Категория
     average_slope: Средний уклон
+    elevation_gain_loss: ''
