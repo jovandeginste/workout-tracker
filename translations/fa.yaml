@@ -3,6 +3,9 @@ fa:
     workouts_added:
       one: '%{count} تمرین جدید اضافه شد: %{list}'
       other: '%{count} تمرین جدید اضافه شد: %{list}'
+    route_segments_added:
+      one: ''
+      other: ''
   misc:
     years_1: ۱ سال
     years_10: ۱۰ سال
@@ -14,6 +17,14 @@ fa:
     month: ماه
     workout: تمرین
     equipment: تجهیزات
+    remove_the_beginning_or_the_ending_of_a_workout: ''
+    convert_from_not_yet_supported_file_format: ''
+    split_files_with_multiple_tracks: ''
+    month_1: ''
+    forever: ''
+    month_3: ''
+    day_15: ''
+    route_segment: ''
   sports:
     walking: پیاده‌روی
     weight-lifting: وزنه برداری
@@ -24,10 +35,23 @@ fa:
     running: دویدن
     skiing: اسکی
     snowboarding: اسنوبُردسواری
+    rowing: ''
+    unknown: ''
+    hiking: ''
+    inline-skating: ''
+    other: ''
+    kayaking: ''
+    horse-riding: ''
+    auto: ''
+    e-cycling: ''
   menu:
     Equipment: تجهیزات
     Statistics: آمارها
     Workouts: تمرین‌ها
+    Measurements: ''
+    route_segments: ''
+    Dashboard: ''
+    Heatmap: ''
   units:
     kilograms: کیلوگرم
     kilometers: کیلومتر
@@ -36,6 +60,9 @@ fa:
     pounds: پوند
     kilometers_per_hour: کیلومتر در ساعت
     miles_per_hour: مایل در ساعت
+    inch: ''
+    centimeter: ''
+    feet: ''
   settings:
     update: بروزرسانی تنظیمات
   translation:
@@ -46,10 +73,11 @@ fa:
     Add_workout: افزودن تمرین
     Add_workouts: افزودن تمرین‌ها
     Admin: مدیر
-    All_workouts_will_be_refreshed_in_the_coming_minutes: همه تمرین‌ها در دقایق پیش
-      رو نوسازی خواهند شد.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: همه تمرین‌ها در دقایق 
+      پیش رو نوسازی خواهند شد.
     Application_settings: تنظیمات برنامه
-    Are_you_sure_you_want_to_delete_this_s: اطمینان دارید که می‌خواهید %s را حذف کنید؟
+    Are_you_sure_you_want_to_delete_this_s: اطمینان دارید که می‌خواهید %s را حذف
+      کنید؟
     Autodetect: تشخیص خودکار
     Average_per_minute: میانگین هر دقیقه
     Average_speed: میانگین سرعت
@@ -69,7 +97,8 @@ fa:
     Elevation: ارتفاع
     End: پایان
     Est_calories_burned: تخمین کالری سوزانده شده
-    Estimated_based_on_the_activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
+    Estimated_based_on_the_activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ 
+      کیلوگرم
     File: فایل
     Heart_rate: ضربان قلب
     Leave_blank_to_keep_current_password: برای حفظ رمز عبور فعلی خالی رهایش کنید
@@ -114,8 +143,8 @@ fa:
     Welcome: خوش‌آمدید!
     Workout: تمرین
     Workout_type: نوع تمرین
-    Your_account_has_been_created_but_needs_to_be_activated: حساب شما ساخته شد اما
-      نیاز به فعال‌سازی دارد.
+    Your_account_has_been_created_but_needs_to_be_activated: حساب شما ساخته شد 
+      اما نیاز به فعال‌سازی دارد.
     Your_profile: نمایه شما
     delete: حذف
     distance: مسافت
@@ -130,12 +159,90 @@ fa:
     up: بالا
     workouts: تمرین‌ها
     i_completed_a_workout_s: 'من یک تمرین را تمام کردم: %s.'
+    Time_paused: ''
+    Breakdown: ''
+    Total_repetitions: ''
+    All: ''
+    Total_duration: ''
+    Steps: ''
+    Total_up: ''
+    Slope: ''
+    Streets: ''
+    Your_progress_per_s_for_the_past_s: ''
+    Sort_by: ''
+    The_equipment_s_has_been_deleted: ''
+    WorkoutLocked: ''
+    Calories: ''
+    Accuracy: ''
+    Resources: ''
+    Tempo: ''
+    Regenerate_publicly_shareable_link: ''
+    find_matches: ''
+    Circular: ''
+    WorkoutAttributeLocked: ''
+    Totals: ''
+    Last: ''
+    Repetitions: ''
+    Height: ''
+    The_workout_s_now_has_a_shareable_link: ''
+    Update: ''
+    temperature: ''
+    Total_weight: ''
+    delete_public_share: ''
+    You_can_edit_your_GPX_files_before_uploading_them_here: ''
+    Average_cadence: ''
+    Filter: ''
+    Publicly_shareable_link_was_copied_to_clipboard: ''
+    Max_cadence: ''
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: ''
+    Copy_publicly_shareable_link: ''
+    Matches: ''
+    The_workout_s_will_be_refreshed_soon: ''
+    Are_you_sure: ''
+    Heading: ''
+    create_route_segment: ''
+    Total_down: ''
+    Show_map_in_full_width: ''
+    Matching_route_segments: ''
+    route_segment:
+      update: ''
+    WorkoutUnLocked: ''
+    it_took_me_s_to_go_s_i_averaged_s: ''
+    The_equipment_s_has_been_updated: ''
+    Update_measurement: ''
+    LockWorkout: ''
+    Records_for_s: ''
+    ascending: ''
+    enhanced_speed: ''
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: ''
+    Average_tempo_no_pause: ''
+    Dashboard_for_s: ''
+    Average_tempo: ''
+    The_route_segment_s_has_been_updated: ''
+    Per: ''
+    No_measurements_found: ''
+    Cadence: ''
+    public_share: ''
+    Filter_workouts: ''
+    Aerial: ''
+    Extra_metrics: ''
+    Try_one_of_these_sites: ''
+    HelpTranslating: ''
+    descending: ''
+    duration: ''
+    Create_route_segment: ''
+    You_can_find_inspiration_here: ''
+    Latest_measurements: ''
+    Add_route_segment: ''
+    The_workout_s_has_been_created: ''
+    Actions: ''
+    The_shareable_link_is_deleted_for_the_workout_s: ''
   user:
     profile:
       your_settings: تنظیمات شما
       auto_import_directory: وارد کردن خودکار پوشه
-      disable_social_sharing_buttons: غیرفعال‌سازی دکمه‌های اشتراک گذاری در شبکه‌های
-        اجتماعی
+      disable_social_sharing_buttons: غیرفعال‌سازی دکمه‌های اشتراک گذاری در 
+        شبکه‌های اجتماعی
       enable_api_access: فعال سازی دسترسی API
       Language: زبان
       refresh_all_your_workouts: نوسازی همه تمرین‌هایتان
@@ -145,8 +252,33 @@ fa:
       copy_to_clipboard: کپی به کلیپ‌برد
       generate_a_new_api_key: ساخت یک کلید API جدید
       show_hide: نمایش/پنهان
+      Dark: ''
+      totals_to_show_on_dashboard: ''
+      Light: ''
+      Browser_System: ''
+      Theme: ''
+      update_preferred_units: ''
+      preferred_units: ''
     update: بروزرسانی کاربر
   workout:
     update: بروزرسانی تمیرین
   equipment:
     update: بروزرسانی تجهیزات
+  alerts:
+    something_wrong: ''
+    route_segments_added:
+      one: ''
+      other: ''
+    workouts_added:
+      one: ''
+      other: ''
+  route_segment:
+    update: ''
+  climb:
+    category: ''
+    type_climb: ''
+    elevation_gain_loss: ''
+    average_slope: ''
+    distance: ''
+    type_descent: ''
+    start: ''
