@@ -254,6 +254,8 @@ ru:
     WorkoutLocked: ''
     WorkoutAttributeLocked: ''
     WorkoutUnLocked: ''
+    Breakdown: ''
+    LockWorkout: ''
   user:
     profile:
       time_zone: Часовой пояс
@@ -296,3 +298,7 @@ ru:
     category: Категория
     average_slope: Средний уклон
     elevation_gain_loss: ''
+    type_climb: ''
+    distance: ''
+    type_descent: ''
+    start: ''
