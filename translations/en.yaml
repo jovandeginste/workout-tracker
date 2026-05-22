@@ -1,324 +1,322 @@
 ---
-alerts:
-  something_wrong: 'Something went wrong: %{message}'
-  workouts_added:
-    one: 'Encountered 1 problem while adding workouts: %{list}'
-    other: 'Encountered %{count} problems while adding workouts: %{list}'
-  route_segments_added:
-    one: 'Encountered 1 problem while adding route segment: %{list}'
-    other: 'Encountered %{count} problems while adding route segment: %{list}'
-notices:
-  workouts_added:
-    one: 'Added a new workout: %{list}'
-    other: 'Added %{count} new workouts: %{list}'
-  route_segments_added:
-    one: 'Added 1 new route segment: %{list} - we search for matches in the background'
-    other: 'Added %{count} new route segments: %{list} - we search for matches in
-      the background'
-misc:
-  month_1: 1 month
-  years_1: 1 year
-  years_10: 10 years
-  day_15: 15 days
-  years_2: 2 years
-  month_3: 3 months
-  years_5: 5 years
-  month_6: 6 months
-  day_7: 7 days
-  forever: forever
-  day: day
-  month: month
-  equipment: equipment
-  route_segment: route segment
-  workout: workout
-  split_files_with_multiple_tracks: split files with multiple tracks
-  convert_from_not_yet_supported_file_format: convert from not-yet-supported file
-    format
-  remove_the_beginning_or_the_ending_of_a_workout: remove the beginning or the ending
-    of a workout
-sports:
-  auto: auto-detect
-  unknown: unknown
-  cycling: cycling
-  indoor-cycling: indoor cycling
-  mountain-biking: mountain biking
-  alpine-climbing: alpine climbing
-  mountaineering: mountaineering
-  e-cycling: e-cycling
-  horse-riding: horse riding
-  inline-skating: inline skating
-  golfing: golfing
-  hiking: hiking
-  push-ups: push-ups
-  sit-ups: sit-ups
-  squats: squats
-  chin-ups: chin-ups
-  pull-ups: pull-ups
-  planking: planking
-  running: running
-  indoor-running: indoor running
-  skiing: skiing
-  snowboarding: snowboarding
-  swimming: swimming
-  walking: walking
-  weight-lifting: weight lifting
-  kayaking: kayaking
-  rowing: rowing
-  sailing: sailing
-  table-tennis: table tennis
-  tennis: tennis
-  ice-skating: ice skating
-  badminton: badminton
-  football: football
-  core: core
-  dancing: dancing
-  other: other
-menu:
-  Measurements: Measurements
-  Heatmap: Heatmap
-  Dashboard: Dashboard
-  Equipment: Equipment
-  route_segments: Route segments
-  Statistics: Statistics
-  Workouts: Workouts
-units:
-  feet: feet
-  kilograms: kilograms
-  kilometers: kilometers
-  meters: meters
-  miles: miles
-  pounds: pounds
-  inch: inch
-  centimeter: centimeter
-  kilometers_per_hour: kilometers per hour
-  miles_per_hour: miles per hour
-settings:
-  update: Update settings
-climb:
-  distance: Distance
-  start: Start
-  type_descent: 'Descent #%d'
-  type_climb: 'Climb #%d'
-  elevation_gain: Gain
-  elevation_loss: Loss
-  average_slope: Avg. slope
-  category: Cat.
-translation:
-  Climbs: Climbs
-  Create_route_segment_from_climb: Create route segment from this segment
-  Latest_measurements: Latest measurements
-  Update_measurement: Update measurement
-  Steps: Steps
-  Regenerate_publicly_shareable_link: (Re)generate link
-  API_key_updated: API key updated
-  Actions: Actions
-  Active: Active
-  Add_a_workout: Add a workout
-  Add_equipment: Add equipment
-  Add_route_segment: Add route segment
-  Add_workout: Add workout
-  Add_workouts: Add workouts
-  Admin: Admin
-  Aerial: Aerial
-  All: All
-  Slope: Slope
-  All_workouts_will_be_refreshed_in_the_coming_minutes: All workouts will be refreshed
-    in the coming minutes.
-  Application_settings: Application settings
-  Are_you_sure_you_want_to_delete_this_s: Are you sure you want to delete this %s?
-  The_workout_s_now_has_a_shareable_link: The workout '%s' now has a shareable link
-  The_shareable_link_is_deleted_for_the_workout_s: The shareable link is deleted for
-    the workout '%s'
-  delete_public_share: Delete link
-  Autodetect: Auto-detect
-  WorkoutAttributeLocked: This attribute is locked from automatic updates
-  WorkoutLocked: The attributes of workout '%s' are now locked
-  WorkoutUnLocked: The attributes of workout '%s' are now unlocked
-  LockWorkout: Lock or unlock the attributes of this workout from automatic updates.
-  Average_per_minute: Average per minute
-  Average_speed: Average speed
-  Average_speed_no_pause: Average speed (no pause)
-  Average_tempo: Average tempo
-  Average_tempo_no_pause: Average tempo (no pause)
-  Bidirectional: Bidirectional
-  Breakdown: Breakdown
-  Cadence: Cadence
-  cadence: Cadence
-  Cadence_avg_max: Cadence (avg/max)
-  enhanced_speed: Enhanced speed
-  temperature: Temperature
-  Cancel: Cancel
-  Circular: Circular
-  Continue: Continue
-  Copy_publicly_shareable_link: Copy link
-  Create_a_new_account: Create a new account
-  Create_route_segment: Create route segment
-  Created: Created
-  Dashboard_for_s: Dashboard for %s
-  Date: Date
-  Default_workout_types: Default workout types
-  Description: Description
-  Details: Details
-  Disable_account_registration: Disable account registration
-  Distance: Distance
-  Duration: Duration
-  Elevation: Elevation
-  End: End
-  Est_calories_burned: Calories burned (est)
-  Calories_burned: Calories burned
-  Estimated_based_on_the_activity: Estimated based on the activity and your last recorded
-    weight
-  Extra_metrics: Extra metrics
-  File: File
-  Filter: Filter
-  Heading: Heading
-  Heart_rate: Heart rate
-  heart-rate: heart rate
-  strokes: strokes
-  HelpTranslating: 'We''d love your help translating!
+en:
+  alerts:
+    something_wrong: 'Something went wrong: %{message}'
+    workouts_added:
+      one: 'Encountered 1 problem while adding workouts: %{list}'
+      other: 'Encountered %{count} problems while adding workouts: %{list}'
+    route_segments_added:
+      one: 'Encountered 1 problem while adding route segment: %{list}'
+      other: 'Encountered %{count} problems while adding route segment: %{list}'
+  notices:
+    workouts_added:
+      one: 'Added a new workout: %{list}'
+      other: 'Added %{count} new workouts: %{list}'
+    route_segments_added:
+      one: 'Added 1 new route segment: %{list} - we search for matches in the background'
+      other: 'Added %{count} new route segments: %{list} - we search for matches in
+        the background'
+  misc:
+    month_1: 1 month
+    years_1: 1 year
+    years_10: 10 years
+    day_15: 15 days
+    years_2: 2 years
+    month_3: 3 months
+    years_5: 5 years
+    month_6: 6 months
+    day_7: 7 days
+    forever: forever
+    day: day
+    month: month
+    equipment: equipment
+    route_segment: route segment
+    workout: workout
+    split_files_with_multiple_tracks: split files with multiple tracks
+    convert_from_not_yet_supported_file_format: convert from not-yet-supported file
+      format
+    remove_the_beginning_or_the_ending_of_a_workout: remove the beginning or the ending
+      of a workout
+  sports:
+    auto: auto-detect
+    unknown: unknown
+    cycling: cycling
+    indoor-cycling: indoor cycling
+    mountain-biking: mountain biking
+    alpine-climbing: alpine climbing
+    mountaineering: mountaineering
+    e-cycling: e-cycling
+    horse-riding: horse riding
+    inline-skating: inline skating
+    golfing: golfing
+    hiking: hiking
+    push-ups: push-ups
+    sit-ups: sit-ups
+    squats: squats
+    chin-ups: chin-ups
+    pull-ups: pull-ups
+    planking: planking
+    running: running
+    indoor-running: indoor running
+    skiing: skiing
+    snowboarding: snowboarding
+    swimming: swimming
+    walking: walking
+    weight-lifting: weight lifting
+    kayaking: kayaking
+    rowing: rowing
+    sailing: sailing
+    table-tennis: table tennis
+    tennis: tennis
+    ice-skating: ice skating
+    badminton: badminton
+    football: football
+    core: core
+    dancing: dancing
+    other: other
+  menu:
+    Measurements: Measurements
+    Heatmap: Heatmap
+    Dashboard: Dashboard
+    Equipment: Equipment
+    route_segments: Route segments
+    Statistics: Statistics
+    Workouts: Workouts
+  units:
+    feet: feet
+    kilograms: kilograms
+    kilometers: kilometers
+    meters: meters
+    miles: miles
+    pounds: pounds
+    inch: inch
+    centimeter: centimeter
+    kilometers_per_hour: kilometers per hour
+    miles_per_hour: miles per hour
+  settings:
+    update: Update settings
+  climb:
+    distance: Distance
+    start: Start
+    type_descent: 'Descent #%d'
+    type_climb: 'Climb #%d'
+    elevation_gain: Gain
+    elevation_loss: Loss
+    average_slope: Avg. slope
+    category: Cat.
+  translation:
+    Climbs: Climbs
+    Create_route_segment_from_climb: Create route segment from this segment
+    Latest_measurements: Latest measurements
+    Update_measurement: Update measurement
+    Steps: Steps
+    Regenerate_publicly_shareable_link: "(Re)generate link"
+    API_key_updated: API key updated
+    Actions: Actions
+    Active: Active
+    Add_a_workout: Add a workout
+    Add_equipment: Add equipment
+    Add_route_segment: Add route segment
+    Add_workout: Add workout
+    Add_workouts: Add workouts
+    Admin: Admin
+    Aerial: Aerial
+    All: All
+    Slope: Slope
+    All_workouts_will_be_refreshed_in_the_coming_minutes: All workouts will be refreshed
+      in the coming minutes.
+    Application_settings: Application settings
+    Are_you_sure_you_want_to_delete_this_s: Are you sure you want to delete this %s?
+    The_workout_s_now_has_a_shareable_link: The workout '%s' now has a shareable link
+    The_shareable_link_is_deleted_for_the_workout_s: The shareable link is deleted for the workout '%s'
+    delete_public_share: Delete link
+    Autodetect: Auto-detect
+    WorkoutAttributeLocked: This attribute is locked from automatic updates
+    WorkoutLocked: The attributes of workout '%s' are now locked
+    WorkoutUnLocked: The attributes of workout '%s' are now unlocked
+    LockWorkout: Lock or unlock the attributes of this workout from automatic updates.
+    Average_per_minute: Average per minute
+    Average_speed: Average speed
+    Average_speed_no_pause: Average speed (no pause)
+    Average_tempo: Average tempo
+    Average_tempo_no_pause: Average tempo (no pause)
+    Bidirectional: Bidirectional
+    Breakdown: Breakdown
+    Cadence: Cadence
+    cadence: Cadence
+    Cadence_avg_max: Cadence (avg/max)
+    enhanced_speed: Enhanced speed
+    temperature: Temperature
+    Cancel: Cancel
+    Circular: Circular
+    Continue: Continue
+    Copy_publicly_shareable_link: Copy link
+    Create_a_new_account: Create a new account
+    Create_route_segment: Create route segment
+    Created: Created
+    Dashboard_for_s: Dashboard for %s
+    Date: Date
+    Default_workout_types: Default workout types
+    Description: Description
+    Details: Details
+    Disable_account_registration: Disable account registration
+    Distance: Distance
+    Duration: Duration
+    Elevation: Elevation
+    End: End
+    Est_calories_burned: Calories burned (est)
+    Calories_burned: Calories burned
+    Estimated_based_on_the_activity: Estimated based on the activity and your last
+      recorded weight
+    Extra_metrics: Extra metrics
+    File: File
+    Filter: Filter
+    Heading: Heading
+    Heart_rate: Heart rate
+    heart-rate: heart rate
+    strokes: strokes
+    HelpTranslating: |
+      We'd love your help translating!
 
-
-    Please help translate [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-
-    '
-  it_took_me_s_to_go_s_i_averaged_s: It took me %s to go %s. I averaged %s.
-  Last: Last
-  Leave_blank_to_keep_current_password: Leave blank to keep current password
-  Location: Location
-  Logout: Logout
-  Manage: Manage
-  Manage_user_s: Manage user '%s'
-  Manage_users: Manage users
-  Manual: Manual
-  Matches: Matches
-  Matching_route_segments: Matching route segments
-  Max_elevation: Max elevation
-  Max_speed: Max speed
-  Min_elevation: Min elevation
-  Name: Name
-  Notes: Notes
-  Other_users: Other users
-  Password: Password
-  Per: Per
-  Personal_trend: Personal trend
-  Please_help_translate_via_Weblate: Please help translate via Weblate
-  Profile_updated: Profile updated
-  Publicly_shareable_link_was_copied_to_clipboard: Publicly shareable link was copied
-    to clipboard
-  public_share: Publicly shareable link
-  Recent_activity: Recent activity
-  Records_for_s: Records for %s
-  Register: Register
-  Repetitions: Repetitions
-  Reset_changes: Reset changes
-  Show_map_in_full_width: Show map in full width
-  Sign_in: Sign in
-  Since: Since
-  Sort_by: Sort by
-  Source: Source
-  Speed: Speed
-  Start: Start
-  Streets: Streets
-  Tempo: Tempo
-  The_user_s_has_been_deleted: The user '%s' has been deleted.
-  The_user_s_has_been_updated: The user '%s' has been updated.
-  The_workout_s_has_been_deleted: The workout '%s' has been deleted.
-  The_workout_s_has_been_refreshed: The workout '%s' has been refreshed.
-  The_workout_s_has_been_updated: The workout '%s' has been updated.
-  These_settings_may_be_overwritten_by: 'These settings may be overwritten by:'
-  Time: Time
-  Time_paused: Time paused
-  Total_distance: Total distance
-  Total_down: Total down
-  Total_duration: Total duration
-  Total_repetitions: Total repetitions
-  Total_up: Total up
-  Totals: Totals
-  Type: Type
-  Updated: Updated
-  Use_a_file: Use a file
-  User: User
-  Username: Username
-  Username_email: Username (email)
-  Weight: Weight
-  Welcome: Welcome!
-  Workout: Workout
-  Workout_type: Workout type
-  Your_account_has_been_created_but_needs_to_be_activated: Your account has been created,
-    but needs to be activated.
-  Your_profile: Your profile
-  Your_progress_per_s_for_the_past_s: Your progress per %s for the past %s
-  create_route_segment: create route segment
-  delete: delete
-  distance: distance
-  download: download
-  duration: duration
-  edit: edit
-  environment_variables: environment variables
-  find_matches: find matches
-  how_to_use: how to use
-  no_equipment: no equipment
-  refresh: refresh
-  refresh_in_progress: refresh in progress
+      Please help translate [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+    it_took_me_s_to_go_s_i_averaged_s: It took me %s to go %s. I averaged %s.
+    Last: Last
+    Leave_blank_to_keep_current_password: Leave blank to keep current password
+    Location: Location
+    Logout: Logout
+    Manage: Manage
+    Manage_user_s: Manage user '%s'
+    Manage_users: Manage users
+    Manual: Manual
+    Matches: Matches
+    Matching_route_segments: Matching route segments
+    Max_elevation: Max elevation
+    Max_speed: Max speed
+    Min_elevation: Min elevation
+    Name: Name
+    Notes: Notes
+    Other_users: Other users
+    Password: Password
+    Per: Per
+    Personal_trend: Personal trend
+    Please_help_translate_via_Weblate: Please help translate via Weblate
+    Profile_updated: Profile updated
+    Publicly_shareable_link_was_copied_to_clipboard: Publicly shareable link was copied
+      to clipboard
+    public_share: Publicly shareable link
+    Recent_activity: Recent activity
+    Records_for_s: Records for %s
+    Register: Register
+    Repetitions: Repetitions
+    Reset_changes: Reset changes
+    Show_map_in_full_width: Show map in full width
+    Sign_in: Sign in
+    Since: Since
+    Sort_by: Sort by
+    Source: Source
+    Speed: Speed
+    Start: Start
+    Streets: Streets
+    Tempo: Tempo
+    The_user_s_has_been_deleted: The user '%s' has been deleted.
+    The_user_s_has_been_updated: The user '%s' has been updated.
+    The_workout_s_has_been_deleted: The workout '%s' has been deleted.
+    The_workout_s_has_been_refreshed: The workout '%s' has been refreshed.
+    The_workout_s_has_been_updated: The workout '%s' has been updated.
+    These_settings_may_be_overwritten_by: 'These settings may be overwritten by:'
+    Time: Time
+    Time_paused: Time paused
+    Total_distance: Total distance
+    Total_down: Total down
+    Total_duration: Total duration
+    Total_repetitions: Total repetitions
+    Total_up: Total up
+    Totals: Totals
+    Type: Type
+    Updated: Updated
+    Use_a_file: Use a file
+    User: User
+    Username: Username
+    Username_email: Username (email)
+    Weight: Weight
+    Welcome: Welcome!
+    Workout: Workout
+    Workout_type: Workout type
+    Your_account_has_been_created_but_needs_to_be_activated: Your account has been
+      created, but needs to be activated.
+    Your_profile: Your profile
+    Your_progress_per_s_for_the_past_s: Your progress per %s for the past %s
+    create_route_segment: create route segment
+    delete: delete
+    distance: distance
+    download: download
+    duration: duration
+    edit: edit
+    environment_variables: environment variables
+    find_matches: find matches
+    how_to_use: how to use
+    no_equipment: no equipment
+    refresh: refresh
+    refresh_in_progress: refresh in progress
+    route_segment:
+      update: Update route segment
+    the_configuration_file: the configuration file
+    up: up
+    workouts: workouts
+    Accuracy: Accuracy
+    Calories: Calories
+    Power: Power
+    power: Power
+    Power_avg_max: Power (avg/max)
+    ascending: ascending
+    descending: descending
+    Total_weight: Total weight
+    Filter_workouts: Filter workouts
+    Resources: Resources
+    The_equipment_s_has_been_deleted: The equipment '%s' has been deleted.
+    The_equipment_s_has_been_updated: The equipment '%s' has been updated.
+    You_can_find_inspiration_here: 'You can find inspiration here:'
+    The_workout_s_will_be_refreshed_soon: The workout '%s' will be refreshed soon…
+    The_workout_s_has_been_created: The workout '%s' has been created.
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: The
+      route segment '%s' has been created - we search for matches in the background.
+    The_route_segment_s_has_been_updated: The route segment '%s' has been updated.
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: Start
+      searching in the background for matching workouts for route segment '%s'.
+    No_measurements_found: No measurements found
+    Update: Update
+    Height: Height
+    Are_you_sure: Are you sure?
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'You can edit your GPX
+      files before uploading them here:'
+    Try_one_of_these_sites: 'Try one of these sites:'
+    i_completed_a_workout_s: "I completed a workout: '%s'."
+  user:
+    profile:
+      show_tabs: Show workout information in tabs
+      your_settings: Your settings
+      auto_import_directory: Auto import directory
+      disable_social_sharing_buttons: Disable social sharing buttons
+      enable_api_access: Enable API access
+      Language: Language
+      preferred_units: Preferred units
+      refresh_all_your_workouts: Refresh all your workouts
+      show_full_date_by_default: Show full date by default
+      time_zone: Time zone
+      totals_to_show_on_dashboard: Totals to show on dashboard
+      update_preferred_units: Update preferred units
+      update_profile: Update profile
+      copy_to_clipboard: Copy to clipboard
+      generate_a_new_api_key: Generate a new API key
+      show_hide: show/hide
+      Theme: Theme
+      Light: Light
+      Dark: Dark
+      Browser_System: Browser / System
+    update: Update user
+  workout:
+    update: Update workout
   route_segment:
     update: Update route segment
-  the_configuration_file: the configuration file
-  up: up
-  workouts: workouts
-  Accuracy: Accuracy
-  Calories: Calories
-  Power: Power
-  power: Power
-  Power_avg_max: Power (avg/max)
-  ascending: ascending
-  descending: descending
-  Total_weight: Total weight
-  Filter_workouts: Filter workouts
-  Resources: Resources
-  The_equipment_s_has_been_deleted: The equipment '%s' has been deleted.
-  The_equipment_s_has_been_updated: The equipment '%s' has been updated.
-  You_can_find_inspiration_here: 'You can find inspiration here:'
-  The_workout_s_will_be_refreshed_soon: The workout '%s' will be refreshed soon…
-  The_workout_s_has_been_created: The workout '%s' has been created.
-  The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: The
-    route segment '%s' has been created - we search for matches in the background.
-  The_route_segment_s_has_been_updated: The route segment '%s' has been updated.
-  Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: Start
-    searching in the background for matching workouts for route segment '%s'.
-  No_measurements_found: No measurements found
-  Update: Update
-  Height: Height
-  Are_you_sure: Are you sure?
-  You_can_edit_your_GPX_files_before_uploading_them_here: 'You can edit your GPX files
-    before uploading them here:'
-  Try_one_of_these_sites: 'Try one of these sites:'
-  i_completed_a_workout_s: 'I completed a workout: ''%s''.'
-user:
-  profile:
-    show_tabs: Show workout information in tabs
-    your_settings: Your settings
-    auto_import_directory: Auto import directory
-    disable_social_sharing_buttons: Disable social sharing buttons
-    enable_api_access: Enable API access
-    Language: Language
-    preferred_units: Preferred units
-    refresh_all_your_workouts: Refresh all your workouts
-    show_full_date_by_default: Show full date by default
-    time_zone: Time zone
-    totals_to_show_on_dashboard: Totals to show on dashboard
-    update_preferred_units: Update preferred units
-    update_profile: Update profile
-    copy_to_clipboard: Copy to clipboard
-    generate_a_new_api_key: Generate a new API key
-    show_hide: show/hide
-    Theme: Theme
-    Light: Light
-    Dark: Dark
-    Browser_System: Browser / System
-  update: Update user
-workout:
-  update: Update workout
-route_segment:
-  update: Update route segment
-equipment:
-  update: Update equipment
+  equipment:
+    update: Update equipment
