@@ -36,10 +36,10 @@ func (a *App) createToken(u *database.User, c echo.Context) error {
 }
 
 func (a *App) setTokenCookie(t string, exp time.Time, c echo.Context) {
+	//nolint:gosec // Disable G124, allow insecure cookies
 	cookie := new(http.Cookie)
 	cookie.Path = "/"
 	cookie.HttpOnly = true
-	cookie.Secure = true
 	cookie.SameSite = http.SameSiteLaxMode
 	cookie.Name = "token"
 	cookie.Value = t
