@@ -1,3 +1,4 @@
+---
 zh-Hans:
   alerts:
     workouts_added:
@@ -73,7 +74,7 @@ zh-Hans:
     Latest_measurements: 最新测量
     Update_measurement: 更新测量
     Steps: 步数
-    Regenerate_publicly_shareable_link: "（重新）生成链接"
+    Regenerate_publicly_shareable_link: （重新）生成链接
     API_key_updated: API 密钥已更新
     Actions: 操作
     Active: 活跃
@@ -103,7 +104,7 @@ zh-Hans:
     Create_a_new_account: 创建新账号
     Create_route_segment: 创建路线段
     Created: 已创建
-    Dashboard_for_s: "%s 的仪表板"
+    Dashboard_for_s: '%s 的仪表板'
     Date: 日期
     Default_workout_types: 默认锻炼类型
     Description: 描述
@@ -143,7 +144,7 @@ zh-Hans:
     Profile_updated: 个人资料已更新
     Publicly_shareable_link_was_copied_to_clipboard: 可公开分享的链接已复制到剪贴板
     Recent_activity: 最近活动
-    Records_for_s: "%s 的记录"
+    Records_for_s: '%s 的记录'
     Register: 注册
     Repetitions: 重复次数
     Reset_changes: 重置更改
@@ -212,11 +213,9 @@ zh-Hans:
     You_can_find_inspiration_here: 您可以在此找到灵感：
     The_workout_s_will_be_refreshed_soon: 锻炼 '%s' 将很快刷新…
     The_workout_s_has_been_created: 锻炼 '%s' 已创建。
-    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
-      路线段 '%s' 已创建 - 我们在后台搜索匹配项。
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 路线段 '%s' 已创建 - 我们在后台搜索匹配项。
     The_route_segment_s_has_been_updated: 路线段 '%s' 已更新。
-    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
-      开始在后台搜索与路线段 '%s' 匹配的锻炼。
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 开始在后台搜索与路线段 '%s' 匹配的锻炼。
     No_measurements_found: 未找到测量结果
     Update: 更新
     Height: 高度

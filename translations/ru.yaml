@@ -1,3 +1,4 @@
+---
 ru:
   tempo: темп
   segment: участок
@@ -7,12 +8,9 @@ ru:
       few: 'Добавлены %{count} новые тренировки: %{list}'
       many: 'Добавлено %{count} новых тренировок: %{list}'
     route_segments_added:
-      one: 'Добавлен %{count} новый отрезок пути: %{list} — мы ищем совпадения в фоновом
-        режиме'
-      few: 'Добавлен %{count} новые отрезки пути: %{list} — мы ищем совпадения в фоновом
-        режиме'
-      many: 'Добавлен %{count} новых отрезка пути: %{list} — мы ищем совпадения в
-        фоновом режиме'
+      one: 'Добавлен %{count} новый отрезок пути: %{list} — мы ищем совпадения в фоновом режиме'
+      few: 'Добавлен %{count} новые отрезки пути: %{list} — мы ищем совпадения в фоновом режиме'
+      many: 'Добавлен %{count} новых отрезка пути: %{list} — мы ищем совпадения в фоновом режиме'
   misc:
     years_1: 1 год
     years_2: 2 года
@@ -30,10 +28,8 @@ ru:
     day_15: 15 дней
     month_3: 3 месяца
     split_files_with_multiple_tracks: разделить файлы с несколькими путями
-    convert_from_not_yet_supported_file_format: преобразовать из пока 
-      неподдерживаемого формата файла
-    remove_the_beginning_or_the_ending_of_a_workout: удалить начало или конец 
-      тренировки
+    convert_from_not_yet_supported_file_format: преобразовать из пока неподдерживаемого формата файла
+    remove_the_beginning_or_the_ending_of_a_workout: удалить начало или конец тренировки
   sports:
     snowboarding: сноуборд
     walking: ходьба
@@ -86,8 +82,7 @@ ru:
     Add_workouts: Добавить тренировки
     Admin: Админ
     Aerial: Esri World Imagery
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут 
-      обновлены в ближайшие минуты.
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Все тренировки будут обновлены в ближайшие минуты.
     Application_settings: Настройки
     Are_you_sure_you_want_to_delete_this_s: Вы уверены, что хотите удалить %s?
     Autodetect: Автоопределение
@@ -120,8 +115,7 @@ ru:
     File: Файл
     Heading: Направление
     Heart_rate: ЧСС
-    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить 
-      текущий пароль
+    Leave_blank_to_keep_current_password: Оставьте пустым, чтобы сохранить текущий пароль
     Location: Местоположение
     Logout: Выход
     Manage: Управление
@@ -136,11 +130,9 @@ ru:
     Other_users: Другие пользователи
     Password: Пароль
     Per: в
-    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на 
-      Weblate
+    Please_help_translate_via_Weblate: Пожалуйста, помогите c переводом на Weblate
     Profile_updated: Профиль обновлен
-    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка 
-      скопирована в буфер обмена
+    Publicly_shareable_link_was_copied_to_clipboard: Общедоступная ссылка скопирована в буфер обмена
     Recent_activity: Недавняя активность
     Register: Зарегистрироваться
     Show_map_in_full_width: Показать карту в полную ширину
@@ -156,8 +148,7 @@ ru:
     The_workout_s_has_been_deleted: Тренировка '%s' удалена.
     The_workout_s_has_been_refreshed: Тренировка '%s' обновлена.
     The_workout_s_has_been_updated: Тренировка '%s' обновлена.
-    These_settings_may_be_overwritten_by: 'Эти параметры могут быть переопределены
-      через:'
+    These_settings_may_be_overwritten_by: 'Эти параметры могут быть переопределены через:'
     Time: Время
     Time_paused: Время остановок
     Total_distance: Общее расстояние
@@ -174,8 +165,7 @@ ru:
     Welcome: Добро пожаловать!
     Workout: Тренировка
     Workout_type: Тип тренировки
-    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан,
-      но его необходимо активировать.
+    Your_account_has_been_created_but_needs_to_be_activated: Ваш аккаунт создан, но его необходимо активировать.
     Your_profile: Ваш профиль
     Your_progress_per_s_for_the_past_s: Ваш прогресс в %s за прошедшие %s
     create_route_segment: создать участок маршрута
@@ -210,16 +200,13 @@ ru:
     Update: Обновить
     Height: Высота
     Update_measurement: Обновить измерение
-    The_workout_s_now_has_a_shareable_link: Тренировка '%s' теперь имеет ссылку 
-      общего доступа
-    The_shareable_link_is_deleted_for_the_workout_s: Ссылка общего доступа для 
-      тренировки '%s' удалена
+    The_workout_s_now_has_a_shareable_link: Тренировка '%s' теперь имеет ссылку общего доступа
+    The_shareable_link_is_deleted_for_the_workout_s: Ссылка общего доступа для тренировки '%s' удалена
     delete_public_share: Удалить ссылку
     Average_cadence: Средний каденс
     Bidirectional: Двунаправленный
     Filter: Фильтр
-    it_took_me_s_to_go_s_i_averaged_s: Мне потребовалось %s, чтобы пройти %s. В 
-      среднем %s.
+    it_took_me_s_to_go_s_i_averaged_s: Мне потребовалось %s, чтобы пройти %s. В среднем %s.
     Last: Последние
     Matches: Совпадения
     Matching_route_segments: Совпадающие отрезки пути
@@ -236,23 +223,17 @@ ru:
     You_can_find_inspiration_here: 'Вдохновение можно найти здесь:'
     The_workout_s_will_be_refreshed_soon: Тренировка '%s' скоро обновится…
     The_workout_s_has_been_created: Тренировка '%s' создана.
-    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
-      Участок пути '%s' создан — мы ищем совпадения в фоновом режиме.
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: Участок пути '%s' создан — мы ищем совпадения в фоновом режиме.
     The_route_segment_s_has_been_updated: Участок пути «%s» обновлён.
-    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
-      Начать поиск в фоновом режиме соответствующих тренировок для участка пути 
-      «%s».
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: Начать поиск в фоновом режиме соответствующих тренировок для участка пути «%s».
     No_measurements_found: Измерения не найдены
-    You_can_edit_your_GPX_files_before_uploading_them_here: 'Вы можете отредактировать
-      файлы GPX перед их загрузкой здесь:'
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'Вы можете отредактировать файлы GPX перед их загрузкой здесь:'
     i_completed_a_workout_s: 'Я выполнил тренировку: «%s».'
-    HelpTranslating: "Мы будем признательны вашей помощи с переводом!\n\nПожалуйста,
-      помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)\n"
+    HelpTranslating: "Мы будем признательны вашей помощи с переводом!\n\nПожалуйста, помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)\n"
     enhanced_speed: Улучшенная скорость
     temperature: Температура
     Slope: Уклон
-    WorkoutAttributeLocked: Этот атрибут заблокирован от автоматических 
-      обновлений
+    WorkoutAttributeLocked: Этот атрибут заблокирован от автоматических обновлений
     WorkoutLocked: Атрибуты тренировки «%s» теперь заблокированы
     WorkoutUnLocked: Атрибуты тренировки «%s» теперь разблокированы
   user:

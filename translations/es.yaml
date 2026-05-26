@@ -1,3 +1,4 @@
+---
 es:
   alerts:
     something_wrong: 'Algo ha salido mal: %{message}'
