@@ -1,4 +1,3 @@
----
 zh-Hans:
   alerts:
     workouts_added:
@@ -10,7 +9,7 @@ zh-Hans:
     workouts_added:
       other: 添加了 %{count} 份新锻炼：%{list}
     route_segments_added:
-      other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项。
+      other: 添加了 %{count} 个新路线片段：%{list} - 我们在后台搜索匹配项
   misc:
     month_6: 6月
     month_3: 3月
@@ -49,6 +48,24 @@ zh-Hans:
     unknown: 未知
     horse-riding: 马术
     inline-skating: 轮滑
+    indoor-cycling: 室内骑行
+    mountain-biking: 山地自行车
+    alpine-climbing: 高山攀登
+    mountaineering: 登山运动
+    sit-ups: 仰卧起坐
+    squats: 深蹲
+    chin-ups: 反手引体向上
+    pull-ups: 正手引体向上
+    planking: 平板支撑
+    indoor-running: 室内跑步
+    sailing: 帆船
+    table-tennis: 乒乓球
+    tennis: 网球
+    ice-skating: 滑冰
+    badminton: 羽毛球
+    football: 足球
+    core: 核心训练
+    dancing: 舞蹈
   menu:
     Dashboard: 仪表板
     Equipment: 设备
@@ -114,7 +131,7 @@ zh-Hans:
     Duration: 持续时间
     Elevation: 海拔
     End: 结束
-    Est_calories_burned: 估计消耗卡路里
+    Est_calories_burned: 消耗卡路里（估算）
     Estimated_based_on_the_activity: 基于活动的估算，并根据您最后记录的体重
     Extra_metrics: 额外指标
     File: 文件
@@ -213,9 +230,11 @@ zh-Hans:
     You_can_find_inspiration_here: 您可以在此找到灵感：
     The_workout_s_will_be_refreshed_soon: 锻炼 '%s' 将很快刷新…
     The_workout_s_has_been_created: 锻炼 '%s' 已创建。
-    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 路线段 '%s' 已创建 - 我们在后台搜索匹配项。
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
+      路线段 '%s' 已创建 - 我们在后台搜索匹配项。
     The_route_segment_s_has_been_updated: 路线段 '%s' 已更新。
-    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 开始在后台搜索与路线段 '%s' 匹配的锻炼。
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
+      开始在后台搜索与路线段 '%s' 匹配的锻炼。
     No_measurements_found: 未找到测量结果
     Update: 更新
     Height: 高度
@@ -237,6 +256,18 @@ zh-Hans:
     WorkoutLocked: 锻炼 '%s' 的属性现已锁定
     WorkoutUnLocked: 锻炼 '%s' 的属性现已解锁
     LockWorkout: 锁定或解锁此锻炼的属性，禁止自动更新。
+    Climbs: 爬坡
+    Create_route_segment_from_climb: 从此路段创建路线段
+    Breakdown: 分类明细
+    cadence: 踏频
+    Cadence_avg_max: 踏频（平均/最大）
+    Calories_burned: 消耗卡路里
+    heart-rate: 心率
+    strokes: 划水次数
+    Personal_trend: 个人趋势
+    Power: 功率
+    power: 功率
+    Power_avg_max: 功率（平均/最大）
   user:
     profile:
       your_settings: 您的设置
@@ -258,6 +289,7 @@ zh-Hans:
       Theme: 主题
       Light: 浅色
       Dark: 深色
+      show_tabs: 在标签页中显示运动信息
     update: 更新用户
   workout:
     update: 更新锻炼
@@ -266,10 +298,12 @@ zh-Hans:
   route_segment:
     update: 更新路线段
   climb:
-    distance: 爬升距离
-    start: 起始距离
+    distance: 距离
+    start: 起点
     type_descent: '下降 #%d'
     type_climb: '爬升 #%d'
     elevation_gain_loss: 海拔升降
     average_slope: 平均坡度
-    category: 分类
+    category: 等级
+    elevation_gain: 爬升
+    elevation_loss: 下降
