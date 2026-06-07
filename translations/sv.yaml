@@ -179,8 +179,8 @@ sv:
     Manage: Hantera
     Manage_user_s: Hantera användaren '%s'
     Manage_users: Hantera användare
-    Matches: matcher
-    Matching_route_segments: Matchande ruttsegment
+    Matches: Matcher
+    Matching_route_segments: Matchande sträckor
     Name: Namn
     Notes: Anteckningar
     Other_users: Andra användare
@@ -224,3 +224,25 @@ sv:
     refresh: uppdatera
     refresh_in_progress: uppdatering pågår
     the_configuration_file: konfigurationsfilen
+    Manual: Manuellt
+    Max_elevation: Högsta höjd
+    Max_speed: Högsta hastighet
+    Min_elevation: Lägsta höjd
+    Per: Enligt
+    Records_for_s: Resultat för %s
+    Register: Registrera
+    Source: Källa
+    Start: Start
+    Streets: Gator
+    The_workout_s_has_been_updated: Träningspasset ”%s” har uppdaterats.
+    These_settings_may_be_overwritten_by: 'Dessa inställningar kan åsidosättas av:'
+    Time: Tid
+    Time_paused: Tiden pausad
+    Total_distance: Total sträcka
+    Total_down: Totalt ned
+    Total_repetitions: Totalt antal repetitioner
+    Total_up: Totalt upp
+    Totals: Totalt
+    Type: Typ
+    Updated: Uppdaterad
+    Use_a_file: Använd en fil
