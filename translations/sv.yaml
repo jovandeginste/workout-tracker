@@ -68,12 +68,15 @@ sv:
     badminton: badminton
     football: fotboll
     dancing: dans
+    core: core
+    chin-ups: Chins
+    pull-ups: Räckhäv
   menu:
     Measurements: Mått
     Heatmap: Karta
     Dashboard: Översikt
     Equipment: Utrustning
-    route_segments: Rutt alternativ
+    route_segments: Rutt segment
     Statistics: Statistik
     Workouts: Träningspass
   units:
@@ -97,6 +100,8 @@ sv:
     average_slope: Medel lutning
     category: Kategori
     type_descent: 'Nedstigning #%d'
+    elevation_gain: Stigning
+    elevation_loss: Förlust
   translation:
     Welcome: Välkommen!
     Latest_measurements: Senast mätning
@@ -246,3 +251,80 @@ sv:
     Type: Typ
     Updated: Uppdaterad
     Use_a_file: Använd en fil
+    enhanced_speed: Korrigerad hastighet
+    Create_route_segment: Skapa ett ruttavsnitt
+    Dashboard_for_s: Dashboard för %s
+    Duration: Varaktighet
+    End: Slut
+    Heading: Kurs
+    it_took_me_s_to_go_s_i_averaged_s: Det tog mig %s att gå %s. Mitt genomsnitt
+      blev %s.
+    Last: Sista
+    Total_duration: Total varaktighet
+    create_route_segment: skapa ruttavsnitt
+    duration: längd
+    environment_variables: environment variabler
+    find_matches: sök matchningar
+    route_segment:
+      update: Uppdatera ruttavsnitt
+    up: Stigning
+    workouts: träningspass
+    Accuracy: Noggrannhet
+    Calories: Kalorier
+    Power: Effekt
+    power: Effekt
+    Power_avg_max: Effekt (snitt/max)
+    ascending: stigande
+    descending: nedåt
+    Total_weight: Total vikt
+    Filter_workouts: Filtrera träningspass
+    Resources: Resurser
+    The_equipment_s_has_been_deleted: Utrustningen ”%s” har tagits bort.
+    The_equipment_s_has_been_updated: Utrustningen ”%s” har uppdaterats.
+    You_can_find_inspiration_here: 'Här kan du hitta inspiration:'
+    The_workout_s_will_be_refreshed_soon: Träningspasset ”%s” kommer snart att 
+      uppdateras…
+    The_workout_s_has_been_created: Träningspasset ”%s” har skapats.
+    The_route_segment_s_has_been_created_we_search_for_matches_in_the_background: 
+      Ruttavsnittet ”%s” har skapats – vi söker efter träffar i bakgrunden.
+    The_route_segment_s_has_been_updated: Sträckavsnittet ”%s” har uppdaterats.
+    Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
+      Börja söka i bakgrunden efter pass som passar ruttavsnittet ”%s”.
+    No_measurements_found: Inga mätvärden hittades
+    Update: Uppdatering
+    Height: Höjd
+    Are_you_sure: Är du säker?
+    You_can_edit_your_GPX_files_before_uploading_them_here: 'Du kan redigera dina
+      GPX-filer innan du laddar upp dem här:'
+    Try_one_of_these_sites: 'Prova någon av dessa webbplatser:'
+    i_completed_a_workout_s: 'Jag har avslutat ett träningspass: ’%s’.'
+  user:
+    profile:
+      show_tabs: Visa träningsinformation i flikar
+      your_settings: Dina inställningar
+      Language: Språk
+      Dark: Mörk
+      Browser_System: Webbläsare / System
+      auto_import_directory: Katalog för automatisk import
+      disable_social_sharing_buttons: Inaktivera knapparna för delning på 
+        sociala medier
+      enable_api_access: Aktivera API-åtkomst
+      preferred_units: Föredragna enheter
+      refresh_all_your_workouts: Förnya alla dina träningspass
+      show_full_date_by_default: Visa hela datumet som standard
+      time_zone: Tidszon
+      totals_to_show_on_dashboard: Totalsummor som ska visas på dashboard
+      update_preferred_units: Uppdatera önskade enheter
+      update_profile: Uppdatera profil
+      copy_to_clipboard: Kopiera till urklipp
+      generate_a_new_api_key: Skapa en ny API-nyckel
+      show_hide: visa/dölj
+      Theme: Tema
+      Light: Ljus
+    update: Uppdatera användare
+  workout:
+    update: Uppdatera träningspass
+  equipment:
+    update: Uppdatera utrustning
+  route_segment:
+    update: Uppdatera rutt segment
