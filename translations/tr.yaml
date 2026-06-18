@@ -1,4 +1,3 @@
----
 tr:
   translation:
     Name: Ad
@@ -13,7 +12,8 @@ tr:
     Admin: Yönetici
     Duration: Süre
     Time: Zaman
-    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız oluşturuldu, ancak etkinleştirilmesi gerekiyor.
+    Your_account_has_been_created_but_needs_to_be_activated: Hesabınız 
+      oluşturuldu, ancak etkinleştirilmesi gerekiyor.
     Calories: Kalori
     ascending: artan
     Notes: Notlar
@@ -66,13 +66,16 @@ tr:
     workouts: çalışmalar
     Active: Etkin
     API_key_updated: API anahtarı güncellendi
-    All_workouts_will_be_refreshed_in_the_coming_minutes: Tüm egzersizler sonraki dakikalarda yenilenecektir.
-    Are_you_sure_you_want_to_delete_this_s: Bu %s'yi silmek istediğinden emin misin?
+    All_workouts_will_be_refreshed_in_the_coming_minutes: Tüm egzersizler 
+      sonraki dakikalarda yenilenecektir.
+    Are_you_sure_you_want_to_delete_this_s: Bu %s'yi silmek istediğinden emin 
+      misin?
     Description: Tanım
     Last: Son
     Logout: Oturumu kapat
     Manage: Yönet
-    Leave_blank_to_keep_current_password: Mevcut parolayı kullanmak için boş bırakın
+    Leave_blank_to_keep_current_password: Mevcut parolayı kullanmak için boş 
+      bırakın
     Matches: Eşleşmeler
     Reset_changes: Değişiklikleri sıfırla
     Show_map_in_full_width: Haritayı tam genişlikte göster
@@ -85,6 +88,7 @@ tr:
     Filter_workouts: Çalışmaları süz
     The_workout_s_has_been_created: '''%s'' çalışması oluşturuldu.'
     Sort_by: Sırala
+    Autodetect: Otomatik-algıla
   user:
     profile:
       Light: Aydınlık
@@ -106,7 +110,8 @@ tr:
     day: gün
     month: ay
     route_segment: rota bölümü
-    remove_the_beginning_or_the_ending_of_a_workout: çalışma başlangıcı veya sonunu kaldır
+    remove_the_beginning_or_the_ending_of_a_workout: çalışma başlangıcı veya 
+      sonunu kaldır
     workout: çalışma
     equipment: ekipman
     split_files_with_multiple_tracks: dosyaları birden çok parçaya böl
@@ -116,7 +121,8 @@ tr:
       other: 'Yeni %{count} antrenman eklendi: %{list}'
     route_segments_added:
       one: 'Bir yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri arıyoruz'
-      other: '%{count} yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri arıyoruz'
+      other: '%{count} yeni rota bölümü eklendi: %{list} - Arka planda eşleşmeleri
+        arıyoruz'
   alerts:
     route_segments_added:
       one: 'Rota bölümü eklerken bir sorunla karşılaşıldı: %{list}'
@@ -151,3 +157,5 @@ tr:
     other: diğerleri
     cycling: bisiklete binmek
     e-cycling: e-bisiklet
+    auto: otomatik-algıla
+    mountain-biking: dağ bisikleti
