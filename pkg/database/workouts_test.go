@@ -2,6 +2,7 @@ package database
 
 import (
 	"testing"
+	"time"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/stretchr/testify/assert"
@@ -134,4 +135,17 @@ func TestWorkout_Recreate(t *testing.T) {
 	ws, err = GetWorkouts(db)
 	require.NoError(t, err)
 	assert.Len(t, ws, 1)
+}
+
+func TestMaxSpeedForPoints_UsesDistanceWindow(t *testing.T) {
+	points := []MapPoint{
+		{TotalDistance2D: 0, TotalDuration: 0},
+		{TotalDistance2D: 1, TotalDuration: time.Second},
+		{TotalDistance2D: 2, TotalDuration: time.Second + 100*time.Millisecond},
+		{TotalDistance2D: 22, TotalDuration: 21*time.Second + 100*time.Millisecond},
+		{TotalDistance2D: 42, TotalDuration: 41*time.Second + 100*time.Millisecond},
+	}
+
+	assert.InDelta(t, 1.81, maxSpeedForPoints(points, 1), 0.01)
+	assert.InDelta(t, 1.0, maxSpeedForPoints(points, 20), 0.01)
 }

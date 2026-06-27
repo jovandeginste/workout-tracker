@@ -372,7 +372,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 
 		if g.IsGPXBAsed() {
 			d = gpxDate(g.GPX)
-			data = gpxAsMapData(g.GPX)
+			data = gpxAsMapData(g.GPX, workoutType)
 		}
 
 		if workoutType == WorkoutTypeAutoDetect {
@@ -790,7 +790,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
-	w.setData(gpxAsMapData(gpxContent))
+	w.setData(gpxAsMapData(gpxContent, w.Type))
 	if err := w.Data.Save(db); err != nil {
 		return err
 	}
