@@ -7,6 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
+const DefaultRouteSegmentTrendPeriod = "365"
+
 type Profile struct {
 	Model
 
@@ -14,16 +16,18 @@ type Profile struct {
 
 	PreferredUnits UserPreferredUnits `gorm:"serializer:json" json:"preferredUnits"` // The user's preferred units
 
-	Language            string      `form:"language" json:"language"`                           // The user's preferred language
-	Theme               string      `form:"theme" json:"theme"`                                 // The user's preferred color scheme
-	TotalsShow          WorkoutType `form:"totals_show" json:"totals_show"`                     // What workout type of totals to show
-	Timezone            string      `form:"timezone" json:"timezone"`                           // The user's preferred timezone
-	AutoImportDirectory string      `form:"auto_import_directory" json:"auto_import_directory"` // The user's preferred directory for auto-import
-	UserID              uint64      `json:"userID"`                                             // The ID of the user who owns this profile
-	APIActive           bool        `form:"api_active" json:"api_active"`                       // Whether the user's API key is active
-	SocialsDisabled     bool        `form:"socials_disabled" json:"socials_disabled"`           // Whether social sharing buttons are disabled when viewing a workout
-	PreferFullDate      bool        `form:"prefer_full_date" json:"prefer_full_date"`           // Whether to show full dates in the workout details
-	ShowTabs            bool        `form:"show_tabs" json:"show_tabs"`                         // Whether to show tabs in web UI
+	Language                        string      `form:"language" json:"language"`                                // The user's preferred language
+	Theme                           string      `form:"theme" json:"theme"`                                      // The user's preferred color scheme
+	TotalsShow                      WorkoutType `form:"totals_show" json:"totals_show"`                          // What workout type of totals to show
+	Timezone                        string      `form:"timezone" json:"timezone"`                                // The user's preferred timezone
+	AutoImportDirectory             string      `form:"auto_import_directory" json:"auto_import_directory"`      // The user's preferred directory for auto-import
+	UserID                          uint64      `json:"userID"`                                                  // The ID of the user who owns this profile
+	APIActive                       bool        `form:"api_active" json:"api_active"`                            // Whether the user's API key is active
+	SocialsDisabled                 bool        `form:"socials_disabled" json:"socials_disabled"`                // Whether social sharing buttons are disabled when viewing a workout
+	PreferFullDate                  bool        `form:"prefer_full_date" json:"prefer_full_date"`                // Whether to show full dates in the workout details
+	ShowTabs                        bool        `form:"show_tabs" json:"show_tabs"`                              // Whether to show tabs in web UI
+	RouteSegmentTrendPeriod         string      `json:"route_segment_trend_period"`                              // The default period for route segment trend calculations
+	RouteSegmentTrendBreakDetection bool        `gorm:"default:true" json:"route_segment_trend_break_detection"` // Whether route segment trend break detection is enabled by default
 }
 
 type UserPreferredUnits struct {
@@ -124,6 +128,19 @@ func (p *Profile) ResetBools() {
 
 func (p *Profile) Save(db *gorm.DB) error {
 	return db.Save(p).Error
+}
+
+func (p *Profile) RouteSegmentTrendPeriodOrDefault() string {
+	if p == nil {
+		return DefaultRouteSegmentTrendPeriod
+	}
+
+	switch p.RouteSegmentTrendPeriod {
+	case "all", "365", "90", "30", "year":
+		return p.RouteSegmentTrendPeriod
+	default:
+		return DefaultRouteSegmentTrendPeriod
+	}
 }
 
 func (p *Profile) CanImportFromDirectory() (bool, error) {
