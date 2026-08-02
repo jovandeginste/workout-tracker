@@ -1,13 +1,21 @@
 package user
 
 import (
+	"time"
+
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Statistics(u *database.User, since, per string) {
+type routeSegmentTrendStatDataPoint struct {
+	Date  string `json:"date"`
+	Speed string `json:"speed"`
+	Type  string `json:"type"`
+}
+
+templ Statistics(u *database.User, since, per, workoutType string, routeSegments []*database.RouteSegment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<h2>
@@ -28,12 +36,61 @@ templ Statistics(u *database.User, since, per string) {
 						<option value={ o.Key } selected?={ o.Key == per }>{ i18n.T(ctx, o.Translation) }</option>
 					}
 				</select>
+				<label for="type">{ i18n.T(ctx, "translation.Type") }</label>
+				<select id="type" name="type">
+					<option value="" selected?={ workoutType == "" }>{ i18n.T(ctx, "translation.All") }</option>
+					for _, wt := range database.WorkoutTypes() {
+						<option value={ wt.String() } selected?={ wt.String() == workoutType }>
+							{ i18n.T(ctx, wt.StringT()) }
+						</option>
+					}
+				</select>
 				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
 			{{ currentUser := helpers.CurrentUser(ctx) }}
 			{{ stats, err := currentUser.GetStatisticsFor(since, per) }}
 			if err != nil {
 				<pre>{ err.Error() }</pre>
+			}
+			{{
+				var routeSegmentTrendData []routeSegmentTrendStatDataPoint
+				routeSegmentTrendTranslations := map[string]string{
+					"trend":               i18n.T(ctx, "translation.Trend"),
+					"trendBreak":          i18n.T(ctx, "translation.Trend_break"),
+					"trendBreakDetection": i18n.T(ctx, "translation.Trend_break_detection"),
+					"resetZoom":           i18n.T(ctx, "translation.Reset_zoom"),
+				}
+				for _, s := range routeSegments {
+					for _, m := range s.RouteSegmentMatches {
+						if m.Workout != nil && m.Workout.UserID == currentUser.ID {
+							routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
+								Date:  m.Workout.Date.Format(time.RFC3339),
+								Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+								Type:  m.Workout.Type.String(),
+							})
+							if _, ok := routeSegmentTrendTranslations[m.Workout.Type.String()]; !ok {
+								routeSegmentTrendTranslations[m.Workout.Type.String()] = i18n.T(ctx, m.Workout.Type.StringT())
+							}
+						}
+					}
+				}
+			}}
+			if len(routeSegmentTrendData) > 0 {
+				<div class="inner-form">
+					<h3>
+						@helpers.IconFor("trend")
+						{ i18n.T(ctx, "translation.Personal_trend") }
+					</h3>
+					<route-segment-trend-stat
+						data={ templ.JSONString(routeSegmentTrendData) }
+						since={ since }
+						workout-type={ workoutType }
+						trend-break-detection?={ currentUser.Profile.RouteSegmentTrendBreakDetection }
+						trend-break-detection-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-trend-break-detection-update") }
+						speed-unit={ currentUser.PreferredUnits().Speed(nil) }
+						translations={ templ.JSONString(routeSegmentTrendTranslations) }
+					></route-segment-trend-stat>
+				</div>
 			}
 			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
 				<div>
@@ -46,6 +103,7 @@ templ Statistics(u *database.User, since, per string) {
 							id="workouts-per-time"
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+							workout-type={ workoutType }
 							type="workouts"
 						></wt-stat>
 					</div>
@@ -61,6 +119,7 @@ templ Statistics(u *database.User, since, per string) {
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
+							workout-type={ workoutType }
 							type="durationSeconds"
 							unit="duration"
 						></wt-stat>
@@ -77,6 +136,7 @@ templ Statistics(u *database.User, since, per string) {
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
+							workout-type={ workoutType }
 							type="localDistance"
 							unit="distance"
 						></wt-stat>
@@ -93,6 +153,7 @@ templ Statistics(u *database.User, since, per string) {
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
+							workout-type={ workoutType }
 							type="localAverageSpeed"
 							unit="speed"
 						></wt-stat>
@@ -109,6 +170,7 @@ templ Statistics(u *database.User, since, per string) {
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
+							workout-type={ workoutType }
 							type="localAverageSpeedNoPause"
 							unit="speed"
 						></wt-stat>
@@ -125,6 +187,7 @@ templ Statistics(u *database.User, since, per string) {
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
+							workout-type={ workoutType }
 							type="localMaxSpeed"
 							unit="speed"
 						></wt-stat>

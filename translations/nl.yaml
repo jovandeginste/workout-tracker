@@ -198,6 +198,16 @@ nl:
     Password: Wachtwoord
     Per: Per
     Personal_trend: Persoonlijke trend
+    Trend_period: Trendperiode
+    Trend_break_detection: Trendbreukdetectie
+    Trend: Trend
+    Trend_break: Trendbreuk
+    Reset_zoom: Zoom resetten
+    All_time: Altijd
+    Last_365_days: Laatste 365 dagen
+    Last_90_days: Laatste 90 dagen
+    Last_30_days: Laatste 30 dagen
+    This_calendar_year: Dit kalenderjaar
     Please_help_translate_via_Weblate: Help deze toepassing vertalen op Weblate
     Profile_updated: Profiel bijgewerkt
     Publicly_shareable_link_was_copied_to_clipboard: Publieke koppeling is naar 

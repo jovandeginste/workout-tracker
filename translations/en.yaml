@@ -194,6 +194,16 @@ en:
     Password: Password
     Per: Per
     Personal_trend: Personal trend
+    Trend_period: Trend period
+    Trend_break_detection: Trend break detection
+    Trend: Trend
+    Trend_break: Trend break
+    Reset_zoom: Reset zoom
+    All_time: All time
+    Last_365_days: Last 365 days
+    Last_90_days: Last 90 days
+    Last_30_days: Last 30 days
+    This_calendar_year: This calendar year
     Please_help_translate_via_Weblate: Please help translate via Weblate
     Profile_updated: Profile updated
     Publicly_shareable_link_was_copied_to_clipboard: Publicly shareable link was copied to clipboard
