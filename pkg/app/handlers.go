@@ -34,6 +34,7 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 	statisticsParams := struct {
 		Since string `query:"since"`
 		Per   string `query:"per"`
+		Type  string `query:"type"`
 	}{
 		Since: "1 year",
 		Per:   "month",
@@ -43,7 +44,16 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per))
+	if statisticsParams.Since == "" {
+		statisticsParams.Since = "1 year"
+	}
+
+	routeSegments, err := database.GetRouteSegments(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, routeSegments))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {
