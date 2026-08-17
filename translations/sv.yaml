@@ -321,6 +321,7 @@ sv:
       show_hide: visa/dölj
       Theme: Tema
       Light: Ljus
+      export_all_your_workouts: Exportera alla originalfiler
     update: Uppdatera användare
   workout:
     update: Uppdatera träningspass
