@@ -45,14 +45,12 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		currentUser := helpers.CurrentUser(ctx)
 		var trendData []trendDataPoint
 		speedUnit := currentUser.PreferredUnits().Speed(nil)
-		for _, m := range s.RouteSegmentMatches {
-			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
-				trendData = append(trendData, trendDataPoint{
-					Date:  m.Workout.Date.Format(time.RFC3339),
-					Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-					Type:  m.Workout.Type.String(),
-				})
-			}
+		for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+			trendData = append(trendData, trendDataPoint{
+				Date:  m.Workout.Date.Format(time.RFC3339),
+				Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+				Type:  m.Workout.Type.String(),
+			})
 		}
 		translations := map[string]string{
 			"averageSpeed":        i18n.T(ctx, "translation.Average_speed"),
@@ -80,7 +78,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(trendData))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 54, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 52, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -93,7 +91,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(translations))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 55, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 53, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -106,7 +104,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(currentUser.Profile.Theme)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 56, Col: 40}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 54, Col: 40}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -119,7 +117,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(currentUser.Profile.RouteSegmentTrendPeriodOrDefault())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 57, Col: 71}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 55, Col: 71}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -142,7 +140,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.RouteFor(ctx, "user-profile-route-segment-config-update"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 59, Col: 89}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 57, Col: 89}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {
@@ -155,7 +153,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.Language(ctx))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 60, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 58, Col: 30}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 		if templ_7745c5c3_Err != nil {
@@ -168,7 +166,7 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.RouteFor(ctx, "assets") + "/views/route_segments/show_stats.js")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 62, Col: 86}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/show_stats.templ`, Line: 60, Col: 86}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 		if templ_7745c5c3_Err != nil {

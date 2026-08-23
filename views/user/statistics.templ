@@ -61,16 +61,14 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 					"resetZoom":           i18n.T(ctx, "translation.Reset_zoom"),
 				}
 				for _, s := range routeSegments {
-					for _, m := range s.RouteSegmentMatches {
-						if m.Workout != nil && m.Workout.UserID == currentUser.ID {
-							routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
-								Date:  m.Workout.Date.Format(time.RFC3339),
-								Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-								Type:  m.Workout.Type.String(),
-							})
-							if _, ok := routeSegmentTrendTranslations[m.Workout.Type.String()]; !ok {
-								routeSegmentTrendTranslations[m.Workout.Type.String()] = i18n.T(ctx, m.Workout.Type.StringT())
-							}
+					for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+						routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
+							Date:  m.Workout.Date.Format(time.RFC3339),
+							Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+							Type:  m.Workout.Type.String(),
+						})
+						if _, ok := routeSegmentTrendTranslations[m.Workout.Type.String()]; !ok {
+							routeSegmentTrendTranslations[m.Workout.Type.String()] = i18n.T(ctx, m.Workout.Type.StringT())
 						}
 					}
 				}
