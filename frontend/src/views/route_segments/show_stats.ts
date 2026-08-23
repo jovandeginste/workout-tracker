@@ -76,20 +76,15 @@ export class RouteSegmentStats extends LitElement {
   trendPeriod: TrendPeriod = "365";
 
   @property({
-    attribute: "trend-period-update-route",
+    attribute: "config-update-route",
   })
-  trendPeriodUpdateRoute = "";
+  configUpdateRoute = "";
 
   @property({
     attribute: "trend-break-detection",
     type: Boolean,
   })
   trendBreakDetection = false;
-
-  @property({
-    attribute: "trend-break-detection-update-route",
-  })
-  trendBreakDetectionUpdateRoute = "";
 
   private chart: Chart | null = null;
   private hiddenTrendGroups = new Set<string>();
@@ -176,49 +171,36 @@ export class RouteSegmentStats extends LitElement {
     const period = (event.target as HTMLSelectElement).value as TrendPeriod;
     this.trendPeriod = period;
 
-    if (!this.trendPeriodUpdateRoute) {
-      return;
-    }
-
-    const body = new URLSearchParams({
-      route_segment_trend_period: period,
-    });
-
-    try {
-      const response = await fetch(this.trendPeriodUpdateRoute, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body,
-      });
-
-      if (response.ok) {
-        return;
-      }
-    } catch (_err) {
-      // Keep the selected chart period even if saving the preference fails.
-    }
-
-    if (this.trendPeriodUpdateRoute) {
-      console.warn("Failed to save route segment trend period preference");
-    }
+    await this.saveRouteSegmentConfig(
+      new URLSearchParams({ route_segment_trend_period: period }),
+      "Failed to save route segment trend period preference",
+    );
   }
 
   private async updateTrendBreakDetection(event: Event): Promise<void> {
     this.trendBreakDetection =
       (event.target as HTMLSelectElement).value === "break";
 
-    if (!this.trendBreakDetectionUpdateRoute) {
+    await this.saveRouteSegmentConfig(
+      new URLSearchParams({
+        route_segment_trend_break_detection: String(
+          this.trendBreakDetection,
+        ),
+      }),
+      "Failed to save route segment trend break detection preference",
+    );
+  }
+
+  private async saveRouteSegmentConfig(
+    body: URLSearchParams,
+    failureMessage: string,
+  ): Promise<void> {
+    if (!this.configUpdateRoute) {
       return;
     }
 
-    const body = new URLSearchParams({
-      route_segment_trend_break_detection: String(this.trendBreakDetection),
-    });
-
     try {
-      const response = await fetch(this.trendBreakDetectionUpdateRoute, {
+      const response = await fetch(this.configUpdateRoute, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -233,9 +215,7 @@ export class RouteSegmentStats extends LitElement {
       // Keep the selected chart setting even if saving the preference fails.
     }
 
-    console.warn(
-      "Failed to save route segment trend break detection preference",
-    );
+    console.warn(failureMessage);
   }
 
   private average(points: ChartPoint[]): number {
