@@ -13,8 +13,7 @@ func (a *App) addRoutesSelf(g *echo.Group) {
 	a.GET(selfGroup, "/profile", a.userProfileHandler, "user-profile")
 	a.POST(selfGroup, "/profile", a.userProfileUpdateHandler, "user-profile-update")
 	a.POST(selfGroup, "/profile/preferred-units", a.userProfilePreferredUnitsUpdateHandler, "user-profile-preferred-units-update")
-	a.POST(selfGroup, "/profile/route-segment-trend-period", a.userProfileRouteSegmentTrendPeriodUpdateHandler, "user-profile-route-segment-trend-period-update")
-	a.POST(selfGroup, "/profile/route-segment-trend-break-detection", a.userProfileRouteSegmentTrendBreakDetectionUpdateHandler, "user-profile-route-segment-trend-break-detection-update")
+	a.POST(selfGroup, "/profile/route-segment-config", a.userProfileRouteSegmentConfigUpdateHandler, "user-profile-route-segment-config-update")
 	a.POST(selfGroup, "/refresh", a.userRefreshHandler, "user-refresh")
 	a.POST(selfGroup, "/reset-api-key", a.userProfileResetAPIKeyHandler, "user-profile-reset-api-key")
 	a.POST(selfGroup, "/update-version", a.userUpdateVersion, "user-update-version")
@@ -74,26 +73,22 @@ func (a *App) userProfileUpdateHandler(c *echo.Context) error {
 	return c.Redirect(http.StatusFound, a.Reverse("user-profile"))
 }
 
-func (a *App) userProfileRouteSegmentTrendPeriodUpdateHandler(c *echo.Context) error {
-	u := a.getCurrentUser(c)
-	u.Profile.RouteSegmentConfig.TrendPeriod = c.FormValue("route_segment_trend_period")
-	u.Profile.RouteSegmentConfig.Validate()
-
-	if err := u.Profile.Save(a.db); err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
-	}
-
-	if err := a.setUser(c); err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
-	}
-
-	return c.NoContent(http.StatusNoContent)
-}
-
-func (a *App) userProfileRouteSegmentTrendBreakDetectionUpdateHandler(c *echo.Context) error {
+func (a *App) userProfileRouteSegmentConfigUpdateHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
 
-	u.Profile.RouteSegmentConfig.TrendBreakDetection = c.FormValue("route_segment_trend_break_detection") == "true"
+	if err := c.Request().ParseForm(); err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	values := c.Request().PostForm
+
+	if period := values.Get("route_segment_trend_period"); period != "" {
+		u.Profile.RouteSegmentConfig.TrendPeriod = period
+		u.Profile.RouteSegmentConfig.Validate()
+	}
+
+	if _, ok := values["route_segment_trend_break_detection"]; ok {
+		u.Profile.RouteSegmentConfig.TrendBreakDetection = values.Get("route_segment_trend_break_detection") == "true"
+	}
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())

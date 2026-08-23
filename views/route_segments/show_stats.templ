@@ -55,9 +55,8 @@ templ ShowStats(s *database.RouteSegment) {
 		translations={ templ.JSONString(translations) }
 		color-mode={ currentUser.Profile.Theme }
 		trend-period={ currentUser.Profile.RouteSegmentTrendPeriodOrDefault() }
-		trend-period-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-trend-period-update") }
 		trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
-		trend-break-detection-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-trend-break-detection-update") }
+		config-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-config-update") }
 		lang={ helpers.Language(ctx) }
 	></route-segment-stats>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/route_segments/show_stats.js" } type="module"></script>

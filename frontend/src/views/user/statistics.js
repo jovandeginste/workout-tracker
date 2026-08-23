@@ -198,9 +198,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     this.workoutType = this.getAttribute("workout-type") || "";
     this.trendBreakDetection =
       this.getAttribute("trend-break-detection") !== null;
-    this.trendBreakDetectionUpdateRoute = this.getAttribute(
-      "trend-break-detection-update-route",
-    );
+    this.configUpdateRoute = this.getAttribute("config-update-route");
     this.speedUnit = this.getAttribute("speed-unit") || "";
     this.translations = JSON.parse(this.getAttribute("translations") || `{}`);
 
@@ -258,7 +256,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
       this.chart.updateSeries(series);
     }
 
-    if (!this.trendBreakDetectionUpdateRoute) {
+    if (!this.configUpdateRoute) {
       return;
     }
 
@@ -267,7 +265,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     });
 
     try {
-      const response = await fetch(this.trendBreakDetectionUpdateRoute, {
+      const response = await fetch(this.configUpdateRoute, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
