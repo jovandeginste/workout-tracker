@@ -78,8 +78,8 @@ func (a *App) userRegisterHandler(c *echo.Context) error {
 	u.Profile.Theme = BrowserTheme
 	u.Profile.TotalsShow = DefaultTotalsShow
 	u.Profile.Language = BrowserLanguage
-	u.Profile.RouteSegmentTrendPeriod = database.DefaultRouteSegmentTrendPeriod
-	u.Profile.RouteSegmentTrendBreakDetection = true
+	u.Profile.RouteSegmentConfig.TrendPeriod = database.DefaultRouteSegmentTrendPeriod
+	u.Profile.RouteSegmentConfig.TrendBreakDetection = true
 	// ensure user is not admin and not active by default
 	u.Admin = false
 	u.Active = false

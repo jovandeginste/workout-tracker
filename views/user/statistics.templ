@@ -85,7 +85,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 						data={ templ.JSONString(routeSegmentTrendData) }
 						since={ since }
 						workout-type={ workoutType }
-						trend-break-detection?={ currentUser.Profile.RouteSegmentTrendBreakDetection }
+						trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
 						trend-break-detection-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-trend-break-detection-update") }
 						speed-unit={ currentUser.PreferredUnits().Speed(nil) }
 						translations={ templ.JSONString(routeSegmentTrendTranslations) }

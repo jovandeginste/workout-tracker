@@ -76,15 +76,8 @@ func (a *App) userProfileUpdateHandler(c *echo.Context) error {
 
 func (a *App) userProfileRouteSegmentTrendPeriodUpdateHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	period := c.FormValue("route_segment_trend_period")
-
-	switch period {
-	case "all", "365", "90", "30", "year":
-	default:
-		period = database.DefaultRouteSegmentTrendPeriod
-	}
-
-	u.Profile.RouteSegmentTrendPeriod = period
+	u.Profile.RouteSegmentConfig.TrendPeriod = c.FormValue("route_segment_trend_period")
+	u.Profile.RouteSegmentConfig.Validate()
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
@@ -100,7 +93,7 @@ func (a *App) userProfileRouteSegmentTrendPeriodUpdateHandler(c *echo.Context) e
 func (a *App) userProfileRouteSegmentTrendBreakDetectionUpdateHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
 
-	u.Profile.RouteSegmentTrendBreakDetection = c.FormValue("route_segment_trend_break_detection") == "true"
+	u.Profile.RouteSegmentConfig.TrendBreakDetection = c.FormValue("route_segment_trend_break_detection") == "true"
 
 	if err := u.Profile.Save(a.db); err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
