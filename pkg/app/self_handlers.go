@@ -94,10 +94,6 @@ func (a *App) userProfileRouteSegmentConfigUpdateHandler(c *echo.Context) error 
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	if err := a.setUser(c); err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
-	}
-
 	return c.NoContent(http.StatusNoContent)
 }
 
