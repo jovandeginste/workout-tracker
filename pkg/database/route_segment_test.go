@@ -52,6 +52,27 @@ func TestRouteSegment_FindMatches(t *testing.T) {
 	assert.Len(t, matches[0].Workout.Data.Details.Points, 158)
 }
 
+func TestRouteSegment_RouteSegmentMatchesForUserID(t *testing.T) {
+	rs := &RouteSegment{
+		RouteSegmentMatches: []*RouteSegmentMatch{
+			{Workout: &Workout{UserID: 1}},
+			{Workout: &Workout{UserID: 2}},
+			{Workout: nil},
+			nil,
+			{Workout: &Workout{UserID: 1}},
+		},
+	}
+
+	matches := rs.RouteSegmentMatchesForUserID(1)
+
+	if !assert.Len(t, matches, 2) {
+		return
+	}
+
+	assert.Equal(t, uint64(1), matches[0].Workout.UserID)
+	assert.Equal(t, uint64(1), matches[1].Workout.UserID)
+}
+
 func TestRouteSegment_StartingPoints_NoMatch(t *testing.T) {
 	rs, err := NewRouteSegment("", "finsepiste.gpx", []byte(finsepiste))
 	assert.NoError(t, err)

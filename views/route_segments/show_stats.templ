@@ -19,14 +19,12 @@ templ ShowStats(s *database.RouteSegment) {
 	{{
 		var trendData []trendDataPoint
 		speedUnit := currentUser.PreferredUnits().Speed(nil)
-		for _, m := range s.RouteSegmentMatches {
-			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
-				trendData = append(trendData, trendDataPoint{
-					Date:  m.Workout.Date.Format(time.RFC3339),
-					Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-					Type:  m.Workout.Type.String(),
-				})
-			}
+		for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+			trendData = append(trendData, trendDataPoint{
+				Date:  m.Workout.Date.Format(time.RFC3339),
+				Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+				Type:  m.Workout.Type.String(),
+			})
 		}
 	}}
 	{{

@@ -184,6 +184,23 @@ func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	return rs, nil
 }
 
+func (rs *RouteSegment) RouteSegmentMatchesForUserID(userID uint64) []*RouteSegmentMatch {
+	if rs == nil {
+		return nil
+	}
+
+	matches := make([]*RouteSegmentMatch, 0, len(rs.RouteSegmentMatches))
+	for _, match := range rs.RouteSegmentMatches {
+		if match == nil || match.Workout == nil || match.Workout.UserID != userID {
+			continue
+		}
+
+		matches = append(matches, match)
+	}
+
+	return matches
+}
+
 func (rs *RouteSegment) Address() string {
 	if rs.AddressString != "" {
 		return rs.AddressString
