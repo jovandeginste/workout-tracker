@@ -405,7 +405,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				if currentUser.Profile.RouteSegmentTrendBreakDetection {
+				if currentUser.Profile.RouteSegmentConfig.TrendBreakDetection {
 					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, " trend-break-detection")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
