@@ -52,6 +52,60 @@ func TestRoute_HealthCheck(t *testing.T) {
 	})
 }
 
+func TestRoute_DashboardWebRoot(t *testing.T) {
+	tests := []struct {
+		name    string
+		webRoot string
+		path    string
+	}{
+		{name: "default", path: "/"},
+		{name: "root slash", webRoot: "/", path: "/"},
+		{name: "prefix", webRoot: "/wot", path: "/wot"},
+		{name: "prefix trailing slash", webRoot: "/wot/", path: "/wot"},
+		{name: "nested prefix", webRoot: "fitness/workouts", path: "/fitness/workouts"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Setenv("WT_WEB_ROOT", tt.webRoot)
+			a := configuredApp(t)
+			assert.Equal(t, tt.path, a.Reverse("dashboard"))
+
+			u := defaultUser(a.db)
+			require.NoError(t, u.Save(a.db))
+			tokenReq := httptest.NewRequest(http.MethodGet, tt.path, nil)
+			tokenRec := httptest.NewRecorder()
+			require.NoError(t, a.createToken(u, a.echo.NewContext(tokenReq, tokenRec)))
+			tokenResponse := tokenRec.Result()
+			defer tokenResponse.Body.Close()
+			cookies := tokenResponse.Cookies()
+			require.Len(t, cookies, 1)
+
+			paths := []string{tt.path}
+			if tt.path != "/" {
+				paths = append(paths, tt.path+"/")
+			}
+
+			for _, requestPath := range paths {
+				t.Run(requestPath, func(t *testing.T) {
+					req := httptest.NewRequest(http.MethodGet, requestPath, nil)
+					rec := httptest.NewRecorder()
+					a.echo.ServeHTTP(rec, req)
+					assert.Equal(t, http.StatusFound, rec.Code)
+					assert.Equal(t, a.Reverse("user-signout"), rec.Header().Get("Location"))
+
+					req = httptest.NewRequest(http.MethodGet, requestPath, nil)
+					req.AddCookie(cookies[0])
+					rec = httptest.NewRecorder()
+					a.echo.ServeHTTP(rec, req)
+					assert.Equal(t, http.StatusOK, rec.Code)
+					assert.Contains(t, rec.Body.String(), "Dashboard for my-name")
+				})
+			}
+		})
+	}
+}
+
 func TestRoute_UserRender(t *testing.T) {
 	t.Run("should render for the user", func(t *testing.T) {
 		a := configuredApp(t)
