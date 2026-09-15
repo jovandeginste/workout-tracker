@@ -18,12 +18,19 @@ jobs:
         with:
           go-version-file: go.mod
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
       - name: Vendor dependencies
         run: go mod tidy && go mod vendor
 
-      - uses: actionsx/prettier@v3
-        with:
-          args: --check .
+      - name: Check Prettier formatting
+        run: PATH="$PWD/frontend/node_modules/.bin:$PATH" make test-assets
 
       - name: Verify templ files are formatted
         run: make verify-templates
