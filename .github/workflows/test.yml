@@ -30,7 +30,7 @@ jobs:
         run: go mod tidy && go mod vendor
 
       - name: Check Prettier formatting
-        run: ./frontend/node_modules/.bin/prettier --check .
+        run: PATH="$PWD/frontend/node_modules/.bin:$PATH" make test-assets
 
       - name: Verify templ files are formatted
         run: make verify-templates
