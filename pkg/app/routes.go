@@ -193,7 +193,12 @@ func (a *App) addRoutesSecure(g *echo.Group) *echo.Group {
 	}))
 	secureGroup.Use(a.ValidateUserMiddleware)
 
-	a.GET(secureGroup, "/", a.dashboardHandler, "dashboard")
+	dashboardPath := "/"
+	if a.WebRoot() != "" {
+		// Match the prefixed root after RemoveTrailingSlash has run.
+		dashboardPath = ""
+	}
+	a.GET(secureGroup, dashboardPath, a.dashboardHandler, "dashboard")
 	a.GET(secureGroup, "/daily", a.dailyHandler, "daily")
 	a.POST(secureGroup, "/daily", a.dailyUpdateHandler, "daily-update")
 	a.DELETE(secureGroup, "/daily/:date", a.dailyDeleteHandler, "daily-delete")
