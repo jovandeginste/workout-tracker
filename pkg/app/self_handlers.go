@@ -97,7 +97,7 @@ func (a *App) userProfileRouteSegmentConfigUpdateHandler(c *echo.Context) error 
 	}
 
 	if err := u.Profile.Save(a.db); err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.NoContent(http.StatusInternalServerError)
 	}
 
 	return c.NoContent(http.StatusNoContent)
