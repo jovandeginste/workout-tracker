@@ -62,6 +62,9 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 				}
 				for _, s := range routeSegments {
 					for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+						if workoutType != "" && m.Workout.Type.String() != workoutType {
+							continue
+						}
 						routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
 							Date:  m.Workout.Date.Format(time.RFC3339),
 							Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),

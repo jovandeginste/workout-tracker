@@ -332,6 +332,9 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			}
 			for _, s := range routeSegments {
 				for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+					if workoutType != "" && m.Workout.Type.String() != workoutType {
+						continue
+					}
 					routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
 						Date:  m.Workout.Date.Format(time.RFC3339),
 						Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
@@ -354,7 +357,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var17 string
 				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Personal_trend"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 80, Col: 49}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 83, Col: 49}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 				if templ_7745c5c3_Err != nil {
@@ -367,7 +370,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var18 string
 				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(routeSegmentTrendData))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 83, Col: 52}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 86, Col: 52}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var18)
 				if templ_7745c5c3_Err != nil {
@@ -380,7 +383,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var19 string
 				templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.ResolveAttributeValue(since)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 84, Col: 19}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 87, Col: 19}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var19)
 				if templ_7745c5c3_Err != nil {
@@ -393,7 +396,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var20 string
 				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 85, Col: 32}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 88, Col: 32}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var20)
 				if templ_7745c5c3_Err != nil {
@@ -416,7 +419,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var21 string
 				templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.RouteFor(ctx, "user-profile-route-segment-config-update"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 87, Col: 93}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 90, Col: 93}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
 				if templ_7745c5c3_Err != nil {
@@ -429,7 +432,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var22 string
 				templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.ResolveAttributeValue(currentUser.PreferredUnits().Speed(nil))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 88, Col: 58}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 91, Col: 58}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var22)
 				if templ_7745c5c3_Err != nil {
@@ -442,7 +445,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 				var templ_7745c5c3_Var23 string
 				templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(routeSegmentTrendTranslations))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 89, Col: 68}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 92, Col: 68}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var23)
 				if templ_7745c5c3_Err != nil {
@@ -464,7 +467,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var24 string
 			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "menu.Workouts"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 98, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 101, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 			if templ_7745c5c3_Err != nil {
@@ -477,7 +480,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var25 string
 			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 102, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 105, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var25)
 			if templ_7745c5c3_Err != nil {
@@ -490,7 +493,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 103, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 106, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var26)
 			if templ_7745c5c3_Err != nil {
@@ -503,7 +506,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var27 string
 			templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 104, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 107, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var27)
 			if templ_7745c5c3_Err != nil {
@@ -520,7 +523,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var28 string
 			templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Duration"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 113, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 116, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 			if templ_7745c5c3_Err != nil {
@@ -533,7 +536,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var29 string
 			templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 117, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 120, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var29)
 			if templ_7745c5c3_Err != nil {
@@ -546,7 +549,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var30 string
 			templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 118, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 121, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
 			if templ_7745c5c3_Err != nil {
@@ -559,7 +562,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var31 string
 			templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 120, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 123, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var31)
 			if templ_7745c5c3_Err != nil {
@@ -576,7 +579,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var32 string
 			templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Distance"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 130, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 133, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 			if templ_7745c5c3_Err != nil {
@@ -589,7 +592,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var33 string
 			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 134, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 137, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var33)
 			if templ_7745c5c3_Err != nil {
@@ -602,7 +605,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var34 string
 			templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 135, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 138, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var34)
 			if templ_7745c5c3_Err != nil {
@@ -615,7 +618,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var35 string
 			templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 137, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 140, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var35)
 			if templ_7745c5c3_Err != nil {
@@ -632,7 +635,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var36 string
 			templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Average_speed"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 147, Col: 49}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 150, Col: 49}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
 			if templ_7745c5c3_Err != nil {
@@ -645,7 +648,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var37 string
 			templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 151, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 154, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var37)
 			if templ_7745c5c3_Err != nil {
@@ -658,7 +661,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var38 string
 			templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 152, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 155, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var38)
 			if templ_7745c5c3_Err != nil {
@@ -671,7 +674,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var39 string
 			templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 154, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 157, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var39)
 			if templ_7745c5c3_Err != nil {
@@ -688,7 +691,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var40 string
 			templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Average_speed_no_pause"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 164, Col: 58}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 167, Col: 58}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var40))
 			if templ_7745c5c3_Err != nil {
@@ -701,7 +704,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var41 string
 			templ_7745c5c3_Var41, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 168, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 171, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var41)
 			if templ_7745c5c3_Err != nil {
@@ -714,7 +717,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var42 string
 			templ_7745c5c3_Var42, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 169, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 172, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var42)
 			if templ_7745c5c3_Err != nil {
@@ -727,7 +730,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var43 string
 			templ_7745c5c3_Var43, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 171, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 174, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var43)
 			if templ_7745c5c3_Err != nil {
@@ -744,7 +747,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var44 string
 			templ_7745c5c3_Var44, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Max_speed"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 181, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 184, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var44))
 			if templ_7745c5c3_Err != nil {
@@ -757,7 +760,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var45 string
 			templ_7745c5c3_Var45, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(stats))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 185, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 188, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var45)
 			if templ_7745c5c3_Err != nil {
@@ -770,7 +773,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var46 string
 			templ_7745c5c3_Var46, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 186, Col: 101}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 189, Col: 101}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var46)
 			if templ_7745c5c3_Err != nil {
@@ -783,7 +786,7 @@ func Statistics(u *database.User, since, per, workoutType string, routeSegments 
 			var templ_7745c5c3_Var47 string
 			templ_7745c5c3_Var47, templ_7745c5c3_Err = templ.ResolveAttributeValue(workoutType)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 188, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 191, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var47)
 			if templ_7745c5c3_Err != nil {
