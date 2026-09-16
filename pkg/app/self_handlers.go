@@ -83,7 +83,7 @@ func (a *App) userProfileRouteSegmentConfigUpdateHandler(c *echo.Context) error 
 	u := a.getCurrentUser(c)
 
 	if err := c.Request().ParseForm(); err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.NoContent(http.StatusBadRequest)
 	}
 	values := c.Request().PostForm
 
