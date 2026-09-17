@@ -183,9 +183,7 @@ export class RouteSegmentStats extends LitElement {
 
     await this.saveRouteSegmentConfig(
       new URLSearchParams({
-        route_segment_trend_break_detection: String(
-          this.trendBreakDetection,
-        ),
+        route_segment_trend_break_detection: String(this.trendBreakDetection),
       }),
       "Failed to save route segment trend break detection preference",
     );
