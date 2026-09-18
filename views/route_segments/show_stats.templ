@@ -19,21 +19,28 @@ templ ShowStats(s *database.RouteSegment) {
 	{{
 		var trendData []trendDataPoint
 		speedUnit := currentUser.PreferredUnits().Speed(nil)
-		for _, m := range s.RouteSegmentMatches {
-			if m.Workout != nil && m.Workout.UserID == currentUser.ID {
-				trendData = append(trendData, trendDataPoint{
-					Date:  m.Workout.Date.Format(time.RFC3339),
-					Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-					Type:  m.Workout.Type.String(),
-				})
-			}
+		for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
+			trendData = append(trendData, trendDataPoint{
+				Date:  m.Workout.Date.Format(time.RFC3339),
+				Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
+				Type:  m.Workout.Type.String(),
+			})
 		}
 	}}
 	{{
 		translations := map[string]string{
-			"averageSpeed": i18n.T(ctx, "translation.Average_speed"),
-			"speedUnit":    speedUnit,
-			"trend":        i18n.T(ctx, "translation.Personal_trend"),
+			"averageSpeed":        i18n.T(ctx, "translation.Average_speed"),
+			"speedUnit":           speedUnit,
+			"trend":               i18n.T(ctx, "translation.Trend"),
+			"trendBreak":          i18n.T(ctx, "translation.Trend_break"),
+			"trendPeriod":         i18n.T(ctx, "translation.Trend_period"),
+			"trendBreakDetection": i18n.T(ctx, "translation.Trend_break_detection"),
+			"resetZoom":           i18n.T(ctx, "translation.Reset_zoom"),
+			"trendPeriodAll":      i18n.T(ctx, "translation.All_time"),
+			"trendPeriod365":      i18n.T(ctx, "translation.Last_365_days"),
+			"trendPeriod90":       i18n.T(ctx, "translation.Last_90_days"),
+			"trendPeriod30":       i18n.T(ctx, "translation.Last_30_days"),
+			"trendPeriodYear":     i18n.T(ctx, "translation.This_calendar_year"),
 		}
 		for _, td := range trendData {
 			if _, ok := translations[td.Type]; !ok {
@@ -45,6 +52,9 @@ templ ShowStats(s *database.RouteSegment) {
 		data={ templ.JSONString(trendData) }
 		translations={ templ.JSONString(translations) }
 		color-mode={ currentUser.Profile.Theme }
+		trend-period={ currentUser.Profile.RouteSegmentTrendPeriodOrDefault() }
+		trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
+		config-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-config-update") }
 		lang={ helpers.Language(ctx) }
 	></route-segment-stats>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/route_segments/show_stats.js" } type="module"></script>
