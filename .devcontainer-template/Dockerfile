@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/devcontainers/javascript-node:${NODE_VERSION}-bookworm
 # Install PowerShell
 RUN set -eux; \
     apt-get update -y; \
-    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/powershell/install.sh -o /tmp/install-pwsh.sh; \
+    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/tags/feature_powershell_2.0.2/src/powershell/install.sh -o /tmp/install-pwsh.sh; \
     bash /tmp/install-pwsh.sh; \
     rm -f /tmp/install-pwsh.sh; \
     rm -rf /var/lib/apt/lists/*
