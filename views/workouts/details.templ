@@ -315,6 +315,16 @@ templ FullWorkoutDetails(w *database.Workout) {
 						{ helpers.TempoUnitForWorkout(ctx, w) }
 					</td>
 				</tr>
+				<tr>
+                    <td>
+                        @helpers.IconFor("max-speed")
+                    </td>
+                    <th>{ i18n.T(ctx, "translation.Max_tempo") }</th>
+                    <td class="whitespace-nowrap font-mono">
+                        { helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
+                        { helpers.TempoUnitForWorkout(ctx, w) }
+                    </td>
+                </tr>
 				if  w.PauseDuration()!= 0 {
 					<tr>
 						<td>

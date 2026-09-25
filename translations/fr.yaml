@@ -133,6 +133,7 @@ fr:
     Average_speed_no_pause: Vitesse moyenne (sans pause(s))
     Average_tempo: Allure moyenne
     Average_tempo_no_pause: Allure moyenne (sans pause(s))
+    Max_tempo: Allure Maximale
     Bidirectional: Bidirectionnel
     Cadence: Cadence
     Cancel: Annuler
