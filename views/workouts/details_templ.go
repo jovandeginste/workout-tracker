@@ -1318,7 +1318,7 @@ func FullWorkoutDetails(w *database.Workout) templ.Component {
 			var templ_7745c5c3_Var68 string
 			templ_7745c5c3_Var68, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.Max_tempo"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 322, Col: 62}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 322, Col: 47}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var68))
 			if templ_7745c5c3_Err != nil {
@@ -1331,7 +1331,7 @@ func FullWorkoutDetails(w *database.Workout) templ.Component {
 			var templ_7745c5c3_Var69 string
 			templ_7745c5c3_Var69, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 324, Col: 77}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 324, Col: 59}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var69))
 			if templ_7745c5c3_Err != nil {
@@ -1344,7 +1344,7 @@ func FullWorkoutDetails(w *database.Workout) templ.Component {
 			var templ_7745c5c3_Var70 string
 			templ_7745c5c3_Var70, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.TempoUnitForWorkout(ctx, w))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 325, Col: 61}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/details.templ`, Line: 325, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var70))
 			if templ_7745c5c3_Err != nil {
