@@ -67,7 +67,27 @@ func (a *App) Serve() error {
 
 	a.logger.Info("Starting web server on " + a.Config.Bind)
 
-	return a.echo.Start(a.Config.Bind)
+	// echo.Start already shuts the HTTP server down gracefully on
+	// SIGINT/SIGTERM; it returns once that is done. Nothing closes the
+	// database connection afterwards, so on process exit the sqlite driver
+	// never runs its close-time WAL checkpoint, leaving -wal/-shm files
+	// behind. Close it explicitly so shutdown leaves a clean database file.
+	serveErr := a.echo.Start(a.Config.Bind)
+
+	if err := a.closeDB(); err != nil {
+		a.logger.Error("failed to close database connection", "error", err)
+	}
+
+	return serveErr
+}
+
+func (a *App) closeDB() error {
+	sqlDB, err := a.db.DB()
+	if err != nil {
+		return err
+	}
+
+	return sqlDB.Close()
 }
 
 func (a *App) Configure() error {
