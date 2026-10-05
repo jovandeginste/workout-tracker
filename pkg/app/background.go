@@ -54,6 +54,7 @@ func (a *App) bgLoop() {
 		l.With("size", a.workerPool.WaitingTasks()).Warn("Waiting for current updater to finish")
 	} else {
 		a.updateWorkouts(l.With("update", "workouts"))
+		a.updateHeatmapPoints(l.With("update", "heatmap_points"))
 		a.updateRouteSegments(l.With("update", "route_segments"))
 		a.autoImports(l.With("update", "imports"))
 	}
@@ -262,6 +263,26 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 
 			if err := a.rematchRouteSegmentToWorkouts(rs, rl); err != nil {
 				rl.Error("Error during matching", "error", err)
+			}
+		})
+	}
+}
+
+// updateHeatmapPoints calculates the heatmap points for workouts that were
+// processed before heatmap points existed.
+func (a *App) updateHeatmapPoints(l *slog.Logger) {
+	ids, err := database.GetMapDataDetailsWithoutHeatmap(a.db)
+	if err != nil {
+		l.Error("Error during batch query", "error", err)
+		return
+	}
+
+	for idx := range ids {
+		i := idx
+
+		a.workerPool.Go(func() {
+			if err := database.UpdateHeatmapPointsFor(a.db, ids[i]); err != nil {
+				l.Error("Error during heatmap update", "map_data_details_id", ids[i], "error", err)
 			}
 		})
 	}
