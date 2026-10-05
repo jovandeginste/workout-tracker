@@ -127,12 +127,23 @@ func preMigrationActions(db *gorm.DB) error {
 }
 
 func postMigrationActions(db *gorm.DB) error {
-	workouts, err := GetWorkouts(db)
-	if err != nil {
+	// Only select the workouts that still need their extra metrics; loading
+	// all workouts with their track points would read every GPS point into
+	// memory on every start.
+	var ids []uint64
+
+	if err := db.Model(&MapData{}).
+		Where("extra_metrics IS NULL").
+		Pluck("workout_id", &ids).Error; err != nil {
 		return err
 	}
 
-	for _, w := range workouts {
+	for _, id := range ids {
+		w, err := GetWorkoutDetails(db, id)
+		if err != nil {
+			return err
+		}
+
 		if !w.HasTracks() || w.Data.ExtraMetrics != nil {
 			continue
 		}
