@@ -180,7 +180,7 @@ func (a *App) apiCenters(c *echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 	u := a.getCurrentUser(c)
-	db := a.db.Preload("Data").Preload("Data.Details")
+	db := a.db.Preload("Data")
 
 	wos, err := u.GetWorkouts(db)
 	if err != nil {
