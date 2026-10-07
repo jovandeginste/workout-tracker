@@ -80,6 +80,32 @@ func TestMemoryCacher_EvictsOldestBeyondCap(t *testing.T) {
 	require.NotNil(t, result)
 }
 
+func TestMemoryCacher_GetKeepsRecentlyUsedKeys(t *testing.T) {
+	c := &memoryCacher{}
+	c.init()
+
+	ctx := context.Background()
+
+	for i := range maxCacheEntries {
+		require.NoError(t, c.Store(ctx, fmt.Sprintf("key-%d", i), &caches.Query[any]{Dest: i}))
+	}
+
+	// Reading the oldest key makes it the most recently used one
+	result, err := c.Get(ctx, "key-0", &caches.Query[any]{})
+	require.NoError(t, err)
+	require.NotNil(t, result)
+
+	require.NoError(t, c.Store(ctx, "key-new", &caches.Query[any]{Dest: "new"}))
+
+	result, err = c.Get(ctx, "key-0", &caches.Query[any]{})
+	require.NoError(t, err)
+	assert.NotNil(t, result, "recently read key must survive eviction")
+
+	result, err = c.Get(ctx, "key-1", &caches.Query[any]{})
+	require.NoError(t, err)
+	assert.Nil(t, result, "least recently used key must be evicted")
+}
+
 func TestMemoryCacher_Invalidate(t *testing.T) {
 	c := &memoryCacher{}
 	c.init()

@@ -43,6 +43,10 @@ func (c *memoryCacher) init() {
 func (c *memoryCacher) Get(_ context.Context, key string, q *caches.Query[any]) (*caches.Query[any], error) {
 	c.mu.Lock()
 	b, ok := c.store[key]
+
+	if ok {
+		c.order.MoveToFront(c.elems[key])
+	}
 	c.mu.Unlock()
 
 	if !ok {
