@@ -96,19 +96,25 @@ func (u *User) GetHeatmapPoints(db *gorm.DB) ([]HeatmapPoint, error) {
 }
 
 // GetMapDataDetailsWithoutHeatmap returns the IDs of the map data details for
-// which no heatmap points were calculated yet.
+// which no heatmap points were calculated yet. Dirty workouts are skipped:
+// their update recalculates the heatmap points anyway.
 func GetMapDataDetailsWithoutHeatmap(db *gorm.DB) ([]uint64, error) {
 	var ids []uint64
 
 	err := db.Model(&MapDataDetails{}).
-		Where("heatmap_points IS NULL").
-		Pluck("id", &ids).Error
+		Joins("JOIN map_data ON map_data.id = map_data_details.map_data_id").
+		Joins("JOIN workouts ON workouts.id = map_data.workout_id").
+		Where("map_data_details.heatmap_points IS NULL").
+		Where("workouts.dirty = ?", false).
+		Pluck("map_data_details.id", &ids).Error
 
 	return ids, err
 }
 
 // UpdateHeatmapPointsFor calculates and stores the heatmap points of a single
-// map data details record, writing only the heatmap_points column.
+// map data details record, writing only the heatmap_points column. The write
+// only happens while the column is still NULL, so it never overwrites points
+// that a workout update stored in the meantime.
 func UpdateHeatmapPointsFor(db *gorm.DB, id uint64) error {
 	var d MapDataDetails
 
@@ -118,5 +124,8 @@ func UpdateHeatmapPointsFor(db *gorm.DB, id uint64) error {
 
 	d.UpdateHeatmapPoints()
 
-	return db.Model(&d).Select("heatmap_points").Updates(&d).Error
+	return db.Model(&d).
+		Where("heatmap_points IS NULL").
+		Select("heatmap_points").
+		Updates(&d).Error
 }

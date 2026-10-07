@@ -99,6 +99,7 @@ func TestUser_GetHeatmapPoints(t *testing.T) {
 	detailsID := ws[0].Data.Details.ID
 	require.NoError(t, db.Model(&MapDataDetails{}).Where("id = ?", detailsID).
 		UpdateColumn("heatmap_points", nil).Error)
+	require.NoError(t, db.Model(&Workout{}).Where("id = ?", ws[0].ID).UpdateColumn("dirty", false).Error)
 
 	ids, err := GetMapDataDetailsWithoutHeatmap(db)
 	require.NoError(t, err)
@@ -117,4 +118,48 @@ func TestUser_GetHeatmapPoints(t *testing.T) {
 	points, err = u.GetHeatmapPoints(db)
 	require.NoError(t, err)
 	assert.Equal(t, expected, points)
+}
+
+func TestHeatmapBackfill_SkipsDirtyWorkoutsAndKeepsFreshPoints(t *testing.T) {
+	db := createMemoryDB(t)
+	u := defaultUser()
+	require.NoError(t, u.Create(db))
+
+	f1, err := gpxFS.ReadFile("sample1.gpx")
+	require.NoError(t, err)
+
+	ws, err := NewWorkout(u, WorkoutTypeAutoDetect, "", "file.gpx", f1)
+	require.NoError(t, err)
+	require.Len(t, ws, 1)
+
+	w := ws[0]
+	require.NoError(t, w.Save(db))
+
+	detailsID := w.Data.Details.ID
+	require.NoError(t, db.Model(&MapDataDetails{}).Where("id = ?", detailsID).
+		UpdateColumn("heatmap_points", nil).Error)
+
+	// A dirty workout is left to the regular workout update
+	require.NoError(t, db.Model(&Workout{}).Where("id = ?", w.ID).UpdateColumn("dirty", true).Error)
+
+	ids, err := GetMapDataDetailsWithoutHeatmap(db)
+	require.NoError(t, err)
+	assert.Empty(t, ids)
+
+	require.NoError(t, db.Model(&Workout{}).Where("id = ?", w.ID).UpdateColumn("dirty", false).Error)
+
+	ids, err = GetMapDataDetailsWithoutHeatmap(db)
+	require.NoError(t, err)
+	assert.Equal(t, []uint64{detailsID}, ids)
+
+	// Points stored by a workout update in the meantime are not overwritten
+	fresh := []HeatmapPoint{{1, 2}}
+	require.NoError(t, db.Model(&MapDataDetails{}).Where("id = ?", detailsID).Select("heatmap_points").
+		Updates(&MapDataDetails{HeatmapPoints: fresh}).Error)
+
+	require.NoError(t, UpdateHeatmapPointsFor(db, detailsID))
+
+	points, err := u.GetHeatmapPoints(db)
+	require.NoError(t, err)
+	assert.Equal(t, fresh, points)
 }

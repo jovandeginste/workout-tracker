@@ -30,6 +30,7 @@ const (
 func (a *App) BackgroundWorker() {
 	a.workerPool = pond.NewPool(10)
 	a.workerPoolGeo = pond.NewPool(1)
+	a.workerPoolHeatmap = pond.NewPool(1)
 
 	a.Logger().Info("Background worker loop initialized", "delay_seconds", a.Config.WorkerDelaySeconds)
 	for {
@@ -54,9 +55,16 @@ func (a *App) bgLoop() {
 		l.With("size", a.workerPool.WaitingTasks()).Warn("Waiting for current updater to finish")
 	} else {
 		a.updateWorkouts(l.With("update", "workouts"))
-		a.updateHeatmapPoints(l.With("update", "heatmap_points"))
 		a.updateRouteSegments(l.With("update", "route_segments"))
 		a.autoImports(l.With("update", "imports"))
+	}
+
+	// The backfill decodes a full track per job, so it runs on its own
+	// single-worker pool and only gets new jobs once the previous batch is done.
+	if a.workerPoolHeatmap.WaitingTasks() > 0 || a.workerPoolHeatmap.RunningWorkers() > 0 {
+		l.With("size", a.workerPoolHeatmap.WaitingTasks()).Warn("Waiting for current heatmap updater to finish")
+	} else {
+		a.updateHeatmapPoints(l.With("update", "heatmap_points"))
 	}
 
 	if a.workerPoolGeo.WaitingTasks() > 0 {
@@ -280,7 +288,7 @@ func (a *App) updateHeatmapPoints(l *slog.Logger) {
 	for idx := range ids {
 		i := idx
 
-		a.workerPool.Go(func() {
+		a.workerPoolHeatmap.Go(func() {
 			if err := database.UpdateHeatmapPointsFor(a.db, ids[i]); err != nil {
 				l.Error("Error during heatmap update", "map_data_details_id", ids[i], "error", err)
 			}

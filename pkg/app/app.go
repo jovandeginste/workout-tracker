@@ -27,16 +27,17 @@ type App struct {
 	AssetDir     string
 	Translations fs.FS
 
-	echo           *echo.Echo
-	logger         *slog.Logger
-	rawLogger      *slog.Logger
-	db             *gorm.DB
-	sessionManager *scs.SessionManager
-	translator     *i18n.Locale
-	Version        version.Version
-	Config         database.Config
-	workerPool     pond.Pool
-	workerPoolGeo  pond.Pool
+	echo              *echo.Echo
+	logger            *slog.Logger
+	rawLogger         *slog.Logger
+	db                *gorm.DB
+	sessionManager    *scs.SessionManager
+	translator        *i18n.Locale
+	Version           version.Version
+	Config            database.Config
+	workerPool        pond.Pool
+	workerPoolGeo     pond.Pool
+	workerPoolHeatmap pond.Pool
 }
 
 func (a *App) jwtSecret() []byte {
