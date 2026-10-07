@@ -65,20 +65,17 @@ func (a *App) jwtSecret() []byte {
 func (a *App) Serve() error {
 	go a.BackgroundWorker()
 
+	// Close the database once the HTTP server has shut down, so SQLite runs
+	// its WAL checkpoint and removes the -wal and -shm files.
+	defer func() {
+		if err := a.closeDB(); err != nil {
+			a.logger.Error("failed to close database connection", "error", err)
+		}
+	}()
+
 	a.logger.Info("Starting web server on " + a.Config.Bind)
 
-	// echo.Start already shuts the HTTP server down gracefully on
-	// SIGINT/SIGTERM; it returns once that is done. Nothing closes the
-	// database connection afterwards, so on process exit the sqlite driver
-	// never runs its close-time WAL checkpoint, leaving -wal/-shm files
-	// behind. Close it explicitly so shutdown leaves a clean database file.
-	serveErr := a.echo.Start(a.Config.Bind)
-
-	if err := a.closeDB(); err != nil {
-		a.logger.Error("failed to close database connection", "error", err)
-	}
-
-	return serveErr
+	return a.echo.Start(a.Config.Bind)
 }
 
 func (a *App) closeDB() error {
