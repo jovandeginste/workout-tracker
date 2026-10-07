@@ -65,9 +65,26 @@ func (a *App) jwtSecret() []byte {
 func (a *App) Serve() error {
 	go a.BackgroundWorker()
 
+	// Close the database once the HTTP server has shut down, so SQLite runs
+	// its WAL checkpoint and removes the -wal and -shm files.
+	defer func() {
+		if err := a.closeDB(); err != nil {
+			a.logger.Error("failed to close database connection", "error", err)
+		}
+	}()
+
 	a.logger.Info("Starting web server on " + a.Config.Bind)
 
 	return a.echo.Start(a.Config.Bind)
+}
+
+func (a *App) closeDB() error {
+	sqlDB, err := a.db.DB()
+	if err != nil {
+		return err
+	}
+
+	return sqlDB.Close()
 }
 
 func (a *App) Configure() error {
