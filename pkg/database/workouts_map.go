@@ -85,6 +85,8 @@ type MapDataDetails struct {
 	MapData *MapData   `gorm:"foreignKey:MapDataID" json:"-"`
 	Points  []MapPoint `gorm:"serializer:json" json:"points"` // The GPS points of the workout
 
+	HeatmapPoints []HeatmapPoint `gorm:"serializer:json" json:"-"` // Thinned-out points for the heatmap; NULL until calculated
+
 	MapDataID uint64 `gorm:"not null;uniqueIndex" json:"mapDataID"` // The ID of the map data these details belong to
 }
 
@@ -668,6 +670,7 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType) *MapData {
 
 	data.correctNaN()
 	data.UpdateExtraMetrics()
+	data.Details.UpdateHeatmapPoints()
 
 	return data
 }

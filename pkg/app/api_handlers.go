@@ -180,7 +180,7 @@ func (a *App) apiCenters(c *echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 	u := a.getCurrentUser(c)
-	db := a.db.Preload("Data").Preload("Data.Details")
+	db := a.db.Preload("Data")
 
 	wos, err := u.GetWorkouts(db)
 	if err != nil {
@@ -220,24 +220,13 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 
-	db := a.db.Preload("Data").Preload("Data.Details")
-	u := a.getCurrentUser(c)
-
-	wos, err := u.GetWorkouts(db)
+	points, err := a.getCurrentUser(c).GetHeatmapPoints(a.db)
 	if err != nil {
 		resp.AddError(err)
 	}
 
-	for _, w := range wos {
-		if !w.HasTracks() {
-			continue
-		}
-
-		for _, p := range w.Data.Details.Points {
-			f := geojson.NewFeature(p.ToOrbPoint())
-
-			coords.Append(f)
-		}
+	for _, p := range points {
+		coords.Append(geojson.NewFeature(p.ToOrbPoint()))
 	}
 
 	resp.Results = coords
