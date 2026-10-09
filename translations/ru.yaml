@@ -266,6 +266,7 @@ ru:
     WorkoutLocked: Атрибуты тренировки «%s» теперь заблокированы
     WorkoutUnLocked: Атрибуты тренировки «%s» теперь разблокированы
     cadence: Каденс
+    Cadence_avg_max: Каденс (сред/макс)
   user:
     profile:
       time_zone: Часовой пояс
