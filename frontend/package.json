@@ -9,7 +9,7 @@
     "js-yaml": "^4.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^4.3.3"
   },
   "dependencies": {
     "@lit/localize": "^0.12.2",
