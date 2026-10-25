@@ -17,3 +17,10 @@ func TestGorm_Connect(t *testing.T) {
 	require.Error(t, err)
 	assert.Nil(t, db)
 }
+
+func TestGorm_PostMigrationActionsMapDataWithoutWorkout(t *testing.T) {
+	db := createMemoryDB(t)
+
+	require.NoError(t, db.Create(&MapData{Creator: "tester", WorkoutID: 42}).Error)
+	require.NoError(t, postMigrationActions(db))
+}

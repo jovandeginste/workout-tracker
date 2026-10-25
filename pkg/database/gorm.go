@@ -140,6 +140,10 @@ func postMigrationActions(db *gorm.DB) error {
 
 	for _, id := range ids {
 		w, err := GetWorkoutDetails(db, id)
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			continue
+		}
+
 		if err != nil {
 			return err
 		}
