@@ -1,4 +1,5 @@
-@tailwind base;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   @media print {
