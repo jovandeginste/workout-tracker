@@ -298,6 +298,17 @@ sv:
       GPX-filer innan du laddar upp dem här:'
     Try_one_of_these_sites: 'Prova någon av dessa webbplatser:'
     i_completed_a_workout_s: 'Jag har avslutat ett träningspass: ’%s’.'
+    Max_tempo: Max tempo
+    Trend_period: Trendperiod
+    Trend_break_detection: Trendbrottsdetektering
+    Trend: Trend
+    Trend_break: Trendbrott
+    Reset_zoom: Återställ zoom
+    All_time: Genom tiderna
+    Last_365_days: Senaste 365 dagarna
+    Last_90_days: Senaste 90 dagarna
+    Last_30_days: Senaste 30 dagarna
+    This_calendar_year: Detta kalenderår
   user:
     profile:
       show_tabs: Visa träningsinformation i flikar
