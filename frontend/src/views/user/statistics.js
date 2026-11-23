@@ -19,6 +19,7 @@ class WtStatistic extends HTMLElement {
     this.unit = this.getAttribute("unit");
     this.type = this.getAttribute("type");
     this.workoutType = this.getAttribute("workout-type") || "";
+    this.chartType = this.getAttribute("chart-type") === "bar" ? "bar" : "line";
 
     if (!this.stats || !this.stats.buckets) {
       console.warn("No stats provided for WtStatistic");
@@ -44,6 +45,8 @@ class WtStatistic extends HTMLElement {
         ? "dark"
         : "light";
 
+    const isBar = this.chartType === "bar";
+
     const options = {
       theme: { mode: theme },
       chart: {
@@ -51,7 +54,7 @@ class WtStatistic extends HTMLElement {
         height: 300,
         animations: { enabled: false },
         toolbar: { show: false },
-        type: "line",
+        type: this.chartType,
       },
       dataLabels: { enabled: false },
       legend: {
@@ -59,7 +62,7 @@ class WtStatistic extends HTMLElement {
         onItemClick: { toggleDataSeries: false },
         onItemHover: { highlightDataSeries: false },
       },
-      stroke: { curve: "straight", width: 2 },
+      stroke: isBar ? { width: 0 } : { curve: "straight", width: 2 },
       markers: { size: 0 },
       tooltip: {
         x: { format: "MMM 'yy" },

@@ -15,7 +15,7 @@ type routeSegmentTrendStatDataPoint struct {
 	Type  string `json:"type"`
 }
 
-templ Statistics(u *database.User, since, per, workoutType string, routeSegments []*database.RouteSegment) {
+templ Statistics(u *database.User, since, per, workoutType, chartType string, routeSegments []*database.RouteSegment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<h2>
@@ -44,6 +44,11 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							{ i18n.T(ctx, wt.StringT()) }
 						</option>
 					}
+				</select>
+				<label for="chart">{ i18n.T(ctx, "translation.Chart_type") }</label>
+				<select id="chart" name="chart">
+					<option value="line" selected?={ chartType == "line" }>{ i18n.T(ctx, "translation.Line") }</option>
+					<option value="bar" selected?={ chartType == "bar" }>{ i18n.T(ctx, "translation.Bar") }</option>
 				</select>
 				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
@@ -105,6 +110,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							stats={ templ.JSONString(stats) }
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="workouts"
 						></wt-stat>
 					</div>
@@ -121,6 +127,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="durationSeconds"
 							unit="duration"
 						></wt-stat>
@@ -138,6 +145,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="localDistance"
 							unit="distance"
 						></wt-stat>
@@ -155,6 +163,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="localAverageSpeed"
 							unit="speed"
 						></wt-stat>
@@ -172,6 +181,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="localAverageSpeedNoPause"
 							unit="speed"
 						></wt-stat>
@@ -189,6 +199,7 @@ templ Statistics(u *database.User, since, per, workoutType string, routeSegments
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							filter-no-duration
 							workout-type={ workoutType }
+							chart-type={ chartType }
 							type="localMaxSpeed"
 							unit="speed"
 						></wt-stat>

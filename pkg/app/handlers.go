@@ -35,9 +35,11 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		Since string `query:"since"`
 		Per   string `query:"per"`
 		Type  string `query:"type"`
+		Chart string `query:"chart"`
 	}{
 		Since: "1 year",
 		Per:   "month",
+		Chart: "line",
 	}
 
 	if err := c.Bind(&statisticsParams); err != nil {
@@ -48,12 +50,16 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		statisticsParams.Since = "1 year"
 	}
 
+	if statisticsParams.Chart != "bar" {
+		statisticsParams.Chart = "line"
+	}
+
 	routeSegments, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, routeSegments))
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {
