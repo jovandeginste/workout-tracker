@@ -66,4 +66,9 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 		data-el="workout-data"
 		preferred-units-el="workout-preferred-units"
 	></wt-map>
+	<div class="map-controls flex flex-wrap flex-row-reverse">
+		<a href="#" title={ i18n.T(ctx, "translation.Fullscreen") } aria-label={ i18n.T(ctx, "translation.Fullscreen") } onclick="toggleMapFullscreen('map'); return false;">
+			@helpers.IconFor("expand")
+		</a>
+	</div>
 }

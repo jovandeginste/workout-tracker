@@ -38,7 +38,7 @@ templ Show(w *database.Workout) {
 		</div>
 		<div class="lg:flex lg:flex-wrap print:block">
 			if w.HasTracks() {
-				<div id="map-container" class="basis-1/2 pagebreak">
+				<div id="map-container" data-map-container class="basis-1/2 pagebreak">
 					<div class="inner-form">
 						@Map(w)
 					</div>
