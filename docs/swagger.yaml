@@ -1319,6 +1319,38 @@ paths:
             $ref: '#/definitions/app.APIResponse'
       summary: Create a new workout
   /workouts/{id}:
+    delete:
+      parameters:
+      - description: Workout ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/database.Workout'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: Delete a workout
     get:
       parameters:
       - description: Workout ID
@@ -1355,6 +1387,48 @@ paths:
           schema:
             $ref: '#/definitions/app.APIResponse'
       summary: Get all information about a workout
+    patch:
+      consumes:
+      - application/json
+      description: Only the provided metadata fields are updated; GPS data is left
+        untouched
+      parameters:
+      - description: Workout ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Workout data
+        in: body
+        name: workout
+        required: true
+        schema:
+          $ref: '#/definitions/app.ManualWorkout'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.APIResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/database.Workout'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.APIResponse'
+      summary: Update the metadata of a workout
   /workouts/{id}/breakdown:
     get:
       parameters:

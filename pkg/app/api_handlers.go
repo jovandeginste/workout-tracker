@@ -98,6 +98,8 @@ func (a *App) apiRoutes(g *echo.Group) {
 	a.GET(apiGroup, "/workouts", a.apiWorkoutsHandler, "api-workouts")
 	a.POST(apiGroup, "/workouts", a.apiWorkoutAddHandler, "api-workout-add")
 	a.GET(apiGroup, "/workouts/:id", a.apiWorkoutHandler, "api-workout")
+	a.PATCH(apiGroup, "/workouts/:id", a.apiWorkoutUpdateHandler, "api-workout-update")
+	a.DELETE(apiGroup, "/workouts/:id", a.apiWorkoutDeleteHandler, "api-workout-delete")
 	a.GET(apiGroup, "/workouts/:id/breakdown", a.apiWorkoutBreakdownHandler, "api-workout-breakdown")
 	a.GET(apiGroup, "/workouts/coordinates", a.apiCoordinates, "api-workouts-coordinates")
 	a.GET(apiGroup, "/workouts/centers", a.apiCenters, "api-workouts-centers")
@@ -432,6 +434,91 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 	resp.Results = w
 
 	return c.JSON(http.StatusOK, resp)
+}
+
+// apiWorkoutUpdateHandler updates the metadata of a workout
+// @Summary      Update the metadata of a workout
+// @Description  Only the provided metadata fields are updated; GPS data is left untouched
+// @Accept       json
+// @Param        id      path       int             true "Workout ID"
+// @Param        workout body       ManualWorkout   true "Workout data"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=database.Workout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/{id} [patch]
+func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
+	resp := APIResponse{}
+
+	id, err := cast.ToUint64E(c.Param("id"))
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
+	if err := json.NewDecoder(c.Request().Body).Decode(d); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	d.Update(w)
+
+	if err := w.Save(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = workoutAPIResult(w)
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// apiWorkoutDeleteHandler deletes a workout
+// @Summary      Delete a workout
+// @Param        id      path       int     true "Workout ID"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=database.Workout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/{id} [delete]
+func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
+	resp := APIResponse{}
+
+	id, err := cast.ToUint64E(c.Param("id"))
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	if err := w.Delete(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = workoutAPIResult(w)
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// workoutAPIResult removes the payloads that are not useful in a metadata
+// response: the raw GPS file, the track points and the (secret-bearing) user.
+func workoutAPIResult(w *database.Workout) *database.Workout {
+	w.GPX = nil
+	w.User = nil
+
+	if w.Data != nil {
+		w.Data.Details = nil
+	}
+
+	return w
 }
 
 // apiImportHandler imports a workout
