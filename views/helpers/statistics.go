@@ -19,5 +19,6 @@ func StatisticPerOptions() []TranslatedKey {
 		{Key: "day", Translation: "misc.day"},
 		{Key: "week", Translation: "misc.day_7"},
 		{Key: "month", Translation: "misc.month"},
+		{Key: "year", Translation: "misc.year"},
 	}
 }

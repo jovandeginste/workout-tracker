@@ -28,6 +28,7 @@ en:
     forever: forever
     day: day
     month: month
+    year: year
     equipment: equipment
     route_segment: route segment
     workout: workout

@@ -111,6 +111,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="workouts"
 						></wt-stat>
 					</div>
@@ -128,6 +129,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							filter-no-duration
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="durationSeconds"
 							unit="duration"
 						></wt-stat>
@@ -146,8 +148,27 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							filter-no-duration
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="localDistance"
 							unit="distance"
+						></wt-stat>
+					</div>
+				</div>
+				<div>
+					<div class="inner-form">
+						<h3>
+							@helpers.IconFor("elevation")
+							{ i18n.T(ctx, "translation.Elevation") }
+						</h3>
+						<wt-stat
+							id="elevation-per-time"
+							stats={ templ.JSONString(stats) }
+							preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+							workout-type={ workoutType }
+							chart-type={ chartType }
+							per={ per }
+							type="localUp"
+							unit="elevation"
 						></wt-stat>
 					</div>
 				</div>
@@ -164,6 +185,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							filter-no-duration
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="localAverageSpeed"
 							unit="speed"
 						></wt-stat>
@@ -182,6 +204,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							filter-no-duration
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="localAverageSpeedNoPause"
 							unit="speed"
 						></wt-stat>
@@ -200,6 +223,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 							filter-no-duration
 							workout-type={ workoutType }
 							chart-type={ chartType }
+							per={ per }
 							type="localMaxSpeed"
 							unit="speed"
 						></wt-stat>
