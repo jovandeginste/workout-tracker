@@ -23,10 +23,6 @@ func VersionUpdated() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var1 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var1 == nil {
-			templ_7745c5c3_Var1 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script lang=\"javascript\">\n\t\tvar vn = document.getElementById(\"version-notification\");\n\t\tvn.classList.remove(\"max-h-48\");\n\t\tvn.classList.add(\"vanish\");\n\t</script>")
 		if templ_7745c5c3_Err != nil {
