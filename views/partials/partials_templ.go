@@ -32,10 +32,6 @@ func leafletClasses() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var1 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var1 == nil {
-			templ_7745c5c3_Var1 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<span class=\"leaflet-popup-content-wrapper leaflet-popup-tip\"></span>")
 		if templ_7745c5c3_Err != nil {
@@ -61,10 +57,6 @@ func SnippetDate(date time.Time) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		if helpers.CurrentUser(ctx).ShowFullDate() {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<abbr title=\"")
@@ -72,7 +64,7 @@ func SnippetDate(date time.Time) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.RelativeDate(ctx, date))
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RelativeDate(ctx, date)).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 18, Col: 47}
 			}
@@ -103,7 +95,7 @@ func SnippetDate(date time.Time) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(helpers.LocalDate(ctx, date))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.LocalDate(ctx, date)).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 20, Col: 44}
 			}
@@ -149,10 +141,6 @@ func printAll(messages []string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var7 == nil {
-			templ_7745c5c3_Var7 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		for _, m := range messages {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<span class=\"block sm:inline\">")
@@ -200,10 +188,6 @@ func Alerts() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var9 == nil {
-			templ_7745c5c3_Var9 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div id=\"alerts\" class=\"messages\">")
 		if templ_7745c5c3_Err != nil {
@@ -263,10 +247,6 @@ func Language() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var10 == nil {
-			templ_7745c5c3_Var10 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<select class=\"border-0\" onchange=\"changeLanguage(this.value)\">")
 		if templ_7745c5c3_Err != nil {
@@ -279,7 +259,7 @@ func Language() templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
-			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.ResolveAttributeValue(linf.Code)
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templruntime.NewAttributeExpression(linf.Code).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 57, Col: 28}
 			}
@@ -375,10 +355,6 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var15 == nil {
-			templ_7745c5c3_Var15 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		speedUnit := preferredUnits.Speed(wt)
 		speedFormatter := templatehelpers.HumanSpeedFor(speedUnit)
@@ -392,7 +368,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.ResolveAttributeValue(primaryText)
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templruntime.NewAttributeExpression(primaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 81, Col: 27}
 			}
@@ -423,7 +399,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var18 string
-			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.ResolveAttributeValue(secondaryText)
+			templ_7745c5c3_Var18, templ_7745c5c3_Err = templruntime.NewAttributeExpression(secondaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 83, Col: 29}
 			}
@@ -469,10 +445,6 @@ func PreferredAverageSpeedMetric(w *database.Workout, preferredUnits *database.U
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var20 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var20 == nil {
-			templ_7745c5c3_Var20 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = PreferredSpeedMetric(&w.Type, w.Data.AverageSpeedNoPause, preferredUnits).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
