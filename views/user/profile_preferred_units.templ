@@ -124,7 +124,7 @@ templ profileTotalsShow(types database.WorkoutTypeList) {
 		<div class="flex flex-wrap">
 			<label class="inline">
 				<input
-					class="hidden peer"
+					class="sr-only peer"
 					type="checkbox"
 					name="totals_show"
 					value={ database.WorkoutTypeAutoDetect.String() }
@@ -136,7 +136,7 @@ templ profileTotalsShow(types database.WorkoutTypeList) {
 				if wt.IsDistance() {
 					<label class="inline">
 						<input
-							class="hidden peer"
+							class="sr-only peer"
 							type="checkbox"
 							name="totals_show"
 							value={ wt.String() }

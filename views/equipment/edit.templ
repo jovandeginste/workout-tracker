@@ -78,7 +78,7 @@ templ Edit(e *database.Equipment) {
 										for _, wt := range helpers.WorkoutTypes() {
 											<label class="inline">
 												<input
-													class="hidden peer"
+													class="sr-only peer"
 													type="checkbox"
 													id={ "default_for_" + wt.String() }
 													name="default_for"

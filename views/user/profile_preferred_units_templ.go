@@ -433,7 +433,7 @@ func profileTotalsShow(types database.WorkoutTypeList) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</summary><div class=\"flex flex-wrap\"><label class=\"inline\"><input class=\"hidden peer\" type=\"checkbox\" name=\"totals_show\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</summary><div class=\"flex flex-wrap\"><label class=\"inline\"><input class=\"sr-only peer\" type=\"checkbox\" name=\"totals_show\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -475,7 +475,7 @@ func profileTotalsShow(types database.WorkoutTypeList) templ.Component {
 		}
 		for _, wt := range helpers.WorkoutTypes() {
 			if wt.IsDistance() {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "<label class=\"inline\"><input class=\"hidden peer\" type=\"checkbox\" name=\"totals_show\" value=\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "<label class=\"inline\"><input class=\"sr-only peer\" type=\"checkbox\" name=\"totals_show\" value=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

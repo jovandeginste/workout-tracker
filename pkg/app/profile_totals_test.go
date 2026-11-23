@@ -53,6 +53,8 @@ func TestRoute_UserProfileTotalsShowFoldable(t *testing.T) {
 	body := rec.Body.String()
 	assert.Contains(t, body, "<details>")
 	assert.Contains(t, body, "running, cycling")
+	assert.Contains(t, body, `class="sr-only peer"`)
+	assert.NotContains(t, body, `class="hidden peer"`)
 	assert.Contains(t, body, `name="totals_show" value="running" checked`)
 	assert.Contains(t, body, `name="totals_show" value="cycling" checked`)
 }
