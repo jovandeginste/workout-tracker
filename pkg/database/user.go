@@ -31,9 +31,9 @@ var (
 )
 
 type UserSecrets struct {
-	Password string `gorm:"type:varchar(128);not null"` // The user's password as bcrypt hash
-	Salt     string `gorm:"type:varchar(16);not null"`  // The salt used to hash the user's password
-	APIKey   string `gorm:"type:varchar(32)"`           // The user's API key
+	Password string `gorm:"type:varchar(128);not null" json:"password,omitempty"` // The user's password as bcrypt hash
+	Salt     string `gorm:"type:varchar(16);not null" json:"salt,omitempty"`      // The salt used to hash the user's password
+	APIKey   string `gorm:"type:varchar(32)" json:"apiKey,omitempty"`             // The user's API key
 }
 
 type UserData struct {

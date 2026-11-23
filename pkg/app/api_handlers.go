@@ -165,7 +165,7 @@ func (a *App) apiWorkoutsHandler(c *echo.Context) error {
 		resp.AddError(err)
 	}
 
-	resp.Results = w
+	resp.Results = workoutsWithSafeUsers(w)
 
 	return c.JSON(http.StatusOK, resp)
 }
@@ -383,7 +383,6 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 	}
 
 	workout := &database.Workout{}
-	resp.Results = workout
 
 	d.Update(workout)
 
@@ -394,6 +393,8 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 	if err := workout.Save(a.db); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
+
+	resp.Results = workoutAPIResult(workout)
 
 	return c.JSON(http.StatusOK, resp)
 }
@@ -431,7 +432,7 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 		resp.AddError(err)
 	}
 
-	resp.Results = w
+	resp.Results = workoutWithSafeUser(w)
 
 	return c.JSON(http.StatusOK, resp)
 }
@@ -509,16 +510,44 @@ func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
 }
 
 // workoutAPIResult removes the payloads that are not useful in a metadata
-// response: the raw GPS file, the track points and the (secret-bearing) user.
+// response: the raw GPS file and the track points.
 func workoutAPIResult(w *database.Workout) *database.Workout {
+	w = workoutWithSafeUser(w)
+
+	if w == nil {
+		return nil
+	}
+
 	w.GPX = nil
-	w.User = nil
 
 	if w.Data != nil {
 		w.Data.Details = nil
 	}
 
 	return w
+}
+
+// workoutWithSafeUser replaces the user with a copy without credentials, so
+// responses can include the owner without exposing password, salt or API key.
+func workoutWithSafeUser(w *database.Workout) *database.Workout {
+	if w == nil || w.User == nil {
+		return w
+	}
+
+	w.User = &database.User{
+		UserData: w.User.UserData,
+		Profile:  w.User.Profile,
+	}
+
+	return w
+}
+
+func workoutsWithSafeUsers(ws []*database.Workout) []*database.Workout {
+	for _, w := range ws {
+		workoutWithSafeUser(w)
+	}
+
+	return ws
 }
 
 // apiImportHandler imports a workout
@@ -548,7 +577,7 @@ func (a *App) apiImportHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, addErr...)
 	}
 
-	resp.Results = w
+	resp.Results = workoutsWithSafeUsers(w)
 
 	return c.JSON(http.StatusOK, resp)
 }

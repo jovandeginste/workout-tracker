@@ -38,6 +38,26 @@ func createAPIWorkout(t *testing.T, a *App, u *database.User, name string, wt da
 	return w
 }
 
+const testGPX = `<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="test" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><time>2025-01-03T10:00:00Z</time></metadata>
+  <trk><name>Imported</name><type>running</type><trkseg>
+    <trkpt lat="50.8500" lon="4.3500"><ele>20</ele><time>2025-01-03T10:00:00Z</time></trkpt>
+    <trkpt lat="50.8510" lon="4.3510"><ele>22</ele><time>2025-01-03T10:01:00Z</time></trkpt>
+  </trkseg></trk>
+</gpx>`
+
+func assertSafeUser(t *testing.T, b []byte) {
+	t.Helper()
+
+	assert.Contains(t, string(b), "my-username")
+	assert.NotContains(t, string(b), "my-api-key")
+	assert.NotContains(t, string(b), "my-password")
+	assert.NotContains(t, string(b), `"password"`)
+	assert.NotContains(t, string(b), `"salt"`)
+	assert.NotContains(t, string(b), `"apiKey"`)
+}
+
 func apiWorkoutRequest(t *testing.T, ts *httptest.Server, method, path, body string) (int, []byte) {
 	t.Helper()
 
@@ -61,6 +81,43 @@ func apiWorkoutRequest(t *testing.T, ts *httptest.Server, method, path, body str
 	return res.StatusCode, b
 }
 
+func TestAPI_WorkoutResponsesDoNotLeakUserSecrets(t *testing.T) {
+	a := configuredApp(t)
+	u := defaultAPIUser(a.db)
+	w := createAPIWorkout(t, a, u, "Secretless", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
+
+	ts := httptest.NewServer(a.echo)
+	defer ts.Close()
+
+	t.Run("list", func(t *testing.T) {
+		status, b := apiWorkoutRequest(t, ts, http.MethodGet, a.Reverse("api-workouts"), "")
+		require.Equal(t, http.StatusOK, status)
+		assert.Contains(t, string(b), "Secretless")
+		assertSafeUser(t, b)
+	})
+
+	t.Run("show", func(t *testing.T) {
+		status, b := apiWorkoutRequest(t, ts, http.MethodGet, a.Reverse("api-workout", w.ID), "")
+		require.Equal(t, http.StatusOK, status)
+		assert.Contains(t, string(b), "Secretless")
+		assertSafeUser(t, b)
+	})
+
+	t.Run("create", func(t *testing.T) {
+		status, b := apiWorkoutRequest(t, ts, http.MethodPost, a.Reverse("api-workout-add"), `{"name":"New workout","date":"2025-01-02T10:00","type":"running"}`)
+		require.Equal(t, http.StatusOK, status)
+		assert.Contains(t, string(b), "New workout")
+		assertSafeUser(t, b)
+	})
+
+	t.Run("import", func(t *testing.T) {
+		status, b := apiWorkoutRequest(t, ts, http.MethodPost, a.Reverse("api-import", "generic"), testGPX)
+		require.Equal(t, http.StatusOK, status)
+		assert.Contains(t, string(b), "Imported")
+		assertSafeUser(t, b)
+	})
+}
+
 func TestAPI_WorkoutUpdate(t *testing.T) {
 	a := configuredApp(t)
 	u := defaultAPIUser(a.db)
@@ -80,8 +137,7 @@ func TestAPI_WorkoutUpdate(t *testing.T) {
 		}
 		require.NoError(t, json.Unmarshal(b, &resp))
 		assert.Empty(t, resp.Errors)
-		assert.NotContains(t, string(b), "my-api-key")
-		assert.NotContains(t, string(b), "my-password")
+		assertSafeUser(t, b)
 
 		assert.Equal(t, "Renamed", resp.Results.Name)
 		assert.Equal(t, database.WorkoutTypeCycling, resp.Results.Type)
@@ -153,8 +209,7 @@ func TestAPI_WorkoutDelete(t *testing.T) {
 		}
 		require.NoError(t, json.Unmarshal(b, &resp))
 		assert.Empty(t, resp.Errors)
-		assert.NotContains(t, string(b), "my-api-key")
-		assert.NotContains(t, string(b), "my-password")
+		assertSafeUser(t, b)
 		assert.Equal(t, w.ID, resp.Results.ID)
 
 		var count int64
