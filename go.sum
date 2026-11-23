@@ -325,8 +325,8 @@ github.com/kyokomi/emoji/v2 v2.2.13 h1:GhTfQa67venUUvmleTNFnb+bi7S3aocF7ZCXU9fSO
 github.com/kyokomi/emoji/v2 v2.2.13/go.mod h1:JUcn42DTdsXJo1SWanHh4HKDEyPaR5CqkmoirZZP9qE=
 github.com/labstack/echo-jwt/v5 v5.0.2 h1:ECmHEjwbR30fv90LvpQ0XZbEJWhCF/c3Zp8ug/iVrCE=
 github.com/labstack/echo-jwt/v5 v5.0.2/go.mod h1:jNxekWlI4+M+UoV8dozKwIHN9MJ2psUR+U1B0nEutIg=
-github.com/labstack/echo/v5 v5.4.0 h1:iY674460IvSmUcj7MziL3YrgyTClghz5BpdZoKiGxR4=
-github.com/labstack/echo/v5 v5.4.0/go.mod h1:4iEGNQiPPZnkfYpNR/L6fINd3NLiGWUD5+eBotFALas=
+github.com/labstack/echo/v5 v5.4.1 h1:pxn7LF+AIepRAoSXRS6GMdjWysbOBt8B18G0VPjPH3U=
+github.com/labstack/echo/v5 v5.4.1/go.mod h1:4iEGNQiPPZnkfYpNR/L6fINd3NLiGWUD5+eBotFALas=
 github.com/labstack/gommon v0.5.0 h1:6VSQ2NOzsnEJ5W6+84E0RbcaDDmgB6NIAzWCczTEe6c=
 github.com/labstack/gommon v0.5.0/go.mod h1:Rzlg7HHy1maLfzBYGg9NZcVuz1sA68HHhLjhcEllYE0=
 github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
