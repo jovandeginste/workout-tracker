@@ -151,12 +151,18 @@ definitions:
       distance:
         description: The total distance in the bucket
         type: number
+      distanceUnit:
+        description: The distance unit for this bucket
+        type: string
       duration:
         description: The total duration in the bucket
         type: integer
       durationSeconds:
         description: The total duration in the bucket, in seconds
         type: number
+      isNautical:
+        description: Whether the workout is nautical
+        type: boolean
       localAverageSpeed:
         description: The average speed in the bucket, localized
         type: string
@@ -180,6 +186,9 @@ definitions:
         type: number
       raw_bucket:
         description: One day in the bucket (for statistic rendering)
+        type: string
+      speedUnit:
+        description: The speed unit for this bucket
         type: string
       up:
         description: The total up elevation in the bucket
@@ -533,6 +542,10 @@ definitions:
         allOf:
         - $ref: '#/definitions/database.UserPreferredUnits'
         description: The user's preferred units
+      route_segment_config:
+        allOf:
+        - $ref: '#/definitions/database.RouteSegmentConfig'
+        description: Configuration for route segment visualization
       show_tabs:
         description: Whether to show tabs in web UI
         type: boolean
@@ -546,9 +559,10 @@ definitions:
         description: The user's preferred timezone
         type: string
       totals_show:
-        allOf:
-        - $ref: '#/definitions/database.WorkoutType'
-        description: What workout type of totals to show
+        description: What workout types of totals to show
+        items:
+          $ref: '#/definitions/database.WorkoutType'
+        type: array
       updatedAt:
         type: string
       userID:
@@ -626,6 +640,15 @@ definitions:
         description: The total distance up of the workout
         type: number
       updatedAt:
+        type: string
+    type: object
+  database.RouteSegmentConfig:
+    properties:
+      trend_break_detection:
+        description: Whether trend break detection is enabled by default
+        type: boolean
+      trend_period:
+        description: The default period for trend calculations
         type: string
     type: object
   database.RouteSegmentMatch:
@@ -874,10 +897,14 @@ definitions:
     - sit-ups
     - squats
     - core
+    - chin-ups
+    - pull-ups
+    - planking
     - weight-lifting
     - rowing
     - table-tennis
     - tennis
+    - sailing
     - ice-skating
     - badminton
     - football
@@ -908,10 +935,14 @@ definitions:
     - WorkoutTypeSitups
     - WorkoutTypeSquats
     - WorkoutTypeCore
+    - WorkoutTypeChinUps
+    - WorkoutTypePullUps
+    - WorkoutTypePlanking
     - WorkoutTypeWeightLifting
     - WorkoutTypeRowing
     - WorkoutTypeTableTennis
     - WorkoutTypeTennis
+    - WorkoutTypeSailing
     - WorkoutTypeIceSkating
     - WorkoutTypeBadminton
     - WorkoutTypeFootball
@@ -944,7 +975,20 @@ definitions:
       suburb:
         type: string
     type: object
-  geojson.Feature:
+  geojson.FeatureCollection:
+    properties:
+      bbox:
+        items:
+          type: number
+        type: array
+      features:
+        items:
+          $ref: '#/definitions/geojson.FeatureOf-geojson_Properties'
+        type: array
+      type:
+        type: string
+    type: object
+  geojson.FeatureOf-geojson_Properties:
     properties:
       bbox:
         items:
@@ -957,21 +1001,8 @@ definitions:
       type:
         type: string
     type: object
-  geojson.FeatureCollection:
-    properties:
-      bbox:
-        items:
-          type: number
-        type: array
-      features:
-        items:
-          $ref: '#/definitions/geojson.Feature'
-        type: array
-      type:
-        type: string
-    type: object
   geojson.Properties:
-    additionalProperties: true
+    additionalProperties: {}
     type: object
 info:
   contact:

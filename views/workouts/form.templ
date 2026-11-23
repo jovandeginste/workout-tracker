@@ -181,7 +181,7 @@ templ Form(w *database.Workout) {
 			for _, e := range currentUser.Equipment {
 				<label class="inline">
 					<input
-						class="hidden peer"
+						class="sr-only peer"
 						type="checkbox"
 						id={ fmt.Sprintf("equipment_%d", e.ID) }
 						name="equipment"

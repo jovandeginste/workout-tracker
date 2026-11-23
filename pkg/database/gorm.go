@@ -1,10 +1,12 @@
 package database
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
 	"math"
+	"strings"
 	"time"
 
 	"github.com/glebarez/sqlite"
@@ -58,6 +60,10 @@ func Connect(driver, dsn string, debug bool, logger *slog.Logger) (*gorm.DB, err
 	}
 
 	if err := preMigrationActions(db); err != nil {
+		return nil, err
+	}
+
+	if err := migrateTotalsShow(db); err != nil {
 		return nil, err
 	}
 
@@ -124,6 +130,52 @@ func preMigrationActions(db *gorm.DB) error {
 		Update("type", WorkoutTypeWeightLifting)
 
 	return q.Error
+}
+
+// migrateTotalsShow converts the stored single workout type of the profile
+// totals setting to the JSON list format used by gorm's json serializer.
+func migrateTotalsShow(db *gorm.DB) error {
+	if !db.Migrator().HasTable(&Profile{}) || !db.Migrator().HasColumn(&Profile{}, "totals_show") {
+		return nil
+	}
+
+	type profileTotals struct {
+		ID         uint64
+		TotalsShow string
+	}
+
+	var rows []profileTotals
+
+	err := db.
+		Table("profiles").
+		Select("id", "totals_show").
+		Where("totals_show IS NOT NULL").
+		Where("totals_show <> ''").
+		Find(&rows).Error
+	if err != nil {
+		return err
+	}
+
+	for _, row := range rows {
+		if strings.HasPrefix(strings.TrimSpace(row.TotalsShow), "[") {
+			continue
+		}
+
+		value, err := json.Marshal(WorkoutTypeList{AsWorkoutType(row.TotalsShow)})
+		if err != nil {
+			return err
+		}
+
+		err = db.
+			Table("profiles").
+			Where("id = ?", row.ID).
+			Update("totals_show", string(value)).Error
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func postMigrationActions(db *gorm.DB) error {

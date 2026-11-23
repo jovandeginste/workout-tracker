@@ -332,6 +332,11 @@
     @apply dark:bg-red-800 dark:peer-checked:bg-green-800 dark:border-red-700 dark:peer-checked:border-green-700;
   }
 
+  .peer:focus-visible + .selectable-pill {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
   .pill,
   .user-pill,
   .selectable-pill {

@@ -1,6 +1,9 @@
 package user
 
 import (
+	"context"
+	"strings"
+
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
@@ -115,17 +118,49 @@ templ profilePreferredUnits() {
 	</form>
 }
 
-templ profileTotalsShow(uwt *database.WorkoutType) {
-	<select class="input-ellipsis" id="totals_show" name="totals_show">
-		<option value="auto">{ i18n.T(ctx, "translation.Autodetect") }</option>
-		for _, wt := range helpers.WorkoutTypes() {
-			if wt.IsDistance() {
-				<option value={ wt.String() } selected?={ wt.String() == uwt.String() }>
-					{ i18n.T(ctx, wt.StringT()) }
-				</option>
+templ profileTotalsShow(types database.WorkoutTypeList) {
+	<details>
+		<summary class="cursor-pointer">{ totalsShowSummary(ctx, types) }</summary>
+		<div class="flex flex-wrap">
+			<label class="inline">
+				<input
+					class="sr-only peer"
+					type="checkbox"
+					name="totals_show"
+					value={ database.WorkoutTypeAutoDetect.String() }
+					checked?={ types.Has(database.WorkoutTypeAutoDetect) }
+				/>
+				<span class="selectable-pill">{ i18n.T(ctx, "translation.Autodetect") }</span>
+			</label>
+			for _, wt := range helpers.WorkoutTypes() {
+				if wt.IsDistance() {
+					<label class="inline">
+						<input
+							class="sr-only peer"
+							type="checkbox"
+							name="totals_show"
+							value={ wt.String() }
+							checked?={ types.Has(wt) }
+						/>
+						<span class="selectable-pill">{ i18n.T(ctx, wt.StringT()) }</span>
+					</label>
+				}
 			}
-		}
-	</select>
+		</div>
+	</details>
+}
+
+func totalsShowSummary(ctx context.Context, types database.WorkoutTypeList) string {
+	if len(types) == 0 {
+		return i18n.T(ctx, database.WorkoutTypeAutoDetect.StringT())
+	}
+
+	names := make([]string, 0, len(types))
+	for _, wt := range types {
+		names = append(names, i18n.T(ctx, wt.StringT()))
+	}
+
+	return strings.Join(names, ", ")
 }
 
 templ profileTimezone(utz string) {

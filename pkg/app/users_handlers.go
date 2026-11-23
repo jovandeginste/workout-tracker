@@ -76,7 +76,7 @@ func (a *App) userRegisterHandler(c *echo.Context) error {
 	}
 
 	u.Profile.Theme = BrowserTheme
-	u.Profile.TotalsShow = DefaultTotalsShow
+	u.Profile.TotalsShow = database.WorkoutTypeList{DefaultTotalsShow}
 	u.Profile.Language = BrowserLanguage
 	u.Profile.RouteSegmentConfig.TrendPeriod = database.DefaultRouteSegmentTrendPeriod
 	u.Profile.RouteSegmentConfig.TrendBreakDetection = true

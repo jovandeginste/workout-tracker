@@ -15,12 +15,14 @@ templ StatsRecordsTotal(user *database.User) {
 		<pre>{ err.Error() }</pre>
 	} else {
 		{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
-		<div class="md:flex md:flex-wrap">
-			@StatisticTile(user.Profile.TotalsShow.String(), i18n.T(ctx, user.Profile.TotalsShow.StringT()), helpers.A2S(totals.Workouts), "")
-			@StatisticTile("distance", i18n.T(ctx, "translation.distance"), templatehelpers.HumanDistanceFor(preferredUnits.Distance(&user.Profile.TotalsShow))(totals.Distance), preferredUnits.Distance(&user.Profile.TotalsShow))
-			@StatisticTile("up", i18n.T(ctx, "translation.up"), helpers.HumanElevation(ctx, totals.Up), preferredUnits.Elevation())
-			@StatisticTile("duration", i18n.T(ctx, "translation.duration"), helpers.HumanDuration(totals.Duration), "")
-		</div>
+		for _, t := range totals {
+			<div class="md:flex md:flex-wrap">
+				@StatisticTile(t.WorkoutType.String(), i18n.T(ctx, t.WorkoutType.StringT()), helpers.A2S(t.Workouts), "")
+				@StatisticTile("distance", i18n.T(ctx, "translation.distance"), templatehelpers.HumanDistanceFor(preferredUnits.Distance(&t.WorkoutType))(t.Distance), preferredUnits.Distance(&t.WorkoutType))
+				@StatisticTile("up", i18n.T(ctx, "translation.up"), helpers.HumanElevation(ctx, t.Up), preferredUnits.Elevation())
+				@StatisticTile("duration", i18n.T(ctx, "translation.duration"), helpers.HumanDuration(t.Duration), "")
+			</div>
+		}
 	}
 }
 
