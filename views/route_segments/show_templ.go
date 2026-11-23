@@ -90,7 +90,7 @@ func Show(s *database.RouteSegment) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</h2><div class=\"lg:flex lg:flex-wrap print:block\"><div class=\"basis-1/2 2xl:basis-1/3 pagebreak\"><div class=\"inner-form\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</h2><div class=\"lg:flex lg:flex-wrap print:block\"><div data-map-container class=\"basis-1/2 2xl:basis-1/3 pagebreak\"><div class=\"inner-form\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

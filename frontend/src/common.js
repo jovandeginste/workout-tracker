@@ -94,19 +94,58 @@ globalThis.readDailyHeight = function readDailyHeight() {
   inch.value = height.value % 12;
 };
 
-globalThis.fullMap = function fullMap(map) {
-  const d = document.getElementById("map-container");
-  const mapEl = document.getElementById(map);
-
-  d.classList.toggle("small-size");
-  d.classList.toggle("full-size");
-
-  if (mapEl) {
-    mapEl.updateSize();
+function updateMapSize(mapEl) {
+  if (mapEl && typeof mapEl.updateSize === "function") {
+    requestAnimationFrame(() => mapEl.updateSize());
   }
+}
+
+globalThis.fullMap = function fullMap(map) {
+  const mapEl = document.getElementById(map);
+  const container = mapEl?.closest("[data-map-container]");
+
+  if (!container) {
+    return false;
+  }
+
+  container.classList.toggle("full-size");
+  updateMapSize(mapEl);
 
   return false;
 };
+
+globalThis.toggleMapFullscreen = function toggleMapFullscreen(map) {
+  const mapEl = document.getElementById(map);
+  const container = mapEl?.closest("[data-map-container]");
+
+  if (!container) {
+    return false;
+  }
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen().then(
+      () => updateMapSize(mapEl),
+      () => updateMapSize(mapEl),
+    );
+
+    return false;
+  }
+
+  if (typeof container.requestFullscreen !== "function") {
+    return fullMap(map);
+  }
+
+  container.requestFullscreen().then(
+    () => updateMapSize(mapEl),
+    () => fullMap(map),
+  );
+
+  return false;
+};
+
+document.addEventListener("fullscreenchange", () => {
+  document.querySelectorAll("wt-map").forEach(updateMapSize);
+});
 
 globalThis.showTab = function showTab(parentId, elemId) {
   var parent = document.getElementById(parentId);

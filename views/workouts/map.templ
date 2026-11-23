@@ -43,12 +43,12 @@ templ Map(w *database.Workout) {
 		data-el="workout-data"
 		preferred-units-el="workout-preferred-units"
 	></wt-map>
-	<div class="flex flex-wrap">
+	<div class="map-controls flex flex-wrap">
 		if !helpers.AppConfig(ctx).SocialsDisabled && !helpers.CurrentUser(ctx).Profile.SocialsDisabled {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title={ i18n.T(ctx, "translation.Show_map_in_full_width") } onclick="fullMap('workout-map')">
+			<a href="#" title={ i18n.T(ctx, "translation.Fullscreen") } aria-label={ i18n.T(ctx, "translation.Fullscreen") } onclick="toggleMapFullscreen('workout-map'); return false;">
 				@helpers.IconFor("expand")
 			</a>
 		</div>

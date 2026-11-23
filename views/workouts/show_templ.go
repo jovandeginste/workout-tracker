@@ -131,7 +131,7 @@ func Show(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if w.HasTracks() {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"map-container\" class=\"basis-1/2 pagebreak\"><div class=\"inner-form\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"map-container\" data-map-container class=\"basis-1/2 pagebreak\"><div class=\"inner-form\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
