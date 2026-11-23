@@ -136,6 +136,9 @@ en:
     Average_speed_no_pause: Average speed (no pause)
     Average_tempo: Average tempo
     Average_tempo_no_pause: Average tempo (no pause)
+    Bar: Bar
+    Chart_type: Chart type
+    Line: Line
     Max_tempo: Max tempo
     Bidirectional: Bidirectional
     Breakdown: Breakdown

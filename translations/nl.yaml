@@ -142,6 +142,9 @@ nl:
     Average_speed_no_pause: Gemiddelde snelheid (zonder pauze)
     Average_tempo: Gemiddelde tempo
     Average_tempo_no_pause: Gemiddelde tempo (zonder pauze)
+    Bar: Staaf
+    Chart_type: Grafiektype
+    Line: Lijn
     Bidirectional: Bidirectioneel
     Breakdown: Uitsplitsing
     Cadence: Cadans
