@@ -112,10 +112,6 @@ func DataJson(w *database.Workout) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var1 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var1 == nil {
-			templ_7745c5c3_Var1 = templ.NopComponent
-		}
 		ctx = templ.ClearChildren(ctx)
 		pu := helpers.PreferredUnitsToJSON(helpers.CurrentUser(ctx).PreferredUnits())
 		if w.Type.IsNautical() {

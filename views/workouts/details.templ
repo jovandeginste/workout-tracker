@@ -172,7 +172,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 						<ul>
 							<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>
 							<li>UTC: { helpers.InTimezone( w.Date, "UTC").String() }</li>
-							<li>{ w.Timezone() }: {  helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
+							<li>{ w.Timezone() }: { helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
 						</ul>
 					</div>
 				</td>
