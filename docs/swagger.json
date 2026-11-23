@@ -625,6 +625,125 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete a workout",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Workout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {
+                                            "$ref": "#/definitions/database.Workout"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Only the provided metadata fields are updated; GPS data is left untouched",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update the metadata of a workout",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Workout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Workout data",
+                        "name": "workout",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app.ManualWorkout"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {
+                                            "$ref": "#/definitions/database.Workout"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.APIResponse"
+                        }
+                    }
+                }
             }
         },
         "/workouts/{id}/breakdown": {

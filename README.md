@@ -365,6 +365,30 @@ curl -sSL -H "Authorization: bearer your-api-key" \
 EOF
 ```
 
+#### Update metadata
+
+You can update the metadata of an existing workout without touching the recorded
+GPS data. Only the fields you send are changed. The supported fields are the
+same as for manual creation.
+
+```bash
+curl -sSL -X PATCH -H "Authorization: bearer your-api-key" \
+  http://localhost:8080/api/v1/workouts/1 \
+  --data @- <<EOF
+{
+  "type": "running",
+  "notes": "Treadmill run"
+}
+EOF
+```
+
+#### Delete
+
+```bash
+curl -sSL -X DELETE -H "Authorization: bearer your-api-key" \
+  http://localhost:8080/api/v1/workouts/1
+```
+
 #### Generic upload of a file
 
 The generic upload endpoint takes the recording as body. Prepend the path with

@@ -223,6 +223,10 @@ func (a *App) POST(g *echo.Group, p string, h echo.HandlerFunc, name string, m .
 	_, _ = g.AddRoute(echo.Route{Method: http.MethodPost, Path: p, Handler: h, Name: name, Middlewares: m})
 }
 
+func (a *App) PATCH(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
+	_, _ = g.AddRoute(echo.Route{Method: http.MethodPatch, Path: p, Handler: h, Name: name, Middlewares: m})
+}
+
 func (a *App) DELETE(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
 	_, _ = g.AddRoute(echo.Route{Method: http.MethodDelete, Path: p, Handler: h, Name: name, Middlewares: m})
 }

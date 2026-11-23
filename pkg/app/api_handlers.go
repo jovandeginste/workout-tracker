@@ -98,6 +98,8 @@ func (a *App) apiRoutes(g *echo.Group) {
 	a.GET(apiGroup, "/workouts", a.apiWorkoutsHandler, "api-workouts")
 	a.POST(apiGroup, "/workouts", a.apiWorkoutAddHandler, "api-workout-add")
 	a.GET(apiGroup, "/workouts/:id", a.apiWorkoutHandler, "api-workout")
+	a.PATCH(apiGroup, "/workouts/:id", a.apiWorkoutUpdateHandler, "api-workout-update")
+	a.DELETE(apiGroup, "/workouts/:id", a.apiWorkoutDeleteHandler, "api-workout-delete")
 	a.GET(apiGroup, "/workouts/:id/breakdown", a.apiWorkoutBreakdownHandler, "api-workout-breakdown")
 	a.GET(apiGroup, "/workouts/coordinates", a.apiCoordinates, "api-workouts-coordinates")
 	a.GET(apiGroup, "/workouts/centers", a.apiCenters, "api-workouts-centers")
@@ -163,7 +165,7 @@ func (a *App) apiWorkoutsHandler(c *echo.Context) error {
 		resp.AddError(err)
 	}
 
-	resp.Results = w
+	resp.Results = workoutsWithSafeUsers(w)
 
 	return c.JSON(http.StatusOK, resp)
 }
@@ -381,7 +383,6 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 	}
 
 	workout := &database.Workout{}
-	resp.Results = workout
 
 	d.Update(workout)
 
@@ -392,6 +393,8 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 	if err := workout.Save(a.db); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
+
+	resp.Results = workoutAPIResult(workout)
 
 	return c.JSON(http.StatusOK, resp)
 }
@@ -429,9 +432,122 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 		resp.AddError(err)
 	}
 
-	resp.Results = w
+	resp.Results = workoutWithSafeUser(w)
 
 	return c.JSON(http.StatusOK, resp)
+}
+
+// apiWorkoutUpdateHandler updates the metadata of a workout
+// @Summary      Update the metadata of a workout
+// @Description  Only the provided metadata fields are updated; GPS data is left untouched
+// @Accept       json
+// @Param        id      path       int             true "Workout ID"
+// @Param        workout body       ManualWorkout   true "Workout data"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=database.Workout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/{id} [patch]
+func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
+	resp := APIResponse{}
+
+	id, err := cast.ToUint64E(c.Param("id"))
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
+	if err := json.NewDecoder(c.Request().Body).Decode(d); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	d.Update(w)
+
+	if err := w.Save(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = workoutAPIResult(w)
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// apiWorkoutDeleteHandler deletes a workout
+// @Summary      Delete a workout
+// @Param        id      path       int     true "Workout ID"
+// @Produce      json
+// @Success      200  {object}  APIResponse{results=database.Workout}
+// @Failure      400  {object}  APIResponse
+// @Failure      404  {object}  APIResponse
+// @Failure      500  {object}  APIResponse
+// @Router       /workouts/{id} [delete]
+func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
+	resp := APIResponse{}
+
+	id, err := cast.ToUint64E(c.Param("id"))
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	if err := w.Delete(a.db); err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	resp.Results = workoutAPIResult(w)
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// workoutAPIResult removes the payloads that are not useful in a metadata
+// response: the raw GPS file and the track points.
+func workoutAPIResult(w *database.Workout) *database.Workout {
+	w = workoutWithSafeUser(w)
+
+	if w == nil {
+		return nil
+	}
+
+	w.GPX = nil
+
+	if w.Data != nil {
+		w.Data.Details = nil
+	}
+
+	return w
+}
+
+// workoutWithSafeUser replaces the user with a copy without credentials, so
+// responses can include the owner without exposing password, salt or API key.
+func workoutWithSafeUser(w *database.Workout) *database.Workout {
+	if w == nil || w.User == nil {
+		return w
+	}
+
+	w.User = &database.User{
+		UserData: w.User.UserData,
+		Profile:  w.User.Profile,
+	}
+
+	return w
+}
+
+func workoutsWithSafeUsers(ws []*database.Workout) []*database.Workout {
+	for _, w := range ws {
+		workoutWithSafeUser(w)
+	}
+
+	return ws
 }
 
 // apiImportHandler imports a workout
@@ -461,7 +577,7 @@ func (a *App) apiImportHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, addErr...)
 	}
 
-	resp.Results = w
+	resp.Results = workoutsWithSafeUsers(w)
 
 	return c.JSON(http.StatusOK, resp)
 }
