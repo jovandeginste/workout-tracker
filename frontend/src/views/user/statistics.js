@@ -20,6 +20,7 @@ class WtStatistic extends HTMLElement {
     this.type = this.getAttribute("type");
     this.workoutType = this.getAttribute("workout-type") || "";
     this.chartType = this.getAttribute("chart-type") === "bar" ? "bar" : "line";
+    this.per = this.getAttribute("per") || "month";
 
     if (!this.stats || !this.stats.buckets) {
       console.warn("No stats provided for WtStatistic");
@@ -65,18 +66,14 @@ class WtStatistic extends HTMLElement {
       stroke: isBar ? { width: 0 } : { curve: "straight", width: 2 },
       markers: { size: 0 },
       tooltip: {
-        x: { format: "MMM 'yy" },
+        x: { format: this.per === "year" ? "yyyy" : "MMM 'yy" },
       },
       xaxis: { type: "datetime" },
     };
 
     if (this.type === "durationSeconds") {
       this.setupDurationOptions(options);
-    } else if (
-      this.type.startsWith("localDistance") ||
-      this.type.startsWith("localAverageSpeed") ||
-      this.type.startsWith("localMaxSpeed")
-    ) {
+    } else if (this.type.startsWith("local")) {
       this.setupValueOptions(options);
     }
 
@@ -108,11 +105,21 @@ class WtStatistic extends HTMLElement {
     const firstStandardSeries = series.find((s) => !s.isNautical);
     const firstNauticalSeries = series.find((s) => s.isNautical);
 
+    const isElevation = this.type.includes("Up");
+
     const standardUnit =
       this.preferredUnits[
-        this.type.includes("Distance") ? "distance" : "speed"
+        this.type.includes("Distance")
+          ? "distance"
+          : isElevation
+            ? "elevation"
+            : "speed"
       ];
     const nauticalUnit = this.type.includes("Distance") ? "nm" : "kn";
+
+    const formatStandardValue = isElevation
+      ? (val) => Math.round(val) + " " + standardUnit
+      : (val) => val.toFixed(1) + " " + standardUnit;
 
     const yaxis = [];
 
@@ -124,7 +131,7 @@ class WtStatistic extends HTMLElement {
           show: s.name === firstStandardSeries.name,
           title: { text: standardUnit },
           labels: {
-            formatter: (val) => val.toFixed(1) + " " + standardUnit,
+            formatter: formatStandardValue,
           },
         });
       } else {
@@ -152,9 +159,6 @@ class WtStatistic extends HTMLElement {
   }
 
   getSeriesData() {
-    const unitType = this.type.includes("Distance")
-      ? "distanceUnit"
-      : "speedUnit";
     const entries = Object.entries(this.stats.buckets).filter(
       ([type]) => !this.workoutType || type === this.workoutType,
     );
@@ -166,7 +170,9 @@ class WtStatistic extends HTMLElement {
         );
         if (buckets.length === 0) return null;
 
-        const isNautical = buckets[0].isNautical;
+        const isNautical = this.type.includes("Up")
+          ? false
+          : buckets[0].isNautical;
 
         return {
           name: value.localWorkoutType,
@@ -182,13 +188,25 @@ class WtStatistic extends HTMLElement {
               return {
                 x: e.bucket,
                 y: numericValue,
-                unit: e[unitType],
+                unit: this.getValueUnit(e),
               };
             })
             .sort((a, b) => a.x.localeCompare(b.x)),
         };
       })
       .filter((e) => e !== null);
+  }
+
+  getValueUnit(bucket) {
+    if (this.type.includes("Distance")) {
+      return bucket.distanceUnit;
+    }
+
+    if (this.type.includes("Up")) {
+      return this.preferredUnits.elevation;
+    }
+
+    return bucket.speedUnit;
   }
 }
 
