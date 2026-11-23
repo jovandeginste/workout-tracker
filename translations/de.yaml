@@ -18,13 +18,15 @@ de:
       other: '%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im
         Hintergrund nach Übereinstimmungen'
   climb:
-    distance: Aufstieg Distanz
-    start: Startdistanz
+    distance: Distanz
+    start: Start
     type_climb: 'Aufstieg #%d'
     type_descent: 'Abstieg #%d'
-    average_slope: Durchschnittliche Steigung
+    average_slope: Durchschn. Steigung
     category: Kategorie
     elevation_gain_loss: Höhenunterschied
+    elevation_gain: Aufstieg
+    elevation_loss: Abstieg
   misc:
     day_7: 7 Tage
     month_6: 6 Monate
@@ -67,7 +69,23 @@ de:
     unknown: unbekannt
     horse-riding: Reiten
     inline-skating: Inlineskaten
-    indoor-cycling: ''
+    indoor-cycling: 'Indoorcycling'
+    mountain-biking: Mountainbiking
+    alpine-climbing: Alpinklettern
+    mountaineering: Bergsteigen
+    sit-ups: Rumpfbeugen
+    squats: Kniebeugen
+    chin-ups: Untergriff-Klimmzüge
+    pull-ups: Klimmzüge
+    planking: Unterarmstütz
+    sailing: Segeln
+    table-tennis: Tischtennis
+    tennis: Tennis
+    ice-skating: Eislaufen
+    badminton: Badminton
+    football: Fußball
+    core: Rumpftraining
+    dancing: Tanzen
   menu:
     Equipment: Ausrüstung
     Statistics: Statistik
@@ -136,7 +154,7 @@ de:
     Duration: Dauer
     Elevation: Höhe
     End: Ende
-    Est_calories_burned: Geschätzter Kalorienverbrauch
+    Est_calories_burned: Kalorienverbrauch (geschätzt)
     Estimated_based_on_the_activity: Geschätzt auf der Grundlage der Aktivität 
       und deines zuletzt gemessenen Gewichts
     Extra_metrics: Zusätzliche Metriken
@@ -277,6 +295,30 @@ de:
     WorkoutUnLocked: Die Attribute des Trainings '%s' sind jetzt entsperrt
     LockWorkout: Die Attribute dieses Trainings für automatische 
       Aktualisierungen sperren oder entsperren.
+    Climbs: Aufstiege
+    Create_route_segment_from_climb: Streckenabschnitt aus diesem Segment 
+      erstellen
+    Max_tempo: Maximales Tempo
+    Breakdown: Aufschlüsselung
+    cadence: Kadenz
+    Cadence_avg_max: Kadenz (Mittelwert/Maximum)
+    Calories_burned: Kalorienverbrauch
+    heart-rate: Herzfrequenz
+    strokes: Bewegungen
+    Personal_trend: Persönlicher Trend
+    Trend_period: Trendzeitraum
+    Trend_break: Trendbruch
+    Trend_break_detection: Trendbrucherkennung
+    Trend: Trend
+    Reset_zoom: Zoom zurücksetzen
+    All_time: Gesamter Zeitraum
+    Last_365_days: Letzte 365 Tage
+    Last_90_days: Letzte 90 Tage
+    Last_30_days: Letzte 30 Tage
+    This_calendar_year: Dieses Kalenderjahr
+    Power: Leistung
+    power: Leistung
+    Power_avg_max: Leistung (Mittelwert/Maximum)
   user:
     profile:
       your_settings: Deine Einstellungen
@@ -300,6 +342,8 @@ de:
       Light: Hell
       Dark: Dunkel
       Browser_System: Browser / System
+      show_tabs: Trainingsdetails in Reitern anzeigen
+      export_all_your_workouts: Alle Originaldateien exportieren
     update: Benutzer aktualisieren
   workout:
     update: Training aktualisieren
