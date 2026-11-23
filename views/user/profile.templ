@@ -120,12 +120,10 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
-						<label for="totals_show">
-							{ i18n.T(ctx, "user.profile.totals_to_show_on_dashboard") }
-						</label>
+						<label>{ i18n.T(ctx, "user.profile.totals_to_show_on_dashboard") }</label>
 					</th>
 					<td>
-						@profileTotalsShow(&u.Profile.TotalsShow)
+						@profileTotalsShow(u.Profile.TotalsShow)
 					</td>
 				</tr>
 				<tr>

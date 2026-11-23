@@ -44,3 +44,26 @@ func TestWorkoutType_IsNautical(t *testing.T) {
 	assert.False(t, WorkoutTypeRunning.IsNautical())
 	assert.False(t, WorkoutTypeCycling.IsNautical())
 }
+
+func TestWorkoutTypeList_Sanitize(t *testing.T) {
+	types := WorkoutTypeList{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeRunning, "invalid", WorkoutTypeAutoDetect, WorkoutTypeAutoDetect}
+
+	types.Sanitize()
+
+	assert.Equal(t, WorkoutTypeList{WorkoutTypeRunning, WorkoutTypeCycling, WorkoutTypeAutoDetect}, types)
+}
+
+func TestWorkoutTypeList_SanitizeEmpty(t *testing.T) {
+	var types WorkoutTypeList
+
+	types.Sanitize()
+
+	assert.Empty(t, types)
+}
+
+func TestWorkoutTypeList_Has(t *testing.T) {
+	types := WorkoutTypeList{WorkoutTypeRunning, WorkoutTypeCycling}
+
+	assert.True(t, types.Has(WorkoutTypeRunning))
+	assert.False(t, types.Has(WorkoutTypeSwimming))
+}

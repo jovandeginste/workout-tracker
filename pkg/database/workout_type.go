@@ -7,6 +7,9 @@ import (
 
 type (
 	WorkoutType string
+
+	// WorkoutTypeList is a list of workout types, stored as JSON in the database
+	WorkoutTypeList []WorkoutType
 )
 
 const (
@@ -211,6 +214,36 @@ func (wt WorkoutType) IsLocation() bool {
 
 func AsWorkoutType(s string) WorkoutType {
 	return WorkoutType(s)
+}
+
+// Has returns true if the list contains the given workout type
+func (l WorkoutTypeList) Has(t WorkoutType) bool {
+	return slices.Contains(l, t)
+}
+
+// Sanitize removes unknown and duplicate workout types from the list
+func (l *WorkoutTypeList) Sanitize() {
+	if l == nil {
+		return
+	}
+
+	seen := map[WorkoutType]bool{}
+	result := make(WorkoutTypeList, 0, len(*l))
+
+	for _, t := range *l {
+		if t != WorkoutTypeAutoDetect && !t.IsDuration() {
+			continue
+		}
+
+		if seen[t] {
+			continue
+		}
+
+		seen[t] = true
+		result = append(result, t)
+	}
+
+	*l = result
 }
 
 // MaxDeltaMeter is the maximum distance in meters that a point can be away from

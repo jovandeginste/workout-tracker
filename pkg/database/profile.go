@@ -18,7 +18,7 @@ type Profile struct {
 
 	Language            string             `form:"language" json:"language"`                                           // The user's preferred language
 	Theme               string             `form:"theme" json:"theme"`                                                 // The user's preferred color scheme
-	TotalsShow          WorkoutType        `form:"totals_show" json:"totals_show"`                                     // What workout type of totals to show
+	TotalsShow          WorkoutTypeList    `gorm:"serializer:json" form:"totals_show" json:"totals_show"`              // What workout types of totals to show
 	Timezone            string             `form:"timezone" json:"timezone"`                                           // The user's preferred timezone
 	AutoImportDirectory string             `form:"auto_import_directory" json:"auto_import_directory"`                 // The user's preferred directory for auto-import
 	UserID              uint64             `json:"userID"`                                                             // The ID of the user who owns this profile
@@ -154,6 +154,11 @@ func (p *Profile) Save(db *gorm.DB) error {
 
 func (p *Profile) BeforeSave(_ *gorm.DB) error {
 	p.RouteSegmentConfig.Validate()
+	p.TotalsShow.Sanitize()
+
+	if len(p.TotalsShow) == 0 {
+		p.TotalsShow = WorkoutTypeList{WorkoutTypeAutoDetect}
+	}
 
 	return nil
 }

@@ -59,6 +59,7 @@ func (a *App) userProfileUpdateHandler(c *echo.Context) error {
 	p := &u.Profile
 
 	p.ResetBools()
+	p.TotalsShow = nil
 
 	if err := c.Bind(p); err != nil {
 		return a.redirectWithError(c, a.Reverse("user-profile"), err)

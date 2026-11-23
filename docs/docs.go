@@ -921,6 +921,10 @@ const docTemplate = `{
                     "description": "The total distance in the bucket",
                     "type": "number"
                 },
+                "distanceUnit": {
+                    "description": "The distance unit for this bucket",
+                    "type": "string"
+                },
                 "duration": {
                     "description": "The total duration in the bucket",
                     "type": "integer"
@@ -928,6 +932,10 @@ const docTemplate = `{
                 "durationSeconds": {
                     "description": "The total duration in the bucket, in seconds",
                     "type": "number"
+                },
+                "isNautical": {
+                    "description": "Whether the workout is nautical",
+                    "type": "boolean"
                 },
                 "localAverageSpeed": {
                     "description": "The average speed in the bucket, localized",
@@ -959,6 +967,10 @@ const docTemplate = `{
                 },
                 "raw_bucket": {
                     "description": "One day in the bucket (for statistic rendering)",
+                    "type": "string"
+                },
+                "speedUnit": {
+                    "description": "The speed unit for this bucket",
                     "type": "string"
                 },
                 "up": {
@@ -1464,6 +1476,14 @@ const docTemplate = `{
                         }
                     ]
                 },
+                "route_segment_config": {
+                    "description": "Configuration for route segment visualization",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/database.RouteSegmentConfig"
+                        }
+                    ]
+                },
                 "show_tabs": {
                     "description": "Whether to show tabs in web UI",
                     "type": "boolean"
@@ -1481,12 +1501,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "totals_show": {
-                    "description": "What workout type of totals to show",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/database.WorkoutType"
-                        }
-                    ]
+                    "description": "What workout types of totals to show",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/database.WorkoutType"
+                    }
                 },
                 "updatedAt": {
                     "type": "string"
@@ -1599,6 +1618,19 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "database.RouteSegmentConfig": {
+            "type": "object",
+            "properties": {
+                "trend_break_detection": {
+                    "description": "Whether trend break detection is enabled by default",
+                    "type": "boolean"
+                },
+                "trend_period": {
+                    "description": "The default period for trend calculations",
                     "type": "string"
                 }
             }
@@ -1971,10 +2003,14 @@ const docTemplate = `{
                 "sit-ups",
                 "squats",
                 "core",
+                "chin-ups",
+                "pull-ups",
+                "planking",
                 "weight-lifting",
                 "rowing",
                 "table-tennis",
                 "tennis",
+                "sailing",
                 "ice-skating",
                 "badminton",
                 "football",
@@ -2005,10 +2041,14 @@ const docTemplate = `{
                 "WorkoutTypeSitups",
                 "WorkoutTypeSquats",
                 "WorkoutTypeCore",
+                "WorkoutTypeChinUps",
+                "WorkoutTypePullUps",
+                "WorkoutTypePlanking",
                 "WorkoutTypeWeightLifting",
                 "WorkoutTypeRowing",
                 "WorkoutTypeTableTennis",
                 "WorkoutTypeTennis",
+                "WorkoutTypeSailing",
                 "WorkoutTypeIceSkating",
                 "WorkoutTypeBadminton",
                 "WorkoutTypeFootball",
@@ -2057,7 +2097,27 @@ const docTemplate = `{
                 }
             }
         },
-        "geojson.Feature": {
+        "geojson.FeatureCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/geojson.FeatureOf-geojson_Properties"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "geojson.FeatureOf-geojson_Properties": {
             "type": "object",
             "properties": {
                 "bbox": {
@@ -2076,29 +2136,9 @@ const docTemplate = `{
                 }
             }
         },
-        "geojson.FeatureCollection": {
-            "type": "object",
-            "properties": {
-                "bbox": {
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    }
-                },
-                "features": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/geojson.Feature"
-                    }
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "geojson.Properties": {
             "type": "object",
-            "additionalProperties": true
+            "additionalProperties": {}
         }
     }
 }`

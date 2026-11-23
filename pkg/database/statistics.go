@@ -3,6 +3,7 @@ package database
 import (
 	"errors"
 	"fmt"
+	"slices"
 )
 
 const postgresDialect = "postgres"
@@ -194,22 +195,95 @@ func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
 	return &wt, nil
 }
 
-func (u *User) GetDefaultTotals() (*Bucket, error) {
+func (u *User) GetDefaultTotals() ([]*Bucket, error) {
 	if u.IsAnonymous() {
 		return nil, ErrAnonymousUser
 	}
 
-	t := u.Profile.TotalsShow
-	if t == WorkoutTypeAutoDetect {
-		ht, err := u.GetHighestWorkoutType()
-		if err != nil {
-			return nil, err
-		}
-
-		t = *ht
+	types, err := u.defaultTotalsTypes()
+	if err != nil {
+		return nil, err
 	}
 
-	return u.GetTotals(t)
+	return u.GetTotalsFor(types)
+}
+
+func (u *User) defaultTotalsTypes() (WorkoutTypeList, error) {
+	types := slices.Clone(u.Profile.TotalsShow)
+	types.Sanitize()
+
+	if len(types) == 0 {
+		types = WorkoutTypeList{WorkoutTypeAutoDetect}
+	}
+
+	result := make(WorkoutTypeList, 0, len(types))
+
+	for _, t := range types {
+		if t == WorkoutTypeAutoDetect {
+			ht, err := u.GetHighestWorkoutType()
+			if err != nil {
+				return nil, err
+			}
+
+			t = *ht
+
+			// Keep the auto-detect label when there is no workout to detect.
+			if t == "" || t == WorkoutTypeUnknown {
+				t = WorkoutTypeAutoDetect
+			}
+		}
+
+		if !result.Has(t) {
+			result = append(result, t)
+		}
+	}
+
+	return result, nil
+}
+
+func (u *User) GetTotalsFor(types WorkoutTypeList) ([]*Bucket, error) {
+	if len(types) == 0 {
+		return nil, nil
+	}
+
+	rows := []*Bucket{}
+
+	err := u.db.
+		Table("workouts").
+		Select(
+			"count(*) as workouts",
+			"workouts.type as workout_type",
+			"sum(total_duration) as duration",
+			"sum(total_distance) as distance",
+			"sum(total_up) as up",
+			"'all' as bucket",
+		).
+		Joins("join map_data on workouts.id = map_data.workout_id").
+		Where("user_id = ?", u.ID).
+		Where("workouts.type IN ?", types).
+		Group("workouts.type").
+		Scan(&rows).Error
+	if err != nil {
+		return nil, err
+	}
+
+	byType := map[WorkoutType]*Bucket{}
+	for _, r := range rows {
+		byType[r.WorkoutType] = r
+	}
+
+	result := make([]*Bucket, 0, len(types))
+
+	for _, t := range types {
+		r, ok := byType[t]
+		if !ok {
+			r = &Bucket{WorkoutType: t}
+		}
+
+		result = append(result, r)
+	}
+
+	return result, nil
 }
 
 func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
@@ -263,7 +337,18 @@ func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
 
 func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 	if t == "" {
-		t = u.Profile.TotalsShow
+		types, err := u.defaultTotalsTypes()
+		if err != nil {
+			return nil, err
+		}
+
+		if len(types) > 0 {
+			t = types[0]
+		}
+	}
+
+	if t == "" {
+		t = WorkoutTypeRunning
 	}
 
 	r := &WorkoutRecord{WorkoutType: t}
