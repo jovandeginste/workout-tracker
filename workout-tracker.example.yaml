@@ -10,3 +10,9 @@ bind: "[::]:80"
 
 # The root path of the web application
 web_root: /my-workout-tracker
+
+# Markdown text shown on the login screen
+# login_custom_text: |
+#   Welcome to this Workout Tracker instance!
+#
+#   Please contact the administrator for an account.

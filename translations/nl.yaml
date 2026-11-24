@@ -160,6 +160,7 @@ nl:
     Create_a_new_account: Maak een nieuwe account
     Create_route_segment: Maak een route segment
     Created: Aangemaakt
+    Custom_login_text: Aangepaste logintekst (Markdown)
     Dashboard_for_s: Dashboard voor %s
     Date: Datum
     Default_workout_types: Standaard soorten workout

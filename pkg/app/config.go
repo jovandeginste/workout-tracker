@@ -22,6 +22,7 @@ func (a *App) ReadConfiguration() error {
 	viper.SetDefault("dsn", "./database.db")
 	viper.SetDefault("registration_disabled", false)
 	viper.SetDefault("socials_disabled", false)
+	viper.SetDefault("login_custom_text", "")
 	viper.SetDefault("worker_delay_seconds", 60)
 
 	for _, envVar := range []string{
@@ -38,6 +39,7 @@ func (a *App) ReadConfiguration() error {
 		"dsn_file",
 		"registration_disabled",
 		"socials_disabled",
+		"login_custom_text",
 		"worker_delay_seconds",
 	} {
 		if err := viper.BindEnv(envVar); err != nil {

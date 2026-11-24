@@ -53,6 +53,26 @@ func TestApp_Configure(t *testing.T) {
 	assert.NotNil(t, a.db)
 }
 
+func TestApp_ConfigureLoginCustomTextFromEnv(t *testing.T) {
+	t.Setenv("WT_DATABASE_DRIVER", "memory")
+	t.Setenv("WT_LOGIN_CUSTOM_TEXT", "# Welcome\n\nPlease contact the administrator.")
+
+	a := defaultApp(t)
+	require.NoError(t, a.Configure())
+
+	assert.Equal(t, "# Welcome\n\nPlease contact the administrator.", a.Config.LoginCustomText)
+}
+
+func TestApp_LoginCustomTextDatabase(t *testing.T) {
+	a := configuredApp(t)
+	a.Config.LoginCustomText = "# Stored welcome"
+
+	require.NoError(t, a.Config.Save(a.db))
+	require.NoError(t, a.ResetConfiguration())
+
+	assert.Equal(t, "# Stored welcome", a.Config.LoginCustomText)
+}
+
 func TestApp_NewLogger(t *testing.T) {
 	l := newLogger(false)
 	assert.IsType(t, slognil.Handler{}, l.Handler())

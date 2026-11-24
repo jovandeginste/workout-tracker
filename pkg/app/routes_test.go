@@ -3,6 +3,8 @@ package app
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -196,6 +198,48 @@ func TestRoute_NoUserAccessLogin(t *testing.T) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Contains(t, rec.Body.String(), `<button id="signin" type="submit">`)
 	})
+}
+
+func TestRoute_AdminConfigUpdateLoginCustomText(t *testing.T) {
+	a := configuredApp(t)
+	form := url.Values{
+		"login_custom_text":     {"# Welcome\n\nPlease **contact** the administrator."},
+		"registration_disabled": {"true"},
+	}
+
+	req := httptest.NewRequest(http.MethodPost, a.Reverse("admin-config-update"), strings.NewReader(form.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+
+	s := sessionLoadAndSave(a.sessionManager)
+	h := s(a.adminConfigUpdateHandler)
+
+	require.NoError(t, h(c))
+	assert.Equal(t, http.StatusFound, rec.Code)
+	assert.True(t, a.Config.RegistrationDisabled)
+	assert.Equal(t, "# Welcome\n\nPlease **contact** the administrator.", a.Config.LoginCustomText)
+}
+
+func TestRoute_NoUserAccessLoginCustomText(t *testing.T) {
+	a := configuredApp(t)
+	a.Config.LoginCustomText = "# Welcome\n\nPlease **contact** the administrator."
+
+	req := httptest.NewRequest(http.MethodGet, a.Reverse("user-login"), nil)
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+
+	s := sessionLoadAndSave(a.sessionManager)
+	h := s(a.userLoginHandler)
+
+	require.NoError(t, h(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Contains(t, rec.Body.String(), "<h1>Welcome</h1>")
+	assert.Contains(t, rec.Body.String(), "<strong>contact</strong>")
 }
 
 func TestRoute_NoUserAccessLoginLang(t *testing.T) {

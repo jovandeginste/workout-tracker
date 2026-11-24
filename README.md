@@ -300,6 +300,7 @@ WT_DATABASE_DRIVER="sqlite"
 WT_DSN="./database.db"
 WT_REGISTRATION_DISABLED="false"
 WT_SOCIALS_DISABLED="false"
+WT_LOGIN_CUSTOM_TEXT=""
 WT_DEV="false"
 WT_WORKER_DELAY_SECONDS=60
 WT_OFFLINE="false"
@@ -309,6 +310,28 @@ WT_OFFLINE="false"
 > Setting `WT_OFFLINE` to `true` runs the app without making external geocoding
 > requests (useful for offline environments or to avoid rate limits). In this
 > mode, geocoding functions return nil results.
+
+### Custom login text
+
+You can show a custom message on the login page. The text is written in
+Markdown and rendered to sanitized HTML. Set it in the admin interface under
+*Application settings*, in `workout-tracker.yaml`:
+
+```yaml
+login_custom_text: |
+  Welcome to this instance!
+
+  Please contact the administrator for an account.
+```
+
+or with an environment variable:
+
+```bash
+export WT_LOGIN_CUSTOM_TEXT=$'**Welcome!**\n\nPlease contact the administrator.'
+```
+
+If set, values from the config file or environment take precedence over the
+value stored through the admin interface.
 
 After starting the server, you can access it at <http://localhost:8080> (the
 default port). A login form is shown.

@@ -8,6 +8,7 @@ import (
 
 templ Login() {
 	@partials.Page(partials.NewPageOptions()) {
+		{{ ac := helpers.AppConfig(ctx) }}
 		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 			<div>
 				<div class="inner-form flex flex-wrap justify-between">
@@ -20,6 +21,11 @@ templ Login() {
 					</div>
 					<img class="p-3" src={ helpers.RouteFor(ctx, "assets") + "/logo.png" } alt="Workout Tracker"/>
 				</div>
+				if ac.LoginCustomText != "" {
+					<div class="inner-form">
+						@templ.Raw(helpers.MarkdownToHTML(ac.LoginCustomText))
+					</div>
+				}
 			</div>
 			<div>
 				<div class="inner-form">
@@ -62,7 +68,7 @@ templ Login() {
 						</table>
 					</form>
 				</div>
-				if !helpers.AppConfig(ctx).RegistrationDisabled {
+				if !ac.RegistrationDisabled {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("user-register")
