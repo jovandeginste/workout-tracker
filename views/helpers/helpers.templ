@@ -8,22 +8,20 @@ templ IconFor(name string) {
 
 // UserLink shows the username of the user, linking to their dashboard.
 templ UserLink(u *database.User) {
-	if u == nil || u.ID == 0 {
-		return
+	if u != nil && u.ID != 0 {
+		<a href={ templ.SafeURL(RouteFor(ctx, "user-show", u.ID)) }>
+			@IconFor("user")
+			{ u.Username }
+		</a>
 	}
-	<a href={ templ.SafeURL(RouteFor(ctx, "user-show", u.ID)) }>
-		@IconFor("user")
-		{ u.Username }
-	</a>
 }
 
 // UserLinkWithName shows the username of the user, followed by their name.
 templ UserLinkWithName(u *database.User) {
-	if u == nil || u.ID == 0 {
-		return
-	}
-	@UserLink(u)
-	if u.Name != "" && u.Name != u.Username {
-		<span class="user-name">{ u.Name }</span>
+	if u != nil && u.ID != 0 {
+		@UserLink(u)
+		if u.Name != "" && u.Name != u.Username {
+			<span class="user-name">{ u.Name }</span>
+		}
 	}
 }
