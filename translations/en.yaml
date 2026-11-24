@@ -155,6 +155,7 @@ en:
     Create_a_new_account: Create a new account
     Create_route_segment: Create route segment
     Created: Created
+    Custom_login_text: Custom login text (Markdown)
     Dashboard_for_s: Dashboard for %s
     Date: Date
     Default_workout_types: Default workout types

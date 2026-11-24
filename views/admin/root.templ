@@ -65,6 +65,20 @@ templ Root(users []*database.User) {
 					<tbody>
 						<tr>
 							<th>
+								<label for="login_custom_text">
+									{ i18n.T(ctx, "translation.Custom_login_text") }
+								</label>
+							</th>
+							<td>
+								<textarea
+									id="login_custom_text"
+									name="login_custom_text"
+									rows="8"
+								>{ ac.LoginCustomText }</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>
 								<label for="registration_disabled">
 									{ i18n.T(ctx, "translation.Disable_account_registration") }
 								</label>
