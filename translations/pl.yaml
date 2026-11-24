@@ -1,10 +1,10 @@
 ---
 pl:
   admin:
-    leave-blank-to-keep-current-password: Pozostaw puste, aby zachować obecne hasło
     manage: Zarządzaj
     manage-user: Zarządzaj użytkownikiem '%s'
     manage-users: Zarządzaj użytkownikami
+    password-hint: Pozostaw puste, aby zachować obecne hasło
     role: Administrator
   alerts:
     route-segments-added:
@@ -57,18 +57,18 @@ pl:
     records-for: Rekordy dla %s
   equipment:
     add: Dodaj sprzęt
-    default-workout-types: Domyślne typy treningu
+    default-types: Domyślne typy treningu
     notice:
       deleted: Sprzęt '%s' został usunięty.
       updated: Sprzęt '%s' został zaktualizowany.
     update: Zaktualizuj sprzęt
   help:
+    edit-gpx-files: 'Możesz edytować swoje pliki GPX wgrywając je tutaj:'
     how-to-use: jak korzystać
-    please-translate-via-weblate: Pomóż w tłumaczeniu na Weblate
+    inspiration: 'Możesz znaleźć inspirację tutaj:'
     resources: Zasoby
-    try-one-of-these-sites: 'Wypróbuj jedną z tych stron:'
-    you-can-edit-your-gpx-files: 'Możesz edytować swoje pliki GPX wgrywając je tutaj:'
-    you-can-find-inspiration-here: 'Możesz znaleźć inspirację tutaj:'
+    try-sites: 'Wypróbuj jedną z tych stron:'
+    weblate: Pomóż w tłumaczeniu na Weblate
   map:
     aerial: Z lotu ptaka
     streets: Ulice
@@ -86,7 +86,7 @@ pl:
     statistics: Statystyki
     workouts: Treningi
   misc:
-    convert-from-not-yet-supported-file-format: przekonwertuj z jeszcze niewspieranego formatu pliku
+    convert-format: przekonwertuj z jeszcze niewspieranego formatu pliku
     day: dzień
     day-7: 7 dni
     day-15: 15 dni
@@ -96,9 +96,9 @@ pl:
     month-1: 1 miesiąc
     month-3: 3 miesiące
     month-6: 6 miesięcy
-    remove-the-beginning-or-the-ending-of-a-workout: usuń początek lub koniec treningu
     route-segment: odcinek trasy
-    split-files-with-multiple-tracks: dziel pliki z wieloma ścieżkami
+    split-tracks: dziel pliki z wieloma ścieżkami
+    trim-workout: usuń początek lub koniec treningu
     workout: trening
     years-1: 1 rok
     years-2: 2 lata
@@ -130,8 +130,8 @@ pl:
   settings:
     application: Ustawienia aplikacji
     configuration-file: plik konfiguracyjny
-    disable-account-registration: Wyłącz rejestrację kont
-    environment-variables: zmienne środowiskowe
+    disable-registration: Wyłącz rejestrację kont
+    env-vars: zmienne środowiskowe
     overwritten-by: 'Te ustawienia mogą zostać nadpisane przez:'
     update: Zaktualizuj ustawienia
   sports:
@@ -179,24 +179,24 @@ pl:
     password: Hasło
     profile:
       api-key-updated: Zaktualizowano klucz API
-      auto-import-directory: Automatycznie importuj folder
+      auto-import: Automatycznie importuj folder
       browser-system: Przeglądarka/System operacyjny
       copy-to-clipboard: Skopiuj do schowka
       dark: Ciemny
-      disable-social-sharing-buttons: Wyłącz przyciski udostępniania na social media
+      dashboard-totals: Sumy do pokazania w kokpicie
+      disable-sharing: Wyłącz przyciski udostępniania na social media
       enable-api-access: Włącz dostęp do API
-      generate-a-new-api-key: Generuj nowy klucz API
+      full-date: Domyślnie pokazuj pełną datę
       language: Język
       light: Jasny
+      new-api-key: Generuj nowy klucz API
       preferred-units: Preferowane jednostki
-      refresh-all-your-workouts: Odśwież wszystkie swoje treningi
-      show-full-date-by-default: Domyślnie pokazuj pełną datę
+      refresh-all: Odśwież wszystkie swoje treningi
       show-hide: pokaż/ukryj
       theme: Motyw
       time-zone: Strefa czasowa
-      totals-to-show-on-dashboard: Sumy do pokazania w kokpicie
-      update-preferred-units: Zaktualizuj preferowane jednostki
       update-profile: Zaktualizuj profil
+      update-units: Zaktualizuj preferowane jednostki
       updated: Zaktualizowano profil
       your-profile: Twój profil
       your-settings: Twoje ustawienia
@@ -215,18 +215,19 @@ pl:
     average-tempo-no-pause: Średnie tempo (bez pauz)
     cadence: Kadencja
     calories: Kalorie
+    calories-hint: Szacowane na podstawie aktywności i ostatniej zapisanej wagi
     distance: Dystans
     duration: Czas trwania
     elevation: Wysokość
     est-calories-burned: Szacowane spalone kalorii
-    estimated-based-on-the-activity: Szacowane na podstawie aktywności i ostatniej zapisanej wagi
     extra-metrics: Dodatkowe wskaźniki
     filter-workouts: Filtruj treningi
     heading: Kierunek
     heart-rate: Tętno
     location: Lokalizacja
     manual: Podręcznik
-    matching-route-segments: Pasujące odcinki trasy
+    map-full-width: Pokaż mapę na pełną szerokość
+    matching-segments: Pasujące odcinki trasy
     max-elevation: Maksymalna wysokość
     max-speed: Maksymalna szybkość
     min-elevation: Minimalna wysokość
@@ -245,7 +246,6 @@ pl:
       copied: Link do udostępniania został skopiowany do schowka
       copy: Skopiuj link do udostępniania
       regenerate: Wygeneruj (ponownie) link do udostępniania
-    show-map-in-full-width: Pokaż mapę na pełną szerokość
     social:
       completed: 'Ukończyłem trening: ''%s''.'
       summary: Zajęło mi to %s aby $s. Średnio $s.

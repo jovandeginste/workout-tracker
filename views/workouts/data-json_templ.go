@@ -43,7 +43,7 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 		"distance":        {Label: i18n.T(ctx, "workout.distance"), Data: []any{}},
 		"speed":           {Label: i18n.T(ctx, "workout.speed"), Data: []any{}},
 		"duration":        {Label: i18n.T(ctx, "workout.duration"), Data: []any{}},
-		"moving-duration": {Label: i18n.T(ctx, "workout.duration-without-pauses"), Data: []any{}},
+		"moving-duration": {Label: i18n.T(ctx, "workout.moving-duration"), Data: []any{}},
 		"slope":           {Label: i18n.T(ctx, "workout.slope"), Data: []any{}},
 	}
 

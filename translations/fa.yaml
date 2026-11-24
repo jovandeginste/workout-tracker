@@ -1,10 +1,10 @@
 ---
 fa:
   admin:
-    leave-blank-to-keep-current-password: برای حفظ رمز عبور فعلی خالی رهایش کنید
     manage: مدیریت
     manage-user: مدیریت کاربر '%s'
     manage-users: مدیریت کاربر‌ها
+    password-hint: برای حفظ رمز عبور فعلی خالی رهایش کنید
     role: مدیر
   common:
     active: فعال
@@ -35,11 +35,11 @@ fa:
     recent-activity: فعالیت‌های اخیر
   equipment:
     add: اضافه کردن تجهیزات
-    default-workout-types: نوع تمرین پیشفرض
+    default-types: نوع تمرین پیشفرض
     update: بروزرسانی تجهیزات
   help:
     how-to-use: چگونه استفاده کنید
-    please-translate-via-weblate: لطفا در ترجمه از طریق Weblate کمک کنید
+    weblate: لطفا در ترجمه از طریق Weblate کمک کنید
   menu:
     equipment: تجهیزات
     statistics: آمارها
@@ -66,8 +66,8 @@ fa:
   settings:
     application: تنظیمات برنامه
     configuration-file: فایل پیکربندی
-    disable-account-registration: غیرفعال‌سازی عضویت حساب کاربری
-    environment-variables: متغیر‌های محیطی
+    disable-registration: غیرفعال‌سازی عضویت حساب کاربری
+    env-vars: متغیر‌های محیطی
     overwritten-by: 'این تنظیمات ممکن است باز نویسی شوند توسط:'
     update: بروزرسانی تنظیمات
   sports:
@@ -105,14 +105,14 @@ fa:
     password: رمز عبور
     profile:
       api-key-updated: کلید API بروز شد
-      auto-import-directory: وارد کردن خودکار پوشه
+      auto-import: وارد کردن خودکار پوشه
       copy-to-clipboard: کپی به کلیپ‌برد
-      disable-social-sharing-buttons: غیرفعال‌سازی دکمه‌های اشتراک گذاری در شبکه‌های اجتماعی
+      disable-sharing: غیرفعال‌سازی دکمه‌های اشتراک گذاری در شبکه‌های اجتماعی
       enable-api-access: فعال سازی دسترسی API
-      generate-a-new-api-key: ساخت یک کلید API جدید
+      full-date: نمایش تاریخ کامل به صورت پیشفرض
       language: زبان
-      refresh-all-your-workouts: نوسازی همه تمرین‌هایتان
-      show-full-date-by-default: نمایش تاریخ کامل به صورت پیشفرض
+      new-api-key: ساخت یک کلید API جدید
+      refresh-all: نوسازی همه تمرین‌هایتان
       show-hide: نمایش/پنهان
       time-zone: منطقه زمانی
       update-profile: بروزرسانی نمایه
@@ -129,11 +129,11 @@ fa:
     average-per-minute: میانگین هر دقیقه
     average-speed: میانگین سرعت
     average-speed-no-pause: میانگین سرعت (بدون توقف)
+    calories-hint: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
     distance: مسافت
     duration: بازه زمانی
     elevation: ارتفاع
     est-calories-burned: تخمین کالری سوزانده شده
-    estimated-based-on-the-activity: تخمین زده شده بر اساس فعالیت، با فرض ۷۰ کیلوگرم
     heart-rate: ضربان قلب
     location: مکان
     manual: دستی

@@ -1,10 +1,10 @@
 ---
 en:
   admin:
-    leave-blank-to-keep-current-password: Leave blank to keep current password
     manage: Manage
     manage-user: Manage user '%s'
     manage-users: Manage users
+    password-hint: Leave blank to keep current password
     role: Admin
   alerts:
     route-segments-added:
@@ -65,22 +65,22 @@ en:
     records-for: Records for %s
   equipment:
     add: Add equipment
-    default-workout-types: Default workout types
+    default-types: Default workout types
     notice:
       deleted: The equipment '%s' has been deleted.
       updated: The equipment '%s' has been updated.
     update: Update equipment
   help:
+    edit-gpx-files: 'You can edit your GPX files before uploading them here:'
     how-to-use: how to use
-    please-translate-via-weblate: Please help translate via Weblate
+    inspiration: 'You can find inspiration here:'
     resources: Resources
     translating: |
       We'd love your help translating!
 
       Please help translate [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Try one of these sites:'
-    you-can-edit-your-gpx-files: 'You can edit your GPX files before uploading them here:'
-    you-can-find-inspiration-here: 'You can find inspiration here:'
+    try-sites: 'Try one of these sites:'
+    weblate: Please help translate via Weblate
   map:
     aerial: Aerial
     fullscreen: Fullscreen
@@ -99,7 +99,7 @@ en:
     statistics: Statistics
     workouts: Workouts
   misc:
-    convert-from-not-yet-supported-file-format: convert from not-yet-supported file format
+    convert-format: convert from not-yet-supported file format
     day: day
     day-7: 7 days
     day-15: 15 days
@@ -109,9 +109,9 @@ en:
     month-1: 1 month
     month-3: 3 months
     month-6: 6 months
-    remove-the-beginning-or-the-ending-of-a-workout: remove the beginning or the ending of a workout
     route-segment: route segment
-    split-files-with-multiple-tracks: split files with multiple tracks
+    split-tracks: split files with multiple tracks
+    trim-workout: remove the beginning or the ending of a workout
     workout: workout
     year: year
     years-1: 1 year
@@ -144,8 +144,8 @@ en:
   settings:
     application: Application settings
     configuration-file: the configuration file
-    disable-account-registration: Disable account registration
-    environment-variables: environment variables
+    disable-registration: Disable account registration
+    env-vars: environment variables
     login-custom-text: Custom login text (Markdown)
     overwritten-by: 'These settings may be overwritten by:'
     update: Update settings
@@ -188,6 +188,7 @@ en:
     weight-lifting: weight lifting
   statistics:
     bar: Bar
+    break-detection: Trend break detection
     chart-type: Chart type
     line: Line
     per: Per
@@ -196,14 +197,13 @@ en:
       last-30-days: Last 30 days
       last-90-days: Last 90 days
       last-365-days: Last 365 days
-      this-calendar-year: This calendar year
+      this-year: This calendar year
     personal-trend: Personal trend
     progress: Your progress per %s for the past %s
     reset-zoom: Reset zoom
     since: Since
     trend: Trend
     trend-break: Trend break
-    trend-break-detection: Trend break detection
     trend-period: Trend period
   units:
     centimeter: centimeter
@@ -232,26 +232,26 @@ en:
     password: Password
     profile:
       api-key-updated: API key updated
-      auto-import-directory: Auto import directory
+      auto-import: Auto import directory
       browser-system: Browser / System
       copy-to-clipboard: Copy to clipboard
       dark: Dark
-      disable-social-sharing-buttons: Disable social sharing buttons
+      dashboard-totals: Totals to show on dashboard
+      disable-sharing: Disable social sharing buttons
       enable-api-access: Enable API access
-      export-all-your-workouts: Export all original files
-      generate-a-new-api-key: Generate a new API key
+      export-all: Export all original files
+      full-date: Show full date by default
       language: Language
       light: Light
+      new-api-key: Generate a new API key
       preferred-units: Preferred units
-      refresh-all-your-workouts: Refresh all your workouts
-      show-full-date-by-default: Show full date by default
+      refresh-all: Refresh all your workouts
       show-hide: show/hide
       show-tabs: Show workout information in tabs
       theme: Theme
       time-zone: Time zone
-      totals-to-show-on-dashboard: Totals to show on dashboard
-      update-preferred-units: Update preferred units
       update-profile: Update profile
+      update-units: Update preferred units
       updated: Profile updated
       your-profile: Your profile
       your-settings: Your settings
@@ -274,14 +274,13 @@ en:
     cadence-avg-max: Cadence (avg/max)
     calories: Calories
     calories-burned: Calories burned
+    calories-hint: Estimated based on the activity and your last recorded weight
     climbs: Climbs
     distance: Distance
     duration: Duration
-    duration-without-pauses: Duration without pauses
     elevation: Elevation
     enhanced-speed: Enhanced speed
     est-calories-burned: Calories burned (est)
-    estimated-based-on-the-activity: Estimated based on the activity and your last recorded weight
     extra-metrics: Extra metrics
     filter-workouts: Filter workouts
     heading: Heading
@@ -290,11 +289,13 @@ en:
     lock: Lock or unlock the attributes of this workout from automatic updates.
     locked: The attributes of workout '%s' are now locked
     manual: Manual
-    matching-route-segments: Matching route segments
+    map-full-width: Show map in full width
+    matching-segments: Matching route segments
     max-elevation: Max elevation
     max-speed: Max speed
     max-tempo: Max tempo
     min-elevation: Min elevation
+    moving-duration: Duration without pauses
     no-equipment: no equipment
     not-found: Workout not found
     notice:
@@ -318,7 +319,6 @@ en:
       delete: Delete link
       link: Publicly shareable link
       regenerate: "(Re)generate link"
-    show-map-in-full-width: Show map in full width
     slope: Slope
     social:
       completed: 'I completed a workout: ''%s''.'

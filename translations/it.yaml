@@ -1,9 +1,9 @@
 it:
   admin:
-    leave-blank-to-keep-current-password: Lascia vuoto per mantenere la password attuale
     manage: Gestisci
     manage-user: Gestisci l'utente '%s'
     manage-users: Gestisci utenti
+    password-hint: Lascia vuoto per mantenere la password attuale
     role: Amministratore
   alerts:
     workouts-added:
@@ -36,7 +36,7 @@ it:
     records-for: Registri per %s
   equipment:
     add: Aggiungi attrezzatura
-    default-workout-types: Tipi di allenamento predefiniti
+    default-types: Tipi di allenamento predefiniti
   help:
     how-to-use: Come utilizzare
   menu:
@@ -55,8 +55,8 @@ it:
   settings:
     application: Impostazioni dell'applicazione
     configuration-file: Il file di configurazione
-    disable-account-registration: Disabilita la registrazione dell'account
-    environment-variables: variabili di ambiente
+    disable-registration: Disabilita la registrazione dell'account
+    env-vars: variabili di ambiente
     overwritten-by: 'Queste impostazioni possono essere sovrascritte da:'
     update: Aggiorna impostazioni
   sports:
@@ -92,20 +92,20 @@ it:
     password: Password
     profile:
       api-key-updated: Chiave API aggiornata
-      auto-import-directory: Directory di importazione automatica
+      auto-import: Directory di importazione automatica
       copy-to-clipboard: copia negli appunti
-      disable-social-sharing-buttons: Disabilita i pulsanti di condivisione sui social media
+      dashboard-totals: Totali da mostrare sul cruscotto
+      disable-sharing: Disabilita i pulsanti di condivisione sui social media
       enable-api-access: Abilita l'accesso API
-      generate-a-new-api-key: Genera una nuova chiave API
+      full-date: Mostra data completa per default
       language: Lingua
+      new-api-key: Genera una nuova chiave API
       preferred-units: Unità preferite
-      refresh-all-your-workouts: Aggiorna tutti i tuoi allenamenti
-      show-full-date-by-default: Mostra data completa per default
+      refresh-all: Aggiorna tutti i tuoi allenamenti
       show-hide: mostra/nascondi
       time-zone: Fuso orario
-      totals-to-show-on-dashboard: Totali da mostrare sul cruscotto
-      update-preferred-units: Aggiorna unità preferite
       update-profile: Aggiorna profilo
+      update-units: Aggiorna unità preferite
       updated: Profilo aggiornato
       your-profile: Il tuo profilo
     update: Aggiorna utente

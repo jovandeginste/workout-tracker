@@ -1,9 +1,9 @@
 de:
   admin:
-    leave-blank-to-keep-current-password: Leer lassen, um das aktuelle Passwort beizubehalten
     manage: Verwalten
     manage-user: Benutzer '%s' verwalten
     manage-users: Benutzerverwaltung
+    password-hint: Leer lassen, um das aktuelle Passwort beizubehalten
     role: Administrator
   alerts:
     route-segments-added:
@@ -65,22 +65,22 @@ de:
     records-for: Aufzeichnungen für %s
   equipment:
     add: Ausrüstung hinzufügen
-    default-workout-types: Standard-Trainingsarten
+    default-types: Standard-Trainingsarten
     notice:
       deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
       updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
     update: Ausrüstung aktualisieren
   help:
+    edit-gpx-files: 'Du kannst deine GPX-Dateien bearbeiten, bevor du sie hier hochlädst:'
     how-to-use: Hilfe
-    please-translate-via-weblate: Hilf bei der Übersetzung mit Weblate
+    inspiration: 'Hier kannst du Inspirationen finden:'
     resources: Ressourcen
     translating: |
       Wir würden uns über Ihre Hilfe freuen!
 
       Bitte helfen Sie beim Übersetzen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Probiere eine dieser Seiten:'
-    you-can-edit-your-gpx-files: 'Du kannst deine GPX-Dateien bearbeiten, bevor du sie hier hochlädst:'
-    you-can-find-inspiration-here: 'Hier kannst du Inspirationen finden:'
+    try-sites: 'Probiere eine dieser Seiten:'
+    weblate: Hilf bei der Übersetzung mit Weblate
   map:
     aerial: Luftbild
     streets: Straßen
@@ -98,7 +98,7 @@ de:
     statistics: Statistik
     workouts: Trainings
   misc:
-    convert-from-not-yet-supported-file-format: aus einem bisher nicht unterstützten Dateiformat konvertieren
+    convert-format: aus einem bisher nicht unterstützten Dateiformat konvertieren
     day: Tag
     day-1: 1 Tag
     day-7: 7 Tage
@@ -109,9 +109,9 @@ de:
     month-1: 1 Monat
     month-3: 3 Monate
     month-6: 6 Monate
-    remove-the-beginning-or-the-ending-of-a-workout: den Anfang oder das Ende eines Trainings entfernen
     route-segment: Streckenabschnitt
-    split-files-with-multiple-tracks: Dateien mit mehreren Pfaden aufteilen
+    split-tracks: Dateien mit mehreren Pfaden aufteilen
+    trim-workout: den Anfang oder das Ende eines Trainings entfernen
     workout: Training
     years-1: 1 Jahr
     years-2: 2 Jahre
@@ -141,8 +141,8 @@ de:
   settings:
     application: Anwendungseinstellungen
     configuration-file: Konfigurationsdatei
-    disable-account-registration: Benutzer Registrierung deaktivieren
-    environment-variables: Umgebungsvariablen
+    disable-registration: Benutzer Registrierung deaktivieren
+    env-vars: Umgebungsvariablen
     overwritten-by: 'Diese Einstellungen können überschrieben werden durch:'
     update: Einstellungen speichern
   sports:
@@ -183,20 +183,20 @@ de:
     walking: Gehen
     weight-lifting: Gewichtheben
   statistics:
+    break-detection: Trendbrucherkennung
     per: pro
     period:
       all-time: Gesamter Zeitraum
       last-30-days: Letzte 30 Tage
       last-90-days: Letzte 90 Tage
       last-365-days: Letzte 365 Tage
-      this-calendar-year: Dieses Kalenderjahr
+      this-year: Dieses Kalenderjahr
     personal-trend: Persönlicher Trend
     progress: Dein Fortschritt pro %s für die vergangenen %s
     reset-zoom: Zoom zurücksetzen
     since: Seit
     trend: Trend
     trend-break: Trendbruch
-    trend-break-detection: Trendbrucherkennung
     trend-period: Trendzeitraum
   units:
     centimeter: Zentimeter
@@ -224,26 +224,26 @@ de:
     password: Passwort
     profile:
       api-key-updated: API-Schlüssel aktualisiert
-      auto-import-directory: Verzeichnis für automatischen Import
+      auto-import: Verzeichnis für automatischen Import
       browser-system: Browser / System
       copy-to-clipboard: In die Zwischenablage kopieren
       dark: Dunkel
-      disable-social-sharing-buttons: Schaltflächen für soziale Netzwerke deaktivieren
+      dashboard-totals: Zusammenfassung aller Werte auf dem Dashboard anzeigen
+      disable-sharing: Schaltflächen für soziale Netzwerke deaktivieren
       enable-api-access: API-Zugriff aktivieren
-      export-all-your-workouts: Alle Originaldateien exportieren
-      generate-a-new-api-key: Neuen API-Schlüssel generieren
+      export-all: Alle Originaldateien exportieren
+      full-date: Standardmäßig das vollständige Datum anzeigen
       language: Sprache
       light: Hell
+      new-api-key: Neuen API-Schlüssel generieren
       preferred-units: Bevorzugte Einheiten
-      refresh-all-your-workouts: Alle deine Trainingseinheiten aktualisieren
-      show-full-date-by-default: Standardmäßig das vollständige Datum anzeigen
+      refresh-all: Alle deine Trainingseinheiten aktualisieren
       show-hide: Anzeigen/Verbergen
       show-tabs: Trainingsdetails in Reitern anzeigen
       theme: Modus
       time-zone: Zeitzone
-      totals-to-show-on-dashboard: Zusammenfassung aller Werte auf dem Dashboard anzeigen
-      update-preferred-units: Bevorzugte Einheiten aktualisieren
       update-profile: Profil aktualisieren
+      update-units: Bevorzugte Einheiten aktualisieren
       updated: Profil aktualisiert
       your-profile: Dein Profil
       your-settings: Deine Einstellungen
@@ -267,13 +267,13 @@ de:
     cadence-avg-max: Kadenz (Mittelwert/Maximum)
     calories: Kalorien
     calories-burned: Kalorienverbrauch
+    calories-hint: Geschätzt auf der Grundlage der Aktivität und deines zuletzt gemessenen Gewichts
     climbs: Aufstiege
     distance: Distanz
     duration: Dauer
     elevation: Höhe
     enhanced-speed: Verbesserte Geschwindigkeit
     est-calories-burned: Kalorienverbrauch (geschätzt)
-    estimated-based-on-the-activity: Geschätzt auf der Grundlage der Aktivität und deines zuletzt gemessenen Gewichts
     extra-metrics: Zusätzliche Metriken
     filter-workouts: Trainings filtern
     heading: Kurs
@@ -282,7 +282,8 @@ de:
     lock: Die Attribute dieses Trainings für automatische Aktualisierungen sperren oder entsperren.
     locked: Die Attribute des Trainings '%s' sind jetzt gesperrt
     manual: Manuell
-    matching-route-segments: Übereinstimmende Streckenabschnitte
+    map-full-width: Karte in voller Breite anzeigen
+    matching-segments: Übereinstimmende Streckenabschnitte
     max-cadence: Maximale Trittfrequenz
     max-elevation: Maximale Höhe
     max-speed: Höchstgeschwindigkeit
@@ -308,7 +309,6 @@ de:
       delete: Link löschen
       link: Öffentlich teilbarer Link
       regenerate: Link (neu) generieren
-    show-map-in-full-width: Karte in voller Breite anzeigen
     slope: Steigung
     social:
       completed: Ich habe das Training %s absolviert.

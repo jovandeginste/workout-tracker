@@ -57,7 +57,7 @@ templ Root(users []*database.User) {
 			<ul class="note">
 				{ i18n.T(ctx, "settings.overwritten-by") }
 				<li>{ i18n.T(ctx, "settings.configuration-file") }</li>
-				<li>{ i18n.T(ctx, "settings.environment-variables") }</li>
+				<li>{ i18n.T(ctx, "settings.env-vars") }</li>
 			</ul>
 			{{ ac := helpers.AppConfig(ctx) }}
 			<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-config-update")) }>
@@ -80,7 +80,7 @@ templ Root(users []*database.User) {
 						<tr>
 							<th>
 								<label for="registration_disabled">
-									{ i18n.T(ctx, "settings.disable-account-registration") }
+									{ i18n.T(ctx, "settings.disable-registration") }
 								</label>
 							</th>
 							<td>
@@ -96,7 +96,7 @@ templ Root(users []*database.User) {
 						<tr>
 							<th>
 								<label for="socials_disabled">
-									{ i18n.T(ctx, "user.profile.disable-social-sharing-buttons") }
+									{ i18n.T(ctx, "user.profile.disable-sharing") }
 								</label>
 							</th>
 							<td>

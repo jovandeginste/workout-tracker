@@ -1,7 +1,7 @@
 tr:
   admin:
-    leave-blank-to-keep-current-password: Mevcut parolayı kullanmak için boş bırakın
     manage: Yönet
+    password-hint: Mevcut parolayı kullanmak için boş bırakın
     role: Yönetici
   alerts:
     route-segments-added:
@@ -45,7 +45,7 @@ tr:
     for-user: "%s için gösterge"
   equipment:
     add: Ekipman ekle
-    default-workout-types: Varsayılan çalışma türleri
+    default-types: Varsayılan çalışma türleri
   help:
     how-to-use: nasıl kullanılır
     resources: Kaynaklar
@@ -67,9 +67,9 @@ tr:
     month-1: 1 ay
     month-3: 3 ay
     month-6: 6 ay
-    remove-the-beginning-or-the-ending-of-a-workout: çalışma başlangıcı veya sonunu kaldır
     route-segment: rota bölümü
-    split-files-with-multiple-tracks: dosyaları birden çok parçaya böl
+    split-tracks: dosyaları birden çok parçaya böl
+    trim-workout: çalışma başlangıcı veya sonunu kaldır
     workout: çalışma
     years-1: 1 yıl
     years-2: 2 yıl
@@ -147,10 +147,10 @@ tr:
     duration: Süre
     filter-workouts: Çalışmaları süz
     location: Konum
+    map-full-width: Haritayı tam genişlikte göster
     notice:
       created: "'%s' çalışması oluşturuldu."
       refresh-all: Tüm egzersizler sonraki dakikalarda yenilenecektir.
-    show-map-in-full-width: Haritayı tam genişlikte göster
     source: Kaynak
     speed: Hız
     time: Zaman

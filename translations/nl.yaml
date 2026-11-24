@@ -1,9 +1,9 @@
 nl:
   admin:
-    leave-blank-to-keep-current-password: Laat leeg om het huidige wachtwoord te behouden
     manage: Beheer
     manage-user: Beheer gebruiker '%s'
     manage-users: Gebruikersbeheer
+    password-hint: Laat leeg om het huidige wachtwoord te behouden
     role: Beheerder
   alerts:
     route-segments-added:
@@ -64,22 +64,22 @@ nl:
     records-for: Records voor %s
   equipment:
     add: Voeg materiaal toe
-    default-workout-types: Standaard soorten workout
+    default-types: Standaard soorten workout
     notice:
       deleted: Het materiaal '%s' werd verwijderd.
       updated: Het materiaal '%s' werd aangepast.
     update: Materiaal bijwerken
   help:
+    edit-gpx-files: 'Je kunt je GPX-bestanden aanpassen voor je ze hier uploadt:'
     how-to-use: hoe te gebruiken
-    please-translate-via-weblate: Help deze toepassing vertalen op Weblate
+    inspiration: 'Hier kun je inspiratie opdoen:'
     resources: Hulpmiddelen
     translating: |
       We kunnen jouw hulp gebruiken bij het vertalen!
 
       Help ons vertalen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Probeer één van volgende sites:'
-    you-can-edit-your-gpx-files: 'Je kunt je GPX-bestanden aanpassen voor je ze hier uploadt:'
-    you-can-find-inspiration-here: 'Hier kun je inspiratie opdoen:'
+    try-sites: 'Probeer één van volgende sites:'
+    weblate: Help deze toepassing vertalen op Weblate
   map:
     aerial: Lucht
     fullscreen: Volledig scherm
@@ -98,7 +98,7 @@ nl:
     statistics: Statistieken
     workouts: Workouts
   misc:
-    convert-from-not-yet-supported-file-format: zet om van nog niet ondersteunde formaten
+    convert-format: zet om van nog niet ondersteunde formaten
     day: dag
     day-1: 1 dag
     day-7: 7 dagen
@@ -109,9 +109,9 @@ nl:
     month-1: 1 maand
     month-3: 3 maand
     month-6: 6 maand
-    remove-the-beginning-or-the-ending-of-a-workout: verwijder het begin of het einde van een workout
     route-segment: route segment
-    split-files-with-multiple-tracks: splits bestanden met meerdere trajecten
+    split-tracks: splits bestanden met meerdere trajecten
+    trim-workout: verwijder het begin of het einde van een workout
     workout: training
     year: jaar
     years-1: 1 jaar
@@ -144,8 +144,8 @@ nl:
   settings:
     application: Applicatie-instellingen
     configuration-file: het configuratiebestand
-    disable-account-registration: Registratie van nieuw accounts uitschakelen
-    environment-variables: omgevingsvariabelen
+    disable-registration: Registratie van nieuw accounts uitschakelen
+    env-vars: omgevingsvariabelen
     login-custom-text: Aangepaste logintekst (Markdown)
     overwritten-by: 'Deze instellingen kunnen worden overschreven door:'
     update: Instellingen bijwerken
@@ -188,6 +188,7 @@ nl:
     weight-lifting: gewichtheffen
   statistics:
     bar: Staaf
+    break-detection: Trendbreukdetectie
     chart-type: Grafiektype
     line: Lijn
     per: Per
@@ -196,14 +197,13 @@ nl:
       last-30-days: Laatste 30 dagen
       last-90-days: Laatste 90 dagen
       last-365-days: Laatste 365 dagen
-      this-calendar-year: Dit kalenderjaar
+      this-year: Dit kalenderjaar
     personal-trend: Persoonlijke trend
     progress: Jouw vooruitgang per %s voor de afgelopen %s
     reset-zoom: Zoom resetten
     since: Sinds
     trend: Trend
     trend-break: Trendbreuk
-    trend-break-detection: Trendbreukdetectie
     trend-period: Trendperiode
   units:
     centimeter: centimeter
@@ -232,26 +232,26 @@ nl:
     password: Wachtwoord
     profile:
       api-key-updated: API-sleutel bijgewerkt
-      auto-import-directory: Map om automatisch te importeren
+      auto-import: Map om automatisch te importeren
       browser-system: Browser / Systeem
       copy-to-clipboard: kopieer naar klembord
       dark: Donker
-      disable-social-sharing-buttons: Knoppen uitschakelen om te delen via sociale netwerken
+      dashboard-totals: Totale waardes om op het dashboard weer te geven
+      disable-sharing: Knoppen uitschakelen om te delen via sociale netwerken
       enable-api-access: API toegang inschakelen
-      export-all-your-workouts: Exporteer al jouw originele bestanden
-      generate-a-new-api-key: Maak een nieuwe API-sleutel
+      export-all: Exporteer al jouw originele bestanden
+      full-date: Toon volledige datum
       language: Taal
       light: Licht
+      new-api-key: Maak een nieuwe API-sleutel
       preferred-units: Voorkeurseenheden
-      refresh-all-your-workouts: Vernieuw al jouw workouts
-      show-full-date-by-default: Toon volledige datum
+      refresh-all: Vernieuw al jouw workouts
       show-hide: toon/verberg
       show-tabs: Toon workout informatie in tabs
       theme: Thema
       time-zone: Tijdzone
-      totals-to-show-on-dashboard: Totale waardes om op het dashboard weer te geven
-      update-preferred-units: Voorkeurseenheden bijwerken
       update-profile: Profiel bijwerken
+      update-units: Voorkeurseenheden bijwerken
       updated: Profiel bijgewerkt
       your-profile: Jouw profiel
       your-settings: Uw instellingen
@@ -274,14 +274,13 @@ nl:
     cadence-avg-max: Cadans (gem/max)
     calories: Calorieën
     calories-burned: Verbruik calorieën
+    calories-hint: Geschat op basis van de activiteit en je laatst gekende gewicht
     climbs: Beklimmingen
     distance: Afstand
     duration: Duur
-    duration-without-pauses: Duur zonder pauzes
     elevation: Hoogte
     enhanced-speed: Gecorrigeerde snelheid
     est-calories-burned: Verbruik calorieën (geschat)
-    estimated-based-on-the-activity: Geschat op basis van de activiteit en je laatst gekende gewicht
     extra-metrics: Extra informatie
     filter-workouts: Filter workouts
     heading: Koers
@@ -290,11 +289,13 @@ nl:
     lock: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
     locked: De attributen van workout '%s' zijn nu vergrendeld
     manual: Manueel
-    matching-route-segments: Overeenkomende route segmenten
+    map-full-width: Toon de kaart in volle breedte
+    matching-segments: Overeenkomende route segmenten
     max-elevation: Hoogste niveau
     max-speed: Max. snelheid
     max-tempo: Maximale tempo
     min-elevation: Laagste niveau
+    moving-duration: Duur zonder pauzes
     no-equipment: geen materiaal
     not-found: Workout niet gevonden
     notice:
@@ -318,7 +319,6 @@ nl:
       delete: Verwijder koppeling
       link: Publieke koppeling
       regenerate: "(Her)genereer koppeling"
-    show-map-in-full-width: Toon de kaart in volle breedte
     slope: Helling
     social:
       completed: 'Ik heb een workout voltooid: %s.'

@@ -1,9 +1,9 @@
 pt:
   admin:
-    leave-blank-to-keep-current-password: Deixe em branco para manter a palavra-passe atual
     manage: Gerir
     manage-user: Gerir utilizador '%s'
     manage-users: Gerir utilizadores
+    password-hint: Deixe em branco para manter a palavra-passe atual
     role: Administrador
   alerts:
     something-wrong: 'Algo deu errado: %{message}'
@@ -58,22 +58,22 @@ pt:
     records-for: Recordes para %s
   equipment:
     add: Adicionar equipamento
-    default-workout-types: Tipos de treino padrão
+    default-types: Tipos de treino padrão
     notice:
       deleted: O equipamento '%s' foi apagado.
       updated: O equipamento '%s' foi atualizado.
     update: Atualizar equipamento
   help:
+    edit-gpx-files: 'Pode editar os seus ficheiros GPX antes de enviá-los aqui:'
     how-to-use: como usar
-    please-translate-via-weblate: Por favor, ajude a traduzir via Weblate
+    inspiration: 'Pode encontrar inspiração aqui:'
     resources: Recursos
     translating: |
       Adoraríamos a sua ajuda a traduzir!
 
       Por favor, ajude a traduzir [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Experimente um destes sites:'
-    you-can-edit-your-gpx-files: 'Pode editar os seus ficheiros GPX antes de enviá-los aqui:'
-    you-can-find-inspiration-here: 'Pode encontrar inspiração aqui:'
+    try-sites: 'Experimente um destes sites:'
+    weblate: Por favor, ajude a traduzir via Weblate
   map:
     aerial: Vista aérea
     streets: Ruas
@@ -91,7 +91,7 @@ pt:
     statistics: Estatísticas
     workouts: Treinos
   misc:
-    convert-from-not-yet-supported-file-format: converter de formato de ficheiro ainda-não-suportado
+    convert-format: converter de formato de ficheiro ainda-não-suportado
     day: dia
     day-7: 7 dias
     day-15: 15 dias
@@ -101,9 +101,9 @@ pt:
     month-1: 1 mês
     month-3: 3 meses
     month-6: 6 meses
-    remove-the-beginning-or-the-ending-of-a-workout: remover o início ou o fim de um treino
     route-segment: segmento de rota
-    split-files-with-multiple-tracks: dividir ficheiros com múltiplas trilhas
+    split-tracks: dividir ficheiros com múltiplas trilhas
+    trim-workout: remover o início ou o fim de um treino
     workout: treino
     years-1: 1 ano
     years-2: 2 anos
@@ -126,8 +126,8 @@ pt:
   settings:
     application: Configurações da aplicação
     configuration-file: o ficheiro de configuração
-    disable-account-registration: Desativar registo de conta
-    environment-variables: variáveis de ambiente
+    disable-registration: Desativar registo de conta
+    env-vars: variáveis de ambiente
     overwritten-by: 'Estas configurações podem ser sobrescritas por:'
     update: Atualizar configurações
   sports:
@@ -198,26 +198,26 @@ pt:
     password: Palavra-passe
     profile:
       api-key-updated: Chave API atualizada
-      auto-import-directory: Diretório de importação automática
+      auto-import: Diretório de importação automática
       browser-system: Navegador / Sistema
       copy-to-clipboard: Copiar para a área de transferência
       dark: Escuro
-      disable-social-sharing-buttons: Desativar botões de compartilhamento social
+      dashboard-totals: Totais a mostrar no painel
+      disable-sharing: Desativar botões de compartilhamento social
       enable-api-access: Ativar acesso à API
-      export-all-your-workouts: Exportar todos arquivos originais
-      generate-a-new-api-key: Gerar uma nova chave API
+      export-all: Exportar todos arquivos originais
+      full-date: Mostrar data completa por padrão
       language: Idioma
       light: Claro
+      new-api-key: Gerar uma nova chave API
       preferred-units: Unidades preferidas
-      refresh-all-your-workouts: Atualizar todos os seus treinos
-      show-full-date-by-default: Mostrar data completa por padrão
+      refresh-all: Atualizar todos os seus treinos
       show-hide: mostrar/esconder
       show-tabs: Exibir informações do treino em abas
       theme: Tema
       time-zone: Fuso horário
-      totals-to-show-on-dashboard: Totais a mostrar no painel
-      update-preferred-units: Atualizar unidades preferidas
       update-profile: Atualizar perfil
+      update-units: Atualizar unidades preferidas
       updated: Perfil atualizado
       your-profile: O seu perfil
       your-settings: As suas configurações
@@ -239,13 +239,13 @@ pt:
     cadence-avg-max: Cadência (méd/máx)
     calories: Calorias
     calories-burned: Calorias queimadas
+    calories-hint: Estimado com base na atividade e no seu último peso registado
     climbs: Subidas
     distance: Distância
     duration: Duração
     elevation: Elevação
     enhanced-speed: Velocidade aperfeiçoada
     est-calories-burned: Queima de calorias estimada
-    estimated-based-on-the-activity: Estimado com base na atividade e no seu último peso registado
     extra-metrics: Métricas adicionais
     filter-workouts: Filtrar treinos
     heading: Direção
@@ -254,7 +254,8 @@ pt:
     lock: Bloqueie ou desbloqueie os atributos deste treino para impedir ou permitir atualizações automáticas.
     locked: Os atributos do treino '%s' agora estão bloqueados
     manual: Manual
-    matching-route-segments: Segmentos de rota correspondentes
+    map-full-width: Mostrar mapa em largura total
+    matching-segments: Segmentos de rota correspondentes
     max-elevation: Elevação máxima
     max-speed: Velocidade máxima
     min-elevation: Elevação mínima
@@ -278,7 +279,6 @@ pt:
       delete: Excluir link
       link: Link compartilhável publicamente
       regenerate: "(Re)gerar link"
-    show-map-in-full-width: Mostrar mapa em largura total
     slope: Declive
     social:
       completed: 'Concluí um treino: ''%s''.'

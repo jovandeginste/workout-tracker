@@ -194,7 +194,7 @@ func Show(w *database.Workout) templ.Component {
 				},
 				partials.Tab{
 					Icon:        "route-segment",
-					Name:        i18n.T(ctx, "workout.matching-route-segments"),
+					Name:        i18n.T(ctx, "workout.matching-segments"),
 					Show:        len(w.RouteSegmentMatches) > 0,
 					ContentFunc: func() templ.Component { return renderRouteSegments(w) },
 				},

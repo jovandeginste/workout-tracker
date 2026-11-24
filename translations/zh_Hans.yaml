@@ -1,9 +1,9 @@
 zh-Hans:
   admin:
-    leave-blank-to-keep-current-password: 留空以保持当前密码
     manage: 管理
     manage-user: 管理用户 '%s'
     manage-users: 管理用户
+    password-hint: 留空以保持当前密码
     role: 管理员
   alerts:
     route-segments-added:
@@ -63,22 +63,22 @@ zh-Hans:
     records-for: "%s 的记录"
   equipment:
     add: 添加设备
-    default-workout-types: 默认锻炼类型
+    default-types: 默认锻炼类型
     notice:
       deleted: 设备 '%s' 已删除。
       updated: 设备 '%s' 已更新。
     update: 更新设备
   help:
+    edit-gpx-files: 您可以在上传前编辑 GPX 文件：
     how-to-use: 如何使用
-    please-translate-via-weblate: 请通过 Weblate 帮助翻译
+    inspiration: 您可以在此找到灵感：
     resources: 资源
     translating: |
       我们希望您能帮助翻译！
 
       请[通过 Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)协助翻译
-    try-one-of-these-sites: 试试这些网站：
-    you-can-edit-your-gpx-files: 您可以在上传前编辑 GPX 文件：
-    you-can-find-inspiration-here: 您可以在此找到灵感：
+    try-sites: 试试这些网站：
+    weblate: 请通过 Weblate 帮助翻译
   map:
     aerial: 航拍
     streets: 街道
@@ -96,7 +96,7 @@ zh-Hans:
     statistics: 统计
     workouts: 锻炼记录
   misc:
-    convert-from-not-yet-supported-file-format: 从未支持的文件格式转换
+    convert-format: 从未支持的文件格式转换
     day: 天
     day-7: 7天
     day-15: 15天
@@ -106,9 +106,9 @@ zh-Hans:
     month-1: 1月
     month-3: 3月
     month-6: 6月
-    remove-the-beginning-or-the-ending-of-a-workout: 移除锻炼的开始或结束部分
     route-segment: 路线片段
-    split-files-with-multiple-tracks: 分割包含多个轨迹的文件
+    split-tracks: 分割包含多个轨迹的文件
+    trim-workout: 移除锻炼的开始或结束部分
     workout: 锻炼
     years-1: 1年
     years-2: 2年
@@ -136,8 +136,8 @@ zh-Hans:
   settings:
     application: 应用程序设置
     configuration-file: 配置文件
-    disable-account-registration: 禁用账号注册
-    environment-variables: 环境变量
+    disable-registration: 禁用账号注册
+    env-vars: 环境变量
     overwritten-by: 这些设置可能会被以下内容覆盖：
     update: 更新设置
   sports:
@@ -208,25 +208,25 @@ zh-Hans:
     password: 密码
     profile:
       api-key-updated: API 密钥已更新
-      auto-import-directory: 自动导入目录
+      auto-import: 自动导入目录
       browser-system: 浏览器/系统
       copy-to-clipboard: 复制到剪贴板
       dark: 深色
-      disable-social-sharing-buttons: 禁用社交分享按钮
+      dashboard-totals: 在仪表板上显示的总计
+      disable-sharing: 禁用社交分享按钮
       enable-api-access: 启用 API 访问
-      generate-a-new-api-key: 生成新的 API 密钥
+      full-date: 默认显示完整日期
       language: 语言
       light: 浅色
+      new-api-key: 生成新的 API 密钥
       preferred-units: 首选单位
-      refresh-all-your-workouts: 刷新您所有的锻炼
-      show-full-date-by-default: 默认显示完整日期
+      refresh-all: 刷新您所有的锻炼
       show-hide: 显示/隐藏
       show-tabs: 在标签页中显示运动信息
       theme: 主题
       time-zone: 时区
-      totals-to-show-on-dashboard: 在仪表板上显示的总计
-      update-preferred-units: 更新首选单位
       update-profile: 更新个人资料
+      update-units: 更新首选单位
       updated: 个人资料已更新
       your-profile: 您的个人资料
       your-settings: 您的设置
@@ -250,13 +250,13 @@ zh-Hans:
     cadence-avg-max: 踏频（平均/最大）
     calories: 卡路里
     calories-burned: 消耗卡路里
+    calories-hint: 基于活动的估算，并根据您最后记录的体重
     climbs: 爬坡
     distance: 距离
     duration: 持续时间
     elevation: 海拔
     enhanced-speed: 增强速度
     est-calories-burned: 消耗卡路里（估算）
-    estimated-based-on-the-activity: 基于活动的估算，并根据您最后记录的体重
     extra-metrics: 额外指标
     filter-workouts: 筛选锻炼
     heading: 标题
@@ -265,7 +265,8 @@ zh-Hans:
     lock: 锁定或解锁此锻炼的属性，禁止自动更新。
     locked: 锻炼 '%s' 的属性现已锁定
     manual: 手动
-    matching-route-segments: 匹配的路线段
+    map-full-width: 全宽显示地图
+    matching-segments: 匹配的路线段
     max-cadence: 最大步频
     max-elevation: 最大海拔
     max-speed: 最高速度
@@ -290,7 +291,6 @@ zh-Hans:
       delete: 删除链接
       link: 可公开分享的链接
       regenerate: "（重新）生成链接"
-    show-map-in-full-width: 全宽显示地图
     slope: 坡度
     social:
       completed: 我完成了一次锻炼：%s。

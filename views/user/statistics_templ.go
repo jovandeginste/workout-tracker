@@ -386,7 +386,7 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 			routeSegmentTrendTranslations := map[string]string{
 				"trend":               i18n.T(ctx, "statistics.trend"),
 				"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
-				"trendBreakDetection": i18n.T(ctx, "statistics.trend-break-detection"),
+				"trendBreakDetection": i18n.T(ctx, "statistics.break-detection"),
 				"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
 			}
 			for _, s := range routeSegments {

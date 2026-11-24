@@ -1,10 +1,10 @@
 ---
 pt-BR:
   admin:
-    leave-blank-to-keep-current-password: Deixe em branco para manter a senha atual
     manage: Gerenciar
     manage-user: Gerenciar usuário '%s'
     manage-users: Gerenciar usuários
+    password-hint: Deixe em branco para manter a senha atual
     role: Administrador
   alerts:
     route-segments-added:
@@ -55,22 +55,22 @@ pt-BR:
     records-for: Recordes para %s
   equipment:
     add: Adicionar equipamento
-    default-workout-types: Tipos de treino padrão
+    default-types: Tipos de treino padrão
     notice:
       deleted: O equipamento '%s' foi excluído.
       updated: O equipamento '%s' foi atualizado.
     update: Atualizar equipamento
   help:
+    edit-gpx-files: 'Você pode editar seus arquivos GPX antes de enviá-los aqui:'
     how-to-use: como usar
-    please-translate-via-weblate: Por favor, ajude a traduzir via Weblate
+    inspiration: 'Você pode encontrar inspiração aqui:'
     resources: Recursos
     translating: |
       Adoraríamos sua ajuda traduzindo!
 
       Por favor, ajude a traduzir [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Experimente um destes sites:'
-    you-can-edit-your-gpx-files: 'Você pode editar seus arquivos GPX antes de enviá-los aqui:'
-    you-can-find-inspiration-here: 'Você pode encontrar inspiração aqui:'
+    try-sites: 'Experimente um destes sites:'
+    weblate: Por favor, ajude a traduzir via Weblate
   map:
     aerial: Vista aérea
     streets: Ruas
@@ -88,7 +88,7 @@ pt-BR:
     statistics: Estatísticas
     workouts: Treinos
   misc:
-    convert-from-not-yet-supported-file-format: converter de formato de arquivo ainda-não-suportado
+    convert-format: converter de formato de arquivo ainda-não-suportado
     day: dia
     day-7: 7 dias
     day-15: 15 dias
@@ -98,9 +98,9 @@ pt-BR:
     month-1: 1 mês
     month-3: 3 meses
     month-6: 6 meses
-    remove-the-beginning-or-the-ending-of-a-workout: remover o início ou o fim de um treino
     route-segment: segmento de rota
-    split-files-with-multiple-tracks: dividir arquivos com múltiplas trilhas
+    split-tracks: dividir arquivos com múltiplas trilhas
+    trim-workout: remover o início ou o fim de um treino
     workout: treino
     years-1: 1 ano
     years-2: 2 anos
@@ -130,8 +130,8 @@ pt-BR:
   settings:
     application: Configurações do aplicativo
     configuration-file: o arquivo de configuração
-    disable-account-registration: Desativar registro de conta
-    environment-variables: variáveis de ambiente
+    disable-registration: Desativar registro de conta
+    env-vars: variáveis de ambiente
     overwritten-by: 'Estas configurações podem ser sobrescritas por:'
     update: Atualizar configurações
   sports:
@@ -179,24 +179,24 @@ pt-BR:
     password: Senha
     profile:
       api-key-updated: Chave API atualizada
-      auto-import-directory: Diretório de importação automática
+      auto-import: Diretório de importação automática
       browser-system: Navegador / Sistema
       copy-to-clipboard: Copiar para a área de transferência
       dark: Escuro
-      disable-social-sharing-buttons: Desativar botões de compartilhamento social
+      dashboard-totals: Totais a mostrar no painel
+      disable-sharing: Desativar botões de compartilhamento social
       enable-api-access: Habilitar acesso à API
-      generate-a-new-api-key: Gerar uma nova chave API
+      full-date: Mostrar data completa por padrão
       language: Idioma
       light: Claro
+      new-api-key: Gerar uma nova chave API
       preferred-units: Unidades preferidas
-      refresh-all-your-workouts: Atualizar todos os seus treinos
-      show-full-date-by-default: Mostrar data completa por padrão
+      refresh-all: Atualizar todos os seus treinos
       show-hide: mostrar/esconder
       theme: Tema
       time-zone: Fuso horário
-      totals-to-show-on-dashboard: Totais a mostrar no painel
-      update-preferred-units: Atualizar unidades preferidas
       update-profile: Atualizar perfil
+      update-units: Atualizar unidades preferidas
       updated: Perfil atualizado
       your-profile: Seu perfil
       your-settings: Suas configurações
@@ -215,18 +215,19 @@ pt-BR:
     average-tempo-no-pause: Ritmo médio (sem pausas)
     cadence: Cadência
     calories: Calorias
+    calories-hint: Estimado com base na atividade e no seu último peso registrado
     distance: Distância
     duration: Duração
     elevation: Elevação
     est-calories-burned: Queima de calorias estimada
-    estimated-based-on-the-activity: Estimado com base na atividade e no seu último peso registrado
     extra-metrics: Métricas adicionais
     filter-workouts: Filtrar treinos
     heading: Direção
     heart-rate: Frequência cardíaca
     location: Localização
     manual: Manual
-    matching-route-segments: Segmentos de rota correspondentes
+    map-full-width: Mostrar mapa em largura total
+    matching-segments: Segmentos de rota correspondentes
     max-elevation: Elevação máxima
     max-speed: Velocidade máxima
     min-elevation: Elevação mínima
@@ -245,7 +246,6 @@ pt-BR:
       copied: Link compartilhável publicamente foi copiado para a área de transferência
       copy: Copiar link compartilhável publicamente
       regenerate: "(Re)gerar link compartilhável publicamente"
-    show-map-in-full-width: Mostrar mapa em largura total
     social:
       completed: 'Concluí um treino: ''%s''.'
       summary: Levei %s para percorrer %s. Minha média foi %s.

@@ -97,7 +97,7 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("workout")
 								</td>
-								<th>{ i18n.T(ctx, "equipment.default-workout-types") }</th>
+								<th>{ i18n.T(ctx, "equipment.default-types") }</th>
 								<td>
 									<div class="flex flex-wrap">
 										for _, d := range  e.DefaultFor {

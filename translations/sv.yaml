@@ -1,9 +1,9 @@
 sv:
   admin:
-    leave-blank-to-keep-current-password: Lämna tomt för att behålla det nuvarande lösenordet
     manage: Hantera
     manage-user: Hantera användaren '%s'
     manage-users: Hantera användare
+    password-hint: Lämna tomt för att behålla det nuvarande lösenordet
     role: Admin
   alerts:
     route-segments-added:
@@ -65,22 +65,22 @@ sv:
     records-for: Resultat för %s
   equipment:
     add: Lägg till utrustning
-    default-workout-types: Standardträningsformer
+    default-types: Standardträningsformer
     notice:
       deleted: Utrustningen ”%s” har tagits bort.
       updated: Utrustningen ”%s” har uppdaterats.
     update: Uppdatera utrustning
   help:
+    edit-gpx-files: 'Du kan redigera dina GPX-filer innan du laddar upp dem här:'
     how-to-use: hur man använder
-    please-translate-via-weblate: Hjälp gärna till med översättningen via Weblate
+    inspiration: 'Här kan du hitta inspiration:'
     resources: Resurser
     translating: |
       Vi skulle uppskatta din hjälp med översättningen!
 
       Hjälp gärna till med översättningen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    try-one-of-these-sites: 'Prova någon av dessa webbplatser:'
-    you-can-edit-your-gpx-files: 'Du kan redigera dina GPX-filer innan du laddar upp dem här:'
-    you-can-find-inspiration-here: 'Här kan du hitta inspiration:'
+    try-sites: 'Prova någon av dessa webbplatser:'
+    weblate: Hjälp gärna till med översättningen via Weblate
   map:
     aerial: Satellit
     streets: Gator
@@ -98,7 +98,7 @@ sv:
     statistics: Statistik
     workouts: Träningspass
   misc:
-    convert-from-not-yet-supported-file-format: Konvertera från ett filformat som ännu inte är tillgängligt
+    convert-format: Konvertera från ett filformat som ännu inte är tillgängligt
     day: Dag
     day-7: 7 dagar
     day-15: 15 dagar
@@ -108,9 +108,9 @@ sv:
     month-1: 1 månad
     month-3: 3 månader
     month-6: 6 månader
-    remove-the-beginning-or-the-ending-of-a-workout: Slutet på träningspasset
     route-segment: ruttavsnitt
-    split-files-with-multiple-tracks: dela upp filer med flera spår
+    split-tracks: dela upp filer med flera spår
+    trim-workout: Slutet på träningspasset
     workout: Träningspass
     years-1: 1 år
     years-2: 2 år
@@ -140,8 +140,8 @@ sv:
   settings:
     application: Inställningar
     configuration-file: konfigurationsfilen
-    disable-account-registration: Inaktivera kontoregistrering
-    environment-variables: environment variabler
+    disable-registration: Inaktivera kontoregistrering
+    env-vars: environment variabler
     overwritten-by: 'Dessa inställningar kan åsidosättas av:'
     update: Spara inställningar
   sports:
@@ -182,20 +182,20 @@ sv:
     walking: Gång
     weight-lifting: Tyngdlyftning
   statistics:
+    break-detection: Trendbrottsdetektering
     per: Enligt
     period:
       all-time: Genom tiderna
       last-30-days: Senaste 30 dagarna
       last-90-days: Senaste 90 dagarna
       last-365-days: Senaste 365 dagarna
-      this-calendar-year: Detta kalenderår
+      this-year: Detta kalenderår
     personal-trend: Personlig trend
     progress: Dina framsteg per %s under de senaste %s
     reset-zoom: Återställ zoom
     since: Sedan
     trend: Trend
     trend-break: Trendbrott
-    trend-break-detection: Trendbrottsdetektering
     trend-period: Trendperiod
   units:
     centimeter: Centimeter
@@ -223,26 +223,26 @@ sv:
     password: Lösenord
     profile:
       api-key-updated: API nyckel uppdaterad
-      auto-import-directory: Katalog för automatisk import
+      auto-import: Katalog för automatisk import
       browser-system: Webbläsare / System
       copy-to-clipboard: Kopiera till urklipp
       dark: Mörk
-      disable-social-sharing-buttons: Inaktivera knapparna för delning på sociala medier
+      dashboard-totals: Totalsummor som ska visas på dashboard
+      disable-sharing: Inaktivera knapparna för delning på sociala medier
       enable-api-access: Aktivera API-åtkomst
-      export-all-your-workouts: Exportera alla originalfiler
-      generate-a-new-api-key: Skapa en ny API-nyckel
+      export-all: Exportera alla originalfiler
+      full-date: Visa hela datumet som standard
       language: Språk
       light: Ljus
+      new-api-key: Skapa en ny API-nyckel
       preferred-units: Föredragna enheter
-      refresh-all-your-workouts: Förnya alla dina träningspass
-      show-full-date-by-default: Visa hela datumet som standard
+      refresh-all: Förnya alla dina träningspass
       show-hide: visa/dölj
       show-tabs: Visa träningsinformation i flikar
       theme: Tema
       time-zone: Tidszon
-      totals-to-show-on-dashboard: Totalsummor som ska visas på dashboard
-      update-preferred-units: Uppdatera önskade enheter
       update-profile: Uppdatera profil
+      update-units: Uppdatera önskade enheter
       updated: Profilen har uppdaterats
       your-profile: Din profil
       your-settings: Dina inställningar
@@ -266,13 +266,13 @@ sv:
     cadence-avg-max: stegfrekvens (snitt/max)
     calories: Kalorier
     calories-burned: Förbrukade kalorier
+    calories-hint: Beräknat utifrån din aktivitet och din senast registrerade vikt
     climbs: Stigning
     distance: Distans
     duration: Varaktighet
     elevation: Stigning
     enhanced-speed: Korrigerad hastighet
     est-calories-burned: Förbrukade kalorier (uppskattning)
-    estimated-based-on-the-activity: Beräknat utifrån din aktivitet och din senast registrerade vikt
     extra-metrics: Ytterligare mätvärden
     filter-workouts: Filtrera träningspass
     heading: Kurs
@@ -281,7 +281,8 @@ sv:
     lock: Lås eller lås upp attributen för detta träningspass från automatiska uppdateringar.
     locked: Attributen för träningspasset ”%s” är nu låsta
     manual: Manuellt
-    matching-route-segments: Matchande sträckor
+    map-full-width: Visa kartan i full bredd
+    matching-segments: Matchande sträckor
     max-elevation: Högsta höjd
     max-speed: Högsta hastighet
     max-tempo: Max tempo
@@ -306,7 +307,6 @@ sv:
       delete: Ta bort länk
       link: Länk som kan delas offentligt
       regenerate: Skapa ny länk
-    show-map-in-full-width: Visa kartan i full bredd
     slope: Backe
     social:
       completed: 'Jag har avslutat ett träningspass: ’%s’.'

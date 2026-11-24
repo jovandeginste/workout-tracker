@@ -33,7 +33,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		translations := map[string]string{
 			"distance":        i18n.T(ctx, "workout.distance"),
 			"duration":        i18n.T(ctx, "workout.duration"),
-			"moving-duration": i18n.T(ctx, "workout.duration-without-pauses"),
+			"moving-duration": i18n.T(ctx, "workout.moving-duration"),
 			"time-of-day":     i18n.T(ctx, "workout.time-of-day"),
 			"calories":        i18n.T(ctx, "workout.calories"),
 			"power":           i18n.T(ctx, "workout.power"),

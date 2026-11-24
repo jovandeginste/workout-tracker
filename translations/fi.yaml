@@ -1,10 +1,10 @@
 ---
 fi:
   admin:
-    leave-blank-to-keep-current-password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
     manage: Hallitse
     manage-user: Hallitse käyttäjää '%s'
     manage-users: Hallitse käyttäjiä
+    password-hint: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
     role: Ylläpitäjä
   alerts:
     workouts-added:
@@ -49,13 +49,13 @@ fi:
     records-for: Tulokset käyttäjälle %s
   equipment:
     add: Lisää väline
-    default-workout-types: Oletusharjoitustyypit
+    default-types: Oletusharjoitustyypit
     update: Päivitä välineet
   help:
     how-to-use: käyttöohjeet
-    please-translate-via-weblate: Auta kääntämisessä Weblaten kautta
+    inspiration: 'Täältä löydät inspiraatiota:'
     resources: Resurssit
-    you-can-find-inspiration-here: 'Täältä löydät inspiraatiota:'
+    weblate: Auta kääntämisessä Weblaten kautta
   map:
     aerial: Ilmakuva
     streets: Kadut
@@ -99,8 +99,8 @@ fi:
   settings:
     application: Sovelluksen asetukset
     configuration-file: asetustiedosto
-    disable-account-registration: Poista tilien luonti käytöstä
-    environment-variables: ympäristömuuttujat
+    disable-registration: Poista tilien luonti käytöstä
+    env-vars: ympäristömuuttujat
     update: Päivitä asetukset
   sports:
     cycling: pyöräily
@@ -140,23 +140,23 @@ fi:
     password: Salasana
     profile:
       api-key-updated: API-avain päivitetty
-      auto-import-directory: Automaattinen tuontihakemisto
+      auto-import: Automaattinen tuontihakemisto
       browser-system: Selain / Järjestelmä
       copy-to-clipboard: Kopioi leikepöydälle
       dark: Tumma
-      disable-social-sharing-buttons: Poista sosiaalisen median jakopainikkeet käytöstä
+      disable-sharing: Poista sosiaalisen median jakopainikkeet käytöstä
       enable-api-access: Ota API-käyttö käyttöön
-      generate-a-new-api-key: Luo uusi API-avain
+      full-date: Näytä koko päivämäärä oletuksena
       language: Kieli
       light: Vaalea
+      new-api-key: Luo uusi API-avain
       preferred-units: Ensisijaiset yksiköt
-      refresh-all-your-workouts: Virkistä kaikki harjoituksesi
-      show-full-date-by-default: Näytä koko päivämäärä oletuksena
+      refresh-all: Virkistä kaikki harjoituksesi
       show-hide: näytä/piilota
       theme: Teema
       time-zone: Aikavyöhyke
-      update-preferred-units: Päivitä ensisijaiset yksiköt
       update-profile: Päivitä profiili
+      update-units: Päivitä ensisijaiset yksiköt
       updated: Profiili päivitetty
       your-profile: Profiilisi
     update: Päivitä käyttäjä
@@ -173,17 +173,18 @@ fi:
     average-tempo: Keskitahti
     average-tempo-no-pause: Keskitahti (ilman taukoja)
     cadence: Kadenssi
+    calories-hint: Arvioitu aktiviteetin perusteella
     distance: Matka
     duration: Kesto
     elevation: Korkeus
     est-calories-burned: Arv. kulutetut kalorit
-    estimated-based-on-the-activity: Arvioitu aktiviteetin perusteella
     extra-metrics: Lisämittarit
     filter-workouts: Suodata harjoituksia
     heart-rate: Syke
     location: Sijainti
     manual: Manuaalinen
-    matching-route-segments: Vastaavat reittiosuudet
+    map-full-width: Näytä kartta täydessä leveydessä
+    matching-segments: Vastaavat reittiosuudet
     max-elevation: Korkein kohta
     max-speed: Maksiminopeus
     min-elevation: Matalin kohta
@@ -198,7 +199,6 @@ fi:
       copied: Julkinen jakolinkki kopioitiin leikepöydälle
       copy: Kopioi julkinen jakolinkki
       regenerate: Luo (uudelleen) julkinen jakolinkki
-    show-map-in-full-width: Näytä kartta täydessä leveydessä
     social:
       completed: 'Suoritin harjoituksen: %s.'
       summary: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.

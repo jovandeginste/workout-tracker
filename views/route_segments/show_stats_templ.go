@@ -54,13 +54,13 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 			"trend":               i18n.T(ctx, "statistics.trend"),
 			"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
 			"trendPeriod":         i18n.T(ctx, "statistics.trend-period"),
-			"trendBreakDetection": i18n.T(ctx, "statistics.trend-break-detection"),
+			"trendBreakDetection": i18n.T(ctx, "statistics.break-detection"),
 			"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
 			"trendPeriodAll":      i18n.T(ctx, "statistics.period.all-time"),
 			"trendPeriod365":      i18n.T(ctx, "statistics.period.last-365-days"),
 			"trendPeriod90":       i18n.T(ctx, "statistics.period.last-90-days"),
 			"trendPeriod30":       i18n.T(ctx, "statistics.period.last-30-days"),
-			"trendPeriodYear":     i18n.T(ctx, "statistics.period.this-calendar-year"),
+			"trendPeriodYear":     i18n.T(ctx, "statistics.period.this-year"),
 		}
 		for _, td := range trendData {
 			if _, ok := translations[td.Type]; !ok {

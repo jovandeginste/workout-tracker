@@ -1,9 +1,9 @@
 ru:
   admin:
-    leave-blank-to-keep-current-password: Оставьте пустым, чтобы сохранить текущий пароль
     manage: Управление
     manage-user: Управление пользователем '%s'
     manage-users: Управление пользователями
+    password-hint: Оставьте пустым, чтобы сохранить текущий пароль
     role: Админ
   alerts:
     route-segments-added:
@@ -62,22 +62,22 @@ ru:
     records-for: Записи для %s
   equipment:
     add: Добавить снаряжение
-    default-workout-types: Типы тренировок по умолчанию
+    default-types: Типы тренировок по умолчанию
     notice:
       deleted: Оборудование '%s' удалено.
       updated: Оборудование '%s' обновлено.
     update: Обновить снаряжение
   help:
+    edit-gpx-files: 'Вы можете отредактировать файлы GPX перед их загрузкой здесь:'
     how-to-use: как использовать
-    please-translate-via-weblate: Пожалуйста, помогите c переводом на Weblate
+    inspiration: 'Вдохновение можно найти здесь:'
     resources: Ресурсы
     translating: |
       Мы будем признательны вашей помощи с переводом!
 
       Пожалуйста, помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)
-    try-one-of-these-sites: 'Попробуйте один из этих сайтов:'
-    you-can-edit-your-gpx-files: 'Вы можете отредактировать файлы GPX перед их загрузкой здесь:'
-    you-can-find-inspiration-here: 'Вдохновение можно найти здесь:'
+    try-sites: 'Попробуйте один из этих сайтов:'
+    weblate: Пожалуйста, помогите c переводом на Weblate
   map:
     aerial: Esri World Imagery
     streets: OSM Carto
@@ -95,7 +95,7 @@ ru:
     statistics: Статистика
     workouts: Тренировки
   misc:
-    convert-from-not-yet-supported-file-format: преобразовать из пока неподдерживаемого формата файла
+    convert-format: преобразовать из пока неподдерживаемого формата файла
     day: день
     day-7: 7 дней
     day-15: 15 дней
@@ -105,9 +105,9 @@ ru:
     month-1: 1 месяц
     month-3: 3 месяца
     month-6: 6 месяцев
-    remove-the-beginning-or-the-ending-of-a-workout: удалить начало или конец тренировки
     route-segment: участок маршрута
-    split-files-with-multiple-tracks: разделить файлы с несколькими путями
+    split-tracks: разделить файлы с несколькими путями
+    trim-workout: удалить начало или конец тренировки
     workout: тренировка
     years-1: 1 год
     years-2: 2 года
@@ -139,8 +139,8 @@ ru:
   settings:
     application: Настройки
     configuration-file: файл конфигурации
-    disable-account-registration: Отключить регистрацию
-    environment-variables: переменные окружения
+    disable-registration: Отключить регистрацию
+    env-vars: переменные окружения
     overwritten-by: 'Эти параметры могут быть переопределены через:'
     update: Обновить настройки
   sports:
@@ -205,24 +205,24 @@ ru:
     password: Пароль
     profile:
       api-key-updated: API-ключ обновлен
-      auto-import-directory: Папка автоматического импорта
+      auto-import: Папка автоматического импорта
       browser-system: Обозреватель / ОС
       copy-to-clipboard: Cкопировать в буфер обмена
       dark: Темная
-      disable-social-sharing-buttons: Отключить кнопки социальных сетей
+      dashboard-totals: Итоги для отображения на панели управления
+      disable-sharing: Отключить кнопки социальных сетей
       enable-api-access: Включить доступ к API
-      generate-a-new-api-key: Cгенерировать новый API-ключ
+      full-date: Показывать полную дату по умолчанию
       language: Язык
       light: Светлая
+      new-api-key: Cгенерировать новый API-ключ
       preferred-units: Единицы измерения
-      refresh-all-your-workouts: Обновить все ваши тренировки
-      show-full-date-by-default: Показывать полную дату по умолчанию
+      refresh-all: Обновить все ваши тренировки
       show-hide: показать/скрыть
       theme: Тема
       time-zone: Часовой пояс
-      totals-to-show-on-dashboard: Итоги для отображения на панели управления
-      update-preferred-units: Обновить единицы измерения
       update-profile: Обновить профиль
+      update-units: Обновить единицы измерения
       updated: Профиль обновлен
       your-profile: Ваш профиль
       your-settings: Настройки
@@ -244,12 +244,12 @@ ru:
     cadence: Каденс
     cadence-avg-max: Каденс (сред/макс)
     calories: Калории
+    calories-hint: Оценка основана на виде активности
     distance: Расстояние
     duration: Продолжительность
     elevation: Подъём
     enhanced-speed: Улучшенная скорость
     est-calories-burned: Сожжено калорий
-    estimated-based-on-the-activity: Оценка основана на виде активности
     extra-metrics: Дополнительные метрики
     filter-workouts: Фильтр тренировок
     heading: Направление
@@ -257,7 +257,8 @@ ru:
     location: Местоположение
     locked: Атрибуты тренировки «%s» теперь заблокированы
     manual: Вручную
-    matching-route-segments: Совпадающие отрезки пути
+    map-full-width: Показать карту в полную ширину
+    matching-segments: Совпадающие отрезки пути
     max-cadence: Максимальный каденс
     max-elevation: Максимальная высота
     max-speed: Максимальная скорость
@@ -280,7 +281,6 @@ ru:
       delete: Удалить ссылку
       link: Публичная ссылка общего доступа
       regenerate: Сгенерировать ссылку
-    show-map-in-full-width: Показать карту в полную ширину
     slope: Уклон
     social:
       completed: 'Я выполнил тренировку: «%s».'

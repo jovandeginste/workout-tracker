@@ -21,7 +21,7 @@ es:
     month-3: 3 meses
     month-6: 6 meses
     route-segment: segmento
-    split-files-with-multiple-tracks: dividir archivos en múltiples tracks
+    split-tracks: dividir archivos en múltiples tracks
     workout: entrenamiento
     years-1: 1 año
     years-2: 2 años
