@@ -1,6 +1,5 @@
-import "leaflet";
-import "simpleheat";
-import "leaflet.heat";
+import L from "leaflet";
+import { HeatLayer } from "leaflet.heat";
 import "leaflet.markercluster";
 
 import "leaflet/dist/leaflet.css";
@@ -92,7 +91,7 @@ class WtHeatmap extends HTMLElement {
         radiusEl.disabled = false;
         blurEl.disabled = false;
       }
-      heatLayer = L.heatLayer(heatMapData, config);
+      heatLayer = new HeatLayer(heatMapData, config);
       heatLayer.addTo(map);
       if (showMarkers) {
         markers.addTo(map);

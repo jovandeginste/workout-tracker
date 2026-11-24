@@ -20,6 +20,9 @@ let ctx = await esbuild.context({
   sourcemap: isWatch ? "inline" : false,
   format: "esm",
   target: ["chrome58", "firefox57", "safari11", "edge18"],
+  // esbuild cannot lower destructuring for the older targets, but every
+  // browser we support understands it natively.
+  supported: { destructuring: true },
   outdir: "../assets/",
   publicPath: "/assets/",
   plugins: [
