@@ -313,9 +313,9 @@ WT_OFFLINE="false"
 
 ### Custom login text
 
-You can show a custom message on the login page. The text is written in
-Markdown and rendered to sanitized HTML. Set it in the admin interface under
-*Application settings*, in `workout-tracker.yaml`:
+You can show a custom message on the login page. The text is written in Markdown
+and rendered to sanitized HTML. Set it in the admin interface under _Application
+settings_, in `workout-tracker.yaml`:
 
 ```yaml
 login_custom_text: |
