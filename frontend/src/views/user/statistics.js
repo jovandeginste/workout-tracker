@@ -248,7 +248,9 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     selector.className = "input-ellipsis";
     selector.innerHTML = `
       <option value="trend">${this.translations.trend || "Trend"}</option>
-      <option value="break">${this.translations.trendBreak || "Trend break"}</option>
+      <option value="break">${
+        this.translations.trendBreak || "Trend break"
+      }</option>
     `;
     selector.value = this.trendBreakDetection ? "break" : "trend";
     selector.addEventListener("change", () => {

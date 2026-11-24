@@ -18,7 +18,7 @@ RUN set -eux; \
 # Install Docker-in-Docker (moby/docker engine + tools)
 RUN set -eux; \
     apt-get update -y; \
-    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/docker-in-docker/install.sh -o /tmp/install-dind.sh; \
+    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/tags/feature_docker-in-docker_4.1.3/src/docker-in-docker/install.sh -o /tmp/install-dind.sh; \
     bash /tmp/install-dind.sh; \
     rm -f /tmp/install-dind.sh; \
     rm -rf /var/lib/apt/lists/*
@@ -27,7 +27,7 @@ RUN set -eux; \
 ARG GO_VERSION=YouForgotToSetIt
 RUN set -eux; \
     apt-get update -y; \
-    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/go/install.sh -o /tmp/install-go.sh; \
+    curl -fsSL https://raw.githubusercontent.com/devcontainers/features/refs/tags/feature_go_1.4.1/src/go/install.sh -o /tmp/install-go.sh; \
     VERSION="${GO_VERSION}" bash /tmp/install-go.sh; \
     rm -f /tmp/install-go.sh; \
     rm -rf /var/lib/apt/lists/*

@@ -1,6 +1,6 @@
 package database
 
-import "github.com/ringsaturn/tzf"
+import "github.com/ringsaturn/tzf/v2"
 
 var tzFinder tzf.F
 

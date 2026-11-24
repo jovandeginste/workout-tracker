@@ -309,10 +309,11 @@ export class WorkoutBreakdown extends LitElement {
           ${intervals.map((interval) => {
             return html`<a
               href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${this
-                .intervalDistance === interval
-                ? "bg-indigo-500 text-white"
-                : ""}"
+              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
+                this.intervalDistance === interval
+                  ? "bg-indigo-500 text-white"
+                  : ""
+              }"
               @click=${(e: Event) => {
                 e.preventDefault();
                 this.setActiveItem(null);
