@@ -21,7 +21,7 @@
     "chartjs-plugin-zoom": "^3.0.2",
     "date-fns": "^4.1.0",
     "fullcalendar": "^6.1.11",
-    "htmx.org": "^1.9.12",
+    "htmx.org": "^2.0.11",
     "leaflet": "^1.9.4",
     "leaflet.heat": "github:Leaflet/Leaflet.heat",
     "leaflet.markercluster": "^1.5.3",
