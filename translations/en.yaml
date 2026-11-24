@@ -163,6 +163,7 @@ en:
     Disable_account_registration: Disable account registration
     Distance: Distance
     Duration: Duration
+    Duration_without_pauses: Duration without pauses
     Elevation: Elevation
     End: End
     Est_calories_burned: Calories burned (est)
@@ -237,6 +238,7 @@ en:
     The_workout_s_has_been_updated: The workout '%s' has been updated.
     These_settings_may_be_overwritten_by: 'These settings may be overwritten by:'
     Time: Time
+    Time_of_day: Time of day
     Time_paused: Time paused
     Total_distance: Total distance
     Total_down: Total down

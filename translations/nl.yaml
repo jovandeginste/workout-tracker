@@ -168,6 +168,7 @@ nl:
     Disable_account_registration: Registratie van nieuw accounts uitschakelen
     Distance: Afstand
     Duration: Duur
+    Duration_without_pauses: Duur zonder pauzes
     Elevation: Hoogte
     End: Einde
     Est_calories_burned: Verbruik calorieën (geschat)
@@ -241,6 +242,7 @@ nl:
     These_settings_may_be_overwritten_by: 'Deze instellingen kunnen worden overschreven
       door:'
     Time: Tijd
+    Time_of_day: Tijdstip
     Time_paused: Tijd gepauzeerd
     Total_distance: Totale afstand
     Total_down: Totaal omlaag
