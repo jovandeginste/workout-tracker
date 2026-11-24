@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import yaml from "js-yaml";
+import { load as loadYaml } from "js-yaml";
 import xliff from "xliff";
 
 async function syncXliffFiles() {
@@ -40,7 +40,7 @@ async function processXliffFile(xliffFileName, xliffDir, translationsDir) {
     let yamlTranslations = {};
     try {
       const yamlContent = await fs.readFile(yamlPath, "utf8");
-      yamlTranslations = (yaml.load(yamlContent) || {})[baseName];
+      yamlTranslations = (loadYaml(yamlContent) || {})[baseName];
     } catch (error) {
       return;
     }
