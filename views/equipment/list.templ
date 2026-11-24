@@ -53,9 +53,11 @@ templ List(equipment []*database.Equipment, username string) {
 						</td>
 						<td>{ helpers.A2S(len(e.Workouts)) }</td>
 						<td>
-							<span class="actions">
-								@actions(e)
-							</span>
+							if e.User.ID == helpers.CurrentUser(ctx).ID {
+								<span class="actions">
+									@actions(e)
+								</span>
+							}
 						</td>
 					</tr>
 				}
