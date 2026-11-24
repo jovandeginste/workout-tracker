@@ -125,7 +125,7 @@ func (a *App) userRegisterHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-login"), err)
 	}
 
-	a.addNoticeT(c, "translation.Your_account_has_been_created_but_needs_to_be_activated")
+	a.addNoticeT(c, "user.auth.activation-needed")
 
 	return c.Redirect(http.StatusFound, a.Reverse("user-login"))
 }

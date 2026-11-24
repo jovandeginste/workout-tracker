@@ -75,7 +75,7 @@ func (a *App) userProfileUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-profile"), err)
 	}
 
-	a.addNoticeT(c, "translation.Profile_updated")
+	a.addNoticeT(c, "user.profile.updated")
 
 	return c.Redirect(http.StatusFound, a.Reverse("user-profile"))
 }
@@ -113,7 +113,7 @@ func (a *App) userProfileResetAPIKeyHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-profile"), err)
 	}
 
-	a.addNoticeT(c, "translation.API_key_updated")
+	a.addNoticeT(c, "user.profile.api-key-updated")
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("user-profile"))
@@ -130,7 +130,7 @@ func (a *App) userRefreshHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-profile"), err)
 	}
 
-	a.addNoticeT(c, "translation.All_workouts_will_be_refreshed_in_the_coming_minutes")
+	a.addNoticeT(c, "workout.notice.refresh-all")
 
 	return c.Redirect(http.StatusFound, a.Reverse("user-profile"))
 }

@@ -58,24 +58,24 @@ func FindTranslationForKey(tks []TranslatedKey, key string) string {
 
 func OrderDirOptions() []TranslatedKey {
 	return []TranslatedKey{
-		{"asc", "translation.ascending"},
-		{"desc", "translation.descending"},
+		{"asc", "common.ascending"},
+		{"desc", "common.descending"},
 	}
 }
 
 func OrderByOptions() []TranslatedKey {
 	return []TranslatedKey{
-		{"date", "translation.Date"},
+		{"date", "common.date"},
 
-		{"total_distance", "translation.Total_distance"},
-		{"total_duration", "translation.Total_duration"},
-		{"total_weight", "translation.Total_weight"},
-		{"total_repetitions", "translation.Total_repetitions"},
-		{"total_up", "translation.Total_up"},
-		{"total_down", "translation.Total_down"},
+		{"total_distance", "workout.total-distance"},
+		{"total_duration", "workout.total-duration"},
+		{"total_weight", "workout.total-weight"},
+		{"total_repetitions", "workout.total-repetitions"},
+		{"total_up", "workout.total-up"},
+		{"total_down", "workout.total-down"},
 
-		{"average_speed_no_pause", "translation.Average_speed"},
-		{"max_speed", "translation.Max_speed"},
+		{"average_speed_no_pause", "workout.average-speed"},
+		{"max_speed", "workout.max-speed"},
 	}
 }
 

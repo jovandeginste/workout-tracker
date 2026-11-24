@@ -12,21 +12,21 @@ templ Profile(u *database.User) {
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("user-profile")
-				{ i18n.T(ctx, "user.profile.your_settings") }
+				{ i18n.T(ctx, "user.profile.your-settings") }
 			</h3>
 			@userSettings(u)
 		</div>
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("units")
-				{ i18n.T(ctx, "user.profile.preferred_units") }
+				{ i18n.T(ctx, "user.profile.preferred-units") }
 			</h3>
 			@profilePreferredUnits()
 		</div>
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("actions")
-				{ i18n.T(ctx, "translation.Actions") }
+				{ i18n.T(ctx, "common.actions") }
 			</h3>
 			@userActions()
 		</div>
@@ -35,7 +35,7 @@ templ Profile(u *database.User) {
 
 templ userActions() {
 	<form method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-refresh")) }>
-		<label for="refresh">{ i18n.T(ctx, "user.profile.refresh_all_your_workouts") }</label>
+		<label for="refresh">{ i18n.T(ctx, "user.profile.refresh-all") }</label>
 		<button id="refresh" type="submit">
 			<a>
 				@helpers.IconFor("refresh")
@@ -43,7 +43,7 @@ templ userActions() {
 		</button>
 	</form>
 	<form method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "user-export-all")) }>
-		<label for="export">{ i18n.T(ctx, "user.profile.export_all_your_workouts") }</label>
+		<label for="export">{ i18n.T(ctx, "user.profile.export-all") }</label>
 		<button id="export" type="submit">
 			<a>
 				@helpers.IconFor("download")
@@ -59,9 +59,9 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th class="w-1/2 xl:w-1/3 2xl:w-1/4">
 						<label for="api_active">
-							{ i18n.T(ctx, "user.profile.enable_api_access") }
+							{ i18n.T(ctx, "user.profile.enable-api-access") }
 							<a
-								title={ i18n.T(ctx, "translation.how_to_use") }
+								title={ i18n.T(ctx, "help.how-to-use") }
 								target="_blank"
 								href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
 							>
@@ -91,21 +91,21 @@ templ userSettings(u *database.User) {
 									<button
 										type="button"
 										class="edit"
-										title={ i18n.T(ctx, "user.profile.show_hide") }
+										title={ i18n.T(ctx, "user.profile.show-hide") }
 										onclick="toggleTextPassword(this, 'api_key');"
 									>
 										@helpers.IconFor("show")
 									</button>
 									<button
 										type="button"
-										title={ i18n.T(ctx, "user.profile.copy_to_clipboard") }
+										title={ i18n.T(ctx, "user.profile.copy-to-clipboard") }
 										onclick="copyToClipboard('api_key');"
 									>
 										@helpers.IconFor("copy")
 									</button>
 									<button
 										class="dangerous"
-										title={ i18n.T(ctx, "user.profile.generate_a_new_api_key") }
+										title={ i18n.T(ctx, "user.profile.new-api-key") }
 										type="button"
 										hx-post={ helpers.RouteFor(ctx, "user-profile-reset-api-key") }
 										hx-target="body"
@@ -120,7 +120,7 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
-						<label>{ i18n.T(ctx, "user.profile.totals_to_show_on_dashboard") }</label>
+						<label>{ i18n.T(ctx, "user.profile.dashboard-totals") }</label>
 					</th>
 					<td>
 						@profileTotalsShow(u.Profile.TotalsShow)
@@ -128,7 +128,7 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
-						<label for="timezone">{ i18n.T(ctx, "user.profile.time_zone") }</label>
+						<label for="timezone">{ i18n.T(ctx, "user.profile.time-zone") }</label>
 					</th>
 					<td>
 						@profileTimezone(u.Profile.Timezone)
@@ -137,11 +137,11 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="language">
-							{ i18n.T(ctx, "user.profile.Language") }
+							{ i18n.T(ctx, "user.profile.language") }
 							<a
 								href="https://hosted.weblate.org/projects/workout-tracker/"
 								target="_blank"
-								title={ i18n.T(ctx, "translation.Please_help_translate_via_Weblate") }
+								title={ i18n.T(ctx, "help.weblate") }
 							>
 								@helpers.IconFor("translate")
 							</a>
@@ -153,18 +153,18 @@ templ userSettings(u *database.User) {
 				</tr>
 				<tr>
 					<th>
-						<label for="theme">{ i18n.T(ctx, "user.profile.Theme") }</label>
+						<label for="theme">{ i18n.T(ctx, "user.profile.theme") }</label>
 					</th>
 					<td>
 						<select class="input-ellipsis" id="theme" name="theme">
 							<option value="light" selected?={ u.Profile.Theme == "light" }>
-								{ i18n.T(ctx, "user.profile.Light") }
+								{ i18n.T(ctx, "user.profile.light") }
 							</option>
 							<option value="dark" selected?={ u.Profile.Theme == "dark" }>
-								{ i18n.T(ctx, "user.profile.Dark") }
+								{ i18n.T(ctx, "user.profile.dark") }
 							</option>
 							<option value="browser" selected?={ u.Profile.Theme == "browser" }>
-								{ i18n.T(ctx, "user.profile.Browser_System") }
+								{ i18n.T(ctx, "user.profile.browser-system") }
 							</option>
 						</select>
 					</td>
@@ -172,7 +172,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="auto_import_directory">
-							{ i18n.T(ctx, "user.profile.auto_import_directory") }
+							{ i18n.T(ctx, "user.profile.auto-import") }
 						</label>
 					</th>
 					<td>
@@ -190,7 +190,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="prefer_full_date">
-							{ i18n.T(ctx, "user.profile.show_full_date_by_default") }
+							{ i18n.T(ctx, "user.profile.full-date") }
 						</label>
 					</th>
 					<td>
@@ -206,7 +206,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="show_tabs">
-							{ i18n.T(ctx, "user.profile.show_tabs") }
+							{ i18n.T(ctx, "user.profile.show-tabs") }
 						</label>
 					</th>
 					<td>
@@ -222,7 +222,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<th>
 						<label for="socials_disabled">
-							{ i18n.T(ctx, "user.profile.disable_social_sharing_buttons") }
+							{ i18n.T(ctx, "user.profile.disable-sharing") }
 						</label>
 					</th>
 					<td>
@@ -238,7 +238,7 @@ templ userSettings(u *database.User) {
 				<tr>
 					<td></td>
 					<td>
-						<button id="update-profile" type="submit">{ i18n.T(ctx, "user.profile.update_profile") }</button>
+						<button id="update-profile" type="submit">{ i18n.T(ctx, "user.profile.update-profile") }</button>
 					</td>
 				</tr>
 			</tbody>

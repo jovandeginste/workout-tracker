@@ -12,7 +12,7 @@ templ EditUser(u *database.User) {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor(`admin`)
-			{ i18n.T(ctx, "translation.Manage_user_s", u.Name) }
+			{ i18n.T(ctx, "admin.manage-user", u.Name) }
 		</h2>
 		<div class="inner-form">
 			<form
@@ -23,7 +23,7 @@ templ EditUser(u *database.User) {
 					<tbody>
 						<tr>
 							<td>
-								<label for="username">{ i18n.T(ctx, "translation.Username") }</label>
+								<label for="username">{ i18n.T(ctx, "user.username") }</label>
 							</td>
 							<td>
 								<input
@@ -36,7 +36,7 @@ templ EditUser(u *database.User) {
 						</tr>
 						<tr>
 							<td>
-								<label for="name">{ i18n.T(ctx, "translation.Name") }</label>
+								<label for="name">{ i18n.T(ctx, "common.name") }</label>
 							</td>
 							<td>
 								<input id="name" name="name" size="40" value={ u.Name }/>
@@ -44,7 +44,7 @@ templ EditUser(u *database.User) {
 						</tr>
 						<tr>
 							<td>
-								<label for="name">{ i18n.T(ctx, "translation.Password") }</label>
+								<label for="name">{ i18n.T(ctx, "user.password") }</label>
 							</td>
 							<td>
 								<input
@@ -52,14 +52,14 @@ templ EditUser(u *database.User) {
 									id="password"
 									name="password"
 									size="40"
-									placeholder={ i18n.T(ctx, "translation.Leave_blank_to_keep_current_password") }
+									placeholder={ i18n.T(ctx, "admin.password-hint") }
 									value=""
 								/>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="active">{ i18n.T(ctx, "translation.Active") }</label>
+								<label for="active">{ i18n.T(ctx, "common.active") }</label>
 							</td>
 							<td>
 								<input
@@ -73,7 +73,7 @@ templ EditUser(u *database.User) {
 						</tr>
 						<tr>
 							<td>
-								<label for="admin">{ i18n.T(ctx, "translation.Admin") }</label>
+								<label for="admin">{ i18n.T(ctx, "admin.role") }</label>
 							</td>
 							<td>
 								<input

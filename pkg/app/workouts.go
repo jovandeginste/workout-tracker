@@ -210,7 +210,7 @@ func (a *App) addWorkout(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workout-show", workout.ID), err)
 	}
 
-	a.addNoticeT(c, "translation.The_workout_s_has_been_created", workout.Name)
+	a.addNoticeT(c, "workout.notice.created", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("workouts"))
 }
@@ -250,7 +250,7 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_workout_s_has_been_updated", workout.Name)
+	a.addNoticeT(c, "workout.notice.updated", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
 }
@@ -290,11 +290,11 @@ func (a *App) addWorkoutFromFile(c *echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addErrorN(c, "alerts.workouts_added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
+		a.addErrorN(c, "alerts.workouts-added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
 	}
 
 	if len(msg) > 0 {
-		a.addNoticeNRaw(c, "notices.workouts_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
+		a.addNoticeNRaw(c, "notices.workouts-added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
 	}
 
 	return c.Redirect(http.StatusFound, a.Reverse("workouts"))

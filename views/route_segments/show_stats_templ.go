@@ -49,18 +49,18 @@ func ShowStats(s *database.RouteSegment) templ.Component {
 			})
 		}
 		translations := map[string]string{
-			"averageSpeed":        i18n.T(ctx, "translation.Average_speed"),
+			"averageSpeed":        i18n.T(ctx, "workout.average-speed"),
 			"speedUnit":           speedUnit,
-			"trend":               i18n.T(ctx, "translation.Trend"),
-			"trendBreak":          i18n.T(ctx, "translation.Trend_break"),
-			"trendPeriod":         i18n.T(ctx, "translation.Trend_period"),
-			"trendBreakDetection": i18n.T(ctx, "translation.Trend_break_detection"),
-			"resetZoom":           i18n.T(ctx, "translation.Reset_zoom"),
-			"trendPeriodAll":      i18n.T(ctx, "translation.All_time"),
-			"trendPeriod365":      i18n.T(ctx, "translation.Last_365_days"),
-			"trendPeriod90":       i18n.T(ctx, "translation.Last_90_days"),
-			"trendPeriod30":       i18n.T(ctx, "translation.Last_30_days"),
-			"trendPeriodYear":     i18n.T(ctx, "translation.This_calendar_year"),
+			"trend":               i18n.T(ctx, "statistics.trend"),
+			"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
+			"trendPeriod":         i18n.T(ctx, "statistics.trend-period"),
+			"trendBreakDetection": i18n.T(ctx, "statistics.break-detection"),
+			"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
+			"trendPeriodAll":      i18n.T(ctx, "statistics.period.all-time"),
+			"trendPeriod365":      i18n.T(ctx, "statistics.period.last-365-days"),
+			"trendPeriod90":       i18n.T(ctx, "statistics.period.last-90-days"),
+			"trendPeriod30":       i18n.T(ctx, "statistics.period.last-30-days"),
+			"trendPeriodYear":     i18n.T(ctx, "statistics.period.this-year"),
 		}
 		for _, td := range trendData {
 			if _, ok := translations[td.Type]; !ok {

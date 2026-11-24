@@ -12,21 +12,21 @@ templ ListDetails(w *database.Workout) {
 	<div class="workouts_list_details flex flex-wrap gap-1">
 		if w.Type.IsLocation() {
 			<div
-				title={ i18n.T(ctx, "translation.Location") + ": " + w.Address() }
+				title={ i18n.T(ctx, "workout.location") + ": " + w.Address() }
 			>
 				@helpers.IconFor("location")
 				{ w.Address() }
 			</div>
 		}
 		if w.Type.IsDistance() {
-			<div class="font-mono" title={ i18n.T(ctx, "translation.Distance") }>
+			<div class="font-mono" title={ i18n.T(ctx, "workout.distance") }>
 				@helpers.IconFor("distance")
 				{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
 				{ helpers.DistanceUnitForWorkout(ctx, w) }
 			</div>
 		}
 		if w.Type.IsDuration() {
-			<div class="font-mono" title={ i18n.T(ctx, "translation.Duration") }>
+			<div class="font-mono" title={ i18n.T(ctx, "workout.duration") }>
 				@helpers.IconFor("duration")
 				{ helpers.HumanDuration(w.TotalDuration()) }
 			</div>
@@ -34,21 +34,21 @@ templ ListDetails(w *database.Workout) {
 		if w.Type.IsDistance()&& w.Type.IsDuration() {
 			<div
 				class="font-mono"
-				title={ i18n.T(ctx, "translation.Average_speed") }
+				title={ i18n.T(ctx, "workout.average-speed") }
 			>
 				@helpers.IconFor("speed")
 				@partials.PreferredAverageSpeedMetric(w, preferredUnits)
 			</div>
 		}
 		if w.Type.IsWeight() {
-			<div class="font-mono" title={ i18n.T(ctx, "translation.Weight") }>
+			<div class="font-mono" title={ i18n.T(ctx, "common.weight") }>
 				@helpers.IconFor("weight")
 				{ helpers.HumanWeight(ctx, w.Weight()) }
 				{ preferredUnits.Weight() }
 			</div>
 		}
 		if w.Type.IsRepetition() {
-			<div class="font-mono" title={ i18n.T(ctx, "translation.Repetitions") }>
+			<div class="font-mono" title={ i18n.T(ctx, "workout.repetitions") }>
 				@helpers.IconFor("repetitions")
 				{ helpers.A2S(w.Repetitions()) }
 			</div>

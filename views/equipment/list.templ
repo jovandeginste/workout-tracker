@@ -12,12 +12,12 @@ templ List(equipment []*database.Equipment, username string) {
 		<div class="items-baseline flex flex-wrap">
 			<h2 class="grow justify-start">
 				@helpers.IconFor("equipment")
-				{ i18n.T(ctx, "menu.Equipment") } ({ helpers.A2S(len(equipment)) })
+				{ i18n.T(ctx, "menu.equipment") } ({ helpers.A2S(len(equipment)) })
 			</h2>
 			<div class="justify-end mr-2">
 				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
 					@helpers.IconFor("add")
-					<span>{ i18n.T(ctx, "translation.Add_equipment") }</span>
+					<span>{ i18n.T(ctx, "equipment.add") }</span>
 				</a>
 			</div>
 		</div>
@@ -27,15 +27,15 @@ templ List(equipment []*database.Equipment, username string) {
 			action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment")) }
 		>
 			@partials.UsernameFilter(username)
-			<button type="submit">{ i18n.T(ctx, "translation.Filter") }</button>
+			<button type="submit">{ i18n.T(ctx, "common.filter") }</button>
 		</form>
 		<table class="equipment-info">
 			<thead>
 				<tr>
-					<th>{ i18n.T(ctx, "translation.Name") }</th>
-					<th class="hidden md:table-cell">{ i18n.T(ctx, "translation.Username") }</th>
-					<th>{ i18n.T(ctx, "translation.Active") }</th>
-					<th>{ i18n.T(ctx, "menu.Workouts") }</th>
+					<th>{ i18n.T(ctx, "common.name") }</th>
+					<th class="hidden md:table-cell">{ i18n.T(ctx, "user.username") }</th>
+					<th>{ i18n.T(ctx, "common.active") }</th>
+					<th>{ i18n.T(ctx, "menu.workouts") }</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -68,7 +68,7 @@ templ List(equipment []*database.Equipment, username string) {
 
 templ actions(e *database.Equipment) {
 	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "translation.edit") }>
+		<button class="edit" title={ i18n.T(ctx, "common.edit") }>
 			<a>
 				@helpers.IconFor("edit")
 			</a>
@@ -79,7 +79,7 @@ templ actions(e *database.Equipment) {
 		hx-target="#modal-container"
 		hx-swap="innerHTML"
 		class="dangerous"
-		title={ i18n.T(ctx, "translation.delete") }
+		title={ i18n.T(ctx, "common.delete") }
 	>
 		@helpers.IconFor("delete")
 	</button>
@@ -105,7 +105,7 @@ templ DeleteModal(e *database.Equipment) {
 			</div>
 			<div class="modal-content">
 				<h3>
-					{ i18n.T(ctx, "translation.Are_you_sure_you_want_to_delete_this_s", i18n.T(ctx, "misc.equipment")) }
+					{ i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, "misc.equipment")) }
 					<div>
 						{ e.Name }
 					</div>
@@ -114,13 +114,13 @@ templ DeleteModal(e *database.Equipment) {
 					<button
 						hx-post={ helpers.RouteFor(ctx, "equipment-delete", e.ID) }
 						class="confirm"
-					>{ i18n.T(ctx, "translation.Continue") }</button>
+					>{ i18n.T(ctx, "common.continue") }</button>
 					<button
 						hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
 						hx-target="body"
 						hx-swap="innerHTML"
 						class="cancel"
-					>{ i18n.T(ctx, "translation.Cancel") }</button>
+					>{ i18n.T(ctx, "common.cancel") }</button>
 				</div>
 			</div>
 		</div>

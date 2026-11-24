@@ -12,7 +12,7 @@ templ Form(w *database.Workout) {
 	{{ preferredUnits := currentUser.PreferredUnits() }}
 	if w.HasCustomType() {
 		<tr>
-			<td><label for="custom_type">{ i18n.T(ctx, "translation.Type") }</label></td>
+			<td><label for="custom_type">{ i18n.T(ctx, "common.type") }</label></td>
 			<td>
 				<input
 					type="text"
@@ -29,7 +29,7 @@ templ Form(w *database.Workout) {
 		<td>
 			<label for="name">
 				@helpers.IconFor(w.Type.String())
-				{ i18n.T(ctx, "translation.Name") }
+				{ i18n.T(ctx, "common.name") }
 			</label>
 		</td>
 		<td>
@@ -44,7 +44,7 @@ templ Form(w *database.Workout) {
 		</td>
 	</tr>
 	<tr>
-		<td><label for="date">{ i18n.T(ctx, "translation.Date") }</label></td>
+		<td><label for="date">{ i18n.T(ctx, "common.date") }</label></td>
 		<td>
 			<input
 				type="datetime-local"
@@ -63,7 +63,7 @@ templ Form(w *database.Workout) {
 		</td>
 	</tr>
 	<tr>
-		<td><label for="location">{ i18n.T(ctx, "translation.Location") }</label></td>
+		<td><label for="location">{ i18n.T(ctx, "workout.location") }</label></td>
 		<td>
 			<input
 				type="text"
@@ -81,7 +81,7 @@ templ Form(w *database.Workout) {
 	</tr>
 	if w.Type.IsDuration() {
 		<tr>
-			<td><label for="duration">{ i18n.T(ctx, "translation.Duration") }</label></td>
+			<td><label for="duration">{ i18n.T(ctx, "workout.duration") }</label></td>
 			<td>
 				<input
 					type="number"
@@ -119,7 +119,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsDistance() {
 		<tr>
-			<td><label for="distance">{ i18n.T(ctx, "translation.Distance") }</label></td>
+			<td><label for="distance">{ i18n.T(ctx, "workout.distance") }</label></td>
 			<td>
 				<input
 					type="text"
@@ -136,7 +136,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsRepetition() {
 		<tr>
-			<td><label for="repetitions">{ i18n.T(ctx, "translation.Repetitions") }</label></td>
+			<td><label for="repetitions">{ i18n.T(ctx, "workout.repetitions") }</label></td>
 			<td>
 				<input
 					type="number"
@@ -150,7 +150,7 @@ templ Form(w *database.Workout) {
 	}
 	if w.Type.IsWeight() {
 		<tr>
-			<td><label for="weight">{ i18n.T(ctx, "translation.Weight") }</label></td>
+			<td><label for="weight">{ i18n.T(ctx, "common.weight") }</label></td>
 			<td>
 				<input
 					type="text"
@@ -165,7 +165,7 @@ templ Form(w *database.Workout) {
 	}
 	<tr>
 		<td>
-			<label for="notes">{ i18n.T(ctx, "translation.Notes") }</label>
+			<label for="notes">{ i18n.T(ctx, "common.notes") }</label>
 		</td>
 		<td>
 			<textarea type="text" id="notes" name="notes" rows="10" cols="60">
@@ -175,7 +175,7 @@ templ Form(w *database.Workout) {
 	</tr>
 	<tr>
 		<td>
-			<label for="equipment">{ i18n.T(ctx, "menu.Equipment") }</label>
+			<label for="equipment">{ i18n.T(ctx, "menu.equipment") }</label>
 		</td>
 		<td>
 			for _, e := range currentUser.Equipment {
@@ -199,7 +199,7 @@ templ Form(w *database.Workout) {
 		<td>
 			<label for="private">
 				@helpers.IconFor("hide")
-				{ i18n.T(ctx, "translation.Private") }
+				{ i18n.T(ctx, "workout.private") }
 			</label>
 		</td>
 		<td>
@@ -210,7 +210,7 @@ templ Form(w *database.Workout) {
 				value="true"
 				checked?={ w.Private }
 			/>
-			<span class="text-sm">{ i18n.T(ctx, "translation.Private_workout_explanation") }</span>
+			<span class="text-sm">{ i18n.T(ctx, "workout.private-explanation") }</span>
 		</td>
 	</tr>
 }

@@ -23,11 +23,11 @@ func workoutDataTitle(ctx context.Context, w *database.Workout) string {
 
 	return i18n.T(
 		ctx,
-		`translation.i_completed_a_workout_s`,
+		`workout.social.completed`,
 		i18n.T(ctx, w.Type.StringT()),
 	) + " " + i18n.T(
 		ctx,
-		`translation.it_took_me_s_to_go_s_i_averaged_s`,
+		`workout.social.summary`,
 		helpers.HumanDuration(w.TotalDuration()),
 		dist,
 		speed,

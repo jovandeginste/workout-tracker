@@ -28,11 +28,11 @@ templ Map(w *database.Workout) {
 			MinElevation:  w.MinElevation(),
 			MaxElevation:  w.MaxElevation(),
 			MaxSpeed:      w.MaxSpeed(),
-			SpeedName:     i18n.T(ctx, "translation.Average_speed"),
-			ElevationName: i18n.T(ctx, "translation.Elevation"),
-			SlopeName:     i18n.T(ctx, "translation.Slope"),
-			StreetsName:   i18n.T(ctx, "translation.Streets"),
-			AerialName:    i18n.T(ctx, "translation.Aerial"),
+			SpeedName:     i18n.T(ctx, "workout.average-speed"),
+			ElevationName: i18n.T(ctx, "workout.elevation"),
+			SlopeName:     i18n.T(ctx, "workout.slope"),
+			StreetsName:   i18n.T(ctx, "map.streets"),
+			AerialName:    i18n.T(ctx, "map.aerial"),
 			ShowElevation: true,
 		}
 	}}
@@ -48,7 +48,7 @@ templ Map(w *database.Workout) {
 			@Social(w)
 		}
 		<div class="grow flex flex-wrap flex-row-reverse">
-			<a href="#" title={ i18n.T(ctx, "translation.Fullscreen") } aria-label={ i18n.T(ctx, "translation.Fullscreen") } onclick="toggleMapFullscreen('workout-map'); return false;">
+			<a href="#" title={ i18n.T(ctx, "map.fullscreen") } aria-label={ i18n.T(ctx, "map.fullscreen") } onclick="toggleMapFullscreen('workout-map'); return false;">
 				@helpers.IconFor("expand")
 			</a>
 		</div>

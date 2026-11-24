@@ -13,7 +13,7 @@ templ Heatmap(workouts []*database.Workout) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.js" }></script>
 		<h2>
 			@helpers.IconFor(`heatmap`)
-			{ i18n.T(ctx, "menu.Heatmap") }
+			{ i18n.T(ctx, "menu.heatmap") }
 		</h2>
 		<div id="map-container" class="small-size pagebreak">
 			<wt-heatmap
@@ -22,8 +22,8 @@ templ Heatmap(workouts []*database.Workout) {
 				api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
 				api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
 				i18n={ templ.JSONString(map[string]string{
-          "streets": i18n.T(ctx, "translation.Streets"),
-          "aerial":  i18n.T(ctx, "translation.Aerial"),
+          "streets": i18n.T(ctx, "map.streets"),
+          "aerial":  i18n.T(ctx, "map.aerial"),
         }) }
 			></wt-heatmap>
 		</div>

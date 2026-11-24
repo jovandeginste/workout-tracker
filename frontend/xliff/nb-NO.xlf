@@ -2,13 +2,13 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="nb-NO" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
-<trans-unit id="translation.Tempo">
+<trans-unit id="workout.tempo">
   <source>Tempo</source>
 </trans-unit>
-<trans-unit id="translation.Total_up">
+<trans-unit id="workout.total-up">
   <source>Total up</source>
 </trans-unit>
-<trans-unit id="translation.Total_down">
+<trans-unit id="workout.total-down">
   <source>Total down</source>
 </trans-unit>
 </body>

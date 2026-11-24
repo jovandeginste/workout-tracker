@@ -22,7 +22,7 @@ templ Show(w *database.Workout) {
 					if w.Dirty {
 						<span class="dirty">
 							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "translation.refresh_in_progress") }
+							{ i18n.T(ctx, "workout.refresh-in-progress") }
 						</span>
 					}
 					@Actions(w)
@@ -35,7 +35,7 @@ templ Show(w *database.Workout) {
 					<i>({ w.CustomType })</i>
 				}
 				if w.Private {
-					<span title={ i18n.T(ctx, "translation.Private_workout_explanation") }>
+					<span title={ i18n.T(ctx, "workout.private-explanation") }>
 						@helpers.IconFor("hide")
 					</span>
 				}
@@ -59,32 +59,32 @@ templ Show(w *database.Workout) {
 			"workout-details",
 			partials.Tab{
 				Icon:        "speed",
-				Name:        i18n.T(ctx, "translation.Average_speed") + " / " + i18n.T(ctx, "translation.Elevation"),
+				Name:        i18n.T(ctx, "workout.average-speed") + " / " + i18n.T(ctx, "workout.elevation"),
 				Show:        w.Details() != nil,
 				NoPrint:     true,
 				ContentFunc: func() templ.Component { return renderDetails(w) },
 			},
 			partials.Tab{
 				Icon:        "route-segment",
-				Name:        i18n.T(ctx, "translation.Matching_route_segments"),
+				Name:        i18n.T(ctx, "workout.matching-segments"),
 				Show:        len(w.RouteSegmentMatches) > 0,
 				ContentFunc: func() templ.Component { return renderRouteSegments(w) },
 			},
 			partials.Tab{
 				Icon:        "note",
-				Name:        i18n.T(ctx, "translation.Notes"),
+				Name:        i18n.T(ctx, "common.notes"),
 				Show:        len(w.Notes) > 0,
 				ContentFunc: func() templ.Component { return renderNotes(w) },
 			},
 			partials.Tab{
 				Icon:        "elevation",
-				Name:        i18n.T(ctx, "translation.Climbs"),
+				Name:        i18n.T(ctx, "workout.climbs"),
 				Show:        len(w.Data.Climbs) > 0,
 				ContentFunc: func() templ.Component { return renderClimbs(w) },
 			},
 			partials.Tab{
 				Icon:        "breakdown",
-				Name:        i18n.T(ctx, "translation.Breakdown"),
+				Name:        i18n.T(ctx, "workout.breakdown"),
 				Show:        w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil,
 				ContentFunc: func() templ.Component { return renderBreakdown(w) },
 			},
@@ -140,19 +140,19 @@ templ renderClimbs(w *database.Workout) {
 					</th>
 					<th class="text-right">
 						@helpers.IconFor("duration")
-						{ i18n.T(ctx, "translation.Duration") }
+						{ i18n.T(ctx, "workout.duration") }
 					</th>
 					<th class="hidden lg:table-cell text-right">
 						@helpers.IconFor("gain")
-						{ i18n.T(ctx, "climb.elevation_gain") } / { i18n.T(ctx, "climb.elevation_loss") }
+						{ i18n.T(ctx, "climb.elevation-gain") } / { i18n.T(ctx, "climb.elevation-loss") }
 					</th>
 					<th class="text-right">
 						@helpers.IconFor("slope")
-						{ i18n.T(ctx, "climb.average_slope") }
+						{ i18n.T(ctx, "climb.average-slope") }
 					</th>
 					<th class="hidden sm:table-cell text-right">
 						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "translation.Average_speed") }
+						{ i18n.T(ctx, "workout.average-speed") }
 					</th>
 					<th class="hidden sm:table-cell text-right">
 						@helpers.IconFor("slope_cat")
@@ -171,7 +171,7 @@ templ renderClimbs(w *database.Workout) {
 								<span class="text-orange-600"><span class="icon-decoration icon-[fa6-solid--arrow-down-long]"></span></span>
 							}
 							<span class="hidden lg:table-cell">
-								{ i18n.T(ctx, "climb.type_"+string(climb.Type), climb.Index) }
+								{ i18n.T(ctx, "climb.type-"+string(climb.Type), climb.Index) }
 							</span>
 						</td>
 						<td class="hidden md:table-cell text-right">
@@ -195,7 +195,7 @@ templ renderClimbs(w *database.Workout) {
 						<td class="text-right">
 							<a
 								href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID) + "?start=" + strconv.Itoa(climb.StartIdx+1) + "&end=" + strconv.Itoa(climb.EndIdx+1)) }
-								title={ i18n.T(ctx, "translation.Create_route_segment_from_climb") }
+								title={ i18n.T(ctx, "climb.create-route-segment") }
 							>
 								@helpers.IconFor("route-segment-add")
 							</a>
