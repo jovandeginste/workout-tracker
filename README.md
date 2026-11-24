@@ -192,7 +192,7 @@ Overview of all your activities, with summaries.
 
 Details of a workout, with:
 
-- a zoomable, dragable map of the GPX track with more details per point
+- a zoomable, draggable map of the GPX track with more details per point
 - many summarized statistics
 - a breakdown per kilometer or per mile
 - track color based on elevation of the segment
@@ -405,7 +405,7 @@ curl -sSL -H "Authorization: bearer your-api-key" \
 ```
 
 If you upload FIT files or other file types, including GPX, include a query
-paramter `name`:
+parameter `name`:
 
 ```bash
 curl -sSL -H "Authorization: bearer your-api-key" \
@@ -553,7 +553,7 @@ database storage is a single SQLite file.
 The application uses OpenStreetMap and Esri as its map providers and for
 geocoding a GPS coordinate to a location.
 
-## Compatiblity
+## Compatibility
 
 This is a work in progress. If you find any problems, please let us know. The
 application is tested with GPX files from these sources:
