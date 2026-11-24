@@ -31,18 +31,18 @@ func ShowStats(w *database.Workout) templ.Component {
 		ctx = templ.InitializeContext(ctx)
 		ctx = templ.ClearChildren(ctx)
 		translations := map[string]string{
-			"distance":        i18n.T(ctx, "translation.Distance"),
-			"duration":        i18n.T(ctx, "translation.Duration"),
-			"moving-duration": i18n.T(ctx, "translation.Duration_without_pauses"),
-			"time-of-day":     i18n.T(ctx, "translation.Time_of_day"),
-			"calories":        i18n.T(ctx, "translation.Calories"),
-			"power":           i18n.T(ctx, "translation.Power"),
-			"heart-rate":      i18n.T(ctx, "translation.Heart_rate"),
+			"distance":        i18n.T(ctx, "translation.distance"),
+			"duration":        i18n.T(ctx, "translation.duration"),
+			"moving-duration": i18n.T(ctx, "translation.duration-without-pauses"),
+			"time-of-day":     i18n.T(ctx, "translation.time-of-day"),
+			"calories":        i18n.T(ctx, "translation.calories"),
+			"power":           i18n.T(ctx, "translation.power"),
+			"heart-rate":      i18n.T(ctx, "translation.heart-rate"),
 			"temperature":     i18n.T(ctx, "translation.temperature"),
-			"speed":           i18n.T(ctx, "translation.Speed"),
-			"elevation":       i18n.T(ctx, "translation.Elevation"),
-			"cadence":         i18n.T(ctx, "translation.Cadence"),
-			"averagespeed":    i18n.T(ctx, "translation.Average_speed"),
+			"speed":           i18n.T(ctx, "translation.speed"),
+			"elevation":       i18n.T(ctx, "translation.elevation"),
+			"cadence":         i18n.T(ctx, "translation.cadence"),
+			"averagespeed":    i18n.T(ctx, "translation.average-speed"),
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<workout-stats id=\"workout-stats\" color-mode=\"")
 		if templ_7745c5c3_Err != nil {

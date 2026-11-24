@@ -14,7 +14,7 @@ templ Show(s *database.RouteSegment) {
 				if s.Dirty {
 					<span class="dirty">
 						@helpers.IconFor("refresh")
-						{ i18n.T(ctx, "translation.refresh_in_progress") }
+						{ i18n.T(ctx, "translation.refresh-in-progress") }
 					</span>
 				}
 				@actions(s)
@@ -42,10 +42,10 @@ templ Show(s *database.RouteSegment) {
 									<th>
 										@helpers.IconFor("user")
 									</th>
-									<th>{ i18n.T(ctx, "translation.Workout") }</th>
-									<th class="lg:hidden 3xl:table-cell">{ i18n.T(ctx, "translation.Distance") }</th>
-									<th>{ i18n.T(ctx, "translation.Duration") }</th>
-									<th>{ i18n.T(ctx, "translation.Tempo") }</th>
+									<th>{ i18n.T(ctx, "translation.workout") }</th>
+									<th class="lg:hidden 3xl:table-cell">{ i18n.T(ctx, "translation.distance") }</th>
+									<th>{ i18n.T(ctx, "translation.duration") }</th>
+									<th>{ i18n.T(ctx, "translation.tempo") }</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -80,7 +80,7 @@ templ Show(s *database.RouteSegment) {
 			<div class="inner-form h-[300px] md:h-[500px] print:hidden grid grid-rows-[auto_1fr] overflow-hidden">
 				<h3>
 					@helpers.IconFor("trend")
-					{ i18n.T(ctx, "translation.Personal_trend") }
+					{ i18n.T(ctx, "translation.personal-trend") }
 				</h3>
 				@ShowStats(s)
 			</div>
@@ -89,7 +89,7 @@ templ Show(s *database.RouteSegment) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("note")
-							{ i18n.T(ctx, "translation.Notes") }
+							{ i18n.T(ctx, "translation.notes") }
 						</h3>
 						<div>
 							@templ.Raw(helpers.MarkdownToHTML(s.Notes))

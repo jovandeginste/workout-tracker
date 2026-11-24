@@ -78,11 +78,11 @@ func Map(w *database.Workout) templ.Component {
 			MinElevation:  w.MinElevation(),
 			MaxElevation:  w.MaxElevation(),
 			MaxSpeed:      w.MaxSpeed(),
-			SpeedName:     i18n.T(ctx, "translation.Average_speed"),
-			ElevationName: i18n.T(ctx, "translation.Elevation"),
-			SlopeName:     i18n.T(ctx, "translation.Slope"),
-			StreetsName:   i18n.T(ctx, "translation.Streets"),
-			AerialName:    i18n.T(ctx, "translation.Aerial"),
+			SpeedName:     i18n.T(ctx, "translation.average-speed"),
+			ElevationName: i18n.T(ctx, "translation.elevation"),
+			SlopeName:     i18n.T(ctx, "translation.slope"),
+			StreetsName:   i18n.T(ctx, "translation.streets"),
+			AerialName:    i18n.T(ctx, "translation.aerial"),
 			ShowElevation: true,
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<wt-map id=\"workout-map\" class=\"border-2 border-black rounded-xl h-[300px] sm:h-[400px] md:h-[600px] print:w-full print:h-[600px]\" map-config=\"")
@@ -113,7 +113,7 @@ func Map(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.Fullscreen")).Resolve(ctx)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 51, Col: 60}
 		}
@@ -126,7 +126,7 @@ func Map(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.Fullscreen")).Resolve(ctx)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 51, Col: 113}
 		}

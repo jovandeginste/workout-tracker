@@ -65,17 +65,17 @@ func OrderDirOptions() []TranslatedKey {
 
 func OrderByOptions() []TranslatedKey {
 	return []TranslatedKey{
-		{"date", "translation.Date"},
+		{"date", "translation.date"},
 
-		{"total_distance", "translation.Total_distance"},
-		{"total_duration", "translation.Total_duration"},
-		{"total_weight", "translation.Total_weight"},
-		{"total_repetitions", "translation.Total_repetitions"},
-		{"total_up", "translation.Total_up"},
-		{"total_down", "translation.Total_down"},
+		{"total_distance", "translation.total-distance"},
+		{"total_duration", "translation.total-duration"},
+		{"total_weight", "translation.total-weight"},
+		{"total_repetitions", "translation.total-repetitions"},
+		{"total_up", "translation.total-up"},
+		{"total_down", "translation.total-down"},
 
-		{"average_speed_no_pause", "translation.Average_speed"},
-		{"max_speed", "translation.Max_speed"},
+		{"average_speed_no_pause", "translation.average-speed"},
+		{"max_speed", "translation.max-speed"},
 	}
 }
 

@@ -1,13 +1,13 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="fa">
     <body>
-      <trans-unit id="translation.Tempo">
+      <trans-unit id="translation.tempo">
         <source>Tempo</source>
       </trans-unit>
-      <trans-unit id="translation.Total_up">
+      <trans-unit id="translation.total-up">
         <source>Total up</source>
       </trans-unit>
-      <trans-unit id="translation.Total_down">
+      <trans-unit id="translation.total-down">
         <source>Total down</source>
       </trans-unit>
     </body>

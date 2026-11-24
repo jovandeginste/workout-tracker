@@ -75,11 +75,11 @@ func (a *App) addRouteSegment(c *echo.Context) error {
 	}
 
 	if len(errMsg) > 0 {
-		a.addErrorN(c, "alerts.route_segments_added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
+		a.addErrorN(c, "alerts.route-segments-added", len(errMsg), i18n.M{"count": len(errMsg), "list": strings.Join(errMsg, "; ")})
 	}
 
 	if len(msg) > 0 {
-		a.addNoticeN(c, "notices.route_segments_added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
+		a.addNoticeN(c, "notices.route-segments-added", len(msg), i18n.M{"count": len(msg), "list": strings.Join(msg, "; ")})
 	}
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segments"))
@@ -132,7 +132,7 @@ func (a *App) routeSegmentsRefreshHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_workout_s_has_been_refreshed", rs.Name)
+	a.addNoticeT(c, "translation.the-workout-s-has-been-refreshed", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }
@@ -147,7 +147,7 @@ func (a *App) routeSegmentsDeleteHandler(c *echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_workout_s_has_been_deleted", rs.Name)
+	a.addNoticeT(c, "translation.the-workout-s-has-been-deleted", rs.Name)
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("route-segments"))
@@ -173,7 +173,7 @@ func (a *App) routeSegmentsUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-edit", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_route_segment_s_has_been_updated", rs.Name)
+	a.addNoticeT(c, "translation.the-route-segment-s-has-been-updated", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }
@@ -194,7 +194,7 @@ func (a *App) routeSegmentFindMatches(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.Start_searching_in_the_background_for_matching_workouts_for_route_segment_s", rs.Name)
+	a.addNoticeT(c, "translation.start-searching-in-the-background-for-matching-workouts-for-route-segment-s", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }

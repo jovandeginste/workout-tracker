@@ -43,7 +43,7 @@ func (a *App) equipmentHandler(c *echo.Context) error {
 
 	target, err := a.userForUsername(c, username)
 	if err != nil {
-		a.addErrorT(c, "translation.No_user_found_with_username_s", username)
+		a.addErrorT(c, "translation.no-user-found-with-username-s", username)
 
 		return Render(c, http.StatusOK, equipment.List(nil, username))
 	}
@@ -86,7 +86,7 @@ func (a *App) equipmentDeleteHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("equipment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_equipment_s_has_been_deleted", e.Name)
+	a.addNoticeT(c, "translation.the-equipment-s-has-been-deleted", e.Name)
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("equipment"))
@@ -113,7 +113,7 @@ func (a *App) equipmentUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("equipment-edit", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.The_equipment_s_has_been_updated", e.Name)
+	a.addNoticeT(c, "translation.the-equipment-s-has-been-updated", e.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("equipment-show", c.Param("id")))
 }

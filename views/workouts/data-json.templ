@@ -15,29 +15,29 @@ type dataset struct {
 
 func translationMap(ctx context.Context) map[string]string {
 	return map[string]string{
-		"distance":     i18n.T(ctx, "translation.Distance"),
-		"duration":     i18n.T(ctx, "translation.Duration"),
-		"calories":     i18n.T(ctx, "translation.Calories"),
-		"power":        i18n.T(ctx, "translation.Power"),
-		"heart-rate":   i18n.T(ctx, "translation.Heart_rate"),
+		"distance":     i18n.T(ctx, "translation.distance"),
+		"duration":     i18n.T(ctx, "translation.duration"),
+		"calories":     i18n.T(ctx, "translation.calories"),
+		"power":        i18n.T(ctx, "translation.power"),
+		"heart-rate":   i18n.T(ctx, "translation.heart-rate"),
 		"temperature":  i18n.T(ctx, "translation.temperature"),
-		"speed":        i18n.T(ctx, "translation.Speed"),
-		"elevation":    i18n.T(ctx, "translation.Elevation"),
-		"cadence":      i18n.T(ctx, "translation.Cadence"),
-		"averagespeed": i18n.T(ctx, "translation.Average_speed"),
-		"slope":        i18n.T(ctx, "translation.Slope"),
+		"speed":        i18n.T(ctx, "translation.speed"),
+		"elevation":    i18n.T(ctx, "translation.elevation"),
+		"cadence":      i18n.T(ctx, "translation.cadence"),
+		"averagespeed": i18n.T(ctx, "translation.average-speed"),
+		"slope":        i18n.T(ctx, "translation.slope"),
 	}
 }
 
 func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 	data := map[string]*dataset{
 		"position":        {Label: "", Data: []any{}},
-		"time":            {Label: i18n.T(ctx, "translation.Time"), Data: []any{}},
-		"distance":        {Label: i18n.T(ctx, "translation.Distance"), Data: []any{}},
-		"speed":           {Label: i18n.T(ctx, "translation.Speed"), Data: []any{}},
-		"duration":        {Label: i18n.T(ctx, "translation.Duration"), Data: []any{}},
-		"moving-duration": {Label: i18n.T(ctx, "translation.Duration_without_pauses"), Data: []any{}},
-		"slope":           {Label: i18n.T(ctx, "translation.Slope"), Data: []any{}},
+		"time":            {Label: i18n.T(ctx, "translation.time"), Data: []any{}},
+		"distance":        {Label: i18n.T(ctx, "translation.distance"), Data: []any{}},
+		"speed":           {Label: i18n.T(ctx, "translation.speed"), Data: []any{}},
+		"duration":        {Label: i18n.T(ctx, "translation.duration"), Data: []any{}},
+		"moving-duration": {Label: i18n.T(ctx, "translation.duration-without-pauses"), Data: []any{}},
+		"slope":           {Label: i18n.T(ctx, "translation.slope"), Data: []any{}},
 	}
 
 	translations := translationMap(ctx)
