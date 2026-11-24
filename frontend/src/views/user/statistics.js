@@ -112,8 +112,8 @@ class WtStatistic extends HTMLElement {
         this.type.includes("Distance")
           ? "distance"
           : isElevation
-          ? "elevation"
-          : "speed"
+            ? "elevation"
+            : "speed"
       ];
     const nauticalUnit = this.type.includes("Distance") ? "nm" : "kn";
 
