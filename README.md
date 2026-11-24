@@ -11,6 +11,8 @@
 
 [![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#workout-tracker:matrix.org)
 
+> AI is used as a tool in this project. [Read more](#use-of-ai).
+
 A workout tracking web application for personal use (or family, friends), geared
 towards running and other GPX-based activities
 
@@ -509,6 +511,15 @@ make dev-docker # Runs the server in a docker compose setup
 make dev-docker-sqlite # Runs the server in a docker compose setup with SQLite
 make dev-docker-clean # Removes volumes created by the dev-docker targets
 ```
+
+## Use of AI
+
+AI is used for debugging, code writing, algorithm design and similar tasks. It
+is a tool, not an author.
+
+Every change in this project is either written by a human, or reviewed by a
+human before it is merged. No code, documentation or translation ends up here
+without a person checking it.
 
 ## What is this, technically?
 
