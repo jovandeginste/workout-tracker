@@ -3,7 +3,7 @@ package database
 import (
 	"testing"
 
-	"github.com/ringsaturn/tzf"
+	"github.com/ringsaturn/tzf/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -17,9 +17,7 @@ func TestInitTZFinder_Success(t *testing.T) {
 	err := InitTZFinder()
 	require.NoError(t, err, "InitTZFinder should succeed in standard environment")
 
-	// Verify that tzFinder is initialized (i.e., not the zero value tzf.F{}).
-	// Since tzf.F is a struct containing data structures (R-tree), a successful
-	// initialization should result in a non-zero value.
+	// Verify that tzFinder is initialized (i.e., not the nil finder).
 	var zeroF tzf.F
 	require.NotEqual(t, zeroF, tzFinder, "tzFinder should be initialized after successful call")
 }

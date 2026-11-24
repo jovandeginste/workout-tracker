@@ -32,7 +32,7 @@ require (
 	github.com/muktihari/fit v0.28.7
 	github.com/orandin/slog-gorm v1.4.0
 	github.com/paulmach/orb v0.14.0
-	github.com/ringsaturn/tzf v1.2.5
+	github.com/ringsaturn/tzf/v2 v2.3.0
 	github.com/sersh88/timeago v1.0.0
 	github.com/spf13/cast v1.10.0
 	github.com/spf13/cobra v1.10.2
@@ -118,7 +118,6 @@ require (
 	github.com/philhofer/vec v0.0.0-20140421144027-536fc796d369 // indirect
 	github.com/pjbgf/sha1cd v0.6.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
-	github.com/ringsaturn/orb v0.15.0 // indirect
 	github.com/ringsaturn/tzf-dist v0.0.2026-f // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.12.0 // indirect
@@ -129,8 +128,6 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/tdewolff/parse/v2 v2.8.12 // indirect
 	github.com/tdewolff/test v1.0.12 // indirect
-	github.com/tidwall/geoindex v1.7.0 // indirect
-	github.com/tidwall/rtree v1.11.1 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect

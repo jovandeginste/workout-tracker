@@ -112,8 +112,8 @@ class WtStatistic extends HTMLElement {
         this.type.includes("Distance")
           ? "distance"
           : isElevation
-            ? "elevation"
-            : "speed"
+          ? "elevation"
+          : "speed"
       ];
     const nauticalUnit = this.type.includes("Distance") ? "nm" : "kn";
 
@@ -248,7 +248,9 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     selector.className = "input-ellipsis";
     selector.innerHTML = `
       <option value="trend">${this.translations.trend || "Trend"}</option>
-      <option value="break">${this.translations.trendBreak || "Trend break"}</option>
+      <option value="break">${
+        this.translations.trendBreak || "Trend break"
+      }</option>
     `;
     selector.value = this.trendBreakDetection ? "break" : "trend";
     selector.addEventListener("change", () => {
