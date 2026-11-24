@@ -268,12 +268,7 @@ func (a *App) workoutsToggleLockHandler(c *echo.Context) error {
 }
 
 func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workouts"), err)
-	}
-
-	workout, err := database.GetWorkoutDetails(a.db, id)
+	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}

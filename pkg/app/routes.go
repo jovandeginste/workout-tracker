@@ -131,7 +131,7 @@ func (a *App) ConfigureWebserver() error {
 	a.GET(publicGroup, "/assets", func(c *echo.Context) error {
 		return c.Redirect(http.StatusFound, a.Reverse("dashboard"))
 	}, "assets")
-	a.GET(publicGroup, "/share/:uuid", a.workoutShowShared, "share")
+	a.GET(publicGroup, "/share/:uuid", a.workoutShowShared, "share", a.OptionalUserMiddleware)
 
 	userGroup := publicGroup.Group("/user")
 	a.GET(userGroup, "/signin", a.userLoginHandler, "user-login")
@@ -162,6 +162,28 @@ func (a *App) ValidateAdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
 		return next(ctx)
 	}
+}
+
+// OptionalUserMiddleware loads the user when the request carries a valid token,
+// but lets the request continue anonymously otherwise. This allows public pages
+// to show extra information to the users that are logged in.
+func (a *App) OptionalUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	jwtMiddleware := echojwt.WithConfig(echojwt.Config{
+		SigningKey:             a.jwtSecret(),
+		TokenLookup:            "cookie:token",
+		ContinueOnIgnoredError: true,
+		ErrorHandler: func(*echo.Context, error) error {
+			return nil
+		},
+	})
+
+	return jwtMiddleware(func(c *echo.Context) error {
+		// A missing, invalid or expired token, or an unknown or inactive user,
+		// leaves the request anonymous.
+		_ = a.setUser(c)
+
+		return next(c)
+	})
 }
 
 func (a *App) ValidateUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {

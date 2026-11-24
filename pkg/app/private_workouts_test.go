@@ -237,7 +237,83 @@ func TestPrivateWorkouts_CanBeSetThroughTheWebForm(t *testing.T) {
 	update(false)
 }
 
+func shareViaRouter(t *testing.T, a *App, u *database.User, uuid string) (int, string) {
+	t.Helper()
+
+	req := httptest.NewRequest(http.MethodGet, a.Reverse("share", uuid), nil)
+
+	if u != nil {
+		tokenReq := httptest.NewRequest(http.MethodGet, "/", nil)
+		tokenRec := httptest.NewRecorder()
+		require.NoError(t, a.createToken(u, a.echo.NewContext(tokenReq, tokenRec)))
+
+		cookies := tokenRec.Result().Cookies()
+		require.NotEmpty(t, cookies)
+
+		req.AddCookie(cookies[0])
+	}
+
+	rec := httptest.NewRecorder()
+
+	a.echo.ServeHTTP(rec, req)
+
+	return rec.Code, rec.Body.String()
+}
+
 func TestPrivateWorkouts_SharedLinkIsHidden(t *testing.T) {
+	a := configuredApp(t)
+
+	owner := privateUser(t, a, "owner", false)
+	other := privateUser(t, a, "other", false)
+	admin := privateUser(t, a, "boss", true)
+
+	privateUUID := "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a"
+	publicUUID := "1f9b0b0b-4a1e-4e5c-8e1f-1b3b2b2b2b2b"
+
+	privateWorkout := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
+	makePrivate(t, a, privateWorkout)
+	require.NoError(t, a.db.Model(privateWorkout).Update("public_uuid", privateUUID).Error)
+
+	publicWorkout := createAPIWorkout(t, a, owner, "public workout", database.WorkoutTypeRunning, time.Date(2025, 1, 2, 10, 0, 0, 0, time.UTC))
+	require.NoError(t, a.db.Model(publicWorkout).Update("public_uuid", publicUUID).Error)
+
+	t.Run("a public workout is still visible to anonymous visitors", func(t *testing.T) {
+		status, body := shareViaRouter(t, a, nil, publicUUID)
+
+		assert.Equal(t, http.StatusOK, status)
+		assert.Contains(t, body, "public workout")
+	})
+
+	t.Run("a private workout is hidden from anonymous visitors", func(t *testing.T) {
+		status, body := shareViaRouter(t, a, nil, privateUUID)
+
+		assert.Equal(t, http.StatusFound, status)
+		assert.NotContains(t, body, "secret workout")
+	})
+
+	t.Run("a private workout is hidden from other users", func(t *testing.T) {
+		status, body := shareViaRouter(t, a, other, privateUUID)
+
+		assert.Equal(t, http.StatusFound, status)
+		assert.NotContains(t, body, "secret workout")
+	})
+
+	t.Run("the owner sees the shared private workout", func(t *testing.T) {
+		status, body := shareViaRouter(t, a, owner, privateUUID)
+
+		assert.Equal(t, http.StatusOK, status)
+		assert.Contains(t, body, "secret workout")
+	})
+
+	t.Run("an admin sees the shared private workout", func(t *testing.T) {
+		status, body := shareViaRouter(t, a, admin, privateUUID)
+
+		assert.Equal(t, http.StatusOK, status)
+		assert.Contains(t, body, "secret workout")
+	})
+}
+
+func TestPrivateWorkouts_RouteSegmentCreationIsOwnerScoped(t *testing.T) {
 	a := configuredApp(t)
 
 	owner := privateUser(t, a, "owner", false)
@@ -246,15 +322,49 @@ func TestPrivateWorkouts_SharedLinkIsHidden(t *testing.T) {
 	w := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	makePrivate(t, a, w)
 
-	require.NoError(t, a.db.Model(w).Update("public_uuid", "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a").Error)
+	var md database.MapData
 
-	params := echo.PathValue{Name: "uuid", Value: "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a"}
+	require.NoError(t, a.db.Where("workout_id = ?", w.ID).First(&md).Error)
+	require.NoError(t, a.db.Create(&database.MapDataDetails{
+		MapDataID: md.ID,
+		Points: []database.MapPoint{
+			{Lat: 50, Lng: 4},
+			{Lat: 50.001, Lng: 4},
+			{Lat: 50.002, Lng: 4},
+		},
+	}).Error)
 
-	status, body := renderAs(t, a, other, a.Reverse("share", "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a"), a.workoutShowShared, params)
-	assert.Equal(t, http.StatusFound, status)
-	assert.NotContains(t, body, "secret workout")
+	createSegment := func(u *database.User) int {
+		form := url.Values{"name": {"segment"}, "start": {"1"}, "end": {"3"}}
 
-	status, body = renderAs(t, a, owner, a.Reverse("share", "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a"), a.workoutShowShared, params)
-	assert.Equal(t, http.StatusOK, status)
-	assert.Contains(t, body, "secret workout")
+		req := httptest.NewRequest(http.MethodPost, a.Reverse("workout-route-segment-create", w.ID), strings.NewReader(form.Encode()))
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationForm)
+		rec := httptest.NewRecorder()
+
+		c := a.echo.NewContext(req, rec)
+		a.setContext(c)
+		c.Set("user_info", u)
+		c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
+		c.SetPathValues(echo.PathValues{{Name: "id", Value: strconv.FormatUint(w.ID, 10)}})
+
+		s := sessionLoadAndSave(a.sessionManager)
+		require.NoError(t, s(a.workoutsCreateRouteSegmentFromWorkoutHandler)(c))
+
+		return rec.Code
+	}
+
+	segments := func() int64 {
+		t.Helper()
+
+		var count int64
+		require.NoError(t, a.db.Model(&database.RouteSegment{}).Count(&count).Error)
+
+		return count
+	}
+
+	assert.Equal(t, http.StatusFound, createSegment(other))
+	assert.Zero(t, segments())
+
+	assert.Equal(t, http.StatusFound, createSegment(owner))
+	assert.EqualValues(t, 1, segments())
 }
