@@ -20,7 +20,7 @@
     "chartjs-plugin-trendline": "^3.2.4",
     "chartjs-plugin-zoom": "^3.0.2",
     "date-fns": "^4.1.0",
-    "fullcalendar": "^6.1.11",
+    "fullcalendar": "^7.1.5",
     "htmx.org": "^2.0.11",
     "leaflet": "^1.9.4",
     "leaflet.heat": "github:Leaflet/Leaflet.heat",
@@ -29,6 +29,7 @@
     "material-icons": "^1.13.12",
     "shareon": "^2.5.0",
     "simpleheat": "^1.0.0",
+    "temporal-polyfill": "^1.0.8",
     "xliff": "^6.2.2"
   },
   "scripts": {

@@ -1,4 +1,9 @@
-import { Calendar } from "fullcalendar";
+import { Calendar } from "fullcalendar/all";
+import themePlugin from "fullcalendar/themes/classic";
+
+import "fullcalendar/skeleton.css";
+import "fullcalendar/themes/classic/theme.css";
+import "fullcalendar/themes/classic/palette.css";
 
 class ProfileCalendar extends HTMLElement {
   constructor() {
@@ -11,11 +16,16 @@ class ProfileCalendar extends HTMLElement {
 
   connectedCallback() {
     var calendar = new Calendar(this, {
+      plugins: [themePlugin],
       timeZone: this.getAttribute("timezone"),
       initialView: "dayGridMonth",
       locale: Intl.DateTimeFormat().resolvedOptions().locale,
       firstDay: 1,
       aspectRatio: 2,
+      headerToolbar: {
+        start: "title",
+        end: "today prev,next",
+      },
       eventContent: function (arg) {
         let eventSpan = document.createElement("div");
 

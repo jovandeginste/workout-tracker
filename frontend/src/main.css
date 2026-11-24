@@ -221,6 +221,12 @@
     @apply dark:bg-neutral-800 dark:border-neutral-800 dark:hover:border-neutral-500;
   }
 
+  /* Let the calendar use the background of its container, instead of painting
+     its own (near-black in dark mode). */
+  profile-calendar {
+    --fc-classic-background: transparent;
+  }
+
   .version-notice {
     @apply bg-sky-100 border-sky-800 text-sky-800;
     @apply dark:bg-sky-100 dark:border-sky-400 dark:text-sky-700;

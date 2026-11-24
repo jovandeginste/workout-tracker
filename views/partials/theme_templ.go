@@ -26,19 +26,23 @@ func Theme() templ.Component {
 		}
 		ctx = templ.InitializeContext(ctx)
 		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script>\n\t\twindow.setColorScheme = function (dark) {\n\t\t\tdocument.documentElement.classList.toggle(\"dark\", dark);\n\t\t\tdocument.documentElement.setAttribute(\n\t\t\t\t\"data-color-scheme\",\n\t\t\t\tdark ? \"dark\" : \"light\",\n\t\t\t);\n\t\t};\n\t</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		switch helpers.CurrentUser(ctx).Profile.Theme {
 		case "light":
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script>\n\t\t\tdocument.documentElement.classList.toggle(\"dark\", false);\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<script>\n\t\t\tsetColorScheme(false);\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		case "dark":
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<script>\n\t\t\tdocument.documentElement.classList.toggle(\"dark\", true);\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<script>\n\t\t\tsetColorScheme(true);\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		default:
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<script>\n\t\t\tvar browserThemeDark = window.matchMedia(\n\t\t\t\t\"(prefers-color-scheme: dark)\",\n\t\t\t).matches;\n\t\t\tdocument.documentElement.classList.toggle(\"dark\", browserThemeDark);\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<script>\n\t\t\tsetColorScheme(\n\t\t\t\twindow.matchMedia(\"(prefers-color-scheme: dark)\").matches,\n\t\t\t);\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
