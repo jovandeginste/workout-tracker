@@ -31,12 +31,13 @@ func translationMap(ctx context.Context) map[string]string {
 
 func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 	data := map[string]*dataset{
-		"position": {Label: "", Data: []any{}},
-		"time":     {Label: i18n.T(ctx, "translation.Time"), Data: []any{}},
-		"distance": {Label: i18n.T(ctx, "translation.Distance"), Data: []any{}},
-		"speed":    {Label: i18n.T(ctx, "translation.Speed"), Data: []any{}},
-		"duration": {Label: i18n.T(ctx, "translation.Duration"), Data: []any{}},
-		"slope":    {Label: i18n.T(ctx, "translation.Slope"), Data: []any{}},
+		"position":        {Label: "", Data: []any{}},
+		"time":            {Label: i18n.T(ctx, "translation.Time"), Data: []any{}},
+		"distance":        {Label: i18n.T(ctx, "translation.Distance"), Data: []any{}},
+		"speed":           {Label: i18n.T(ctx, "translation.Speed"), Data: []any{}},
+		"duration":        {Label: i18n.T(ctx, "translation.Duration"), Data: []any{}},
+		"moving-duration": {Label: i18n.T(ctx, "translation.Duration_without_pauses"), Data: []any{}},
+		"slope":           {Label: i18n.T(ctx, "translation.Slope"), Data: []any{}},
 	}
 
 	translations := translationMap(ctx)
@@ -53,6 +54,11 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 	if d == nil {
 		return
 	}
+
+	// The moving duration is calculated here, and not stored with the points,
+	// so that it also works for workouts that were processed before this
+	// feature existed.
+	movingDuration := 0.0
 
 	for _, p := range d.Points {
 		s := 0.0
@@ -71,6 +77,12 @@ func addDetails(ctx context.Context, data map[string]*dataset, w *database.Worko
 		data["time"].Data = append(data["time"].Data, p.Time)
 		data["distance"].Data = append(data["distance"].Data, helpers.HumanDistanceForWorkout(ctx, w, p.TotalDistance))
 		data["duration"].Data = append(data["duration"].Data, p.TotalDuration.Seconds())
+
+		if p.IsMoving() {
+			movingDuration += p.Duration.Seconds()
+		}
+
+		data["moving-duration"].Data = append(data["moving-duration"].Data, movingDuration)
 		data["slope"].Data = append(data["slope"].Data, p.SlopeGrade)
 		data["speed"].Data = append(data["speed"].Data, cast.ToFloat64(helpers.HumanSpeedForWorkout(ctx, w, s)))
 

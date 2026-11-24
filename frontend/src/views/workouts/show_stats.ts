@@ -33,7 +33,7 @@ export class WorkoutStats extends LitElement {
   })
   colorMode = "browser";
 
-  // type can be "time" or "distance"
+  // type can be "time", "duration" or "distance"
   @property()
   type = "time";
 
@@ -76,6 +76,18 @@ export class WorkoutStats extends LitElement {
 
   private timeLabels: number[] = [];
 
+  // xValues returns the values for the x-axis of the current type.
+  private get xValues(): number[] {
+    switch (this.type) {
+      case "distance":
+        return this.data["distance"].Data.map((d: string) => parseFloat(d));
+      case "duration":
+        return this.data["moving-duration"].Data.map((d: number) => Number(d));
+      default:
+        return this.timeLabels;
+    }
+  }
+
   public constructor() {
     super();
 
@@ -114,13 +126,10 @@ export class WorkoutStats extends LitElement {
       end = end.valueOf();
     }
 
-    if (this.type === "distance") {
-      start = parseFloat(
-        this.data["distance"].Data[this.timeLabels.indexOf(start)],
-      );
-      end = parseFloat(
-        this.data["distance"].Data[this.timeLabels.indexOf(end)],
-      );
+    if (this.type === "distance" || this.type === "duration") {
+      const values = this.xValues;
+      start = values[this.timeLabels.indexOf(start as number)];
+      end = values[this.timeLabels.indexOf(end as number)];
     }
 
     this.chart.zoomScale("x", { min: start as number, max: end as number });
@@ -134,19 +143,32 @@ export class WorkoutStats extends LitElement {
     this.chart.resetZoom();
   }
 
+  private get xRange(): { min: number; max: number } {
+    const values = this.xValues;
+
+    return { min: values[0], max: values[values.length - 1] };
+  }
+
+  private formatXValue(val: number): string {
+    switch (this.type) {
+      case "distance":
+        return `${val % 1 ? val.toFixed(1) : val} ${
+          this.preferredUnits.distance
+        }`;
+      case "duration":
+        return formatDuration(val);
+      default:
+        return new Date(val).toTimeString().substr(0, 5);
+    }
+  }
+
   public willUpdate(cProps: PropertyValues<this>) {
     if (cProps.has("data") || cProps.has("type")) {
-      let labels: (number | Date)[];
       this.timeLabels = this.data["time"].Data.map((t: number) =>
         new Date(t).valueOf(),
       );
-      if (this.type === "time") {
-        labels = this.timeLabels;
-      } else if (this.type === "distance") {
-        labels = this.data["distance"].Data.map((d: string) => parseFloat(d));
-      }
 
-      this.chartData.labels = labels;
+      this.chartData.labels = this.xValues;
     }
 
     if (cProps.has("data") || !cProps.has("preferredUnits")) {
@@ -198,6 +220,7 @@ export class WorkoutStats extends LitElement {
             <nav>
               <a
                 href="#"
+                title=${this.translations?.["time-of-day"] ?? ""}
                 class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
                   this.type === "time" ? "bg-indigo-500 text-white" : ""
                 }"
@@ -208,6 +231,18 @@ export class WorkoutStats extends LitElement {
                 ><span class="icon-[fa6-regular--clock]"></span></a>
               <a
                 href="#"
+                title=${this.translations?.["moving-duration"] ?? ""}
+                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
+                  this.type === "duration" ? "bg-indigo-500 text-white" : ""
+                }"
+                @click=${(e: Event) => {
+                  e.preventDefault();
+                  this.type = "duration";
+                }}
+                ><span class="icon-[fa6-solid--stopwatch]"></span></a>
+              <a
+                href="#"
+                title=${this.translations?.distance ?? ""}
                 class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
                   this.type === "distance" ? "bg-indigo-500 text-white" : ""
                 }"
@@ -240,31 +275,11 @@ export class WorkoutStats extends LitElement {
         x: {
           type: this.type === "time" ? "time" : "linear",
           time: this.type === "time" ? { unit: "minute" } : undefined,
-          min:
-            this.type === "time"
-              ? new Date(this.data["time"].Data[0]).valueOf()
-              : parseFloat(this.data["distance"].Data[0]),
-          max:
-            this.type === "time"
-              ? new Date(
-                  this.data["time"].Data[this.data["time"].Data.length - 1],
-                ).valueOf()
-              : parseFloat(
-                  this.data["distance"].Data[
-                    this.data["distance"].Data.length - 1
-                  ],
-                ),
+          min: this.xRange.min,
+          max: this.xRange.max,
           ticks: {
             color: fgColor,
-            callback: (val: number) => {
-              if (this.type === "distance") {
-                return `${val % 1 ? val.toFixed(1) : val} ${
-                  this.preferredUnits.distance
-                }`;
-              }
-
-              return new Date(val as number).toTimeString().substr(0, 5);
-            },
+            callback: (val: number) => this.formatXValue(val),
           },
           grid: { color: gridColor },
         },
@@ -347,7 +362,8 @@ export class WorkoutStats extends LitElement {
               if (this.type === "distance") {
                 return `${x.toFixed(2)} ${this.preferredUnits.distance}`;
               }
-              return new Date(x).toTimeString().substr(0, 5);
+
+              return this.formatXValue(x);
             },
             label: (tooltipItem) => {
               const settings = metricSettings[tooltipItem.dataset.yAxisID];

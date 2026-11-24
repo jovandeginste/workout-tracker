@@ -236,6 +236,17 @@ func (m *MapPoint) AverageSpeed() float64 {
 	return m.Distance / m.Duration.Seconds()
 }
 
+// stoppedSpeedThreshold is the speed (in km/h) at or below which the athlete is
+// considered to be standing still. It matches the threshold gpxgo uses to
+// calculate the stopped time.
+const stoppedSpeedThreshold = 1.0
+
+// IsMoving reports whether the athlete was moving between the previous point
+// and this point.
+func (m *MapPoint) IsMoving() bool {
+	return m.AverageSpeed()*3.6 > stoppedSpeedThreshold
+}
+
 func (m *MapPoint) DistanceTo(m2 *MapPoint) float64 {
 	if m == nil || m2 == nil {
 		return math.Inf(1)
