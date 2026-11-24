@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@lit/localize": "^0.12.2",
-    "apexcharts": "^3.48.0",
+    "apexcharts": "^8.9.1",
     "chart.js": "^4.5.0",
     "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-plugin-trendline": "^3.2.4",
