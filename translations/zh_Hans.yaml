@@ -1,4 +1,10 @@
 zh-Hans:
+  admin:
+    leave-blank-to-keep-current-password: 留空以保持当前密码
+    manage: 管理
+    manage-user: 管理用户 '%s'
+    manage-users: 管理用户
+    role: 管理员
   alerts:
     route-segments-added:
       other: 添加路线段时遇到 1 个问题：%{list}
@@ -8,6 +14,7 @@ zh-Hans:
   climb:
     average-slope: 平均坡度
     category: 等级
+    create-route-segment: 从此路段创建路线段
     distance: 距离
     elevation-gain: 爬升
     elevation-gain-loss: 海拔升降
@@ -15,8 +22,71 @@ zh-Hans:
     start: 起点
     type-climb: '爬升 #%d'
     type-descent: '下降 #%d'
+  common:
+    actions: 操作
+    active: 活跃
+    all: 全部
+    are-you-sure: 您确定吗？
+    ascending: 升序
+    cancel: 取消
+    confirm-delete: 您确定要删除这个 %s 吗？
+    continue: 继续
+    created: 已创建
+    date: 日期
+    delete: 删除
+    descending: 降序
+    description: 描述
+    details: 详细信息
+    download: 下载
+    edit: 编辑
+    file: 文件
+    filter: 筛选
+    height: 高度
+    last: 最后
+    name: 名称
+    notes: 备注
+    refresh: 刷新
+    reset-changes: 重置更改
+    sort-by: 排序依据
+    type: 类型
+    update: 更新
+    updated: 已更新
+    use-a-file: 使用文件
+    user: 用户
+    weight: 体重
+    workout: 锻炼
+    workouts: 锻炼记录
+  dashboard:
+    for-user: "%s 的仪表板"
+    other-users: 其他用户
+    recent-activity: 最近活动
+    records-for: "%s 的记录"
   equipment:
+    add: 添加设备
+    default-workout-types: 默认锻炼类型
+    notice:
+      deleted: 设备 '%s' 已删除。
+      updated: 设备 '%s' 已更新。
     update: 更新设备
+  help:
+    how-to-use: 如何使用
+    please-translate-via-weblate: 请通过 Weblate 帮助翻译
+    resources: 资源
+    translating: |
+      我们希望您能帮助翻译！
+
+      请[通过 Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)协助翻译
+    try-one-of-these-sites: 试试这些网站：
+    you-can-edit-your-gpx-files: 您可以在上传前编辑 GPX 文件：
+    you-can-find-inspiration-here: 您可以在此找到灵感：
+  map:
+    aerial: 航拍
+    streets: 街道
+  measurements:
+    latest: 最新测量
+    none: 未找到测量结果
+    steps: 步数
+    update: 更新测量
   menu:
     dashboard: 仪表板
     equipment: 设备
@@ -50,8 +120,25 @@ zh-Hans:
     workouts-added:
       other: 添加了 %{count} 份新锻炼：%{list}
   route-segment:
+    add: 添加路线段
+    bidirectional: 双向
+    circular: 循环
+    create: 创建路线段
+    end: 结束
+    find-matches: 查找匹配项
+    matches: 匹配
+    notice:
+      created: 路线段 '%s' 已创建 - 我们在后台搜索匹配项。
+      searching: 开始在后台搜索与路线段 '%s' 匹配的锻炼。
+      updated: 路线段 '%s' 已更新。
+    start: 开始
     update: 更新路线段
   settings:
+    application: 应用程序设置
+    configuration-file: 配置文件
+    disable-account-registration: 禁用账号注册
+    environment-variables: 环境变量
+    overwritten-by: 这些设置可能会被以下内容覆盖：
     update: 更新设置
   sports:
     alpine-climbing: 高山攀登
@@ -90,182 +177,11 @@ zh-Hans:
     unknown: 未知
     walking: 步行
     weight-lifting: 举重
-  translation:
-    accuracy: 精确度
-    actions: 操作
-    active: 活跃
-    add-a-workout: 添加锻炼
-    add-equipment: 添加设备
-    add-route-segment: 添加路线段
-    add-workout: 添加锻炼
-    add-workouts: 添加锻炼
-    admin: 管理员
-    aerial: 航拍
-    all: 全部
-    all-workouts-will-be-refreshed-in-the-coming-minutes: 所有锻炼将在接下来的几分钟内刷新。
-    api-key-updated: API 密钥已更新
-    application-settings: 应用程序设置
-    are-you-sure: 您确定吗？
-    are-you-sure-you-want-to-delete-this-s: 您确定要删除这个 %s 吗？
-    ascending: 升序
-    autodetect: 自动检测
-    average-cadence: 平均步频
-    average-per-minute: 每分钟平均
-    average-speed: 平均速度
-    average-speed-no-pause: 平均速度（无暂停）
-    average-tempo: 平均节奏
-    average-tempo-no-pause: 平均节奏（无暂停）
-    bidirectional: 双向
-    breakdown: 分类明细
-    cadence: 步频
-    cadence-avg-max: 踏频（平均/最大）
-    calories: 卡路里
-    calories-burned: 消耗卡路里
-    cancel: 取消
-    circular: 循环
-    climbs: 爬坡
-    continue: 继续
-    copy-publicly-shareable-link: 复制链接
-    create-a-new-account: 创建新账号
-    create-route-segment: 创建路线段
-    create-route-segment-from-climb: 从此路段创建路线段
-    created: 已创建
-    dashboard-for-s: "%s 的仪表板"
-    date: 日期
-    default-workout-types: 默认锻炼类型
-    delete: 删除
-    delete-public-share: 删除链接
-    descending: 降序
-    description: 描述
-    details: 详细信息
-    disable-account-registration: 禁用账号注册
-    distance: 距离
-    download: 下载
-    duration: 持续时间
-    edit: 编辑
-    elevation: 海拔
-    end: 结束
-    enhanced-speed: 增强速度
-    environment-variables: 环境变量
-    est-calories-burned: 消耗卡路里（估算）
-    estimated-based-on-the-activity: 基于活动的估算，并根据您最后记录的体重
-    extra-metrics: 额外指标
-    file: 文件
-    filter: 筛选
-    filter-workouts: 筛选锻炼
-    find-matches: 查找匹配项
-    heading: 标题
-    heart-rate: 心率
-    height: 高度
-    help-translating: |
-      我们希望您能帮助翻译！
-
-      请[通过 Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)协助翻译
-    how-to-use: 如何使用
-    i-completed-a-workout-s: 我完成了一次锻炼：%s。
-    it-took-me-s-to-go-s-i-averaged-s: 我用 %s 去 %s，平均速度为 %s。
-    last: 最后
-    latest-measurements: 最新测量
-    leave-blank-to-keep-current-password: 留空以保持当前密码
-    location: 位置
-    lock-workout: 锁定或解锁此锻炼的属性，禁止自动更新。
-    logout: 注销
-    manage: 管理
-    manage-user-s: 管理用户 '%s'
-    manage-users: 管理用户
-    manual: 手动
-    matches: 匹配
-    matching-route-segments: 匹配的路线段
-    max-cadence: 最大步频
-    max-elevation: 最大海拔
-    max-speed: 最高速度
-    min-elevation: 最小海拔
-    name: 名称
-    no-equipment: 无设备
-    no-measurements-found: 未找到测量结果
-    notes: 备注
-    other-users: 其他用户
-    password: 密码
+  statistics:
     per: 每
     personal-trend: 个人趋势
-    please-help-translate-via-weblate: 请通过 Weblate 帮助翻译
-    power: 功率
-    power-avg-max: 功率（平均/最大）
-    profile-updated: 个人资料已更新
-    public-share: 可公开分享的链接
-    publicly-shareable-link-was-copied-to-clipboard: 可公开分享的链接已复制到剪贴板
-    recent-activity: 最近活动
-    records-for-s: "%s 的记录"
-    refresh: 刷新
-    refresh-in-progress: 刷新进行中
-    regenerate-publicly-shareable-link: "（重新）生成链接"
-    register: 注册
-    repetitions: 重复次数
-    reset-changes: 重置更改
-    resources: 资源
-    route-segment:
-      update: 更新路线段
-    show-map-in-full-width: 全宽显示地图
-    sign-in: 登录
+    progress: 您每%s取得的进展在过去的%s中
     since: 自
-    slope: 坡度
-    sort-by: 排序依据
-    source: 来源
-    speed: 速度
-    start: 开始
-    start-searching-in-the-background-for-matching-workouts-for-route-segment-s: 开始在后台搜索与路线段 '%s' 匹配的锻炼。
-    steps: 步数
-    streets: 街道
-    strokes: 划水次数
-    temperature: 温度
-    tempo: 节奏
-    the-configuration-file: 配置文件
-    the-equipment-s-has-been-deleted: 设备 '%s' 已删除。
-    the-equipment-s-has-been-updated: 设备 '%s' 已更新。
-    the-route-segment-s-has-been-created-we-search-for-matches-in-the-background: 路线段 '%s' 已创建 - 我们在后台搜索匹配项。
-    the-route-segment-s-has-been-updated: 路线段 '%s' 已更新。
-    the-shareable-link-is-deleted-for-the-workout-s: 已删除锻炼 '%s' 的可分享链接
-    the-user-s-has-been-deleted: 用户 '%s' 已被删除。
-    the-user-s-has-been-updated: 用户 '%s' 已被更新。
-    the-workout-s-has-been-created: 锻炼 '%s' 已创建。
-    the-workout-s-has-been-deleted: 锻炼 '%s' 已被删除。
-    the-workout-s-has-been-refreshed: 锻炼 '%s' 已被刷新。
-    the-workout-s-has-been-updated: 锻炼 '%s' 已被更新。
-    the-workout-s-now-has-a-shareable-link: 锻炼 '%s' 现有可分享的链接
-    the-workout-s-will-be-refreshed-soon: 锻炼 '%s' 将很快刷新…
-    these-settings-may-be-overwritten-by: 这些设置可能会被以下内容覆盖：
-    time: 时间
-    time-paused: 时间暂停
-    total-distance: 总距离
-    total-down: 总下降
-    total-duration: 总时长
-    total-repetitions: 总重复次数
-    total-up: 总爬升
-    total-weight: 总重量
-    totals: 总计
-    try-one-of-these-sites: 试试这些网站：
-    type: 类型
-    up: 爬升
-    update: 更新
-    update-measurement: 更新测量
-    updated: 已更新
-    use-a-file: 使用文件
-    user: 用户
-    username: 用户名
-    username-email: 用户名（邮箱）
-    weight: 体重
-    welcome: 欢迎！
-    workout: 锻炼
-    workout-attribute-locked: 此属性已锁定，禁止自动更新
-    workout-locked: 锻炼 '%s' 的属性现已锁定
-    workout-type: 锻炼类型
-    workout-unlocked: 锻炼 '%s' 的属性现已解锁
-    workouts: 锻炼记录
-    you-can-edit-your-gpx-files-before-uploading-them-here: 您可以在上传前编辑 GPX 文件：
-    you-can-find-inspiration-here: 您可以在此找到灵感：
-    your-account-has-been-created-but-needs-to-be-activated: 您的账号已创建，但需要激活。
-    your-profile: 您的个人资料
-    your-progress-per-s-for-the-past-s: 您每%s取得的进展在过去的%s中
   units:
     centimeter: 厘米
     feet: 英尺
@@ -278,7 +194,20 @@ zh-Hans:
     miles-per-hour: 英里每小时
     pounds: 磅
   user:
+    auth:
+      activation-needed: 您的账号已创建，但需要激活。
+      create-account: 创建新账号
+      register: 注册
+      sign-in: 登录
+      username-email: 用户名（邮箱）
+      welcome: 欢迎！
+    logout: 注销
+    notice:
+      deleted: 用户 '%s' 已被删除。
+      updated: 用户 '%s' 已被更新。
+    password: 密码
     profile:
+      api-key-updated: API 密钥已更新
       auto-import-directory: 自动导入目录
       browser-system: 浏览器/系统
       copy-to-clipboard: 复制到剪贴板
@@ -298,7 +227,89 @@ zh-Hans:
       totals-to-show-on-dashboard: 在仪表板上显示的总计
       update-preferred-units: 更新首选单位
       update-profile: 更新个人资料
+      updated: 个人资料已更新
+      your-profile: 您的个人资料
       your-settings: 您的设置
     update: 更新用户
+    username: 用户名
   workout:
+    accuracy: 精确度
+    add-a-workout: 添加锻炼
+    add-workout: 添加锻炼
+    add-workouts: 添加锻炼
+    attribute-locked: 此属性已锁定，禁止自动更新
+    autodetect: 自动检测
+    average-cadence: 平均步频
+    average-per-minute: 每分钟平均
+    average-speed: 平均速度
+    average-speed-no-pause: 平均速度（无暂停）
+    average-tempo: 平均节奏
+    average-tempo-no-pause: 平均节奏（无暂停）
+    breakdown: 分类明细
+    cadence: 步频
+    cadence-avg-max: 踏频（平均/最大）
+    calories: 卡路里
+    calories-burned: 消耗卡路里
+    climbs: 爬坡
+    distance: 距离
+    duration: 持续时间
+    elevation: 海拔
+    enhanced-speed: 增强速度
+    est-calories-burned: 消耗卡路里（估算）
+    estimated-based-on-the-activity: 基于活动的估算，并根据您最后记录的体重
+    extra-metrics: 额外指标
+    filter-workouts: 筛选锻炼
+    heading: 标题
+    heart-rate: 心率
+    location: 位置
+    lock: 锁定或解锁此锻炼的属性，禁止自动更新。
+    locked: 锻炼 '%s' 的属性现已锁定
+    manual: 手动
+    matching-route-segments: 匹配的路线段
+    max-cadence: 最大步频
+    max-elevation: 最大海拔
+    max-speed: 最高速度
+    min-elevation: 最小海拔
+    no-equipment: 无设备
+    notice:
+      created: 锻炼 '%s' 已创建。
+      deleted: 锻炼 '%s' 已被删除。
+      refresh-all: 所有锻炼将在接下来的几分钟内刷新。
+      refresh-soon: 锻炼 '%s' 将很快刷新…
+      refreshed: 锻炼 '%s' 已被刷新。
+      share-link-created: 锻炼 '%s' 现有可分享的链接
+      share-link-deleted: 已删除锻炼 '%s' 的可分享链接
+      updated: 锻炼 '%s' 已被更新。
+    power: 功率
+    power-avg-max: 功率（平均/最大）
+    refresh-in-progress: 刷新进行中
+    repetitions: 重复次数
+    share:
+      copied: 可公开分享的链接已复制到剪贴板
+      copy: 复制链接
+      delete: 删除链接
+      link: 可公开分享的链接
+      regenerate: "（重新）生成链接"
+    show-map-in-full-width: 全宽显示地图
+    slope: 坡度
+    social:
+      completed: 我完成了一次锻炼：%s。
+      summary: 我用 %s 去 %s，平均速度为 %s。
+    source: 来源
+    speed: 速度
+    strokes: 划水次数
+    temperature: 温度
+    tempo: 节奏
+    time: 时间
+    time-paused: 时间暂停
+    total-distance: 总距离
+    total-down: 总下降
+    total-duration: 总时长
+    total-repetitions: 总重复次数
+    total-up: 总爬升
+    total-weight: 总重量
+    totals: 总计
+    type: 锻炼类型
+    unlocked: 锻炼 '%s' 的属性现已解锁
+    up: 爬升
     update: 更新锻炼

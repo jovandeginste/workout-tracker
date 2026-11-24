@@ -12,7 +12,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("dashboard")
-			{ i18n.T(ctx, "translation.dashboard-for-s", user.Username) }
+			{ i18n.T(ctx, "dashboard.for-user", user.Username) }
 			if user.Name != "" && user.Name != user.Username {
 				<span class="user-name">({ user.Name })</span>
 			}
@@ -41,7 +41,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 			<div class="inner-form">
 				<h3>
 					@helpers.IconFor("users")
-					{ i18n.T(ctx, "translation.other-users") }
+					{ i18n.T(ctx, "dashboard.other-users") }
 				</h3>
 				<div class="sm:flex sm:flex-wrap gap-5">
 					for _, u := range users {
@@ -57,7 +57,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 		<div class="inner-form recent-activity">
 			<h3>
 				@helpers.IconFor("workout")
-				{ i18n.T(ctx, "translation.recent-activity") }
+				{ i18n.T(ctx, "dashboard.recent-activity") }
 			</h3>
 			<div class="sm:flex sm:flex-wrap justify-center">
 				for _, w := range recentWorkouts {

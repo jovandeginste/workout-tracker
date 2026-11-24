@@ -132,7 +132,7 @@ func (a *App) routeSegmentsRefreshHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-workout-s-has-been-refreshed", rs.Name)
+	a.addNoticeT(c, "route-segment.notice.refreshed", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }
@@ -147,7 +147,7 @@ func (a *App) routeSegmentsDeleteHandler(c *echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-workout-s-has-been-deleted", rs.Name)
+	a.addNoticeT(c, "route-segment.notice.deleted", rs.Name)
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("route-segments"))
@@ -173,7 +173,7 @@ func (a *App) routeSegmentsUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-edit", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-route-segment-s-has-been-updated", rs.Name)
+	a.addNoticeT(c, "route-segment.notice.updated", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }
@@ -194,7 +194,7 @@ func (a *App) routeSegmentFindMatches(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.start-searching-in-the-background-for-matching-workouts-for-route-segment-s", rs.Name)
+	a.addNoticeT(c, "route-segment.notice.searching", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", c.Param("id")))
 }

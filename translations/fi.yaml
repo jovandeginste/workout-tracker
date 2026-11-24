@@ -1,11 +1,64 @@
 ---
 fi:
+  admin:
+    leave-blank-to-keep-current-password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
+    manage: Hallitse
+    manage-user: Hallitse käyttäjää '%s'
+    manage-users: Hallitse käyttäjiä
+    role: Ylläpitäjä
   alerts:
     workouts-added:
       one: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
       other: 'Kohdattiin %{count} ongelmaa harjoitusten lisäämisessä: %{list}'
+  common:
+    actions: Toiminnot
+    active: Aktiivinen
+    all: Kaikki
+    are-you-sure: Oletko varma?
+    ascending: nouseva
+    cancel: Peruuta
+    confirm-delete: 'Haluatko varmasti poistaa tämän: %s?'
+    continue: Jatka
+    created: Luotu
+    date: Päivämäärä
+    delete: poista
+    descending: laskeva
+    description: Kuvaus
+    details: Tiedot
+    download: lataa
+    edit: muokkaa
+    file: Tiedosto
+    filter: Suodata
+    last: Viimeinen
+    name: Nimi
+    notes: Muistiinpanot
+    refresh: virkistä
+    reset-changes: Palauta muutokset
+    sort-by: Järjestä
+    type: Tyyppi
+    updated: Päivitetty
+    use-a-file: Käytä tiedostoa
+    user: Käyttäjä
+    weight: Paino
+    workout: Harjoitus
+    workouts: harjoitukset
+  dashboard:
+    for-user: Kojelauta käyttäjälle %s
+    other-users: Muut käyttäjät
+    recent-activity: Viimeaikainen toiminta
+    records-for: Tulokset käyttäjälle %s
   equipment:
+    add: Lisää väline
+    default-workout-types: Oletusharjoitustyypit
     update: Päivitä välineet
+  help:
+    how-to-use: käyttöohjeet
+    please-translate-via-weblate: Auta kääntämisessä Weblaten kautta
+    resources: Resurssit
+    you-can-find-inspiration-here: 'Täältä löydät inspiraatiota:'
+  map:
+    aerial: Ilmakuva
+    streets: Kadut
   menu:
     dashboard: Kojelauta
     equipment: Välineet
@@ -34,7 +87,20 @@ fi:
     workouts-added:
       one: 'Lisätty %{count} uutta harjoitusta: %{list}'
       other: 'Lisätty %{count} uutta harjoitusta: %{list}'
+  route-segment:
+    add: Lisää reittiosuus
+    bidirectional: Kaksisuuntainen
+    circular: Ympyrä
+    create: Luo reittiosuus
+    end: Loppu
+    find-matches: etsi vastaavuudet
+    matches: Vastaavuudet
+    start: Aloitus
   settings:
+    application: Sovelluksen asetukset
+    configuration-file: asetustiedosto
+    disable-account-registration: Poista tilien luonti käytöstä
+    environment-variables: ympäristömuuttujat
     update: Päivitä asetukset
   sports:
     cycling: pyöräily
@@ -49,135 +115,10 @@ fi:
     swimming: uinti
     walking: kävely
     weight-lifting: painonnosto
-  translation:
-    accuracy: Tarkkuus
-    actions: Toiminnot
-    active: Aktiivinen
-    add-a-workout: Lisää harjoitus
-    add-equipment: Lisää väline
-    add-route-segment: Lisää reittiosuus
-    add-workout: Lisää harjoitus
-    add-workouts: Lisää harjoituksia
-    admin: Ylläpitäjä
-    aerial: Ilmakuva
-    all: Kaikki
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Kaikki harjoitukset virkistetään tulevien minuuttien aikana.
-    api-key-updated: API-avain päivitetty
-    application-settings: Sovelluksen asetukset
-    are-you-sure: Oletko varma?
-    are-you-sure-you-want-to-delete-this-s: 'Haluatko varmasti poistaa tämän: %s?'
-    ascending: nouseva
-    autodetect: Automaattinen tunnistus
-    average-per-minute: Keskiarvo minuutissa
-    average-speed: Keskinopeus
-    average-speed-no-pause: Keskinopeus (ilman taukoja)
-    average-tempo: Keskitahti
-    average-tempo-no-pause: Keskitahti (ilman taukoja)
-    bidirectional: Kaksisuuntainen
-    cadence: Kadenssi
-    cancel: Peruuta
-    circular: Ympyrä
-    continue: Jatka
-    copy-publicly-shareable-link: Kopioi julkinen jakolinkki
-    create-a-new-account: Luo uusi tili
-    create-route-segment: Luo reittiosuus
-    created: Luotu
-    dashboard-for-s: Kojelauta käyttäjälle %s
-    date: Päivämäärä
-    default-workout-types: Oletusharjoitustyypit
-    delete: poista
-    descending: laskeva
-    description: Kuvaus
-    details: Tiedot
-    disable-account-registration: Poista tilien luonti käytöstä
-    distance: Matka
-    download: lataa
-    duration: Kesto
-    edit: muokkaa
-    elevation: Korkeus
-    end: Loppu
-    environment-variables: ympäristömuuttujat
-    est-calories-burned: Arv. kulutetut kalorit
-    estimated-based-on-the-activity: Arvioitu aktiviteetin perusteella
-    extra-metrics: Lisämittarit
-    file: Tiedosto
-    filter: Suodata
-    filter-workouts: Suodata harjoituksia
-    find-matches: etsi vastaavuudet
-    heart-rate: Syke
-    how-to-use: käyttöohjeet
-    i-completed-a-workout-s: 'Suoritin harjoituksen: %s.'
-    it-took-me-s-to-go-s-i-averaged-s: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.
-    last: Viimeinen
-    leave-blank-to-keep-current-password: Jätä tyhjäksi säilyttääksesi nykyisen salasanan
-    location: Sijainti
-    logout: Kirjaudu ulos
-    manage: Hallitse
-    manage-user-s: Hallitse käyttäjää '%s'
-    manage-users: Hallitse käyttäjiä
-    manual: Manuaalinen
-    matches: Vastaavuudet
-    matching-route-segments: Vastaavat reittiosuudet
-    max-elevation: Korkein kohta
-    max-speed: Maksiminopeus
-    min-elevation: Matalin kohta
-    name: Nimi
-    no-equipment: ei välineitä
-    notes: Muistiinpanot
-    other-users: Muut käyttäjät
-    password: Salasana
+  statistics:
     per: Per
-    please-help-translate-via-weblate: Auta kääntämisessä Weblaten kautta
-    profile-updated: Profiili päivitetty
-    publicly-shareable-link-was-copied-to-clipboard: Julkinen jakolinkki kopioitiin leikepöydälle
-    recent-activity: Viimeaikainen toiminta
-    records-for-s: Tulokset käyttäjälle %s
-    refresh: virkistä
-    refresh-in-progress: virkistys meneillään
-    regenerate-publicly-shareable-link: Luo (uudelleen) julkinen jakolinkki
-    register: Rekisteröidy
-    repetitions: Toistot
-    reset-changes: Palauta muutokset
-    resources: Resurssit
-    route-segment:
-      update: Päivitä reittiosuus
-    show-map-in-full-width: Näytä kartta täydessä leveydessä
-    sign-in: Kirjaudu sisään
+    progress: Edistymisesi per %s viimeisten %s aikana
     since: Lähtien
-    sort-by: Järjestä
-    source: Lähde
-    speed: Nopeus
-    start: Aloitus
-    streets: Kadut
-    tempo: Tahti
-    the-configuration-file: asetustiedosto
-    the-workout-s-has-been-refreshed: Harjoitus '%s' on virkistetty.
-    the-workout-s-will-be-refreshed-soon: Harjoitus '%s' virkistetään pian…
-    time: Aika
-    time-paused: Taukoaika
-    total-distance: Kokonaismatka
-    total-down: Kokonaislasku
-    total-duration: Kokonaiskesto
-    total-repetitions: Kokonaistoistot
-    total-up: Kokonaisnousu
-    total-weight: Kokonaispaino
-    totals: Yhteensä
-    type: Tyyppi
-    up: Ylös
-    updated: Päivitetty
-    use-a-file: Käytä tiedostoa
-    user: Käyttäjä
-    username: Käyttäjänimi
-    username-email: Käyttäjänimi (sähköposti)
-    weight: Paino
-    welcome: Tervetuloa!
-    workout: Harjoitus
-    workout-type: Harjoitustyyppi
-    workouts: harjoitukset
-    you-can-find-inspiration-here: 'Täältä löydät inspiraatiota:'
-    your-account-has-been-created-but-needs-to-be-activated: Tilisi on luotu, mutta se täytyy aktivoida.
-    your-profile: Profiilisi
-    your-progress-per-s-for-the-past-s: Edistymisesi per %s viimeisten %s aikana
   units:
     feet: jalat
     kilograms: kilogrammat
@@ -188,7 +129,17 @@ fi:
     miles-per-hour: mailia tunnissa
     pounds: paunat
   user:
+    auth:
+      activation-needed: Tilisi on luotu, mutta se täytyy aktivoida.
+      create-account: Luo uusi tili
+      register: Rekisteröidy
+      sign-in: Kirjaudu sisään
+      username-email: Käyttäjänimi (sähköposti)
+      welcome: Tervetuloa!
+    logout: Kirjaudu ulos
+    password: Salasana
     profile:
+      api-key-updated: API-avain päivitetty
       auto-import-directory: Automaattinen tuontihakemisto
       browser-system: Selain / Järjestelmä
       copy-to-clipboard: Kopioi leikepöydälle
@@ -206,6 +157,63 @@ fi:
       time-zone: Aikavyöhyke
       update-preferred-units: Päivitä ensisijaiset yksiköt
       update-profile: Päivitä profiili
+      updated: Profiili päivitetty
+      your-profile: Profiilisi
     update: Päivitä käyttäjä
+    username: Käyttäjänimi
   workout:
+    accuracy: Tarkkuus
+    add-a-workout: Lisää harjoitus
+    add-workout: Lisää harjoitus
+    add-workouts: Lisää harjoituksia
+    autodetect: Automaattinen tunnistus
+    average-per-minute: Keskiarvo minuutissa
+    average-speed: Keskinopeus
+    average-speed-no-pause: Keskinopeus (ilman taukoja)
+    average-tempo: Keskitahti
+    average-tempo-no-pause: Keskitahti (ilman taukoja)
+    cadence: Kadenssi
+    distance: Matka
+    duration: Kesto
+    elevation: Korkeus
+    est-calories-burned: Arv. kulutetut kalorit
+    estimated-based-on-the-activity: Arvioitu aktiviteetin perusteella
+    extra-metrics: Lisämittarit
+    filter-workouts: Suodata harjoituksia
+    heart-rate: Syke
+    location: Sijainti
+    manual: Manuaalinen
+    matching-route-segments: Vastaavat reittiosuudet
+    max-elevation: Korkein kohta
+    max-speed: Maksiminopeus
+    min-elevation: Matalin kohta
+    no-equipment: ei välineitä
+    notice:
+      refresh-all: Kaikki harjoitukset virkistetään tulevien minuuttien aikana.
+      refresh-soon: Harjoitus '%s' virkistetään pian…
+      refreshed: Harjoitus '%s' on virkistetty.
+    refresh-in-progress: virkistys meneillään
+    repetitions: Toistot
+    share:
+      copied: Julkinen jakolinkki kopioitiin leikepöydälle
+      copy: Kopioi julkinen jakolinkki
+      regenerate: Luo (uudelleen) julkinen jakolinkki
+    show-map-in-full-width: Näytä kartta täydessä leveydessä
+    social:
+      completed: 'Suoritin harjoituksen: %s.'
+      summary: Minulla kesti %s kulkea %s. Keskiarvoni oli %s.
+    source: Lähde
+    speed: Nopeus
+    tempo: Tahti
+    time: Aika
+    time-paused: Taukoaika
+    total-distance: Kokonaismatka
+    total-down: Kokonaislasku
+    total-duration: Kokonaiskesto
+    total-repetitions: Kokonaistoistot
+    total-up: Kokonaisnousu
+    total-weight: Kokonaispaino
+    totals: Yhteensä
+    type: Harjoitustyyppi
+    up: Ylös
     update: Päivitä harjoitus

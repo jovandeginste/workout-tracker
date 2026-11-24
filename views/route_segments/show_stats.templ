@@ -29,18 +29,18 @@ templ ShowStats(s *database.RouteSegment) {
 	}}
 	{{
 		translations := map[string]string{
-			"averageSpeed":        i18n.T(ctx, "translation.average-speed"),
+			"averageSpeed":        i18n.T(ctx, "workout.average-speed"),
 			"speedUnit":           speedUnit,
-			"trend":               i18n.T(ctx, "translation.trend"),
-			"trendBreak":          i18n.T(ctx, "translation.trend-break"),
-			"trendPeriod":         i18n.T(ctx, "translation.trend-period"),
-			"trendBreakDetection": i18n.T(ctx, "translation.trend-break-detection"),
-			"resetZoom":           i18n.T(ctx, "translation.reset-zoom"),
-			"trendPeriodAll":      i18n.T(ctx, "translation.all-time"),
-			"trendPeriod365":      i18n.T(ctx, "translation.last-365-days"),
-			"trendPeriod90":       i18n.T(ctx, "translation.last-90-days"),
-			"trendPeriod30":       i18n.T(ctx, "translation.last-30-days"),
-			"trendPeriodYear":     i18n.T(ctx, "translation.this-calendar-year"),
+			"trend":               i18n.T(ctx, "statistics.trend"),
+			"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
+			"trendPeriod":         i18n.T(ctx, "statistics.trend-period"),
+			"trendBreakDetection": i18n.T(ctx, "statistics.trend-break-detection"),
+			"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
+			"trendPeriodAll":      i18n.T(ctx, "statistics.period.all-time"),
+			"trendPeriod365":      i18n.T(ctx, "statistics.period.last-365-days"),
+			"trendPeriod90":       i18n.T(ctx, "statistics.period.last-90-days"),
+			"trendPeriod30":       i18n.T(ctx, "statistics.period.last-30-days"),
+			"trendPeriodYear":     i18n.T(ctx, "statistics.period.this-calendar-year"),
 		}
 		for _, td := range trendData {
 			if _, ok := translations[td.Type]; !ok {

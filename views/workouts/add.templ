@@ -10,12 +10,12 @@ templ Add() {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("workout-add")
-			{ i18n.T(ctx, "translation.add-a-workout") }
+			{ i18n.T(ctx, "workout.add-a-workout") }
 		</h2>
 		<div class="sm:flex sm:flex-wrap [&>*]:basis-1/2">
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "translation.use-a-file") }</h3>
+					<h3>{ i18n.T(ctx, "common.use-a-file") }</h3>
 					<form
 						id="upload"
 						method="post"
@@ -25,7 +25,7 @@ templ Add() {
 						<table class="sm:table-fixed">
 							<tbody>
 								<tr>
-									<td><label for="file">{ i18n.T(ctx, "translation.file") }</label></td>
+									<td><label for="file">{ i18n.T(ctx, "common.file") }</label></td>
 									<td>
 										<input
 											type="file"
@@ -38,11 +38,11 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "translation.type") }</label>
+										<label for="type">{ i18n.T(ctx, "common.type") }</label>
 									</td>
 									<td>
 										<select id="type" name="type">
-											<option value="auto">{ i18n.T(ctx, "translation.autodetect") }</option>
+											<option value="auto">{ i18n.T(ctx, "workout.autodetect") }</option>
 											for _, wt := range helpers.WorkoutTypes() {
 												<option value={ wt.String() }>
 													{ i18n.T(ctx, wt.StringT()) }
@@ -53,7 +53,7 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label for="notes">{ i18n.T(ctx, "translation.notes") }</label>
+										<label for="notes">{ i18n.T(ctx, "common.notes") }</label>
 									</td>
 									<td>
 										<textarea
@@ -66,18 +66,18 @@ templ Add() {
 								</tr>
 								<tr>
 									<td>
-										<label>{ i18n.T(ctx, "translation.resources") }</label>
+										<label>{ i18n.T(ctx, "help.resources") }</label>
 									</td>
 									<td>
 										<div>
 											<ul>
-												{ i18n.T(ctx, "translation.you-can-edit-your-gpx-files-before-uploading-them-here") }
+												{ i18n.T(ctx, "help.you-can-edit-your-gpx-files") }
 												<li>{ i18n.T(ctx, "misc.split-files-with-multiple-tracks") }</li>
 												<li>{ i18n.T(ctx, "misc.convert-from-not-yet-supported-file-format") }</li>
 												<li>{ i18n.T(ctx, "misc.remove-the-beginning-or-the-ending-of-a-workout") }</li>
 											</ul>
 											<ul>
-												{ i18n.T(ctx, "translation.try-one-of-these-sites") }
+												{ i18n.T(ctx, "help.try-one-of-these-sites") }
 												<li><a target="_blank" href="https://gpx.studio/">gpx.studio — the online GPX file editor</a></li>
 												<li><a target="_blank" href="https://kml2gpx.com/">Kml2gpx.com: convert kml to gpx online</a></li>
 												<li><a target="_blank" href="https://www.fitfileviewer.com/">FIT File Viewer</a></li>
@@ -90,7 +90,7 @@ templ Add() {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "translation.add-workouts") }</button>
+										<button type="submit">{ i18n.T(ctx, "workout.add-workouts") }</button>
 									</td>
 								</tr>
 							</tfoot>
@@ -100,13 +100,13 @@ templ Add() {
 			</div>
 			<div>
 				<div class="inner-form">
-					<h3>{ i18n.T(ctx, "translation.manual") }</h3>
+					<h3>{ i18n.T(ctx, "workout.manual") }</h3>
 					<form id="manual" method="post" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts-create")) }>
 						<table class="sm:table-auto">
 							<thead>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "translation.workout-type") }</label>
+										<label for="type">{ i18n.T(ctx, "workout.type") }</label>
 									</td>
 									<td>
 										<select
@@ -136,7 +136,7 @@ templ Add() {
 								<tr>
 									<td></td>
 									<td>
-										<button type="submit">{ i18n.T(ctx, "translation.add-workouts") }</button>
+										<button type="submit">{ i18n.T(ctx, "workout.add-workouts") }</button>
 									</td>
 								</tr>
 							</tfoot>

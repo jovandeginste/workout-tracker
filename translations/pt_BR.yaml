@@ -1,5 +1,11 @@
 ---
 pt-BR:
+  admin:
+    leave-blank-to-keep-current-password: Deixe em branco para manter a senha atual
+    manage: Gerenciar
+    manage-user: Gerenciar usuário '%s'
+    manage-users: Gerenciar usuários
+    role: Administrador
   alerts:
     route-segments-added:
       one: 'Encontrado 1 problema ao adicionar segmento de rota: %{list}'
@@ -8,8 +14,71 @@ pt-BR:
     workouts-added:
       one: 'Encontrado 1 problema ao adicionar treinos: %{list}'
       many: 'Encontrados %{count} problemas ao adicionar treinos: %{list}'
+  common:
+    actions: Ações
+    active: Ativo
+    all: Todos
+    are-you-sure: Tem certeza?
+    ascending: ascendente
+    cancel: Cancelar
+    confirm-delete: Tem certeza que deseja excluir este %s?
+    continue: Continuar
+    created: Criado
+    date: Data
+    delete: excluir
+    descending: descendente
+    description: Descrição
+    details: Detalhes
+    download: baixar
+    edit: editar
+    file: Arquivo
+    filter: Filtrar
+    height: Altura
+    last: Último
+    name: Nome
+    notes: Anotações
+    refresh: atualizar
+    reset-changes: Redefinir alterações
+    sort-by: Ordenar por
+    type: Tipo
+    update: Atualizar
+    updated: Atualizado
+    use-a-file: Usar um arquivo
+    user: Usuário
+    weight: Peso
+    workout: Treino
+    workouts: treinos
+  dashboard:
+    for-user: Painel para %s
+    other-users: Outros usuários
+    recent-activity: Atividade recente
+    records-for: Recordes para %s
   equipment:
+    add: Adicionar equipamento
+    default-workout-types: Tipos de treino padrão
+    notice:
+      deleted: O equipamento '%s' foi excluído.
+      updated: O equipamento '%s' foi atualizado.
     update: Atualizar equipamento
+  help:
+    how-to-use: como usar
+    please-translate-via-weblate: Por favor, ajude a traduzir via Weblate
+    resources: Recursos
+    translating: |
+      Adoraríamos sua ajuda traduzindo!
+
+      Por favor, ajude a traduzir [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+    try-one-of-these-sites: 'Experimente um destes sites:'
+    you-can-edit-your-gpx-files: 'Você pode editar seus arquivos GPX antes de enviá-los aqui:'
+    you-can-find-inspiration-here: 'Você pode encontrar inspiração aqui:'
+  map:
+    aerial: Vista aérea
+    streets: Ruas
+  measurements:
+    latest: Últimas medições
+    none: Nenhuma medição encontrada
+    steps: Passos
+    update: Atualizar medição
   menu:
     dashboard: Painel
     equipment: Equipamentos
@@ -45,8 +114,25 @@ pt-BR:
       one: 'Adicionado um novo treino: %{list}'
       many: 'Adicionados %{count} novos treinos: %{list}'
   route-segment:
+    add: Adicionar segmento de rota
+    bidirectional: Bidirecional
+    circular: Circular
+    create: Criar segmento de rota
+    end: Fim
+    find-matches: encontrar correspondências
+    matches: Correspondências
+    notice:
+      created: O segmento de rota '%s' foi criado - buscamos correspondências em segundo plano.
+      searching: Iniciar busca em segundo plano por treinos correspondentes ao segmento de rota '%s'.
+      updated: O segmento de rota '%s' foi atualizado.
+    start: Início
     update: Atualizar segmento de rota
   settings:
+    application: Configurações do aplicativo
+    configuration-file: o arquivo de configuração
+    disable-account-registration: Desativar registro de conta
+    environment-variables: variáveis de ambiente
+    overwritten-by: 'Estas configurações podem ser sobrescritas por:'
     update: Atualizar configurações
   sports:
     cycling: ciclismo
@@ -63,161 +149,10 @@ pt-BR:
     swimming: natação
     walking: caminhada
     weight-lifting: musculação
-  translation:
-    accuracy: Precisão
-    actions: Ações
-    active: Ativo
-    add-a-workout: Adicionar um treino
-    add-equipment: Adicionar equipamento
-    add-route-segment: Adicionar segmento de rota
-    add-workout: Adicionar treino
-    add-workouts: Adicionar treinos
-    admin: Administrador
-    aerial: Vista aérea
-    all: Todos
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Todos os treinos serão atualizados nos próximos minutos.
-    api-key-updated: Chave API atualizada
-    application-settings: Configurações do aplicativo
-    are-you-sure: Tem certeza?
-    are-you-sure-you-want-to-delete-this-s: Tem certeza que deseja excluir este %s?
-    ascending: ascendente
-    autodetect: Detectar automaticamente
-    average-per-minute: Média por minuto
-    average-speed: Velocidade média
-    average-speed-no-pause: Velocidade média (sem pausas)
-    average-tempo: Ritmo médio
-    average-tempo-no-pause: Ritmo médio (sem pausas)
-    bidirectional: Bidirecional
-    cadence: Cadência
-    calories: Calorias
-    cancel: Cancelar
-    circular: Circular
-    continue: Continuar
-    copy-publicly-shareable-link: Copiar link compartilhável publicamente
-    create-a-new-account: Criar uma nova conta
-    create-route-segment: Criar segmento de rota
-    created: Criado
-    dashboard-for-s: Painel para %s
-    date: Data
-    default-workout-types: Tipos de treino padrão
-    delete: excluir
-    descending: descendente
-    description: Descrição
-    details: Detalhes
-    disable-account-registration: Desativar registro de conta
-    distance: Distância
-    download: baixar
-    duration: Duração
-    edit: editar
-    elevation: Elevação
-    end: Fim
-    environment-variables: variáveis de ambiente
-    est-calories-burned: Queima de calorias estimada
-    estimated-based-on-the-activity: Estimado com base na atividade e no seu último peso registrado
-    extra-metrics: Métricas adicionais
-    file: Arquivo
-    filter: Filtrar
-    filter-workouts: Filtrar treinos
-    find-matches: encontrar correspondências
-    heading: Direção
-    heart-rate: Frequência cardíaca
-    height: Altura
-    help-translating: |
-      Adoraríamos sua ajuda traduzindo!
-
-      Por favor, ajude a traduzir [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    how-to-use: como usar
-    i-completed-a-workout-s: 'Concluí um treino: ''%s''.'
-    it-took-me-s-to-go-s-i-averaged-s: Levei %s para percorrer %s. Minha média foi %s.
-    last: Último
-    latest-measurements: Últimas medições
-    leave-blank-to-keep-current-password: Deixe em branco para manter a senha atual
-    location: Localização
-    logout: Sair
-    manage: Gerenciar
-    manage-user-s: Gerenciar usuário '%s'
-    manage-users: Gerenciar usuários
-    manual: Manual
-    matches: Correspondências
-    matching-route-segments: Segmentos de rota correspondentes
-    max-elevation: Elevação máxima
-    max-speed: Velocidade máxima
-    min-elevation: Elevação mínima
-    name: Nome
-    no-equipment: sem equipamento
-    no-measurements-found: Nenhuma medição encontrada
-    notes: Anotações
-    other-users: Outros usuários
-    password: Senha
+  statistics:
     per: Por
-    please-help-translate-via-weblate: Por favor, ajude a traduzir via Weblate
-    profile-updated: Perfil atualizado
-    publicly-shareable-link-was-copied-to-clipboard: Link compartilhável publicamente foi copiado para a área de transferência
-    recent-activity: Atividade recente
-    records-for-s: Recordes para %s
-    refresh: atualizar
-    refresh-in-progress: atualização em andamento
-    regenerate-publicly-shareable-link: "(Re)gerar link compartilhável publicamente"
-    register: Registrar
-    repetitions: Repetições
-    reset-changes: Redefinir alterações
-    resources: Recursos
-    route-segment:
-      update: Atualizar segmento de rota
-    show-map-in-full-width: Mostrar mapa em largura total
-    sign-in: Entrar
+    progress: Seu progresso por %s nos últimos %s
     since: Desde
-    sort-by: Ordenar por
-    source: Fonte
-    speed: Velocidade
-    start: Início
-    start-searching-in-the-background-for-matching-workouts-for-route-segment-s: Iniciar busca em segundo plano por treinos correspondentes ao segmento de rota '%s'.
-    steps: Passos
-    streets: Ruas
-    tempo: Ritmo
-    the-configuration-file: o arquivo de configuração
-    the-equipment-s-has-been-deleted: O equipamento '%s' foi excluído.
-    the-equipment-s-has-been-updated: O equipamento '%s' foi atualizado.
-    the-route-segment-s-has-been-created-we-search-for-matches-in-the-background: O segmento de rota '%s' foi criado - buscamos correspondências em segundo plano.
-    the-route-segment-s-has-been-updated: O segmento de rota '%s' foi atualizado.
-    the-user-s-has-been-deleted: O usuário '%s' foi excluído.
-    the-user-s-has-been-updated: O usuário '%s' foi atualizado.
-    the-workout-s-has-been-created: O treino '%s' foi criado.
-    the-workout-s-has-been-deleted: O treino '%s' foi excluído.
-    the-workout-s-has-been-refreshed: O treino '%s' foi atualizado.
-    the-workout-s-has-been-updated: O treino '%s' foi modificado.
-    the-workout-s-now-has-a-shareable-link: O treino '%s' agora tem um link compartilhável
-    the-workout-s-will-be-refreshed-soon: O treino '%s' será atualizado em breve…
-    these-settings-may-be-overwritten-by: 'Estas configurações podem ser sobrescritas por:'
-    time: Tempo
-    time-paused: Tempo pausado
-    total-distance: Distância total
-    total-down: Descida total
-    total-duration: Duração total
-    total-repetitions: Repetições totais
-    total-up: Subida total
-    total-weight: Peso total
-    totals: Totais
-    try-one-of-these-sites: 'Experimente um destes sites:'
-    type: Tipo
-    up: Subir
-    update: Atualizar
-    update-measurement: Atualizar medição
-    updated: Atualizado
-    use-a-file: Usar um arquivo
-    user: Usuário
-    username: Usuário
-    username-email: Usuário (e-mail)
-    weight: Peso
-    welcome: Bem-vindo!
-    workout: Treino
-    workout-type: Tipo de treino
-    workouts: treinos
-    you-can-edit-your-gpx-files-before-uploading-them-here: 'Você pode editar seus arquivos GPX antes de enviá-los aqui:'
-    you-can-find-inspiration-here: 'Você pode encontrar inspiração aqui:'
-    your-account-has-been-created-but-needs-to-be-activated: Sua conta foi criada, mas precisa ser ativada.
-    your-profile: Seu perfil
-    your-progress-per-s-for-the-past-s: Seu progresso por %s nos últimos %s
   units:
     centimeter: centímetro
     feet: pés
@@ -230,7 +165,20 @@ pt-BR:
     miles-per-hour: milhas por hora
     pounds: libras
   user:
+    auth:
+      activation-needed: Sua conta foi criada, mas precisa ser ativada.
+      create-account: Criar uma nova conta
+      register: Registrar
+      sign-in: Entrar
+      username-email: Usuário (e-mail)
+      welcome: Bem-vindo!
+    logout: Sair
+    notice:
+      deleted: O usuário '%s' foi excluído.
+      updated: O usuário '%s' foi atualizado.
+    password: Senha
     profile:
+      api-key-updated: Chave API atualizada
       auto-import-directory: Diretório de importação automática
       browser-system: Navegador / Sistema
       copy-to-clipboard: Copiar para a área de transferência
@@ -249,7 +197,70 @@ pt-BR:
       totals-to-show-on-dashboard: Totais a mostrar no painel
       update-preferred-units: Atualizar unidades preferidas
       update-profile: Atualizar perfil
+      updated: Perfil atualizado
+      your-profile: Seu perfil
       your-settings: Suas configurações
     update: Atualizar usuário
+    username: Usuário
   workout:
+    accuracy: Precisão
+    add-a-workout: Adicionar um treino
+    add-workout: Adicionar treino
+    add-workouts: Adicionar treinos
+    autodetect: Detectar automaticamente
+    average-per-minute: Média por minuto
+    average-speed: Velocidade média
+    average-speed-no-pause: Velocidade média (sem pausas)
+    average-tempo: Ritmo médio
+    average-tempo-no-pause: Ritmo médio (sem pausas)
+    cadence: Cadência
+    calories: Calorias
+    distance: Distância
+    duration: Duração
+    elevation: Elevação
+    est-calories-burned: Queima de calorias estimada
+    estimated-based-on-the-activity: Estimado com base na atividade e no seu último peso registrado
+    extra-metrics: Métricas adicionais
+    filter-workouts: Filtrar treinos
+    heading: Direção
+    heart-rate: Frequência cardíaca
+    location: Localização
+    manual: Manual
+    matching-route-segments: Segmentos de rota correspondentes
+    max-elevation: Elevação máxima
+    max-speed: Velocidade máxima
+    min-elevation: Elevação mínima
+    no-equipment: sem equipamento
+    notice:
+      created: O treino '%s' foi criado.
+      deleted: O treino '%s' foi excluído.
+      refresh-all: Todos os treinos serão atualizados nos próximos minutos.
+      refresh-soon: O treino '%s' será atualizado em breve…
+      refreshed: O treino '%s' foi atualizado.
+      share-link-created: O treino '%s' agora tem um link compartilhável
+      updated: O treino '%s' foi modificado.
+    refresh-in-progress: atualização em andamento
+    repetitions: Repetições
+    share:
+      copied: Link compartilhável publicamente foi copiado para a área de transferência
+      copy: Copiar link compartilhável publicamente
+      regenerate: "(Re)gerar link compartilhável publicamente"
+    show-map-in-full-width: Mostrar mapa em largura total
+    social:
+      completed: 'Concluí um treino: ''%s''.'
+      summary: Levei %s para percorrer %s. Minha média foi %s.
+    source: Fonte
+    speed: Velocidade
+    tempo: Ritmo
+    time: Tempo
+    time-paused: Tempo pausado
+    total-distance: Distância total
+    total-down: Descida total
+    total-duration: Duração total
+    total-repetitions: Repetições totais
+    total-up: Subida total
+    total-weight: Peso total
+    totals: Totais
+    type: Tipo de treino
+    up: Subir
     update: Atualizar treino

@@ -1,4 +1,8 @@
 tr:
+  admin:
+    leave-blank-to-keep-current-password: Mevcut parolayı kullanmak için boş bırakın
+    manage: Yönet
+    role: Yönetici
   alerts:
     route-segments-added:
       one: 'Rota bölümü eklerken bir sorunla karşılaşıldı: %{list}'
@@ -7,6 +11,46 @@ tr:
     workouts-added:
       one: 'Egzersiz eklerken bir sorunla karşılaşıldı: %{list}'
       other: 'Egzersiz eklerken %{count} sorunla karşılaşıldı: %{list}'
+  common:
+    active: Etkin
+    all: Tümü
+    ascending: artan
+    cancel: İptal
+    confirm-delete: Bu %s'yi silmek istediğinden emin misin?
+    continue: Devam et
+    created: Oluşturuldu
+    date: Tarih
+    delete: sil
+    descending: azalan
+    description: Tanım
+    details: Ayrıntılar
+    download: indir
+    edit: düzenle
+    file: Dosya
+    filter: Süzgeç
+    last: Son
+    name: Ad
+    notes: Notlar
+    refresh: yenile
+    reset-changes: Değişiklikleri sıfırla
+    sort-by: Sırala
+    type: Tür
+    update: Güncelleme
+    updated: Güncellendi
+    user: Kullanıcı
+    weight: Ağırlık
+    workout: Çalışma
+    workouts: çalışmalar
+  dashboard:
+    for-user: "%s için gösterge"
+  equipment:
+    add: Ekipman ekle
+    default-workout-types: Varsayılan çalışma türleri
+  help:
+    how-to-use: nasıl kullanılır
+    resources: Kaynaklar
+  measurements:
+    steps: Adım
   menu:
     dashboard: Gösterge
     equipment: Ekipman
@@ -38,7 +82,15 @@ tr:
     workouts-added:
       one: 'Yeni bir antrenman eklendi: %{list}'
       other: 'Yeni %{count} antrenman eklendi: %{list}'
+  route-segment:
+    add: Rota bölümü ekle
+    create: Rota bölümü oluştur
+    find-matches: eşleşmeleri bul
+    matches: Eşleşmeler
+    start: Başla
   settings:
+    application: Uygulama ayarları
+    configuration-file: yapılandırma dosyası
     update: Güncelleme ayarları
   sports:
     auto: otomatik-algıla
@@ -52,89 +104,6 @@ tr:
     swimming: yüzme
     walking: yürüme
     weight-lifting: ağırlık kaldırma
-  translation:
-    accuracy: Doğruluk
-    active: Etkin
-    add-a-workout: Bir çalışma ekle
-    add-equipment: Ekipman ekle
-    add-route-segment: Rota bölümü ekle
-    add-workout: Çalışma ekle
-    add-workouts: Çalışmalar ekle
-    admin: Yönetici
-    all: Tümü
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Tüm egzersizler sonraki dakikalarda yenilenecektir.
-    api-key-updated: API anahtarı güncellendi
-    application-settings: Uygulama ayarları
-    are-you-sure-you-want-to-delete-this-s: Bu %s'yi silmek istediğinden emin misin?
-    ascending: artan
-    autodetect: Otomatik-algıla
-    average-per-minute: Dakikalık ortalama
-    average-speed: Ortalama hız
-    average-speed-no-pause: Ortalama hız (duraklamasız)
-    average-tempo: Ortalama tempo
-    average-tempo-no-pause: Ortalama tempo (duraklamasız)
-    calories: Kalori
-    cancel: İptal
-    continue: Devam et
-    create-a-new-account: Yeni hesap oluştur
-    create-route-segment: Rota bölümü oluştur
-    created: Oluşturuldu
-    dashboard-for-s: "%s için gösterge"
-    date: Tarih
-    default-workout-types: Varsayılan çalışma türleri
-    delete: sil
-    descending: azalan
-    description: Tanım
-    details: Ayrıntılar
-    distance: Mesafe
-    download: indir
-    duration: Süre
-    edit: düzenle
-    file: Dosya
-    filter: Süzgeç
-    filter-workouts: Çalışmaları süz
-    find-matches: eşleşmeleri bul
-    how-to-use: nasıl kullanılır
-    last: Son
-    leave-blank-to-keep-current-password: Mevcut parolayı kullanmak için boş bırakın
-    location: Konum
-    logout: Oturumu kapat
-    manage: Yönet
-    matches: Eşleşmeler
-    name: Ad
-    notes: Notlar
-    password: Parola
-    profile-updated: Profil güncellendi
-    refresh: yenile
-    register: Kayıt ol
-    reset-changes: Değişiklikleri sıfırla
-    resources: Kaynaklar
-    show-map-in-full-width: Haritayı tam genişlikte göster
-    sign-in: Oturum aç
-    sort-by: Sırala
-    source: Kaynak
-    speed: Hız
-    start: Başla
-    steps: Adım
-    the-configuration-file: yapılandırma dosyası
-    the-workout-s-has-been-created: "'%s' çalışması oluşturuldu."
-    time: Zaman
-    time-paused: Zaman duraklatıldı
-    total-weight: Toplam ağırlık
-    totals: Toplam
-    type: Tür
-    up: Tırmanma
-    update: Güncelleme
-    updated: Güncellendi
-    user: Kullanıcı
-    username: Kullanıcı adı
-    username-email: Kullanıcı adı (e-posta)
-    weight: Ağırlık
-    welcome: Hoş geldin!
-    workout: Çalışma
-    workout-type: Çalışma türü
-    workouts: çalışmalar
-    your-account-has-been-created-but-needs-to-be-activated: Hesabınız oluşturuldu, ancak etkinleştirilmesi gerekiyor.
   units:
     centimeter: santimetre
     inch: inç
@@ -143,10 +112,50 @@ tr:
     meters: metre
     miles: mil
   user:
+    auth:
+      activation-needed: Hesabınız oluşturuldu, ancak etkinleştirilmesi gerekiyor.
+      create-account: Yeni hesap oluştur
+      register: Kayıt ol
+      sign-in: Oturum aç
+      username-email: Kullanıcı adı (e-posta)
+      welcome: Hoş geldin!
+    logout: Oturumu kapat
+    password: Parola
     profile:
+      api-key-updated: API anahtarı güncellendi
       dark: Karanlık
       language: Dil
       light: Aydınlık
       preferred-units: Tercih edilen birimler
       show-hide: göster/gizle
       time-zone: Zaman dilimi
+      updated: Profil güncellendi
+    username: Kullanıcı adı
+  workout:
+    accuracy: Doğruluk
+    add-a-workout: Bir çalışma ekle
+    add-workout: Çalışma ekle
+    add-workouts: Çalışmalar ekle
+    autodetect: Otomatik-algıla
+    average-per-minute: Dakikalık ortalama
+    average-speed: Ortalama hız
+    average-speed-no-pause: Ortalama hız (duraklamasız)
+    average-tempo: Ortalama tempo
+    average-tempo-no-pause: Ortalama tempo (duraklamasız)
+    calories: Kalori
+    distance: Mesafe
+    duration: Süre
+    filter-workouts: Çalışmaları süz
+    location: Konum
+    notice:
+      created: "'%s' çalışması oluşturuldu."
+      refresh-all: Tüm egzersizler sonraki dakikalarda yenilenecektir.
+    show-map-in-full-width: Haritayı tam genişlikte göster
+    source: Kaynak
+    speed: Hız
+    time: Zaman
+    time-paused: Zaman duraklatıldı
+    total-weight: Toplam ağırlık
+    totals: Toplam
+    type: Çalışma türü
+    up: Tırmanma

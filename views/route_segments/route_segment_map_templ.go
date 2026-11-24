@@ -80,10 +80,10 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			CenterLng:     s.Center.Lng,
 			MinElevation:  s.MinElevation,
 			MaxElevation:  s.MaxElevation,
-			SpeedName:     i18n.T(ctx, "translation.average-speed"),
-			ElevationName: i18n.T(ctx, "translation.elevation"),
-			StreetsName:   i18n.T(ctx, "translation.streets"),
-			AerialName:    i18n.T(ctx, "translation.aerial"),
+			SpeedName:     i18n.T(ctx, "workout.average-speed"),
+			ElevationName: i18n.T(ctx, "workout.elevation"),
+			StreetsName:   i18n.T(ctx, "map.streets"),
+			AerialName:    i18n.T(ctx, "map.aerial"),
 		}
 		data := map[string]*dataset{
 			"position": {
@@ -91,11 +91,11 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 				Data:  []any{},
 			},
 			"distance": {
-				Label: i18n.T(ctx, "translation.distance"),
+				Label: i18n.T(ctx, "workout.distance"),
 				Data:  []any{},
 			},
 			"elevation": {
-				Label: i18n.T(ctx, "translation.elevation"),
+				Label: i18n.T(ctx, "workout.elevation"),
 				Data:  []any{},
 			},
 		}
@@ -135,9 +135,9 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.fullscreen")).Resolve(ctx)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 51}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -148,9 +148,9 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.fullscreen")).Resolve(ctx)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 112}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {

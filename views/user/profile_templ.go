@@ -114,9 +114,9 @@ func Profile(u *database.User) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.actions"))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.actions"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 29, Col: 40}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 29, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -285,9 +285,9 @@ func userSettings(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var14 string
-		templ_7745c5c3_Var14, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.how-to-use")).Resolve(ctx)
+		templ_7745c5c3_Var14, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "help.how-to-use")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 64, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 64, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var14)
 		if templ_7745c5c3_Err != nil {
@@ -470,9 +470,9 @@ func userSettings(u *database.User) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var23 string
-		templ_7745c5c3_Var23, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.please-help-translate-via-weblate")).Resolve(ctx)
+		templ_7745c5c3_Var23, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "help.please-translate-via-weblate")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 144, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile.templ`, Line: 144, Col: 64}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var23)
 		if templ_7745c5c3_Err != nil {

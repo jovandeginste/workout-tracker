@@ -1,4 +1,10 @@
 nl:
+  admin:
+    leave-blank-to-keep-current-password: Laat leeg om het huidige wachtwoord te behouden
+    manage: Beheer
+    manage-user: Beheer gebruiker '%s'
+    manage-users: Gebruikersbeheer
+    role: Beheerder
   alerts:
     route-segments-added:
       one: 'Een probleem tijdens het toevoegen van route segmenten: %{list}'
@@ -10,14 +16,79 @@ nl:
   climb:
     average-slope: Gem. helling
     category: Cat.
+    create-route-segment: Maak route segment van dit segment
     distance: Afstand
     elevation-gain: Stijging
     elevation-loss: Daling
     start: Start
     type-climb: 'Klim #%d'
     type-descent: 'Afd. #%d'
+  common:
+    actions: Acties
+    active: Actief
+    all: Alles
+    are-you-sure: Bent u zeker?
+    ascending: oplopend
+    cancel: Annuleren
+    confirm-delete: Weet je zeker dat je deze %s wilt verwijderen?
+    continue: Doorgaan
+    created: Aangemaakt
+    date: Datum
+    delete: verwijder
+    descending: aflopend
+    description: Omschrijving
+    details: Details
+    download: downloaden
+    edit: bewerk
+    file: Bestand
+    filter: Filter
+    height: Grootte
+    last: Laatste
+    name: Naam
+    notes: Notities
+    refresh: ververs
+    reset-changes: Wijzigingen ongedaan maken
+    sort-by: Sorteer op
+    type: Type
+    update: Aanpassen
+    updated: Geüpdate
+    use-a-file: Gebruik een bestand
+    user: Gebruiker
+    weight: Gewicht
+    workout: Workout
+    workouts: workouts
+  dashboard:
+    for-user: Dashboard voor %s
+    other-users: Andere gebruikers
+    recent-activity: Recente activiteit
+    records-for: Records voor %s
   equipment:
+    add: Voeg materiaal toe
+    default-workout-types: Standaard soorten workout
+    notice:
+      deleted: Het materiaal '%s' werd verwijderd.
+      updated: Het materiaal '%s' werd aangepast.
     update: Materiaal bijwerken
+  help:
+    how-to-use: hoe te gebruiken
+    please-translate-via-weblate: Help deze toepassing vertalen op Weblate
+    resources: Hulpmiddelen
+    translating: |
+      We kunnen jouw hulp gebruiken bij het vertalen!
+
+      Help ons vertalen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+    try-one-of-these-sites: 'Probeer één van volgende sites:'
+    you-can-edit-your-gpx-files: 'Je kunt je GPX-bestanden aanpassen voor je ze hier uploadt:'
+    you-can-find-inspiration-here: 'Hier kun je inspiratie opdoen:'
+  map:
+    aerial: Lucht
+    fullscreen: Volledig scherm
+    streets: Straten
+  measurements:
+    latest: Laatste metingen
+    none: Geen metingen gevonden
+    steps: Stappen
+    update: Meting aanpassen
   menu:
     dashboard: Dashboard
     equipment: Materiaal
@@ -55,8 +126,28 @@ nl:
       one: '1 nieuwe workout toegevoegd: %{list}'
       other: "%{count} nieuwe workouts toegevoegd: %{list}"
   route-segment:
+    add: Voeg een route segment toe
+    bidirectional: Bidirectioneel
+    circular: Rondtoer
+    create: Maak een route segment
+    end: Einde
+    find-matches: overeenkomsten zoeken
+    matches: Overeenkomsten
+    notice:
+      created: Het route segment '%s' werd aangemaakt - we zoeken op de achtergrond naar matches.
+      deleted: Het route segment '%s' werd verwijderd.
+      refreshed: Het route segment '%s' werd vernieuwd.
+      searching: Zoek op de achtergrond naar workouts met matches voor route segment '%s'.
+      updated: Het route segment '%s' werd aangepast.
+    start: Begin
     update: Update route segment
   settings:
+    application: Applicatie-instellingen
+    configuration-file: het configuratiebestand
+    disable-account-registration: Registratie van nieuw accounts uitschakelen
+    environment-variables: omgevingsvariabelen
+    login-custom-text: Aangepaste logintekst (Markdown)
+    overwritten-by: 'Deze instellingen kunnen worden overschreven door:'
     update: Instellingen bijwerken
   sports:
     alpine-climbing: alpine klimmen
@@ -95,202 +186,25 @@ nl:
     unknown: onbekend
     walking: wandelen
     weight-lifting: gewichtheffen
-  translation:
-    accuracy: Nauwkeurigheid
-    actions: Acties
-    active: Actief
-    add-a-workout: Voeg een workout toe
-    add-equipment: Voeg materiaal toe
-    add-route-segment: Voeg een route segment toe
-    add-workout: Workout toevoegen
-    add-workouts: Workouts toevoegen
-    admin: Beheerder
-    aerial: Lucht
-    all: Alles
-    all-time: Altijd
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Alle workouts worden vernieuwd in de komende minuten.
-    api-key-updated: API-sleutel bijgewerkt
-    application-settings: Applicatie-instellingen
-    are-you-sure: Bent u zeker?
-    are-you-sure-you-want-to-delete-this-s: Weet je zeker dat je deze %s wilt verwijderen?
-    ascending: oplopend
-    autodetect: Automatisch detecteren
-    average-per-minute: Gemiddelde per minuut
-    average-speed: Gemiddelde snelheid
-    average-speed-no-pause: Gemiddelde snelheid (zonder pauze)
-    average-tempo: Gemiddelde tempo
-    average-tempo-no-pause: Gemiddelde tempo (zonder pauze)
+  statistics:
     bar: Staaf
-    bidirectional: Bidirectioneel
-    breakdown: Uitsplitsing
-    cadence: Cadans
-    cadence-avg-max: Cadans (gem/max)
-    calories: Calorieën
-    calories-burned: Verbruik calorieën
-    cancel: Annuleren
     chart-type: Grafiektype
-    circular: Rondtoer
-    climbs: Beklimmingen
-    continue: Doorgaan
-    copy-publicly-shareable-link: Kopieer koppeling
-    create-a-new-account: Maak een nieuwe account
-    create-route-segment: Maak een route segment
-    create-route-segment-from-climb: Maak route segment van dit segment
-    created: Aangemaakt
-    custom-login-text: Aangepaste logintekst (Markdown)
-    dashboard-for-s: Dashboard voor %s
-    date: Datum
-    default-workout-types: Standaard soorten workout
-    delete: verwijder
-    delete-public-share: Verwijder koppeling
-    descending: aflopend
-    description: Omschrijving
-    details: Details
-    disable-account-registration: Registratie van nieuw accounts uitschakelen
-    distance: Afstand
-    download: downloaden
-    duration: Duur
-    duration-without-pauses: Duur zonder pauzes
-    edit: bewerk
-    elevation: Hoogte
-    end: Einde
-    enhanced-speed: Gecorrigeerde snelheid
-    environment-variables: omgevingsvariabelen
-    est-calories-burned: Verbruik calorieën (geschat)
-    estimated-based-on-the-activity: Geschat op basis van de activiteit en je laatst gekende gewicht
-    extra-metrics: Extra informatie
-    file: Bestand
-    filter: Filter
-    filter-workouts: Filter workouts
-    find-matches: overeenkomsten zoeken
-    fullscreen: Volledig scherm
-    heading: Koers
-    heart-rate: Hartslag
-    height: Grootte
-    help-translating: |
-      We kunnen jouw hulp gebruiken bij het vertalen!
-
-      Help ons vertalen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    how-to-use: hoe te gebruiken
-    i-completed-a-workout-s: 'Ik heb een workout voltooid: %s.'
-    it-took-me-s-to-go-s-i-averaged-s: Het duurde %s om %s te bereiken. Ik haalde gemiddeld %s.
-    last: Laatste
-    last-30-days: Laatste 30 dagen
-    last-90-days: Laatste 90 dagen
-    last-365-days: Laatste 365 dagen
-    latest-measurements: Laatste metingen
-    leave-blank-to-keep-current-password: Laat leeg om het huidige wachtwoord te behouden
     line: Lijn
-    location: Locatie
-    lock-workout: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
-    logout: Afmelden
-    manage: Beheer
-    manage-user-s: Beheer gebruiker '%s'
-    manage-users: Gebruikersbeheer
-    manual: Manueel
-    matches: Overeenkomsten
-    matching-route-segments: Overeenkomende route segmenten
-    max-elevation: Hoogste niveau
-    max-speed: Max. snelheid
-    max-tempo: Maximale tempo
-    min-elevation: Laagste niveau
-    name: Naam
-    no-equipment: geen materiaal
-    no-measurements-found: Geen metingen gevonden
-    no-user-found-with-username-s: Geen gebruiker gevonden met gebruikersnaam %s
-    notes: Notities
-    other-users: Andere gebruikers
-    password: Wachtwoord
     per: Per
+    period:
+      all-time: Altijd
+      last-30-days: Laatste 30 dagen
+      last-90-days: Laatste 90 dagen
+      last-365-days: Laatste 365 dagen
+      this-calendar-year: Dit kalenderjaar
     personal-trend: Persoonlijke trend
-    please-help-translate-via-weblate: Help deze toepassing vertalen op Weblate
-    power: Vermogen
-    power-avg-max: Vermogen (gem/max)
-    private: Privé
-    private-workout-explanation: Een privé-workout is enkel zichtbaar voor jou en voor beheerders.
-    profile-updated: Profiel bijgewerkt
-    public-share: Publieke koppeling
-    publicly-shareable-link-was-copied-to-clipboard: Publieke koppeling is naar het klembord gekopieerd
-    recent-activity: Recente activiteit
-    records-for-s: Records voor %s
-    refresh: ververs
-    refresh-in-progress: bezig met verversen
-    regenerate-publicly-shareable-link: "(Her)genereer koppeling"
-    register: Registreren
-    repetitions: Herhalingen
-    reset-changes: Wijzigingen ongedaan maken
+    progress: Jouw vooruitgang per %s voor de afgelopen %s
     reset-zoom: Zoom resetten
-    resources: Hulpmiddelen
-    route-segment:
-      update: Route segment aanpassen
-    show-map-in-full-width: Toon de kaart in volle breedte
-    sign-in: Aanmelden
     since: Sinds
-    slope: Helling
-    sort-by: Sorteer op
-    source: Bron
-    speed: Snelheid
-    start: Begin
-    start-searching-in-the-background-for-matching-workouts-for-route-segment-s: Zoek op de achtergrond naar workouts met matches voor route segment '%s'.
-    steps: Stappen
-    streets: Straten
-    strokes: slagen
-    temperature: Temperatuur
-    tempo: Tempo
-    the-configuration-file: het configuratiebestand
-    the-equipment-s-has-been-deleted: Het materiaal '%s' werd verwijderd.
-    the-equipment-s-has-been-updated: Het materiaal '%s' werd aangepast.
-    the-route-segment-s-has-been-created-we-search-for-matches-in-the-background: Het route segment '%s' werd aangemaakt - we zoeken op de achtergrond naar matches.
-    the-route-segment-s-has-been-updated: Het route segment '%s' werd aangepast.
-    the-shareable-link-is-deleted-for-the-workout-s: De publieke link is verwijderd voor workout '%s'
-    the-user-s-has-been-deleted: De gebruiker '%s' is verwijderd.
-    the-user-s-has-been-updated: De gebruiker '%s' is bijgewerkt.
-    the-workout-s-has-been-created: De workout '%s' werd gemaakt.
-    the-workout-s-has-been-deleted: De workout '%s' is verwijderd.
-    the-workout-s-has-been-refreshed: De workout '%s' is vernieuwd.
-    the-workout-s-has-been-updated: De workout '%s' is bijgewerkt.
-    the-workout-s-now-has-a-shareable-link: De workout '%s' heeft nu een publieke link
-    the-workout-s-will-be-refreshed-soon: De workout '%s' wordt binnenkort ververst…
-    these-settings-may-be-overwritten-by: 'Deze instellingen kunnen worden overschreven door:'
-    this-calendar-year: Dit kalenderjaar
-    time: Tijd
-    time-of-day: Tijdstip
-    time-paused: Tijd gepauzeerd
-    total-distance: Totale afstand
-    total-down: Totaal omlaag
-    total-duration: Totale duur
-    total-repetitions: Totaal aantal
-    total-up: Totaal omhoog
-    total-weight: Totaal gewicht
-    totals: Totalen
     trend: Trend
     trend-break: Trendbreuk
     trend-break-detection: Trendbreukdetectie
     trend-period: Trendperiode
-    try-one-of-these-sites: 'Probeer één van volgende sites:'
-    type: Type
-    up: Omhoog
-    update: Aanpassen
-    update-measurement: Meting aanpassen
-    updated: Geüpdate
-    use-a-file: Gebruik een bestand
-    user: Gebruiker
-    username: Gebruikersnaam
-    username-email: Gebruikersnaam (e-mailadres)
-    weight: Gewicht
-    welcome: Welkom!
-    workout: Workout
-    workout-attribute-locked: Dit attribuut is vergrendeld tegen automatische updates
-    workout-locked: De attributen van workout '%s' zijn nu vergrendeld
-    workout-not-found: Workout niet gevonden
-    workout-type: Type workout
-    workout-unlocked: De attributen van workout '%s' zijn nu ontgrendeld
-    workouts: workouts
-    you-can-edit-your-gpx-files-before-uploading-them-here: 'Je kunt je GPX-bestanden aanpassen voor je ze hier uploadt:'
-    you-can-find-inspiration-here: 'Hier kun je inspiratie opdoen:'
-    your-account-has-been-created-but-needs-to-be-activated: Jouw account is aangemaakt, maar moet nog worden geactiveerd.
-    your-profile: Jouw profiel
-    your-progress-per-s-for-the-past-s: Jouw vooruitgang per %s voor de afgelopen %s
   units:
     centimeter: centimeter
     feet: voet
@@ -303,7 +217,21 @@ nl:
     miles-per-hour: mijl per uur
     pounds: pond
   user:
+    auth:
+      activation-needed: Jouw account is aangemaakt, maar moet nog worden geactiveerd.
+      create-account: Maak een nieuwe account
+      register: Registreren
+      sign-in: Aanmelden
+      username-email: Gebruikersnaam (e-mailadres)
+      welcome: Welkom!
+    logout: Afmelden
+    not-found: Geen gebruiker gevonden met gebruikersnaam %s
+    notice:
+      deleted: De gebruiker '%s' is verwijderd.
+      updated: De gebruiker '%s' is bijgewerkt.
+    password: Wachtwoord
     profile:
+      api-key-updated: API-sleutel bijgewerkt
       auto-import-directory: Map om automatisch te importeren
       browser-system: Browser / Systeem
       copy-to-clipboard: kopieer naar klembord
@@ -324,7 +252,93 @@ nl:
       totals-to-show-on-dashboard: Totale waardes om op het dashboard weer te geven
       update-preferred-units: Voorkeurseenheden bijwerken
       update-profile: Profiel bijwerken
+      updated: Profiel bijgewerkt
+      your-profile: Jouw profiel
       your-settings: Uw instellingen
     update: Gebruiker bijwerken
+    username: Gebruikersnaam
   workout:
+    accuracy: Nauwkeurigheid
+    add-a-workout: Voeg een workout toe
+    add-workout: Workout toevoegen
+    add-workouts: Workouts toevoegen
+    attribute-locked: Dit attribuut is vergrendeld tegen automatische updates
+    autodetect: Automatisch detecteren
+    average-per-minute: Gemiddelde per minuut
+    average-speed: Gemiddelde snelheid
+    average-speed-no-pause: Gemiddelde snelheid (zonder pauze)
+    average-tempo: Gemiddelde tempo
+    average-tempo-no-pause: Gemiddelde tempo (zonder pauze)
+    breakdown: Uitsplitsing
+    cadence: Cadans
+    cadence-avg-max: Cadans (gem/max)
+    calories: Calorieën
+    calories-burned: Verbruik calorieën
+    climbs: Beklimmingen
+    distance: Afstand
+    duration: Duur
+    duration-without-pauses: Duur zonder pauzes
+    elevation: Hoogte
+    enhanced-speed: Gecorrigeerde snelheid
+    est-calories-burned: Verbruik calorieën (geschat)
+    estimated-based-on-the-activity: Geschat op basis van de activiteit en je laatst gekende gewicht
+    extra-metrics: Extra informatie
+    filter-workouts: Filter workouts
+    heading: Koers
+    heart-rate: Hartslag
+    location: Locatie
+    lock: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
+    locked: De attributen van workout '%s' zijn nu vergrendeld
+    manual: Manueel
+    matching-route-segments: Overeenkomende route segmenten
+    max-elevation: Hoogste niveau
+    max-speed: Max. snelheid
+    max-tempo: Maximale tempo
+    min-elevation: Laagste niveau
+    no-equipment: geen materiaal
+    not-found: Workout niet gevonden
+    notice:
+      created: De workout '%s' werd gemaakt.
+      deleted: De workout '%s' is verwijderd.
+      refresh-all: Alle workouts worden vernieuwd in de komende minuten.
+      refresh-soon: De workout '%s' wordt binnenkort ververst…
+      refreshed: De workout '%s' is vernieuwd.
+      share-link-created: De workout '%s' heeft nu een publieke link
+      share-link-deleted: De publieke link is verwijderd voor workout '%s'
+      updated: De workout '%s' is bijgewerkt.
+    power: Vermogen
+    power-avg-max: Vermogen (gem/max)
+    private: Privé
+    private-explanation: Een privé-workout is enkel zichtbaar voor jou en voor beheerders.
+    refresh-in-progress: bezig met verversen
+    repetitions: Herhalingen
+    share:
+      copied: Publieke koppeling is naar het klembord gekopieerd
+      copy: Kopieer koppeling
+      delete: Verwijder koppeling
+      link: Publieke koppeling
+      regenerate: "(Her)genereer koppeling"
+    show-map-in-full-width: Toon de kaart in volle breedte
+    slope: Helling
+    social:
+      completed: 'Ik heb een workout voltooid: %s.'
+      summary: Het duurde %s om %s te bereiken. Ik haalde gemiddeld %s.
+    source: Bron
+    speed: Snelheid
+    strokes: slagen
+    temperature: Temperatuur
+    tempo: Tempo
+    time: Tijd
+    time-of-day: Tijdstip
+    time-paused: Tijd gepauzeerd
+    total-distance: Totale afstand
+    total-down: Totaal omlaag
+    total-duration: Totale duur
+    total-repetitions: Totaal aantal
+    total-up: Totaal omhoog
+    total-weight: Totaal gewicht
+    totals: Totalen
+    type: Type workout
+    unlocked: De attributen van workout '%s' zijn nu ontgrendeld
+    up: Omhoog
     update: Workout bijwerken

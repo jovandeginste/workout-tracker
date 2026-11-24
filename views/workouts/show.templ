@@ -22,7 +22,7 @@ templ Show(w *database.Workout) {
 					if w.Dirty {
 						<span class="dirty">
 							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "translation.refresh-in-progress") }
+							{ i18n.T(ctx, "workout.refresh-in-progress") }
 						</span>
 					}
 					@Actions(w)
@@ -35,7 +35,7 @@ templ Show(w *database.Workout) {
 					<i>({ w.CustomType })</i>
 				}
 				if w.Private {
-					<span title={ i18n.T(ctx, "translation.private-workout-explanation") }>
+					<span title={ i18n.T(ctx, "workout.private-explanation") }>
 						@helpers.IconFor("hide")
 					</span>
 				}
@@ -59,32 +59,32 @@ templ Show(w *database.Workout) {
 			"workout-details",
 			partials.Tab{
 				Icon:        "speed",
-				Name:        i18n.T(ctx, "translation.average-speed") + " / " + i18n.T(ctx, "translation.elevation"),
+				Name:        i18n.T(ctx, "workout.average-speed") + " / " + i18n.T(ctx, "workout.elevation"),
 				Show:        w.Details() != nil,
 				NoPrint:     true,
 				ContentFunc: func() templ.Component { return renderDetails(w) },
 			},
 			partials.Tab{
 				Icon:        "route-segment",
-				Name:        i18n.T(ctx, "translation.matching-route-segments"),
+				Name:        i18n.T(ctx, "workout.matching-route-segments"),
 				Show:        len(w.RouteSegmentMatches) > 0,
 				ContentFunc: func() templ.Component { return renderRouteSegments(w) },
 			},
 			partials.Tab{
 				Icon:        "note",
-				Name:        i18n.T(ctx, "translation.notes"),
+				Name:        i18n.T(ctx, "common.notes"),
 				Show:        len(w.Notes) > 0,
 				ContentFunc: func() templ.Component { return renderNotes(w) },
 			},
 			partials.Tab{
 				Icon:        "elevation",
-				Name:        i18n.T(ctx, "translation.climbs"),
+				Name:        i18n.T(ctx, "workout.climbs"),
 				Show:        len(w.Data.Climbs) > 0,
 				ContentFunc: func() templ.Component { return renderClimbs(w) },
 			},
 			partials.Tab{
 				Icon:        "breakdown",
-				Name:        i18n.T(ctx, "translation.breakdown"),
+				Name:        i18n.T(ctx, "workout.breakdown"),
 				Show:        w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil,
 				ContentFunc: func() templ.Component { return renderBreakdown(w) },
 			},
@@ -140,7 +140,7 @@ templ renderClimbs(w *database.Workout) {
 					</th>
 					<th class="text-right">
 						@helpers.IconFor("duration")
-						{ i18n.T(ctx, "translation.duration") }
+						{ i18n.T(ctx, "workout.duration") }
 					</th>
 					<th class="hidden lg:table-cell text-right">
 						@helpers.IconFor("gain")
@@ -152,7 +152,7 @@ templ renderClimbs(w *database.Workout) {
 					</th>
 					<th class="hidden sm:table-cell text-right">
 						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "translation.average-speed") }
+						{ i18n.T(ctx, "workout.average-speed") }
 					</th>
 					<th class="hidden sm:table-cell text-right">
 						@helpers.IconFor("slope_cat")
@@ -195,7 +195,7 @@ templ renderClimbs(w *database.Workout) {
 						<td class="text-right">
 							<a
 								href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID) + "?start=" + strconv.Itoa(climb.StartIdx+1) + "&end=" + strconv.Itoa(climb.EndIdx+1)) }
-								title={ i18n.T(ctx, "translation.create-route-segment-from-climb") }
+								title={ i18n.T(ctx, "climb.create-route-segment") }
 							>
 								@helpers.IconFor("route-segment-add")
 							</a>

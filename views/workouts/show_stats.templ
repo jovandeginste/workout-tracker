@@ -9,18 +9,18 @@ import (
 templ ShowStats(w *database.Workout) {
 	{{
 		translations := map[string]string{
-			"distance":        i18n.T(ctx, "translation.distance"),
-			"duration":        i18n.T(ctx, "translation.duration"),
-			"moving-duration": i18n.T(ctx, "translation.duration-without-pauses"),
-			"time-of-day":     i18n.T(ctx, "translation.time-of-day"),
-			"calories":        i18n.T(ctx, "translation.calories"),
-			"power":           i18n.T(ctx, "translation.power"),
-			"heart-rate":      i18n.T(ctx, "translation.heart-rate"),
-			"temperature":     i18n.T(ctx, "translation.temperature"),
-			"speed":           i18n.T(ctx, "translation.speed"),
-			"elevation":       i18n.T(ctx, "translation.elevation"),
-			"cadence":         i18n.T(ctx, "translation.cadence"),
-			"averagespeed":    i18n.T(ctx, "translation.average-speed"),
+			"distance":        i18n.T(ctx, "workout.distance"),
+			"duration":        i18n.T(ctx, "workout.duration"),
+			"moving-duration": i18n.T(ctx, "workout.duration-without-pauses"),
+			"time-of-day":     i18n.T(ctx, "workout.time-of-day"),
+			"calories":        i18n.T(ctx, "workout.calories"),
+			"power":           i18n.T(ctx, "workout.power"),
+			"heart-rate":      i18n.T(ctx, "workout.heart-rate"),
+			"temperature":     i18n.T(ctx, "workout.temperature"),
+			"speed":           i18n.T(ctx, "workout.speed"),
+			"elevation":       i18n.T(ctx, "workout.elevation"),
+			"cadence":         i18n.T(ctx, "workout.cadence"),
+			"averagespeed":    i18n.T(ctx, "workout.average-speed"),
 		}
 	}}
 	<workout-stats

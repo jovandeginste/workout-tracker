@@ -73,9 +73,9 @@ func Show(w *database.Workout) templ.Component {
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var3 string
-					templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.refresh-in-progress"))
+					templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.refresh-in-progress"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 25, Col: 55}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 25, Col: 51}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 					if templ_7745c5c3_Err != nil {
@@ -132,9 +132,9 @@ func Show(w *database.Workout) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var5 string
-				templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.private-workout-explanation")).Resolve(ctx)
+				templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "workout.private-explanation")).Resolve(ctx)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 38, Col: 73}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 38, Col: 61}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 				if templ_7745c5c3_Err != nil {
@@ -187,32 +187,32 @@ func Show(w *database.Workout) templ.Component {
 				"workout-details",
 				partials.Tab{
 					Icon:        "speed",
-					Name:        i18n.T(ctx, "translation.average-speed") + " / " + i18n.T(ctx, "translation.elevation"),
+					Name:        i18n.T(ctx, "workout.average-speed") + " / " + i18n.T(ctx, "workout.elevation"),
 					Show:        w.Details() != nil,
 					NoPrint:     true,
 					ContentFunc: func() templ.Component { return renderDetails(w) },
 				},
 				partials.Tab{
 					Icon:        "route-segment",
-					Name:        i18n.T(ctx, "translation.matching-route-segments"),
+					Name:        i18n.T(ctx, "workout.matching-route-segments"),
 					Show:        len(w.RouteSegmentMatches) > 0,
 					ContentFunc: func() templ.Component { return renderRouteSegments(w) },
 				},
 				partials.Tab{
 					Icon:        "note",
-					Name:        i18n.T(ctx, "translation.notes"),
+					Name:        i18n.T(ctx, "common.notes"),
 					Show:        len(w.Notes) > 0,
 					ContentFunc: func() templ.Component { return renderNotes(w) },
 				},
 				partials.Tab{
 					Icon:        "elevation",
-					Name:        i18n.T(ctx, "translation.climbs"),
+					Name:        i18n.T(ctx, "workout.climbs"),
 					Show:        len(w.Data.Climbs) > 0,
 					ContentFunc: func() templ.Component { return renderClimbs(w) },
 				},
 				partials.Tab{
 					Icon:        "breakdown",
-					Name:        i18n.T(ctx, "translation.breakdown"),
+					Name:        i18n.T(ctx, "workout.breakdown"),
 					Show:        w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil,
 					ContentFunc: func() templ.Component { return renderBreakdown(w) },
 				},
@@ -444,9 +444,9 @@ func renderClimbs(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var14 string
-		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.duration"))
+		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.duration"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 143, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 143, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
@@ -520,9 +520,9 @@ func renderClimbs(w *database.Workout) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var18 string
-		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.average-speed"))
+		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.average-speed"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 155, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 155, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
@@ -743,9 +743,9 @@ func renderClimbs(w *database.Workout) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var33 string
-			templ_7745c5c3_Var33, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.create-route-segment-from-climb")).Resolve(ctx)
+			templ_7745c5c3_Var33, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "climb.create-route-segment")).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 198, Col: 74}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show.templ`, Line: 198, Col: 57}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var33)
 			if templ_7745c5c3_Err != nil {

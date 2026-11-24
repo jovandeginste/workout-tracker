@@ -63,15 +63,15 @@ func StatsRecordsTotal(user *database.User, viewer *database.User) templ.Compone
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = StatisticTile("distance", i18n.T(ctx, "translation.distance"), templatehelpers.HumanDistanceFor(preferredUnits.Distance(&t.WorkoutType))(t.Distance), preferredUnits.Distance(&t.WorkoutType)).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = StatisticTile("distance", i18n.T(ctx, "workout.distance"), templatehelpers.HumanDistanceFor(preferredUnits.Distance(&t.WorkoutType))(t.Distance), preferredUnits.Distance(&t.WorkoutType)).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = StatisticTile("up", i18n.T(ctx, "translation.up"), helpers.HumanElevation(ctx, t.Up), preferredUnits.Elevation()).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = StatisticTile("up", i18n.T(ctx, "workout.up"), helpers.HumanElevation(ctx, t.Up), preferredUnits.Elevation()).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = StatisticTile("duration", i18n.T(ctx, "translation.duration"), helpers.HumanDuration(t.Duration), "").Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = StatisticTile("duration", i18n.T(ctx, "workout.duration"), helpers.HumanDuration(t.Duration), "").Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -341,9 +341,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var17 string
-		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.records-for-s", i18n.T(ctx, rec.WorkoutType.StringT())))
+		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "dashboard.records-for", i18n.T(ctx, rec.WorkoutType.StringT())))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 79, Col: 84}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 79, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -362,9 +362,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var18 string
-		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.average-speed"))
+		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.average-speed"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 87, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 87, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
@@ -399,9 +399,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var19 string
-		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.average-speed-no-pause"))
+		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.average-speed-no-pause"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 101, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 101, Col: 53}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {
@@ -436,9 +436,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var20 string
-		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.max-speed"))
+		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.max-speed"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 115, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 115, Col: 40}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
@@ -473,9 +473,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var21 string
-		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.total-distance"))
+		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.total-distance"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 129, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 129, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 		if templ_7745c5c3_Err != nil {
@@ -528,9 +528,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var24 string
-		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.total-up"))
+		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.total-up"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 143, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 143, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 		if templ_7745c5c3_Err != nil {
@@ -583,9 +583,9 @@ func StatsRecordsDistance(rec *database.WorkoutRecord) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var27 string
-		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.total-duration"))
+		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.total-duration"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 157, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/stats.templ`, Line: 157, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 		if templ_7745c5c3_Err != nil {

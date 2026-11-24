@@ -22,8 +22,8 @@ templ Heatmap(workouts []*database.Workout) {
 				api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
 				api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
 				i18n={ templ.JSONString(map[string]string{
-          "streets": i18n.T(ctx, "translation.streets"),
-          "aerial":  i18n.T(ctx, "translation.aerial"),
+          "streets": i18n.T(ctx, "map.streets"),
+          "aerial":  i18n.T(ctx, "map.aerial"),
         }) }
 			></wt-heatmap>
 		</div>

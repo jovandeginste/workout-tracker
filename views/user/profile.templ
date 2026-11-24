@@ -26,7 +26,7 @@ templ Profile(u *database.User) {
 		<div class="inner-form">
 			<h3>
 				@helpers.IconFor("actions")
-				{ i18n.T(ctx, "translation.actions") }
+				{ i18n.T(ctx, "common.actions") }
 			</h3>
 			@userActions()
 		</div>
@@ -61,7 +61,7 @@ templ userSettings(u *database.User) {
 						<label for="api_active">
 							{ i18n.T(ctx, "user.profile.enable-api-access") }
 							<a
-								title={ i18n.T(ctx, "translation.how-to-use") }
+								title={ i18n.T(ctx, "help.how-to-use") }
 								target="_blank"
 								href="https://github.com/jovandeginste/workout-tracker?tab=readme-ov-file#api-usage"
 							>
@@ -141,7 +141,7 @@ templ userSettings(u *database.User) {
 							<a
 								href="https://hosted.weblate.org/projects/workout-tracker/"
 								target="_blank"
-								title={ i18n.T(ctx, "translation.please-help-translate-via-weblate") }
+								title={ i18n.T(ctx, "help.please-translate-via-weblate") }
 							>
 								@helpers.IconFor("translate")
 							</a>

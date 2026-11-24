@@ -70,7 +70,7 @@ func (a *App) adminUserUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-user-s-has-been-updated", u.Name)
+	a.addNoticeT(c, "user.notice.updated", u.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("admin-user-show", c.Param("id")))
 }
@@ -85,7 +85,7 @@ func (a *App) adminUserDeleteHandler(c *echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-user-s-has-been-deleted", u.Name)
+	a.addNoticeT(c, "user.notice.deleted", u.Name)
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("admin"))

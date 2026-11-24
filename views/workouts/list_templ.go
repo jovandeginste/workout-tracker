@@ -103,9 +103,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.add-workout"))
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.add-workout"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 20, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 20, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -126,9 +126,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.filter-workouts"))
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.filter-workouts"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 25, Col: 79}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 25, Col: 75}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -152,9 +152,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.type"))
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.type"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 28, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 28, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -165,9 +165,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.all"))
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.all"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 30, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 30, Col: 49}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -232,9 +232,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
-			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.last"))
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.last"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 41, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 41, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -291,9 +291,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.sort-by"))
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.sort-by"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 49, Col: 62}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 49, Col: 57}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -396,9 +396,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var21 string
-			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.filter"))
+			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.filter"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 64, Col: 61}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 64, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 			if templ_7745c5c3_Err != nil {
@@ -409,9 +409,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var22 string
-			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.name"))
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.name"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 71, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 71, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
@@ -422,9 +422,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var23 string
-			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.username"))
+			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "user.username"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 72, Col: 75}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 72, Col: 68}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 			if templ_7745c5c3_Err != nil {
@@ -435,9 +435,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var24 string
-			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.date"))
+			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.date"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 73, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 73, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 			if templ_7745c5c3_Err != nil {
@@ -448,9 +448,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.details"))
+			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.details"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 74, Col: 74}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 74, Col: 69}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 			if templ_7745c5c3_Err != nil {
@@ -542,9 +542,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var30 string
-					templ_7745c5c3_Var30, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.private-workout-explanation")).Resolve(ctx)
+					templ_7745c5c3_Var30, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "workout.private-explanation")).Resolve(ctx)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 96, Col: 76}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 96, Col: 64}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
 					if templ_7745c5c3_Err != nil {
@@ -597,9 +597,9 @@ func List(workouts []*database.Workout, filters *database.WorkoutFilters) templ.
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var31 string
-					templ_7745c5c3_Var31, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.refresh-in-progress")).Resolve(ctx)
+					templ_7745c5c3_Var31, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "workout.refresh-in-progress")).Resolve(ctx)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 112, Col: 68}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/list.templ`, Line: 112, Col: 64}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var31)
 					if templ_7745c5c3_Err != nil {

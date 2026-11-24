@@ -77,9 +77,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.your-progress-per-s-for-the-past-s", i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticPerOptions(), per)), i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticSinceOptions(), since))))
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.progress", i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticPerOptions(), per)), i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticSinceOptions(), since))))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 23, Col: 230}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 23, Col: 203}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -90,9 +90,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.since"))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.since"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 27, Col: 57}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 27, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -149,9 +149,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.per"))
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.per"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 33, Col: 53}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 33, Col: 52}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -208,9 +208,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
-			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.type"))
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.type"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 39, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 39, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -231,9 +231,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
-			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.all"))
+			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.all"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 41, Col: 86}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 41, Col: 81}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -290,9 +290,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var15 string
-			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.chart-type"))
+			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.chart-type"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 48, Col: 62}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 48, Col: 61}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -313,9 +313,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.line"))
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.line"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 50, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 50, Col: 92}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -336,9 +336,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var17 string
-			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.bar"))
+			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.bar"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 51, Col: 90}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 51, Col: 89}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
@@ -349,9 +349,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var18 string
-			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.refresh"))
+			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.refresh"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 53, Col: 77}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 53, Col: 72}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
@@ -384,10 +384,10 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 			}
 			var routeSegmentTrendData []routeSegmentTrendStatDataPoint
 			routeSegmentTrendTranslations := map[string]string{
-				"trend":               i18n.T(ctx, "translation.trend"),
-				"trendBreak":          i18n.T(ctx, "translation.trend-break"),
-				"trendBreakDetection": i18n.T(ctx, "translation.trend-break-detection"),
-				"resetZoom":           i18n.T(ctx, "translation.reset-zoom"),
+				"trend":               i18n.T(ctx, "statistics.trend"),
+				"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
+				"trendBreakDetection": i18n.T(ctx, "statistics.trend-break-detection"),
+				"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
 			}
 			for _, s := range routeSegments {
 				for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
@@ -418,9 +418,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var20 string
-				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.personal-trend"))
+				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "statistics.personal-trend"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 88, Col: 49}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 88, Col: 48}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 				if templ_7745c5c3_Err != nil {
@@ -618,9 +618,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var33 string
-			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.duration"))
+			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.duration"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 123, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 123, Col: 40}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 			if templ_7745c5c3_Err != nil {
@@ -704,9 +704,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var39 string
-			templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.distance"))
+			templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.distance"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 142, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 142, Col: 40}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var39))
 			if templ_7745c5c3_Err != nil {
@@ -790,9 +790,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var45 string
-			templ_7745c5c3_Var45, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.elevation"))
+			templ_7745c5c3_Var45, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.elevation"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 161, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 161, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var45))
 			if templ_7745c5c3_Err != nil {
@@ -876,9 +876,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var51 string
-			templ_7745c5c3_Var51, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.average-speed"))
+			templ_7745c5c3_Var51, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.average-speed"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 179, Col: 49}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 179, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var51))
 			if templ_7745c5c3_Err != nil {
@@ -962,9 +962,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var57 string
-			templ_7745c5c3_Var57, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.average-speed-no-pause"))
+			templ_7745c5c3_Var57, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.average-speed-no-pause"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 198, Col: 58}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 198, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var57))
 			if templ_7745c5c3_Err != nil {
@@ -1048,9 +1048,9 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var63 string
-			templ_7745c5c3_Var63, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.max-speed"))
+			templ_7745c5c3_Var63, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.max-speed"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 217, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/statistics.templ`, Line: 217, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var63))
 			if templ_7745c5c3_Err != nil {

@@ -1,4 +1,10 @@
 ru:
+  admin:
+    leave-blank-to-keep-current-password: Оставьте пустым, чтобы сохранить текущий пароль
+    manage: Управление
+    manage-user: Управление пользователем '%s'
+    manage-users: Управление пользователями
+    role: Админ
   alerts:
     route-segments-added:
       one: 'Возникла %{count} проблема в процессе добавления отрывка трассы: %{list}'
@@ -15,8 +21,71 @@ ru:
     distance: Расстояние
     elevation-gain-loss: Набор/сброс высоты
     start: Начало
+  common:
+    actions: Действия
+    active: Активное
+    all: Все
+    are-you-sure: Вы уверены?
+    ascending: по возрастанию
+    cancel: Отмена
+    confirm-delete: Вы уверены, что хотите удалить %s?
+    continue: Продолжить
+    created: Создано
+    date: Дата
+    delete: удалить
+    descending: по убыванию
+    description: Описание
+    details: Подробности
+    download: скачать
+    edit: редактировать
+    file: Файл
+    filter: Фильтр
+    height: Высота
+    last: Последние
+    name: Название
+    notes: Заметки
+    refresh: обновить
+    reset-changes: Сбросить изменения
+    sort-by: Сортировать по
+    type: Тип
+    update: Обновить
+    updated: Обновлено
+    use-a-file: Использовать файл
+    user: Пользователь
+    weight: Вес
+    workout: Тренировка
+    workouts: тренировки
+  dashboard:
+    for-user: Панель управления для %s
+    other-users: Другие пользователи
+    recent-activity: Недавняя активность
+    records-for: Записи для %s
   equipment:
+    add: Добавить снаряжение
+    default-workout-types: Типы тренировок по умолчанию
+    notice:
+      deleted: Оборудование '%s' удалено.
+      updated: Оборудование '%s' обновлено.
     update: Обновить снаряжение
+  help:
+    how-to-use: как использовать
+    please-translate-via-weblate: Пожалуйста, помогите c переводом на Weblate
+    resources: Ресурсы
+    translating: |
+      Мы будем признательны вашей помощи с переводом!
+
+      Пожалуйста, помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)
+    try-one-of-these-sites: 'Попробуйте один из этих сайтов:'
+    you-can-edit-your-gpx-files: 'Вы можете отредактировать файлы GPX перед их загрузкой здесь:'
+    you-can-find-inspiration-here: 'Вдохновение можно найти здесь:'
+  map:
+    aerial: Esri World Imagery
+    streets: OSM Carto
+  measurements:
+    latest: Последние измерения
+    none: Измерения не найдены
+    steps: Шаги
+    update: Обновить измерение
   menu:
     dashboard: Панель управления
     equipment: Снаряжение
@@ -54,8 +123,25 @@ ru:
       few: 'Добавлены %{count} новые тренировки: %{list}'
       many: 'Добавлено %{count} новых тренировок: %{list}'
   route-segment:
+    add: Добавить участок маршрута
+    bidirectional: Двунаправленный
+    circular: Круговой
+    create: Создать участок маршрута
+    end: Конец
+    find-matches: найти совпадения
+    matches: Совпадения
+    notice:
+      created: Участок пути '%s' создан — мы ищем совпадения в фоновом режиме.
+      searching: Начать поиск в фоновом режиме соответствующих тренировок для участка пути «%s».
+      updated: Участок пути «%s» обновлён.
+    start: Начало
     update: Обновить участок маршрута
   settings:
+    application: Настройки
+    configuration-file: файл конфигурации
+    disable-account-registration: Отключить регистрацию
+    environment-variables: переменные окружения
+    overwritten-by: 'Эти параметры могут быть переопределены через:'
     update: Обновить настройки
   sports:
     auto: автоопределение
@@ -89,173 +175,10 @@ ru:
     unknown: неизвестно
     walking: ходьба
     weight-lifting: силовая
-  translation:
-    accuracy: Точность
-    actions: Действия
-    active: Активное
-    add-a-workout: Добавить тренировку
-    add-equipment: Добавить снаряжение
-    add-route-segment: Добавить участок маршрута
-    add-workout: Добавить тренировку
-    add-workouts: Добавить тренировки
-    admin: Админ
-    aerial: Esri World Imagery
-    all: Все
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Все тренировки будут обновлены в ближайшие минуты.
-    api-key-updated: API-ключ обновлен
-    application-settings: Настройки
-    are-you-sure: Вы уверены?
-    are-you-sure-you-want-to-delete-this-s: Вы уверены, что хотите удалить %s?
-    ascending: по возрастанию
-    autodetect: Автоопределение
-    average-cadence: Средний каденс
-    average-per-minute: Среднее в минуту
-    average-speed: Средняя скорость
-    average-speed-no-pause: Средняя скорость (без остановок)
-    average-tempo: Средний темп
-    average-tempo-no-pause: Средний темп (без остановок)
-    bidirectional: Двунаправленный
-    cadence: Каденс
-    cadence-avg-max: Каденс (сред/макс)
-    calories: Калории
-    cancel: Отмена
-    circular: Круговой
-    continue: Продолжить
-    copy-publicly-shareable-link: Копировать ссылку
-    create-a-new-account: Создать новый аккаунт
-    create-route-segment: Создать участок маршрута
-    created: Создано
-    dashboard-for-s: Панель управления для %s
-    date: Дата
-    default-workout-types: Типы тренировок по умолчанию
-    delete: удалить
-    delete-public-share: Удалить ссылку
-    descending: по убыванию
-    description: Описание
-    details: Подробности
-    disable-account-registration: Отключить регистрацию
-    distance: Расстояние
-    download: скачать
-    duration: Продолжительность
-    edit: редактировать
-    elevation: Подъём
-    end: Конец
-    enhanced-speed: Улучшенная скорость
-    environment-variables: переменные окружения
-    est-calories-burned: Сожжено калорий
-    estimated-based-on-the-activity: Оценка основана на виде активности
-    extra-metrics: Дополнительные метрики
-    file: Файл
-    filter: Фильтр
-    filter-workouts: Фильтр тренировок
-    find-matches: найти совпадения
-    heading: Направление
-    heart-rate: ЧСС
-    height: Высота
-    help-translating: |
-      Мы будем признательны вашей помощи с переводом!
-
-      Пожалуйста, помогите с переводом [на Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/ru/)
-    how-to-use: как использовать
-    i-completed-a-workout-s: 'Я выполнил тренировку: «%s».'
-    it-took-me-s-to-go-s-i-averaged-s: Мне потребовалось %s, чтобы пройти %s. В среднем %s.
-    last: Последние
-    latest-measurements: Последние измерения
-    leave-blank-to-keep-current-password: Оставьте пустым, чтобы сохранить текущий пароль
-    location: Местоположение
-    logout: Выход
-    manage: Управление
-    manage-user-s: Управление пользователем '%s'
-    manage-users: Управление пользователями
-    manual: Вручную
-    matches: Совпадения
-    matching-route-segments: Совпадающие отрезки пути
-    max-cadence: Максимальный каденс
-    max-elevation: Максимальная высота
-    max-speed: Максимальная скорость
-    min-elevation: Минимальная высота
-    name: Название
-    no-equipment: нет снаряжения
-    no-measurements-found: Измерения не найдены
-    notes: Заметки
-    other-users: Другие пользователи
-    password: Пароль
+  statistics:
     per: в
-    please-help-translate-via-weblate: Пожалуйста, помогите c переводом на Weblate
-    profile-updated: Профиль обновлен
-    public-share: Публичная ссылка общего доступа
-    publicly-shareable-link-was-copied-to-clipboard: Общедоступная ссылка скопирована в буфер обмена
-    recent-activity: Недавняя активность
-    records-for-s: Записи для %s
-    refresh: обновить
-    refresh-in-progress: обновление в процессе
-    regenerate-publicly-shareable-link: Сгенерировать ссылку
-    register: Зарегистрироваться
-    repetitions: Повторения
-    reset-changes: Сбросить изменения
-    resources: Ресурсы
-    route-segment:
-      update: Обновить участок маршрута
-    show-map-in-full-width: Показать карту в полную ширину
-    sign-in: Войти
+    progress: Ваш прогресс в %s за прошедшие %s
     since: За прошедшие
-    slope: Уклон
-    sort-by: Сортировать по
-    source: Источник
-    speed: Скорость
-    start: Начало
-    start-searching-in-the-background-for-matching-workouts-for-route-segment-s: Начать поиск в фоновом режиме соответствующих тренировок для участка пути «%s».
-    steps: Шаги
-    streets: OSM Carto
-    temperature: Температура
-    tempo: Темп
-    the-configuration-file: файл конфигурации
-    the-equipment-s-has-been-deleted: Оборудование '%s' удалено.
-    the-equipment-s-has-been-updated: Оборудование '%s' обновлено.
-    the-route-segment-s-has-been-created-we-search-for-matches-in-the-background: Участок пути '%s' создан — мы ищем совпадения в фоновом режиме.
-    the-route-segment-s-has-been-updated: Участок пути «%s» обновлён.
-    the-shareable-link-is-deleted-for-the-workout-s: Ссылка общего доступа для тренировки '%s' удалена
-    the-user-s-has-been-deleted: Пользователь '%s' удален.
-    the-user-s-has-been-updated: Пользователь '%s' обновлен.
-    the-workout-s-has-been-created: Тренировка '%s' создана.
-    the-workout-s-has-been-deleted: Тренировка '%s' удалена.
-    the-workout-s-has-been-refreshed: Тренировка '%s' обновлена.
-    the-workout-s-has-been-updated: Тренировка '%s' обновлена.
-    the-workout-s-now-has-a-shareable-link: Тренировка '%s' теперь имеет ссылку общего доступа
-    the-workout-s-will-be-refreshed-soon: Тренировка '%s' скоро обновится…
-    these-settings-may-be-overwritten-by: 'Эти параметры могут быть переопределены через:'
-    time: Время
-    time-paused: Время остановок
-    total-distance: Общее расстояние
-    total-down: Потеря высоты
-    total-duration: Общая продолжительность
-    total-repetitions: Всего повторений
-    total-up: Набор высоты
-    total-weight: Общий вес
-    totals: Всего
-    try-one-of-these-sites: 'Попробуйте один из этих сайтов:'
-    type: Тип
-    up: Вверх
-    update: Обновить
-    update-measurement: Обновить измерение
-    updated: Обновлено
-    use-a-file: Использовать файл
-    user: Пользователь
-    username: Имя пользователя
-    username-email: Имя пользователя (email)
-    weight: Вес
-    welcome: Добро пожаловать!
-    workout: Тренировка
-    workout-attribute-locked: Этот атрибут заблокирован от автоматических обновлений
-    workout-locked: Атрибуты тренировки «%s» теперь заблокированы
-    workout-type: Тип тренировки
-    workout-unlocked: Атрибуты тренировки «%s» теперь разблокированы
-    workouts: тренировки
-    you-can-edit-your-gpx-files-before-uploading-them-here: 'Вы можете отредактировать файлы GPX перед их загрузкой здесь:'
-    you-can-find-inspiration-here: 'Вдохновение можно найти здесь:'
-    your-account-has-been-created-but-needs-to-be-activated: Ваш аккаунт создан, но его необходимо активировать.
-    your-profile: Ваш профиль
-    your-progress-per-s-for-the-past-s: Ваш прогресс в %s за прошедшие %s
   units:
     centimeter: сантиметр
     feet: футы
@@ -268,7 +191,20 @@ ru:
     miles-per-hour: мили в час
     pounds: фунты
   user:
+    auth:
+      activation-needed: Ваш аккаунт создан, но его необходимо активировать.
+      create-account: Создать новый аккаунт
+      register: Зарегистрироваться
+      sign-in: Войти
+      username-email: Имя пользователя (email)
+      welcome: Добро пожаловать!
+    logout: Выход
+    notice:
+      deleted: Пользователь '%s' удален.
+      updated: Пользователь '%s' обновлен.
+    password: Пароль
     profile:
+      api-key-updated: API-ключ обновлен
       auto-import-directory: Папка автоматического импорта
       browser-system: Обозреватель / ОС
       copy-to-clipboard: Cкопировать в буфер обмена
@@ -287,7 +223,82 @@ ru:
       totals-to-show-on-dashboard: Итоги для отображения на панели управления
       update-preferred-units: Обновить единицы измерения
       update-profile: Обновить профиль
+      updated: Профиль обновлен
+      your-profile: Ваш профиль
       your-settings: Настройки
     update: Обновить пользователя
+    username: Имя пользователя
   workout:
+    accuracy: Точность
+    add-a-workout: Добавить тренировку
+    add-workout: Добавить тренировку
+    add-workouts: Добавить тренировки
+    attribute-locked: Этот атрибут заблокирован от автоматических обновлений
+    autodetect: Автоопределение
+    average-cadence: Средний каденс
+    average-per-minute: Среднее в минуту
+    average-speed: Средняя скорость
+    average-speed-no-pause: Средняя скорость (без остановок)
+    average-tempo: Средний темп
+    average-tempo-no-pause: Средний темп (без остановок)
+    cadence: Каденс
+    cadence-avg-max: Каденс (сред/макс)
+    calories: Калории
+    distance: Расстояние
+    duration: Продолжительность
+    elevation: Подъём
+    enhanced-speed: Улучшенная скорость
+    est-calories-burned: Сожжено калорий
+    estimated-based-on-the-activity: Оценка основана на виде активности
+    extra-metrics: Дополнительные метрики
+    filter-workouts: Фильтр тренировок
+    heading: Направление
+    heart-rate: ЧСС
+    location: Местоположение
+    locked: Атрибуты тренировки «%s» теперь заблокированы
+    manual: Вручную
+    matching-route-segments: Совпадающие отрезки пути
+    max-cadence: Максимальный каденс
+    max-elevation: Максимальная высота
+    max-speed: Максимальная скорость
+    min-elevation: Минимальная высота
+    no-equipment: нет снаряжения
+    notice:
+      created: Тренировка '%s' создана.
+      deleted: Тренировка '%s' удалена.
+      refresh-all: Все тренировки будут обновлены в ближайшие минуты.
+      refresh-soon: Тренировка '%s' скоро обновится…
+      refreshed: Тренировка '%s' обновлена.
+      share-link-created: Тренировка '%s' теперь имеет ссылку общего доступа
+      share-link-deleted: Ссылка общего доступа для тренировки '%s' удалена
+      updated: Тренировка '%s' обновлена.
+    refresh-in-progress: обновление в процессе
+    repetitions: Повторения
+    share:
+      copied: Общедоступная ссылка скопирована в буфер обмена
+      copy: Копировать ссылку
+      delete: Удалить ссылку
+      link: Публичная ссылка общего доступа
+      regenerate: Сгенерировать ссылку
+    show-map-in-full-width: Показать карту в полную ширину
+    slope: Уклон
+    social:
+      completed: 'Я выполнил тренировку: «%s».'
+      summary: Мне потребовалось %s, чтобы пройти %s. В среднем %s.
+    source: Источник
+    speed: Скорость
+    temperature: Температура
+    tempo: Темп
+    time: Время
+    time-paused: Время остановок
+    total-distance: Общее расстояние
+    total-down: Потеря высоты
+    total-duration: Общая продолжительность
+    total-repetitions: Всего повторений
+    total-up: Набор высоты
+    total-weight: Общий вес
+    totals: Всего
+    type: Тип тренировки
+    unlocked: Атрибуты тренировки «%s» теперь разблокированы
+    up: Вверх
     update: Обновить тренировку

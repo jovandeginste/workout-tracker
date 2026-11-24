@@ -25,7 +25,7 @@ templ Show(e *database.Equipment) {
 				<div class="inner-form">
 					<h3 class="grow justify-start">
 						@helpers.IconFor("totals")
-						{ i18n.T(ctx, "translation.totals") }
+						{ i18n.T(ctx, "workout.totals") }
 					</h3>
 					<table>
 						{{ totals, _ := e.GetTotals() }}
@@ -34,7 +34,7 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("distance")
 								</td>
-								<th>{ i18n.T(ctx, "translation.total-distance") }</th>
+								<th>{ i18n.T(ctx, "workout.total-distance") }</th>
 								<td>
 									{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
 								</td>
@@ -43,14 +43,14 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("duration")
 								</td>
-								<th>{ i18n.T(ctx, "translation.total-duration") }</th>
+								<th>{ i18n.T(ctx, "workout.total-duration") }</th>
 								<td>{ helpers.HumanDuration(totals.Duration ) }</td>
 							</tr>
 							<tr>
 								<td>
 									@helpers.IconFor("repetitions")
 								</td>
-								<th>{ i18n.T(ctx, "translation.total-repetitions") }</th>
+								<th>{ i18n.T(ctx, "workout.total-repetitions") }</th>
 								<td>{ helpers.A2S(totals.Repetitions) }</td>
 							</tr>
 						</tbody>
@@ -63,7 +63,7 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("user")
 								</td>
-								<th>{ i18n.T(ctx, "translation.username") }</th>
+								<th>{ i18n.T(ctx, "user.username") }</th>
 								<td>
 									@helpers.UserLinkWithName(&e.User)
 								</td>
@@ -72,7 +72,7 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("date")
 								</td>
-								<th>{ i18n.T(ctx, "translation.created") }</th>
+								<th>{ i18n.T(ctx, "common.created") }</th>
 								<td>
 									@partials.SnippetDate(e.CreatedAt)
 								</td>
@@ -81,14 +81,14 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("note")
 								</td>
-								<th>{ i18n.T(ctx, "translation.description") }</th>
+								<th>{ i18n.T(ctx, "common.description") }</th>
 								<td>{ e.Description }</td>
 							</tr>
 							<tr>
 								<td>
 									@helpers.IconFor("check")
 								</td>
-								<th>{ i18n.T(ctx, "translation.active") }</th>
+								<th>{ i18n.T(ctx, "common.active") }</th>
 								<td>
 									@templ.Raw(helpers.BoolToHTML(e.Active))
 								</td>
@@ -97,7 +97,7 @@ templ Show(e *database.Equipment) {
 								<td>
 									@helpers.IconFor("workout")
 								</td>
-								<th>{ i18n.T(ctx, "translation.default-workout-types") }</th>
+								<th>{ i18n.T(ctx, "equipment.default-workout-types") }</th>
 								<td>
 									<div class="flex flex-wrap">
 										for _, d := range  e.DefaultFor {
@@ -113,7 +113,7 @@ templ Show(e *database.Equipment) {
 					<div class="inner-form">
 						<h3>
 							@helpers.IconFor("note")
-							{ i18n.T(ctx, "translation.notes") }
+							{ i18n.T(ctx, "common.notes") }
 						</h3>
 						<div>
 							@templ.Raw(helpers.MarkdownToHTML(e.Notes))
@@ -131,9 +131,9 @@ templ Show(e *database.Equipment) {
 						<thead>
 							<tr>
 								<th></th>
-								<th>{ i18n.T(ctx, "translation.name") }</th>
-								<th class="hidden lg:table-cell">{ i18n.T(ctx, "translation.username") }</th>
-								<th class="hidden sm:table-cell">{ i18n.T(ctx, "translation.date") }</th>
+								<th>{ i18n.T(ctx, "common.name") }</th>
+								<th class="hidden lg:table-cell">{ i18n.T(ctx, "user.username") }</th>
+								<th class="hidden sm:table-cell">{ i18n.T(ctx, "common.date") }</th>
 							</tr>
 						</thead>
 						<tbody>

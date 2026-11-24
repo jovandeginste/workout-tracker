@@ -13,15 +13,15 @@ templ DummyWorkoutPointTitle() {
 
 func PointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
 	t := []string{
-		"<ul><li><b>" + i18n.T(ctx, "translation.time") + ":</b> ",
+		"<ul><li><b>" + i18n.T(ctx, "workout.time") + ":</b> ",
 		helpers.LocalTime(ctx, p.Time).Format("15:04"),
-		"</li><li><b>" + i18n.T(ctx, "translation.distance") + ":</b> ",
+		"</li><li><b>" + i18n.T(ctx, "workout.distance") + ":</b> ",
 		helpers.HumanDistance(ctx, p.TotalDistance) + " " + preferredUnits.Distance(nil),
-		"</li><li><b>" + i18n.T(ctx, "translation.duration") + ":</b> ",
+		"</li><li><b>" + i18n.T(ctx, "workout.duration") + ":</b> ",
 		helpers.HumanDuration(p.TotalDuration),
-		"</li><li><b>" + i18n.T(ctx, "translation.speed") + ":</b> ",
+		"</li><li><b>" + i18n.T(ctx, "workout.speed") + ":</b> ",
 		helpers.HumanSpeed(ctx, p.AverageSpeed()) + " " + preferredUnits.Speed(nil),
-		"</li><li><b>" + i18n.T(ctx, "translation.elevation") + ":</b> ",
+		"</li><li><b>" + i18n.T(ctx, "workout.elevation") + ":</b> ",
 		helpers.HumanElevation(ctx, p.ExtraMetrics.Get("elevation")) + " " + preferredUnits.Elevation(),
 		"</li></ul>",
 	}

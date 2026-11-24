@@ -47,7 +47,7 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 
 	target, err := a.userForUsername(c, filters.Username)
 	if err != nil {
-		a.addErrorT(c, "translation.no-user-found-with-username-s", filters.Username)
+		a.addErrorT(c, "user.not-found", filters.Username)
 
 		return Render(c, http.StatusOK, workouts.List(nil, filters))
 	}
@@ -72,7 +72,7 @@ func (a *App) workoutsShowHandler(c *echo.Context) error {
 	}
 
 	if !w.IsVisibleTo(a.getCurrentUser(c)) {
-		a.addErrorT(c, "translation.workout-not-found")
+		a.addErrorT(c, "workout.not-found")
 
 		return c.Redirect(http.StatusFound, a.Reverse("workouts"))
 	}
@@ -124,7 +124,7 @@ func (a *App) workoutsDeleteHandler(c *echo.Context) error { //nolint:dupl
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-workout-s-has-been-deleted", workout.Name)
+	a.addNoticeT(c, "workout.notice.deleted", workout.Name)
 
 	if isHtmx(c) {
 		c.Response().Header().Set("Hx-Redirect", a.Reverse("workouts"))
@@ -146,7 +146,7 @@ func (a *App) workoutShowShared(c *echo.Context) error {
 	}
 
 	if !w.IsVisibleTo(a.getCurrentUser(c)) {
-		a.addErrorT(c, "translation.workout-not-found")
+		a.addErrorT(c, "workout.not-found")
 
 		return c.Redirect(http.StatusFound, a.Reverse("dashboard"))
 	}
@@ -172,7 +172,7 @@ func (a *App) workoutsShareHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-workout-s-now-has-a-shareable-link", workout.Name)
+	a.addNoticeT(c, "workout.notice.share-link-created", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
 }
@@ -194,7 +194,7 @@ func (a *App) workoutsShareDeleteHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-shareable-link-is-deleted-for-the-workout-s", workout.Name)
+	a.addNoticeT(c, "workout.notice.share-link-deleted", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
 }
@@ -215,7 +215,7 @@ func (a *App) workoutsRefreshHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
-	a.addNoticeT(c, "translation.the-workout-s-will-be-refreshed-soon", workout.Name)
+	a.addNoticeT(c, "workout.notice.refresh-soon", workout.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
 }
@@ -259,9 +259,9 @@ func (a *App) workoutsToggleLockHandler(c *echo.Context) error {
 	}
 
 	if workout.Locked {
-		a.addNoticeT(c, "translation.workout-locked", workout.Name)
+		a.addNoticeT(c, "workout.locked", workout.Name)
 	} else {
-		a.addNoticeT(c, "translation.workout-unlocked", workout.Name)
+		a.addNoticeT(c, "workout.unlocked", workout.Name)
 	}
 
 	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
@@ -289,7 +289,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c *echo.Context) erro
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
 
-	a.addNoticeT(c, "translation.the-route-segment-s-has-been-created-we-search-for-matches-in-the-background", rs.Name)
+	a.addNoticeT(c, "route-segment.notice.created", rs.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("route-segment-show", rs.ID))
 }

@@ -26,7 +26,7 @@ templ Edit(w *database.Workout) {
 							<thead>
 								<tr>
 									<td>
-										<label for="type">{ i18n.T(ctx, "translation.workout-type") }</label>
+										<label for="type">{ i18n.T(ctx, "workout.type") }</label>
 									</td>
 									<td>
 										<input type="hidden" name="id" value={ helpers.A2S(w.ID) }/>
@@ -59,7 +59,7 @@ templ Edit(w *database.Workout) {
 									<td>
 										<button type="submit">{ i18n.T(ctx, "workout.update") }</button>
 										<button type="reset" class="edit">
-											{ i18n.T(ctx, "translation.reset-changes") }
+											{ i18n.T(ctx, "common.reset-changes") }
 										</button>
 										<button
 											type="button"
@@ -67,7 +67,7 @@ templ Edit(w *database.Workout) {
 											onclick="document.location=this.getAttribute('data-url')"
 											data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
 										>
-											{ i18n.T(ctx, "translation.cancel") }
+											{ i18n.T(ctx, "common.cancel") }
 										</button>
 									</td>
 								</tr>

@@ -103,9 +103,9 @@ func List(equipment []*database.Equipment, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.add-equipment"))
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "equipment.add"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 20, Col: 53}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 20, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -137,9 +137,9 @@ func List(equipment []*database.Equipment, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.filter"))
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.filter"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 30, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 30, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -150,9 +150,9 @@ func List(equipment []*database.Equipment, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.name"))
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.name"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 35, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 35, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -163,9 +163,9 @@ func List(equipment []*database.Equipment, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.username"))
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "user.username"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 36, Col: 75}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 36, Col: 68}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -176,9 +176,9 @@ func List(equipment []*database.Equipment, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
-			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.active"))
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.active"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 37, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 37, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -329,9 +329,9 @@ func actions(e *database.Equipment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var18 string
-		templ_7745c5c3_Var18, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.edit")).Resolve(ctx)
+		templ_7745c5c3_Var18, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.edit")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 71, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 71, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var18)
 		if templ_7745c5c3_Err != nil {
@@ -363,9 +363,9 @@ func actions(e *database.Equipment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var20 string
-		templ_7745c5c3_Var20, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.delete")).Resolve(ctx)
+		templ_7745c5c3_Var20, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.delete")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 82, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 82, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var20)
 		if templ_7745c5c3_Err != nil {
@@ -430,9 +430,9 @@ func DeleteModal(e *database.Equipment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var23 string
-		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.are-you-sure-you-want-to-delete-this-s", i18n.T(ctx, "misc.equipment")))
+		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, "misc.equipment")))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 108, Col: 103}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 108, Col: 74}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 		if templ_7745c5c3_Err != nil {
@@ -469,9 +469,9 @@ func DeleteModal(e *database.Equipment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var26 string
-		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.continue"))
+		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.continue"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 117, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 117, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
@@ -495,9 +495,9 @@ func DeleteModal(e *database.Equipment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var28 string
-		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.cancel"))
+		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.cancel"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 123, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/equipment/list.templ`, Line: 123, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 		if templ_7745c5c3_Err != nil {

@@ -54,7 +54,7 @@ templ Alerts() {
 // UsernameFilter is a text input for a username, with the known usernames
 // suggested through htmx.
 templ UsernameFilter(value string) {
-	<label for="username">{ i18n.T(ctx, "translation.username") }</label>
+	<label for="username">{ i18n.T(ctx, "user.username") }</label>
 	<input
 		type="text"
 		id="username"

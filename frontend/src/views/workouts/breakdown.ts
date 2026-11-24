@@ -117,15 +117,15 @@ export class WorkoutBreakdown extends LitElement {
           if (metric === "speed") {
             return html`<th class="${hiddenClasses}">${col}</th>
               <th class="${hiddenClasses}">
-                ${msg("Tempo", { id: "translation.tempo" })}
+                ${msg("Tempo", { id: "workout.tempo" })}
               </th>`;
           }
           if (metric === "elevation") {
             return html`<th class="${hiddenClasses}">
-                ${msg("Total up", { id: "translation.total-up" })}
+                ${msg("Total up", { id: "workout.total-up" })}
               </th>
               <th class="${hiddenClasses}">
-                ${msg("Total down", { id: "translation.total-down" })}
+                ${msg("Total down", { id: "workout.total-down" })}
               </th>`;
           }
           return html`<th class="${hiddenClasses}">${col}</th>`;

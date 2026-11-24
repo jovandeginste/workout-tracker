@@ -48,9 +48,9 @@ func actions(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.download")).Resolve(ctx)
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.download")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 11, Col: 70}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 11, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -82,9 +82,9 @@ func actions(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.edit")).Resolve(ctx)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.edit")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 18, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 18, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -116,9 +116,9 @@ func actions(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.refresh")).Resolve(ctx)
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.refresh")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 25, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 25, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 		if templ_7745c5c3_Err != nil {
@@ -150,9 +150,9 @@ func actions(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.find-matches")).Resolve(ctx)
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "route-segment.find-matches")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 32, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 32, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var9)
 		if templ_7745c5c3_Err != nil {
@@ -184,9 +184,9 @@ func actions(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "translation.delete")).Resolve(ctx)
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.delete")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 43, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 43, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
 		if templ_7745c5c3_Err != nil {
@@ -251,9 +251,9 @@ func DeleteModal(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var14 string
-		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.are-you-sure-you-want-to-delete-this-s", i18n.T(ctx, "misc.route-segment")))
+		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, "misc.route-segment")))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 69, Col: 107}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 69, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
@@ -290,9 +290,9 @@ func DeleteModal(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var17 string
-		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.continue"))
+		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.continue"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 78, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 78, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -316,9 +316,9 @@ func DeleteModal(s *database.RouteSegment) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var19 string
-		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "translation.cancel"))
+		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.cancel"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 84, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/actions.templ`, Line: 84, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {

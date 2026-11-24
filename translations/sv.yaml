@@ -1,4 +1,10 @@
 sv:
+  admin:
+    leave-blank-to-keep-current-password: Lämna tomt för att behålla det nuvarande lösenordet
+    manage: Hantera
+    manage-user: Hantera användaren '%s'
+    manage-users: Hantera användare
+    role: Admin
   alerts:
     route-segments-added:
       one: 'Ett problem uppstod vid skapad rutt: %{list}'
@@ -10,6 +16,7 @@ sv:
   climb:
     average-slope: Medel lutning
     category: Kategori
+    create-route-segment: Skapa ett ruttavsnitt utifrån detta avsnitt
     distance: Klättringsdistans
     elevation-gain: Stigning
     elevation-gain-loss: Höjd upp/ner
@@ -17,8 +24,71 @@ sv:
     start: Start distans
     type-climb: 'Klättrat #%d'
     type-descent: 'Nedstigning #%d'
+  common:
+    actions: Alternativ
+    active: Aktiv
+    all: Alla
+    are-you-sure: Är du säker?
+    ascending: stigande
+    cancel: Avbryt
+    confirm-delete: Vill du radera %s?
+    continue: Fortsätt
+    created: Skapad
+    date: Datum
+    delete: ta bort
+    descending: nedåt
+    description: Beskrivning
+    details: Detaljer
+    download: ladda ner
+    edit: redigera
+    file: Fil
+    filter: Filter
+    height: Höjd
+    last: Sista
+    name: Namn
+    notes: Anteckningar
+    refresh: uppdatera
+    reset-changes: Återställ ändringar
+    sort-by: Sortera efter
+    type: Typ
+    update: Uppdatering
+    updated: Uppdaterad
+    use-a-file: Använd en fil
+    user: Användare
+    weight: Vikt
+    workout: Träning
+    workouts: träningspass
+  dashboard:
+    for-user: Dashboard för %s
+    other-users: Andra användare
+    recent-activity: Senaste aktivitet
+    records-for: Resultat för %s
   equipment:
+    add: Lägg till utrustning
+    default-workout-types: Standardträningsformer
+    notice:
+      deleted: Utrustningen ”%s” har tagits bort.
+      updated: Utrustningen ”%s” har uppdaterats.
     update: Uppdatera utrustning
+  help:
+    how-to-use: hur man använder
+    please-translate-via-weblate: Hjälp gärna till med översättningen via Weblate
+    resources: Resurser
+    translating: |
+      Vi skulle uppskatta din hjälp med översättningen!
+
+      Hjälp gärna till med översättningen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
+    try-one-of-these-sites: 'Prova någon av dessa webbplatser:'
+    you-can-edit-your-gpx-files: 'Du kan redigera dina GPX-filer innan du laddar upp dem här:'
+    you-can-find-inspiration-here: 'Här kan du hitta inspiration:'
+  map:
+    aerial: Satellit
+    streets: Gator
+  measurements:
+    latest: Senast mätning
+    none: Inga mätvärden hittades
+    steps: Steg
+    update: Uppdatera mätning
   menu:
     dashboard: Översikt
     equipment: Utrustning
@@ -54,8 +124,25 @@ sv:
       one: "%{list} tillagt"
       other: "%{count} %{list} tillagda"
   route-segment:
+    add: Lägg till ruttavsnitt
+    bidirectional: Tvåvägs
+    circular: Cirkulär
+    create: Skapa ett ruttavsnitt
+    end: Slut
+    find-matches: sök matchningar
+    matches: Matcher
+    notice:
+      created: Ruttavsnittet ”%s” har skapats – vi söker efter träffar i bakgrunden.
+      searching: Börja söka i bakgrunden efter pass som passar ruttavsnittet ”%s”.
+      updated: Sträckavsnittet ”%s” har uppdaterats.
+    start: Start
     update: Uppdatera rutt segment
   settings:
+    application: Inställningar
+    configuration-file: konfigurationsfilen
+    disable-account-registration: Inaktivera kontoregistrering
+    environment-variables: environment variabler
+    overwritten-by: 'Dessa inställningar kan åsidosättas av:'
     update: Spara inställningar
   sports:
     alpine-climbing: alpklättring
@@ -94,192 +181,22 @@ sv:
     unknown: Okänd
     walking: Gång
     weight-lifting: Tyngdlyftning
-  translation:
-    accuracy: Noggrannhet
-    actions: Alternativ
-    active: Aktiv
-    add-a-workout: Lägg till träningspass
-    add-equipment: Lägg till utrustning
-    add-route-segment: Lägg till ruttavsnitt
-    add-workout: Skapa träningspass
-    add-workouts: Lägg till träningspass
-    admin: Admin
-    aerial: Satellit
-    all: Alla
-    all-time: Genom tiderna
-    all-workouts-will-be-refreshed-in-the-coming-minutes: Alla träningspass uppdateras inom några minuten.
-    api-key-updated: API nyckel uppdaterad
-    application-settings: Inställningar
-    are-you-sure: Är du säker?
-    are-you-sure-you-want-to-delete-this-s: Vill du radera %s?
-    ascending: stigande
-    autodetect: Automatisk identifiering
-    average-cadence: Medel steglängd
-    average-per-minute: Genomsnitt per minut
-    average-speed: Genomsnitt hastighet
-    average-speed-no-pause: Genomsnittlig hastighet (utan pauser)
-    average-tempo: Genomsnittligt tempo
-    average-tempo-no-pause: Genomsnittligt tempo (utan paus)
-    bidirectional: Tvåvägs
-    breakdown: Uppdelning
-    cadence: stegfrekvens
-    cadence-avg-max: stegfrekvens (snitt/max)
-    calories: Kalorier
-    calories-burned: Förbrukade kalorier
-    cancel: Avbryt
-    circular: Cirkulär
-    climbs: Stigning
-    continue: Fortsätt
-    copy-publicly-shareable-link: Kopiera länken
-    create-a-new-account: Skapa ett nytt konto
-    create-route-segment: Skapa ett ruttavsnitt
-    create-route-segment-from-climb: Skapa ett ruttavsnitt utifrån detta avsnitt
-    created: Skapad
-    dashboard-for-s: Dashboard för %s
-    date: Datum
-    default-workout-types: Standardträningsformer
-    delete: ta bort
-    delete-public-share: Ta bort länk
-    descending: nedåt
-    description: Beskrivning
-    details: Detaljer
-    disable-account-registration: Inaktivera kontoregistrering
-    distance: Distans
-    download: ladda ner
-    duration: Varaktighet
-    edit: redigera
-    elevation: Stigning
-    end: Slut
-    enhanced-speed: Korrigerad hastighet
-    environment-variables: environment variabler
-    est-calories-burned: Förbrukade kalorier (uppskattning)
-    estimated-based-on-the-activity: Beräknat utifrån din aktivitet och din senast registrerade vikt
-    extra-metrics: Ytterligare mätvärden
-    file: Fil
-    filter: Filter
-    filter-workouts: Filtrera träningspass
-    find-matches: sök matchningar
-    heading: Kurs
-    heart-rate: Puls
-    height: Höjd
-    help-translating: |
-      Vi skulle uppskatta din hjälp med översättningen!
-
-      Hjälp gärna till med översättningen [via Weblate](https://hosted.weblate.org/projects/workout-tracker/web-interface/)
-    how-to-use: hur man använder
-    i-completed-a-workout-s: 'Jag har avslutat ett träningspass: ’%s’.'
-    it-took-me-s-to-go-s-i-averaged-s: Det tog mig %s att gå %s. Mitt genomsnitt blev %s.
-    last: Sista
-    last-30-days: Senaste 30 dagarna
-    last-90-days: Senaste 90 dagarna
-    last-365-days: Senaste 365 dagarna
-    latest-measurements: Senast mätning
-    leave-blank-to-keep-current-password: Lämna tomt för att behålla det nuvarande lösenordet
-    location: Plats
-    lock-workout: Lås eller lås upp attributen för detta träningspass från automatiska uppdateringar.
-    logout: Logga ut
-    manage: Hantera
-    manage-user-s: Hantera användaren '%s'
-    manage-users: Hantera användare
-    manual: Manuellt
-    matches: Matcher
-    matching-route-segments: Matchande sträckor
-    max-elevation: Högsta höjd
-    max-speed: Högsta hastighet
-    max-tempo: Max tempo
-    min-elevation: Lägsta höjd
-    name: Namn
-    no-equipment: ingen utrustning
-    no-measurements-found: Inga mätvärden hittades
-    notes: Anteckningar
-    other-users: Andra användare
-    password: Lösenord
+  statistics:
     per: Enligt
+    period:
+      all-time: Genom tiderna
+      last-30-days: Senaste 30 dagarna
+      last-90-days: Senaste 90 dagarna
+      last-365-days: Senaste 365 dagarna
+      this-calendar-year: Detta kalenderår
     personal-trend: Personlig trend
-    please-help-translate-via-weblate: Hjälp gärna till med översättningen via Weblate
-    power: Effekt
-    power-avg-max: Effekt (snitt/max)
-    profile-updated: Profilen har uppdaterats
-    public-share: Länk som kan delas offentligt
-    publicly-shareable-link-was-copied-to-clipboard: En länk som kan delas offentligt har kopierats till urklipp
-    recent-activity: Senaste aktivitet
-    records-for-s: Resultat för %s
-    refresh: uppdatera
-    refresh-in-progress: uppdatering pågår
-    regenerate-publicly-shareable-link: Skapa ny länk
-    register: Registrera
-    repetitions: Upprepningar
-    reset-changes: Återställ ändringar
+    progress: Dina framsteg per %s under de senaste %s
     reset-zoom: Återställ zoom
-    resources: Resurser
-    route-segment:
-      update: Uppdatera ruttavsnitt
-    show-map-in-full-width: Visa kartan i full bredd
-    sign-in: Logga in
     since: Sedan
-    slope: Backe
-    sort-by: Sortera efter
-    source: Källa
-    speed: Hastighet
-    start: Start
-    start-searching-in-the-background-for-matching-workouts-for-route-segment-s: Börja söka i bakgrunden efter pass som passar ruttavsnittet ”%s”.
-    steps: Steg
-    streets: Gator
-    strokes: slag
-    temperature: Temperatur
-    tempo: Tempo
-    the-configuration-file: konfigurationsfilen
-    the-equipment-s-has-been-deleted: Utrustningen ”%s” har tagits bort.
-    the-equipment-s-has-been-updated: Utrustningen ”%s” har uppdaterats.
-    the-route-segment-s-has-been-created-we-search-for-matches-in-the-background: Ruttavsnittet ”%s” har skapats – vi söker efter träffar i bakgrunden.
-    the-route-segment-s-has-been-updated: Sträckavsnittet ”%s” har uppdaterats.
-    the-shareable-link-is-deleted-for-the-workout-s: Den delade länken för '%s' är nu borttagen
-    the-user-s-has-been-deleted: Användaren '%s' har tagits bort.
-    the-user-s-has-been-updated: Användaren '%s' har uppdaterats.
-    the-workout-s-has-been-created: Träningspasset ”%s” har skapats.
-    the-workout-s-has-been-deleted: Träningspasset '%s' har tagits bort.
-    the-workout-s-has-been-refreshed: Träningspasset '%s har uppdaterats.
-    the-workout-s-has-been-updated: Träningspasset ”%s” har uppdaterats.
-    the-workout-s-now-has-a-shareable-link: Träningspasset '%s' har nu en delbar länk
-    the-workout-s-will-be-refreshed-soon: Träningspasset ”%s” kommer snart att uppdateras…
-    these-settings-may-be-overwritten-by: 'Dessa inställningar kan åsidosättas av:'
-    this-calendar-year: Detta kalenderår
-    time: Tid
-    time-paused: Tiden pausad
-    total-distance: Total sträcka
-    total-down: Totalt ned
-    total-duration: Total varaktighet
-    total-repetitions: Totalt antal repetitioner
-    total-up: Totalt upp
-    total-weight: Total vikt
-    totals: Totalt
     trend: Trend
     trend-break: Trendbrott
     trend-break-detection: Trendbrottsdetektering
     trend-period: Trendperiod
-    try-one-of-these-sites: 'Prova någon av dessa webbplatser:'
-    type: Typ
-    up: Stigning
-    update: Uppdatering
-    update-measurement: Uppdatera mätning
-    updated: Uppdaterad
-    use-a-file: Använd en fil
-    user: Användare
-    username: Användarnamn
-    username-email: Användarnamn (e-postadress)
-    weight: Vikt
-    welcome: Välkommen!
-    workout: Träning
-    workout-attribute-locked: Det här attributet är låst för automatiska uppdateringar
-    workout-locked: Attributen för träningspasset ”%s” är nu låsta
-    workout-type: Typ av träning
-    workout-unlocked: Attributen för träningspasset ”%s” är nu upplåst
-    workouts: träningspass
-    you-can-edit-your-gpx-files-before-uploading-them-here: 'Du kan redigera dina GPX-filer innan du laddar upp dem här:'
-    you-can-find-inspiration-here: 'Här kan du hitta inspiration:'
-    your-account-has-been-created-but-needs-to-be-activated: Ditt konto har skapats, men måste aktiveras.
-    your-profile: Din profil
-    your-progress-per-s-for-the-past-s: Dina framsteg per %s under de senaste %s
   units:
     centimeter: Centimeter
     feet: Fot
@@ -292,7 +209,20 @@ sv:
     miles-per-hour: Miles per hour
     pounds: Pund
   user:
+    auth:
+      activation-needed: Ditt konto har skapats, men måste aktiveras.
+      create-account: Skapa ett nytt konto
+      register: Registrera
+      sign-in: Logga in
+      username-email: Användarnamn (e-postadress)
+      welcome: Välkommen!
+    logout: Logga ut
+    notice:
+      deleted: Användaren '%s' har tagits bort.
+      updated: Användaren '%s' har uppdaterats.
+    password: Lösenord
     profile:
+      api-key-updated: API nyckel uppdaterad
       auto-import-directory: Katalog för automatisk import
       browser-system: Webbläsare / System
       copy-to-clipboard: Kopiera till urklipp
@@ -313,7 +243,89 @@ sv:
       totals-to-show-on-dashboard: Totalsummor som ska visas på dashboard
       update-preferred-units: Uppdatera önskade enheter
       update-profile: Uppdatera profil
+      updated: Profilen har uppdaterats
+      your-profile: Din profil
       your-settings: Dina inställningar
     update: Uppdatera användare
+    username: Användarnamn
   workout:
+    accuracy: Noggrannhet
+    add-a-workout: Lägg till träningspass
+    add-workout: Skapa träningspass
+    add-workouts: Lägg till träningspass
+    attribute-locked: Det här attributet är låst för automatiska uppdateringar
+    autodetect: Automatisk identifiering
+    average-cadence: Medel steglängd
+    average-per-minute: Genomsnitt per minut
+    average-speed: Genomsnitt hastighet
+    average-speed-no-pause: Genomsnittlig hastighet (utan pauser)
+    average-tempo: Genomsnittligt tempo
+    average-tempo-no-pause: Genomsnittligt tempo (utan paus)
+    breakdown: Uppdelning
+    cadence: stegfrekvens
+    cadence-avg-max: stegfrekvens (snitt/max)
+    calories: Kalorier
+    calories-burned: Förbrukade kalorier
+    climbs: Stigning
+    distance: Distans
+    duration: Varaktighet
+    elevation: Stigning
+    enhanced-speed: Korrigerad hastighet
+    est-calories-burned: Förbrukade kalorier (uppskattning)
+    estimated-based-on-the-activity: Beräknat utifrån din aktivitet och din senast registrerade vikt
+    extra-metrics: Ytterligare mätvärden
+    filter-workouts: Filtrera träningspass
+    heading: Kurs
+    heart-rate: Puls
+    location: Plats
+    lock: Lås eller lås upp attributen för detta träningspass från automatiska uppdateringar.
+    locked: Attributen för träningspasset ”%s” är nu låsta
+    manual: Manuellt
+    matching-route-segments: Matchande sträckor
+    max-elevation: Högsta höjd
+    max-speed: Högsta hastighet
+    max-tempo: Max tempo
+    min-elevation: Lägsta höjd
+    no-equipment: ingen utrustning
+    notice:
+      created: Träningspasset ”%s” har skapats.
+      deleted: Träningspasset '%s' har tagits bort.
+      refresh-all: Alla träningspass uppdateras inom några minuten.
+      refresh-soon: Träningspasset ”%s” kommer snart att uppdateras…
+      refreshed: Träningspasset '%s har uppdaterats.
+      share-link-created: Träningspasset '%s' har nu en delbar länk
+      share-link-deleted: Den delade länken för '%s' är nu borttagen
+      updated: Träningspasset ”%s” har uppdaterats.
+    power: Effekt
+    power-avg-max: Effekt (snitt/max)
+    refresh-in-progress: uppdatering pågår
+    repetitions: Upprepningar
+    share:
+      copied: En länk som kan delas offentligt har kopierats till urklipp
+      copy: Kopiera länken
+      delete: Ta bort länk
+      link: Länk som kan delas offentligt
+      regenerate: Skapa ny länk
+    show-map-in-full-width: Visa kartan i full bredd
+    slope: Backe
+    social:
+      completed: 'Jag har avslutat ett träningspass: ’%s’.'
+      summary: Det tog mig %s att gå %s. Mitt genomsnitt blev %s.
+    source: Källa
+    speed: Hastighet
+    strokes: slag
+    temperature: Temperatur
+    tempo: Tempo
+    time: Tid
+    time-paused: Tiden pausad
+    total-distance: Total sträcka
+    total-down: Totalt ned
+    total-duration: Total varaktighet
+    total-repetitions: Totalt antal repetitioner
+    total-up: Totalt upp
+    total-weight: Total vikt
+    totals: Totalt
+    type: Typ av träning
+    unlocked: Attributen för träningspasset ”%s” är nu upplåst
+    up: Stigning
     update: Uppdatera träningspass
