@@ -96,18 +96,20 @@ func (sc *StatConfig) GetSince() string {
 	return s
 }
 
-func (u *User) GetDefaultStatistics() (*Statistics, error) {
-	return u.GetStatisticsFor("1 year", "month")
+func (u *User) GetDefaultStatistics(viewer *User) (*Statistics, error) {
+	return u.GetStatisticsFor("1 year", "month", viewer)
 }
 
-func (u *User) GetStatisticsFor(since, per string) (*Statistics, error) {
+func (u *User) GetStatisticsFor(since, per string, viewer *User) (*Statistics, error) {
 	return u.GetStatistics(StatConfig{
 		Since: since,
 		Per:   per,
-	})
+	}, viewer)
 }
 
-func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
+// GetStatistics returns the statistics of the user, limited to the workouts the
+// viewer may see.
+func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, error) {
 	sqlDialect := u.db.Dialector.Name()
 
 	r := &Statistics{
@@ -116,7 +118,7 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 		Buckets:      map[WorkoutType]Buckets{},
 	}
 
-	q := u.db.
+	q := VisibleWorkouts(u.db, viewer).
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
@@ -175,10 +177,10 @@ func (u *User) GetStatistics(statConfig StatConfig) (*Statistics, error) {
 	return r, nil
 }
 
-func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
+func (u *User) GetHighestWorkoutType(viewer *User) (*WorkoutType, error) {
 	r := ""
 
-	err := u.db.
+	err := VisibleWorkouts(u.db, viewer).
 		Table("workouts").
 		Select("workouts.type").
 		Where("user_id = ?", u.ID).
@@ -195,20 +197,20 @@ func (u *User) GetHighestWorkoutType() (*WorkoutType, error) {
 	return &wt, nil
 }
 
-func (u *User) GetDefaultTotals() ([]*Bucket, error) {
+func (u *User) GetDefaultTotals(viewer *User) ([]*Bucket, error) {
 	if u.IsAnonymous() {
 		return nil, ErrAnonymousUser
 	}
 
-	types, err := u.defaultTotalsTypes()
+	types, err := u.defaultTotalsTypes(viewer)
 	if err != nil {
 		return nil, err
 	}
 
-	return u.GetTotalsFor(types)
+	return u.GetTotalsFor(types, viewer)
 }
 
-func (u *User) defaultTotalsTypes() (WorkoutTypeList, error) {
+func (u *User) defaultTotalsTypes(viewer *User) (WorkoutTypeList, error) {
 	types := slices.Clone(u.Profile.TotalsShow)
 	types.Sanitize()
 
@@ -220,7 +222,7 @@ func (u *User) defaultTotalsTypes() (WorkoutTypeList, error) {
 
 	for _, t := range types {
 		if t == WorkoutTypeAutoDetect {
-			ht, err := u.GetHighestWorkoutType()
+			ht, err := u.GetHighestWorkoutType(viewer)
 			if err != nil {
 				return nil, err
 			}
@@ -241,14 +243,14 @@ func (u *User) defaultTotalsTypes() (WorkoutTypeList, error) {
 	return result, nil
 }
 
-func (u *User) GetTotalsFor(types WorkoutTypeList) ([]*Bucket, error) {
+func (u *User) GetTotalsFor(types WorkoutTypeList, viewer *User) ([]*Bucket, error) {
 	if len(types) == 0 {
 		return nil, nil
 	}
 
 	rows := []*Bucket{}
 
-	err := u.db.
+	err := VisibleWorkouts(u.db, viewer).
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
@@ -286,14 +288,14 @@ func (u *User) GetTotalsFor(types WorkoutTypeList) ([]*Bucket, error) {
 	return result, nil
 }
 
-func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
+func (u *User) GetTotals(t WorkoutType, viewer *User) (*Bucket, error) {
 	if t == "" {
 		t = WorkoutTypeRunning
 	}
 
 	r := &Bucket{}
 
-	err := u.db.
+	err := VisibleWorkouts(u.db, viewer).
 		Table("workouts").
 		Select(
 			"count(*) as workouts",
@@ -314,7 +316,7 @@ func (u *User) GetTotals(t WorkoutType) (*Bucket, error) {
 	return r, nil
 }
 
-func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
+func (u *User) GetAllRecords(viewer *User) ([]*WorkoutRecord, error) {
 	if u.IsAnonymous() {
 		return nil, ErrAnonymousUser
 	}
@@ -322,7 +324,7 @@ func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
 	rs := []*WorkoutRecord{}
 
 	for _, w := range DistanceWorkoutTypes() {
-		r, err := u.GetRecords(w)
+		r, err := u.GetRecords(w, viewer)
 		if err != nil {
 			return nil, err
 		}
@@ -335,9 +337,9 @@ func (u *User) GetAllRecords() ([]*WorkoutRecord, error) {
 	return rs, nil
 }
 
-func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
+func (u *User) GetRecords(t WorkoutType, viewer *User) (*WorkoutRecord, error) {
 	if t == "" {
-		types, err := u.defaultTotalsTypes()
+		types, err := u.defaultTotalsTypes(viewer)
 		if err != nil {
 			return nil, err
 		}
@@ -362,7 +364,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 	}
 
 	for k, v := range mapping {
-		err := u.db.
+		err := VisibleWorkouts(u.db, viewer).
 			Table("workouts").
 			Joins("join map_data on workouts.id = map_data.workout_id").
 			Where("user_id = ?", u.ID).
@@ -377,7 +379,7 @@ func (u *User) GetRecords(t WorkoutType) (*WorkoutRecord, error) {
 		}
 	}
 
-	err := u.db.
+	err := VisibleWorkouts(u.db, viewer).
 		Table("workouts").
 		Joins("join map_data on workouts.id = map_data.workout_id").
 		Where("user_id = ?", u.ID).

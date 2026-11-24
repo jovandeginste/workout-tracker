@@ -254,7 +254,9 @@ func (a *App) apiRecordsHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetRecords(database.AsWorkoutType(workoutType))
+	u := a.getCurrentUser(c)
+
+	s, err := u.GetRecords(database.AsWorkoutType(workoutType), u)
 	if err != nil {
 		resp.AddError(err)
 	}
@@ -282,7 +284,9 @@ func (a *App) apiTotalsHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetTotals(database.AsWorkoutType(workoutType))
+	u := a.getCurrentUser(c)
+
+	s, err := u.GetTotals(database.AsWorkoutType(workoutType), u)
 	if err != nil {
 		resp.AddError(err)
 	}
@@ -311,7 +315,9 @@ func (a *App) apiStatisticsHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	s, err := a.getCurrentUser(c).GetStatistics(statConfig)
+	u := a.getCurrentUser(c)
+
+	s, err := u.GetStatistics(statConfig, u)
 	if err != nil {
 		resp.AddError(err)
 	}

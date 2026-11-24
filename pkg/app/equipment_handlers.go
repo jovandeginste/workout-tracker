@@ -67,6 +67,8 @@ func (a *App) equipmentShowHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("equipment"), err)
 	}
 
+	e.FilterVisibleWorkouts(a.getCurrentUser(c))
+
 	return Render(c, http.StatusOK, equipment.Show(e))
 }
 

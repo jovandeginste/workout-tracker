@@ -212,6 +212,8 @@ en:
     This_calendar_year: This calendar year
     Please_help_translate_via_Weblate: Please help translate via Weblate
     Profile_updated: Profile updated
+    Private: Private
+    Private_workout_explanation: A private workout is only visible to you and to admins.
     Publicly_shareable_link_was_copied_to_clipboard: Publicly shareable link was copied to clipboard
     public_share: Publicly shareable link
     Recent_activity: Recent activity
@@ -251,6 +253,7 @@ en:
     Weight: Weight
     Welcome: Welcome!
     Workout: Workout
+    Workout_not_found: Workout not found
     Workout_type: Workout type
     Your_account_has_been_created_but_needs_to_be_activated: Your account has been created, but needs to be activated.
     Your_profile: Your profile

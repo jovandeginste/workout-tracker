@@ -42,6 +42,7 @@ type Workout struct {
 	UserID              uint64               `gorm:"not null;index;uniqueIndex:idx_start_user" json:"userID"`                            // The ID of the user who owns the workout
 	Locked              bool                 `json:"locked"`                                                                             // Whether the workout's main attributes should be auto-updated
 	Dirty               bool                 `json:"dirty"`                                                                              // Whether the workout has been modified and the details should be re-rendered
+	Private             bool                 `gorm:"not null;default:false" json:"private"`                                              // Whether the workout is only visible to its owner and to admins
 }
 
 type GPXData struct {
@@ -512,14 +513,46 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX, dataName string) 
 	return WorkoutTypeWalking
 }
 
-func GetRecentWorkouts(db *gorm.DB, count int) ([]*Workout, error) {
+func GetRecentWorkouts(db *gorm.DB, viewer *User, count int) ([]*Workout, error) {
 	var w []*Workout
 
-	if err := db.Preload("Data").Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
+	if err := VisibleWorkouts(db, viewer).Preload("Data").Preload("User").Order("date DESC").Limit(count).Find(&w).Error; err != nil {
 		return nil, err
 	}
 
 	return w, nil
+}
+
+// IsVisibleTo reports whether the viewer may see this workout. A private
+// workout is only visible to its owner and to admins.
+func (w *Workout) IsVisibleTo(viewer *User) bool {
+	if w == nil {
+		return false
+	}
+
+	if !w.Private {
+		return true
+	}
+
+	if viewer == nil {
+		return false
+	}
+
+	return viewer.Admin || viewer.ID == w.UserID
+}
+
+// VisibleWorkouts limits the query to the workouts the viewer may see. Private
+// workouts are only visible to their owner and to admins.
+func VisibleWorkouts(db *gorm.DB, viewer *User) *gorm.DB {
+	if viewer != nil && viewer.Admin {
+		return db
+	}
+
+	if viewer == nil {
+		return db.Where("workouts.private IS NOT TRUE")
+	}
+
+	return db.Where("workouts.user_id = ? OR workouts.private IS NOT TRUE", viewer.ID)
 }
 
 func GetWorkouts(db *gorm.DB) ([]*Workout, error) {

@@ -92,6 +92,11 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
 								@Name(w, 20)
 							</a>
+							if w.Private {
+								<span title={ i18n.T(ctx, "translation.Private_workout_explanation") }>
+									@helpers.IconFor("hide")
+								</span>
+							}
 						</td>
 						<td class="hidden md:table-cell">
 							@helpers.UserLink(w.User)

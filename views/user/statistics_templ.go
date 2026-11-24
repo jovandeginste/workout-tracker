@@ -362,7 +362,7 @@ func Statistics(u *database.User, since, per, workoutType, chartType string, rou
 				return templ_7745c5c3_Err
 			}
 			currentUser := helpers.CurrentUser(ctx)
-			stats, err := currentUser.GetStatisticsFor(since, per)
+			stats, err := currentUser.GetStatisticsFor(since, per, currentUser)
 			if err != nil {
 				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<pre>")
 				if templ_7745c5c3_Err != nil {

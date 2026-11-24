@@ -34,6 +34,10 @@ func (a *App) routeSegmentsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
+	for _, rs := range s {
+		rs.FilterVisibleMatches(a.getCurrentUser(c))
+	}
+
 	return Render(c, http.StatusOK, route_segments.List(s))
 }
 
@@ -86,6 +90,8 @@ func (a *App) routeSegmentsShowHandler(c *echo.Context) error {
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("route-segments"), err)
 	}
+
+	rs.FilterVisibleMatches(a.getCurrentUser(c))
 
 	return Render(c, http.StatusOK, route_segments.Show(rs))
 }

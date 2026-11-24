@@ -8,7 +8,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 )
 
-templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout) {
+templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout, viewer *database.User) {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("dashboard")
@@ -17,10 +17,10 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 				<span class="user-name">({ user.Name })</span>
 			}
 		</h2>
-		@StatsRecordsTotal(user)
+		@StatsRecordsTotal(user, viewer)
 		<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
 			<div>
-				{{ recs, err := user.GetAllRecords() }}
+				{{ recs, err := user.GetAllRecords(viewer) }}
 				if err != nil {
 					<pre>{ err.Error() }</pre>
 				} else {
