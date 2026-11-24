@@ -8,6 +8,7 @@ import (
 type WorkoutFilters struct {
 	db       *gorm.DB
 	Type     WorkoutType `query:"type"`
+	Username string      `query:"username"`
 	Active   bool        `query:"active"`
 	Since    string      `query:"since"`
 	OrderBy  string      `query:"order_by"`

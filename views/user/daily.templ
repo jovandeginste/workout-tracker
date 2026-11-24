@@ -57,6 +57,10 @@ templ Measurements(u *database.User, n int) {
 		<table>
 			<thead>
 				<tr>
+					<th class="hidden md:table-cell">
+						@helpers.IconFor("user")
+						{ i18n.T(ctx, "translation.Username") }
+					</th>
 					<th class="w-1/5">
 						@helpers.IconFor("date")
 						{ i18n.T(ctx, "translation.Date") }
@@ -79,6 +83,9 @@ templ Measurements(u *database.User, n int) {
 			<tbody>
 				for _, m := range ms {
 					<tr>
+						<td class="hidden md:table-cell">
+							@helpers.UserLink(u)
+						</td>
 						<td>
 							{ m.DateString() }
 						</td>

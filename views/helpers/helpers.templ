@@ -1,5 +1,29 @@
 package helpers
 
+import "github.com/jovandeginste/workout-tracker/v2/pkg/database"
+
 templ IconFor(name string) {
 	@templ.Raw(iconFor(name))
+}
+
+// UserLink shows the username of the user, linking to their dashboard.
+templ UserLink(u *database.User) {
+	if u == nil || u.ID == 0 {
+		return
+	}
+	<a href={ templ.SafeURL(RouteFor(ctx, "user-show", u.ID)) }>
+		@IconFor("user")
+		{ u.Username }
+	</a>
+}
+
+// UserLinkWithName shows the username of the user, followed by their name.
+templ UserLinkWithName(u *database.User) {
+	if u == nil || u.ID == 0 {
+		return
+	}
+	@UserLink(u)
+	if u.Name != "" && u.Name != u.Username {
+		<span class="user-name">{ u.Name }</span>
+	}
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ List(equipment []*database.Equipment) {
+templ List(equipment []*database.Equipment, username string) {
 	@partials.Page(partials.NewPageOptions()) {
 		<div class="items-baseline flex flex-wrap">
 			<h2 class="grow justify-start">
@@ -21,10 +21,19 @@ templ List(equipment []*database.Equipment) {
 				</a>
 			</div>
 		</div>
+		<form
+			id="filters"
+			method="get"
+			action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment")) }
+		>
+			@partials.UsernameFilter(username)
+			<button type="submit">{ i18n.T(ctx, "translation.Filter") }</button>
+		</form>
 		<table class="equipment-info">
 			<thead>
 				<tr>
 					<th>{ i18n.T(ctx, "translation.Name") }</th>
+					<th class="hidden md:table-cell">{ i18n.T(ctx, "translation.Username") }</th>
 					<th>{ i18n.T(ctx, "translation.Active") }</th>
 					<th>{ i18n.T(ctx, "menu.Workouts") }</th>
 					<th></th>
@@ -35,6 +44,9 @@ templ List(equipment []*database.Equipment) {
 					<tr>
 						<td>
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-show", e.ID)) }>{ e.Name }</a>
+						</td>
+						<td class="hidden md:table-cell">
+							@helpers.UserLink(&e.User)
 						</td>
 						<td>
 							@templ.Raw(helpers.BoolToHTML(e.Active))

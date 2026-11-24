@@ -37,6 +37,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 						</option>
 					}
 				</select>
+				@partials.UsernameFilter(filters.Username)
 				<label for="since">{ i18n.T(ctx, "translation.Last") }</label>
 				<select id="since" name="since">
 					for _, fo := range helpers.FilterOptions() {
@@ -68,6 +69,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 				<tr>
 					<th></th>
 					<th>{ i18n.T(ctx, "translation.Name") }</th>
+					<th class="hidden md:table-cell">{ i18n.T(ctx, "translation.Username") }</th>
 					<th>{ i18n.T(ctx, "translation.Date") }</th>
 					<th class="hidden lg:table-cell">{ i18n.T(ctx, "translation.Details") }</th>
 					<th class="hidden sm:table-cell"></th>
@@ -90,6 +92,9 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
 								@Name(w, 20)
 							</a>
+						</td>
+						<td class="hidden md:table-cell">
+							@helpers.UserLink(w.User)
 						</td>
 						<td>
 							@partials.SnippetDate(w.Date)

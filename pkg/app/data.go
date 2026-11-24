@@ -73,6 +73,23 @@ func (a *App) setUser(c *echo.Context) error {
 	return nil
 }
 
+// userForUsername returns the user whose items a list should show. Without a
+// username, or with your own username, this is the current user.
+func (a *App) userForUsername(c *echo.Context, username string) (*database.User, error) {
+	current := a.getCurrentUser(c)
+
+	if username == "" || username == current.Username {
+		return current, nil
+	}
+
+	u, err := database.GetUser(a.db, username)
+	if err != nil || u == nil {
+		return nil, ErrUserNotFound
+	}
+
+	return u, nil
+}
+
 func (a *App) getCurrentUser(c *echo.Context) *database.User {
 	d := c.Get("user_info")
 

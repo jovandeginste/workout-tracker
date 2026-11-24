@@ -45,7 +45,14 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	w, err := u.GetWorkouts(filters.ToQuery(a.db))
+	target, err := a.userForUsername(c, filters.Username)
+	if err != nil {
+		a.addErrorT(c, "translation.No_user_found_with_username_s", filters.Username)
+
+		return Render(c, http.StatusOK, workouts.List(nil, filters))
+	}
+
+	w, err := target.GetWorkouts(filters.ToQuery(a.db))
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}

@@ -52,9 +52,7 @@ templ Show(s *database.RouteSegment) {
 								for _, m := range s.RouteSegmentMatches {
 									<tr>
 										<td>
-											<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", m.Workout.UserID)) }>
-												{ m.Workout.User.Name }
-											</a>
+											@helpers.UserLink(m.Workout.User)
 										</td>
 										<td>
 											<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", m.WorkoutID)) }>

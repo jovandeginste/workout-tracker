@@ -1,6 +1,7 @@
 package partials
 
 import (
+	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
@@ -48,6 +49,26 @@ templ Alerts() {
 			</div>
 		}
 	</div>
+}
+
+// UsernameFilter is a text input for a username, with the known usernames
+// suggested through htmx.
+templ UsernameFilter(value string) {
+	<label for="username">{ i18n.T(ctx, "translation.Username") }</label>
+	<input
+		type="text"
+		id="username"
+		name="username"
+		list="user-suggestions"
+		autocomplete="off"
+		value={ value }
+		placeholder={ helpers.CurrentUser(ctx).Username }
+		hx-get={ helpers.RouteFor(ctx, "user-suggest") }
+		hx-trigger="load, input changed delay:300ms"
+		hx-target="#user-suggestions"
+		hx-swap="innerHTML"
+	/>
+	<datalist id="user-suggestions"></datalist>
 }
 
 templ Language() {

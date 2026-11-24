@@ -61,6 +61,15 @@ templ Show(e *database.Equipment) {
 						<tbody>
 							<tr>
 								<td>
+									@helpers.IconFor("user")
+								</td>
+								<th>{ i18n.T(ctx, "translation.Username") }</th>
+								<td>
+									@helpers.UserLinkWithName(&e.User)
+								</td>
+							</tr>
+							<tr>
+								<td>
 									@helpers.IconFor("date")
 								</td>
 								<th>{ i18n.T(ctx, "translation.Created") }</th>
@@ -123,6 +132,7 @@ templ Show(e *database.Equipment) {
 							<tr>
 								<th></th>
 								<th>{ i18n.T(ctx, "translation.Name") }</th>
+								<th class="hidden lg:table-cell">{ i18n.T(ctx, "translation.Username") }</th>
 								<th class="hidden sm:table-cell">{ i18n.T(ctx, "translation.Date") }</th>
 							</tr>
 						</thead>
@@ -138,6 +148,9 @@ templ Show(e *database.Equipment) {
 										<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
 											@workouts.Name(&w, 20)
 										</a>
+									</td>
+									<td class="hidden lg:table-cell">
+										@helpers.UserLink(&e.User)
 									</td>
 									<td class="hidden sm:table-cell">
 										@partials.SnippetDate(w.Date)
