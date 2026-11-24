@@ -39,14 +39,21 @@ func (a *App) addEquipment(c *echo.Context) error {
 }
 
 func (a *App) equipmentHandler(c *echo.Context) error {
-	u := a.getCurrentUser(c)
+	username := c.QueryParam("username")
 
-	e, err := u.GetAllEquipment(a.db)
+	target, err := a.userForUsername(c, username)
+	if err != nil {
+		a.addErrorT(c, "translation.No_user_found_with_username_s", username)
+
+		return Render(c, http.StatusOK, equipment.List(nil, username))
+	}
+
+	e, err := target.GetAllEquipment(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, equipment.List(e))
+	return Render(c, http.StatusOK, equipment.List(e, target.Username))
 }
 
 func (a *App) equipmentShowHandler(c *echo.Context) error {

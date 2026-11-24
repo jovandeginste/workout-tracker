@@ -291,6 +291,7 @@ en:
     The_route_segment_s_has_been_updated: The route segment '%s' has been updated.
     Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: Start searching in the background for matching workouts for route segment '%s'.
     No_measurements_found: No measurements found
+    No_user_found_with_username_s: No user found with username %s
     Update: Update
     Height: Height
     Are_you_sure: Are you sure?

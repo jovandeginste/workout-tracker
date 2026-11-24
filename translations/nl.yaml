@@ -301,6 +301,7 @@ nl:
     Start_searching_in_the_background_for_matching_workouts_for_route_segment_s: 
       Zoek op de achtergrond naar workouts met matches voor route segment '%s'.
     No_measurements_found: Geen metingen gevonden
+    No_user_found_with_username_s: Geen gebruiker gevonden met gebruikersnaam %s
     Update: Aanpassen
     Height: Grootte
     Are_you_sure: Bent u zeker?

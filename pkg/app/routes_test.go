@@ -99,7 +99,8 @@ func TestRoute_DashboardWebRoot(t *testing.T) {
 					rec = httptest.NewRecorder()
 					a.echo.ServeHTTP(rec, req)
 					assert.Equal(t, http.StatusOK, rec.Code)
-					assert.Contains(t, rec.Body.String(), "Dashboard for my-name")
+					assert.Contains(t, rec.Body.String(), "Dashboard for my-username")
+					assert.Contains(t, rec.Body.String(), "my-name")
 				})
 			}
 		})
@@ -123,7 +124,8 @@ func TestRoute_UserRender(t *testing.T) {
 		require.NoError(t, h(c))
 		assert.Empty(t, c.Get("errors"))
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Contains(t, rec.Body.String(), "Dashboard for my-name")
+		assert.Contains(t, rec.Body.String(), "Dashboard for my-username")
+		assert.Contains(t, rec.Body.String(), "my-name")
 	})
 }
 
@@ -152,7 +154,8 @@ func TestRoute_UserRenderLang(t *testing.T) {
 			require.NoError(t, h(c))
 			assert.Empty(t, c.Get("errors"))
 			assert.Equal(t, http.StatusOK, rec.Code)
-			assert.Contains(t, rec.Body.String(), expected+" my-name")
+			assert.Contains(t, rec.Body.String(), expected+" my-username")
+			assert.Contains(t, rec.Body.String(), "my-name")
 		})
 	}
 }

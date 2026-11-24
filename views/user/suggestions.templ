@@ -1,0 +1,10 @@
+package user
+
+import "github.com/jovandeginste/workout-tracker/v2/pkg/database"
+
+// Suggestions renders the users as options for the username datalist.
+templ Suggestions(users []*database.User) {
+	for _, u := range users {
+		<option value={ u.Username }>{ u.Name }</option>
+	}
+}

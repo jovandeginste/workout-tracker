@@ -12,7 +12,10 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("dashboard")
-			{ i18n.T(ctx, "translation.Dashboard_for_s", user.Name) }
+			{ i18n.T(ctx, "translation.Dashboard_for_s", user.Username) }
+			if user.Name != "" && user.Name != user.Username {
+				<span class="user-name">({ user.Name })</span>
+			}
 		</h2>
 		@StatsRecordsTotal(user)
 		<div class="lg:flex lg:flex-wrap [&>*]:basis-1/2">
@@ -44,7 +47,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 					for _, u := range users {
 						if u.ID != user.ID {
 							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID)) }>
-								<span class="user-pill">{ u.Name } </span>
+								<span class="user-pill">{ u.Username } </span>
 							</a>
 						}
 					}

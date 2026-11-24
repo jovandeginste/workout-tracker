@@ -140,6 +140,15 @@ templ FullWorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
+			<tr>
+				<td>
+					@helpers.IconFor("user")
+				</td>
+				<th>{ i18n.T(ctx, "translation.Username") }</th>
+				<td>
+					@helpers.UserLinkWithName(w.User)
+				</td>
+			</tr>
 			if w.HasFile() {
 				<tr>
 					<td>

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
@@ -14,7 +15,43 @@ var ErrLoginFailed = errors.New("username or password incorrect")
 
 func (a *App) addRoutesUsers(g *echo.Group) {
 	usersGroup := g.Group("/users")
+	a.GET(usersGroup, "/suggest", a.userSuggestHandler, "user-suggest")
 	a.GET(usersGroup, "/:id", a.userShowHandler, "user-show")
+}
+
+// userSuggestHandler returns the users matching the (partial) username, for the
+// autocomplete of the username filters.
+func (a *App) userSuggestHandler(c *echo.Context) error {
+	users, err := database.GetUsers(a.db)
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return Render(c, http.StatusOK, user.Suggestions(filterUsers(users, c.QueryParam("username"))))
+}
+
+const userSuggestionLimit = 20
+
+func filterUsers(users []*database.User, query string) []*database.User {
+	query = strings.ToLower(strings.TrimSpace(query))
+
+	matches := make([]*database.User, 0, len(users))
+
+	for _, u := range users {
+		if query != "" &&
+			!strings.Contains(strings.ToLower(u.Username), query) &&
+			!strings.Contains(strings.ToLower(u.Name), query) {
+			continue
+		}
+
+		matches = append(matches, u)
+
+		if len(matches) == userSuggestionLimit {
+			break
+		}
+	}
+
+	return matches
 }
 
 // userSigninHandler will be executed after SignInForm submission.
