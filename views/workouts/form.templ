@@ -195,4 +195,22 @@ templ Form(w *database.Workout) {
 			}
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<label for="private">
+				@helpers.IconFor("hide")
+				{ i18n.T(ctx, "translation.Private") }
+			</label>
+		</td>
+		<td>
+			<input
+				type="checkbox"
+				name="private"
+				id="private"
+				value="true"
+				checked?={ w.Private }
+			/>
+			<span class="text-sm">{ i18n.T(ctx, "translation.Private_workout_explanation") }</span>
+		</td>
+	</tr>
 }

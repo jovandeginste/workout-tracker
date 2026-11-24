@@ -139,12 +139,12 @@ func (a *App) dashboardHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	recent, err := database.GetRecentWorkouts(a.db, 20)
+	recent, err := database.GetRecentWorkouts(a.db, u, 20)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	return Render(c, http.StatusOK, user.Show(u, users, w, recent))
+	return Render(c, http.StatusOK, user.Show(u, users, w, recent, u))
 }
 
 func (a *App) userLoginHandler(c *echo.Context) error {

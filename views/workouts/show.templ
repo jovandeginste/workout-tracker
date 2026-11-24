@@ -34,6 +34,11 @@ templ Show(w *database.Workout) {
 				if w.HasCustomType() {
 					<i>({ w.CustomType })</i>
 				}
+				if w.Private {
+					<span title={ i18n.T(ctx, "translation.Private_workout_explanation") }>
+						@helpers.IconFor("hide")
+					</span>
+				}
 			</h2>
 		</div>
 		<div class="lg:flex lg:flex-wrap print:block">

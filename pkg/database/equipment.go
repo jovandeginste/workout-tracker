@@ -79,6 +79,19 @@ func (e *Equipment) SetDB(db *gorm.DB) {
 	e.db = db
 }
 
+// FilterVisibleWorkouts removes the workouts the viewer may not see.
+func (e *Equipment) FilterVisibleWorkouts(viewer *User) {
+	workouts := make([]Workout, 0, len(e.Workouts))
+
+	for _, w := range e.Workouts {
+		if w.IsVisibleTo(viewer) {
+			workouts = append(workouts, w)
+		}
+	}
+
+	e.Workouts = workouts
+}
+
 func (e *Equipment) GetTotals() (WorkoutTotals, error) {
 	rs := WorkoutTotals{}
 

@@ -215,6 +215,8 @@ nl:
     This_calendar_year: Dit kalenderjaar
     Please_help_translate_via_Weblate: Help deze toepassing vertalen op Weblate
     Profile_updated: Profiel bijgewerkt
+    Private: Privé
+    Private_workout_explanation: Een privé-workout is enkel zichtbaar voor jou en voor beheerders.
     Publicly_shareable_link_was_copied_to_clipboard: Publieke koppeling is naar 
       het klembord gekopieerd
     Recent_activity: Recente activiteit
@@ -255,6 +257,7 @@ nl:
     Weight: Gewicht
     Welcome: Welkom!
     Workout: Workout
+    Workout_not_found: Workout niet gevonden
     Workout_type: Type workout
     Your_account_has_been_created_but_needs_to_be_activated: Jouw account is 
       aangemaakt, maar moet nog worden geactiveerd.

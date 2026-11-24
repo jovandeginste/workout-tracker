@@ -52,7 +52,7 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 		return Render(c, http.StatusOK, workouts.List(nil, filters))
 	}
 
-	w, err := target.GetWorkouts(filters.ToQuery(a.db))
+	w, err := target.GetWorkouts(database.VisibleWorkouts(filters.ToQuery(a.db), u))
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
@@ -69,6 +69,12 @@ func (a *App) workoutsShowHandler(c *echo.Context) error {
 	w, err := database.GetWorkoutDetails(a.db, id)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
+	}
+
+	if !w.IsVisibleTo(a.getCurrentUser(c)) {
+		a.addErrorT(c, "translation.Workout_not_found")
+
+		return c.Redirect(http.StatusFound, a.Reverse("workouts"))
 	}
 
 	return Render(c, http.StatusOK, workouts.Show(w))
@@ -137,6 +143,12 @@ func (a *App) workoutShowShared(c *echo.Context) error {
 	w, err := database.GetWorkoutDetailsByUUID(a.db, u)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
+	}
+
+	if !w.IsVisibleTo(a.getCurrentUser(c)) {
+		a.addErrorT(c, "translation.Workout_not_found")
+
+		return c.Redirect(http.StatusFound, a.Reverse("dashboard"))
 	}
 
 	return Render(c, http.StatusOK, workouts.Show(w))
@@ -235,12 +247,7 @@ func (a *App) workoutsEditHandler(c *echo.Context) error {
 }
 
 func (a *App) workoutsToggleLockHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workouts"), err)
-	}
-
-	workout, err := database.GetWorkoutDetails(a.db, id)
+	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
@@ -293,12 +300,7 @@ func (a *App) workoutsCreateRouteSegmentFromWorkoutHandler(c *echo.Context) erro
 }
 
 func (a *App) workoutsCreateRouteSegmentHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workouts"), err)
-	}
-
-	w, err := database.GetWorkoutDetails(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}

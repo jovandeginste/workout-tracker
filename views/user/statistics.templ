@@ -53,7 +53,7 @@ templ Statistics(u *database.User, since, per, workoutType, chartType string, ro
 				<button type="submit" value="Submit">{ i18n.T(ctx, "translation.refresh") }</button>
 			</form>
 			{{ currentUser := helpers.CurrentUser(ctx) }}
-			{{ stats, err := currentUser.GetStatisticsFor(since, per) }}
+			{{ stats, err := currentUser.GetStatisticsFor(since, per, currentUser) }}
 			if err != nil {
 				<pre>{ err.Error() }</pre>
 			}

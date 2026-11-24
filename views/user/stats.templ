@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-templ StatsRecordsTotal(user *database.User) {
-	{{ totals, err := user.GetDefaultTotals() }}
+templ StatsRecordsTotal(user *database.User, viewer *database.User) {
+	{{ totals, err := user.GetDefaultTotals(viewer) }}
 	if err != nil {
 		<pre>{ err.Error() }</pre>
 	} else {

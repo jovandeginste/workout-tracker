@@ -56,7 +56,7 @@ func TestUser_GetDefaultTotals_MultipleTypes(t *testing.T) {
 
 	u.Profile.TotalsShow = WorkoutTypeList{WorkoutTypeCycling, WorkoutTypeRunning}
 
-	totals, err := u.GetDefaultTotals()
+	totals, err := u.GetDefaultTotals(u)
 	require.NoError(t, err)
 	require.Len(t, totals, 2)
 
@@ -83,7 +83,7 @@ func TestUser_GetDefaultTotals_AutoDetect(t *testing.T) {
 
 	u.Profile.TotalsShow = WorkoutTypeList{WorkoutTypeAutoDetect, WorkoutTypeCycling}
 
-	totals, err := u.GetDefaultTotals()
+	totals, err := u.GetDefaultTotals(u)
 	require.NoError(t, err)
 	require.Len(t, totals, 1, "auto-detect should resolve to the most used type and dedupe")
 
@@ -99,7 +99,7 @@ func TestUser_GetDefaultTotals_EmptyDefaultsToAutoDetect(t *testing.T) {
 
 	u.Profile.TotalsShow = nil
 
-	totals, err := u.GetDefaultTotals()
+	totals, err := u.GetDefaultTotals(u)
 	require.NoError(t, err)
 	require.Len(t, totals, 1)
 
@@ -112,7 +112,7 @@ func TestUser_GetDefaultTotals_WithoutWorkouts(t *testing.T) {
 
 	u.Profile.TotalsShow = WorkoutTypeList{WorkoutTypeSwimming}
 
-	totals, err := u.GetDefaultTotals()
+	totals, err := u.GetDefaultTotals(u)
 	require.NoError(t, err)
 	require.Len(t, totals, 1)
 
@@ -128,7 +128,7 @@ func TestUser_GetDefaultTotals_AutoDetectWithoutWorkouts(t *testing.T) {
 
 	u.Profile.TotalsShow = WorkoutTypeList{WorkoutTypeAutoDetect}
 
-	totals, err := u.GetDefaultTotals()
+	totals, err := u.GetDefaultTotals(u)
 	require.NoError(t, err)
 	require.Len(t, totals, 1)
 
@@ -137,14 +137,14 @@ func TestUser_GetDefaultTotals_AutoDetectWithoutWorkouts(t *testing.T) {
 }
 
 func TestUser_GetDefaultTotals_Anonymous(t *testing.T) {
-	totals, err := AnonymousUser().GetDefaultTotals()
+	totals, err := AnonymousUser().GetDefaultTotals(nil)
 
 	require.ErrorIs(t, err, ErrAnonymousUser)
 	assert.Nil(t, totals)
 }
 
 func TestUser_GetTotalsFor_Empty(t *testing.T) {
-	totals, err := (&User{}).GetTotalsFor(nil)
+	totals, err := (&User{}).GetTotalsFor(nil, nil)
 
 	require.NoError(t, err)
 	assert.Nil(t, totals)

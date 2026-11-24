@@ -51,6 +51,7 @@ type ManualWorkout struct {
 	Notes           *string               `form:"notes" json:"notes"`
 	Type            *database.WorkoutType `form:"type" json:"type"`
 	CustomType      *string               `form:"custom_type" json:"custom_type"`
+	Private         *bool                 `form:"private" json:"private"`
 
 	units *database.UserPreferredUnits
 }
@@ -148,6 +149,7 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.Date, dDate)
 	setIfNotNil(&w.Type, m.Type)
 	setIfNotNil(&w.CustomType, m.CustomType)
+	setIfNotNil(&w.Private, m.Private)
 
 	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
@@ -181,6 +183,7 @@ func (a *App) addWorkout(c *echo.Context) error {
 
 	workout := &database.Workout{}
 	d.Update(workout)
+	workout.Private = c.FormValue("private") == "true"
 
 	workout.User = a.getCurrentUser(c)
 	workout.UserID = a.getCurrentUser(c).ID
@@ -224,6 +227,7 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 	}
 
 	d.Update(workout)
+	workout.Private = c.FormValue("private") == "true"
 
 	var equipmentIDS struct {
 		EquipmentIDs []uint64 `form:"equipment"`

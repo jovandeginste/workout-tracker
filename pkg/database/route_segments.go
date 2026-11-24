@@ -174,6 +174,24 @@ func (rs *RouteSegment) Save(db *gorm.DB) error {
 	return db.Save(rs).Error
 }
 
+// FilterVisibleMatches removes the matches with workouts the viewer may not see.
+func (rs *RouteSegment) FilterVisibleMatches(viewer *User) {
+	if rs == nil {
+		return
+	}
+
+	matches := make([]*RouteSegmentMatch, 0, len(rs.RouteSegmentMatches))
+	for _, m := range rs.RouteSegmentMatches {
+		if m == nil || !m.Workout.IsVisibleTo(viewer) {
+			continue
+		}
+
+		matches = append(matches, m)
+	}
+
+	rs.RouteSegmentMatches = matches
+}
+
 func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	var rs []*RouteSegment
 
