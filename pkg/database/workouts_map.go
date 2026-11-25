@@ -465,28 +465,17 @@ func addExtraMetrics(gpxContent *gpx.GPX, data *converters.WorkoutData) {
 }
 
 func (m *MapData) correctNaN() {
-	if math.IsNaN(m.MinElevation) {
-		m.MinElevation = 0
-	}
-
-	if math.IsNaN(m.MaxElevation) {
-		m.MaxElevation = 0
-	}
-
-	if math.IsNaN(m.TotalDistance) {
-		m.TotalDistance = 0
-	}
-
-	if math.IsNaN(m.TotalDistance2D) {
-		m.TotalDistance2D = 0
-	}
-
-	if math.IsNaN(m.TotalDown) {
-		m.TotalDown = 0
-	}
-
-	if math.IsNaN(m.TotalUp) {
-		m.TotalUp = 0
+	for _, value := range []*float64{
+		&m.MinElevation,
+		&m.MaxElevation,
+		&m.TotalDistance,
+		&m.TotalDistance2D,
+		&m.TotalDown,
+		&m.TotalUp,
+	} {
+		if math.IsNaN(*value) {
+			*value = 0
+		}
 	}
 }
 
@@ -502,18 +491,18 @@ func maxSpeedForPoints(points []MapPoint, maxDeltaMeter float64) float64 {
 	maxSpeed := 0.0
 
 	for center := range points {
-		left, ok := maxSpeedWindowLeft(points, center, maxDeltaMeter)
+		left, ok := maxSpeedWindow(points, center, maxDeltaMeter, -1)
 		if !ok {
 			continue
 		}
 
-		right, ok := maxSpeedWindowRight(points, center, maxDeltaMeter)
+		right, ok := maxSpeedWindow(points, center, maxDeltaMeter, 1)
 		if !ok {
 			continue
 		}
 
-		leftPoint, _ := mapPointAt(points, left)
-		rightPoint, _ := mapPointAt(points, right)
+		leftPoint := points[left]
+		rightPoint := points[right]
 
 		dist := rightPoint.TotalDistance2D - leftPoint.TotalDistance2D
 		dur := rightPoint.TotalDuration - leftPoint.TotalDuration
@@ -530,68 +519,25 @@ func maxSpeedForPoints(points []MapPoint, maxDeltaMeter float64) float64 {
 	return maxSpeed
 }
 
-func maxSpeedWindowLeft(points []MapPoint, center int, maxDeltaMeter float64) (int, bool) {
-	centerPoint, ok := mapPointAt(points, center)
-	if !ok {
-		return 0, false
-	}
+func maxSpeedWindow(points []MapPoint, center int, maxDeltaMeter float64, step int) (int, bool) {
+	centerPoint := points[center]
+	index := center
 
-	left := center
-	for left > 0 {
-		leftPoint, ok := mapPointAt(points, left)
-		if !ok {
+	for index+step >= 0 && index+step < len(points) {
+		next := index + step
+		if math.Abs(points[next].TotalDistance2D-centerPoint.TotalDistance2D) >= maxDeltaMeter {
+			index = next
 			break
 		}
 
-		if centerPoint.TotalDistance2D-leftPoint.TotalDistance2D >= maxDeltaMeter {
-			break
-		}
-
-		left--
+		index = next
 	}
 
-	leftPoint, ok := mapPointAt(points, left)
-	if !ok || centerPoint.TotalDistance2D-leftPoint.TotalDistance2D < maxDeltaMeter {
+	if math.Abs(points[index].TotalDistance2D-centerPoint.TotalDistance2D) < maxDeltaMeter {
 		return 0, false
 	}
 
-	return left, true
-}
-
-func maxSpeedWindowRight(points []MapPoint, center int, maxDeltaMeter float64) (int, bool) {
-	centerPoint, ok := mapPointAt(points, center)
-	if !ok {
-		return 0, false
-	}
-
-	right := center
-	for right < len(points)-1 {
-		rightPoint, ok := mapPointAt(points, right)
-		if !ok {
-			break
-		}
-
-		if rightPoint.TotalDistance2D-centerPoint.TotalDistance2D >= maxDeltaMeter {
-			break
-		}
-
-		right++
-	}
-
-	rightPoint, ok := mapPointAt(points, right)
-	if !ok || rightPoint.TotalDistance2D-centerPoint.TotalDistance2D < maxDeltaMeter {
-		return 0, false
-	}
-
-	return right, true
-}
-
-func mapPointAt(points []MapPoint, idx int) (MapPoint, bool) {
-	if idx < 0 || idx >= len(points) {
-		return MapPoint{}, false
-	}
-
-	return points[idx], true
+	return index, true
 }
 
 func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType) *MapData {

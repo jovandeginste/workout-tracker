@@ -17,58 +17,60 @@ type StatConfig struct {
 	Per   string `query:"per"`
 }
 
-func (sc *StatConfig) GetBucketString(sqlDialect string) string {
-	switch sqlDialect {
-	case postgresDialect:
-		switch sc.Per {
-		case "year":
-			return "YYYY"
-		case "week":
-			return "YYYY-WW"
-		case "day":
-			return "YYYY-MM-DD"
-		default:
-			return "YYYY-MM"
-		}
-	default:
-		switch sc.Per {
-		case "year":
-			return "%Y"
-		case "week":
-			return "%Y-%W"
-		case "day":
-			return "%Y-%m-%d"
-		default:
-			return "%Y-%m"
-		}
+var bucketStrings = map[string]map[string]string{
+	postgresDialect: {
+		"year":  "YYYY",
+		"week":  "YYYY-WW",
+		"day":   "YYYY-MM-DD",
+		"month": "YYYY-MM",
+	},
+	"sqlite": {
+		"year":  "%Y",
+		"week":  "%Y-%W",
+		"day":   "%Y-%m-%d",
+		"month": "%Y-%m",
+	},
+}
+
+var dayBucketExpressions = map[string]map[string]string{
+	postgresDialect: {
+		"year":  "min(to_char(date_trunc('year', workouts.date), 'YYYY-MM-DD')) as bucket",
+		"week":  "min(to_char(date_trunc('week', workouts.date), 'YYYY-MM-DD')) as bucket",
+		"day":   "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket",
+		"month": "min(to_char(date_trunc('month', workouts.date), 'YYYY-MM-DD')) as bucket",
+	},
+	"sqlite": {
+		"year":  "min(strftime('%Y-01-01', workouts.date)) as bucket",
+		"week":  "min(date(workouts.date, '-6 days', 'weekday 1')) as bucket",
+		"day":   "min(strftime('%Y-%m-%d', workouts.date)) as bucket",
+		"month": "min(strftime('%Y-%m-01', workouts.date)) as bucket",
+	},
+}
+
+func bucketValue(table map[string]string, per string) string {
+	if value, ok := table[per]; ok {
+		return value
 	}
+
+	return table["month"]
+}
+
+func (sc *StatConfig) GetBucketString(sqlDialect string) string {
+	table, ok := bucketStrings[sqlDialect]
+	if !ok {
+		table = bucketStrings["sqlite"]
+	}
+
+	return bucketValue(table, sc.Per)
 }
 
 func (sc *StatConfig) GetDayBucketFormatExpression(sqlDialect string) string {
-	switch sqlDialect {
-	case postgresDialect:
-		switch sc.Per {
-		case "year":
-			return "min(to_char(date_trunc('year', workouts.date), 'YYYY-MM-DD')) as bucket"
-		case "week":
-			return "min(to_char(date_trunc('week', workouts.date), 'YYYY-MM-DD')) as bucket"
-		case "day":
-			return "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket"
-		default:
-			return "min(to_char(date_trunc('month', workouts.date), 'YYYY-MM-DD')) as bucket"
-		}
-	default:
-		switch sc.Per {
-		case "year":
-			return "min(strftime('%Y-01-01', workouts.date)) as bucket"
-		case "week":
-			return "min(date(workouts.date, '-6 days', 'weekday 1')) as bucket"
-		case "day":
-			return "min(strftime('%Y-%m-%d', workouts.date)) as bucket"
-		default:
-			return "min(strftime('%Y-%m-01', workouts.date)) as bucket"
-		}
+	table, ok := dayBucketExpressions[sqlDialect]
+	if !ok {
+		table = dayBucketExpressions["sqlite"]
 	}
+
+	return bucketValue(table, sc.Per)
 }
 
 func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
