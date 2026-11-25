@@ -7,78 +7,86 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
+templ List(workouts []*database.Workout, filters *database.WorkoutFilters, workoutTypes []database.WorkoutType) {
 	@partials.Page(partials.NewPageOptions()) {
-		@partials.ListHeader("workout", "menu.workouts", len(workouts), "workout-add", "workout.add-workout")
-		<details class="inner-form" open?={ filters.Active }>
-			<summary class="cursor-pointer">{ i18n.T(ctx, "workout.filter-workouts") }</summary>
-			<form id="filters" method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>
-				<input type="hidden" id="active" name="active" value="true"/>
-				<label for="type">{ i18n.T(ctx, "common.type") }</label>
-				<select id="type" name="type">
-					@partials.WorkoutTypeOptions(filters.Type.String(), false, true)
-				</select>
-				@partials.UsernameFilter(filters.Username)
-				<label for="since">{ i18n.T(ctx, "common.last") }</label>
-				@partials.TranslatedKeySelect("since", "since", filters.Since, helpers.StatisticSinceOptions())
-				<label for="order_by">{ i18n.T(ctx, "common.sort-by") }</label>
-				@partials.TranslatedKeySelect("order_by", "order_by", filters.OrderBy, helpers.OrderByOptions())
-				@partials.TranslatedKeySelect("order_dir", "order_dir", filters.OrderDir, helpers.OrderDirOptions())
-				<button type="submit">{ i18n.T(ctx, "common.filter") }</button>
-			</form>
-		</details>
-		<table class="workout-info">
-			<thead>
-				<tr>
-					<th></th>
-					<th>{ i18n.T(ctx, "common.name") }</th>
-					<th class="hidden md:table-cell">{ i18n.T(ctx, "user.username") }</th>
-					<th>{ i18n.T(ctx, "common.date") }</th>
-					<th class="hidden lg:table-cell">{ i18n.T(ctx, "common.details") }</th>
-					<th class="hidden sm:table-cell"></th>
-				</tr>
-			</thead>
-			<tbody>
-				for _, w := range workouts {
+		<div id="workouts-content">
+			@partials.ListHeader("workout", "menu.workouts", len(workouts), "workout-add", "workout.add-workout")
+			<details class="inner-form" open?={ filters.Active }>
+				<summary class="cursor-pointer">{ i18n.T(ctx, "workout.filter-workouts") }</summary>
+				<form
+					id="filters"
+					method="get"
+					action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }
+					hx-get={ helpers.RouteFor(ctx, "workouts") }
+					hx-trigger="change"
+					hx-target="#workouts-content"
+					hx-select="#workouts-content"
+					hx-swap="outerHTML"
+					hx-push-url="true"
+				>
+					<input type="hidden" id="active" name="active" value="true"/>
+					@partials.WorkoutTypeFilter(workoutTypes, helpers.WorkoutTypeStrings(filters.Types))
+					@partials.UsernameFilter(filters.Username)
+					<label for="since">{ i18n.T(ctx, "common.last") }</label>
+					@partials.TranslatedKeySelect("since", "since", filters.Since, helpers.StatisticSinceOptions())
+					<label for="order_by">{ i18n.T(ctx, "common.sort-by") }</label>
+					@partials.TranslatedKeySelect("order_by", "order_by", filters.OrderBy, helpers.OrderByOptions())
+					@partials.TranslatedKeySelect("order_dir", "order_dir", filters.OrderDir, helpers.OrderDirOptions())
+				</form>
+			</details>
+			<table class="workout-info">
+				<thead>
 					<tr>
-						<td class="text-center">
-							<div title={ i18n.T(ctx, w.Type.StringT()) }>
-								@helpers.IconFor(w.Type.String())
-								if w.HasCustomType() {
-									<i>{ w.CustomType }</i>
-								} else {
-									{ i18n.T(ctx, w.Type.StringT()) }
-								}
-							</div>
-						</td>
-						<td>
-							<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
-								@Name(w, 20)
-							</a>
-							if w.Private {
-								@partials.PrivateIndicator()
-							}
-						</td>
-						<td class="hidden md:table-cell">
-							@helpers.UserLink(w.User)
-						</td>
-						<td>
-							@partials.SnippetDate(w.Date)
-						</td>
-						<th class="hidden lg:table-cell">
-							@ListDetails(w)
-						</th>
-						<td class="hidden sm:table-cell">
-							<span class="actions">
-								if w.Dirty {
-									@partials.DirtyIndicatorIcon()
-								}
-								@Actions(w)
-							</span>
-						</td>
+						<th></th>
+						<th>{ i18n.T(ctx, "common.name") }</th>
+						<th class="hidden md:table-cell">{ i18n.T(ctx, "user.username") }</th>
+						<th>{ i18n.T(ctx, "common.date") }</th>
+						<th class="hidden lg:table-cell">{ i18n.T(ctx, "common.details") }</th>
+						<th class="hidden sm:table-cell"></th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					for _, w := range workouts {
+						<tr>
+							<td class="text-center">
+								<div title={ i18n.T(ctx, w.Type.StringT()) }>
+									@helpers.IconFor(w.Type.String())
+									if w.HasCustomType() {
+										<i>{ w.CustomType }</i>
+									} else {
+										{ i18n.T(ctx, w.Type.StringT()) }
+									}
+								</div>
+							</td>
+							<td>
+								<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", w.ID)) }>
+									@Name(w, 20)
+								</a>
+								if w.Private {
+									@partials.PrivateIndicator()
+								}
+							</td>
+							<td class="hidden md:table-cell">
+								@helpers.UserLink(w.User)
+							</td>
+							<td>
+								@partials.SnippetDate(w.Date)
+							</td>
+							<th class="hidden lg:table-cell">
+								@ListDetails(w)
+							</th>
+							<td class="hidden sm:table-cell">
+								<span class="actions">
+									if w.Dirty {
+										@partials.DirtyIndicatorIcon()
+									}
+									@Actions(w)
+								</span>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
 	}
 }

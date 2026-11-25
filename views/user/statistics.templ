@@ -30,15 +30,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					hx-swap="outerHTML focus-scroll:false"
 					hx-push-url="true"
 				>
-					<details class="workout-types" open?={ len(workoutTypes) > 0 }>
-						<summary>{ i18n.T(ctx, "common.type") }</summary>
-						<div>
-							@partials.SelectablePill("type_all", "type", "", i18n.T(ctx, "common.all"), "pill-compact", len(workoutTypes) == 0)
-							for _, wt := range helpers.WorkoutTypesByCount(typeCounts) {
-								@partials.SelectablePill("type_"+wt.String(), "type", wt.String(), i18n.T(ctx, wt.StringT()), "pill-compact", slices.Contains(workoutTypes, wt.String()))
-							}
-						</div>
-					</details>
+					@partials.WorkoutTypeFilter(helpers.WorkoutTypesByCount(typeCounts), workoutTypes)
 					<label for="since">{ i18n.T(ctx, "statistics.since") }</label>
 					@partials.TranslatedKeySelect("since", "since", since, helpers.StatisticSinceOptions())
 					<label for="per">{ i18n.T(ctx, "statistics.per") }</label>

@@ -37,6 +37,15 @@ func WorkoutTypes() []database.WorkoutType {
 
 // WorkoutTypesByCount returns the workout types the user actually has
 // workouts for, ordered by count and then by name.
+func WorkoutTypeStrings(types []database.WorkoutType) []string {
+	result := make([]string, 0, len(types))
+	for _, t := range types {
+		result = append(result, t.String())
+	}
+
+	return result
+}
+
 func WorkoutTypesByCount(counts map[database.WorkoutType]int) []database.WorkoutType {
 	types := make([]database.WorkoutType, 0, len(counts))
 

@@ -2,6 +2,7 @@ package partials
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
@@ -80,6 +81,18 @@ templ DeleteButton(route string) {
 templ ModalContainer() {
 	<div id="modal-container">
 		// Modal content will be loaded here
+	</div>
+}
+
+templ WorkoutTypeFilter(types []database.WorkoutType, selected []string) {
+	<div class="workout-types flex flex-wrap items-center gap-1">
+		<span class="px-2">{ i18n.T(ctx, "common.type") }</span>
+		<div class="flex flex-wrap items-center">
+			@SelectablePill("type_all", "type", "", i18n.T(ctx, "common.all"), "pill-compact", len(selected) == 0)
+			for _, wt := range types {
+				@SelectablePill("type_"+wt.String(), "type", wt.String(), i18n.T(ctx, wt.StringT()), "pill-compact", slices.Contains(selected, wt.String()))
+			}
+		</div>
 	</div>
 }
 
