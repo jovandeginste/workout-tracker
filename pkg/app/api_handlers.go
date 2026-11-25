@@ -241,6 +241,10 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /records [get]
+func (a *App) renderAPIResult(c *echo.Context, results any) error {
+	return c.JSON(http.StatusOK, APIResponse{Results: results})
+}
+
 func (a *App) apiWorkoutMetric(c *echo.Context, fetch func(u *database.User, wt database.WorkoutType) (any, error)) error {
 	resp := APIResponse{}
 
@@ -256,9 +260,7 @@ func (a *App) apiWorkoutMetric(c *echo.Context, fetch func(u *database.User, wt 
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = result
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, result)
 }
 
 func (a *App) apiRecordsHandler(c *echo.Context) error {
