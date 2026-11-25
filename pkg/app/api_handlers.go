@@ -359,7 +359,7 @@ func (a *App) apiWorkoutBreakdownHandler(c *echo.Context) error {
 
 	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
 	resp.Results, err = w.StatisticsPer(config.Count, config.Unit)

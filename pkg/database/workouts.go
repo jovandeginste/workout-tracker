@@ -807,9 +807,6 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	}
 
 	w.setData(gpxAsMapData(gpxContent, w.Type))
-	if err := w.Data.Save(db); err != nil {
-		return err
-	}
 
 	if err := w.UpdateRouteSegmentMatches(db); err != nil {
 		return err

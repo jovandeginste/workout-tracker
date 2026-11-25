@@ -49,12 +49,6 @@ const (
 	WorkoutTypeFootball       WorkoutType = "football"
 	WorkoutTypeDancing        WorkoutType = "dancing"
 	WorkoutTypeOther          WorkoutType = "other"
-
-	WorkoutTypeClassLocation   = "location"
-	WorkoutTypeClassDistance   = "distance"
-	WorkoutTypeClassRepetition = "repetition"
-	WorkoutTypeClassWeight     = "weight"
-	WorkoutTypeClassDuration   = "duration"
 )
 
 type WorkoutTypeConfiguration struct {
@@ -107,10 +101,7 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeWeightLifting:  {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
 }
 
-var (
-	workoutTypes        []WorkoutType
-	workoutTypesByClass map[string][]WorkoutType
-)
+var workoutTypes []WorkoutType
 
 func WorkoutTypes() []WorkoutType {
 	if len(workoutTypes) > 0 {
@@ -124,15 +115,7 @@ func WorkoutTypes() []WorkoutType {
 	return workoutTypes
 }
 
-func getOrSetByClass(class string, fn func(c WorkoutTypeConfiguration) bool) []WorkoutType {
-	if workoutTypesByClass == nil {
-		workoutTypesByClass = make(map[string][]WorkoutType)
-	}
-
-	if wt, ok := workoutTypesByClass[class]; ok {
-		return wt
-	}
-
+func workoutTypesByClass(fn func(c WorkoutTypeConfiguration) bool) []WorkoutType {
 	keys := []WorkoutType{}
 
 	for k, c := range workoutTypeConfigs {
@@ -144,37 +127,36 @@ func getOrSetByClass(class string, fn func(c WorkoutTypeConfiguration) bool) []W
 	}
 
 	slices.Sort(keys)
-	workoutTypesByClass[WorkoutTypeClassDistance] = keys
 
 	return keys
 }
 
 func DistanceWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassDistance, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Distance
 	})
 }
 
 func WeightWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassWeight, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Weight
 	})
 }
 
 func RepetitionWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassRepetition, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Repetition
 	})
 }
 
 func LocationWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassLocation, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Location
 	})
 }
 
 func DurationWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassDuration, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return true // All workout types store duration
 	})
 }

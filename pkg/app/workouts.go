@@ -178,7 +178,7 @@ func (a *App) addWorkout(c *echo.Context) error {
 
 	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
 
 	workout := &database.Workout{}
@@ -223,7 +223,7 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 
 	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
 
 	d.Update(workout)

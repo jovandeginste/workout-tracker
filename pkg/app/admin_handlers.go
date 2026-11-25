@@ -41,11 +41,11 @@ func (a *App) adminRootHandler(c *echo.Context) error {
 func (a *App) adminUserEditHandler(c *echo.Context) error {
 	user, err := a.getUser(c)
 	if err != nil {
-		return a.redirectWithError(c, "/admin", err)
+		return a.redirectWithError(c, a.Reverse("admin"), err)
 	}
 
 	if user == nil {
-		return a.redirectWithError(c, "/admin", ErrUserNotFound)
+		return a.redirectWithError(c, a.Reverse("admin"), ErrUserNotFound)
 	}
 
 	return Render(c, http.StatusOK, admin.EditUser(user))
@@ -54,7 +54,7 @@ func (a *App) adminUserEditHandler(c *echo.Context) error {
 func (a *App) adminUserUpdateHandler(c *echo.Context) error {
 	u, err := a.getUser(c)
 	if err != nil {
-		return a.redirectWithError(c, "/admin", err)
+		return a.redirectWithError(c, a.Reverse("admin"), err)
 	}
 
 	u.Name = c.FormValue("name")

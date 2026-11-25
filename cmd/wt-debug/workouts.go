@@ -49,6 +49,8 @@ func (c *cli) workoutsDiagCmd() *cobra.Command {
 				wo, err := database.GetWorkout(c.getDatabase(), id)
 				if err != nil {
 					issues = append(issues, err.Error())
+					t.AddRow(cast.ToString(id), "", strings.Join(issues, "; "))
+					continue
 				}
 
 				if len(issues) == 0 {

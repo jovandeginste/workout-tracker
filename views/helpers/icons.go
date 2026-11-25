@@ -44,6 +44,7 @@ var iconMap = map[string]string{
 	"up":             "icon-[fa6-solid--chevron-up]",
 	"down":           "icon-[fa6-solid--chevron-down]",
 	"metrics":        "icon-[fa6-regular--rectangle-list]",
+	"info":           "icon-[fa6-solid--circle-info]",
 	"translate":      "icon-[fa6-solid--language]",
 	"expand":         "icon-[fa6-solid--arrows-left-right]",
 	"share":          "icon-[fa6-solid--share-from-square]",

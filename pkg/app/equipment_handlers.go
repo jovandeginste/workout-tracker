@@ -26,13 +26,13 @@ func (a *App) addEquipment(c *echo.Context) error {
 	p := database.Equipment{}
 
 	if err := c.Bind(&p); err != nil {
-		return a.redirectWithError(c, a.Reverse("add-equipment"), err)
+		return a.redirectWithError(c, a.Reverse("equipment-add"), err)
 	}
 
 	p.UserID = u.ID
 
 	if err := p.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.Reverse("add-equipment"), err)
+		return a.redirectWithError(c, a.Reverse("equipment-add"), err)
 	}
 
 	return c.Redirect(http.StatusFound, a.Reverse("equipment"))

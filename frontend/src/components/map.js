@@ -38,13 +38,11 @@ class WtMap extends HTMLElement {
       center: [mapConfig.CenterLat, mapConfig.CenterLng],
       minElevation: mapConfig.MinElevation,
       maxElevation: mapConfig.MaxElevation,
-      maxSpeed: mapConfig.MaxSpeed,
       speedName: mapConfig.SpeedName,
       elevationName: mapConfig.ElevationName,
       slopeName: mapConfig.SlopeName,
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
-      showElevation: mapConfig.ShowElevation,
       showSlope: mapConfig.ShowSlope,
     };
 
@@ -128,9 +126,7 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (speedLayerGroup && this.config.showSpeed) {
-      speedLayerGroup.addTo(map);
-    } else if (slopeLayerGroup && this.config.showSlope) {
+    if (slopeLayerGroup && this.config.showSlope) {
       slopeLayerGroup.addTo(map);
     } else {
       elevationLayerGroup.addTo(map);
