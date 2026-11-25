@@ -97,8 +97,8 @@ class WtHeatmap extends HTMLElement {
         container.innerHTML = `
         <div class="flex items-center"><label for="radius" class="w-12 text-zinc-800">Radius</label><input class="p-0" type="range" id="radius" value="10" min="1" max="30"/></div>
         <div class="flex items-center"><label for="blur" class="w-12 text-zinc-800">Blur</label><input class="p-0" type="range" id="blur" value="15" min="1" max="30"/></div>
-        <div class="flex items-center"><input type="checkbox" id="showMarkers" name="showMarkers" class="mr-1" checked /><label for="showMarkers" class="text-zinc-800">Show Markers</label></div>
-        <div class="flex items-center"><input type="checkbox" id="onlyTrace" name="onlyTrace" class="mr-1" /><label for="onlyTrace" class="text-zinc-800">Only show where you've been</label></div>
+        <div class="flex items-center"><input type="checkbox" id="showMarkers" name="showMarkers" class="mr-1" checked /><label for="showMarkers" class="text-zinc-800">${this.i18n.markers}</label></div>
+        <div class="flex items-center"><input type="checkbox" id="onlyTrace" name="onlyTrace" class="mr-1" /><label for="onlyTrace" class="text-zinc-800">${this.i18n["only-visited"]}</label></div>
         `;
 
         // Prevent map drag when clicking control

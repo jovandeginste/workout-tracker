@@ -82,6 +82,8 @@ nl:
   map:
     aerial: Lucht
     fullscreen: Volledig scherm
+    markers: Markeringen tonen
+    only-visited: Toon enkel waar je geweest bent
     streets: Straten
   measurements:
     latest: Laatste metingen

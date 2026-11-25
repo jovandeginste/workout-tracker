@@ -131,7 +131,7 @@ func GetUsers(db *gorm.DB) ([]*User, error) {
 	var u []*User
 
 	if err := db.Find(&u).Error; err != nil {
-		return nil, db.Error
+		return nil, err
 	}
 
 	return u, nil
@@ -141,44 +141,37 @@ func currentUserQuery(db *gorm.DB) *gorm.DB {
 	return db.Preload("Profile").Preload("Equipment")
 }
 
-func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
+func firstUser(db *gorm.DB, query *gorm.DB) (*User, error) {
 	var u User
 
-	if err := currentUserQuery(db).Where(&UserSecrets{APIKey: key}).First(&u).Error; err != nil {
-		return nil, db.Error
+	if err := query.First(&u).Error; err != nil {
+		return nil, err
 	}
 
 	u.SetDB(db)
 
 	return &u, nil
+}
+
+func GetUserByAPIKey(db *gorm.DB, key string) (*User, error) {
+	return firstUser(db, currentUserQuery(db).Where(&UserSecrets{APIKey: key}))
 }
 
 func GetUserByID(db *gorm.DB, userID uint64) (*User, error) {
-	var u User
-
-	if err := currentUserQuery(db).First(&u, userID).Error; err != nil {
-		return nil, db.Error
-	}
-
-	u.SetDB(db)
-
-	return &u, nil
+	return firstUser(db, currentUserQuery(db).Where("id = ?", userID))
 }
 
 func GetUser(db *gorm.DB, username string) (*User, error) {
-	var u User
-
-	if err := currentUserQuery(db).Where(&UserData{Username: username}).First(&u).Error; err != nil {
-		return nil, db.Error
+	u, err := firstUser(db, currentUserQuery(db).Where(&UserData{Username: username}))
+	if err != nil {
+		return nil, err
 	}
 
 	if u.ID == u.Profile.UserID {
-		u.Profile.User = &u
+		u.Profile.User = u
 	}
 
-	u.SetDB(db)
-
-	return &u, nil
+	return u, nil
 }
 
 func (u *User) SetDB(db *gorm.DB) {

@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	"github.com/labstack/echo/v5"
 	"gorm.io/gorm"
@@ -41,34 +40,25 @@ func (cqp *calendarQueryParams) SetTZ() {
 	cqp.tz = tz
 }
 
-func (cqp calendarQueryParams) SetStart(db *gorm.DB) *gorm.DB {
-	if cqp.Start == nil {
+func (cqp calendarQueryParams) setBound(db *gorm.DB, value *string, operator string) *gorm.DB {
+	if value == nil {
 		return db
 	}
 
-	s := strings.TrimSuffix(*cqp.Start, "Z")
-
-	start, err := time.ParseInLocation(calTS, s, cqp.tz)
+	t, err := time.ParseInLocation(calTS, strings.TrimSuffix(*value, "Z"), cqp.tz)
 	if err != nil {
 		return db
 	}
 
-	return db.Where("workouts.date >= ?", start)
+	return db.Where("workouts.date "+operator+" ?", t)
+}
+
+func (cqp calendarQueryParams) SetStart(db *gorm.DB) *gorm.DB {
+	return cqp.setBound(db, cqp.Start, ">=")
 }
 
 func (cqp calendarQueryParams) SetEnd(db *gorm.DB) *gorm.DB {
-	if cqp.End == nil {
-		return db
-	}
-
-	e := strings.TrimSuffix(*cqp.End, "Z")
-
-	end, err := time.ParseInLocation(calTS, e, cqp.tz)
-	if err != nil {
-		return db
-	}
-
-	return db.Where("workouts.date <= ?", end)
+	return cqp.setBound(db, cqp.End, "<=")
 }
 
 // apiCalendar returns the calendar events of all workouts of the current user
@@ -103,17 +93,10 @@ func (a *App) apiCalendar(c *echo.Context) error {
 	}
 
 	for _, w := range wos {
-		buf := templ.GetBuffer()
-		defer templ.ReleaseBuffer(buf)
-
-		t := workouts.EventTitle(w, u.PreferredUnits())
-		if err := t.Render(c.Request().Context(), buf); err != nil {
+		d, err := renderCompact(c.Request().Context(), workouts.EventTitle(w, u.PreferredUnits()))
+		if err != nil {
 			return a.renderAPIError(c, resp, err)
 		}
-
-		d := buf.String()
-		// Remove all newlines and surrounding whitespace
-		d = htmlConcatenizer.ReplaceAllString(d, "")
 
 		events = append(events, Event{
 			Title: d,

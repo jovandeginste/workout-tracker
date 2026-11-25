@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/importers"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
@@ -338,11 +337,6 @@ func (a *App) apiStatisticsHandler(c *echo.Context) error {
 func (a *App) apiWorkoutBreakdownHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
 	config := struct {
 		Unit  string  `query:"unit"`
 		Count float64 `query:"count"`
@@ -354,7 +348,7 @@ func (a *App) apiWorkoutBreakdownHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -415,11 +409,6 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 func (a *App) apiWorkoutHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
 	details := false
 	if err := echo.QueryParamsBinder(c).Bool("details", &details).BindError(); err != nil {
 		return a.renderAPIError(c, resp, err)
@@ -430,9 +419,9 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 		db = db.Preload("Data.Details")
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(db, id)
+	w, err := a.getWorkoutWithDB(c, db)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
 	resp.Results = workoutWithSafeUser(w)
@@ -455,12 +444,7 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -493,12 +477,7 @@ func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
 func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -592,17 +571,10 @@ func (a *App) renderAPIError(c *echo.Context, resp APIResponse, err ...error) er
 }
 
 func (a *App) fillGeoJSONProperties(c *echo.Context, w *database.Workout, f *geojson.Feature) {
-	buf := templ.GetBuffer()
-	defer templ.ReleaseBuffer(buf)
-
-	t := workouts.Details(w)
-	if err := t.Render(c.Request().Context(), buf); err != nil {
+	d, err := renderCompact(c.Request().Context(), workouts.Details(w))
+	if err != nil {
 		return
 	}
-
-	d := buf.String()
-	// Remove all newlines and surrounding whitespace
-	d = htmlConcatenizer.ReplaceAllString(d, "")
 
 	f.Properties["details"] = d
 }

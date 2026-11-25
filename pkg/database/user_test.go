@@ -168,7 +168,7 @@ func TestUser_BeforeCreateNoPassword(t *testing.T) {
 	assert.NotEmpty(t, u.Salt)
 
 	u, err := GetUser(db, "other-username")
-	require.NoError(t, err)
+	require.ErrorIs(t, err, gorm.ErrRecordNotFound)
 	require.Nil(t, u)
 }
 

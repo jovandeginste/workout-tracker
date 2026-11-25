@@ -2,6 +2,7 @@ package app
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"net/http"
 	"path"
@@ -29,6 +30,45 @@ func (a *App) redirectWithError(c *echo.Context, target string, err error) error
 
 // redirectHTMXOrFound lets HTMX perform a full page navigation, while normal
 // requests get a regular redirect.
+func processUploads(c *echo.Context, handle func(filename string, content []byte) (string, error)) ([]string, []string, error) {
+	form, err := c.MultipartForm()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	msg := []string{}
+	errMsg := []string{}
+
+	for _, file := range form.File["file"] {
+		content, err := uploadedFile(file)
+		if err != nil {
+			errMsg = append(errMsg, err.Error())
+			continue
+		}
+
+		result, err := handle(file.Filename, content)
+		if err != nil {
+			errMsg = append(errMsg, err.Error())
+			continue
+		}
+
+		msg = append(msg, result)
+	}
+
+	return msg, errMsg, nil
+}
+
+func renderCompact(ctx context.Context, t templ.Component) (string, error) {
+	buf := templ.GetBuffer()
+	defer templ.ReleaseBuffer(buf)
+
+	if err := t.Render(ctx, buf); err != nil {
+		return "", err
+	}
+
+	return htmlConcatenizer.ReplaceAllString(buf.String(), ""), nil
+}
+
 func streamAttachment(c *echo.Context, filename string, content []byte) error {
 	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+path.Base(filename)+"\"")
 

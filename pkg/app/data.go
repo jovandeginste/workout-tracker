@@ -11,6 +11,7 @@ import (
 	"github.com/spf13/cast"
 
 	"github.com/labstack/echo/v5"
+	"gorm.io/gorm"
 )
 
 func (a *App) setContext(ctx *echo.Context) {
@@ -124,17 +125,16 @@ func (a *App) getRouteSegment(c *echo.Context) (*database.RouteSegment, error) {
 }
 
 func (a *App) getWorkout(c *echo.Context) (*database.Workout, error) {
+	return a.getWorkoutWithDB(c, a.db)
+}
+
+func (a *App) getWorkoutWithDB(c *echo.Context, db *gorm.DB) (*database.Workout, error) {
 	id, err := cast.ToUint64E(c.Param("id"))
 	if err != nil {
 		return nil, err
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return w, nil
+	return a.getCurrentUser(c).GetWorkout(db, id)
 }
 
 func (a *App) getEquipment(c *echo.Context) (*database.Equipment, error) {

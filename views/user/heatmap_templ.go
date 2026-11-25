@@ -121,11 +121,13 @@ func Heatmap() templ.Component {
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.JSONString(map[string]string{
-				"streets": i18n.T(ctx, "map.streets"),
-				"aerial":  i18n.T(ctx, "map.aerial"),
+				"streets":      i18n.T(ctx, "map.streets"),
+				"aerial":       i18n.T(ctx, "map.aerial"),
+				"markers":      i18n.T(ctx, "map.markers"),
+				"only-visited": i18n.T(ctx, "map.only-visited"),
 			})).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 26, Col: 10}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/heatmap.templ`, Line: 28, Col: 10}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 			if templ_7745c5c3_Err != nil {
