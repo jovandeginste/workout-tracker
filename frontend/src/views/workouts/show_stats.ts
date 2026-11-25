@@ -240,6 +240,12 @@ export class WorkoutStats extends LitElement {
     return this;
   }
 
+  private maxXTicks(): number {
+    const width = this.chart?.width || this.clientWidth || 600;
+
+    return Math.max(6, Math.min(30, Math.floor(width / 50)));
+  }
+
   private getChartOptions(): ChartOptions {
     const metricSettings = this.getMetricSettings();
     const { fgColor, gridColor } = chartTheme(this.colorMode);
@@ -249,11 +255,14 @@ export class WorkoutStats extends LitElement {
       scales: {
         x: {
           type: this.type === "time" ? "time" : "linear",
-          time: this.type === "time" ? { unit: "minute" } : undefined,
+          time: this.type === "time" ? {} : undefined,
           min: this.xRange.min,
           max: this.xRange.max,
           ticks: {
             color: fgColor,
+            autoSkip: true,
+            maxTicksLimit: this.maxXTicks(),
+            maxRotation: 0,
             callback: (val: number) => this.formatXValue(val),
           },
           grid: { color: gridColor },
