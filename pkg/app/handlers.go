@@ -51,10 +51,10 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 	}
 
 	statisticsParams := struct {
-		Since string `query:"since"`
-		Per   string `query:"per"`
-		Type  string `query:"type"`
-		Chart string `query:"chart"`
+		Since string   `query:"since"`
+		Per   string   `query:"per"`
+		Type  []string `query:"type"`
+		Chart string   `query:"chart"`
 	}{
 		Since: "1 year",
 		Per:   "month",
@@ -73,12 +73,28 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		statisticsParams.Chart = "line"
 	}
 
+	// The "all" checkbox submits an empty value. Ignore it when specific
+	// types are selected as well, so the selection always wins.
+	selectedTypes := make([]string, 0, len(statisticsParams.Type))
+	for _, t := range statisticsParams.Type {
+		if t != "" {
+			selectedTypes = append(selectedTypes, t)
+		}
+	}
+
+	statisticsParams.Type = selectedTypes
+
 	routeSegments, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments))
+	typeCounts, err := database.GetWorkoutTypeCounts(a.db, u.ID, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments, typeCounts))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {

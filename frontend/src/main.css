@@ -351,6 +351,10 @@
     @apply dark:bg-red-800 dark:peer-checked:bg-green-800 dark:border-red-700 dark:peer-checked:border-green-700;
   }
 
+  .selectable-pill.pill-compact {
+    @apply py-1 px-3 min-w-0 text-sm;
+  }
+
   .peer:focus-visible + .selectable-pill {
     outline: 2px solid currentColor;
     outline-offset: 2px;

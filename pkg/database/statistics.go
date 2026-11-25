@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+
+	"gorm.io/gorm"
 )
 
 const postgresDialect = "postgres"
@@ -141,7 +143,7 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 	// used in the SELECT clause and to avoid potential mismatches caused by
 	// transformations or processing applied to `bucket`.
 	// The `bucket` field is provided for frontend rendering purposes only.
-	rows, err := q.Group("raw_bucket, workout_type").Rows()
+	rows, err := q.Group("raw_bucket, workouts.type").Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -171,6 +173,30 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 	}
 
 	return r, nil
+}
+
+func GetWorkoutTypeCounts(db *gorm.DB, userID uint64, viewer *User) (map[WorkoutType]int, error) {
+	var rows []struct {
+		WorkoutType WorkoutType `gorm:"column:workout_type"`
+		Count       int         `gorm:"column:workout_count"`
+	}
+
+	err := VisibleWorkouts(db, viewer).
+		Table("workouts").
+		Select("workouts.type as workout_type", "count(*) as workout_count").
+		Where("user_id = ?", userID).
+		Group("workouts.type").
+		Scan(&rows).Error
+	if err != nil {
+		return nil, err
+	}
+
+	counts := make(map[WorkoutType]int, len(rows))
+	for _, r := range rows {
+		counts[r.WorkoutType] = r.Count
+	}
+
+	return counts, nil
 }
 
 func (u *User) GetHighestWorkoutType(viewer *User) (*WorkoutType, error) {

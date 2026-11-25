@@ -18,7 +18,8 @@ class WtStatistic extends HTMLElement {
     this.filterNoDuration = this.getAttribute("filter-no-duration") !== null;
     this.unit = this.getAttribute("unit");
     this.type = this.getAttribute("type");
-    this.workoutType = this.getAttribute("workout-type") || "";
+    this.workoutTypes =
+      JSON.parse(this.getAttribute("workout-types") || `[]`) || [];
     this.chartType = this.getAttribute("chart-type") === "bar" ? "bar" : "line";
     this.per = this.getAttribute("per") || "month";
 
@@ -160,7 +161,8 @@ class WtStatistic extends HTMLElement {
 
   getSeriesData() {
     const entries = Object.entries(this.stats.buckets).filter(
-      ([type]) => !this.workoutType || type === this.workoutType,
+      ([type]) =>
+        this.workoutTypes.length === 0 || this.workoutTypes.includes(type),
     );
 
     return entries
@@ -211,12 +213,60 @@ class WtStatistic extends HTMLElement {
 }
 
 customElements.define("wt-stat", WtStatistic);
+let statisticsScrollY = 0;
+
+document.addEventListener("htmx:beforeSwap", (event) => {
+  if (event.detail.target?.id === "statistics-content") {
+    statisticsScrollY = window.scrollY;
+  }
+});
+
+document.addEventListener("htmx:afterSwap", (event) => {
+  if (event.detail.target?.id === "statistics-content") {
+    requestAnimationFrame(() => window.scrollTo(0, statisticsScrollY));
+  }
+});
+
+// Capture so the `All` checkbox is updated before HTMX serializes the form.
+document.addEventListener(
+  "change",
+  (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || input.name !== "type") {
+      return;
+    }
+
+    const group = input.closest(".workout-types");
+    if (!group) {
+      return;
+    }
+
+    const all = group.querySelector('input[name="type"][value=""]');
+
+    if (!input.checked) {
+      if (all && !group.querySelector('input[name="type"]:checked')) {
+        all.checked = true;
+      }
+      return;
+    }
+
+    if (input.value === "") {
+      group.querySelectorAll('input[name="type"]').forEach((other) => {
+        if (other !== input) other.checked = false;
+      });
+    } else if (all) {
+      all.checked = false;
+    }
+  },
+  true,
+);
 
 class RouteSegmentTrendStatistic extends HTMLElement {
   connectedCallback() {
-    this.data = JSON.parse(this.getAttribute("data") || `[]`);
+    this.data = JSON.parse(this.getAttribute("trend-data") || `[]`);
     this.since = this.getAttribute("since") || "1 year";
-    this.workoutType = this.getAttribute("workout-type") || "";
+    this.workoutTypes =
+      JSON.parse(this.getAttribute("workout-types") || `[]`) || [];
     this.trendBreakDetection =
       this.getAttribute("trend-break-detection") !== null;
     this.configUpdateRoute = this.getAttribute("config-update-route");
@@ -326,6 +376,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
         animations: { enabled: false },
         toolbar: { show: false },
         type: "line",
+        height: 350,
         zoom: {
           enabled: true,
           type: "x",
@@ -394,7 +445,8 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
   getSeriesData() {
     const entries = Object.entries(this.pointsByType()).filter(
-      ([type]) => !this.workoutType || type === this.workoutType,
+      ([type]) =>
+        this.workoutTypes.length === 0 || this.workoutTypes.includes(type),
     );
 
     return entries.flatMap(([type, points]) => {
@@ -422,7 +474,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
         }
 
         series.push({
-          name: `${typeLabel} ${this.translations.trend || "trend"}`,
+          name: `${typeLabel} (${this.translations.trend || "trend"})`,
           type: "line",
           color,
           data: trendData,
