@@ -144,16 +144,6 @@ func SetClient(l *slog.Logger, ua string) {
 }
 
 func search(a string) ([]Result, error) {
-	if c == nil {
-		return nil, ErrClientNotSet
-	}
-
-	if c.alwaysOffline {
-		return nil, nil
-	}
-
-	c.wait()
-
 	q := struct {
 		Q              string `url:"q"`
 		Format         string `url:"format"`
@@ -164,35 +154,45 @@ func search(a string) ([]Result, error) {
 		AddressDetails: 1,
 	}
 
-	v, err := query.Values(q)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := retryablehttp.NewRequest(http.MethodGet, c.url+"search?"+v.Encode(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("User-Agent", c.userAgent)
-
-	res, err := c.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	defer res.Body.Close()
-
 	r := []Result{}
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+	if err := c.request("search", q, &r); err != nil {
 		return nil, err
 	}
 
 	return r, nil
 }
 
-func SearchLocations(a string) ([]Result, error) {
-	return search(a)
+func (c *client) request(endpoint string, q any, out any) error {
+	if c == nil {
+		return ErrClientNotSet
+	}
+
+	if c.alwaysOffline {
+		return nil
+	}
+
+	c.wait()
+
+	v, err := query.Values(q)
+	if err != nil {
+		return err
+	}
+
+	req, err := retryablehttp.NewRequest(http.MethodGet, c.url+endpoint+"?"+v.Encode(), nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("User-Agent", c.userAgent)
+
+	res, err := c.client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer res.Body.Close()
+
+	return json.NewDecoder(res.Body).Decode(out)
 }
 
 func Find(a string) (*geo.Address, error) {
@@ -225,37 +225,8 @@ func Search(a string) ([]string, error) {
 }
 
 func Reverse(q Query) (*geo.Address, error) {
-	if c == nil {
-		return nil, ErrClientNotSet
-	}
-
-	if c.alwaysOffline {
-		return nil, nil
-	}
-
-	c.wait()
-
-	v, err := query.Values(q)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := retryablehttp.NewRequest(http.MethodGet, c.url+"reverse?"+v.Encode(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("User-Agent", c.userAgent)
-
-	res, err := c.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	defer res.Body.Close()
-
 	r := Result{}
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+	if err := c.request("reverse", q, &r); err != nil {
 		return nil, err
 	}
 

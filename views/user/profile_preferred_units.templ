@@ -7,6 +7,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
 templ profilePreferredUnits() {
@@ -17,102 +18,26 @@ templ profilePreferredUnits() {
 	>
 		<table class="table-fixed">
 			<tbody>
-				<tr>
-					<th>
-						<label for="speed">
-							@helpers.IconFor("speed")
-							{ i18n.T(ctx, "workout.speed") }
-						</label>
-					</th>
-					<td>
-						<select class="input-ellipsis" id="speed" name="speed">
-							<option value="kph" selected?={ pu.Speed(nil) == "kph" }>
-								{ i18n.T(ctx, "units.kilometers-per-hour") }
-							</option>
-							<option value="mph" selected?={ pu.Speed(nil) == "mph" }>
-								{ i18n.T(ctx, "units.miles-per-hour") }
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="distance">
-							@helpers.IconFor("distance")
-							{ i18n.T(ctx, "workout.distance") }
-						</label>
-					</th>
-					<td>
-						<select class="input-ellipsis" id="distance" name="distance">
-							<option value="km" selected?={ pu.Distance(nil) == "km" }>
-								{ i18n.T(ctx, "units.kilometers") }
-							</option>
-							<option value="mi" selected?={ pu.Distance(nil) == "mi" }>
-								{ i18n.T(ctx, "units.miles") }
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="elevation">
-							@helpers.IconFor("elevation")
-							{ i18n.T(ctx, "workout.elevation") }
-						</label>
-					</th>
-					<td>
-						<select class="input-ellipsis" id="elevation" name="elevation">
-							<option value="m" selected?={ pu.Elevation() == "m" }>
-								{ i18n.T(ctx, "units.meters") }
-							</option>
-							<option value="ft" selected?={ pu.Elevation() == "ft" }>
-								{ i18n.T(ctx, "units.feet") }
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="weight">
-							@helpers.IconFor("weight")
-							{ i18n.T(ctx, "common.weight") }
-						</label>
-					</th>
-					<td>
-						<select class="input-ellipsis" id="weight" name="weight">
-							<option value="lbs" selected?={ pu.Weight() == "lbs" }>
-								{ i18n.T(ctx, "units.pounds") }
-							</option>
-							<option value="kg" selected?={ pu.Weight() == "kg" }>
-								{ i18n.T(ctx, "units.kilograms") }
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="height">
-							@helpers.IconFor("height")
-							{ i18n.T(ctx, "common.height") }
-						</label>
-					</th>
-					<td>
-						<select class="input-ellipsis" id="height" name="height">
-							<option value="in" selected?={ pu.Height() == "in" }>
-								{ i18n.T(ctx, "units.inch") }
-							</option>
-							<option value="cm" selected?={ pu.Height() == "cm" }>
-								{ i18n.T(ctx, "units.centimeter") }
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<button id="update-preferred-units" type="submit">{ i18n.T(ctx, "user.profile.update-units") }</button>
-					</td>
-				</tr>
+				@unitSelect("speed", "workout.speed", "speed", pu.Speed(nil), []helpers.TranslatedKey{
+					{Key: "kph", Translation: "units.kilometers-per-hour"},
+					{Key: "mph", Translation: "units.miles-per-hour"},
+				})
+				@unitSelect("distance", "workout.distance", "distance", pu.Distance(nil), []helpers.TranslatedKey{
+					{Key: "km", Translation: "units.kilometers"},
+					{Key: "mi", Translation: "units.miles"},
+				})
+				@unitSelect("elevation", "workout.elevation", "elevation", pu.Elevation(), []helpers.TranslatedKey{
+					{Key: "m", Translation: "units.meters"},
+					{Key: "ft", Translation: "units.feet"},
+				})
+				@unitSelect("weight", "common.weight", "weight", pu.Weight(), []helpers.TranslatedKey{
+					{Key: "lbs", Translation: "units.pounds"},
+					{Key: "kg", Translation: "units.kilograms"},
+				})
+				@unitSelect("height", "common.height", "height", pu.Height(), []helpers.TranslatedKey{
+					{Key: "in", Translation: "units.inch"},
+					{Key: "cm", Translation: "units.centimeter"},
+				})
 			</tbody>
 		</table>
 	</form>
@@ -134,16 +59,7 @@ templ profileTotalsShow(types database.WorkoutTypeList) {
 			</label>
 			for _, wt := range helpers.WorkoutTypes() {
 				if wt.IsDistance() {
-					<label class="inline">
-						<input
-							class="sr-only peer"
-							type="checkbox"
-							name="totals_show"
-							value={ wt.String() }
-							checked?={ types.Has(wt) }
-						/>
-						<span class="selectable-pill">{ i18n.T(ctx, wt.StringT()) }</span>
-					</label>
+					@partials.SelectablePill("totals_show_"+wt.String(), "totals_show", wt.String(), i18n.T(ctx, wt.StringT()), "", types.Has(wt))
 				}
 			}
 		</div>
@@ -179,16 +95,26 @@ templ profileLanguage(ulang string) {
 		<option value="browser" selected?={ ulang == "browser" }>
 			🌐 Browser language
 		</option>
-		for _, sl := range helpers.SupportedLanguages() {
-			{{ linf := helpers.ToLanguageInformation(sl) }}
-			<option value={ linf.Code } selected?={ linf.Code == ulang }>
-				{ linf.Flag } { linf.LocalName }
-				if linf.EnglishName != "" {
-					if linf.EnglishName != linf.LocalName {
-						({ linf.EnglishName })
-					}
-				}
-			</option>
-		}
+		@partials.LanguageOptions(ulang)
 	</select>
+}
+
+templ unitSelect(id, labelKey, icon, current string, options []helpers.TranslatedKey) {
+	<tr>
+		<th>
+			<label for={ id }>
+				@helpers.IconFor(icon)
+				{ i18n.T(ctx, labelKey) }
+			</label>
+		</th>
+		<td>
+			<select class="input-ellipsis" id={ id } name={ id }>
+				for _, o := range options {
+					<option value={ o.Key } selected?={ current == o.Key }>
+						{ i18n.T(ctx, o.Translation) }
+					</option>
+				}
+			</select>
+		</td>
+	</tr>
 }

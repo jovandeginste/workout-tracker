@@ -27,6 +27,23 @@ const (
 	workerWorkoutsBatchSize = 10
 )
 
+func runIfIdle(l *slog.Logger, name string, pool pond.Pool, fn func()) {
+	if pool.WaitingTasks() > 0 || pool.RunningWorkers() > 0 {
+		l.With("size", pool.WaitingTasks()).Warn("Waiting for current " + name + " to finish")
+		return
+	}
+
+	fn()
+}
+
+func forEachID(pool pond.Pool, ids []uint64, fn func(uint64)) {
+	for _, id := range ids {
+		pool.Go(func() {
+			fn(id)
+		})
+	}
+}
+
 func (a *App) BackgroundWorker() {
 	a.workerPool = pond.NewPool(10)
 	a.workerPoolGeo = pond.NewPool(1)
@@ -51,27 +68,21 @@ func (a *App) bgLoop() {
 
 	l.Info("Worker started...")
 
-	if a.workerPool.WaitingTasks() > 0 {
-		l.With("size", a.workerPool.WaitingTasks()).Warn("Waiting for current updater to finish")
-	} else {
+	runIfIdle(l, "updater", a.workerPool, func() {
 		a.updateWorkouts(l.With("update", "workouts"))
 		a.updateRouteSegments(l.With("update", "route_segments"))
 		a.autoImports(l.With("update", "imports"))
-	}
+	})
 
 	// The backfill decodes a full track per job, so it runs on its own
 	// single-worker pool and only gets new jobs once the previous batch is done.
-	if a.workerPoolHeatmap.WaitingTasks() > 0 || a.workerPoolHeatmap.RunningWorkers() > 0 {
-		l.With("size", a.workerPoolHeatmap.WaitingTasks()).Warn("Waiting for current heatmap updater to finish")
-	} else {
+	runIfIdle(l, "heatmap updater", a.workerPoolHeatmap, func() {
 		a.updateHeatmapPoints(l.With("update", "heatmap_points"))
-	}
+	})
 
-	if a.workerPoolGeo.WaitingTasks() > 0 {
-		l.With("size", a.workerPoolGeo.WaitingTasks()).Warn("Waiting for current updater to finish")
-	} else {
+	runIfIdle(l, "updater", a.workerPoolGeo, func() {
 		a.updateAddresses(l.With("update", "addresses"))
-	}
+	})
 
 	l.Info("Worker finished...")
 }
@@ -84,15 +95,11 @@ func (a *App) autoImports(l *slog.Logger) {
 		l.Error(ErrWorker.Error() + ": " + err.Error())
 	}
 
-	for idx := range uID {
-		i := idx
-
-		a.workerPool.Go(func() {
-			if err := a.autoImportForUser(l, uID[i]); err != nil {
-				l.Error(ErrWorker.Error() + ": " + err.Error())
-			}
-		})
-	}
+	forEachID(a.workerPool, uID, func(id uint64) {
+		if err := a.autoImportForUser(l, id); err != nil {
+			l.Error(ErrWorker.Error() + ": " + err.Error())
+		}
+	})
 }
 
 func (a *App) autoImportForUser(l *slog.Logger, userID uint64) error {
@@ -155,11 +162,8 @@ func moveImportFile(logger *slog.Logger, dir, path, statusDir string) error {
 	destPath := filepath.Join(destDir, filepath.Base(path))
 	logger.Info("Moving file", "src", path, "dst", destPath)
 
-	// If destDir does not exist, create it
-	if _, err := os.Stat(destDir); errors.Is(err, os.ErrNotExist) {
-		if err := os.Mkdir(destDir, 0o755); err != nil {
-			return err
-		}
+	if err := os.MkdirAll(destDir, 0o755); err != nil {
+		return err
 	}
 
 	if err := os.Rename(path, destPath); err != nil {
@@ -252,28 +256,24 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 		l.Error("Error during batch query", "error", r.Error)
 	}
 
-	for idx := range rsIDs {
-		i := idx
+	forEachID(a.workerPool, rsIDs, func(id uint64) {
+		rs, err := database.GetRouteSegment(a.db, id)
+		if err != nil {
+			l.Error("Error during batch query", "error", err)
+			return
+		}
 
-		a.workerPool.Go(func() {
-			rs, err := database.GetRouteSegment(a.db, rsIDs[i])
-			if err != nil {
-				l.Error("Error during batch query", "error", err)
-				return
-			}
+		if !rs.Dirty {
+			return
+		}
 
-			if !rs.Dirty {
-				return
-			}
+		rl := l.With("route_segment_id", rs.ID)
+		rl.Info("Updating route segment")
 
-			rl := l.With("route_segment_id", rs.ID)
-			rl.Info("Updating route segment")
-
-			if err := a.rematchRouteSegmentToWorkouts(rs, rl); err != nil {
-				rl.Error("Error during matching", "error", err)
-			}
-		})
-	}
+		if err := a.rematchRouteSegmentToWorkouts(rs, rl); err != nil {
+			rl.Error("Error during matching", "error", err)
+		}
+	})
 }
 
 // updateHeatmapPoints calculates the heatmap points for workouts that were
@@ -285,15 +285,11 @@ func (a *App) updateHeatmapPoints(l *slog.Logger) {
 		return
 	}
 
-	for idx := range ids {
-		i := idx
-
-		a.workerPoolHeatmap.Go(func() {
-			if err := database.UpdateHeatmapPointsFor(a.db, ids[i]); err != nil {
-				l.Error("Error during heatmap update", "map_data_details_id", ids[i], "error", err)
-			}
-		})
-	}
+	forEachID(a.workerPoolHeatmap, ids, func(id uint64) {
+		if err := database.UpdateHeatmapPointsFor(a.db, id); err != nil {
+			l.Error("Error during heatmap update", "map_data_details_id", id, "error", err)
+		}
+	})
 }
 
 func (a *App) updateWorkouts(l *slog.Logger) {
@@ -306,28 +302,24 @@ func (a *App) updateWorkouts(l *slog.Logger) {
 		l.Error("Error during batch query", "error", r.Error)
 	}
 
-	for idx := range wIDs {
-		i := idx
+	forEachID(a.workerPool, wIDs, func(id uint64) {
+		w, err := database.GetWorkoutDetails(a.db, id)
+		if err != nil {
+			l.Error("Error during batch query", "error", err)
+			return
+		}
 
-		a.workerPool.Go(func() {
-			w, err := database.GetWorkoutDetails(a.db, wIDs[i])
-			if err != nil {
-				l.Error("Error during batch query", "error", err)
-				return
-			}
+		if !w.Dirty {
+			return
+		}
 
-			if !w.Dirty {
-				return
-			}
+		wl := l.With("workout_id", w.ID)
+		wl.Info("Updating workout")
 
-			wl := l.With("workout_id", w.ID)
-			wl.Info("Updating workout")
-
-			if err := w.UpdateData(a.db); err != nil {
-				wl.Error("Error during data update", "error", err)
-			}
-		})
-	}
+		if err := w.UpdateData(a.db); err != nil {
+			wl.Error("Error during data update", "error", err)
+		}
+	})
 }
 
 func (a *App) updateAddresses(l *slog.Logger) {
@@ -340,23 +332,19 @@ func (a *App) updateAddresses(l *slog.Logger) {
 		l.Error("Error during batch query", "error", r.Error)
 	}
 
-	for idx := range mdIDs {
-		i := idx
+	forEachID(a.workerPoolGeo, mdIDs, func(id uint64) {
+		md, err := database.GetMapData(a.db, id)
+		if err != nil {
+			l.Error("Error during batch query", "error", err)
+			return
+		}
 
-		a.workerPoolGeo.Go(func() {
-			md, err := database.GetMapData(a.db, mdIDs[i])
-			if err != nil {
-				l.Error("Error during batch query", "error", err)
-				return
-			}
+		wl := l.With("workout_id", md.WorkoutID).With("map_data_id", md.ID)
+		wl.Info("Updating address")
 
-			wl := l.With("workout_id", md.WorkoutID).With("map_data_id", md.ID)
-			wl.Info("Updating address")
-
-			md.UpdateAddress()
-			if err := md.Save(a.db); err != nil {
-				wl.Error("Error during address update", "error", err)
-			}
-		})
-	}
+		md.UpdateAddress()
+		if err := md.Save(a.db); err != nil {
+			wl.Error("Error during address update", "error", err)
+		}
+	})
 }

@@ -1,6 +1,7 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { formatDuration } from "../../helpers.js";
+import { formatDuration, navPillClass } from "../../helpers.js";
+import { chartTheme, zoomOptions } from "../../chart";
 import {
   CategoryScale,
   Chart,
@@ -20,13 +21,7 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import Zoom from "chartjs-plugin-zoom";
-import { localized, msg } from "@lit/localize";
-import { initLocalize } from "../../locale.js";
-
-initLocalize();
-
 @customElement("workout-stats")
-@localized()
 export class WorkoutStats extends LitElement {
   @property({
     attribute: "color-mode",
@@ -57,22 +52,10 @@ export class WorkoutStats extends LitElement {
   })
   data = null;
 
-  @property()
-  tz: string = null;
-
-  @property()
-  lang: string = null;
-
   @property({
     converter: (value: string) => JSON.parse(value),
   })
   translations = null;
-
-  private isDark(): boolean {
-    if (this.colorMode === "dark") return true;
-    if (this.colorMode === "light") return false;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
 
   private timeLabels: number[] = [];
 
@@ -221,9 +204,7 @@ export class WorkoutStats extends LitElement {
               <a
                 href="#"
                 title=${this.translations?.["time-of-day"] ?? ""}
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                  this.type === "time" ? "bg-indigo-500 text-white" : ""
-                }"
+                class=${navPillClass(this.type === "time")}
                 @click=${(e: Event) => {
                   e.preventDefault();
                   this.type = "time";
@@ -232,9 +213,7 @@ export class WorkoutStats extends LitElement {
               <a
                 href="#"
                 title=${this.translations?.["moving-duration"] ?? ""}
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                  this.type === "duration" ? "bg-indigo-500 text-white" : ""
-                }"
+                class=${navPillClass(this.type === "duration")}
                 @click=${(e: Event) => {
                   e.preventDefault();
                   this.type = "duration";
@@ -243,9 +222,7 @@ export class WorkoutStats extends LitElement {
               <a
                 href="#"
                 title=${this.translations?.distance ?? ""}
-                class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                  this.type === "distance" ? "bg-indigo-500 text-white" : ""
-                }"
+                class=${navPillClass(this.type === "distance")}
                 @click=${(e: Event) => {
                   e.preventDefault();
                   this.type = "distance";
@@ -263,22 +240,29 @@ export class WorkoutStats extends LitElement {
     return this;
   }
 
+  private maxXTicks(): number {
+    const width = this.chart?.width || this.clientWidth || 600;
+
+    return Math.max(6, Math.min(30, Math.floor(width / 50)));
+  }
+
   private getChartOptions(): ChartOptions {
     const metricSettings = this.getMetricSettings();
-    const dark = this.isDark();
-    const fgColor = dark ? "#e4e4e7" : "#27272a";
-    const gridColor = dark ? "#3f3f46" : "#d4d4d8";
+    const { fgColor, gridColor } = chartTheme(this.colorMode);
     return {
       maintainAspectRatio: false,
       animation: false,
       scales: {
         x: {
           type: this.type === "time" ? "time" : "linear",
-          time: this.type === "time" ? { unit: "minute" } : undefined,
+          time: this.type === "time" ? {} : undefined,
           min: this.xRange.min,
           max: this.xRange.max,
           ticks: {
             color: fgColor,
+            autoSkip: true,
+            maxTicksLimit: this.maxXTicks(),
+            maxRotation: 0,
             callback: (val: number) => this.formatXValue(val),
           },
           grid: { color: gridColor },
@@ -376,21 +360,7 @@ export class WorkoutStats extends LitElement {
             },
           },
         },
-        zoom: {
-          limits: {
-            x: { min: "original", max: "original" },
-            y: { min: "original", max: "original" },
-          },
-          zoom: {
-            drag: {
-              enabled: true,
-            },
-            wheel: {
-              enabled: true,
-            },
-            mode: "x",
-          },
-        },
+        zoom: zoomOptions(),
       },
     };
   }

@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"html"
 	"io"
 	"mime/multipart"
@@ -178,7 +179,7 @@ func (a *App) addWorkout(c *echo.Context) error {
 
 	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
 
 	workout := &database.Workout{}
@@ -223,7 +224,7 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 
 	d := &ManualWorkout{units: a.getCurrentUser(c).PreferredUnits()}
 	if err := c.Bind(d); err != nil {
-		return a.redirectWithError(c, "/workouts", err)
+		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
 
 	d.Update(workout)
@@ -256,37 +257,24 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 }
 
 func (a *App) addWorkoutFromFile(c *echo.Context) error {
-	form, err := c.MultipartForm()
+	notes := c.FormValue("notes")
+	workoutType := database.WorkoutType(c.FormValue("type"))
+
+	msg, errMsg, err := processUploads(c, func(filename string, content []byte) (string, error) {
+		ws, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, filename, content)
+		if len(addErr) > 0 {
+			return "", errors.Join(addErr...)
+		}
+
+		links := make([]string, 0, len(ws))
+		for _, w := range ws {
+			links = append(links, linkForWorkout(c.Request().Context(), w))
+		}
+
+		return strings.Join(links, ", "), nil
+	})
 	if err != nil {
 		return err
-	}
-
-	files := form.File["file"]
-
-	msg := []string{}
-	errMsg := []string{}
-
-	for _, file := range files {
-		content, parseErr := uploadedFile(file)
-		if parseErr != nil {
-			errMsg = append(errMsg, parseErr.Error())
-			continue
-		}
-
-		notes := c.FormValue("notes")
-		workoutType := database.WorkoutType(c.FormValue("type"))
-
-		ws, addErr := a.getCurrentUser(c).AddWorkout(a.db, workoutType, notes, file.Filename, content)
-		if len(addErr) > 0 {
-			for _, e := range addErr {
-				errMsg = append(errMsg, e.Error())
-			}
-			continue
-		}
-
-		for _, w := range ws {
-			msg = append(msg, linkForWorkout(c.Request().Context(), w))
-		}
 	}
 
 	if len(errMsg) > 0 {

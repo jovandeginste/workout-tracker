@@ -49,12 +49,6 @@ const (
 	WorkoutTypeFootball       WorkoutType = "football"
 	WorkoutTypeDancing        WorkoutType = "dancing"
 	WorkoutTypeOther          WorkoutType = "other"
-
-	WorkoutTypeClassLocation   = "location"
-	WorkoutTypeClassDistance   = "distance"
-	WorkoutTypeClassRepetition = "repetition"
-	WorkoutTypeClassWeight     = "weight"
-	WorkoutTypeClassDuration   = "duration"
 )
 
 type WorkoutTypeConfiguration struct {
@@ -70,47 +64,76 @@ type WorkoutTypeConfiguration struct {
 
 const DefaultMaxDeltaMeter = 20.0
 
-var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
-	WorkoutTypeAlpineClimbing: {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeBadminton:      {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeChinUps:        {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeCore:           {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeCycling:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: 120},
-	WorkoutTypeDancing:        {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeECycling:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: 120},
-	WorkoutTypeFootball:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeGolfing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeHiking:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeHorseRiding:    {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeIceSkating:     {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeIndoorCycling:  {Location: false, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: 120},
-	WorkoutTypeIndoorRunning:  {Location: false, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeInlineSkating:  {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeKayaking:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeMountainBiking: {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeMountaineering: {Location: true, Distance: true, Repetition: false, Weight: true, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeOther:          {Location: true, Distance: true, Repetition: true, Weight: true, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypePlanking:       {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypePullUps:        {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypePushups:        {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeRowing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeRunning:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeSailing:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter, Nautical: true},
-	WorkoutTypeSitups:         {Location: false, Distance: false, Repetition: true, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeSkiing:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
-	WorkoutTypeSnowboarding:   {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: false, MaxDeltaMeter: 120},
-	WorkoutTypeSquats:         {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeSwimming:       {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeTableTennis:    {Location: false, Distance: false, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeTennis:         {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: false, AreClimbsRelevant: false, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeWalking:        {Location: true, Distance: true, Repetition: false, Weight: false, AreDescentsRelevant: true, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
-	WorkoutTypeWeightLifting:  {Location: false, Distance: false, Repetition: true, Weight: true, AreDescentsRelevant: false, AreClimbsRelevant: true, MaxDeltaMeter: DefaultMaxDeltaMeter},
+func workoutTypeConfig(location, distance, repetition, weight bool, opts ...func(*WorkoutTypeConfiguration)) WorkoutTypeConfiguration {
+	c := WorkoutTypeConfiguration{
+		Location:      location,
+		Distance:      distance,
+		Repetition:    repetition,
+		Weight:        weight,
+		MaxDeltaMeter: DefaultMaxDeltaMeter,
+	}
+
+	for _, opt := range opts {
+		opt(&c)
+	}
+
+	return c
 }
 
-var (
-	workoutTypes        []WorkoutType
-	workoutTypesByClass map[string][]WorkoutType
-)
+func withClimbs(c *WorkoutTypeConfiguration) {
+	c.AreClimbsRelevant = true
+}
+
+func withDescents(c *WorkoutTypeConfiguration) {
+	c.AreDescentsRelevant = true
+}
+
+func withHighMaxDelta(c *WorkoutTypeConfiguration) {
+	c.MaxDeltaMeter = 120
+}
+
+func withNautical(c *WorkoutTypeConfiguration) {
+	c.Nautical = true
+}
+
+var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
+	WorkoutTypeAlpineClimbing: workoutTypeConfig(true, true, false, false, withClimbs),
+	WorkoutTypeBadminton:      {},
+	WorkoutTypeChinUps:        workoutTypeConfig(false, false, true, true),
+	WorkoutTypeCore:           workoutTypeConfig(false, false, true, false),
+	WorkoutTypeCycling:        workoutTypeConfig(true, true, false, false, withClimbs, withDescents, withHighMaxDelta),
+	WorkoutTypeDancing:        {},
+	WorkoutTypeECycling:       workoutTypeConfig(true, true, false, false, withClimbs, withDescents, withHighMaxDelta),
+	WorkoutTypeFootball:       workoutTypeConfig(true, true, false, false),
+	WorkoutTypeGolfing:        workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeHiking:         workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeHorseRiding:    workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeIceSkating:     workoutTypeConfig(true, true, false, false),
+	WorkoutTypeIndoorCycling:  workoutTypeConfig(false, true, false, false, withHighMaxDelta),
+	WorkoutTypeIndoorRunning:  workoutTypeConfig(false, true, false, false),
+	WorkoutTypeInlineSkating:  workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeKayaking:       workoutTypeConfig(true, true, false, false),
+	WorkoutTypeMountainBiking: workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeMountaineering: workoutTypeConfig(true, true, false, true, withClimbs, withDescents),
+	WorkoutTypeOther:          workoutTypeConfig(true, true, true, true, withClimbs, withDescents),
+	WorkoutTypePlanking:       {},
+	WorkoutTypePullUps:        workoutTypeConfig(false, false, true, true),
+	WorkoutTypePushups:        workoutTypeConfig(false, false, true, false, withClimbs),
+	WorkoutTypeRowing:         workoutTypeConfig(true, true, false, false),
+	WorkoutTypeRunning:        workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeSailing:        workoutTypeConfig(true, true, false, false, withNautical),
+	WorkoutTypeSitups:         workoutTypeConfig(false, false, true, false),
+	WorkoutTypeSkiing:         workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta),
+	WorkoutTypeSnowboarding:   workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta),
+	WorkoutTypeSquats:         workoutTypeConfig(false, false, true, true),
+	WorkoutTypeSwimming:       workoutTypeConfig(true, true, false, false),
+	WorkoutTypeTableTennis:    {},
+	WorkoutTypeTennis:         workoutTypeConfig(true, true, false, false),
+	WorkoutTypeWalking:        workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
+	WorkoutTypeWeightLifting:  workoutTypeConfig(false, false, true, true, withClimbs),
+}
+
+var workoutTypes []WorkoutType
 
 func WorkoutTypes() []WorkoutType {
 	if len(workoutTypes) > 0 {
@@ -124,15 +147,7 @@ func WorkoutTypes() []WorkoutType {
 	return workoutTypes
 }
 
-func getOrSetByClass(class string, fn func(c WorkoutTypeConfiguration) bool) []WorkoutType {
-	if workoutTypesByClass == nil {
-		workoutTypesByClass = make(map[string][]WorkoutType)
-	}
-
-	if wt, ok := workoutTypesByClass[class]; ok {
-		return wt
-	}
-
+func workoutTypesByClass(fn func(c WorkoutTypeConfiguration) bool) []WorkoutType {
 	keys := []WorkoutType{}
 
 	for k, c := range workoutTypeConfigs {
@@ -144,37 +159,36 @@ func getOrSetByClass(class string, fn func(c WorkoutTypeConfiguration) bool) []W
 	}
 
 	slices.Sort(keys)
-	workoutTypesByClass[WorkoutTypeClassDistance] = keys
 
 	return keys
 }
 
 func DistanceWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassDistance, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Distance
 	})
 }
 
 func WeightWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassWeight, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Weight
 	})
 }
 
 func RepetitionWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassRepetition, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Repetition
 	})
 }
 
 func LocationWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassLocation, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return c.Location
 	})
 }
 
 func DurationWorkoutTypes() []WorkoutType {
-	return getOrSetByClass(WorkoutTypeClassDuration, func(c WorkoutTypeConfiguration) bool {
+	return workoutTypesByClass(func(c WorkoutTypeConfiguration) bool {
 		return true // All workout types store duration
 	})
 }

@@ -10,19 +10,7 @@ templ Map(w *database.Workout) {
 	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" }/>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 	{{
-		mapConfig := struct {
-			CenterLat     float64
-			CenterLng     float64
-			MinElevation  float64
-			MaxElevation  float64
-			MaxSpeed      float64
-			SpeedName     string
-			ElevationName string
-			SlopeName     string
-			StreetsName   string
-			AerialName    string
-			ShowElevation bool
-		}{
+		mapConfig := helpers.MapConfig{
 			CenterLat:     w.Center().Lat,
 			CenterLng:     w.Center().Lng,
 			MinElevation:  w.MinElevation(),

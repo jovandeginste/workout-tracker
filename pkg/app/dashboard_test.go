@@ -2,7 +2,6 @@ package app
 
 import (
 	"net/http"
-	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
@@ -45,12 +44,7 @@ func TestRoute_DashboardMultipleTotals(t *testing.T) {
 	createDashboardWorkout(t, a, u, database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	createDashboardWorkout(t, a, u, database.WorkoutTypeCycling, time.Date(2025, 2, 1, 10, 0, 0, 0, time.UTC))
 
-	req := httptest.NewRequest(http.MethodGet, a.Reverse("dashboard"), nil)
-	rec := httptest.NewRecorder()
-
-	c := a.echo.NewContext(req, rec)
-	a.setContext(c)
-	c.Set("user_info", u)
+	c, rec := newTestContext(t, a, a.Reverse("dashboard"), u)
 
 	s := sessionLoadAndSave(a.sessionManager)
 	h := s(a.dashboardHandler)

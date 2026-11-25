@@ -57,7 +57,6 @@ en:
     user: User
     weight: Weight
     workout: Workout
-    workouts: workouts
   dashboard:
     for-user: Dashboard for %s
     other-users: Other users
@@ -84,6 +83,8 @@ en:
   map:
     aerial: Aerial
     fullscreen: Fullscreen
+    markers: Show markers
+    only-visited: Only show where you've been
     streets: Streets
   measurements:
     latest: Latest measurements
@@ -102,7 +103,6 @@ en:
     convert-format: convert from not-yet-supported file format
     day: day
     day-7: 7 days
-    day-15: 15 days
     equipment: equipment
     forever: forever
     month: month
@@ -255,7 +255,6 @@ en:
       update-profile: Update profile
       update-units: Update preferred units
       updated: Profile updated
-      your-profile: Your profile
       your-settings: Your settings
     update: Update user
     username: Username
@@ -281,7 +280,6 @@ en:
     distance: Distance
     duration: Duration
     elevation: Elevation
-    enhanced-speed: Enhanced speed
     est-calories-burned: Calories burned (est)
     extra-metrics: Extra metrics
     filter-workouts: Filter workouts
@@ -291,7 +289,6 @@ en:
     lock: Lock or unlock the attributes of this workout from automatic updates.
     locked: The attributes of workout '%s' are now locked
     manual: Manual
-    map-full-width: Show map in full width
     matching-segments: Matching route segments
     max-elevation: Max elevation
     max-speed: Max speed

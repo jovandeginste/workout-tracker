@@ -21,7 +21,7 @@ func TestRouteSegmentConfigMalformedForm(t *testing.T) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	rec := httptest.NewRecorder()
 	c := a.echo.NewContext(req, rec)
-	c.Set("user_info", u)
+	a.setCurrentUser(c, u)
 
 	require.NoError(t, a.userProfileRouteSegmentConfigUpdateHandler(c))
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
@@ -42,7 +42,7 @@ func TestRouteSegmentConfigSaveFailure(t *testing.T) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	rec := httptest.NewRecorder()
 	c := a.echo.NewContext(req, rec)
-	c.Set("user_info", u)
+	a.setCurrentUser(c, u)
 
 	require.NoError(t, a.userProfileRouteSegmentConfigUpdateHandler(c))
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)

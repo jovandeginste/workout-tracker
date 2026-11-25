@@ -26,13 +26,13 @@ func (a *App) addEquipment(c *echo.Context) error {
 	p := database.Equipment{}
 
 	if err := c.Bind(&p); err != nil {
-		return a.redirectWithError(c, a.Reverse("add-equipment"), err)
+		return a.redirectWithError(c, a.Reverse("equipment-add"), err)
 	}
 
 	p.UserID = u.ID
 
 	if err := p.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.Reverse("add-equipment"), err)
+		return a.redirectWithError(c, a.Reverse("equipment-add"), err)
 	}
 
 	return c.Redirect(http.StatusFound, a.Reverse("equipment"))
@@ -88,12 +88,7 @@ func (a *App) equipmentDeleteHandler(c *echo.Context) error {
 
 	a.addNoticeT(c, "equipment.notice.deleted", e.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("equipment"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("equipment"))
+	return a.redirectHTMXOrFound(c, a.Reverse("equipment"))
 }
 
 func (a *App) equipmentUpdateHandler(c *echo.Context) error {

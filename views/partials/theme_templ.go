@@ -42,7 +42,7 @@ func Theme() templ.Component {
 				return templ_7745c5c3_Err
 			}
 		default:
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<script>\n\t\t\tsetColorScheme(\n\t\t\t\twindow.matchMedia(\"(prefers-color-scheme: dark)\").matches,\n\t\t\t);\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<script>\n\t\t\tsetColorScheme(window.matchMedia(\"(prefers-color-scheme: dark)\").matches);\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

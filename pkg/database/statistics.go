@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+
+	"gorm.io/gorm"
 )
 
 const postgresDialect = "postgres"
@@ -15,58 +17,60 @@ type StatConfig struct {
 	Per   string `query:"per"`
 }
 
-func (sc *StatConfig) GetBucketString(sqlDialect string) string {
-	switch sqlDialect {
-	case postgresDialect:
-		switch sc.Per {
-		case "year":
-			return "YYYY"
-		case "week":
-			return "YYYY-WW"
-		case "day":
-			return "YYYY-MM-DD"
-		default:
-			return "YYYY-MM"
-		}
-	default:
-		switch sc.Per {
-		case "year":
-			return "%Y"
-		case "week":
-			return "%Y-%W"
-		case "day":
-			return "%Y-%m-%d"
-		default:
-			return "%Y-%m"
-		}
+var bucketStrings = map[string]map[string]string{
+	postgresDialect: {
+		"year":  "YYYY",
+		"week":  "YYYY-WW",
+		"day":   "YYYY-MM-DD",
+		"month": "YYYY-MM",
+	},
+	"sqlite": {
+		"year":  "%Y",
+		"week":  "%Y-%W",
+		"day":   "%Y-%m-%d",
+		"month": "%Y-%m",
+	},
+}
+
+var dayBucketExpressions = map[string]map[string]string{
+	postgresDialect: {
+		"year":  "min(to_char(date_trunc('year', workouts.date), 'YYYY-MM-DD')) as bucket",
+		"week":  "min(to_char(date_trunc('week', workouts.date), 'YYYY-MM-DD')) as bucket",
+		"day":   "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket",
+		"month": "min(to_char(date_trunc('month', workouts.date), 'YYYY-MM-DD')) as bucket",
+	},
+	"sqlite": {
+		"year":  "min(strftime('%Y-01-01', workouts.date)) as bucket",
+		"week":  "min(date(workouts.date, '-6 days', 'weekday 1')) as bucket",
+		"day":   "min(strftime('%Y-%m-%d', workouts.date)) as bucket",
+		"month": "min(strftime('%Y-%m-01', workouts.date)) as bucket",
+	},
+}
+
+func bucketValue(table map[string]string, per string) string {
+	if value, ok := table[per]; ok {
+		return value
 	}
+
+	return table["month"]
+}
+
+func (sc *StatConfig) GetBucketString(sqlDialect string) string {
+	table, ok := bucketStrings[sqlDialect]
+	if !ok {
+		table = bucketStrings["sqlite"]
+	}
+
+	return bucketValue(table, sc.Per)
 }
 
 func (sc *StatConfig) GetDayBucketFormatExpression(sqlDialect string) string {
-	switch sqlDialect {
-	case postgresDialect:
-		switch sc.Per {
-		case "year":
-			return "min(to_char(date_trunc('year', workouts.date), 'YYYY-MM-DD')) as bucket"
-		case "week":
-			return "min(to_char(date_trunc('week', workouts.date), 'YYYY-MM-DD')) as bucket"
-		case "day":
-			return "min(to_char(workouts.date, 'YYYY-MM-DD')) as bucket"
-		default:
-			return "min(to_char(date_trunc('month', workouts.date), 'YYYY-MM-DD')) as bucket"
-		}
-	default:
-		switch sc.Per {
-		case "year":
-			return "min(strftime('%Y-01-01', workouts.date)) as bucket"
-		case "week":
-			return "min(date(workouts.date, '-6 days', 'weekday 1')) as bucket"
-		case "day":
-			return "min(strftime('%Y-%m-%d', workouts.date)) as bucket"
-		default:
-			return "min(strftime('%Y-%m-01', workouts.date)) as bucket"
-		}
+	table, ok := dayBucketExpressions[sqlDialect]
+	if !ok {
+		table = dayBucketExpressions["sqlite"]
 	}
+
+	return bucketValue(table, sc.Per)
 }
 
 func (sc *StatConfig) GetBucketFormatExpression(sqlDialect string) string {
@@ -96,10 +100,6 @@ func (sc *StatConfig) GetSince() string {
 	return s
 }
 
-func (u *User) GetDefaultStatistics(viewer *User) (*Statistics, error) {
-	return u.GetStatisticsFor("1 year", "month", viewer)
-}
-
 func (u *User) GetStatisticsFor(since, per string, viewer *User) (*Statistics, error) {
 	return u.GetStatistics(StatConfig{
 		Since: since,
@@ -109,6 +109,13 @@ func (u *User) GetStatisticsFor(since, per string, viewer *User) (*Statistics, e
 
 // GetStatistics returns the statistics of the user, limited to the workouts the
 // viewer may see.
+func (u *User) statsBaseQuery(viewer *User) *gorm.DB {
+	return VisibleWorkouts(u.db, viewer).
+		Table("workouts").
+		Joins("join map_data on workouts.id = map_data.workout_id").
+		Where("user_id = ?", u.ID)
+}
+
 func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, error) {
 	sqlDialect := u.db.Dialector.Name()
 
@@ -118,8 +125,7 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 		Buckets:      map[WorkoutType]Buckets{},
 	}
 
-	q := VisibleWorkouts(u.db, viewer).
-		Table("workouts").
+	q := u.statsBaseQuery(viewer).
 		Select(
 			"count(*) as workouts",
 			"workouts.type as workout_type",
@@ -131,9 +137,7 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 			"sum((total_duration - pause_duration) * average_speed_no_pause) / NULLIF(sum(total_duration - pause_duration), 0) as average_speed_no_pause",
 			statConfig.GetBucketFormatExpression(sqlDialect),
 			statConfig.GetDayBucketFormatExpression(sqlDialect),
-		).
-		Joins("join map_data on workouts.id = map_data.workout_id").
-		Where("user_id = ?", u.ID)
+		)
 
 	if statConfig.Since != "" && statConfig.Since != "forever" {
 		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())
@@ -145,7 +149,7 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 	// used in the SELECT clause and to avoid potential mismatches caused by
 	// transformations or processing applied to `bucket`.
 	// The `bucket` field is provided for frontend rendering purposes only.
-	rows, err := q.Group("raw_bucket, workout_type").Rows()
+	rows, err := q.Group("raw_bucket, workouts.type").Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -175,6 +179,30 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 	}
 
 	return r, nil
+}
+
+func GetWorkoutTypeCounts(db *gorm.DB, userID uint64, viewer *User) (map[WorkoutType]int, error) {
+	var rows []struct {
+		WorkoutType WorkoutType `gorm:"column:workout_type"`
+		Count       int         `gorm:"column:workout_count"`
+	}
+
+	err := VisibleWorkouts(db, viewer).
+		Table("workouts").
+		Select("workouts.type as workout_type", "count(*) as workout_count").
+		Where("user_id = ?", userID).
+		Group("workouts.type").
+		Scan(&rows).Error
+	if err != nil {
+		return nil, err
+	}
+
+	counts := make(map[WorkoutType]int, len(rows))
+	for _, r := range rows {
+		counts[r.WorkoutType] = r.Count
+	}
+
+	return counts, nil
 }
 
 func (u *User) GetHighestWorkoutType(viewer *User) (*WorkoutType, error) {
@@ -250,8 +278,7 @@ func (u *User) GetTotalsFor(types WorkoutTypeList, viewer *User) ([]*Bucket, err
 
 	rows := []*Bucket{}
 
-	err := VisibleWorkouts(u.db, viewer).
-		Table("workouts").
+	err := u.statsBaseQuery(viewer).
 		Select(
 			"count(*) as workouts",
 			"workouts.type as workout_type",
@@ -260,8 +287,6 @@ func (u *User) GetTotalsFor(types WorkoutTypeList, viewer *User) ([]*Bucket, err
 			"sum(total_up) as up",
 			"'all' as bucket",
 		).
-		Joins("join map_data on workouts.id = map_data.workout_id").
-		Where("user_id = ?", u.ID).
 		Where("workouts.type IN ?", types).
 		Group("workouts.type").
 		Scan(&rows).Error
@@ -295,8 +320,7 @@ func (u *User) GetTotals(t WorkoutType, viewer *User) (*Bucket, error) {
 
 	r := &Bucket{}
 
-	err := VisibleWorkouts(u.db, viewer).
-		Table("workouts").
+	err := u.statsBaseQuery(viewer).
 		Select(
 			"count(*) as workouts",
 			"max(workouts.type) as workout_type",
@@ -305,8 +329,6 @@ func (u *User) GetTotals(t WorkoutType, viewer *User) (*Bucket, error) {
 			"sum(total_up) as up",
 			"'all' as bucket",
 		).
-		Joins("join map_data on workouts.id = map_data.workout_id").
-		Where("user_id = ?", u.ID).
 		Where("workouts.type = ?", t).
 		Scan(r).Error
 	if err != nil {
@@ -364,10 +386,7 @@ func (u *User) GetRecords(t WorkoutType, viewer *User) (*WorkoutRecord, error) {
 	}
 
 	for k, v := range mapping {
-		err := VisibleWorkouts(u.db, viewer).
-			Table("workouts").
-			Joins("join map_data on workouts.id = map_data.workout_id").
-			Where("user_id = ?", u.ID).
+		err := u.statsBaseQuery(viewer).
 			Where("workouts.type = ?", t).
 			Select("workouts.id as id", v+" as value", "workouts.date as date").
 			Order(v + " DESC").

@@ -1,8 +1,11 @@
 package app
 
 import (
+	"bytes"
+	"context"
 	"errors"
 	"net/http"
+	"path"
 	"time"
 
 	"github.com/a-h/templ"
@@ -25,17 +28,70 @@ func (a *App) redirectWithError(c *echo.Context, target string, err error) error
 	return c.Redirect(http.StatusFound, target)
 }
 
-func (a *App) statisticsHandler(c *echo.Context) error {
-	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
+// redirectHTMXOrFound lets HTMX perform a full page navigation, while normal
+// requests get a regular redirect.
+func processUploads(c *echo.Context, handle func(filename string, content []byte) (string, error)) ([]string, []string, error) {
+	form, err := c.MultipartForm()
+	if err != nil {
+		return nil, nil, err
 	}
 
+	msg := []string{}
+	errMsg := []string{}
+
+	for _, file := range form.File["file"] {
+		content, err := uploadedFile(file)
+		if err != nil {
+			errMsg = append(errMsg, err.Error())
+			continue
+		}
+
+		result, err := handle(file.Filename, content)
+		if err != nil {
+			errMsg = append(errMsg, err.Error())
+			continue
+		}
+
+		msg = append(msg, result)
+	}
+
+	return msg, errMsg, nil
+}
+
+func renderCompact(ctx context.Context, t templ.Component) (string, error) {
+	buf := templ.GetBuffer()
+	defer templ.ReleaseBuffer(buf)
+
+	if err := t.Render(ctx, buf); err != nil {
+		return "", err
+	}
+
+	return htmlConcatenizer.ReplaceAllString(buf.String(), ""), nil
+}
+
+func streamAttachment(c *echo.Context, filename string, content []byte) error {
+	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+path.Base(filename)+"\"")
+
+	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(content))
+}
+
+func (a *App) redirectHTMXOrFound(c *echo.Context, target string) error {
+	if isHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", target)
+		return c.String(http.StatusFound, "ok")
+	}
+
+	return c.Redirect(http.StatusFound, target)
+}
+
+func (a *App) statisticsHandler(c *echo.Context) error {
+	u := a.getCurrentUser(c)
+
 	statisticsParams := struct {
-		Since string `query:"since"`
-		Per   string `query:"per"`
-		Type  string `query:"type"`
-		Chart string `query:"chart"`
+		Since string   `query:"since"`
+		Per   string   `query:"per"`
+		Type  []string `query:"type"`
+		Chart string   `query:"chart"`
 	}{
 		Since: "1 year",
 		Per:   "month",
@@ -54,12 +110,28 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		statisticsParams.Chart = "line"
 	}
 
+	// The "all" checkbox submits an empty value. Ignore it when specific
+	// types are selected as well, so the selection always wins.
+	selectedTypes := make([]string, 0, len(statisticsParams.Type))
+	for _, t := range statisticsParams.Type {
+		if t != "" {
+			selectedTypes = append(selectedTypes, t)
+		}
+	}
+
+	statisticsParams.Type = selectedTypes
+
 	routeSegments, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments))
+	typeCounts, err := database.GetWorkoutTypeCounts(a.db, u.ID, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments, typeCounts))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {
@@ -80,12 +152,7 @@ func (a *App) dailyDeleteHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("daily"), err)
 	}
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("daily"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("daily"))
+	return a.redirectHTMXOrFound(c, a.Reverse("daily"))
 }
 
 func (a *App) dailyUpdateHandler(c *echo.Context) error {
@@ -125,14 +192,6 @@ func (a *App) dailyHandler(c *echo.Context) error {
 
 func (a *App) dashboardHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
-
-	w, err := u.GetWorkouts(a.db)
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
 
 	users, err := database.GetUsers(a.db)
 	if err != nil {
@@ -144,7 +203,7 @@ func (a *App) dashboardHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	return Render(c, http.StatusOK, user.Show(u, users, w, recent, u))
+	return Render(c, http.StatusOK, user.Show(u, users, recent, u))
 }
 
 func (a *App) userLoginHandler(c *echo.Context) error {
@@ -163,17 +222,7 @@ func (a *App) lookupAddressHandler(c *echo.Context) error {
 }
 
 func (a *App) heatmapHandler(c *echo.Context) error {
-	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
-
-	w, err := u.GetWorkouts(a.db)
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-signout"), err)
-	}
-
-	return Render(c, http.StatusOK, user.Heatmap(w))
+	return Render(c, http.StatusOK, user.Heatmap())
 }
 
 func Render(ctx *echo.Context, statusCode int, t templ.Component) error {

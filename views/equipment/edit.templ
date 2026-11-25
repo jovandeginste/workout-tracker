@@ -76,23 +76,7 @@ templ Edit(e *database.Equipment) {
 									</td>
 									<td>
 										for _, wt := range helpers.WorkoutTypes() {
-											<label class="inline">
-												<input
-													class="sr-only peer"
-													type="checkbox"
-													id={ "default_for_" + wt.String() }
-													name="default_for"
-													value={ wt.String() }
-													checked?={ e.ValidFor(&wt) }
-												/>
-												<span
-													id={ wt.String() }
-													class="selectable-pill"
-													for="default_for_{{ .String }}"
-												>
-													{ helpers.THas(ctx, wt.StringT()) }
-												</span>
-											</label>
+											@partials.SelectablePill("default_for_"+wt.String(), "default_for", wt.String(), helpers.THas(ctx, wt.StringT()), "", e.ValidFor(&wt))
 										}
 									</td>
 								</tr>

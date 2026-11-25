@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -25,7 +26,7 @@ func TestAddDetailsMovingDuration(t *testing.T) {
 		},
 	}
 
-	data := map[string]*dataset{
+	data := map[string]*helpers.Dataset{
 		"position":        {Data: []any{}},
 		"time":            {Data: []any{}},
 		"distance":        {Data: []any{}},

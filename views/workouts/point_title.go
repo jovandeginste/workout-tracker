@@ -2,14 +2,12 @@ package workouts
 
 import (
 	"context"
+	"strings"
+
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
-	"strings"
 )
-
-templ DummyWorkoutPointTitle() {
-}
 
 func PointTitle(ctx context.Context, preferredUnits *database.UserPreferredUnits, p *database.MapPoint) string {
 	t := []string{

@@ -1,8 +1,10 @@
 package helpers
 
 import (
+	"cmp"
 	"context"
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/gomarkdown/markdown"
@@ -29,16 +31,55 @@ func RouteFor(ctx context.Context, name string, params ...any) string {
 	return "/invalid/route/#" + name
 }
 
-func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
-	return CurrentUser(ctx).PreferredUnits()
-}
-
 func WorkoutTypes() []database.WorkoutType {
 	return database.WorkoutTypes()
 }
 
-func FilterOptions() []TranslatedKey {
-	return StatisticSinceOptions()
+// WorkoutTypesByCount returns the workout types the user actually has
+// workouts for, ordered by count and then by name.
+func WorkoutTypesByCount(counts map[database.WorkoutType]int) []database.WorkoutType {
+	types := make([]database.WorkoutType, 0, len(counts))
+
+	for _, wt := range database.WorkoutTypes() {
+		if counts[wt] > 0 {
+			types = append(types, wt)
+		}
+	}
+
+	slices.SortFunc(types, func(a, b database.WorkoutType) int {
+		if c := cmp.Compare(counts[b], counts[a]); c != 0 {
+			return c
+		}
+
+		return cmp.Compare(a, b)
+	})
+
+	return types
+}
+
+type Dataset struct {
+	Label string
+	Data  []any
+}
+
+type MapConfig struct {
+	CenterLat     float64
+	CenterLng     float64
+	MinElevation  float64
+	MaxElevation  float64
+	MaxSpeed      float64
+	SpeedName     string
+	ElevationName string
+	SlopeName     string
+	StreetsName   string
+	AerialName    string
+	ShowElevation bool
+}
+
+type TrendDataPoint struct {
+	Date  string `json:"date"`
+	Speed string `json:"speed"`
+	Type  string `json:"type"`
 }
 
 type TranslatedKey struct {

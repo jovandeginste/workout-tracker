@@ -13,11 +13,6 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 )
 
-type dataset struct {
-	Label string
-	Data  []any
-}
-
 func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -43,7 +38,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "assets") + "/components/map.css").ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 16, Col: 102}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 11, Col: 102}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -56,7 +51,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "assets") + "/components/map.js").ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 17, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 12, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -66,16 +61,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		mapConfig := struct {
-			CenterLat     float64
-			CenterLng     float64
-			MinElevation  float64
-			MaxElevation  float64
-			SpeedName     string
-			ElevationName string
-			StreetsName   string
-			AerialName    string
-		}{
+		mapConfig := helpers.MapConfig{
 			CenterLat:     s.Center.Lat,
 			CenterLng:     s.Center.Lng,
 			MinElevation:  s.MinElevation,
@@ -85,7 +71,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 			StreetsName:   i18n.T(ctx, "map.streets"),
 			AerialName:    i18n.T(ctx, "map.aerial"),
 		}
-		data := map[string]*dataset{
+		data := map[string]*helpers.Dataset{
 			"position": {
 				Label: "",
 				Data:  []any{},
@@ -124,7 +110,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.JSONString(mapConfig)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 65, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 51, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -137,7 +123,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 51}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 56, Col: 51}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -150,7 +136,7 @@ func RouteSegmentMap(s *database.RouteSegment) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 70, Col: 96}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/route_segments/route_segment_map.templ`, Line: 56, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {

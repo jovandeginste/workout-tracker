@@ -1,10 +1,8 @@
 package app
 
 import (
-	"bytes"
 	"errors"
 	"net/http"
-	"path"
 	"time"
 
 	"github.com/google/uuid"
@@ -36,9 +34,6 @@ func (a *App) addRoutesWorkouts(g *echo.Group) {
 
 func (a *App) workoutsHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
 
 	filters, err := database.GetWorkoutsFilters(c)
 	if err != nil {
@@ -126,12 +121,7 @@ func (a *App) workoutsDeleteHandler(c *echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "workout.notice.deleted", workout.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("workouts"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("workouts"))
+	return a.redirectHTMXOrFound(c, a.Reverse("workouts"))
 }
 
 func (a *App) workoutShowShared(c *echo.Context) error {
@@ -154,13 +144,19 @@ func (a *App) workoutShowShared(c *echo.Context) error {
 	return Render(c, http.StatusOK, workouts.Show(w))
 }
 
-func (a *App) workoutsShareHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
+func (a *App) saveWorkoutAndRedirect(c *echo.Context, workout *database.Workout, noticeKey string) error {
+	target := a.Reverse("workout-show", workout.ID)
+	if err := workout.Save(a.db); err != nil {
+		return a.redirectWithError(c, target, err)
 	}
 
-	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	a.addNoticeT(c, noticeKey, workout.Name)
+
+	return c.Redirect(http.StatusFound, target)
+}
+
+func (a *App) workoutsShareHandler(c *echo.Context) error {
+	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
@@ -168,56 +164,29 @@ func (a *App) workoutsShareHandler(c *echo.Context) error {
 	u := uuid.New()
 	workout.PublicUUID = &u
 
-	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	a.addNoticeT(c, "workout.notice.share-link-created", workout.Name)
-
-	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
+	return a.saveWorkoutAndRedirect(c, workout, "workout.notice.share-link-created")
 }
 
 func (a *App) workoutsShareDeleteHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	workout.PublicUUID = nil
 
-	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	a.addNoticeT(c, "workout.notice.share-link-deleted", workout.Name)
-
-	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
+	return a.saveWorkoutAndRedirect(c, workout, "workout.notice.share-link-deleted")
 }
 
 func (a *App) workoutsRefreshHandler(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
-	}
-
-	workout, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	workout, err := a.getWorkout(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
 	}
 
 	workout.Dirty = true
-	if err := workout.Save(a.db); err != nil {
-		return a.redirectWithError(c, a.Reverse("workout-show", c.Param("id")), err)
-	}
 
-	a.addNoticeT(c, "workout.notice.refresh-soon", workout.Name)
-
-	return c.Redirect(http.StatusFound, a.Reverse("workout-show", c.Param("id")))
+	return a.saveWorkoutAndRedirect(c, workout, "workout.notice.refresh-soon")
 }
 
 func (a *App) workoutsDownloadHandler(c *echo.Context) error {
@@ -230,11 +199,7 @@ func (a *App) workoutsDownloadHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("workouts"), errors.New("workout has no content"))
 	}
 
-	basename := path.Base(workout.GPX.Filename)
-
-	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+basename+"\"")
-
-	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(workout.GPX.Content))
+	return streamAttachment(c, workout.GPX.Filename, workout.GPX.Content)
 }
 
 func (a *App) workoutsEditHandler(c *echo.Context) error {

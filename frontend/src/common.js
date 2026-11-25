@@ -16,13 +16,8 @@ globalThis.toggleTextPassword = function toggleTextPassword(el, id) {
   var x = document.getElementById(id);
 
   if (x.type === "password") {
-    // Remove class from span
-    el.classList.remove("icon-eye");
-    el.classList.add("icon-eye-slash");
     x.type = "text";
   } else {
-    el.classList.remove("icon-eye-slash");
-    el.classList.add("icon-eye");
     x.type = "password";
   }
 };

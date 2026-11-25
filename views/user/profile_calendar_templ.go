@@ -7,12 +7,9 @@ package user
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
-	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
-)
+import "github.com/jovandeginste/workout-tracker/v2/views/helpers"
 
-func ProfileCalendar(workouts []*database.Workout) templ.Component {
+func ProfileCalendar() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,7 +33,7 @@ func ProfileCalendar(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.css").ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 9, Col: 115}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 6, Col: 115}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -49,7 +46,7 @@ func ProfileCalendar(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "api-workouts-calendar")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 10, Col: 128}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 7, Col: 128}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -62,7 +59,7 @@ func ProfileCalendar(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.Timezone(ctx)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 10, Col: 163}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 7, Col: 163}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -75,7 +72,7 @@ func ProfileCalendar(workouts []*database.Workout) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.js").ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 11, Col: 82}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/profile_calendar.templ`, Line: 8, Col: 82}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {

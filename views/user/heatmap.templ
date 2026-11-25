@@ -2,12 +2,11 @@ package user
 
 import (
 	"github.com/invopop/ctxi18n/i18n"
-	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Heatmap(workouts []*database.Workout) {
+templ Heatmap() {
 	@partials.Page(partials.NewPageOptions()) {
 		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.css" }/>
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.js" }></script>
@@ -22,8 +21,10 @@ templ Heatmap(workouts []*database.Workout) {
 				api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
 				api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
 				i18n={ templ.JSONString(map[string]string{
-          "streets": i18n.T(ctx, "map.streets"),
-          "aerial":  i18n.T(ctx, "map.aerial"),
+          "streets":      i18n.T(ctx, "map.streets"),
+          "aerial":       i18n.T(ctx, "map.aerial"),
+          "markers":      i18n.T(ctx, "map.markers"),
+          "only-visited": i18n.T(ctx, "map.only-visited"),
         }) }
 			></wt-heatmap>
 		</div>

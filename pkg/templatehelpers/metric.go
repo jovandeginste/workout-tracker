@@ -24,24 +24,30 @@ func HumanDistanceKM(d float64) string {
 }
 
 func HumanSpeedKPH(mps float64) string {
+	return humanSpeed(mps, 3.6)
+}
+
+func HumanTempoKM(mps float64) string {
+	return humanTempo(mps, MeterPerKM)
+}
+
+func humanSpeed(mps, factor float64) string {
 	if mps == 0 {
 		return InvalidValue
 	}
 
-	kmph := 3.6 * mps
-
-	return RoundFloat64(kmph)
+	return RoundFloat64(factor * mps)
 }
 
-func HumanTempoKM(mps float64) string {
+func humanTempo(mps, metersPerUnit float64) string {
 	if mps == 0 || math.IsNaN(mps) {
 		return InvalidValue
 	}
 
-	mpk := MeterPerKM / (60 * mps)
+	minutesPerUnit := metersPerUnit / (60 * mps)
 
-	wholeMinutes := math.Floor(mpk)
-	seconds := (mpk - wholeMinutes) * 60
+	wholeMinutes := math.Floor(minutesPerUnit)
+	seconds := (minutesPerUnit - wholeMinutes) * 60
 
 	return fmt.Sprintf("%d:%02d", int(wholeMinutes), int(seconds))
 }

@@ -1,6 +1,8 @@
 package partials
 
 import (
+	"fmt"
+
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/templatehelpers"
@@ -10,8 +12,218 @@ import (
 	"time"
 )
 
-templ leafletClasses() {
-	<span class="leaflet-popup-content-wrapper leaflet-popup-tip"></span>
+templ TruncatedName(name string, maxLength int) {
+	if name == "" {
+		<i>(no name)</i>
+	} else if maxLength > 0 && len(name) > maxLength {
+		<abbr title={ name }>{ fmt.Sprintf("%.*s", maxLength, name) }...</abbr>
+	} else {
+		{ name }
+	}
+}
+
+templ DirtyIndicatorIcon() {
+	<span title={ i18n.T(ctx, "workout.refresh-in-progress") }>
+		@helpers.IconFor("refresh")
+	</span>
+}
+
+templ DirtyIndicator() {
+	<span class="dirty">
+		@helpers.IconFor("refresh")
+		{ i18n.T(ctx, "workout.refresh-in-progress") }
+	</span>
+}
+
+templ PrivateIndicator() {
+	<span title={ i18n.T(ctx, "workout.private-explanation") }>
+		@helpers.IconFor("hide")
+	</span>
+}
+
+templ SelectablePill(id, name, value, label, extraClass string, checked bool) {
+	<label class="inline">
+		<input
+			class="sr-only peer"
+			type="checkbox"
+			id={ id }
+			name={ name }
+			value={ value }
+			checked?={ checked }
+		/>
+		<span class={ "selectable-pill " + extraClass }>{ label }</span>
+	</label>
+}
+
+templ ActionForm(route, method, icon, labelKey, class string) {
+	<form action={ templ.SafeURL(route) } method={ method }>
+		<button class={ class } title={ i18n.T(ctx, labelKey) }>
+			<a>
+				@helpers.IconFor(icon)
+			</a>
+		</button>
+	</form>
+}
+
+templ DeleteButton(route string) {
+	<button
+		hx-get={ route }
+		hx-target="#modal-container"
+		hx-swap="innerHTML"
+		class="dangerous"
+		title={ i18n.T(ctx, "common.delete") }
+	>
+		@helpers.IconFor("delete")
+	</button>
+}
+
+templ ModalContainer() {
+	<div id="modal-container">
+		// Modal content will be loaded here
+	</div>
+}
+
+templ WorkoutTypeOptions(selected string, includeAuto, includeAll bool) {
+	if includeAll {
+		<option value="">{ i18n.T(ctx, "common.all") }</option>
+	}
+	if includeAuto {
+		<option value="auto">{ i18n.T(ctx, "workout.autodetect") }</option>
+	}
+	for _, wt := range helpers.WorkoutTypes() {
+		<option value={ wt.String() } selected?={ wt.String() == selected }>
+			{ i18n.T(ctx, wt.StringT()) }
+		</option>
+	}
+}
+
+templ TranslatedKeySelect(id, name, selected string, options []helpers.TranslatedKey) {
+	<select id={ id } name={ name }>
+		for _, o := range options {
+			<option value={ o.Key } selected?={ o.Key == selected }>
+				{ i18n.T(ctx, o.Translation) }
+			</option>
+		}
+	</select>
+}
+
+templ WorkoutFormPlaceholder() {
+	<tbody id="workout-form">
+		<tr>
+			<td></td>
+			<td>Select a category</td>
+		</tr>
+	</tbody>
+}
+
+templ FormActions(submitKey, cancelURL string) {
+	<tfoot>
+		<tr>
+			<td></td>
+			<td>
+				<button type="submit">{ i18n.T(ctx, submitKey) }</button>
+				<button type="reset" class="edit">
+					{ i18n.T(ctx, "common.reset-changes") }
+				</button>
+				<button
+					type="button"
+					class="dangerous"
+					onclick="document.location=this.getAttribute('data-url')"
+					data-url={ cancelURL }
+				>
+					{ i18n.T(ctx, "common.cancel") }
+				</button>
+			</td>
+		</tr>
+	</tfoot>
+}
+
+templ DetailRow(icon, labelKey, class string) {
+	<tr>
+		<td>@helpers.IconFor(icon)</td>
+		<th>{ i18n.T(ctx, labelKey) }</th>
+		<td class={ class }>
+			{ children... }
+		</td>
+	</tr>
+}
+
+templ FileInputRow() {
+	<tr>
+		<td><label for="file">{ i18n.T(ctx, "common.file") }</label></td>
+		<td>
+			<input
+				type="file"
+				id="file"
+				name="file"
+				accept={ helpers.SupportedFileTypes() }
+				multiple
+			/>
+		</td>
+	</tr>
+}
+
+templ OverriddenNote() {
+	<p class="note">
+		{ i18n.T(ctx, "settings.overridden") }
+	</p>
+}
+
+templ ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) {
+	<div class="items-baseline flex flex-wrap">
+		<h2 class="grow justify-start">
+			@helpers.IconFor(icon)
+			{ i18n.T(ctx, titleKey) } ({ helpers.A2S(count) })
+		</h2>
+		<div class="justify-end mr-2">
+			<a href={ templ.SafeURL(helpers.RouteFor(ctx, addRoute)) }>
+				@helpers.IconFor("add")
+				<span>{ i18n.T(ctx, addLabelKey) }</span>
+			</a>
+		</div>
+	</div>
+}
+
+templ DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string) {
+	<div id="modalConfirmDelete" class="modal">
+		<div class="window">
+			<div class="flex justify-end p-2">
+				<button
+					class="close-modal"
+					hx-get={ templ.SafeURL(cancelURL) }
+					hx-target="body"
+					hx-swap="innerHTML"
+				>
+					<a>
+						@helpers.IconFor("close")
+					</a>
+				</button>
+			</div>
+			<div class="modal-content">
+				<h3>
+					{ i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, entityKey)) }
+					<div title={ iconTitle }>
+						if icon != "" {
+							@helpers.IconFor(icon)
+						}
+						{ name }
+					</div>
+				</h3>
+				<div class="flex">
+					<button
+						hx-post={ templ.SafeURL(confirmURL) }
+						class="confirm"
+					>{ i18n.T(ctx, "common.continue") }</button>
+					<button
+						hx-get={ templ.SafeURL(cancelURL) }
+						hx-target="body"
+						hx-swap="innerHTML"
+						class="cancel"
+					>{ i18n.T(ctx, "common.cancel") }</button>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 templ SnippetDate(date time.Time) {
@@ -71,17 +283,21 @@ templ UsernameFilter(value string) {
 	<datalist id="user-suggestions"></datalist>
 }
 
+templ LanguageOptions(selected string) {
+	for _, sl := range helpers.SupportedLanguages() {
+		{{ linf := helpers.ToLanguageInformation(sl) }}
+		<option value={ linf.Code } selected?={ linf.Code == selected }>
+			{ linf.Flag } { linf.LocalName }
+			if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
+				({ linf.EnglishName })
+			}
+		</option>
+	}
+}
+
 templ Language() {
 	<select class="border-0" onchange="changeLanguage(this.value)">
-		for _, sl := range helpers.SupportedLanguages() {
-			{{ linf := helpers.ToLanguageInformation(sl) }}
-			<option value={ linf.Code } selected?={ linf.Code == helpers.Language(ctx) }>
-				{ linf.Flag } { linf.LocalName }
-				if linf.EnglishName != "" && linf.EnglishName != linf.LocalName {
-					({ linf.EnglishName }) 
-				}
-			</option>
-		}
+		@LanguageOptions(helpers.Language(ctx))
 	</select>
 	<script>
 		function changeLanguage(value) {

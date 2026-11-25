@@ -1,11 +1,8 @@
 package user
 
-import (
-	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
-	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
-)
+import "github.com/jovandeginste/workout-tracker/v2/views/helpers"
 
-templ ProfileCalendar(workouts []*database.Workout) {
+templ ProfileCalendar() {
 	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.css" }/>
 	<profile-calendar class="inner-form min-h-[450px]" api-workouts-calendar-route={ helpers.RouteFor(ctx, "api-workouts-calendar") } timezone={ helpers.Timezone(ctx) }></profile-calendar>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/profile_calendar.js" }></script>

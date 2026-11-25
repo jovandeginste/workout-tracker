@@ -10,17 +10,8 @@ templ ShowStats(w *database.Workout) {
 	{{
 		translations := map[string]string{
 			"distance":        i18n.T(ctx, "workout.distance"),
-			"duration":        i18n.T(ctx, "workout.duration"),
 			"moving-duration": i18n.T(ctx, "workout.moving-duration"),
 			"time-of-day":     i18n.T(ctx, "workout.time-of-day"),
-			"calories":        i18n.T(ctx, "workout.calories"),
-			"power":           i18n.T(ctx, "workout.power"),
-			"heart-rate":      i18n.T(ctx, "workout.heart-rate"),
-			"temperature":     i18n.T(ctx, "workout.temperature"),
-			"speed":           i18n.T(ctx, "workout.speed"),
-			"elevation":       i18n.T(ctx, "workout.elevation"),
-			"cadence":         i18n.T(ctx, "workout.cadence"),
-			"averagespeed":    i18n.T(ctx, "workout.average-speed"),
 		}
 	}}
 	<workout-stats
@@ -29,8 +20,6 @@ templ ShowStats(w *database.Workout) {
 		map-id="workout-map"
 		data-el="workout-data"
 		preferred-units-el="workout-preferred-units"
-		tz={ helpers.Timezone(ctx) }
-		lang={ helpers.Language(ctx) }
 		translations={ templ.JSONString(translations) }
 	></workout-stats>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" } type="module"></script>

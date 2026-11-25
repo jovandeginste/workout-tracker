@@ -115,12 +115,7 @@ func (a *App) userProfileResetAPIKeyHandler(c *echo.Context) error {
 
 	a.addNoticeT(c, "user.profile.api-key-updated")
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("user-profile"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("user-profile"))
+	return a.redirectHTMXOrFound(c, a.Reverse("user-profile"))
 }
 
 func (a *App) userRefreshHandler(c *echo.Context) error {

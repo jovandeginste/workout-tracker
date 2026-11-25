@@ -1,13 +1,11 @@
 package app
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
 	"regexp"
 
-	"github.com/a-h/templ"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/importers"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
@@ -69,27 +67,12 @@ func (a *App) apiRoutes(g *echo.Group) {
 
 			return false
 		},
-		SuccessHandler: func(ctx *echo.Context) error {
-			if err := a.setUserFromContext(ctx); err != nil {
-				a.logger.Warn("error validating user", "error", err.Error())
-				return err
-			}
-			return nil
-		},
+		SuccessHandler: a.setUserFromContext,
 	}))
 
 	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Validator: a.ValidateAPIKeyMiddleware,
-		KeyLookup: "query:api-key",
-		Skipper: func(ctx *echo.Context) bool {
-			return ctx.Request().URL.Query().Get("api-key") == ""
-		},
-	}))
-	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
-		Validator: a.ValidateAPIKeyMiddleware,
-		Skipper: func(ctx *echo.Context) bool {
-			return ctx.Request().Header.Get("Authorization") == ""
-		},
+		KeyLookup: "query:api-key,header:Authorization:Bearer ",
 	}))
 
 	a.GET(apiGroup, "/whoami", a.apiWhoamiHandler, "api-whoami")
@@ -120,9 +103,7 @@ func (a *App) ValidateAPIKeyMiddleware(c *echo.Context, key string, source middl
 		return false, ErrInvalidAPIKey
 	}
 
-	c.Set("user_info", u)
-	c.Set("user_language", u.Profile.Language)
-	c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
+	a.setCurrentUser(c, u)
 
 	return true, nil
 }
@@ -137,16 +118,14 @@ func (a *App) ValidateAPIKeyMiddleware(c *echo.Context, key string, source middl
 // @Router       /whoami [get]
 func (a *App) apiWhoamiHandler(c *echo.Context) error {
 	user := a.getCurrentUser(c)
-	resp := APIResponse{}
-	resp.Results = struct {
+
+	return a.renderAPIResult(c, struct {
 		database.UserData
 		Profile database.Profile `json:"profile"`
 	}{
 		UserData: user.UserData,
 		Profile:  user.Profile,
-	}
-
-	return c.JSON(http.StatusOK, resp)
+	})
 }
 
 // apiWorkoutsHandler lists current user's workouts
@@ -162,12 +141,10 @@ func (a *App) apiWorkoutsHandler(c *echo.Context) error {
 
 	w, err := a.getCurrentUser(c).GetWorkouts(a.db)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = workoutsWithSafeUsers(w)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutsWithSafeUsers(w))
 }
 
 // apiCenters returns the center of all workouts of the current user
@@ -186,7 +163,7 @@ func (a *App) apiCenters(c *echo.Context) error {
 
 	wos, err := u.GetWorkouts(db)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
 	for _, w := range wos {
@@ -205,9 +182,7 @@ func (a *App) apiCenters(c *echo.Context) error {
 		coords.Append(f)
 	}
 
-	resp.Results = coords
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, coords)
 }
 
 // apiCoordinates returns all coordinates of all workouts of the current user
@@ -224,16 +199,14 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 
 	points, err := a.getCurrentUser(c).GetHeatmapPoints(a.db)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
 	for _, p := range points {
 		coords.Append(geojson.NewFeature(p.ToOrbPoint()))
 	}
 
-	resp.Results = coords
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, coords)
 }
 
 // apiRecordsHandler lists current user's records for the specified workout type
@@ -245,25 +218,32 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /records [get]
-func (a *App) apiRecordsHandler(c *echo.Context) error {
+func (a *App) renderAPIResult(c *echo.Context, results any) error {
+	return c.JSON(http.StatusOK, APIResponse{Results: results})
+}
+
+func (a *App) apiWorkoutMetric(c *echo.Context, fetch func(u *database.User, wt database.WorkoutType) (any, error)) error {
 	resp := APIResponse{}
 
 	var workoutType string
-
 	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
 	u := a.getCurrentUser(c)
 
-	s, err := u.GetRecords(database.AsWorkoutType(workoutType), u)
+	result, err := fetch(u, database.AsWorkoutType(workoutType))
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = s
+	return a.renderAPIResult(c, result)
+}
 
-	return c.JSON(http.StatusOK, resp)
+func (a *App) apiRecordsHandler(c *echo.Context) error {
+	return a.apiWorkoutMetric(c, func(u *database.User, wt database.WorkoutType) (any, error) {
+		return u.GetRecords(wt, u)
+	})
 }
 
 // apiTotalsHandler lists current user's totals for the specified workout type
@@ -276,24 +256,9 @@ func (a *App) apiRecordsHandler(c *echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /totals [get]
 func (a *App) apiTotalsHandler(c *echo.Context) error {
-	resp := APIResponse{}
-
-	var workoutType string
-
-	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	u := a.getCurrentUser(c)
-
-	s, err := u.GetTotals(database.AsWorkoutType(workoutType), u)
-	if err != nil {
-		resp.AddError(err)
-	}
-
-	resp.Results = s
-
-	return c.JSON(http.StatusOK, resp)
+	return a.apiWorkoutMetric(c, func(u *database.User, wt database.WorkoutType) (any, error) {
+		return u.GetTotals(wt, u)
+	})
 }
 
 // apiStatisticsHandler returns a user's statistics for a given time range and bucket size
@@ -319,12 +284,10 @@ func (a *App) apiStatisticsHandler(c *echo.Context) error {
 
 	s, err := u.GetStatistics(statConfig, u)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = s
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, s)
 }
 
 // apiWorkoutBreakdownHandler returns the breakdown per unit for a given workout
@@ -341,11 +304,6 @@ func (a *App) apiStatisticsHandler(c *echo.Context) error {
 func (a *App) apiWorkoutBreakdownHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
 	config := struct {
 		Unit  string  `query:"unit"`
 		Count float64 `query:"count"`
@@ -357,17 +315,17 @@ func (a *App) apiWorkoutBreakdownHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
-	if err != nil {
-		resp.AddError(err)
-	}
-
-	resp.Results, err = w.StatisticsPer(config.Count, config.Unit)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	return c.JSON(http.StatusOK, resp)
+	result, err := w.StatisticsPer(config.Count, config.Unit)
+	if err != nil {
+		return a.renderAPIError(c, resp, err)
+	}
+
+	return a.renderAPIResult(c, result)
 }
 
 // apiWorkoutAddHandler creates a new workout
@@ -400,9 +358,7 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = workoutAPIResult(workout)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutAPIResult(workout))
 }
 
 // apiWorkoutHandler returns all information about a workout
@@ -418,11 +374,6 @@ func (a *App) apiWorkoutAddHandler(c *echo.Context) error {
 func (a *App) apiWorkoutHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
 	details := false
 	if err := echo.QueryParamsBinder(c).Bool("details", &details).BindError(); err != nil {
 		return a.renderAPIError(c, resp, err)
@@ -433,14 +384,12 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 		db = db.Preload("Data.Details")
 	}
 
-	w, err := a.getCurrentUser(c).GetWorkout(db, id)
+	w, err := a.getWorkoutWithDB(c, db)
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = workoutWithSafeUser(w)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutWithSafeUser(w))
 }
 
 // apiWorkoutUpdateHandler updates the metadata of a workout
@@ -458,12 +407,7 @@ func (a *App) apiWorkoutHandler(c *echo.Context) error {
 func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -479,9 +423,7 @@ func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = workoutAPIResult(w)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutAPIResult(w))
 }
 
 // apiWorkoutDeleteHandler deletes a workout
@@ -496,12 +438,7 @@ func (a *App) apiWorkoutUpdateHandler(c *echo.Context) error {
 func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
 	resp := APIResponse{}
 
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	w, err := a.getCurrentUser(c).GetWorkout(a.db, id)
+	w, err := a.getWorkout(c)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
@@ -510,9 +447,7 @@ func (a *App) apiWorkoutDeleteHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = workoutAPIResult(w)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutAPIResult(w))
 }
 
 // workoutAPIResult removes the payloads that are not useful in a metadata
@@ -583,9 +518,7 @@ func (a *App) apiImportHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, addErr...)
 	}
 
-	resp.Results = workoutsWithSafeUsers(w)
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, workoutsWithSafeUsers(w))
 }
 
 func (a *App) renderAPIError(c *echo.Context, resp APIResponse, err ...error) error {
@@ -595,17 +528,10 @@ func (a *App) renderAPIError(c *echo.Context, resp APIResponse, err ...error) er
 }
 
 func (a *App) fillGeoJSONProperties(c *echo.Context, w *database.Workout, f *geojson.Feature) {
-	buf := templ.GetBuffer()
-	defer templ.ReleaseBuffer(buf)
-
-	t := workouts.Details(w)
-	if err := t.Render(c.Request().Context(), buf); err != nil {
+	d, err := renderCompact(c.Request().Context(), workouts.Details(w))
+	if err != nil {
 		return
 	}
-
-	d := buf.String()
-	// Remove all newlines and surrounding whitespace
-	d = htmlConcatenizer.ReplaceAllString(d, "")
 
 	f.Properties["details"] = d
 }
@@ -638,9 +564,7 @@ func (a *App) apiDailyHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = m
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, m)
 }
 
 // apiDailyUpdateHandler updates the daily measurement for the user
@@ -672,7 +596,5 @@ func (a *App) apiDailyUpdateHandler(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = m
-
-	return c.JSON(http.StatusOK, resp)
+	return a.renderAPIResult(c, m)
 }

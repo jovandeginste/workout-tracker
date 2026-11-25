@@ -9,18 +9,7 @@ import (
 
 templ List(equipment []*database.Equipment, username string) {
 	@partials.Page(partials.NewPageOptions()) {
-		<div class="items-baseline flex flex-wrap">
-			<h2 class="grow justify-start">
-				@helpers.IconFor("equipment")
-				{ i18n.T(ctx, "menu.equipment") } ({ helpers.A2S(len(equipment)) })
-			</h2>
-			<div class="justify-end mr-2">
-				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-add")) }>
-					@helpers.IconFor("add")
-					<span>{ i18n.T(ctx, "equipment.add") }</span>
-				</a>
-			</div>
-		</div>
+		@partials.ListHeader("equipment", "menu.equipment", len(equipment), "equipment-add", "equipment.add")
 		<form
 			id="filters"
 			method="get"
@@ -67,62 +56,18 @@ templ List(equipment []*database.Equipment, username string) {
 }
 
 templ actions(e *database.Equipment) {
-	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "equipment-edit", e.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "common.edit") }>
-			<a>
-				@helpers.IconFor("edit")
-			</a>
-		</button>
-	</form>
-	<button
-		hx-get={ helpers.RouteFor(ctx, "equipment-delete-confirm", e.ID) }
-		hx-target="#modal-container"
-		hx-swap="innerHTML"
-		class="dangerous"
-		title={ i18n.T(ctx, "common.delete") }
-	>
-		@helpers.IconFor("delete")
-	</button>
-	<div id="modal-container">
-		// Modal content will be loaded here
-	</div>
+	@partials.ActionForm(helpers.RouteFor(ctx, "equipment-edit", e.ID), "get", "edit", "common.edit", "edit")
+	@partials.DeleteButton(helpers.RouteFor(ctx, "equipment-delete-confirm", e.ID))
+	@partials.ModalContainer()
 }
 
 templ DeleteModal(e *database.Equipment) {
-	<div id="modalConfirmDelete" class="modal">
-		<div class="window">
-			<div class="flex justify-end p-2">
-				<button
-					class="close-modal"
-					hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
-					hx-target="body"
-					hx-swap="innerHTML"
-				>
-					<a>
-						@helpers.IconFor("close")
-					</a>
-				</button>
-			</div>
-			<div class="modal-content">
-				<h3>
-					{ i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, "misc.equipment")) }
-					<div>
-						{ e.Name }
-					</div>
-				</h3>
-				<div class="flex">
-					<button
-						hx-post={ helpers.RouteFor(ctx, "equipment-delete", e.ID) }
-						class="confirm"
-					>{ i18n.T(ctx, "common.continue") }</button>
-					<button
-						hx-get={ helpers.RouteFor(ctx, "equipment", e.ID) }
-						hx-target="body"
-						hx-swap="innerHTML"
-						class="cancel"
-					>{ i18n.T(ctx, "common.cancel") }</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	@partials.DeleteModal(
+		helpers.RouteFor(ctx, "equipment"),
+		helpers.RouteFor(ctx, "equipment-delete", e.ID),
+		"misc.equipment",
+		e.Name,
+		"",
+		"",
+	)
 }

@@ -37,26 +37,11 @@ func HumanDistanceMile(d float64) string {
 }
 
 func HumanSpeedMilePH(mps float64) string {
-	if mps == 0 {
-		return InvalidValue
-	}
-
-	kmph := 3.6 * mps
-
-	return RoundFloat64(MilesPerKM * kmph)
+	return humanSpeed(mps, 3.6*MilesPerKM)
 }
 
 func HumanTempoMile(mps float64) string {
-	if mps == 0 || math.IsNaN(mps) {
-		return InvalidValue
-	}
-
-	mpm := MeterPerMile / (60 * mps)
-
-	wholeMinutes := math.Floor(mpm)
-	seconds := (mpm - wholeMinutes) * 60
-
-	return fmt.Sprintf("%d:%02d", int(wholeMinutes), int(seconds))
+	return humanTempo(mps, MeterPerMile)
 }
 
 func HumanElevationFt(m float64) string {

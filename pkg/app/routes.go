@@ -237,20 +237,24 @@ func (a *App) addRoutesSecure(g *echo.Group) *echo.Group {
 	return secureGroup
 }
 
+func (a *App) route(g *echo.Group, method, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
+	_, _ = g.AddRoute(echo.Route{Method: method, Path: p, Handler: h, Name: name, Middlewares: m})
+}
+
 func (a *App) GET(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
-	_, _ = g.AddRoute(echo.Route{Method: http.MethodGet, Path: p, Handler: h, Name: name, Middlewares: m})
+	a.route(g, http.MethodGet, p, h, name, m...)
 }
 
 func (a *App) POST(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
-	_, _ = g.AddRoute(echo.Route{Method: http.MethodPost, Path: p, Handler: h, Name: name, Middlewares: m})
+	a.route(g, http.MethodPost, p, h, name, m...)
 }
 
 func (a *App) PATCH(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
-	_, _ = g.AddRoute(echo.Route{Method: http.MethodPatch, Path: p, Handler: h, Name: name, Middlewares: m})
+	a.route(g, http.MethodPatch, p, h, name, m...)
 }
 
 func (a *App) DELETE(g *echo.Group, p string, h echo.HandlerFunc, name string, m ...echo.MiddlewareFunc) {
-	_, _ = g.AddRoute(echo.Route{Method: http.MethodDelete, Path: p, Handler: h, Name: name, Middlewares: m})
+	a.route(g, http.MethodDelete, p, h, name, m...)
 }
 
 func isHtmx(c *echo.Context) bool {

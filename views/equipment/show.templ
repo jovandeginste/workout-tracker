@@ -30,15 +30,9 @@ templ Show(e *database.Equipment) {
 					<table>
 						{{ totals, _ := e.GetTotals() }}
 						<tbody>
-							<tr>
-								<td>
-									@helpers.IconFor("distance")
-								</td>
-								<th>{ i18n.T(ctx, "workout.total-distance") }</th>
-								<td>
-									{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
-								</td>
-							</tr>
+							@partials.DetailRow("distance", "workout.total-distance", "") {
+								{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
+							}
 							<tr>
 								<td>
 									@helpers.IconFor("duration")
@@ -59,24 +53,12 @@ templ Show(e *database.Equipment) {
 				<div class="inner-form">
 					<table>
 						<tbody>
-							<tr>
-								<td>
-									@helpers.IconFor("user")
-								</td>
-								<th>{ i18n.T(ctx, "user.username") }</th>
-								<td>
-									@helpers.UserLinkWithName(&e.User)
-								</td>
-							</tr>
-							<tr>
-								<td>
-									@helpers.IconFor("date")
-								</td>
-								<th>{ i18n.T(ctx, "common.created") }</th>
-								<td>
-									@partials.SnippetDate(e.CreatedAt)
-								</td>
-							</tr>
+							@partials.DetailRow("user", "user.username", "") {
+								@helpers.UserLinkWithName(&e.User)
+							}
+							@partials.DetailRow("date", "common.created", "") {
+								@partials.SnippetDate(e.CreatedAt)
+							}
 							<tr>
 								<td>
 									@helpers.IconFor("note")
@@ -84,28 +66,16 @@ templ Show(e *database.Equipment) {
 								<th>{ i18n.T(ctx, "common.description") }</th>
 								<td>{ e.Description }</td>
 							</tr>
-							<tr>
-								<td>
-									@helpers.IconFor("check")
-								</td>
-								<th>{ i18n.T(ctx, "common.active") }</th>
-								<td>
-									@templ.Raw(helpers.BoolToHTML(e.Active))
-								</td>
-							</tr>
-							<tr>
-								<td>
-									@helpers.IconFor("workout")
-								</td>
-								<th>{ i18n.T(ctx, "equipment.default-types") }</th>
-								<td>
-									<div class="flex flex-wrap">
-										for _, d := range  e.DefaultFor {
-											<span class="user-pill">{ d.String() }</span>
-										}
-									</div>
-								</td>
-							</tr>
+							@partials.DetailRow("check", "common.active", "") {
+								@templ.Raw(helpers.BoolToHTML(e.Active))
+							}
+							@partials.DetailRow("workout", "equipment.default-types", "") {
+								<div class="flex flex-wrap">
+									for _, d := range  e.DefaultFor {
+										<span class="user-pill">{ d.String() }</span>
+									}
+								</div>
+							}
 						</tbody>
 					</table>
 				</div>

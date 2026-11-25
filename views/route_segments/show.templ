@@ -12,10 +12,7 @@ templ Show(s *database.RouteSegment) {
 		<div class="gap-4">
 			<span class="float-right actions">
 				if s.Dirty {
-					<span class="dirty">
-						@helpers.IconFor("refresh")
-						{ i18n.T(ctx, "workout.refresh-in-progress") }
-					</span>
+					@partials.DirtyIndicator()
 				}
 				@actions(s)
 			</span>

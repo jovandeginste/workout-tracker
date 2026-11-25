@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatDuration } from "../helpers.js";
+import { aerialLayer, endpointMarker, streetLayer } from "../map.js";
 
 /*
 interface Point {
@@ -38,13 +39,11 @@ class WtMap extends HTMLElement {
       center: [mapConfig.CenterLat, mapConfig.CenterLng],
       minElevation: mapConfig.MinElevation,
       maxElevation: mapConfig.MaxElevation,
-      maxSpeed: mapConfig.MaxSpeed,
       speedName: mapConfig.SpeedName,
       elevationName: mapConfig.ElevationName,
       slopeName: mapConfig.SlopeName,
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
-      showElevation: mapConfig.ShowElevation,
       showSlope: mapConfig.ShowSlope,
     };
 
@@ -128,9 +127,7 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (speedLayerGroup && this.config.showSpeed) {
-      speedLayerGroup.addTo(map);
-    } else if (slopeLayerGroup && this.config.showSlope) {
+    if (slopeLayerGroup && this.config.showSlope) {
       slopeLayerGroup.addTo(map);
     } else {
       elevationLayerGroup.addTo(map);
@@ -141,26 +138,14 @@ class WtMap extends HTMLElement {
     if (positions.length > 0) {
       let last = positions[positions.length - 1];
       this.trackGroup.addLayer(
-        L.circleMarker(last, {
-          color: "red",
-          fill: true,
-          fillColor: "red",
-          fillOpacity: 1,
-          radius: 6,
-        })
+        endpointMarker(last, "red")
           .addTo(map)
           .bindTooltip(this.getTooltip(positions.length - 1)),
       );
 
       let first = positions[0];
       this.trackGroup.addLayer(
-        L.circleMarker(first, {
-          color: "green",
-          fill: true,
-          fillColor: "green",
-          fillOpacity: 1,
-          radius: 6,
-        })
+        endpointMarker(first, "green")
           .addTo(map)
           .bindTooltip(this.getTooltip(0)),
       );
@@ -202,88 +187,74 @@ class WtMap extends HTMLElement {
   }
 
   getStreetLayer() {
-    return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      className: "map-tiles",
-    });
+    return streetLayer();
   }
 
   getAerialLayer() {
-    return L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Powered by Esri",
-      },
-    );
+    return aerialLayer();
   }
 
-  getSlopeLayerGroup(polyLineProperties = {}) {
-    const slopeLayerGroup = new L.featureGroup();
+  buildColorLayer(positions, polyLineProperties, colorFor) {
+    const group = new L.featureGroup();
 
     let prevPoint;
-    const positions = this.workout.position.Data;
     positions.forEach((p, i) => {
       if (p === null) {
         return;
       }
 
       if (prevPoint) {
-        const slope = this.workout.slope.Data[i] || 0;
-
-        polyLineProperties["color"] = this.colorForSlope(slope);
-        L.polyline([prevPoint, p], polyLineProperties).addTo(slopeLayerGroup);
+        polyLineProperties.color = colorFor(i);
+        group.addLayer(L.polyline([prevPoint, p], polyLineProperties));
       }
+
       prevPoint = p;
     });
 
-    return slopeLayerGroup;
+    return group;
+  }
+
+  getSlopeLayerGroup(polyLineProperties = {}) {
+    return this.buildColorLayer(
+      this.workout.position.Data,
+      polyLineProperties,
+      (i) => this.colorForSlope(this.workout.slope.Data[i] || 0),
+    );
   }
 
   getSpeedLayerGroup(polyLineProperties = {}) {
     const MOVING_AVERAGE_LENGTH = 15;
     const movingSpeeds = [];
-    const speeds = this.workout.speed?.Data.filter((x) => x !== null);
+    const speeds = this.workout.speed?.Data.filter((x) => x !== null) || [];
 
-    const averageSpeed =
-      speeds.reduce((a, x) => {
-        return a + x;
-      }, 0) / speeds.length;
+    const averageSpeed = speeds.reduce((a, x) => a + x, 0) / speeds.length;
     const stdevSpeed = Math.sqrt(
       speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
         (speeds.length - 1),
     );
 
-    const speedLayerGroup = new L.featureGroup();
-
-    let prevPoint;
-    this.workout.position.Data.forEach((p, i) => {
-      if (p === null) {
-        return;
-      }
-      if (prevPoint) {
+    return this.buildColorLayer(
+      this.workout.position.Data,
+      polyLineProperties,
+      (i) => {
         const speed = this.workout.speed.Data[i] || null;
         if (speed === null || speed < 0.1) {
-          polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
-        } else {
-          if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
-            movingSpeeds.shift();
-          }
-          movingSpeeds.push(speed);
-          const movingAverageSpeed =
-            movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
-
-          const zScore =
-            ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed; // -1...1 is within one standard deviation
-          polyLineProperties["color"] = this.getColor(0.5 + zScore / 2);
+          return "rgb(0,0,0)"; // Pausing
         }
-        L.polyline([prevPoint, p], polyLineProperties).addTo(speedLayerGroup);
-      }
 
-      prevPoint = p;
-    });
+        if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
+          movingSpeeds.shift();
+        }
+        movingSpeeds.push(speed);
+        const movingAverageSpeed =
+          movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
 
-    return speedLayerGroup;
+        const zScore =
+          ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed;
+
+        return this.getColor(0.5 + zScore / 2);
+      },
+    );
   }
 
   getTooltip(i) {

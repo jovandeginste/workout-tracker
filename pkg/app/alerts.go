@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/labstack/echo/v5"
 )
@@ -17,17 +18,20 @@ func (a *App) addErrorT(c *echo.Context, msg string, vars ...any) {
 }
 
 func (a *App) addError(c *echo.Context, e string) {
+	a.appendSessionMsg(c, "errors", e)
+}
+
+func (a *App) appendSessionMsg(c *echo.Context, key, msg string) {
 	var v []string
 
-	switch msges := a.sessionManager.Get(c.Request().Context(), "errors").(type) {
+	switch msgs := a.sessionManager.Get(c.Request().Context(), key).(type) {
 	case []string:
-		v = msges
-		v = append(v, e)
+		v = slices.Concat(msgs, []string{msg})
 	default:
-		v = []string{e}
+		v = []string{msg}
 	}
 
-	a.sessionManager.Put(c.Request().Context(), "errors", v)
+	a.sessionManager.Put(c.Request().Context(), key, v)
 }
 
 func (a *App) addNoticeNRaw(c *echo.Context, msg string, count int, vars ...any) {
@@ -44,15 +48,5 @@ func (a *App) addNoticeT(c *echo.Context, msg string, vars ...any) {
 }
 
 func (a *App) addNotice(c *echo.Context, e string) {
-	var v []string
-
-	switch msges := a.sessionManager.Get(c.Request().Context(), "notices").(type) {
-	case []string:
-		v = msges
-		v = append(v, e)
-	default:
-		v = []string{e}
-	}
-
-	a.sessionManager.Put(c.Request().Context(), "notices", v)
+	a.appendSessionMsg(c, "notices", e)
 }

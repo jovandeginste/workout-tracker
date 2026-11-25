@@ -1,16 +1,13 @@
 package app
 
 import (
-	"bytes"
 	"net/http"
-	"path"
 	"strings"
 
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/route_segments"
 	"github.com/labstack/echo/v5"
-	"github.com/spf13/cast"
 )
 
 func (a *App) addRoutesSegments(g *echo.Group) {
@@ -46,32 +43,18 @@ func (a *App) routeSegmentsAddHandler(c *echo.Context) error {
 }
 
 func (a *App) addRouteSegment(c *echo.Context) error {
-	form, err := c.MultipartForm()
+	notes := c.FormValue("notes")
+
+	msg, errMsg, err := processUploads(c, func(filename string, content []byte) (string, error) {
+		rs, err := database.AddRouteSegment(a.db, notes, filename, content)
+		if err != nil {
+			return "", err
+		}
+
+		return rs.Name, nil
+	})
 	if err != nil {
 		return err
-	}
-
-	files := form.File["file"]
-
-	msg := []string{}
-	errMsg := []string{}
-
-	for _, file := range files {
-		content, parseErr := uploadedFile(file)
-		if parseErr != nil {
-			errMsg = append(errMsg, parseErr.Error())
-			continue
-		}
-
-		notes := c.FormValue("notes")
-
-		w, addErr := database.AddRouteSegment(a.db, notes, file.Filename, content)
-		if addErr != nil {
-			errMsg = append(errMsg, addErr.Error())
-			continue
-		}
-
-		msg = append(msg, w.Name)
 	}
 
 	if len(errMsg) > 0 {
@@ -102,11 +85,7 @@ func (a *App) routeSegmentsDownloadHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segments"), err)
 	}
 
-	basename := path.Base(rs.Filename)
-
-	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+basename+"\"")
-
-	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(rs.Content))
+	return streamAttachment(c, rs.Filename, rs.Content)
 }
 
 func (a *App) routeSegmentsEditHandler(c *echo.Context) error {
@@ -149,12 +128,7 @@ func (a *App) routeSegmentsDeleteHandler(c *echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "route-segment.notice.deleted", rs.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("route-segments"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("route-segments"))
+	return a.redirectHTMXOrFound(c, a.Reverse("route-segments"))
 }
 
 func (a *App) routeSegmentsUpdateHandler(c *echo.Context) error {
@@ -179,12 +153,7 @@ func (a *App) routeSegmentsUpdateHandler(c *echo.Context) error {
 }
 
 func (a *App) routeSegmentFindMatches(c *echo.Context) error {
-	id, err := cast.ToUint64E(c.Param("id"))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
-	}
-
-	rs, err := database.GetRouteSegment(a.db, id)
+	rs, err := a.getRouteSegment(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("route-segment-show", c.Param("id")), err)
 	}

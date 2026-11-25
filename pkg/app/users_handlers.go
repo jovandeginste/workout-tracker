@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -136,20 +135,7 @@ func (a *App) userShowHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	if u.IsAnonymous() {
-		return a.redirectWithError(
-			c,
-			a.Reverse("dashboard"),
-			fmt.Errorf("user id '%s' not found", c.Param("id")),
-		)
-	}
-
 	viewer := a.getCurrentUser(c)
 
-	w, err := u.GetWorkouts(database.VisibleWorkouts(a.db, viewer))
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-signout"), err)
-	}
-
-	return Render(c, http.StatusOK, user.Show(u, nil, w, nil, viewer))
+	return Render(c, http.StatusOK, user.Show(u, nil, nil, viewer))
 }

@@ -3,7 +3,6 @@ package templatehelpers
 import (
 	"math"
 	"strings"
-	"time"
 
 	"github.com/biter777/countries"
 	"github.com/spf13/cast"
@@ -22,10 +21,6 @@ func HumanPower(pow float64) string {
 
 func HumanCalories(cal float64) string {
 	return RoundFloat64(cal)
-}
-
-func NumericDuration(d time.Duration) float64 {
-	return d.Seconds()
 }
 
 var languageToCountryCodes = map[language.Tag][]countries.CountryCode{

@@ -20,10 +20,7 @@ templ Show(w *database.Workout) {
 			if w.User.ID == currentUser.ID {
 				<span class="float-right actions">
 					if w.Dirty {
-						<span class="dirty">
-							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "workout.refresh-in-progress") }
-						</span>
+						@partials.DirtyIndicator()
 					}
 					@Actions(w)
 				</span>
@@ -35,9 +32,7 @@ templ Show(w *database.Workout) {
 					<i>({ w.CustomType })</i>
 				}
 				if w.Private {
-					<span title={ i18n.T(ctx, "workout.private-explanation") }>
-						@helpers.IconFor("hide")
-					</span>
+					@partials.PrivateIndicator()
 				}
 			</h2>
 		</div>
@@ -101,11 +96,19 @@ templ renderDetails(w *database.Workout) {
 templ renderBreakdown(w *database.Workout) {
 	<div class="print:w-full overflow-y-auto max-h-[300px] sm:max-h-[400px] md:max-h-[600px] print:max-h-[600px]">
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/breakdown.js" } type="module"></script>
+		{{
+			translations := map[string]string{
+				"tempo":      i18n.T(ctx, "workout.tempo"),
+				"total-up":   i18n.T(ctx, "workout.total-up"),
+				"total-down": i18n.T(ctx, "workout.total-down"),
+			}
+		}}
 		<workout-breakdown
 			map-id="workout-map"
 			chart-id="workout-stats"
 			data-el="workout-data"
 			preferred-units-el="workout-preferred-units"
+			translations={ templ.JSONString(translations) }
 		></workout-breakdown>
 	</div>
 }

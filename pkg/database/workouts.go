@@ -77,15 +77,6 @@ func (w *Workout) Filename() string {
 	return w.GPX.Filename
 }
 
-func (w *Workout) HasElevationData() bool {
-	// If both min & max elevation are 0, we don't have elevation information
-	return w.MinElevation() != 0 || w.MaxElevation() != 0
-}
-
-func (w *Workout) HasPause() bool {
-	return w.PauseDuration() == 0
-}
-
 func (w *Workout) HasFile() bool {
 	if w.GPX == nil {
 		return false
@@ -114,28 +105,25 @@ func (w *Workout) HasTracks() bool {
 	return w.Type.IsLocation()
 }
 
-func (w *Workout) TotalRepetitions() int {
+// data returns the workout data, or a zero value when it is not loaded.
+func (w *Workout) data() *MapData {
 	if w.Data == nil {
-		return 0
+		return &MapData{}
 	}
 
-	return w.Data.TotalRepetitions
+	return w.Data
+}
+
+func (w *Workout) TotalRepetitions() int {
+	return w.data().TotalRepetitions
 }
 
 func (w *Workout) Weight() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalWeight
+	return w.data().TotalWeight
 }
 
 func (w *Workout) AverageSpeed() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.AverageSpeed
+	return w.data().AverageSpeed
 }
 
 func (w *Workout) GetEnd() time.Time {
@@ -147,35 +135,19 @@ func (w *Workout) GetEnd() time.Time {
 }
 
 func (w *Workout) TotalDuration() time.Duration {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDuration
+	return w.data().TotalDuration
 }
 
 func (w *Workout) TotalDistance() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDistance
+	return w.data().TotalDistance
 }
 
 func (w *Workout) TotalDistance2D() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDistance2D
+	return w.data().TotalDistance2D
 }
 
 func (w *Workout) Repetitions() int {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalRepetitions
+	return w.TotalRepetitions()
 }
 
 func (w *Workout) Duration() time.Duration {
@@ -211,99 +183,51 @@ func (w *Workout) Details() *MapDataDetails {
 }
 
 func (w *Workout) TotalDown() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDown
+	return w.data().TotalDown
 }
 
 func (w *Workout) TotalUp() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalUp
+	return w.data().TotalUp
 }
 
 func (w *Workout) MaxElevation() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.MaxElevation
+	return w.data().MaxElevation
 }
 
 func (w *Workout) MinElevation() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.MinElevation
+	return w.data().MinElevation
 }
 
 func (w *Workout) MaxSpeed() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.MaxSpeed
+	return w.data().MaxSpeed
 }
 
 func (w *Workout) AveragePower() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.AveragePower
+	return w.data().AveragePower
 }
 
 func (w *Workout) MaxPower() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.MaxPower
+	return w.data().MaxPower
 }
 
 func (w *Workout) MaxCadence() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.MaxCadence
+	return w.data().MaxCadence
 }
 
 func (w *Workout) AverageSpeedNoPause() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.AverageSpeedNoPause
+	return w.data().AverageSpeedNoPause
 }
 
 func (w *Workout) AverageCadence() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.AverageCadence
+	return w.data().AverageCadence
 }
 
 func (w *Workout) PauseDuration() time.Duration {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.PauseDuration
+	return w.data().PauseDuration
 }
 
 func (w *Workout) Creator() string {
-	if w.Data == nil {
-		return ""
-	}
-
-	return w.Data.Creator
+	return w.data().Creator
 }
 
 func (w *Workout) City() string {
@@ -315,11 +239,7 @@ func (w *Workout) City() string {
 }
 
 func (w *Workout) Timezone() string {
-	if w.Data == nil {
-		return ""
-	}
-
-	return w.Data.Center.TZ
+	return w.data().Center.TZ
 }
 
 func (w *Workout) Address() string {
@@ -335,19 +255,7 @@ func (w *Workout) Address() string {
 }
 
 func (w *Workout) Distance() float64 {
-	if w.Data == nil {
-		return 0
-	}
-
-	return w.Data.TotalDistance
-}
-
-func (d *GPXData) Save(db *gorm.DB) error {
-	if d.Content == nil {
-		return ErrInvalidData
-	}
-
-	return db.Save(d).Error
+	return w.TotalDistance()
 }
 
 func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) ([]*Workout, error) {
@@ -421,49 +329,30 @@ func (w *Workout) setContent(filename string, content []byte) {
 
 var workoutTypeAliases = map[string]WorkoutType{
 	"abs":             WorkoutTypeCore,
-	"badminton":       WorkoutTypeBadminton,
-	"chinups":         WorkoutTypeChinUps,
-	"core":            WorkoutTypeCore,
 	"cycle":           WorkoutTypeCycling,
-	"cycling":         WorkoutTypeCycling,
 	"dance":           WorkoutTypeDancing,
-	"dancing":         WorkoutTypeDancing,
 	"ebike":           WorkoutTypeECycling,
-	"ecycling":        WorkoutTypeECycling,
-	"football":        WorkoutTypeFootball,
-	"golfing":         WorkoutTypeGolfing,
-	"hiking":          WorkoutTypeHiking,
 	"horsebackriding": WorkoutTypeHorseRiding,
-	"horseriding":     WorkoutTypeHorseRiding,
-	"iceskating":      WorkoutTypeIceSkating,
-	"inlineskating":   WorkoutTypeInlineSkating,
-	"kayaking":        WorkoutTypeKayaking,
 	"pingpong":        WorkoutTypeTableTennis,
-	"planking":        WorkoutTypePlanking,
-	"pullups":         WorkoutTypePullUps,
-	"pushups":         WorkoutTypePushups,
-	"rowing":          WorkoutTypeRowing,
-	"running":         WorkoutTypeRunning,
 	"run":             WorkoutTypeRunning,
-	"sailing":         WorkoutTypeSailing,
 	"sail":            WorkoutTypeSailing,
-	"situps":          WorkoutTypeSitups,
 	"skate":           WorkoutTypeInlineSkating,
-	"skating":         WorkoutTypeInlineSkating,
-	"skiing":          WorkoutTypeSkiing,
-	"snowboarding":    WorkoutTypeSnowboarding,
 	"soccer":          WorkoutTypeFootball,
-	"squats":          WorkoutTypeSquats,
-	"swimming":        WorkoutTypeSwimming,
-	"tabletennis":     WorkoutTypeTableTennis,
-	"tennis":          WorkoutTypeTennis,
-	"walking":         WorkoutTypeWalking,
 	"walk":            WorkoutTypeWalking,
 }
 
+func init() { //nolint:gochecknoinits
+	for _, wt := range WorkoutTypes() {
+		workoutTypeAliases[normalizeWorkoutType(wt.String())] = wt
+	}
+}
+
+func normalizeWorkoutType(s string) string {
+	return strings.ReplaceAll(strings.ToLower(s), "-", "")
+}
+
 func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
-	normalized := strings.ReplaceAll(strings.ToLower(gpxType), "-", "")
-	if wt, ok := workoutTypeAliases[normalized]; ok {
+	if wt, ok := workoutTypeAliases[normalizeWorkoutType(gpxType)]; ok {
 		return wt, true
 	}
 
@@ -753,61 +642,42 @@ func (w *Workout) calculateAverageSpeeds() {
 }
 
 func (w *Workout) calculatePower() {
-	w.Data.MaxPower = 0
-	w.Data.AveragePower = 0
-
 	if !w.HasPower() {
 		return
 	}
 
-	trackedFor := time.Duration(0)
-	avgPower := 0.0
-
-	for _, p := range w.Data.Details.Points {
-		c, ok := p.ExtraMetrics["power"]
-		if !ok {
-			continue
-		}
-
-		w.Data.MaxPower = max(w.Data.MaxPower, c)
-		avgPower += c * p.Duration.Seconds()
-		trackedFor += p.Duration
-	}
-
-	if trackedFor.Seconds() == 0 {
-		return
-	}
-
-	w.Data.AveragePower = avgPower / trackedFor.Seconds()
+	w.Data.MaxPower, w.Data.AveragePower = w.calculateMetricAvg("power")
 }
 
 func (w *Workout) calculateCadence() {
-	w.Data.MaxCadence = 0
-	w.Data.AverageCadence = 0
-
 	if !w.HasCadence() {
 		return
 	}
 
+	w.Data.MaxCadence, w.Data.AverageCadence = w.calculateMetricAvg("cadence")
+}
+
+func (w *Workout) calculateMetricAvg(name string) (float64, float64) {
 	trackedFor := time.Duration(0)
-	avgCadence := 0.0
+	avg := 0.0
+	maxValue := 0.0
 
 	for _, p := range w.Data.Details.Points {
-		c, ok := p.ExtraMetrics["cadence"]
+		c, ok := p.ExtraMetrics[name]
 		if !ok {
 			continue
 		}
 
-		w.Data.MaxCadence = max(w.Data.MaxCadence, c)
-		avgCadence += c * p.Duration.Seconds()
+		maxValue = max(maxValue, c)
+		avg += c * p.Duration.Seconds()
 		trackedFor += p.Duration
 	}
 
 	if trackedFor.Seconds() == 0 {
-		return
+		return maxValue, 0
 	}
 
-	w.Data.AverageCadence = avgCadence / trackedFor.Seconds()
+	return maxValue, avg / trackedFor.Seconds()
 }
 
 func (w *Workout) UpdateData(db *gorm.DB) error {
@@ -824,9 +694,6 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	}
 
 	w.setData(gpxAsMapData(gpxContent, w.Type))
-	if err := w.Data.Save(db); err != nil {
-		return err
-	}
 
 	if err := w.UpdateRouteSegmentMatches(db); err != nil {
 		return err
@@ -861,24 +728,20 @@ func (w *Workout) RepetitionFrequencyPerMinute() float64 {
 	return float64(w.Data.TotalRepetitions) / w.Duration().Minutes()
 }
 
-func (w *Workout) HasCaloriesEstimate() bool {
-	if w.Data != nil && w.Data.TotalCalories > 0 {
-		return false
-	}
+func (w *Workout) hasRecordedCalories() bool {
+	return w.Data != nil && w.Data.TotalCalories > 0
+}
 
-	return w.Type.IsDuration()
+func (w *Workout) HasCaloriesEstimate() bool {
+	return !w.hasRecordedCalories() && w.Type.IsDuration()
 }
 
 func (w *Workout) HasCalories() bool {
-	if w.Data != nil && w.Data.TotalCalories > 0 {
-		return true
-	}
-
-	return w.Type.IsDuration()
+	return w.hasRecordedCalories() || w.Type.IsDuration()
 }
 
 func (w *Workout) CaloriesBurned() float64 {
-	if w.Data != nil && w.Data.TotalCalories > 0 {
+	if w.hasRecordedCalories() {
 		return w.Data.TotalCalories
 	}
 
