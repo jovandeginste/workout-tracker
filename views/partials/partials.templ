@@ -292,6 +292,8 @@ templ UsernameFilter(value string) {
 		hx-trigger="load, input changed delay:300ms"
 		hx-target="#user-suggestions"
 		hx-swap="innerHTML"
+		hx-select="unset"
+		hx-push-url="false"
 	/>
 	<datalist id="user-suggestions"></datalist>
 }

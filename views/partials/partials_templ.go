@@ -1586,7 +1586,7 @@ func UsernameFilter(value string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 112, "\" hx-trigger=\"load, input changed delay:300ms\" hx-target=\"#user-suggestions\" hx-swap=\"innerHTML\"> <datalist id=\"user-suggestions\"></datalist>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 112, "\" hx-trigger=\"load, input changed delay:300ms\" hx-target=\"#user-suggestions\" hx-swap=\"innerHTML\" hx-select=\"unset\" hx-push-url=\"false\"> <datalist id=\"user-suggestions\"></datalist>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -1620,7 +1620,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var83 string
 			templ_7745c5c3_Var83, templ_7745c5c3_Err = templruntime.NewAttributeExpression(linf.Code).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 302, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 304, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var83)
 			if templ_7745c5c3_Err != nil {
@@ -1643,7 +1643,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var84 string
 			templ_7745c5c3_Var84, templ_7745c5c3_Err = templ.JoinStringErrs(linf.Flag)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 303, Col: 14}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 305, Col: 14}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var84))
 			if templ_7745c5c3_Err != nil {
@@ -1656,7 +1656,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var85 string
 			templ_7745c5c3_Var85, templ_7745c5c3_Err = templ.JoinStringErrs(linf.LocalName)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 303, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 305, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var85))
 			if templ_7745c5c3_Err != nil {
@@ -1674,7 +1674,7 @@ func LanguageOptions(selected string) templ.Component {
 				var templ_7745c5c3_Var86 string
 				templ_7745c5c3_Var86, templ_7745c5c3_Err = templ.JoinStringErrs(linf.EnglishName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 305, Col: 23}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 307, Col: 23}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var86))
 				if templ_7745c5c3_Err != nil {
@@ -1758,7 +1758,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var89 string
 			templ_7745c5c3_Var89, templ_7745c5c3_Err = templruntime.NewAttributeExpression(primaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 331, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 333, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var89)
 			if templ_7745c5c3_Err != nil {
@@ -1771,7 +1771,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var90 string
 			templ_7745c5c3_Var90, templ_7745c5c3_Err = templ.JoinStringErrs(secondaryText)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 331, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 333, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var90))
 			if templ_7745c5c3_Err != nil {
@@ -1789,7 +1789,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var91 string
 			templ_7745c5c3_Var91, templ_7745c5c3_Err = templruntime.NewAttributeExpression(secondaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 333, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 335, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var91)
 			if templ_7745c5c3_Err != nil {
@@ -1802,7 +1802,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var92 string
 			templ_7745c5c3_Var92, templ_7745c5c3_Err = templ.JoinStringErrs(primaryText)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 333, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 335, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var92))
 			if templ_7745c5c3_Err != nil {
