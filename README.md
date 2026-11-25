@@ -331,7 +331,8 @@ export WT_LOGIN_CUSTOM_TEXT=$'**Welcome!**\n\nPlease contact the administrator.'
 ```
 
 If set, values from the config file or environment take precedence over the
-value stored through the admin interface.
+value stored through the admin interface. Such settings are disabled in the
+admin interface, with a note explaining why.
 
 After starting the server, you can access it at <http://localhost:8080> (the
 default port). A login form is shown.

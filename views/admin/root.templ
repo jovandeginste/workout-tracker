@@ -74,7 +74,13 @@ templ Root(users []*database.User) {
 									id="login_custom_text"
 									name="login_custom_text"
 									rows="8"
+									disabled?={ ac.Overrides.LoginCustomText }
 								>{ ac.LoginCustomText }</textarea>
+								if ac.Overrides.LoginCustomText {
+									<p class="note">
+										{ i18n.T(ctx, "settings.overridden") }
+									</p>
+								}
 							</td>
 						</tr>
 						<tr>
@@ -90,7 +96,13 @@ templ Root(users []*database.User) {
 									name="registration_disabled"
 									value="true"
 									checked?={ ac.RegistrationDisabled }
+									disabled?={ ac.Overrides.RegistrationDisabled }
 								/>
+								if ac.Overrides.RegistrationDisabled {
+									<p class="note">
+										{ i18n.T(ctx, "settings.overridden") }
+									</p>
+								}
 							</td>
 						</tr>
 						<tr>
@@ -106,7 +118,13 @@ templ Root(users []*database.User) {
 									name="socials_disabled"
 									value="true"
 									checked?={ ac.SocialsDisabled }
+									disabled?={ ac.Overrides.SocialsDisabled }
 								/>
+								if ac.Overrides.SocialsDisabled {
+									<p class="note">
+										{ i18n.T(ctx, "settings.overridden") }
+									</p>
+								}
 							</td>
 						</tr>
 						<tr>
