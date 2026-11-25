@@ -25,10 +25,10 @@ templ details(s *database.RouteSegment) {
 				</tr>
 			}
 			@partials.DetailRow("date", "common.created", "") {
-					@partials.SnippetDate(s.CreatedAt)
+				@partials.SnippetDate(s.CreatedAt)
 			}
 			@partials.DetailRow("date", "common.updated", "") {
-					@partials.SnippetDate(s.UpdatedAt)
+				@partials.SnippetDate(s.UpdatedAt)
 			}
 			<tr>
 				<td>
@@ -38,25 +38,25 @@ templ details(s *database.RouteSegment) {
 				<td>{ s.Address() }</td>
 			</tr>
 			@partials.DetailRow("bidirectional", "route-segment.bidirectional", "") {
-					@templ.Raw(helpers.BoolToHTML(s.Bidirectional))
+				@templ.Raw(helpers.BoolToHTML(s.Bidirectional))
 			}
 			@partials.DetailRow("circular", "route-segment.circular", "") {
-					@templ.Raw(helpers.BoolToHTML(s.Circular))
+				@templ.Raw(helpers.BoolToHTML(s.Circular))
 			}
 			@partials.DetailRow("distance", "workout.total-distance", "whitespace-nowrap font-mono") {
-					{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance(nil) }
+				{ helpers.HumanDistance(ctx, s.TotalDistance) } { preferredUnits.Distance(nil) }
 			}
 			@partials.DetailRow("elevation", "workout.min-elevation", "whitespace-nowrap font-mono") {
-					{ helpers.HumanElevation(ctx, s.MinElevation) } { preferredUnits.Elevation() }
+				{ helpers.HumanElevation(ctx, s.MinElevation) } { preferredUnits.Elevation() }
 			}
 			@partials.DetailRow("elevation", "workout.max-elevation", "whitespace-nowrap font-mono") {
-					{ helpers.HumanElevation(ctx, s.MaxElevation) } { preferredUnits.Elevation() }
+				{ helpers.HumanElevation(ctx, s.MaxElevation) } { preferredUnits.Elevation() }
 			}
 			@partials.DetailRow("up", "workout.total-up", "whitespace-nowrap font-mono") {
-					{ helpers.HumanElevation(ctx, s.TotalUp) } { preferredUnits.Elevation() }
+				{ helpers.HumanElevation(ctx, s.TotalUp) } { preferredUnits.Elevation() }
 			}
 			@partials.DetailRow("down", "workout.total-down", "whitespace-nowrap font-mono") {
-					{ helpers.HumanElevation(ctx, s.TotalDown) } { preferredUnits.Elevation() }
+				{ helpers.HumanElevation(ctx, s.TotalDown) } { preferredUnits.Elevation() }
 			}
 		</tbody>
 	</table>

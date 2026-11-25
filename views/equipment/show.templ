@@ -31,7 +31,7 @@ templ Show(e *database.Equipment) {
 						{{ totals, _ := e.GetTotals() }}
 						<tbody>
 							@partials.DetailRow("distance", "workout.total-distance", "") {
-									{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
+								{ helpers.HumanDistance(ctx,totals.Distance) } { pu.Distance(nil) }
 							}
 							<tr>
 								<td>
@@ -54,10 +54,10 @@ templ Show(e *database.Equipment) {
 					<table>
 						<tbody>
 							@partials.DetailRow("user", "user.username", "") {
-									@helpers.UserLinkWithName(&e.User)
+								@helpers.UserLinkWithName(&e.User)
 							}
 							@partials.DetailRow("date", "common.created", "") {
-									@partials.SnippetDate(e.CreatedAt)
+								@partials.SnippetDate(e.CreatedAt)
 							}
 							<tr>
 								<td>
@@ -67,14 +67,14 @@ templ Show(e *database.Equipment) {
 								<td>{ e.Description }</td>
 							</tr>
 							@partials.DetailRow("check", "common.active", "") {
-									@templ.Raw(helpers.BoolToHTML(e.Active))
+								@templ.Raw(helpers.BoolToHTML(e.Active))
 							}
 							@partials.DetailRow("workout", "equipment.default-types", "") {
-									<div class="flex flex-wrap">
-										for _, d := range  e.DefaultFor {
-											<span class="user-pill">{ d.String() }</span>
-										}
-									</div>
+								<div class="flex flex-wrap">
+									for _, d := range  e.DefaultFor {
+										<span class="user-pill">{ d.String() }</span>
+									}
+								</div>
 							}
 						</tbody>
 					</table>

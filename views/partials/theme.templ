@@ -23,9 +23,7 @@ templ Theme() {
 		</script>
 		default:
 			<script>
-			setColorScheme(
-				window.matchMedia("(prefers-color-scheme: dark)").matches,
-			);
+			setColorScheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
 		</script>
 	}
 }

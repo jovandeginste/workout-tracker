@@ -135,36 +135,36 @@ templ FullWorkoutDetails(w *database.Workout) {
 	<table>
 		<tbody>
 			@partials.DetailRow("user", "user.username", "") {
-					@helpers.UserLinkWithName(w.User)
+				@helpers.UserLinkWithName(w.User)
 			}
 			if w.HasFile() {
 				@partials.DetailRow("file", "common.file", "") {
-						if len(w.Filename()) > 15 {
-							<abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
-						} else {
-							{ w.Filename() }
-						}
+					if len(w.Filename()) > 15 {
+						<abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
+					} else {
+						{ w.Filename() }
+					}
 				}
 			}
 			@partials.DetailRow("date", "common.date", "") {
-					<a
-						href="#"
-						onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
-					>
-						@helpers.IconFor("timezone")
-					</a>
-					@partials.SnippetDate(w.Date)
-					<div id="timeinfo" class="hidden">
-						<ul>
-							<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>
-							<li>UTC: { helpers.InTimezone( w.Date, "UTC").String() }</li>
-							<li>{ w.Timezone() }: { helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
-						</ul>
-					</div>
+				<a
+					href="#"
+					onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
+				>
+					@helpers.IconFor("timezone")
+				</a>
+				@partials.SnippetDate(w.Date)
+				<div id="timeinfo" class="hidden">
+					<ul>
+						<li>{ currentUser.Timezone().String() }: { helpers.LocalTime(ctx, w.Date).String() }</li>
+						<li>UTC: { helpers.InTimezone( w.Date, "UTC").String() }</li>
+						<li>{ w.Timezone() }: { helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
+					</ul>
+				</div>
 			}
 			@partials.DetailRow("location", "workout.location", "") {
-					@showLocked(w)
-					{ w.Address() }
+				@showLocked(w)
+				{ w.Address() }
 			}
 			<tr>
 				<td>
@@ -174,14 +174,14 @@ templ FullWorkoutDetails(w *database.Workout) {
 				<td>{ w.Creator() }</td>
 			</tr>
 			@partials.DetailRow("workout", "common.type", "") {
-					<span>
-						@helpers.IconFor(w.Type.String())
-						if w.HasCustomType() {
-							<i>{ w.CustomType }</i>
-						} else {
-							{ i18n.T(ctx, w.Type.StringT()) }
-						}
-					</span>
+				<span>
+					@helpers.IconFor(w.Type.String())
+					if w.HasCustomType() {
+						<i>{ w.CustomType }</i>
+					} else {
+						{ i18n.T(ctx, w.Type.StringT()) }
+					}
+				</span>
 			}
 			if w.Type.IsRepetition() {
 				<tr>
@@ -192,74 +192,74 @@ templ FullWorkoutDetails(w *database.Workout) {
 					<td class="whitespace-nowrap font-mono">{ helpers.A2S(w.TotalRepetitions()) }</td>
 				</tr>
 				@partials.DetailRow("tempo", "workout.average-per-minute", "whitespace-nowrap font-mono") {
-						{ helpers.A2S(w.RepetitionFrequencyPerMinute()) }
+					{ helpers.A2S(w.RepetitionFrequencyPerMinute()) }
 				}
 			}
 			if w.Type.IsWeight() {
 				@partials.DetailRow("weight", "common.weight", "whitespace-nowrap font-mono") {
-						{ helpers.HumanWeight(ctx, w.Weight()) }
-						{ currentUser.PreferredUnits().Weight() }
+					{ helpers.HumanWeight(ctx, w.Weight()) }
+					{ currentUser.PreferredUnits().Weight() }
 				}
 			}
 			if w.Type.IsDuration() {
 				@partials.DetailRow("duration", "workout.total-duration", "whitespace-nowrap font-mono") {
-						@showLocked(w)
-						{ helpers.HumanDuration(w.TotalDuration() ) }
+					@showLocked(w)
+					{ helpers.HumanDuration(w.TotalDuration() ) }
 				}
 				if w.PauseDuration() > 0 {
 					@partials.DetailRow("pause", "workout.time-paused", "whitespace-nowrap font-mono") {
-							{ helpers.HumanDuration (w.PauseDuration() ) }
+						{ helpers.HumanDuration (w.PauseDuration() ) }
 					}
 				}
 			}
 			if w.Type.IsDistance() {
 				@partials.DetailRow("distance", "workout.total-distance", "whitespace-nowrap font-mono") {
-						@showLocked(w)
-						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
-						{ helpers.DistanceUnitForWorkout(ctx, w) }
-						if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance() / w.TotalDistance2D()) - 1) > 0.1 {
-							// Only print 2D distance if the difference is greater than 10%
-							(2D:
-							{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance2D()) }
-							{ helpers.DistanceUnitForWorkout(ctx, w) })
-						}
+					@showLocked(w)
+					{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
+					{ helpers.DistanceUnitForWorkout(ctx, w) }
+					if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance() / w.TotalDistance2D()) - 1) > 0.1 {
+						// Only print 2D distance if the difference is greater than 10%
+						(2D:
+						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance2D()) }
+						{ helpers.DistanceUnitForWorkout(ctx, w) })
+					}
 				}
 			}
 			if w.Type.IsDistance() &&  w.Type.IsDuration() {
 				@partials.DetailRow("speed", "workout.average-speed", "whitespace-nowrap font-mono") {
-						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) }
-						{ helpers.SpeedUnitForWorkout(ctx, w) }
+					{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) }
+					{ helpers.SpeedUnitForWorkout(ctx, w) }
 				}
 				if w.PauseDuration() != 0 {
 					@partials.DetailRow("speed", "workout.average-speed-no-pause", "whitespace-nowrap font-mono") {
-							{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
-							{ helpers.SpeedUnitForWorkout(ctx, w) }
+						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
 					}
 				}
 				@partials.DetailRow("tempo", "workout.average-tempo", "whitespace-nowrap font-mono") {
-						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeed() ) }
-						{ helpers.TempoUnitForWorkout(ctx, w) }
+					{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeed() ) }
+					{ helpers.TempoUnitForWorkout(ctx, w) }
 				}
 				@partials.DetailRow("max-speed", "workout.max-tempo", "whitespace-nowrap font-mono") {
-						{ helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
-						{ helpers.TempoUnitForWorkout(ctx, w) }
+					{ helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
+					{ helpers.TempoUnitForWorkout(ctx, w) }
 				}
 				if  w.PauseDuration()!= 0 {
 					@partials.DetailRow("tempo", "workout.average-tempo-no-pause", "whitespace-nowrap font-mono") {
-							{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
-							{ helpers.TempoUnitForWorkout(ctx, w) }
+						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
+						{ helpers.TempoUnitForWorkout(ctx, w) }
 					}
 				}
 				@partials.DetailRow("max-speed", "workout.max-speed", "whitespace-nowrap font-mono") {
-						{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
-						{ helpers.SpeedUnitForWorkout(ctx, w) }
+					{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
+					{ helpers.SpeedUnitForWorkout(ctx, w) }
 				}
 				if w.HasCadence() {
 					@partials.DetailRow("cadence", "workout.cadence-avg-max", "whitespace-nowrap font-mono") {
-							{ helpers.HumanCadence (w.AverageCadence()) }
-							{ currentUser.PreferredUnits().Cadence() } /
-							{ helpers.HumanCadence (w.MaxCadence()) }
-							{ currentUser.PreferredUnits().Cadence() }
+						{ helpers.HumanCadence (w.AverageCadence()) }
+						{ currentUser.PreferredUnits().Cadence() } /
+						{ helpers.HumanCadence (w.MaxCadence()) }
+						{ currentUser.PreferredUnits().Cadence() }
 					}
 				}
 			}
@@ -267,22 +267,22 @@ templ FullWorkoutDetails(w *database.Workout) {
 				if w.HasElevation() {
 					if w.MinElevation() != 0 {
 						@partials.DetailRow("elevation", "workout.min-elevation", "whitespace-nowrap font-mono") {
-								{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
+							{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
 						}
 					}
 					if w.MaxElevation() != 0 {
 						@partials.DetailRow("elevation", "workout.max-elevation", "whitespace-nowrap font-mono") {
-								{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
+							{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
 						}
 					}
 					if w.TotalUp() != 0 {
 						@partials.DetailRow("up", "workout.total-up", "whitespace-nowrap font-mono") {
-								{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
+							{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
 						}
 					}
 					if w.TotalDown() != 0 {
 						@partials.DetailRow("down", "workout.total-down", "whitespace-nowrap font-mono") {
-								{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
+							{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
 						}
 					}
 				}
@@ -317,10 +317,10 @@ templ FullWorkoutDetails(w *database.Workout) {
 			}
 			if w.HasPower() {
 				@partials.DetailRow("power", "workout.power-avg-max", "whitespace-nowrap font-mono") {
-						{ helpers.HumanPower (w.AveragePower()) }
-						{ currentUser.PreferredUnits().Power() } /
-						{ helpers.HumanPower (w.MaxPower()) }
-						{ currentUser.PreferredUnits().Power() }
+					{ helpers.HumanPower (w.AveragePower()) }
+					{ currentUser.PreferredUnits().Power() } /
+					{ helpers.HumanPower (w.MaxPower()) }
+					{ currentUser.PreferredUnits().Power() }
 				}
 			}
 			<tr>
