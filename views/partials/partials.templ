@@ -22,6 +22,12 @@ templ TruncatedName(name string, maxLength int) {
 	}
 }
 
+templ DirtyIndicatorIcon() {
+	<span title={ i18n.T(ctx, "workout.refresh-in-progress") }>
+		@helpers.IconFor("refresh")
+	</span>
+}
+
 templ DirtyIndicator() {
 	<span class="dirty">
 		@helpers.IconFor("refresh")

@@ -30,10 +30,10 @@ templ List(segments []*database.RouteSegment) {
 							@listDetails(s)
 						</th>
 						<td class="hidden lg:table-cell">
-							if s.Dirty {
-								@partials.DirtyIndicator()
-							}
 							<span class="actions">
+								if s.Dirty {
+									@partials.DirtyIndicatorIcon()
+								}
 								@actions(s)
 							</span>
 						</td>

@@ -69,10 +69,10 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 							@ListDetails(w)
 						</th>
 						<td class="hidden sm:table-cell">
-							if w.Dirty {
-								@partials.DirtyIndicator()
-							}
 							<span class="actions">
+								if w.Dirty {
+									@partials.DirtyIndicatorIcon()
+								}
 								@Actions(w)
 							</span>
 						</td>
