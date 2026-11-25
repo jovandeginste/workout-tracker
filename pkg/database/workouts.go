@@ -329,49 +329,30 @@ func (w *Workout) setContent(filename string, content []byte) {
 
 var workoutTypeAliases = map[string]WorkoutType{
 	"abs":             WorkoutTypeCore,
-	"badminton":       WorkoutTypeBadminton,
-	"chinups":         WorkoutTypeChinUps,
-	"core":            WorkoutTypeCore,
 	"cycle":           WorkoutTypeCycling,
-	"cycling":         WorkoutTypeCycling,
 	"dance":           WorkoutTypeDancing,
-	"dancing":         WorkoutTypeDancing,
 	"ebike":           WorkoutTypeECycling,
-	"ecycling":        WorkoutTypeECycling,
-	"football":        WorkoutTypeFootball,
-	"golfing":         WorkoutTypeGolfing,
-	"hiking":          WorkoutTypeHiking,
 	"horsebackriding": WorkoutTypeHorseRiding,
-	"horseriding":     WorkoutTypeHorseRiding,
-	"iceskating":      WorkoutTypeIceSkating,
-	"inlineskating":   WorkoutTypeInlineSkating,
-	"kayaking":        WorkoutTypeKayaking,
 	"pingpong":        WorkoutTypeTableTennis,
-	"planking":        WorkoutTypePlanking,
-	"pullups":         WorkoutTypePullUps,
-	"pushups":         WorkoutTypePushups,
-	"rowing":          WorkoutTypeRowing,
-	"running":         WorkoutTypeRunning,
 	"run":             WorkoutTypeRunning,
-	"sailing":         WorkoutTypeSailing,
 	"sail":            WorkoutTypeSailing,
-	"situps":          WorkoutTypeSitups,
 	"skate":           WorkoutTypeInlineSkating,
-	"skating":         WorkoutTypeInlineSkating,
-	"skiing":          WorkoutTypeSkiing,
-	"snowboarding":    WorkoutTypeSnowboarding,
 	"soccer":          WorkoutTypeFootball,
-	"squats":          WorkoutTypeSquats,
-	"swimming":        WorkoutTypeSwimming,
-	"tabletennis":     WorkoutTypeTableTennis,
-	"tennis":          WorkoutTypeTennis,
-	"walking":         WorkoutTypeWalking,
 	"walk":            WorkoutTypeWalking,
 }
 
+func init() { //nolint:gochecknoinits
+	for _, wt := range WorkoutTypes() {
+		workoutTypeAliases[normalizeWorkoutType(wt.String())] = wt
+	}
+}
+
+func normalizeWorkoutType(s string) string {
+	return strings.ReplaceAll(strings.ToLower(s), "-", "")
+}
+
 func workoutTypeFromData(gpxType string) (WorkoutType, bool) {
-	normalized := strings.ReplaceAll(strings.ToLower(gpxType), "-", "")
-	if wt, ok := workoutTypeAliases[normalized]; ok {
+	if wt, ok := workoutTypeAliases[normalizeWorkoutType(gpxType)]; ok {
 		return wt, true
 	}
 

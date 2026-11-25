@@ -39,22 +39,15 @@ func Version(ctx context.Context) *appversion.Version {
 }
 
 func Notices(ctx context.Context) []string {
-	switch v := SessionManager(ctx).Pop(ctx, "notices").(type) {
-	case string:
-		if v == "" {
-			return nil
-		}
-
-		return []string{v}
-	case []string:
-		return v
-	default:
-		return nil
-	}
+	return popMessages(ctx, "notices")
 }
 
 func Errors(ctx context.Context) []string {
-	switch v := SessionManager(ctx).Pop(ctx, "errors").(type) {
+	return popMessages(ctx, "errors")
+}
+
+func popMessages(ctx context.Context, key string) []string {
+	switch v := SessionManager(ctx).Pop(ctx, key).(type) {
 	case string:
 		if v == "" {
 			return nil

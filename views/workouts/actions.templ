@@ -4,6 +4,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
 templ Actions(w *database.Workout) {
@@ -121,41 +122,12 @@ templ Actions(w *database.Workout) {
 }
 
 templ DeleteModal(w *database.Workout) {
-	<div id="modalConfirmDelete" class="modal">
-		<div class="window">
-			<div class="flex justify-end p-2">
-				<button
-					class="close-modal"
-					hx-get={ helpers.RouteFor(ctx, "workouts", w.ID) }
-					hx-target="body"
-					hx-swap="innerHTML"
-				>
-					<a>
-						@helpers.IconFor("close")
-					</a>
-				</button>
-			</div>
-			<div class="modal-content">
-				<h3>
-					{ i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, "misc.workout")) }
-					<div title={ i18n.T(ctx, w.Type.StringT()) }>
-						@helpers.IconFor(w.Type.String())
-						{ w.Name }
-					</div>
-				</h3>
-				<div class="flex">
-					<button
-						hx-post={ helpers.RouteFor(ctx, "workout-delete", w.ID) }
-						class="confirm"
-					>{ i18n.T(ctx, "common.continue") }</button>
-					<button
-						hx-get={ helpers.RouteFor(ctx, "workouts", w.ID) }
-						hx-target="body"
-						hx-swap="innerHTML"
-						class="cancel"
-					>{ i18n.T(ctx, "common.cancel") }</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	@partials.DeleteModal(
+		helpers.RouteFor(ctx, "workouts"),
+		helpers.RouteFor(ctx, "workout-delete", w.ID),
+		"misc.workout",
+		w.Name,
+		w.Type.String(),
+		i18n.T(ctx, w.Type.StringT()),
+	)
 }

@@ -9,18 +9,7 @@ import (
 
 templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 	@partials.Page(partials.NewPageOptions()) {
-		<div class="items-baseline flex flex-wrap">
-			<h2 class="grow justify-start">
-				@helpers.IconFor(`workout`)
-				{ i18n.T(ctx, "menu.workouts") } ({ helpers.A2S(len(workouts)) })
-			</h2>
-			<div class="justify-end mr-2">
-				<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-add")) }>
-					@helpers.IconFor("add")
-					{ i18n.T(ctx, "workout.add-workout") }
-				</a>
-			</div>
-		</div>
+		@partials.ListHeader("workout", "menu.workouts", len(workouts), "workout-add", "workout.add-workout")
 		<details class="inner-form" open?={ filters.Active }>
 			<summary class="cursor-pointer">{ i18n.T(ctx, "workout.filter-workouts") }</summary>
 			<form id="filters" method="get" action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }>

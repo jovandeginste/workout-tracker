@@ -33,68 +33,47 @@ func (w *Workout) MET() float64 {
 // | Running, 7 min/mile             | 13.8         | 3.85        | 14.0 |
 // | Running, 6 min/mile             | 16.1         | 4.47        | 16.0 |
 
-func (w *Workout) distanceOnFootMET() float64 {
-	s := w.Data.AverageSpeedNoPause // meters per second
-
-	switch {
-	case s < 0.89:
-		return 2.0
-	case s < 1.34:
-		return 2.5
-	case s < 1.56:
-		return 3.3
-	case s < 1.79:
-		return 3.8
-	case s < 1.90:
-		return 5.0
-	case s < 2.10:
-		return 6.5
-	case s < 2.23:
-		return 6.5
-	case s < 2.68:
-		return 8.0
-	case s < 3.01:
-		return 10.0
-	case s < 3.36:
-		return 11.0
-	case s < 3.85:
-		return 12.5
-	case s < 4.47:
-		return 14.0
-	default:
-		return 16.0
-	}
+type metThreshold struct {
+	below float64
+	met   float64
 }
 
-// | Activity                         | Speed (km/h) | Speed (m/s) | METs |
-// |----------------------------------|--------------|-------------|------|
-// | Stationary cycling, 50 watts     | -            | -           | 3.0  |
-// | Bicycling, leisurely             | -            | -           | 3.5  |
-// | Stationary cycling, 100 watts    | -            | -           | 5.5  |
-// | Bicycling, 12-13 mph             | 19.3         | 5.36        | 8.0  |
-// | Bicycling, 14-15 mph             | 23.3         | 6.47        | 10.0 |
-// | Bicycling, 16-19 mph             | 28.9         | 8.03        | 12.0 |
-// | Bicycling, 20+ mph               | 32.2+        | 8.94+       | 16.0 |
+var (
+	onFootMETThresholds = []metThreshold{
+		{0.89, 2.0},
+		{1.34, 2.5},
+		{1.56, 3.3},
+		{1.79, 3.8},
+		{1.90, 5.0},
+		{2.10, 6.5},
+		{2.68, 8.0},
+		{3.01, 10.0},
+		{3.36, 11.0},
+		{3.85, 12.5},
+		{4.47, 14.0},
+	}
+	cyclingMETThresholds = []metThreshold{
+		{3.0, 3.0}, {4.0, 3.5}, {5.36, 5.5}, {6.47, 8.0}, {8.03, 10.0}, {8.94, 12.0},
+	}
+	repetitionMETThresholds = []metThreshold{{5, 3.5}, {10, 5}}
+)
+
+func metFor(value float64, thresholds []metThreshold, fallback float64) float64 {
+	for _, t := range thresholds {
+		if value < t.below {
+			return t.met
+		}
+	}
+
+	return fallback
+}
+
+func (w *Workout) distanceOnFootMET() float64 {
+	return metFor(w.Data.AverageSpeedNoPause, onFootMETThresholds, 16.0)
+}
 
 func (w *Workout) distanceCyclingMET() float64 {
-	s := w.Data.AverageSpeedNoPause // meters per second
-
-	switch {
-	case s < 3.0:
-		return 3.0
-	case s < 4.0:
-		return 3.5
-	case s < 5.36:
-		return 5.5
-	case s < 6.47:
-		return 8.0
-	case s < 8.03:
-		return 10.0
-	case s < 8.94:
-		return 12.0
-	default:
-		return 16.0
-	}
+	return metFor(w.Data.AverageSpeedNoPause, cyclingMETThresholds, 16.0)
 }
 
 func (w *Workout) distanceMET() float64 {
@@ -109,14 +88,5 @@ func (w *Workout) distanceMET() float64 {
 }
 
 func (w *Workout) repititionMET() float64 {
-	freq := w.RepetitionFrequencyPerMinute()
-
-	switch {
-	case freq < 5:
-		return 3.5
-	case freq < 10:
-		return 5
-	default:
-		return 8.0
-	}
+	return metFor(w.RepetitionFrequencyPerMinute(), repetitionMETThresholds, 8.0)
 }

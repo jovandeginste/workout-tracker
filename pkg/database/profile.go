@@ -80,13 +80,16 @@ func (u UserPreferredUnits) HeartRate() string {
 	return "bpm"
 }
 
-func (u UserPreferredUnits) Height() string {
-	switch u.HeightRaw {
-	case "in":
-		return "in"
-	default:
-		return "cm"
+func unitOr(raw, allowed, fallback string) string {
+	if raw == allowed {
+		return allowed
 	}
+
+	return fallback
+}
+
+func (u UserPreferredUnits) Height() string {
+	return unitOr(u.HeightRaw, "in", "cm")
 }
 
 func (u UserPreferredUnits) Temperature() string {
@@ -98,21 +101,11 @@ func (u UserPreferredUnits) Cadence() string {
 }
 
 func (u UserPreferredUnits) Elevation() string {
-	switch u.ElevationRaw {
-	case "ft":
-		return "ft"
-	default:
-		return "m"
-	}
+	return unitOr(u.ElevationRaw, "ft", "m")
 }
 
 func (u UserPreferredUnits) Weight() string {
-	switch u.WeightRaw {
-	case "lbs":
-		return "lbs"
-	default:
-		return "kg"
-	}
+	return unitOr(u.WeightRaw, "lbs", "kg")
 }
 
 func (u UserPreferredUnits) Distance(wt *WorkoutType) string {
@@ -120,12 +113,7 @@ func (u UserPreferredUnits) Distance(wt *WorkoutType) string {
 		return "nm"
 	}
 
-	switch u.DistanceRaw {
-	case "mi":
-		return "mi"
-	default:
-		return "km"
-	}
+	return unitOr(u.DistanceRaw, "mi", "km")
 }
 
 func (u UserPreferredUnits) Speed(wt *WorkoutType) string {
@@ -133,12 +121,7 @@ func (u UserPreferredUnits) Speed(wt *WorkoutType) string {
 		return "kn"
 	}
 
-	switch u.SpeedRaw {
-	case "mph":
-		return "mph"
-	default:
-		return "km/h"
-	}
+	return unitOr(u.SpeedRaw, "mph", "km/h")
 }
 
 func (p *Profile) ResetBools() {

@@ -10,6 +10,63 @@ import (
 	"time"
 )
 
+templ ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) {
+	<div class="items-baseline flex flex-wrap">
+		<h2 class="grow justify-start">
+			@helpers.IconFor(icon)
+			{ i18n.T(ctx, titleKey) } ({ helpers.A2S(count) })
+		</h2>
+		<div class="justify-end mr-2">
+			<a href={ templ.SafeURL(helpers.RouteFor(ctx, addRoute)) }>
+				@helpers.IconFor("add")
+				<span>{ i18n.T(ctx, addLabelKey) }</span>
+			</a>
+		</div>
+	</div>
+}
+
+templ DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string) {
+	<div id="modalConfirmDelete" class="modal">
+		<div class="window">
+			<div class="flex justify-end p-2">
+				<button
+					class="close-modal"
+					hx-get={ templ.SafeURL(cancelURL) }
+					hx-target="body"
+					hx-swap="innerHTML"
+				>
+					<a>
+						@helpers.IconFor("close")
+					</a>
+				</button>
+			</div>
+			<div class="modal-content">
+				<h3>
+					{ i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, entityKey)) }
+					<div title={ iconTitle }>
+						if icon != "" {
+							@helpers.IconFor(icon)
+						}
+						{ name }
+					</div>
+				</h3>
+				<div class="flex">
+					<button
+						hx-post={ templ.SafeURL(confirmURL) }
+						class="confirm"
+					>{ i18n.T(ctx, "common.continue") }</button>
+					<button
+						hx-get={ templ.SafeURL(cancelURL) }
+						hx-target="body"
+						hx-swap="innerHTML"
+						class="cancel"
+					>{ i18n.T(ctx, "common.cancel") }</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
 templ SnippetDate(date time.Time) {
 	if helpers.CurrentUser(ctx).ShowFullDate() {
 		<abbr title={ helpers.RelativeDate(ctx, date) }>{ helpers.LocalDate(ctx, date) }</abbr>
