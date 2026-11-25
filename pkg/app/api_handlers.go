@@ -73,6 +73,11 @@ func (a *App) apiRoutes(g *echo.Group) {
 	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Validator: a.ValidateAPIKeyMiddleware,
 		KeyLookup: "query:api-key,header:Authorization:Bearer ",
+		Skipper: func(ctx *echo.Context) bool {
+			// Cookie-authenticated browser requests carry neither key.
+			return ctx.Request().URL.Query().Get("api-key") == "" &&
+				ctx.Request().Header.Get(echo.HeaderAuthorization) == ""
+		},
 	}))
 
 	a.GET(apiGroup, "/whoami", a.apiWhoamiHandler, "api-whoami")
