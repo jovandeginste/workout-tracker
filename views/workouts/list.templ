@@ -23,6 +23,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters, worko
 					hx-select="#workouts-content"
 					hx-swap="outerHTML"
 					hx-push-url="true"
+					hx-disinherit="hx-select hx-push-url"
 				>
 					<input type="hidden" id="active" name="active" value="true"/>
 					@partials.WorkoutTypeFilter(workoutTypes, helpers.WorkoutTypeStrings(filters.Types))
