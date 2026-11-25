@@ -344,6 +344,18 @@
     }
   }
 
+  .workout-types label {
+    @apply px-0;
+  }
+
+  .workout-types label:first-child .selectable-pill {
+    @apply ml-0;
+  }
+
+  .workout-types label:last-child .selectable-pill {
+    @apply mr-0;
+  }
+
   .selectable-pill {
     @apply hover:brightness-125 cursor-pointer;
 

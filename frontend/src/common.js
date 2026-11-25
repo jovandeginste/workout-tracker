@@ -166,3 +166,37 @@ globalThis.showTab = function showTab(parentId, elemId) {
   var newSize = parent.offsetHeight;
   parent.style.minHeight = Math.max(origSize, newSize) + "px";
 };
+
+// Keep the "All" pill and specific type pills mutually exclusive.
+document.addEventListener(
+  "change",
+  (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || input.name !== "type") {
+      return;
+    }
+
+    const group = input.closest(".workout-types");
+    if (!group) {
+      return;
+    }
+
+    const all = group.querySelector('input[name="type"][value=""]');
+
+    if (!input.checked) {
+      if (all && !group.querySelector('input[name="type"]:checked')) {
+        all.checked = true;
+      }
+      return;
+    }
+
+    if (input.value === "") {
+      group.querySelectorAll('input[name="type"]').forEach((other) => {
+        if (other !== input) other.checked = false;
+      });
+    } else if (all) {
+      all.checked = false;
+    }
+  },
+  true,
+);

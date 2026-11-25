@@ -7,12 +7,12 @@ import (
 
 type WorkoutFilters struct {
 	db       *gorm.DB
-	Type     WorkoutType `query:"type"`
-	Username string      `query:"username"`
-	Active   bool        `query:"active"`
-	Since    string      `query:"since"`
-	OrderBy  string      `query:"order_by"`
-	OrderDir string      `query:"order_dir"`
+	Types    []WorkoutType `query:"type"`
+	Username string        `query:"username"`
+	Active   bool          `query:"active"`
+	Since    string        `query:"since"`
+	OrderBy  string        `query:"order_by"`
+	OrderDir string        `query:"order_dir"`
 }
 
 func GetWorkoutsFilters(c *echo.Context) (*WorkoutFilters, error) {
@@ -28,6 +28,14 @@ func GetWorkoutsFilters(c *echo.Context) (*WorkoutFilters, error) {
 }
 
 func (wf *WorkoutFilters) setDefaults() {
+	types := make([]WorkoutType, 0, len(wf.Types))
+	for _, t := range wf.Types {
+		if t != "" {
+			types = append(types, t)
+		}
+	}
+	wf.Types = types
+
 	if wf.Since == "" {
 		wf.Since = "10 years"
 	}
@@ -52,11 +60,11 @@ func (wf *WorkoutFilters) ToQuery(db *gorm.DB) *gorm.DB {
 }
 
 func (wf *WorkoutFilters) setTypeFilter() {
-	if wf.Type == "" {
+	if len(wf.Types) == 0 {
 		return
 	}
 
-	wf.db = wf.db.Where(&Workout{Type: wf.Type})
+	wf.db = wf.db.Where("workouts.type IN ?", wf.Types)
 }
 
 func (wf *WorkoutFilters) setSinceFilter() {

@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 	"github.com/labstack/echo/v5"
 	"github.com/spf13/cast"
@@ -44,7 +45,7 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 	if err != nil {
 		a.addErrorT(c, "user.not-found", filters.Username)
 
-		return Render(c, http.StatusOK, workouts.List(nil, filters))
+		return Render(c, http.StatusOK, workouts.List(nil, filters, nil))
 	}
 
 	w, err := target.GetWorkouts(database.VisibleWorkouts(filters.ToQuery(a.db), u))
@@ -52,7 +53,12 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, workouts.List(w, filters))
+	typeCounts, err := database.GetWorkoutTypeCounts(a.db, target.ID, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, workouts.List(w, filters, helpers.WorkoutTypesByCount(typeCounts)))
 }
 
 func (a *App) workoutsShowHandler(c *echo.Context) error {

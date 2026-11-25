@@ -221,40 +221,6 @@ document.addEventListener("htmx:afterSwap", (event) => {
   }
 });
 
-// Capture so the `All` checkbox is updated before HTMX serializes the form.
-document.addEventListener(
-  "change",
-  (event) => {
-    const input = event.target;
-    if (!(input instanceof HTMLInputElement) || input.name !== "type") {
-      return;
-    }
-
-    const group = input.closest(".workout-types");
-    if (!group) {
-      return;
-    }
-
-    const all = group.querySelector('input[name="type"][value=""]');
-
-    if (!input.checked) {
-      if (all && !group.querySelector('input[name="type"]:checked')) {
-        all.checked = true;
-      }
-      return;
-    }
-
-    if (input.value === "") {
-      group.querySelectorAll('input[name="type"]').forEach((other) => {
-        if (other !== input) other.checked = false;
-      });
-    } else if (all) {
-      all.checked = false;
-    }
-  },
-  true,
-);
-
 class RouteSegmentTrendStatistic extends HTMLElement {
   connectedCallback() {
     this.data = JSON.parse(this.getAttribute("trend-data") || `[]`);
