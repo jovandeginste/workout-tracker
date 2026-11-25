@@ -49,3 +49,19 @@ export async function saveConfig(
 
   console.warn(failureMessage);
 }
+
+export function zoomOptions(pan = false) {
+  return {
+    limits: {
+      x: { min: "original", max: "original" },
+      y: { min: "original", max: "original" },
+    },
+    pan: { enabled: pan, mode: "x" },
+    zoom: {
+      drag: { enabled: true },
+      wheel: { enabled: true },
+      pinch: { enabled: pan },
+      mode: "x",
+    },
+  };
+}

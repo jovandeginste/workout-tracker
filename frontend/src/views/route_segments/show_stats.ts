@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import Zoom from "chartjs-plugin-zoom";
-import { chartTheme, saveConfig } from "../../chart";
+import { chartTheme, saveConfig, zoomOptions } from "../../chart";
 import {
   ChartPoint,
   colorForType,
@@ -300,28 +300,7 @@ export class RouteSegmentStats extends LitElement {
                 new Date(items[0].parsed.x).toLocaleDateString(),
             },
           },
-          zoom: {
-            limits: {
-              x: { min: "original", max: "original" },
-              y: { min: "original", max: "original" },
-            },
-            pan: {
-              enabled: true,
-              mode: "x",
-            },
-            zoom: {
-              drag: {
-                enabled: true,
-              },
-              wheel: {
-                enabled: true,
-              },
-              pinch: {
-                enabled: true,
-              },
-              mode: "x",
-            },
-          },
+          zoom: zoomOptions(true),
         },
       },
     });

@@ -350,21 +350,7 @@ export class WorkoutStats extends LitElement {
             },
           },
         },
-        zoom: {
-          limits: {
-            x: { min: "original", max: "original" },
-            y: { min: "original", max: "original" },
-          },
-          zoom: {
-            drag: {
-              enabled: true,
-            },
-            wheel: {
-              enabled: true,
-            },
-            mode: "x",
-          },
-        },
+        zoom: zoomOptions(),
       },
     };
   }

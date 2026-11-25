@@ -32,17 +32,8 @@ func ShowStats(w *database.Workout) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		translations := map[string]string{
 			"distance":        i18n.T(ctx, "workout.distance"),
-			"duration":        i18n.T(ctx, "workout.duration"),
 			"moving-duration": i18n.T(ctx, "workout.moving-duration"),
 			"time-of-day":     i18n.T(ctx, "workout.time-of-day"),
-			"calories":        i18n.T(ctx, "workout.calories"),
-			"power":           i18n.T(ctx, "workout.power"),
-			"heart-rate":      i18n.T(ctx, "workout.heart-rate"),
-			"temperature":     i18n.T(ctx, "workout.temperature"),
-			"speed":           i18n.T(ctx, "workout.speed"),
-			"elevation":       i18n.T(ctx, "workout.elevation"),
-			"cadence":         i18n.T(ctx, "workout.cadence"),
-			"averagespeed":    i18n.T(ctx, "workout.average-speed"),
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<workout-stats id=\"workout-stats\" color-mode=\"")
 		if templ_7745c5c3_Err != nil {
@@ -51,7 +42,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.CurrentUser(ctx).Profile.Theme).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 28, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 19, Col: 53}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -64,7 +55,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.JSONString(translations)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 32, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 23, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -77,7 +68,7 @@ func ShowStats(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js").ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 34, Col: 80}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/show_stats.templ`, Line: 25, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
