@@ -16,12 +16,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func privateUser(t *testing.T, a *App, username string, admin bool) *database.User {
+func createUser(t *testing.T, a *App, username, name string, admin bool) *database.User {
 	t.Helper()
 
 	u := defaultUser(a.db)
 	u.Username = username
-	u.Name = username
+	u.Name = name
 	u.Admin = admin
 	require.NoError(t, u.Save(a.db))
 
@@ -59,9 +59,9 @@ func makePrivate(t *testing.T, a *App, w *database.Workout) {
 func TestPrivateWorkouts_ShowIsHiddenFromOtherUsers(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
-	admin := privateUser(t, a, "boss", true)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
+	admin := createUser(t, a, "boss", "boss", true)
 
 	w := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	makePrivate(t, a, w)
@@ -84,9 +84,9 @@ func TestPrivateWorkouts_ShowIsHiddenFromOtherUsers(t *testing.T) {
 func TestPrivateWorkouts_AreHiddenFromDashboards(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
-	admin := privateUser(t, a, "boss", true)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
+	admin := createUser(t, a, "boss", "boss", true)
 
 	private := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	makePrivate(t, a, private)
@@ -120,9 +120,9 @@ func TestPrivateWorkouts_AreHiddenFromDashboards(t *testing.T) {
 func TestPrivateWorkouts_StatisticsAreViewerAware(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
-	admin := privateUser(t, a, "boss", true)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
+	admin := createUser(t, a, "boss", "boss", true)
 
 	private := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	makePrivate(t, a, private)
@@ -156,8 +156,8 @@ func TestPrivateWorkouts_StatisticsAreViewerAware(t *testing.T) {
 func TestPrivateWorkouts_AreHiddenFromEquipmentPages(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
 
 	e := &database.Equipment{UserID: owner.ID, Name: "my bike"}
 	require.NoError(t, a.db.Create(e).Error)
@@ -203,7 +203,7 @@ func TestPrivateWorkouts_CanBeSetThroughTheAPI(t *testing.T) {
 func TestPrivateWorkouts_CanBeSetThroughTheWebForm(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
+	owner := createUser(t, a, "owner", "owner", false)
 	w := createAPIWorkout(t, a, owner, "workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 
 	update := func(private bool) {
@@ -263,9 +263,9 @@ func shareViaRouter(t *testing.T, a *App, u *database.User, uuid string) (int, s
 func TestPrivateWorkouts_SharedLinkIsHidden(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
-	admin := privateUser(t, a, "boss", true)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
+	admin := createUser(t, a, "boss", "boss", true)
 
 	privateUUID := "0e8a9a9a-3f0d-4d4b-9d0e-0a2a1a1a1a1a"
 	publicUUID := "1f9b0b0b-4a1e-4e5c-8e1f-1b3b2b2b2b2b"
@@ -316,8 +316,8 @@ func TestPrivateWorkouts_SharedLinkIsHidden(t *testing.T) {
 func TestPrivateWorkouts_RouteSegmentCreationIsOwnerScoped(t *testing.T) {
 	a := configuredApp(t)
 
-	owner := privateUser(t, a, "owner", false)
-	other := privateUser(t, a, "other", false)
+	owner := createUser(t, a, "owner", "owner", false)
+	other := createUser(t, a, "other", "other", false)
 
 	w := createAPIWorkout(t, a, owner, "secret workout", database.WorkoutTypeRunning, time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC))
 	makePrivate(t, a, w)

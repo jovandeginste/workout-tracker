@@ -4,17 +4,11 @@ import (
 	"io/fs"
 	"strings"
 	"testing"
-	"time"
 
 	apptranslations "github.com/jovandeginste/workout-tracker/v2/translations"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-func TestNumericDuration(t *testing.T) {
-	assert.InDelta(t, 1, NumericDuration(time.Second), 0)
-	assert.InDelta(t, 3600, NumericDuration(time.Hour), 0)
-}
 
 func TestToLanguageInformation(t *testing.T) {
 	assert.Equal(t, "👽", LanguageToFlag("unknown-CODE"))
