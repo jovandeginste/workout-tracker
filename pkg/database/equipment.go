@@ -9,7 +9,6 @@ import (
 )
 
 type Equipment struct {
-	db *gorm.DB
 	Model
 
 	Name        string        `gorm:"not null;uniqueIndex" json:"name" form:"name"`                             // The name of the gear
@@ -39,8 +38,6 @@ func GetEquipment(db *gorm.DB, id uint64) (*Equipment, error) {
 	if err := db.Preload("User").Preload("Workouts").Preload("Workouts.Data").First(&e, id).Error; err != nil {
 		return nil, err
 	}
-
-	e.SetDB(db)
 
 	return &e, nil
 }
@@ -73,10 +70,6 @@ func GetEquipmentByIDs(db *gorm.DB, userID uint64, ids []uint64) ([]*Equipment, 
 	}
 
 	return equipment, nil
-}
-
-func (e *Equipment) SetDB(db *gorm.DB) {
-	e.db = db
 }
 
 // FilterVisibleWorkouts removes the workouts the viewer may not see.

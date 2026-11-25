@@ -125,10 +125,6 @@ func (m *MapPoint) IsZero() bool {
 	return m.Lat == 0 && m.Lng == 0
 }
 
-func (d *MapDataDetails) Save(db *gorm.DB) error {
-	return db.Save(d).Error
-}
-
 func (m *MapData) UpdateExtraMetrics() {
 	if m.Details == nil ||
 		len(m.Details.Points) == 0 {

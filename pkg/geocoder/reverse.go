@@ -191,10 +191,6 @@ func search(a string) ([]Result, error) {
 	return r, nil
 }
 
-func SearchLocations(a string) ([]Result, error) {
-	return search(a)
-}
-
 func Find(a string) (*geo.Address, error) {
 	r, err := search(a)
 	if err != nil {

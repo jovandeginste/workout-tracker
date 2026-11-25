@@ -85,10 +85,8 @@ func (a *App) autoImports(l *slog.Logger) {
 	}
 
 	for idx := range uID {
-		i := idx
-
 		a.workerPool.Go(func() {
-			if err := a.autoImportForUser(l, uID[i]); err != nil {
+			if err := a.autoImportForUser(l, uID[idx]); err != nil {
 				l.Error(ErrWorker.Error() + ": " + err.Error())
 			}
 		})
@@ -253,10 +251,8 @@ func (a *App) updateRouteSegments(l *slog.Logger) {
 	}
 
 	for idx := range rsIDs {
-		i := idx
-
 		a.workerPool.Go(func() {
-			rs, err := database.GetRouteSegment(a.db, rsIDs[i])
+			rs, err := database.GetRouteSegment(a.db, rsIDs[idx])
 			if err != nil {
 				l.Error("Error during batch query", "error", err)
 				return
@@ -286,11 +282,9 @@ func (a *App) updateHeatmapPoints(l *slog.Logger) {
 	}
 
 	for idx := range ids {
-		i := idx
-
 		a.workerPoolHeatmap.Go(func() {
-			if err := database.UpdateHeatmapPointsFor(a.db, ids[i]); err != nil {
-				l.Error("Error during heatmap update", "map_data_details_id", ids[i], "error", err)
+			if err := database.UpdateHeatmapPointsFor(a.db, ids[idx]); err != nil {
+				l.Error("Error during heatmap update", "map_data_details_id", ids[idx], "error", err)
 			}
 		})
 	}
@@ -307,10 +301,8 @@ func (a *App) updateWorkouts(l *slog.Logger) {
 	}
 
 	for idx := range wIDs {
-		i := idx
-
 		a.workerPool.Go(func() {
-			w, err := database.GetWorkoutDetails(a.db, wIDs[i])
+			w, err := database.GetWorkoutDetails(a.db, wIDs[idx])
 			if err != nil {
 				l.Error("Error during batch query", "error", err)
 				return
@@ -341,10 +333,8 @@ func (a *App) updateAddresses(l *slog.Logger) {
 	}
 
 	for idx := range mdIDs {
-		i := idx
-
 		a.workerPoolGeo.Go(func() {
-			md, err := database.GetMapData(a.db, mdIDs[i])
+			md, err := database.GetMapData(a.db, mdIDs[idx])
 			if err != nil {
 				l.Error("Error during batch query", "error", err)
 				return

@@ -29,16 +29,8 @@ func RouteFor(ctx context.Context, name string, params ...any) string {
 	return "/invalid/route/#" + name
 }
 
-func UserPreferredUnits(ctx context.Context) *database.UserPreferredUnits {
-	return CurrentUser(ctx).PreferredUnits()
-}
-
 func WorkoutTypes() []database.WorkoutType {
 	return database.WorkoutTypes()
-}
-
-func FilterOptions() []TranslatedKey {
-	return StatisticSinceOptions()
 }
 
 type TranslatedKey struct {

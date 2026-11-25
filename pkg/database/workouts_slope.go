@@ -21,10 +21,6 @@ const (
 	StateSearching       SlopeState = "SEARCHING"
 	StateInSegment       SlopeState = "IN_SEGMENT"
 	StateEvaluatingPause SlopeState = "EVALUATING_PAUSE"
-	StateStartClimb      SlopeState = "START_CLIMB"
-	StateEndClimb        SlopeState = "END_CLIMB"
-	StateStartDescent    SlopeState = "START_DESCENT"
-	StateEndDescent      SlopeState = "END_DESCENT"
 
 	// Kindes of slope
 	SlopeKindClimb   SlopeKind = "climb"

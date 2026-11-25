@@ -77,15 +77,6 @@ func (w *Workout) Filename() string {
 	return w.GPX.Filename
 }
 
-func (w *Workout) HasElevationData() bool {
-	// If both min & max elevation are 0, we don't have elevation information
-	return w.MinElevation() != 0 || w.MaxElevation() != 0
-}
-
-func (w *Workout) HasPause() bool {
-	return w.PauseDuration() == 0
-}
-
 func (w *Workout) HasFile() bool {
 	if w.GPX == nil {
 		return false
@@ -340,14 +331,6 @@ func (w *Workout) Distance() float64 {
 	}
 
 	return w.Data.TotalDistance
-}
-
-func (d *GPXData) Save(db *gorm.DB) error {
-	if d.Content == nil {
-		return ErrInvalidData
-	}
-
-	return db.Save(d).Error
 }
 
 func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string, content []byte) ([]*Workout, error) {

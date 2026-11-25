@@ -48,14 +48,6 @@ templ StatisticTile(icon string, name string, value string, unit string) {
 	</div>
 }
 
-templ StatsRecordDurationDate(workout *database.DurationRecord) {
-	@StatsRecordDate(workout.ID, workout.Date)
-}
-
-templ StatsRecordDistanceDate(workout *database.Float64Record) {
-	@StatsRecordDate(workout.ID, workout.Date)
-}
-
 templ StatsRecordDate(id uint64, date time.Time) {
 	<span class="hidden xl:inline">
 		<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", id)) }>
@@ -91,7 +83,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeed.Value, preferredUnits)
 				</td>
 				<td>
-					@StatsRecordDistanceDate(&rec.AverageSpeed)
+					@StatsRecordDate(rec.AverageSpeed.ID, rec.AverageSpeed.Date)
 				</td>
 			</tr>
 			<tr>
@@ -105,7 +97,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeedNoPause.Value, preferredUnits)
 				</td>
 				<td>
-					@StatsRecordDistanceDate(&rec.AverageSpeedNoPause)
+					@StatsRecordDate(rec.AverageSpeedNoPause.ID, rec.AverageSpeedNoPause.Date)
 				</td>
 			</tr>
 			<tr>
@@ -119,7 +111,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.MaxSpeed.Value, preferredUnits)
 				</td>
 				<td>
-					@StatsRecordDistanceDate(&rec.MaxSpeed)
+					@StatsRecordDate(rec.MaxSpeed.ID, rec.MaxSpeed.Date)
 				</td>
 			</tr>
 			<tr>
@@ -133,7 +125,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					{ templatehelpers.HumanDistanceFor(preferredUnits.Distance(&rec.WorkoutType))(rec.Distance.Value) } { preferredUnits.Distance(&rec.WorkoutType) }
 				</td>
 				<td>
-					@StatsRecordDistanceDate(&rec.Distance)
+					@StatsRecordDate(rec.Distance.ID, rec.Distance.Date)
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +139,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 					{ helpers.HumanElevation(ctx, rec.TotalUp.Value ) } { preferredUnits.Elevation() }
 				</td>
 				<td>
-					@StatsRecordDistanceDate(&rec.TotalUp)
+					@StatsRecordDate(rec.TotalUp.ID, rec.TotalUp.Date)
 				</td>
 			</tr>
 			<tr>
@@ -159,7 +151,7 @@ templ StatsRecordsDistance(rec *database.WorkoutRecord) {
 				</th>
 				<td class="font-mono whitespace-nowrap">{ helpers.HumanDuration(rec.Duration.Value) }</td>
 				<td>
-					@StatsRecordDurationDate(&rec.Duration)
+					@StatsRecordDate(rec.Duration.ID, rec.Duration.Date)
 				</td>
 			</tr>
 		</tbody>

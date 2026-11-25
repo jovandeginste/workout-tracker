@@ -40,7 +40,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters) {
 				@partials.UsernameFilter(filters.Username)
 				<label for="since">{ i18n.T(ctx, "common.last") }</label>
 				<select id="since" name="since">
-					for _, fo := range helpers.FilterOptions() {
+					for _, fo := range helpers.StatisticSinceOptions() {
 						<option value={ fo.Key } selected?={ fo.Key ==  filters.Since }>
 							{ i18n.T(ctx, fo.Translation) }
 						</option>

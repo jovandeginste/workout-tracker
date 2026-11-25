@@ -340,10 +340,6 @@ func (u *User) GetCurrentMeasurement() (*Measurement, error) {
 	return m, nil
 }
 
-func (u *User) GetLatestMeasurement() (Measurement, error) {
-	return u.GetLatestMeasurementForDate(time.Now())
-}
-
 func (u *User) GetWorkout(db *gorm.DB, id uint64) (*Workout, error) {
 	var w *Workout
 

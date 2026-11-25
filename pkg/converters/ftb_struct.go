@@ -7,7 +7,6 @@ type (
 		Version string `xml:"version"`
 
 		IndoorWorkouts indoorWorkouts `xml:"indoorWorkouts"`
-		Workouts       workouts       `xml:"workouts"`
 
 		// IntervalSets any `xml:"intervalSets"`
 		// WorkoutTypes any `xml:"workoutTypes"`
@@ -22,21 +21,6 @@ type (
 		MaxFrequency float64 `xml:"maxFrequency"`
 		MaxIntensity float64 `xml:"maxIntensity"`
 		Repetitions  int     `xml:"repetitions"`
-		workoutCommon
-	}
-
-	workouts struct {
-		Workouts []workout `xml:"workouts"`
-	}
-	workout struct {
-		Ascent          string  `xml:"ascent"`
-		AvgPace         float64 `xml:"avgPace"`
-		AvgSpeed        float64 `xml:"avgSpeed"`
-		Descent         float64 `xml:"descent"`
-		Length          int64   `xml:"length"`
-		MaxElevationMSL float64 `xml:"maxElevationMSL"`
-		MinElevationMSL float64 `xml:"minElevationMSL"`
-		TopSpeed        float64 `xml:"topSpeed"`
 		workoutCommon
 	}
 

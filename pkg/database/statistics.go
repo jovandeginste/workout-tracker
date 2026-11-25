@@ -96,10 +96,6 @@ func (sc *StatConfig) GetSince() string {
 	return s
 }
 
-func (u *User) GetDefaultStatistics(viewer *User) (*Statistics, error) {
-	return u.GetStatisticsFor("1 year", "month", viewer)
-}
-
 func (u *User) GetStatisticsFor(since, per string, viewer *User) (*Statistics, error) {
 	return u.GetStatistics(StatConfig{
 		Since: since,
