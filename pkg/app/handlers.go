@@ -1,8 +1,10 @@
 package app
 
 import (
+	"bytes"
 	"errors"
 	"net/http"
+	"path"
 	"time"
 
 	"github.com/a-h/templ"
@@ -20,6 +22,23 @@ var ErrUserNotFound = errors.New("user not found")
 func (a *App) redirectWithError(c *echo.Context, target string, err error) error {
 	if err != nil {
 		a.addErrorT(c, "alerts.something-wrong", i18n.M{"message": err.Error()})
+	}
+
+	return c.Redirect(http.StatusFound, target)
+}
+
+// redirectHTMXOrFound lets HTMX perform a full page navigation, while normal
+// requests get a regular redirect.
+func streamAttachment(c *echo.Context, filename string, content []byte) error {
+	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+path.Base(filename)+"\"")
+
+	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(content))
+}
+
+func (a *App) redirectHTMXOrFound(c *echo.Context, target string) error {
+	if isHtmx(c) {
+		c.Response().Header().Set("Hx-Redirect", target)
+		return c.String(http.StatusFound, "ok")
 	}
 
 	return c.Redirect(http.StatusFound, target)
@@ -80,12 +99,7 @@ func (a *App) dailyDeleteHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("daily"), err)
 	}
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("daily"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("daily"))
+	return a.redirectHTMXOrFound(c, a.Reverse("daily"))
 }
 
 func (a *App) dailyUpdateHandler(c *echo.Context) error {

@@ -88,12 +88,7 @@ func (a *App) equipmentDeleteHandler(c *echo.Context) error {
 
 	a.addNoticeT(c, "equipment.notice.deleted", e.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("equipment"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("equipment"))
+	return a.redirectHTMXOrFound(c, a.Reverse("equipment"))
 }
 
 func (a *App) equipmentUpdateHandler(c *echo.Context) error {

@@ -1,9 +1,7 @@
 package app
 
 import (
-	"bytes"
 	"net/http"
-	"path"
 	"strings"
 
 	"github.com/invopop/ctxi18n/i18n"
@@ -102,11 +100,7 @@ func (a *App) routeSegmentsDownloadHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("route-segments"), err)
 	}
 
-	basename := path.Base(rs.Filename)
-
-	c.Response().Header().Set(echo.HeaderContentDisposition, "attachment; filename=\""+basename+"\"")
-
-	return c.Stream(http.StatusOK, "application/binary", bytes.NewReader(rs.Content))
+	return streamAttachment(c, rs.Filename, rs.Content)
 }
 
 func (a *App) routeSegmentsEditHandler(c *echo.Context) error {
@@ -149,12 +143,7 @@ func (a *App) routeSegmentsDeleteHandler(c *echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "route-segment.notice.deleted", rs.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("route-segments"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("route-segments"))
+	return a.redirectHTMXOrFound(c, a.Reverse("route-segments"))
 }
 
 func (a *App) routeSegmentsUpdateHandler(c *echo.Context) error {

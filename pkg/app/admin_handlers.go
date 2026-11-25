@@ -89,12 +89,7 @@ func (a *App) adminUserDeleteHandler(c *echo.Context) error { //nolint:dupl
 
 	a.addNoticeT(c, "user.notice.deleted", u.Name)
 
-	if isHtmx(c) {
-		c.Response().Header().Set("Hx-Redirect", a.Reverse("admin"))
-		return c.String(http.StatusFound, "ok")
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("admin"))
+	return a.redirectHTMXOrFound(c, a.Reverse("admin"))
 }
 
 func (a *App) adminConfigUpdateHandler(c *echo.Context) error {
