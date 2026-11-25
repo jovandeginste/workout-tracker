@@ -12,6 +12,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
+	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v5"
@@ -221,8 +222,29 @@ func (a *App) lookupAddressHandler(c *echo.Context) error {
 	return Render(c, http.StatusOK, partials.AddressResults(results))
 }
 
+func workoutTypesFromQuery(c *echo.Context) []database.WorkoutType {
+	raw := c.QueryParams()["type"]
+	types := make([]database.WorkoutType, 0, len(raw))
+
+	for _, t := range raw {
+		if t != "" {
+			types = append(types, database.AsWorkoutType(t))
+		}
+	}
+
+	return types
+}
+
 func (a *App) heatmapHandler(c *echo.Context) error {
-	return Render(c, http.StatusOK, user.Heatmap())
+	u := a.getCurrentUser(c)
+	selected := workoutTypesFromQuery(c)
+
+	counts, err := database.GetWorkoutTypeCounts(a.db, u.ID, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Heatmap(helpers.WorkoutTypesByCount(counts), helpers.WorkoutTypeStrings(selected), selected))
 }
 
 func Render(ctx *echo.Context, statusCode int, t templ.Component) error {

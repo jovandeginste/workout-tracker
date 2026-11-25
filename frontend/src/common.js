@@ -139,7 +139,7 @@ globalThis.toggleMapFullscreen = function toggleMapFullscreen(map) {
 };
 
 document.addEventListener("fullscreenchange", () => {
-  document.querySelectorAll("wt-map").forEach(updateMapSize);
+  document.querySelectorAll("wt-map, wt-heatmap").forEach(updateMapSize);
 });
 
 globalThis.showTab = function showTab(parentId, elemId) {
