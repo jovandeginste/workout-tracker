@@ -290,6 +290,7 @@ nl:
     filter-workouts: Filter workouts
     heading: Koers
     heart-rate: Hartslag
+    lifts: Liften
     location: Locatie
     lock: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
     locked: De attributen van workout '%s' zijn nu vergrendeld

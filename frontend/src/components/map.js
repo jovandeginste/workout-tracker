@@ -42,6 +42,7 @@ class WtMap extends HTMLElement {
       speedName: mapConfig.SpeedName,
       elevationName: mapConfig.ElevationName,
       slopeName: mapConfig.SlopeName,
+      liftName: mapConfig.LiftName,
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
       showSlope: mapConfig.ShowSlope,
@@ -133,6 +134,12 @@ class WtMap extends HTMLElement {
       elevationLayerGroup.addTo(map);
     }
 
+    let liftLayerGroup;
+    if (this.workout.lifts?.Data?.length) {
+      liftLayerGroup = this.getLiftLayerGroup(polyLineProperties);
+      liftLayerGroup.addTo(map);
+    }
+
     const positions = this.workout.position.Data.filter((x) => x !== null);
 
     if (positions.length > 0) {
@@ -168,6 +175,10 @@ class WtMap extends HTMLElement {
     }
     if (slopeLayerGroup) {
       overlays[this.config.slopeName] = slopeLayerGroup;
+    }
+
+    if (liftLayerGroup && this.config.liftName) {
+      overlays[this.config.liftName] = liftLayerGroup;
     }
 
     L.control.scale().addTo(map);
@@ -210,6 +221,25 @@ class WtMap extends HTMLElement {
 
       prevPoint = p;
     });
+
+    return group;
+  }
+
+  getLiftLayerGroup(polyLineProperties = {}) {
+    const group = new L.featureGroup();
+
+    for (const positions of this.workout.lifts.Data) {
+      if (!positions || positions.length < 2) {
+        continue;
+      }
+
+      L.polyline(positions, {
+        ...polyLineProperties,
+        color: "#f59e0b",
+        dashArray: "6 6",
+        weight: 4,
+      }).addTo(group);
+    }
 
     return group;
   }

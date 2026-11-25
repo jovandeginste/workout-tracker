@@ -25,6 +25,7 @@ const (
 	// Kindes of slope
 	SlopeKindClimb   SlopeKind = "climb"
 	SlopeKindDescent SlopeKind = "descent"
+	SlopeKindLift    SlopeKind = "lift"
 
 	// Climb categories
 	CategoryHorsCategorie Category = "Hors Catégorie"

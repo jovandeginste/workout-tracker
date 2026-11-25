@@ -40,6 +40,7 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*helpers.Data
 		"duration":        {Label: i18n.T(ctx, "workout.duration"), Data: []any{}},
 		"moving-duration": {Label: i18n.T(ctx, "workout.moving-duration"), Data: []any{}},
 		"slope":           {Label: i18n.T(ctx, "workout.slope"), Data: []any{}},
+		"lifts":           {Label: i18n.T(ctx, "workout.lifts"), Data: []any{}},
 	}
 
 	translations := translationMap(ctx)
@@ -100,6 +101,18 @@ func addDetails(ctx context.Context, data map[string]*helpers.Dataset, w *databa
 				data[m].Data = append(data[m].Data, nil)
 			}
 		}
+	}
+
+	for _, lift := range w.Data.Lifts {
+		positions := []any{}
+		for i := max(0, lift.StartIdx); i <= min(len(d.Points)-1, lift.EndIdx); i++ {
+			p := d.Points[i]
+			if p.Lat != 0 || p.Lng != 0 {
+				positions = append(positions, []float64{p.Lat, p.Lng})
+			}
+		}
+
+		data["lifts"].Data = append(data["lifts"].Data, positions)
 	}
 }
 

@@ -76,6 +76,7 @@ type MapData struct {
 	Center        MapCenter `gorm:"serializer:json" json:"center"`         // The center of the workout (in coordinates)
 	WorkoutID     uint64    `gorm:"not null;uniqueIndex" json:"workoutID"` // The workout this data belongs to
 	Climbs        []Segment `gorm:"serializer:json" json:"climbs"`         // Auto-detected climbs
+	Lifts         []Segment `gorm:"serializer:json" json:"lifts"`          // Auto-detected lift/uplift segments
 	converters.WorkoutData
 }
 
@@ -508,6 +509,10 @@ func (m *MapData) correctNaN() {
 }
 
 func maxSpeedForPoints(points []MapPoint, maxDeltaMeter float64) float64 {
+	return maxSpeedForPointsMask(points, maxDeltaMeter, nil)
+}
+
+func maxSpeedForPointsMask(points []MapPoint, maxDeltaMeter float64, excluded []bool) float64 {
 	if len(points) < 2 {
 		return 0
 	}
@@ -519,12 +524,16 @@ func maxSpeedForPoints(points []MapPoint, maxDeltaMeter float64) float64 {
 	maxSpeed := 0.0
 
 	for center := range points {
-		left, ok := maxSpeedWindow(points, center, maxDeltaMeter, -1)
+		if excluded != nil && excluded[center] {
+			continue
+		}
+
+		left, ok := maxSpeedWindow(points, center, maxDeltaMeter, -1, excluded)
 		if !ok {
 			continue
 		}
 
-		right, ok := maxSpeedWindow(points, center, maxDeltaMeter, 1)
+		right, ok := maxSpeedWindow(points, center, maxDeltaMeter, 1, excluded)
 		if !ok {
 			continue
 		}
@@ -547,12 +556,16 @@ func maxSpeedForPoints(points []MapPoint, maxDeltaMeter float64) float64 {
 	return maxSpeed
 }
 
-func maxSpeedWindow(points []MapPoint, center int, maxDeltaMeter float64, step int) (int, bool) {
+func maxSpeedWindow(points []MapPoint, center int, maxDeltaMeter float64, step int, excluded []bool) (int, bool) {
 	centerPoint := points[center]
 	index := center
 
 	for index+step >= 0 && index+step < len(points) {
 		next := index + step
+		if excluded != nil && excluded[next] {
+			break
+		}
+
 		if math.Abs(points[next].TotalDistance2D-centerPoint.TotalDistance2D) >= maxDeltaMeter {
 			index = next
 			break
@@ -692,7 +705,17 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation,
 	data.TotalDuration = totalTime
 
 	applyDeviceValues(gpxContent, data, ignoreElevation, ignoreDeviceValues)
-	data.updateMaxSpeed(gpxContent, workoutType, ignoreDeviceValues)
+
+	if workoutType.AutoDetectLifts() {
+		data.Lifts = DetectLiftSegments(data.Details.Points)
+	}
+
+	if len(data.Lifts) > 0 {
+		applyLiftExclusions(data, workoutType)
+		totalTime = data.TotalDuration
+	} else {
+		data.updateMaxSpeed(gpxContent, workoutType, ignoreDeviceValues)
+	}
 
 	if totalTime > 0 {
 		data.AverageSpeed = data.TotalDistance / totalTime.Seconds()
@@ -708,6 +731,36 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation,
 	data.Details.UpdateHeatmapPoints()
 
 	return data
+}
+
+func applyLiftExclusions(data *MapData, workoutType WorkoutType) {
+	liftMask := liftPointMask(data.Details.Points, data.Lifts)
+
+	for i := 1; i < len(data.Details.Points); i++ {
+		if !liftMask[i] && !liftMask[i-1] {
+			continue
+		}
+
+		data.TotalDistance -= data.Details.Points[i].Distance
+		data.TotalDistance2D -= data.Details.Points[i].Distance2D
+		data.TotalDuration -= data.Details.Points[i].Duration
+	}
+
+	data.TotalDistance = max(0, data.TotalDistance)
+	data.TotalDistance2D = max(0, data.TotalDistance2D)
+	data.TotalDuration = max(0, data.TotalDuration)
+
+	for _, lift := range data.Lifts {
+		if lift.End.Elevation >= lift.Start.Elevation {
+			data.TotalUp = max(0, data.TotalUp-lift.Gain)
+		} else {
+			data.TotalDown = max(0, data.TotalDown-lift.Gain)
+		}
+	}
+
+	// A device-recorded max speed can include the ride itself, so derive it
+	// from the track points outside the lifts instead.
+	data.MaxSpeed = maxSpeedForPointsMask(data.Details.Points, workoutType.MaxDeltaMeter(), liftMask)
 }
 
 func pointHasLocation(pt *gpx.GPXPoint) bool {
