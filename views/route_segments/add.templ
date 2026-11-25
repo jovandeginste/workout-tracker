@@ -23,18 +23,7 @@ templ Add() {
 					>
 						<table class="sm:table-fixed">
 							<tbody>
-								<tr>
-									<td><label for="file">{ i18n.T(ctx, "common.file") }</label></td>
-									<td>
-										<input
-											type="file"
-											id="file"
-											name="file"
-											accept=".gpx, .fit, .tcx"
-											multiple
-										/>
-									</td>
-								</tr>
+								@partials.FileInputRow()
 								<tr>
 									<td>
 										<label for="notes">{ i18n.T(ctx, "common.notes") }</label>

@@ -24,30 +24,14 @@ templ Add() {
 					>
 						<table class="sm:table-fixed">
 							<tbody>
-								<tr>
-									<td><label for="file">{ i18n.T(ctx, "common.file") }</label></td>
-									<td>
-										<input
-											type="file"
-											id="file"
-											name="file"
-											accept={ helpers.SupportedFileTypes() }
-											multiple
-										/>
-									</td>
-								</tr>
+								@partials.FileInputRow()
 								<tr>
 									<td>
 										<label for="type">{ i18n.T(ctx, "common.type") }</label>
 									</td>
 									<td>
 										<select id="type" name="type">
-											<option value="auto">{ i18n.T(ctx, "workout.autodetect") }</option>
-											for _, wt := range helpers.WorkoutTypes() {
-												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.StringT()) }
-												</option>
-											}
+											@partials.WorkoutTypeOptions("", true, false)
 										</select>
 									</td>
 								</tr>
@@ -117,21 +101,12 @@ templ Add() {
 											hx-trigger="input changed delay:300ms"
 										>
 											<option value="select" selected>Select...</option>
-											for _, wt := range helpers.WorkoutTypes() {
-												<option value={ wt.String() }>
-													{ i18n.T(ctx, wt.StringT()) }
-												</option>
-											}
+											@partials.WorkoutTypeOptions("", false, false)
 										</select>
 									</td>
 								</tr>
 							</thead>
-							<tbody id="workout-form">
-								<tr>
-									<td></td>
-									<td>Select a category</td>
-								</tr>
-							</tbody>
+							@partials.WorkoutFormPlaceholder()
 							<tfoot>
 								<tr>
 									<td></td>

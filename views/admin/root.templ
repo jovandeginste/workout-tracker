@@ -77,9 +77,7 @@ templ Root(users []*database.User) {
 									disabled?={ ac.Overrides.LoginCustomText }
 								>{ ac.LoginCustomText }</textarea>
 								if ac.Overrides.LoginCustomText {
-									<p class="note">
-										{ i18n.T(ctx, "settings.overridden") }
-									</p>
+									@partials.OverriddenNote()
 								}
 							</td>
 						</tr>
@@ -99,9 +97,7 @@ templ Root(users []*database.User) {
 									disabled?={ ac.Overrides.RegistrationDisabled }
 								/>
 								if ac.Overrides.RegistrationDisabled {
-									<p class="note">
-										{ i18n.T(ctx, "settings.overridden") }
-									</p>
+									@partials.OverriddenNote()
 								}
 							</td>
 						</tr>
@@ -121,9 +117,7 @@ templ Root(users []*database.User) {
 									disabled?={ ac.Overrides.SocialsDisabled }
 								/>
 								if ac.Overrides.SocialsDisabled {
-									<p class="note">
-										{ i18n.T(ctx, "settings.overridden") }
-									</p>
+									@partials.OverriddenNote()
 								}
 							</td>
 						</tr>

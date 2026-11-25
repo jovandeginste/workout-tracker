@@ -8,19 +8,13 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 )
 
-type trendDataPoint struct {
-	Date  string `json:"date"`
-	Speed string `json:"speed"`
-	Type  string `json:"type"`
-}
-
 templ ShowStats(s *database.RouteSegment) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	{{
-		var trendData []trendDataPoint
+		var trendData []helpers.TrendDataPoint
 		speedUnit := currentUser.PreferredUnits().Speed(nil)
 		for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
-			trendData = append(trendData, trendDataPoint{
+			trendData = append(trendData, helpers.TrendDataPoint{
 				Date:  m.Workout.Date.Format(time.RFC3339),
 				Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
 				Type:  m.Workout.Type.String(),

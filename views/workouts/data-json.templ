@@ -8,11 +8,6 @@ import (
 	"github.com/spf13/cast"
 )
 
-type dataset struct {
-	Label string
-	Data  []any
-}
-
 func translationMap(ctx context.Context) map[string]string {
 	return map[string]string{
 		"distance":     i18n.T(ctx, "workout.distance"),
@@ -29,8 +24,8 @@ func translationMap(ctx context.Context) map[string]string {
 	}
 }
 
-func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
-	data := map[string]*dataset{
+func labelMap(ctx context.Context, w *database.Workout) map[string]*helpers.Dataset {
+	data := map[string]*helpers.Dataset{
 		"position":        {Label: "", Data: []any{}},
 		"time":            {Label: i18n.T(ctx, "workout.time"), Data: []any{}},
 		"distance":        {Label: i18n.T(ctx, "workout.distance"), Data: []any{}},
@@ -43,13 +38,13 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*dataset {
 	translations := translationMap(ctx)
 
 	for _, m := range w.Data.ExtraMetrics {
-		data[m] = &dataset{Label: translations[m], Data: []any{}}
+		data[m] = &helpers.Dataset{Label: translations[m], Data: []any{}}
 	}
 
 	return data
 }
 
-func addDetails(ctx context.Context, data map[string]*dataset, w *database.Workout) {
+func addDetails(ctx context.Context, data map[string]*helpers.Dataset, w *database.Workout) {
 	d := w.Details()
 	if d == nil {
 		return

@@ -26,46 +26,14 @@ templ Actions(w *database.Workout) {
 		</button>
 	</form>
 	if w.HasFile() {
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-download", w.ID)) } method="get">
-			<button class="download" title={ i18n.T(ctx, "common.download") }>
-				<a>
-					@helpers.IconFor("download")
-				</a>
-			</button>
-		</form>
+		@partials.ActionForm(helpers.RouteFor(ctx, "workout-download", w.ID), "get", "download", "common.download", "download")
 	}
-	<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-edit", w.ID)) } method="get">
-		<button class="edit" title={ i18n.T(ctx, "common.edit") }>
-			<a>
-				@helpers.IconFor("edit")
-			</a>
-		</button>
-	</form>
+	@partials.ActionForm(helpers.RouteFor(ctx, "workout-edit", w.ID), "get", "edit", "common.edit", "edit")
 	if w.HasFile() {
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-refresh", w.ID)) } method="post">
-			<button title={ i18n.T(ctx, "common.refresh") }>
-				<a>
-					@helpers.IconFor("refresh")
-				</a>
-			</button>
-		</form>
-		<form action={ templ.SafeURL(helpers.RouteFor(ctx, "workout-route-segment", w.ID)) } method="get">
-			<button title={ i18n.T(ctx, "route-segment.create") }>
-				<a>
-					@helpers.IconFor("route-segment")
-				</a>
-			</button>
-		</form>
+		@partials.ActionForm(helpers.RouteFor(ctx, "workout-refresh", w.ID), "post", "refresh", "common.refresh", "")
+		@partials.ActionForm(helpers.RouteFor(ctx, "workout-route-segment", w.ID), "get", "route-segment", "route-segment.create", "")
 	}
-	<button
-		hx-get={ helpers.RouteFor(ctx, "workout-delete-confirm", w.ID) }
-		hx-target="#modal-container"
-		hx-swap="innerHTML"
-		class="dangerous"
-		title={ i18n.T(ctx, "common.delete") }
-	>
-		@helpers.IconFor("delete")
-	</button>
+	@partials.DeleteButton(helpers.RouteFor(ctx, "workout-delete-confirm", w.ID))
 	<span class="share-actions">
 		<span title={ i18n.T(ctx, "workout.share.link") }>
 			@helpers.IconFor("share")
@@ -116,9 +84,7 @@ templ Actions(w *database.Workout) {
 			@helpers.IconFor("generate-share")
 		</button>
 	</span>
-	<div id="modal-container">
-		// Modal content will be loaded here
-	</div>
+	@partials.ModalContainer()
 }
 
 templ DeleteModal(w *database.Workout) {

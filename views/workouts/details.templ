@@ -25,13 +25,7 @@ templ EventTitle(w *database.Workout, preferredUnits *database.UserPreferredUnit
 }
 
 templ Name(w *database.Workout, maxLength int) {
-	if w.Name == "" {
-		<i>(no name)</i>
-	} else if maxLength > 0 && len(w.Name) > maxLength {
-		<abbr title={ w.Name }>{ fmt.Sprintf("%.*s", maxLength, w.Name) }...</abbr>
-	} else {
-		{ w.Name }
-	}
+	@partials.TruncatedName(w.Name, maxLength)
 }
 
 templ Details(w *database.Workout) {

@@ -78,27 +78,7 @@ templ Edit(s *database.RouteSegment) {
 									</td>
 								</tr>
 							</tbody>
-							<tfoot>
-								<tr>
-									<td></td>
-									<td>
-										<button type="submit">
-											{ i18n.T(ctx, "route-segment.update") }
-										</button>
-										<button type="reset" class="edit">
-											{ i18n.T(ctx, "common.reset-changes") }
-										</button>
-										<button
-											type="button"
-											class="dangerous"
-											onclick="document.location=this.getAttribute('data-url')"
-											data-url={ helpers.RouteFor(ctx, "route-segment-show", s.ID) }
-										>
-											{ i18n.T(ctx, "common.cancel") }
-										</button>
-									</td>
-								</tr>
-							</tfoot>
+							@partials.FormActions("route-segment.update", helpers.RouteFor(ctx, "route-segment-show", s.ID))
 						</table>
 					</form>
 				</div>

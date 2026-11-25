@@ -57,6 +57,31 @@ func WorkoutTypesByCount(counts map[database.WorkoutType]int) []database.Workout
 	return types
 }
 
+type Dataset struct {
+	Label string
+	Data  []any
+}
+
+type MapConfig struct {
+	CenterLat     float64
+	CenterLng     float64
+	MinElevation  float64
+	MaxElevation  float64
+	MaxSpeed      float64
+	SpeedName     string
+	ElevationName string
+	SlopeName     string
+	StreetsName   string
+	AerialName    string
+	ShowElevation bool
+}
+
+type TrendDataPoint struct {
+	Date  string `json:"date"`
+	Speed string `json:"speed"`
+	Type  string `json:"type"`
+}
+
 type TranslatedKey struct {
 	Key         string
 	Translation string

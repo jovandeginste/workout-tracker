@@ -10,12 +10,6 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-type routeSegmentTrendStatDataPoint struct {
-	Date  string `json:"date"`
-	Speed string `json:"speed"`
-	Type  string `json:"type"`
-}
-
 templ Statistics(u *database.User, since, per string, workoutTypes []string, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int) {
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
@@ -39,42 +33,16 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					<details class="workout-types" open?={ len(workoutTypes) > 0 }>
 						<summary>{ i18n.T(ctx, "common.type") }</summary>
 						<div>
-							<label class="inline">
-								<input
-									class="sr-only peer"
-									type="checkbox"
-									name="type"
-									value=""
-									checked?={ len(workoutTypes) == 0 }
-								/>
-								<span class="selectable-pill pill-compact">{ i18n.T(ctx, "common.all") }</span>
-							</label>
+							@partials.SelectablePill("type_all", "type", "", i18n.T(ctx, "common.all"), "pill-compact", len(workoutTypes) == 0)
 							for _, wt := range helpers.WorkoutTypesByCount(typeCounts) {
-								<label class="inline">
-									<input
-										class="sr-only peer"
-										type="checkbox"
-										name="type"
-										value={ wt.String() }
-										checked?={ slices.Contains(workoutTypes, wt.String()) }
-									/>
-									<span class="selectable-pill pill-compact">{ i18n.T(ctx, wt.StringT()) }</span>
-								</label>
+								@partials.SelectablePill("type_"+wt.String(), "type", wt.String(), i18n.T(ctx, wt.StringT()), "pill-compact", slices.Contains(workoutTypes, wt.String()))
 							}
 						</div>
 					</details>
 					<label for="since">{ i18n.T(ctx, "statistics.since") }</label>
-					<select id="since" name="since">
-						for _, o := range helpers.StatisticSinceOptions() {
-							<option value={ o.Key } selected?={ o.Key == since }>{ i18n.T(ctx, o.Translation) }</option>
-						}
-					</select>
+					@partials.TranslatedKeySelect("since", "since", since, helpers.StatisticSinceOptions())
 					<label for="per">{ i18n.T(ctx, "statistics.per") }</label>
-					<select id="per" name="per">
-						for _, o := range helpers.StatisticPerOptions() {
-							<option value={ o.Key } selected?={ o.Key == per }>{ i18n.T(ctx, o.Translation) }</option>
-						}
-					</select>
+					@partials.TranslatedKeySelect("per", "per", per, helpers.StatisticPerOptions())
 					<label for="chart">{ i18n.T(ctx, "statistics.chart-type") }</label>
 					<select id="chart" name="chart">
 						<option value="line" selected?={ chartType == "line" }>{ i18n.T(ctx, "statistics.line") }</option>
@@ -87,7 +55,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					<pre>{ err.Error() }</pre>
 				}
 				{{
-					var routeSegmentTrendData []routeSegmentTrendStatDataPoint
+					var routeSegmentTrendData []helpers.TrendDataPoint
 					routeSegmentTrendTranslations := map[string]string{
 						"trend":               i18n.T(ctx, "statistics.trend"),
 						"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
@@ -99,7 +67,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 							if len(workoutTypes) > 0 && !slices.Contains(workoutTypes, m.Workout.Type.String()) {
 								continue
 							}
-							routeSegmentTrendData = append(routeSegmentTrendData, routeSegmentTrendStatDataPoint{
+							routeSegmentTrendData = append(routeSegmentTrendData, helpers.TrendDataPoint{
 								Date:  m.Workout.Date.Format(time.RFC3339),
 								Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
 								Type:  m.Workout.Type.String(),

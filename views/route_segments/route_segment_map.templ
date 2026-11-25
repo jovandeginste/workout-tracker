@@ -6,26 +6,12 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
 )
 
-type dataset struct {
-	Label string
-	Data  []any
-}
-
 templ RouteSegmentMap(s *database.RouteSegment) {
 	{{ pu := helpers.PreferredUnitsToJSON(helpers.CurrentUser(ctx).PreferredUnits()) }}
 	<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/components/map.css" }/>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/components/map.js" }></script>
 	{{
-		mapConfig := struct {
-			CenterLat     float64
-			CenterLng     float64
-			MinElevation  float64
-			MaxElevation  float64
-			SpeedName     string
-			ElevationName string
-			StreetsName   string
-			AerialName    string
-		}{
+		mapConfig := helpers.MapConfig{
 			CenterLat:     s.Center.Lat,
 			CenterLng:     s.Center.Lng,
 			MinElevation:  s.MinElevation,
@@ -35,7 +21,7 @@ templ RouteSegmentMap(s *database.RouteSegment) {
 			StreetsName:   i18n.T(ctx, "map.streets"),
 			AerialName:    i18n.T(ctx, "map.aerial"),
 		}
-		data := map[string]*dataset{
+		data := map[string]*helpers.Dataset{
 			"position": {
 				Label: "",
 				Data:  []any{},

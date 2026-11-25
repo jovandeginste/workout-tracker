@@ -7,6 +7,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
 templ profilePreferredUnits() {
@@ -58,16 +59,7 @@ templ profileTotalsShow(types database.WorkoutTypeList) {
 			</label>
 			for _, wt := range helpers.WorkoutTypes() {
 				if wt.IsDistance() {
-					<label class="inline">
-						<input
-							class="sr-only peer"
-							type="checkbox"
-							name="totals_show"
-							value={ wt.String() }
-							checked?={ types.Has(wt) }
-						/>
-						<span class="selectable-pill">{ i18n.T(ctx, wt.StringT()) }</span>
-					</label>
+					@partials.SelectablePill("totals_show_"+wt.String(), "totals_show", wt.String(), i18n.T(ctx, wt.StringT()), "", types.Has(wt))
 				}
 			}
 		</div>
@@ -103,17 +95,7 @@ templ profileLanguage(ulang string) {
 		<option value="browser" selected?={ ulang == "browser" }>
 			🌐 Browser language
 		</option>
-		for _, sl := range helpers.SupportedLanguages() {
-			{{ linf := helpers.ToLanguageInformation(sl) }}
-			<option value={ linf.Code } selected?={ linf.Code == ulang }>
-				{ linf.Flag } { linf.LocalName }
-				if linf.EnglishName != "" {
-					if linf.EnglishName != linf.LocalName {
-						({ linf.EnglishName })
-					}
-				}
-			</option>
-		}
+		@partials.LanguageOptions(ulang)
 	</select>
 }
 

@@ -5,6 +5,7 @@ import (
 	"github.com/invopop/ctxi18n/i18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/helpers"
+	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
 templ Form(w *database.Workout) {
@@ -179,19 +180,7 @@ templ Form(w *database.Workout) {
 		</td>
 		<td>
 			for _, e := range currentUser.Equipment {
-				<label class="inline">
-					<input
-						class="sr-only peer"
-						type="checkbox"
-						id={ fmt.Sprintf("equipment_%d", e.ID) }
-						name="equipment"
-						value={ helpers.A2S(e.ID) }
-						checked?={ w.Uses(e) }
-					/>
-					<span id={ helpers.A2S(e.ID) } class="selectable-pill" for={ fmt.Sprintf("equipment_%d", e.ID) }>
-						{ helpers.THas(ctx, e.Name) }
-					</span>
-				</label>
+				@partials.SelectablePill(fmt.Sprintf("equipment_%d", e.ID), "equipment", helpers.A2S(e.ID), helpers.THas(ctx, e.Name), "", w.Uses(e))
 			}
 		</td>
 	</tr>

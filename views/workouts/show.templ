@@ -20,10 +20,7 @@ templ Show(w *database.Workout) {
 			if w.User.ID == currentUser.ID {
 				<span class="float-right actions">
 					if w.Dirty {
-						<span class="dirty">
-							@helpers.IconFor("refresh")
-							{ i18n.T(ctx, "workout.refresh-in-progress") }
-						</span>
+						@partials.DirtyIndicator()
 					}
 					@Actions(w)
 				</span>
@@ -35,9 +32,7 @@ templ Show(w *database.Workout) {
 					<i>({ w.CustomType })</i>
 				}
 				if w.Private {
-					<span title={ i18n.T(ctx, "workout.private-explanation") }>
-						@helpers.IconFor("hide")
-					</span>
+					@partials.PrivateIndicator()
 				}
 			</h2>
 		</div>

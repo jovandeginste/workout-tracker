@@ -38,40 +38,13 @@ templ Edit(w *database.Workout) {
 											hx-trigger="load, input changed delay:300ms"
 											hx-include="[name='id']"
 										>
-											for _, wt := range helpers.WorkoutTypes() {
-												<option value={ wt.String() } selected?={ wt.String() == w.Type.String() }>
-													{ i18n.T(ctx, wt.StringT()) }
-												</option>
-											}
+											@partials.WorkoutTypeOptions(w.Type.String(), false, false)
 										</select>
 									</td>
 								</tr>
 							</thead>
-							<tbody id="workout-form">
-								<tr>
-									<td></td>
-									<td>Select a category</td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td></td>
-									<td>
-										<button type="submit">{ i18n.T(ctx, "workout.update") }</button>
-										<button type="reset" class="edit">
-											{ i18n.T(ctx, "common.reset-changes") }
-										</button>
-										<button
-											type="button"
-											class="dangerous"
-											onclick="document.location=this.getAttribute('data-url')"
-											data-url={ helpers.RouteFor(ctx, "workout-show", w.ID) }
-										>
-											{ i18n.T(ctx, "common.cancel") }
-										</button>
-									</td>
-								</tr>
-							</tfoot>
+							@partials.WorkoutFormPlaceholder()
+							@partials.FormActions("workout.update", helpers.RouteFor(ctx, "workout-show", w.ID))
 						</table>
 					</form>
 				</div>
