@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
+	"github.com/labstack/echo/v5"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
@@ -22,6 +23,22 @@ func configuredApp(t *testing.T) *App {
 	require.NoError(t, a.Configure())
 
 	return a
+}
+
+func newTestContext(t *testing.T, a *App, target string, u *database.User) (*echo.Context, *httptest.ResponseRecorder) {
+	t.Helper()
+
+	req := httptest.NewRequest(http.MethodGet, target, nil)
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+
+	if u != nil {
+		a.setCurrentUser(c, u)
+	}
+
+	return c, rec
 }
 
 func defaultUser(db *gorm.DB) *database.User {
@@ -118,7 +135,7 @@ func TestRoute_UserRender(t *testing.T) {
 
 		c := a.echo.NewContext(req, rec)
 		a.setContext(c)
-		c.Set("user_info", defaultUser(a.db))
+		a.setCurrentUser(c, defaultUser(a.db))
 
 		s := sessionLoadAndSave(a.sessionManager)
 		h := s(a.dashboardHandler)
@@ -148,7 +165,7 @@ func TestRoute_UserRenderLang(t *testing.T) {
 
 			c := a.echo.NewContext(req, rec)
 			a.setContext(c)
-			c.Set("user_info", defaultUser(a.db))
+			a.setCurrentUser(c, defaultUser(a.db))
 
 			s := sessionLoadAndSave(a.sessionManager)
 			h := s(a.dashboardHandler)
@@ -284,12 +301,7 @@ func TestRoute_AdminConfigOverridesDisabled(t *testing.T) {
 	t.Setenv("WT_LOGIN_CUSTOM_TEXT", "# Overridden by the environment")
 	require.NoError(t, a.ResetConfiguration())
 
-	req := httptest.NewRequest(http.MethodGet, a.Reverse("admin"), nil)
-	rec := httptest.NewRecorder()
-
-	c := a.echo.NewContext(req, rec)
-	a.setContext(c)
-	c.Set("user_info", defaultUser(a.db))
+	c, rec := newTestContext(t, a, a.Reverse("admin"), defaultUser(a.db))
 
 	s := sessionLoadAndSave(a.sessionManager)
 	h := s(a.adminRootHandler)
@@ -307,11 +319,7 @@ func TestRoute_NoUserAccessLoginCustomText(t *testing.T) {
 	a := configuredApp(t)
 	a.Config.LoginCustomText = "# Welcome\n\nPlease **contact** the administrator."
 
-	req := httptest.NewRequest(http.MethodGet, a.Reverse("user-login"), nil)
-	rec := httptest.NewRecorder()
-
-	c := a.echo.NewContext(req, rec)
-	a.setContext(c)
+	c, rec := newTestContext(t, a, a.Reverse("user-login"), nil)
 
 	s := sessionLoadAndSave(a.sessionManager)
 	h := s(a.userLoginHandler)
@@ -413,7 +421,7 @@ func TestRoute_UserExportAll(t *testing.T) {
 
 		c := a.echo.NewContext(req, rec)
 		a.setContext(c)
-		c.Set("user_info", u)
+		a.setCurrentUser(c, u)
 
 		s := sessionLoadAndSave(a.sessionManager)
 		h := s(a.userExportAllHandler)

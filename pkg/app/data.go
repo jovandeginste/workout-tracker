@@ -14,16 +14,18 @@ import (
 )
 
 func (a *App) setContext(ctx *echo.Context) {
-	ctx.Set("version", &a.Version)
-	ctx.Set("config", &a.Config)
-	ctx.Set("echo", a.echo)
-	ctx.Set("sessionManager", a.sessionManager)
+	values := map[string]any{
+		"version":        &a.Version,
+		"config":         &a.Config,
+		"echo":           a.echo,
+		"sessionManager": a.sessionManager,
+	}
 
 	reqCtx := ctx.Request().Context()
-	reqCtx = context.WithValue(reqCtx, "version", &a.Version)
-	reqCtx = context.WithValue(reqCtx, "config", &a.Config)
-	reqCtx = context.WithValue(reqCtx, "echo", a.echo)
-	reqCtx = context.WithValue(reqCtx, "sessionManager", a.sessionManager)
+	for key, value := range values {
+		ctx.Set(key, value)
+		reqCtx = context.WithValue(reqCtx, key, value)
+	}
 
 	lctx, _ := ctxi18n.WithLocale(reqCtx, a.langFromContextString(ctx))
 	if lctx == nil {
@@ -66,11 +68,15 @@ func (a *App) setUser(c *echo.Context) error {
 		return ErrInvalidJWTToken
 	}
 
-	c.Set("user_language", dbUser.Profile.Language)
-	c.Set("user_info", dbUser)
-	c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", dbUser)))
+	a.setCurrentUser(c, dbUser)
 
 	return nil
+}
+
+func (a *App) setCurrentUser(c *echo.Context, u *database.User) {
+	c.Set("user_language", u.Profile.Language)
+	c.Set("user_info", u)
+	c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
 }
 
 // userForUsername returns the user whose items a list should show. Without a

@@ -21,7 +21,7 @@ func updateUserProfile(t *testing.T, a *App, u *database.User, form url.Values) 
 
 	c := a.echo.NewContext(req, rec)
 	a.setContext(c)
-	c.Set("user_info", u)
+	a.setCurrentUser(c, u)
 
 	s := sessionLoadAndSave(a.sessionManager)
 	h := s(a.userProfileUpdateHandler)
@@ -37,12 +37,7 @@ func TestRoute_UserProfileTotalsShowFoldable(t *testing.T) {
 	u.Profile.TotalsShow = database.WorkoutTypeList{database.WorkoutTypeRunning, database.WorkoutTypeCycling}
 	require.NoError(t, u.Save(a.db))
 
-	req := httptest.NewRequest(http.MethodGet, a.Reverse("user-profile"), nil)
-	rec := httptest.NewRecorder()
-
-	c := a.echo.NewContext(req, rec)
-	a.setContext(c)
-	c.Set("user_info", u)
+	c, rec := newTestContext(t, a, a.Reverse("user-profile"), u)
 
 	s := sessionLoadAndSave(a.sessionManager)
 	h := s(a.userProfileHandler)

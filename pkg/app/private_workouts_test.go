@@ -31,14 +31,7 @@ func createUser(t *testing.T, a *App, username, name string, admin bool) *databa
 func renderAs(t *testing.T, a *App, u *database.User, target string, h echo.HandlerFunc, params ...echo.PathValue) (int, string) {
 	t.Helper()
 
-	req := httptest.NewRequest(http.MethodGet, target, nil)
-	rec := httptest.NewRecorder()
-
-	c := a.echo.NewContext(req, rec)
-	a.setContext(c)
-	c.Set("user_info", u)
-	c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
-
+	c, rec := newTestContext(t, a, target, u)
 	if len(params) > 0 {
 		c.SetPathValues(params)
 	}
@@ -221,7 +214,7 @@ func TestPrivateWorkouts_CanBeSetThroughTheWebForm(t *testing.T) {
 
 		c := a.echo.NewContext(req, rec)
 		a.setContext(c)
-		c.Set("user_info", owner)
+		a.setCurrentUser(c, owner)
 		c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", owner)))
 		c.SetPathValues(echo.PathValues{{Name: "id", Value: strconv.FormatUint(w.ID, 10)}})
 
@@ -343,7 +336,7 @@ func TestPrivateWorkouts_RouteSegmentCreationIsOwnerScoped(t *testing.T) {
 
 		c := a.echo.NewContext(req, rec)
 		a.setContext(c)
-		c.Set("user_info", u)
+		a.setCurrentUser(c, u)
 		c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
 		c.SetPathValues(echo.PathValues{{Name: "id", Value: strconv.FormatUint(w.ID, 10)}})
 

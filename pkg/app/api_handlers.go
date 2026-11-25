@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -120,9 +119,7 @@ func (a *App) ValidateAPIKeyMiddleware(c *echo.Context, key string, source middl
 		return false, ErrInvalidAPIKey
 	}
 
-	c.Set("user_info", u)
-	c.Set("user_language", u.Profile.Language)
-	c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), "user_info", u)))
+	a.setCurrentUser(c, u)
 
 	return true, nil
 }
