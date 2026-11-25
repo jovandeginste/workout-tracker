@@ -134,36 +134,19 @@ templ FullWorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
-			<tr>
-				<td>
-					@helpers.IconFor("user")
-				</td>
-				<th>{ i18n.T(ctx, "user.username") }</th>
-				<td>
+			@partials.DetailRow("user", "user.username", "") {
 					@helpers.UserLinkWithName(w.User)
-				</td>
-			</tr>
+			}
 			if w.HasFile() {
-				<tr>
-					<td>
-						@helpers.IconFor("file")
-					</td>
-					<th>{ i18n.T(ctx, "common.file") }</th>
-					<td>
+				@partials.DetailRow("file", "common.file", "") {
 						if len(w.Filename()) > 15 {
 							<abbr title={ w.Filename() }>{ fmt.Sprintf("%.15s", w.Filename()) }...</abbr>
 						} else {
 							{ w.Filename() }
 						}
-					</td>
-				</tr>
+				}
 			}
-			<tr>
-				<td>
-					@helpers.IconFor("date")
-				</td>
-				<th>{ i18n.T(ctx, "common.date") }</th>
-				<td>
+			@partials.DetailRow("date", "common.date", "") {
 					<a
 						href="#"
 						onclick="document.getElementById('timeinfo').classList.toggle('hidden'); return false;"
@@ -178,18 +161,11 @@ templ FullWorkoutDetails(w *database.Workout) {
 							<li>{ w.Timezone() }: { helpers.InTimezone(w.Date, w.Timezone()).String() }</li>
 						</ul>
 					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					@helpers.IconFor("location")
-				</td>
-				<th>{ i18n.T(ctx, "workout.location") }</th>
-				<td>
+			}
+			@partials.DetailRow("location", "workout.location", "") {
 					@showLocked(w)
 					{ w.Address() }
-				</td>
-			</tr>
+			}
 			<tr>
 				<td>
 					@helpers.IconFor("source")
@@ -197,12 +173,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 				<th>{ i18n.T(ctx, "workout.source") }</th>
 				<td>{ w.Creator() }</td>
 			</tr>
-			<tr>
-				<td>
-					@helpers.IconFor("workout")
-				</td>
-				<th>{ i18n.T(ctx, "common.type") }</th>
-				<td>
+			@partials.DetailRow("workout", "common.type", "") {
 					<span>
 						@helpers.IconFor(w.Type.String())
 						if w.HasCustomType() {
@@ -211,8 +182,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 							{ i18n.T(ctx, w.Type.StringT()) }
 						}
 					</span>
-				</td>
-			</tr>
+			}
 			if w.Type.IsRepetition() {
 				<tr>
 					<td>
@@ -221,58 +191,29 @@ templ FullWorkoutDetails(w *database.Workout) {
 					<th>{ i18n.T(ctx, "workout.repetitions") }</th>
 					<td class="whitespace-nowrap font-mono">{ helpers.A2S(w.TotalRepetitions()) }</td>
 				</tr>
-				<tr>
-					<td>
-						@helpers.IconFor("tempo")
-					</td>
-					<th>{ i18n.T(ctx, "workout.average-per-minute") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("tempo", "workout.average-per-minute", "whitespace-nowrap font-mono") {
 						{ helpers.A2S(w.RepetitionFrequencyPerMinute()) }
-					</td>
-				</tr>
+				}
 			}
 			if w.Type.IsWeight() {
-				<tr>
-					<td>
-						@helpers.IconFor("weight")
-					</td>
-					<th>{ i18n.T(ctx, "common.weight") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("weight", "common.weight", "whitespace-nowrap font-mono") {
 						{ helpers.HumanWeight(ctx, w.Weight()) }
 						{ currentUser.PreferredUnits().Weight() }
-					</td>
-				</tr>
+				}
 			}
 			if w.Type.IsDuration() {
-				<tr>
-					<td>
-						@helpers.IconFor("duration")
-					</td>
-					<th>{ i18n.T(ctx, "workout.total-duration") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("duration", "workout.total-duration", "whitespace-nowrap font-mono") {
 						@showLocked(w)
 						{ helpers.HumanDuration(w.TotalDuration() ) }
-					</td>
-				</tr>
+				}
 				if w.PauseDuration() > 0 {
-					<tr>
-						<td>
-							@helpers.IconFor("pause")
-						</td>
-						<th>{ i18n.T(ctx, "workout.time-paused") }</th>
-						<td class="whitespace-nowrap font-mono">
+					@partials.DetailRow("pause", "workout.time-paused", "whitespace-nowrap font-mono") {
 							{ helpers.HumanDuration (w.PauseDuration() ) }
-						</td>
-					</tr>
+					}
 				}
 			}
 			if w.Type.IsDistance() {
-				<tr>
-					<td>
-						@helpers.IconFor("distance")
-					</td>
-					<th>{ i18n.T(ctx, "workout.total-distance") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("distance", "workout.total-distance", "whitespace-nowrap font-mono") {
 						@showLocked(w)
 						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
 						{ helpers.DistanceUnitForWorkout(ctx, w) }
@@ -282,134 +223,67 @@ templ FullWorkoutDetails(w *database.Workout) {
 							{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance2D()) }
 							{ helpers.DistanceUnitForWorkout(ctx, w) })
 						}
-					</td>
-				</tr>
+				}
 			}
 			if w.Type.IsDistance() &&  w.Type.IsDuration() {
-				<tr>
-					<td>
-						@helpers.IconFor("speed")
-					</td>
-					<th>{ i18n.T(ctx, "workout.average-speed") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("speed", "workout.average-speed", "whitespace-nowrap font-mono") {
 						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) }
 						{ helpers.SpeedUnitForWorkout(ctx, w) }
-					</td>
-				</tr>
+				}
 				if w.PauseDuration() != 0 {
-					<tr>
-						<td>
-							@helpers.IconFor("speed")
-						</td>
-						<th>{ i18n.T(ctx, "workout.average-speed-no-pause") }</th>
-						<td class="whitespace-nowrap font-mono">
+					@partials.DetailRow("speed", "workout.average-speed-no-pause", "whitespace-nowrap font-mono") {
 							{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
 							{ helpers.SpeedUnitForWorkout(ctx, w) }
-						</td>
-					</tr>
+					}
 				}
-				<tr>
-					<td>
-						@helpers.IconFor("tempo")
-					</td>
-					<th>{ i18n.T(ctx, "workout.average-tempo") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("tempo", "workout.average-tempo", "whitespace-nowrap font-mono") {
 						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeed() ) }
 						{ helpers.TempoUnitForWorkout(ctx, w) }
-					</td>
-				</tr>
-				<tr>
-					<td>
-						@helpers.IconFor("max-speed")
-					</td>
-					<th>{ i18n.T(ctx, "workout.max-tempo") }</th>
-					<td class="whitespace-nowrap font-mono">
+				}
+				@partials.DetailRow("max-speed", "workout.max-tempo", "whitespace-nowrap font-mono") {
 						{ helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
 						{ helpers.TempoUnitForWorkout(ctx, w) }
-					</td>
-				</tr>
+				}
 				if  w.PauseDuration()!= 0 {
-					<tr>
-						<td>
-							@helpers.IconFor("tempo")
-						</td>
-						<th>{ i18n.T(ctx, "workout.average-tempo-no-pause") }</th>
-						<td class="whitespace-nowrap font-mono">
+					@partials.DetailRow("tempo", "workout.average-tempo-no-pause", "whitespace-nowrap font-mono") {
 							{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
 							{ helpers.TempoUnitForWorkout(ctx, w) }
-						</td>
-					</tr>
+					}
 				}
-				<tr>
-					<td>
-						@helpers.IconFor("max-speed")
-					</td>
-					<th>{ i18n.T(ctx, "workout.max-speed") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("max-speed", "workout.max-speed", "whitespace-nowrap font-mono") {
 						{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
 						{ helpers.SpeedUnitForWorkout(ctx, w) }
-					</td>
-				</tr>
+				}
 				if w.HasCadence() {
-					<tr>
-						<td>
-							@helpers.IconFor("cadence")
-						</td>
-						<th>{ i18n.T(ctx, "workout.cadence-avg-max") }</th>
-						<td class="whitespace-nowrap font-mono">
+					@partials.DetailRow("cadence", "workout.cadence-avg-max", "whitespace-nowrap font-mono") {
 							{ helpers.HumanCadence (w.AverageCadence()) }
 							{ currentUser.PreferredUnits().Cadence() } /
 							{ helpers.HumanCadence (w.MaxCadence()) }
 							{ currentUser.PreferredUnits().Cadence() }
-						</td>
-					</tr>
+					}
 				}
 			}
 			if w.Type.IsLocation() {
 				if w.HasElevation() {
 					if w.MinElevation() != 0 {
-						<tr>
-							<td>
-								@helpers.IconFor("elevation")
-							</td>
-							<th>{ i18n.T(ctx, "workout.min-elevation") }</th>
-							<td class="whitespace-nowrap font-mono">
+						@partials.DetailRow("elevation", "workout.min-elevation", "whitespace-nowrap font-mono") {
 								{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
-							</td>
-						</tr>
+						}
 					}
 					if w.MaxElevation() != 0 {
-						<tr>
-							<td>
-								@helpers.IconFor("elevation")
-							</td>
-							<th>{ i18n.T(ctx, "workout.max-elevation") }</th>
-							<td class="whitespace-nowrap font-mono">
+						@partials.DetailRow("elevation", "workout.max-elevation", "whitespace-nowrap font-mono") {
 								{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
-							</td>
-						</tr>
+						}
 					}
 					if w.TotalUp() != 0 {
-						<tr>
-							<td>
-								@helpers.IconFor("up")
-							</td>
-							<th>{ i18n.T(ctx, "workout.total-up") }</th>
-							<td class="whitespace-nowrap font-mono">
+						@partials.DetailRow("up", "workout.total-up", "whitespace-nowrap font-mono") {
 								{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
-							</td>
-						</tr>
+						}
 					}
 					if w.TotalDown() != 0 {
-						<tr>
-							<td>
-								@helpers.IconFor("down")
-							</td>
-							<th>{ i18n.T(ctx, "workout.total-down") }</th>
-							<td class="whitespace-nowrap font-mono">
+						@partials.DetailRow("down", "workout.total-down", "whitespace-nowrap font-mono") {
 								{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
-							</td>
-						</tr>
+						}
 					}
 				}
 			}
@@ -442,18 +316,12 @@ templ FullWorkoutDetails(w *database.Workout) {
 				</tr>
 			}
 			if w.HasPower() {
-				<tr>
-					<td>
-						@helpers.IconFor("power")
-					</td>
-					<th>{ i18n.T(ctx, "workout.power-avg-max") }</th>
-					<td class="whitespace-nowrap font-mono">
+				@partials.DetailRow("power", "workout.power-avg-max", "whitespace-nowrap font-mono") {
 						{ helpers.HumanPower (w.AveragePower()) }
 						{ currentUser.PreferredUnits().Power() } /
 						{ helpers.HumanPower (w.MaxPower()) }
 						{ currentUser.PreferredUnits().Power() }
-					</td>
-				</tr>
+				}
 			}
 			<tr>
 				<td>

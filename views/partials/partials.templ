@@ -133,11 +133,11 @@ templ FormActions(submitKey, cancelURL string) {
 	</tfoot>
 }
 
-templ DetailRow(icon, labelKey string) {
+templ DetailRow(icon, labelKey, class string) {
 	<tr>
 		<td>@helpers.IconFor(icon)</td>
 		<th>{ i18n.T(ctx, labelKey) }</th>
-		<td class="whitespace-nowrap font-mono">
+		<td class={ class }>
 			{ children... }
 		</td>
 	</tr>
