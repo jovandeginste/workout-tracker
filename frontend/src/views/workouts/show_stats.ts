@@ -1,6 +1,7 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { formatDuration } from "../../helpers.js";
+import { formatDuration, navPillClass } from "../../helpers.js";
+import { chartTheme, zoomOptions } from "../../chart";
 import {
   CategoryScale,
   Chart,
