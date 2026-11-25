@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -134,14 +133,6 @@ func (a *App) userShowHandler(c *echo.Context) error {
 	u, err := a.getUser(c)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
-	}
-
-	if u.IsAnonymous() {
-		return a.redirectWithError(
-			c,
-			a.Reverse("dashboard"),
-			fmt.Errorf("user id '%s' not found", c.Param("id")),
-		)
 	}
 
 	viewer := a.getCurrentUser(c)

@@ -34,9 +34,6 @@ func (a *App) addRoutesWorkouts(g *echo.Group) {
 
 func (a *App) workoutsHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
 
 	filters, err := database.GetWorkoutsFilters(c)
 	if err != nil {

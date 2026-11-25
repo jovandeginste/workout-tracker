@@ -67,27 +67,12 @@ func (a *App) apiRoutes(g *echo.Group) {
 
 			return false
 		},
-		SuccessHandler: func(ctx *echo.Context) error {
-			if err := a.setUserFromContext(ctx); err != nil {
-				a.logger.Warn("error validating user", "error", err.Error())
-				return err
-			}
-			return nil
-		},
+		SuccessHandler: a.setUserFromContext,
 	}))
 
 	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Validator: a.ValidateAPIKeyMiddleware,
-		KeyLookup: "query:api-key",
-		Skipper: func(ctx *echo.Context) bool {
-			return ctx.Request().URL.Query().Get("api-key") == ""
-		},
-	}))
-	apiGroup.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
-		Validator: a.ValidateAPIKeyMiddleware,
-		Skipper: func(ctx *echo.Context) bool {
-			return ctx.Request().Header.Get("Authorization") == ""
-		},
+		KeyLookup: "query:api-key,header:Authorization:Bearer ",
 	}))
 
 	a.GET(apiGroup, "/whoami", a.apiWhoamiHandler, "api-whoami")

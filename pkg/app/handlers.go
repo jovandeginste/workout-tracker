@@ -86,9 +86,6 @@ func (a *App) redirectHTMXOrFound(c *echo.Context, target string) error {
 
 func (a *App) statisticsHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
 
 	statisticsParams := struct {
 		Since string   `query:"since"`
@@ -195,9 +192,6 @@ func (a *App) dailyHandler(c *echo.Context) error {
 
 func (a *App) dashboardHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
 
 	users, err := database.GetUsers(a.db)
 	if err != nil {
@@ -228,11 +222,6 @@ func (a *App) lookupAddressHandler(c *echo.Context) error {
 }
 
 func (a *App) heatmapHandler(c *echo.Context) error {
-	u := a.getCurrentUser(c)
-	if u.IsAnonymous() {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
-
 	return Render(c, http.StatusOK, user.Heatmap())
 }
 

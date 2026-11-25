@@ -189,10 +189,9 @@ func TestRoute_NoUserRedirect(t *testing.T) {
 		c := a.echo.NewContext(req, rec)
 		a.setContext(c)
 		s := sessionLoadAndSave(a.sessionManager)
-		h := s(a.dashboardHandler)
+		h := s(a.ValidateUserMiddleware(a.dashboardHandler))
 
 		require.NoError(t, h(c))
-		assert.NotEmpty(t, a.sessionManager.Get(c.Request().Context(), "errors"))
 		assert.Equal(t, http.StatusFound, rec.Code)
 	})
 }
