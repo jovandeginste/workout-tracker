@@ -147,8 +147,10 @@ nl:
     disable-registration: Registratie van nieuw accounts uitschakelen
     env-vars: omgevingsvariabelen
     login-custom-text: Aangepaste logintekst (Markdown)
+    overridden: Deze instelling wordt beheerd door het configuratiebestand of een omgevingsvariabele.
     overwritten-by: 'Deze instellingen kunnen worden overschreven door:'
     update: Instellingen bijwerken
+    updated: Instellingen bijgewerkt
   sports:
     alpine-climbing: alpine klimmen
     auto: automatisch detecteren

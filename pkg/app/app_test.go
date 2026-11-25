@@ -2,6 +2,8 @@ package app
 
 import (
 	"log/slog"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/fsouza/slognil"
@@ -61,6 +63,28 @@ func TestApp_ConfigureLoginCustomTextFromEnv(t *testing.T) {
 	require.NoError(t, a.Configure())
 
 	assert.Equal(t, "# Welcome\n\nPlease contact the administrator.", a.Config.LoginCustomText)
+	assert.True(t, a.Config.Overrides.LoginCustomText)
+	assert.False(t, a.Config.Overrides.RegistrationDisabled)
+	assert.False(t, a.Config.Overrides.SocialsDisabled)
+}
+
+func TestApp_ConfigureLoginCustomTextFromConfigFile(t *testing.T) {
+	t.Chdir(t.TempDir())
+	require.NoError(t, os.WriteFile(
+		filepath.Join(".", "workout-tracker.yaml"),
+		[]byte("login_custom_text: \"# From the config file\"\n"),
+		0o600,
+	))
+
+	t.Setenv("WT_DATABASE_DRIVER", "memory")
+
+	a := defaultApp(t)
+	require.NoError(t, a.Configure())
+
+	assert.Equal(t, "# From the config file", a.Config.LoginCustomText)
+	assert.True(t, a.Config.Overrides.LoginCustomText)
+	assert.False(t, a.Config.Overrides.RegistrationDisabled)
+	assert.False(t, a.Config.Overrides.SocialsDisabled)
 }
 
 func TestApp_LoginCustomTextDatabase(t *testing.T) {

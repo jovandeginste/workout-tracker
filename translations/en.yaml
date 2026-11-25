@@ -147,8 +147,10 @@ en:
     disable-registration: Disable account registration
     env-vars: environment variables
     login-custom-text: Custom login text (Markdown)
+    overridden: This setting is managed by the configuration file or an environment variable.
     overwritten-by: 'These settings may be overwritten by:'
     update: Update settings
+    updated: Settings updated
   sports:
     alpine-climbing: alpine climbing
     auto: auto-detect

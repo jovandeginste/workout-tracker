@@ -1,11 +1,13 @@
 package app
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/admin"
 	"github.com/labstack/echo/v5"
+	"gorm.io/gorm"
 )
 
 func (a *App) adminRoutes(g *echo.Group) *echo.Group {
@@ -96,9 +98,26 @@ func (a *App) adminUserDeleteHandler(c *echo.Context) error { //nolint:dupl
 }
 
 func (a *App) adminConfigUpdateHandler(c *echo.Context) error {
-	var cnf database.Config
+	cnf, err := database.GetConfig(a.db)
+	if err != nil {
+		if !errors.Is(err, gorm.ErrRecordNotFound) {
+			return a.redirectWithError(c, a.Reverse("admin"), err)
+		}
 
-	if err := c.Bind(&cnf); err != nil {
+		cnf = &database.Config{}
+	}
+
+	// Unchecked checkboxes are not submitted, so reset them explicitly. Fields
+	// that are overridden keep their stored value.
+	if !a.Config.Overrides.RegistrationDisabled {
+		cnf.RegistrationDisabled = false
+	}
+
+	if !a.Config.Overrides.SocialsDisabled {
+		cnf.SocialsDisabled = false
+	}
+
+	if err := c.Bind(cnf); err != nil {
 		return a.redirectWithError(c, a.Reverse("admin"), err)
 	}
 
@@ -110,7 +129,7 @@ func (a *App) adminConfigUpdateHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("admin"), err)
 	}
 
-	a.addNoticeT(c, "Config updated")
+	a.addNoticeT(c, "settings.updated")
 
 	return c.Redirect(http.StatusFound, a.Reverse("admin"))
 }

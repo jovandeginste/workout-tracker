@@ -223,6 +223,86 @@ func TestRoute_AdminConfigUpdateLoginCustomText(t *testing.T) {
 	assert.Equal(t, "# Welcome\n\nPlease **contact** the administrator.", a.Config.LoginCustomText)
 }
 
+func TestRoute_AdminConfigUpdateWithOverriddenLoginCustomText(t *testing.T) {
+	a := configuredApp(t)
+	a.Config.LoginCustomText = "# Stored in the database"
+	require.NoError(t, a.Config.Save(a.db))
+
+	t.Setenv("WT_LOGIN_CUSTOM_TEXT", "# Overridden by the environment")
+	require.NoError(t, a.ResetConfiguration())
+	assert.True(t, a.Config.Overrides.LoginCustomText)
+
+	form := url.Values{
+		"registration_disabled": {"true"},
+	}
+
+	req := httptest.NewRequest(http.MethodPost, a.Reverse("admin-config-update"), strings.NewReader(form.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+
+	s := sessionLoadAndSave(a.sessionManager)
+	h := s(a.adminConfigUpdateHandler)
+
+	require.NoError(t, h(c))
+	assert.Equal(t, http.StatusFound, rec.Code)
+	assert.True(t, a.Config.RegistrationDisabled)
+	assert.Equal(t, "# Overridden by the environment", a.Config.LoginCustomText)
+
+	var stored database.Config
+	require.NoError(t, a.db.First(&stored).Error)
+	assert.True(t, stored.RegistrationDisabled)
+	assert.Equal(t, "# Stored in the database", stored.LoginCustomText)
+}
+
+func TestRoute_AdminConfigUpdateUnchecksRegistration(t *testing.T) {
+	a := configuredApp(t)
+	a.Config.RegistrationDisabled = true
+	require.NoError(t, a.Config.Save(a.db))
+	require.NoError(t, a.ResetConfiguration())
+	assert.True(t, a.Config.RegistrationDisabled)
+
+	req := httptest.NewRequest(http.MethodPost, a.Reverse("admin-config-update"), strings.NewReader(""))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+
+	s := sessionLoadAndSave(a.sessionManager)
+	h := s(a.adminConfigUpdateHandler)
+
+	require.NoError(t, h(c))
+	assert.Equal(t, http.StatusFound, rec.Code)
+	assert.False(t, a.Config.RegistrationDisabled)
+}
+
+func TestRoute_AdminConfigOverridesDisabled(t *testing.T) {
+	a := configuredApp(t)
+	t.Setenv("WT_LOGIN_CUSTOM_TEXT", "# Overridden by the environment")
+	require.NoError(t, a.ResetConfiguration())
+
+	req := httptest.NewRequest(http.MethodGet, a.Reverse("admin"), nil)
+	rec := httptest.NewRecorder()
+
+	c := a.echo.NewContext(req, rec)
+	a.setContext(c)
+	c.Set("user_info", defaultUser(a.db))
+
+	s := sessionLoadAndSave(a.sessionManager)
+	h := s(a.adminRootHandler)
+
+	require.NoError(t, h(c))
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	body := rec.Body.String()
+	assert.Contains(t, body, `id="login_custom_text"`)
+	assert.Contains(t, body, "disabled")
+	assert.Contains(t, body, "managed by the configuration file")
+}
+
 func TestRoute_NoUserAccessLoginCustomText(t *testing.T) {
 	a := configuredApp(t)
 	a.Config.LoginCustomText = "# Welcome\n\nPlease **contact** the administrator."

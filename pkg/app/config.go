@@ -4,10 +4,13 @@ import (
 	"os"
 	"strings"
 
+	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/spf13/viper"
 )
 
 func (a *App) ReadConfiguration() error {
+	viper.Reset()
+
 	viper.SetConfigName("workout-tracker")
 	viper.AddConfigPath(".")
 	viper.SetEnvPrefix("WT")
@@ -57,7 +60,27 @@ func (a *App) ReadConfiguration() error {
 		return err
 	}
 
+	// Only non-default values from the configuration file or environment take
+	// precedence over the database, so only those are marked as overridden.
+	a.Config.Overrides = database.ConfigOverrides{
+		RegistrationDisabled: a.Config.RegistrationDisabled && isConfigOverridden("registration_disabled"),
+		SocialsDisabled:      a.Config.SocialsDisabled && isConfigOverridden("socials_disabled"),
+		LoginCustomText:      a.Config.LoginCustomText != "" && isConfigOverridden("login_custom_text"),
+	}
+
 	return nil
+}
+
+// isConfigOverridden reports whether a setting is explicitly set in the
+// configuration file or through an environment variable.
+func isConfigOverridden(key string) bool {
+	if viper.InConfig(key) {
+		return true
+	}
+
+	_, ok := os.LookupEnv("WT_" + strings.ToUpper(key))
+
+	return ok
 }
 
 func (a *App) ResetConfiguration() error {

@@ -11,6 +11,18 @@ type Config struct {
 	Model
 	EnvConfig  `mapstructure:",squash"`
 	UserConfig `mapstructure:",squash"`
+
+	// Overrides tracks which user settings are managed by the configuration
+	// file or environment. They cannot be changed through the web interface.
+	Overrides ConfigOverrides `mapstructure:"-" gorm:"-"`
+}
+
+// ConfigOverrides marks the user settings that are overridden by the
+// configuration file or environment.
+type ConfigOverrides struct {
+	RegistrationDisabled bool
+	SocialsDisabled      bool
+	LoginCustomText      bool
 }
 
 // UserConfig are options that can be changed at runtime or configured through the web interface
@@ -40,7 +52,7 @@ type EnvConfig struct {
 	DSNFile              string `mapstructure:"dsn_file" gorm:"-"`                // File containing the database DSN
 }
 
-func getConfig(db *gorm.DB) (*Config, error) {
+func GetConfig(db *gorm.DB) (*Config, error) {
 	var c Config
 
 	if err := db.Model(&Config{}).First(&c).Error; err != nil {
@@ -51,7 +63,7 @@ func getConfig(db *gorm.DB) (*Config, error) {
 }
 
 func (c *Config) UpdateFromDatabase(db *gorm.DB) error {
-	dbConfig, err := getConfig(db)
+	dbConfig, err := GetConfig(db)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil
@@ -68,19 +80,28 @@ func (c *Config) UpdateFromDatabase(db *gorm.DB) error {
 // copy copies all fields from one Config to another, if the destination field
 // is the zero value (false, 0, "")
 func (c *Config) copy(from *Config) {
-	v := reflect.ValueOf(c).Elem()
-	vFrom := reflect.ValueOf(from).Elem()
-	n := v.Type().NumField()
+	copyZeroFields(&c.Model, &from.Model)
+	copyZeroFields(&c.EnvConfig, &from.EnvConfig)
+	copyZeroFields(&c.UserConfig, &from.UserConfig)
+}
 
-	for i := range n {
-		if v.Field(i).IsZero() {
-			v.Field(i).Set(vFrom.Field(i))
+// copyZeroFields copies the fields of src to dst, if the destination field is
+// the zero value.
+func copyZeroFields[T any](dst, src *T) {
+	v := reflect.ValueOf(dst).Elem()
+	vFrom := reflect.ValueOf(src).Elem()
+
+	for i := range v.NumField() {
+		if !v.Field(i).CanSet() || !v.Field(i).IsZero() {
+			continue
 		}
+
+		v.Field(i).Set(vFrom.Field(i))
 	}
 }
 
 func (c *Config) Save(db *gorm.DB) error {
-	realCnf, err := getConfig(db)
+	realCnf, err := GetConfig(db)
 	if err != nil {
 		if !errors.Is(err, gorm.ErrRecordNotFound) {
 			return err
