@@ -1,14 +1,8 @@
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { formatDuration } from "../../helpers.js";
+import { formatDuration, navPillClass } from "../../helpers.js";
 import { WorkoutStats } from "./show_stats.js";
-import { localized, msg } from "@lit/localize";
-import { initLocalize } from "../../locale.js";
-
-initLocalize();
-
 @customElement("workout-breakdown")
-@localized()
 export class WorkoutBreakdown extends LitElement {
   private activeItem: HTMLElement | null = null;
 
@@ -40,6 +34,11 @@ export class WorkoutBreakdown extends LitElement {
       JSON.parse(document.getElementById(id)?.textContent || "null"),
   })
   preferredUnits = null;
+
+  @property({
+    converter: (value: string) => JSON.parse(value) as Record<string, string>,
+  })
+  translations: Record<string, string> = {};
 
   availableMetrics: Record<string, { unit: string; displayFor?: string[] }> = {
     distance: {
@@ -117,15 +116,15 @@ export class WorkoutBreakdown extends LitElement {
           if (metric === "speed") {
             return html`<th class="${hiddenClasses}">${col}</th>
               <th class="${hiddenClasses}">
-                ${msg("Tempo", { id: "workout.tempo" })}
+                ${this.translations.tempo || "Tempo"}
               </th>`;
           }
           if (metric === "elevation") {
             return html`<th class="${hiddenClasses}">
-                ${msg("Total up", { id: "workout.total-up" })}
+                ${this.translations["total-up"] || "Total up"}
               </th>
               <th class="${hiddenClasses}">
-                ${msg("Total down", { id: "workout.total-down" })}
+                ${this.translations["total-down"] || "Total down"}
               </th>`;
           }
           return html`<th class="${hiddenClasses}">${col}</th>`;
@@ -309,11 +308,7 @@ export class WorkoutBreakdown extends LitElement {
           ${intervals.map((interval) => {
             return html`<a
               href="#"
-              class="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0 ${
-                this.intervalDistance === interval
-                  ? "bg-indigo-500 text-white"
-                  : ""
-              }"
+              class=${navPillClass(this.intervalDistance === interval)}
               @click=${(e: Event) => {
                 e.preventDefault();
                 this.setActiveItem(null);

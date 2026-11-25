@@ -55,7 +55,6 @@ templ ShowStats(s *database.RouteSegment) {
 		trend-period={ currentUser.Profile.RouteSegmentTrendPeriodOrDefault() }
 		trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
 		config-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-config-update") }
-		lang={ helpers.Language(ctx) }
 	></route-segment-stats>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/route_segments/show_stats.js" } type="module"></script>
 }

@@ -29,8 +29,6 @@ templ ShowStats(w *database.Workout) {
 		map-id="workout-map"
 		data-el="workout-data"
 		preferred-units-el="workout-preferred-units"
-		tz={ helpers.Timezone(ctx) }
-		lang={ helpers.Language(ctx) }
 		translations={ templ.JSONString(translations) }
 	></workout-stats>
 	<script src={ helpers.RouteFor(ctx, "assets") + "/views/workouts/show_stats.js" } type="module"></script>

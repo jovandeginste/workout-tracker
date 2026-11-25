@@ -1,5 +1,6 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { endpointMarker, streetLayer } from "../../map.js";
 
 class CreateRouteSegmentMap extends HTMLElement {
   constructor() {
@@ -27,11 +28,7 @@ class CreateRouteSegmentMap extends HTMLElement {
     const map = L.map(this, {
       fadeAnimation: false,
     }).setView(this.center, 15);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      className: "map-tiles",
-    }).addTo(map);
+    streetLayer().addTo(map);
     L.control.scale().addTo(map);
 
     // Add features to the map
@@ -63,23 +60,11 @@ class CreateRouteSegmentMap extends HTMLElement {
     });
 
     let last = this.points[this.points.length - 1];
-    this.endMarker = L.circleMarker([last.lat, last.lng], {
-      color: "red",
-      fill: true,
-      fillColor: "red",
-      fillOpacity: 1,
-      radius: 6,
-    });
+    this.endMarker = endpointMarker([last.lat, last.lng], "red");
     group.addLayer(this.endMarker.addTo(map));
 
     let first = this.points[0];
-    this.startMarker = L.circleMarker([first.lat, first.lng], {
-      color: "green",
-      fill: true,
-      fillColor: "green",
-      fillOpacity: 1,
-      radius: 6,
-    });
+    this.startMarker = endpointMarker([first.lat, first.lng], "green");
     group.addLayer(this.startMarker.addTo(map));
 
     map.fitBounds(group.getBounds(), { animate: false });

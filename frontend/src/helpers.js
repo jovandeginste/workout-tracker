@@ -42,3 +42,10 @@ export function formatDuration(s) {
 
   return components.join(" ");
 }
+
+export function navPillClass(active) {
+  const base =
+    "relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-200 inset-ring inset-ring-gray-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0";
+
+  return `${base} ${active ? "bg-indigo-500 text-white" : ""}`;
+}

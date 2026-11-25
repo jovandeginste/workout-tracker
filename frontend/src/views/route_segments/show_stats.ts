@@ -12,13 +12,13 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import Zoom from "chartjs-plugin-zoom";
-import { localized } from "@lit/localize";
-import { initLocalize } from "../../locale.js";
-
-initLocalize();
-
-const MAX_TREND_BREAK_POINTS = 200;
-const DAYS_PER_MONTH = 30.4375;
+import { chartTheme, saveConfig } from "../../chart";
+import {
+  ChartPoint,
+  colorForType,
+  trendCutoffFromPeriod,
+  trendSegments,
+} from "../../trend";
 
 interface TrendDataPoint {
   date: string;
@@ -33,24 +33,7 @@ interface Translations {
 
 type TrendPeriod = "all" | "365" | "90" | "30" | "year";
 
-interface ChartPoint {
-  x: number;
-  y: number;
-}
-
-interface TrendBreak {
-  pivot: number;
-  pValue: number;
-}
-
-interface Regression {
-  slope: number;
-  intercept: number;
-  baseX: number;
-}
-
 @customElement("route-segment-stats")
-@localized()
 export class RouteSegmentStats extends LitElement {
   @property({
     converter: (v: string) => JSON.parse(v) as TrendDataPoint[],
@@ -61,9 +44,6 @@ export class RouteSegmentStats extends LitElement {
     attribute: "color-mode",
   })
   colorMode = "browser";
-
-  @property()
-  lang: string = null;
 
   @property({
     converter: (value: string) => JSON.parse(value) as Translations,
@@ -103,48 +83,6 @@ export class RouteSegmentStats extends LitElement {
     );
   }
 
-  private isDark(): boolean {
-    if (this.colorMode === "dark") return true;
-    if (this.colorMode === "light") return false;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
-
-  private colorForType(type: string): string {
-    const palette = [
-      "#2563eb",
-      "#16a34a",
-      "#dc2626",
-      "#9333ea",
-      "#ea580c",
-      "#0891b2",
-      "#4f46e5",
-      "#65a30d",
-      "#be123c",
-      "#7c3aed",
-    ];
-
-    let hash = 0;
-    for (let i = 0; i < type.length; i++) {
-      hash = (hash * 31 + type.charCodeAt(i)) % palette.length;
-    }
-
-    return palette[hash];
-  }
-
-  private trendCutoff(): number | null {
-    const now = new Date();
-
-    if (this.trendPeriod === "all") {
-      return null;
-    }
-
-    if (this.trendPeriod === "year") {
-      return new Date(now.getFullYear(), 0, 1).valueOf();
-    }
-
-    return now.valueOf() - Number(this.trendPeriod) * 24 * 60 * 60 * 1000;
-  }
-
   private trendPeriodOptions(): { value: TrendPeriod; label: string }[] {
     return [
       { value: "all", label: this.translations?.trendPeriodAll || "All time" },
@@ -171,7 +109,8 @@ export class RouteSegmentStats extends LitElement {
     const period = (event.target as HTMLSelectElement).value as TrendPeriod;
     this.trendPeriod = period;
 
-    await this.saveRouteSegmentConfig(
+    await saveConfig(
+      this.configUpdateRoute,
       new URLSearchParams({ route_segment_trend_period: period }),
       "Failed to save route segment trend period preference",
     );
@@ -181,237 +120,12 @@ export class RouteSegmentStats extends LitElement {
     this.trendBreakDetection =
       (event.target as HTMLSelectElement).value === "break";
 
-    await this.saveRouteSegmentConfig(
+    await saveConfig(
+      this.configUpdateRoute,
       new URLSearchParams({
         route_segment_trend_break_detection: String(this.trendBreakDetection),
       }),
       "Failed to save route segment trend break detection preference",
-    );
-  }
-
-  private async saveRouteSegmentConfig(
-    body: URLSearchParams,
-    failureMessage: string,
-  ): Promise<void> {
-    if (!this.configUpdateRoute) {
-      return;
-    }
-
-    try {
-      const response = await fetch(this.configUpdateRoute, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body,
-      });
-
-      if (response.ok) {
-        return;
-      }
-    } catch (_err) {
-      // Keep the selected chart setting even if saving the preference fails.
-    }
-
-    console.warn(failureMessage);
-  }
-
-  private average(points: ChartPoint[]): number {
-    return points.reduce((sum, point) => sum + point.y, 0) / points.length;
-  }
-
-  private variance(points: ChartPoint[], average: number): number {
-    if (points.length < 2) {
-      return 0;
-    }
-
-    return (
-      points.reduce((sum, point) => sum + (point.y - average) ** 2, 0) /
-      (points.length - 1)
-    );
-  }
-
-  private normalCDF(value: number): number {
-    const sign = value < 0 ? -1 : 1;
-    const x = Math.abs(value) / Math.sqrt(2);
-    const t = 1 / (1 + 0.3275911 * x);
-    const erf =
-      1 -
-      ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) *
-        t +
-        0.254829592) *
-        t *
-        Math.exp(-x * x);
-
-    return 0.5 * (1 + sign * erf);
-  }
-
-  private trendBreakPValue(before: ChartPoint[], after: ChartPoint[]): number {
-    const beforeAverage = this.average(before);
-    const afterAverage = this.average(after);
-    const beforeVariance = this.variance(before, beforeAverage);
-    const afterVariance = this.variance(after, afterAverage);
-    const standardError = Math.sqrt(
-      beforeVariance / before.length + afterVariance / after.length,
-    );
-
-    if (standardError === 0) {
-      return beforeAverage === afterAverage ? 1 : 0;
-    }
-
-    const testStatistic =
-      Math.abs(beforeAverage - afterAverage) / standardError;
-
-    return 2 * (1 - this.normalCDF(testStatistic));
-  }
-
-  private detectTrendBreak(points: ChartPoint[]): TrendBreak | null {
-    const minimumPointsPerSide = 3;
-
-    if (!this.trendBreakDetection) {
-      return null;
-    }
-
-    if (points.length < minimumPointsPerSide * 2) {
-      return null;
-    }
-
-    if (points.length > MAX_TREND_BREAK_POINTS) {
-      return null;
-    }
-
-    let bestBreak: TrendBreak | null = null;
-    let bestGroupSize = 0;
-
-    for (
-      let pivot = minimumPointsPerSide;
-      pivot <= points.length - minimumPointsPerSide;
-      pivot++
-    ) {
-      const before = points.slice(0, pivot);
-      const after = points.slice(pivot);
-      const pValue = this.trendBreakPValue(before, after);
-
-      if (pValue > 0.05) {
-        continue;
-      }
-
-      const groupSize = Math.min(before.length, after.length);
-
-      if (
-        groupSize > bestGroupSize ||
-        (groupSize === bestGroupSize &&
-          (!bestBreak || pValue < bestBreak.pValue))
-      ) {
-        bestGroupSize = groupSize;
-        bestBreak = {
-          pivot,
-          pValue,
-        };
-      }
-    }
-
-    return bestBreak;
-  }
-
-  private canShowTrend(points: ChartPoint[]): boolean {
-    if (points.length < 5) {
-      return false;
-    }
-
-    const first = points[0].x;
-    const last = points[points.length - 1].x;
-    const months = Math.max(
-      1,
-      (last - first) / (DAYS_PER_MONTH * 24 * 60 * 60 * 1000),
-    );
-
-    return points.length / months >= 1;
-  }
-
-  private linearRegression(points: ChartPoint[]): Regression {
-    const count = points.length;
-    const baseX = points[0].x;
-    const sums = points.reduce(
-      (acc, point) => {
-        const x = point.x - baseX;
-        acc.x += x;
-        acc.y += point.y;
-        acc.xy += x * point.y;
-        acc.x2 += x * x;
-        return acc;
-      },
-      { x: 0, y: 0, xy: 0, x2: 0 },
-    );
-
-    const denominator = count * sums.x2 - sums.x * sums.x;
-    if (denominator === 0) {
-      return { slope: 0, intercept: sums.y / count, baseX };
-    }
-
-    const slope = (count * sums.xy - sums.x * sums.y) / denominator;
-    const intercept = (sums.y - slope * sums.x) / count;
-
-    return { slope, intercept, baseX };
-  }
-
-  private trendLineData(points: ChartPoint[]): ChartPoint[] {
-    if (!this.canShowTrend(points)) {
-      return [];
-    }
-
-    const regression = this.linearRegression(points);
-    const first = points[0];
-    const last = points[points.length - 1];
-
-    return [first, last].map((point) => ({
-      x: point.x,
-      y: regression.slope * (point.x - regression.baseX) + regression.intercept,
-    }));
-  }
-
-  private averageLineData(points: ChartPoint[]): ChartPoint[] {
-    if (!this.canShowTrend(points)) {
-      return [];
-    }
-
-    const y = this.average(points);
-
-    return [
-      { x: points[0].x, y },
-      { x: points[points.length - 1].x, y },
-    ];
-  }
-
-  private trendSegments(points: ChartPoint[]): ChartPoint[][] {
-    if (!this.canShowTrend(points)) {
-      return [];
-    }
-
-    if (!this.trendBreakDetection) {
-      return [this.trendLineData(points)].filter(
-        (segment) => segment.length > 0,
-      );
-    }
-
-    const trendBreak = this.detectTrendBreak(points);
-
-    if (!trendBreak) {
-      return [this.trendLineData(points)].filter(
-        (segment) => segment.length > 0,
-      );
-    }
-
-    const before = points.slice(0, trendBreak.pivot);
-    const after = points.slice(trendBreak.pivot);
-    if (!this.canShowTrend(before) || !this.canShowTrend(after)) {
-      return [this.trendLineData(points)].filter(
-        (segment) => segment.length > 0,
-      );
-    }
-
-    return [this.averageLineData(before), this.averageLineData(after)].filter(
-      (segment) => segment.length > 0,
     );
   }
 
@@ -458,15 +172,13 @@ export class RouteSegmentStats extends LitElement {
     if (!canvas) return;
 
     const speedUnit = this.translations?.speedUnit || "";
-    const dark = this.isDark();
-    const fgColor = dark ? "#e4e4e7" : "#27272a";
-    const gridColor = dark ? "#3f3f46" : "#d4d4d8";
+    const { fgColor, gridColor } = chartTheme(this.colorMode);
 
     const allTypes = Array.from(
       new Set(processedData.map((d) => d.type)),
     ).sort();
 
-    const trendCutoff = this.trendCutoff();
+    const trendCutoff = trendCutoffFromPeriod(this.trendPeriod);
     const trendMax = new Date().valueOf();
     const datasets = allTypes.flatMap((type) => {
       const typeData = processedData
@@ -478,12 +190,12 @@ export class RouteSegmentStats extends LitElement {
         .filter((d) => !isNaN(d.y))
         .sort((a, b) => a.x - b.x);
 
-      const color = this.colorForType(type);
+      const color = colorForType(type);
 
       const trendData = typeData.filter(
         (d: ChartPoint) => trendCutoff === null || d.x >= trendCutoff,
       );
-      const trendSegments = this.trendSegments(trendData);
+      const segments = trendSegments(trendData, this.trendBreakDetection);
 
       return [
         {
@@ -499,7 +211,7 @@ export class RouteSegmentStats extends LitElement {
           pointHoverBorderWidth: 0,
           pointRadius: 4,
         },
-        ...trendSegments.map((segment, index) => ({
+        ...segments.map((segment, index) => ({
           label: `__trend:${type}:${index}`,
           trendGroup: type,
           backgroundColor: "transparent",

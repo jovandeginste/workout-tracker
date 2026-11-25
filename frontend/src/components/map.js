@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatDuration } from "../helpers.js";
+import { aerialLayer, endpointMarker, streetLayer } from "../map.js";
 
 /*
 interface Point {
@@ -137,26 +138,14 @@ class WtMap extends HTMLElement {
     if (positions.length > 0) {
       let last = positions[positions.length - 1];
       this.trackGroup.addLayer(
-        L.circleMarker(last, {
-          color: "red",
-          fill: true,
-          fillColor: "red",
-          fillOpacity: 1,
-          radius: 6,
-        })
+        endpointMarker(last, "red")
           .addTo(map)
           .bindTooltip(this.getTooltip(positions.length - 1)),
       );
 
       let first = positions[0];
       this.trackGroup.addLayer(
-        L.circleMarker(first, {
-          color: "green",
-          fill: true,
-          fillColor: "green",
-          fillOpacity: 1,
-          radius: 6,
-        })
+        endpointMarker(first, "green")
           .addTo(map)
           .bindTooltip(this.getTooltip(0)),
       );
@@ -198,20 +187,11 @@ class WtMap extends HTMLElement {
   }
 
   getStreetLayer() {
-    return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      className: "map-tiles",
-    });
+    return streetLayer();
   }
 
   getAerialLayer() {
-    return L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Powered by Esri",
-      },
-    );
+    return aerialLayer();
   }
 
   getSlopeLayerGroup(polyLineProperties = {}) {

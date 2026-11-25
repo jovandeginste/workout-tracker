@@ -3,7 +3,6 @@ import { HeatLayer } from "leaflet.heat";
 import "leaflet.markercluster";
 
 import "leaflet/dist/leaflet.css";
-import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -11,6 +10,7 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { aerialLayer, streetLayer } from "../../map.js";
 
 class WtHeatmap extends HTMLElement {
   constructor() {
@@ -31,21 +31,8 @@ class WtHeatmap extends HTMLElement {
     var map = L.map(this, {
       fadeAnimation: false,
     });
-    const layerStreet = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        className: "map-tiles",
-      },
-    );
-
-    const layerAerial = L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Powered by Esri",
-      },
-    );
+    const layerStreet = streetLayer();
+    const layerAerial = aerialLayer();
 
     const iconDefault = L.icon({
       iconRetinaUrl: markerIcon2x,
@@ -131,30 +118,24 @@ class WtHeatmap extends HTMLElement {
 
     var clusterConfig = { showCoverageOnHover: false };
 
-    let resp = await fetch(this.apiWorkoutsCoordinatesRoute, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    let respJson = await resp.json();
+    const fetchJson = async (route) => {
+      const response = await fetch(route, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
+      return response.json();
+    };
+
+    let respJson = await fetchJson(this.apiWorkoutsCoordinatesRoute);
     heatMapData = geoJson2heat(respJson.results);
 
-    resp = await fetch(this.apiWorkoutsCentersRoute, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    respJson = await resp.json();
+    respJson = await fetchJson(this.apiWorkoutsCentersRoute);
     markers = L.markerClusterGroup(clusterConfig);
     const geoJsonLayer = L.geoJson(respJson.results, {
       onEachFeature: function (feature, layer) {
         layer.bindPopup(feature.properties.details);
       },
     });
-    geoJsonLayer.onEachFeature;
-
     markers.addLayer(geoJsonLayer);
     markers.addTo(map);
 
