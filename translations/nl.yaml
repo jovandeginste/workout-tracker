@@ -56,7 +56,6 @@ nl:
     user: Gebruiker
     weight: Gewicht
     workout: Workout
-    workouts: workouts
   dashboard:
     for-user: Dashboard voor %s
     other-users: Andere gebruikers
@@ -102,7 +101,6 @@ nl:
     day: dag
     day-1: 1 dag
     day-7: 7 dagen
-    day-15: 15 dagen
     equipment: materiaal
     forever: voor altijd
     month: maand
@@ -255,7 +253,6 @@ nl:
       update-profile: Profiel bijwerken
       update-units: Voorkeurseenheden bijwerken
       updated: Profiel bijgewerkt
-      your-profile: Jouw profiel
       your-settings: Uw instellingen
     update: Gebruiker bijwerken
     username: Gebruikersnaam
@@ -281,7 +278,6 @@ nl:
     distance: Afstand
     duration: Duur
     elevation: Hoogte
-    enhanced-speed: Gecorrigeerde snelheid
     est-calories-burned: Verbruik calorieën (geschat)
     extra-metrics: Extra informatie
     filter-workouts: Filter workouts
@@ -291,7 +287,6 @@ nl:
     lock: Vergrendel of ontgrendel de attributen van deze workout tegen automatische updates.
     locked: De attributen van workout '%s' zijn nu vergrendeld
     manual: Manueel
-    map-full-width: Toon de kaart in volle breedte
     matching-segments: Overeenkomende route segmenten
     max-elevation: Hoogste niveau
     max-speed: Max. snelheid

@@ -15,7 +15,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 )
 
-func Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout, viewer *database.User) templ.Component {
+func Show(user *database.User, users []*database.User, recentWorkouts []*database.Workout, viewer *database.User) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -141,7 +141,7 @@ func Show(user *database.User, users []*database.User, wos []*database.Workout, 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = ProfileCalendar(wos).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ProfileCalendar().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

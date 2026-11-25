@@ -8,7 +8,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/workouts"
 )
 
-templ Show(user *database.User, users []*database.User, wos []*database.Workout, recentWorkouts []*database.Workout, viewer *database.User) {
+templ Show(user *database.User, users []*database.User, recentWorkouts []*database.Workout, viewer *database.User) {
 	@partials.Page(partials.NewPageOptions()) {
 		<h2>
 			@helpers.IconFor("dashboard")
@@ -34,7 +34,7 @@ templ Show(user *database.User, users []*database.User, wos []*database.Workout,
 				}
 			</div>
 			<div>
-				@ProfileCalendar(wos)
+				@ProfileCalendar()
 			</div>
 		</div>
 		if len(users) > 1 {

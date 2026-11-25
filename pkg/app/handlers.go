@@ -143,11 +143,6 @@ func (a *App) dashboardHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	w, err := u.GetWorkouts(a.db)
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
-	}
-
 	users, err := database.GetUsers(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
@@ -158,7 +153,7 @@ func (a *App) dashboardHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	return Render(c, http.StatusOK, user.Show(u, users, w, recent, u))
+	return Render(c, http.StatusOK, user.Show(u, users, recent, u))
 }
 
 func (a *App) userLoginHandler(c *echo.Context) error {
@@ -182,12 +177,7 @@ func (a *App) heatmapHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-signout"), ErrUserNotFound)
 	}
 
-	w, err := u.GetWorkouts(a.db)
-	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-signout"), err)
-	}
-
-	return Render(c, http.StatusOK, user.Heatmap(w))
+	return Render(c, http.StatusOK, user.Heatmap())
 }
 
 func Render(ctx *echo.Context, statusCode int, t templ.Component) error {

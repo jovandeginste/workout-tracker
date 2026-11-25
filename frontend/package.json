@@ -17,7 +17,6 @@
     "apexcharts": "^8.9.1",
     "chart.js": "^4.5.0",
     "chartjs-adapter-date-fns": "^3.0.0",
-    "chartjs-plugin-trendline": "^3.2.4",
     "chartjs-plugin-zoom": "^3.0.2",
     "date-fns": "^4.1.0",
     "fullcalendar": "^7.1.5",
@@ -26,10 +25,7 @@
     "leaflet.heat": "github:Leaflet/Leaflet.heat",
     "leaflet.markercluster": "^1.5.3",
     "lit": "^3.3.1",
-    "material-icons": "^1.13.12",
     "shareon": "^2.5.0",
-    "simpleheat": "^1.0.0",
-    "temporal-polyfill": "^1.0.8",
     "xliff": "^6.2.2"
   },
   "scripts": {

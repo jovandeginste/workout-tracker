@@ -5,6 +5,8 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD)
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 WT_OUTPUT_FILE ?= tmp/workout-tracker
 WT_DEBUG_OUTPUT_FILE ?= tmp/wt-debug
+LD_FLAGS = -X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'
+DOCKER_BUILD_ARGS = --build-arg BUILD_TIME="$(BUILD_TIME)" --build-arg GIT_COMMIT="$(GIT_COMMIT)" --build-arg GIT_REF="$(GIT_REF)" --build-arg GIT_REF_NAME="$(GIT_REF_NAME)" --build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)"
 
 THEME_SCREENSHOT_WIDTH ?= 1200
 THEME_SCREENSHOT_HEIGHT ?= 900
@@ -99,25 +101,13 @@ build: build-frontend build-templates build-server build-docker screenshots
 meta: swagger screenshots changelog
 
 build-cli:
-	go build \
-			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
-			-o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
+	go build -ldflags "$(LD_FLAGS)" -o $(WT_DEBUG_OUTPUT_FILE) ./cmd/wt-debug/
 
 build-server:
-	go build \
-			-ldflags "-X 'main.buildTime=$(BUILD_TIME)' -X 'main.gitCommit=$(GIT_COMMIT)' -X 'main.gitRef=$(GIT_REF)' -X 'main.gitRefName=$(GIT_REF_NAME)' -X 'main.gitRefType=$(GIT_REF_TYPE)'" \
-			-o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
+	go build -ldflags "$(LD_FLAGS)" -o $(WT_OUTPUT_FILE) ./cmd/workout-tracker/
 
 build-docker:
-	docker build \
-			--tag workout-tracker --pull \
-			--build-arg BUILD_TIME="$(BUILD_TIME)" \
-			--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
-			--build-arg GIT_REF="$(GIT_REF)" \
-			--build-arg GIT_REF_NAME="$(GIT_REF_NAME)" \
-			--build-arg GIT_REF_TYPE="$(GIT_REF_TYPE)" \
-			--file ./docker/Dockerfile \
-			.
+	docker build --tag workout-tracker --pull $(DOCKER_BUILD_ARGS) --file ./docker/Dockerfile .
 
 swagger:
 	go tool swag init \
@@ -161,22 +151,21 @@ test-go: test-commands test-templates test-packages
 
 screenshots: generate-screenshots screenshots-theme screenshots-responsive screenshots-i18n track-gif
 
-generate-screenshots: build-server
+define run_with_server
 	export WT_BIND=[::]:8180 WT_DSN=./tmp/screenshots.db; \
 			$(WT_OUTPUT_FILE) & \
 			export SERVER_PID=$$!; \
 			sleep 3; \
-			K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js; \
+			$(1); \
 			kill $${SERVER_PID}
+endef
+
+generate-screenshots: build-server
+	$(call run_with_server,K6_BROWSER_ARGS="force-dark-mode" k6 run screenshots.js)
 
 generate-track-frames: build-server
 	mkdir -p tmp/
-	export WT_BIND=[::]:8180 WT_DSN=./tmp/screenshots.db; \
-			$(WT_OUTPUT_FILE) & \
-			export SERVER_PID=$$!; \
-			sleep 3; \
-			K6_BROWSER_ARGS="force-dark-mode" k6 run track.js; \
-			kill $${SERVER_PID}
+	$(call run_with_server,K6_BROWSER_ARGS="force-dark-mode" k6 run track.js)
 
 track-gif: generate-track-frames
 	magick convert -delay 50 -loop 0 tmp/track-frame-*.png docs/track.gif
