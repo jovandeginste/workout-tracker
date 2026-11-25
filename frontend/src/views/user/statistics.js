@@ -1,4 +1,5 @@
 import ApexCharts from "apexcharts";
+import { chartTheme, saveConfig } from "../../chart";
 import { formatDuration } from "../../helpers.js";
 import { colorForType, trendCutoffFromSince, trendSegments } from "../../trend";
 
