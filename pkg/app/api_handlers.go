@@ -241,25 +241,30 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 // @Failure      404  {object}  APIResponse
 // @Failure      500  {object}  APIResponse
 // @Router       /records [get]
-func (a *App) apiRecordsHandler(c *echo.Context) error {
+func (a *App) apiWorkoutMetric(c *echo.Context, fetch func(u *database.User, wt database.WorkoutType) (any, error)) error {
 	resp := APIResponse{}
 
 	var workoutType string
-
 	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
 		return a.renderAPIError(c, resp, err)
 	}
 
 	u := a.getCurrentUser(c)
 
-	s, err := u.GetRecords(database.AsWorkoutType(workoutType), u)
+	result, err := fetch(u, database.AsWorkoutType(workoutType))
 	if err != nil {
-		resp.AddError(err)
+		return a.renderAPIError(c, resp, err)
 	}
 
-	resp.Results = s
+	resp.Results = result
 
 	return c.JSON(http.StatusOK, resp)
+}
+
+func (a *App) apiRecordsHandler(c *echo.Context) error {
+	return a.apiWorkoutMetric(c, func(u *database.User, wt database.WorkoutType) (any, error) {
+		return u.GetRecords(wt, u)
+	})
 }
 
 // apiTotalsHandler lists current user's totals for the specified workout type
@@ -272,24 +277,9 @@ func (a *App) apiRecordsHandler(c *echo.Context) error {
 // @Failure      500  {object}  APIResponse
 // @Router       /totals [get]
 func (a *App) apiTotalsHandler(c *echo.Context) error {
-	resp := APIResponse{}
-
-	var workoutType string
-
-	if err := echo.QueryParamsBinder(c).String("type", &workoutType).BindError(); err != nil {
-		return a.renderAPIError(c, resp, err)
-	}
-
-	u := a.getCurrentUser(c)
-
-	s, err := u.GetTotals(database.AsWorkoutType(workoutType), u)
-	if err != nil {
-		resp.AddError(err)
-	}
-
-	resp.Results = s
-
-	return c.JSON(http.StatusOK, resp)
+	return a.apiWorkoutMetric(c, func(u *database.User, wt database.WorkoutType) (any, error) {
+		return u.GetTotals(wt, u)
+	})
 }
 
 // apiStatisticsHandler returns a user's statistics for a given time range and bucket size

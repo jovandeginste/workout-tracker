@@ -194,72 +194,67 @@ class WtMap extends HTMLElement {
     return aerialLayer();
   }
 
-  getSlopeLayerGroup(polyLineProperties = {}) {
-    const slopeLayerGroup = new L.featureGroup();
+  buildColorLayer(positions, polyLineProperties, colorFor) {
+    const group = new L.featureGroup();
 
     let prevPoint;
-    const positions = this.workout.position.Data;
     positions.forEach((p, i) => {
       if (p === null) {
         return;
       }
 
       if (prevPoint) {
-        const slope = this.workout.slope.Data[i] || 0;
-
-        polyLineProperties["color"] = this.colorForSlope(slope);
-        L.polyline([prevPoint, p], polyLineProperties).addTo(slopeLayerGroup);
+        polyLineProperties.color = colorFor(i);
+        group.addLayer(L.polyline([prevPoint, p], polyLineProperties));
       }
+
       prevPoint = p;
     });
 
-    return slopeLayerGroup;
+    return group;
+  }
+
+  getSlopeLayerGroup(polyLineProperties = {}) {
+    return this.buildColorLayer(
+      this.workout.position.Data,
+      polyLineProperties,
+      (i) => this.colorForSlope(this.workout.slope.Data[i] || 0),
+    );
   }
 
   getSpeedLayerGroup(polyLineProperties = {}) {
     const MOVING_AVERAGE_LENGTH = 15;
     const movingSpeeds = [];
-    const speeds = this.workout.speed?.Data.filter((x) => x !== null);
+    const speeds = this.workout.speed?.Data.filter((x) => x !== null) || [];
 
-    const averageSpeed =
-      speeds.reduce((a, x) => {
-        return a + x;
-      }, 0) / speeds.length;
+    const averageSpeed = speeds.reduce((a, x) => a + x, 0) / speeds.length;
     const stdevSpeed = Math.sqrt(
       speeds.reduce((a, x) => a + Math.pow(x - averageSpeed, 2), 0) /
         (speeds.length - 1),
     );
 
-    const speedLayerGroup = new L.featureGroup();
-
-    let prevPoint;
-    this.workout.position.Data.forEach((p, i) => {
-      if (p === null) {
-        return;
-      }
-      if (prevPoint) {
+    return this.buildColorLayer(
+      this.workout.position.Data,
+      polyLineProperties,
+      (i) => {
         const speed = this.workout.speed.Data[i] || null;
         if (speed === null || speed < 0.1) {
-          polyLineProperties["color"] = "rgb(0,0,0)"; // Pausing
-        } else {
-          if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
-            movingSpeeds.shift();
-          }
-          movingSpeeds.push(speed);
-          const movingAverageSpeed =
-            movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
-
-          const zScore =
-            ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed; // -1...1 is within one standard deviation
-          polyLineProperties["color"] = this.getColor(0.5 + zScore / 2);
+          return "rgb(0,0,0)"; // Pausing
         }
-        L.polyline([prevPoint, p], polyLineProperties).addTo(speedLayerGroup);
-      }
 
-      prevPoint = p;
-    });
+        if (movingSpeeds.length > MOVING_AVERAGE_LENGTH) {
+          movingSpeeds.shift();
+        }
+        movingSpeeds.push(speed);
+        const movingAverageSpeed =
+          movingSpeeds.reduce((a, x) => a + x) / movingSpeeds.length;
 
-    return speedLayerGroup;
+        const zScore =
+          ((movingAverageSpeed || averageSpeed) - averageSpeed) / stdevSpeed;
+
+        return this.getColor(0.5 + zScore / 2);
+      },
+    );
   }
 
   getTooltip(i) {
