@@ -71,6 +71,15 @@ func sessionLoadAndSave(sm *scs.SessionManager) echo.MiddlewareFunc {
 	}
 }
 
+func cacheControl(value string) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c *echo.Context) error {
+			c.Response().Header().Set(echo.HeaderCacheControl, value)
+			return next(c)
+		}
+	}
+}
+
 func newEcho(logger *slog.Logger) *echo.Echo {
 	e := echo.New()
 
@@ -123,7 +132,7 @@ func (a *App) ConfigureWebserver() error {
 	a.apiRoutes(publicGroup)
 
 	if a.AssetDir != "" {
-		publicGroup.Static("/assets", a.AssetDir)
+		publicGroup.Static("/assets", a.AssetDir, cacheControl("no-cache"))
 	} else {
 		publicGroup.StaticFS("/assets", a.Assets)
 	}
