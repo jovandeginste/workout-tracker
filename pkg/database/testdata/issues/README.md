@@ -14,8 +14,11 @@ included.
 Regenerate the golden files after an intentional parser change:
 
 ```sh
-go test ./pkg/database -run TestIssueSamples -count=1 -update-issue-samples
+TZ=UTC go test ./pkg/database -run TestIssueSamples -count=1 -update-issue-samples
 ```
+
+The test suite runs in UTC. Use `make test-go`, or prefix direct `go test`
+invocations with `TZ=UTC`, so date and time formatting matches the goldens.
 
 The golden files keep the workout summary, detected climbs and descents, the
 number of parsed points, a SHA-256 digest of every point (including slope

@@ -14,7 +14,8 @@ TEMPL_PROXY_PORT = 8090
 TEMPL_APP_PORT = 8080
 TEMPL_COMMAND ?= go tool templ
 
-GO_TEST = go test -short -count 1 -mod vendor -covermode=atomic
+# Run the tests in UTC so date/time formatting is reproducible.
+GO_TEST = TZ=UTC go test -short -count 1 -mod vendor -covermode=atomic
 
 BRANCH_NAME_DEPS ?= update-deps
 

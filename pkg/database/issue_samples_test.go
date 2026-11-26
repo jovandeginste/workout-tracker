@@ -22,7 +22,10 @@ import (
 // issues. Every sample has a golden file with the expected result of the
 // parsing pipeline. Regenerate the golden files with:
 //
-//	go test ./pkg/database -run TestIssueSamples -update-issue-samples
+//	TZ=UTC go test ./pkg/database -run TestIssueSamples -update-issue-samples
+//
+// The test suite runs in UTC; use make test-go or set TZ=UTC when invoking
+// go test directly.
 var updateIssueSamples = flag.Bool("update-issue-samples", false, "rewrite the golden JSON files for the donated issue samples")
 
 const issueSamplesDir = "testdata/issues"
@@ -117,12 +120,6 @@ type issueSamplePoint struct {
 }
 
 func TestIssueSamples(t *testing.T) {
-	// The converters use the process-local timezone for some generated names.
-	// Pin it so developer machines and CI produce the same results.
-	previousLocal := time.Local
-	time.Local = time.UTC
-	t.Cleanup(func() { time.Local = previousLocal })
-
 	sources := issueSampleSources(t)
 	files := issueSampleFiles(t)
 	require.NotEmpty(t, files, "no issue samples found in %s", issueSamplesDir)
