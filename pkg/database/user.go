@@ -412,6 +412,18 @@ func (u *User) GetAllEquipment(db *gorm.DB) ([]*Equipment, error) {
 	return w, nil
 }
 
+// GetEquipmentForFilter returns the user's equipment without loading the
+// associated workouts. It is used to render workout filters.
+func (u *User) GetEquipmentForFilter(db *gorm.DB) ([]*Equipment, error) {
+	var equipment []*Equipment
+
+	if err := db.Where(&Equipment{UserID: u.ID}).Order("name").Find(&equipment).Error; err != nil {
+		return nil, err
+	}
+
+	return equipment, nil
+}
+
 func (u *User) GetEquipment(db *gorm.DB, id uint64) (*Equipment, error) {
 	var w *Equipment
 

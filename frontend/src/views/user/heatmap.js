@@ -34,6 +34,7 @@ class WtHeatmap extends HTMLElement {
     );
     this.i18n = JSON.parse(this.getAttribute("i18n"));
     this.types = JSON.parse(this.getAttribute("types") || "[]") || [];
+    this.equipment = JSON.parse(this.getAttribute("equipment") || "[]") || [];
 
     this.style.display = "block";
 
@@ -138,6 +139,7 @@ class WtHeatmap extends HTMLElement {
     const fetchJson = async (route) => {
       const params = new URLSearchParams();
       this.types.forEach((type) => params.append("type", type));
+      this.equipment.forEach((id) => params.append("equipment", id));
       const url = params.toString() ? `${route}?${params}` : route;
       const response = await fetch(url, {
         method: "GET",
@@ -180,6 +182,12 @@ class WtHeatmap extends HTMLElement {
       )
         .map((input) => input.value)
         .filter(Boolean);
+
+      this.equipment = Array.from(
+        filterForm.querySelectorAll('input[name="equipment"]:checked'),
+      )
+        .map((input) => Number(input.value))
+        .filter((id) => id > 0);
 
       this.loadData();
     });

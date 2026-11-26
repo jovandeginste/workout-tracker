@@ -74,10 +74,10 @@ func (d *MapDataDetails) UpdateHeatmapPoints() {
 // Only the (small) heatmap_points column is read; the full track points are
 // never loaded, keeping memory usage independent of the history size.
 func (u *User) GetHeatmapPoints(db *gorm.DB) ([]HeatmapPoint, error) {
-	return u.GetHeatmapPointsForTypes(db, nil)
+	return u.GetHeatmapPointsForTypes(db, nil, nil)
 }
 
-func (u *User) GetHeatmapPointsForTypes(db *gorm.DB, types []WorkoutType) ([]HeatmapPoint, error) {
+func (u *User) GetHeatmapPointsForTypes(db *gorm.DB, types []WorkoutType, equipment []uint64) ([]HeatmapPoint, error) {
 	var details []*MapDataDetails
 
 	query := db.Model(&MapDataDetails{}).
@@ -89,6 +89,13 @@ func (u *User) GetHeatmapPointsForTypes(db *gorm.DB, types []WorkoutType) ([]Hea
 
 	if len(types) > 0 {
 		query = query.Where("workouts.type IN ?", types)
+	}
+
+	if len(equipment) > 0 {
+		query = query.Where(
+			"workouts.id IN (SELECT workout_id FROM workout_equipment WHERE equipment_id IN ?)",
+			equipment,
+		)
 	}
 
 	err := query.Find(&details).Error

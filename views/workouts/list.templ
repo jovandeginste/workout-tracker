@@ -7,7 +7,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ List(workouts []*database.Workout, filters *database.WorkoutFilters, workoutTypes []database.WorkoutType) {
+templ List(workouts []*database.Workout, filters *database.WorkoutFilters, workoutTypes []database.WorkoutType, equipment []*database.Equipment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<div id="workouts-content">
 			@partials.ListHeader("workout", "menu.workouts", len(workouts), "workout-add", "workout.add-workout")
@@ -26,7 +26,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters, worko
 					hx-disinherit="hx-select hx-push-url"
 				>
 					<input type="hidden" id="active" name="active" value="true"/>
-					@partials.WorkoutTypeFilter(workoutTypes, helpers.WorkoutTypeStrings(filters.Types))
+					@partials.WorkoutTypeFilter(workoutTypes, helpers.WorkoutTypeStrings(filters.Types), equipment, filters.Equipment)
 					@partials.UsernameFilter(filters.Username)
 					<label for="since">{ i18n.T(ctx, "common.last") }</label>
 					@partials.TranslatedKeySelect("since", "since", filters.Since, helpers.StatisticSinceOptions())

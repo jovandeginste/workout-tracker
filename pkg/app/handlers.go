@@ -89,10 +89,11 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
 
 	statisticsParams := struct {
-		Since string   `query:"since"`
-		Per   string   `query:"per"`
-		Type  []string `query:"type"`
-		Chart string   `query:"chart"`
+		Since     string   `query:"since"`
+		Per       string   `query:"per"`
+		Type      []string `query:"type"`
+		Equipment []uint64 `query:"equipment"`
+		Chart     string   `query:"chart"`
 	}{
 		Since: "1 year",
 		Per:   "month",
@@ -122,6 +123,14 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 
 	statisticsParams.Type = selectedTypes
 
+	equipment := make([]uint64, 0, len(statisticsParams.Equipment))
+	for _, id := range statisticsParams.Equipment {
+		if id != 0 {
+			equipment = append(equipment, id)
+		}
+	}
+	statisticsParams.Equipment = equipment
+
 	routeSegments, err := database.GetRouteSegments(a.db)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
@@ -132,7 +141,12 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Chart, routeSegments, typeCounts))
+	allEquipment, err := u.GetEquipmentForFilter(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Equipment, statisticsParams.Chart, routeSegments, typeCounts, allEquipment))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {
@@ -235,16 +249,35 @@ func workoutTypesFromQuery(c *echo.Context) []database.WorkoutType {
 	return types
 }
 
+func equipmentIDsFromQuery(c *echo.Context) []uint64 {
+	raw := c.QueryParams()["equipment"]
+	ids := make([]uint64, 0, len(raw))
+
+	for _, value := range raw {
+		if id := cast.ToUint64(value); id != 0 {
+			ids = append(ids, id)
+		}
+	}
+
+	return ids
+}
+
 func (a *App) heatmapHandler(c *echo.Context) error {
 	u := a.getCurrentUser(c)
 	selected := workoutTypesFromQuery(c)
+	selectedEquipment := equipmentIDsFromQuery(c)
 
 	counts, err := database.GetWorkoutTypeCounts(a.db, u.ID, u)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Heatmap(helpers.WorkoutTypesByCount(counts), helpers.WorkoutTypeStrings(selected), selected))
+	equipment, err := u.GetEquipmentForFilter(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Heatmap(helpers.WorkoutTypesByCount(counts), helpers.WorkoutTypeStrings(selected), selected, equipment, selectedEquipment))
 }
 
 func Render(ctx *echo.Context, statusCode int, t templ.Component) error {

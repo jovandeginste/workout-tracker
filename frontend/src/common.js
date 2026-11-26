@@ -167,31 +167,34 @@ globalThis.showTab = function showTab(parentId, elemId) {
   parent.style.minHeight = Math.max(origSize, newSize) + "px";
 };
 
-// Keep the "All" pill and specific type pills mutually exclusive.
+// Keep the "All" pill and specific pills mutually exclusive.
 document.addEventListener(
   "change",
   (event) => {
     const input = event.target;
-    if (!(input instanceof HTMLInputElement) || input.name !== "type") {
+    if (
+      !(input instanceof HTMLInputElement) ||
+      !["type", "equipment"].includes(input.name)
+    ) {
       return;
     }
 
-    const group = input.closest(".workout-types");
+    const group = input.closest(".workout-types, .workout-equipment");
     if (!group) {
       return;
     }
 
-    const all = group.querySelector('input[name="type"][value=""]');
+    const all = group.querySelector(`input[name="${input.name}"][id$="_all"]`);
 
     if (!input.checked) {
-      if (all && !group.querySelector('input[name="type"]:checked')) {
+      if (all && !group.querySelector(`input[name="${input.name}"]:checked`)) {
         all.checked = true;
       }
       return;
     }
 
-    if (input.value === "") {
-      group.querySelectorAll('input[name="type"]').forEach((other) => {
+    if (input === all) {
+      group.querySelectorAll(`input[name="${input.name}"]`).forEach((other) => {
         if (other !== input) other.checked = false;
       });
     } else if (all) {

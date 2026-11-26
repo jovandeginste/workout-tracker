@@ -349,15 +349,18 @@
     }
   }
 
-  .workout-types label {
+  .workout-types label,
+  .workout-equipment label {
     @apply px-0;
   }
 
-  .workout-types label:first-child .selectable-pill {
+  .workout-types label:first-child .selectable-pill,
+  .workout-equipment label:first-child .selectable-pill {
     @apply ml-0;
   }
 
-  .workout-types label:last-child .selectable-pill {
+  .workout-types label:last-child .selectable-pill,
+  .workout-equipment label:last-child .selectable-pill {
     @apply mr-0;
   }
 

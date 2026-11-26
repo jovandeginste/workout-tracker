@@ -13,8 +13,9 @@ const postgresDialect = "postgres"
 var ErrAnonymousUser = errors.New("no statistics available for anonymous user")
 
 type StatConfig struct {
-	Since string `query:"since"`
-	Per   string `query:"per"`
+	Since     string   `query:"since"`
+	Per       string   `query:"per"`
+	Equipment []uint64 `query:"equipment"`
 }
 
 var bucketStrings = map[string]map[string]string{
@@ -100,10 +101,11 @@ func (sc *StatConfig) GetSince() string {
 	return s
 }
 
-func (u *User) GetStatisticsFor(since, per string, viewer *User) (*Statistics, error) {
+func (u *User) GetStatisticsFor(since, per string, equipment []uint64, viewer *User) (*Statistics, error) {
 	return u.GetStatistics(StatConfig{
-		Since: since,
-		Per:   per,
+		Since:     since,
+		Per:       per,
+		Equipment: equipment,
 	}, viewer)
 }
 
@@ -141,6 +143,20 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 
 	if statConfig.Since != "" && statConfig.Since != "forever" {
 		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())
+	}
+
+	equipment := make([]uint64, 0, len(statConfig.Equipment))
+	for _, id := range statConfig.Equipment {
+		if id != 0 {
+			equipment = append(equipment, id)
+		}
+	}
+
+	if len(equipment) > 0 {
+		q = q.Where(
+			"workouts.id IN (SELECT workout_id FROM workout_equipment WHERE equipment_id IN ?)",
+			equipment,
+		)
 	}
 
 	// Grouping by `raw_bucket` instead of `bucket` ensures that the data is grouped
