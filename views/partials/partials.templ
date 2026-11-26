@@ -84,7 +84,7 @@ templ ModalContainer() {
 	</div>
 }
 
-templ WorkoutTypeFilter(types []database.WorkoutType, selected []string) {
+templ WorkoutTypeFilter(types []database.WorkoutType, selected []string, equipment []*database.Equipment, selectedEquipment []uint64) {
 	<div class="workout-types flex flex-wrap items-center gap-1">
 		<span class="px-2">{ i18n.T(ctx, "common.type") }</span>
 		<div class="flex flex-wrap items-center">
@@ -94,6 +94,17 @@ templ WorkoutTypeFilter(types []database.WorkoutType, selected []string) {
 			}
 		</div>
 	</div>
+	if len(equipment) > 0 {
+		<div class="workout-equipment flex flex-wrap items-center gap-1">
+			<span class="px-2">{ i18n.T(ctx, "menu.equipment") }</span>
+			<div class="flex flex-wrap items-center">
+				@SelectablePill("equipment_all", "equipment", "0", i18n.T(ctx, "common.all"), "pill-compact", len(selectedEquipment) == 0)
+				for _, e := range equipment {
+					@SelectablePill(fmt.Sprintf("equipment_%d", e.ID), "equipment", helpers.A2S(e.ID), e.Name, "pill-compact", slices.Contains(selectedEquipment, e.ID))
+				}
+			</div>
+		</div>
+	}
 }
 
 templ WorkoutTypeOptions(selected string, includeAuto, includeAll bool) {

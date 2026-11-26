@@ -195,7 +195,7 @@ func (rs *RouteSegment) FilterVisibleMatches(viewer *User) {
 func GetRouteSegments(db *gorm.DB) ([]*RouteSegment, error) {
 	var rs []*RouteSegment
 
-	if err := db.Preload("RouteSegmentMatches.Workout").Order("created_at DESC").Find(&rs).Error; err != nil {
+	if err := db.Preload("RouteSegmentMatches.Workout.Equipment").Order("created_at DESC").Find(&rs).Error; err != nil {
 		return nil, err
 	}
 

@@ -10,7 +10,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Statistics(u *database.User, since, per string, workoutTypes []string, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int) {
+templ Statistics(u *database.User, since, per string, workoutTypes []string, selectedEquipment []uint64, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int, equipment []*database.Equipment) {
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<div id="statistics-content">
@@ -30,7 +30,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					hx-swap="outerHTML focus-scroll:false"
 					hx-push-url="true"
 				>
-					@partials.WorkoutTypeFilter(helpers.WorkoutTypesByCount(typeCounts), workoutTypes)
+					@partials.WorkoutTypeFilter(helpers.WorkoutTypesByCount(typeCounts), workoutTypes, equipment, selectedEquipment)
 					<label for="since">{ i18n.T(ctx, "statistics.since") }</label>
 					@partials.TranslatedKeySelect("since", "since", since, helpers.StatisticSinceOptions())
 					<label for="per">{ i18n.T(ctx, "statistics.per") }</label>
@@ -42,7 +42,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					</select>
 				</form>
 				{{ currentUser := helpers.CurrentUser(ctx) }}
-				{{ stats, err := currentUser.GetStatisticsFor(since, per, currentUser) }}
+				{{ stats, err := currentUser.GetStatisticsFor(since, per, selectedEquipment, currentUser) }}
 				if err != nil {
 					<pre>{ err.Error() }</pre>
 				}
@@ -57,6 +57,9 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, cha
 					for _, s := range routeSegments {
 						for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
 							if len(workoutTypes) > 0 && !slices.Contains(workoutTypes, m.Workout.Type.String()) {
+								continue
+							}
+							if !m.Workout.HasAnyEquipment(selectedEquipment) {
 								continue
 							}
 							routeSegmentTrendData = append(routeSegmentTrendData, helpers.TrendDataPoint{

@@ -46,6 +46,22 @@ func (e *Equipment) ValidFor(wt *WorkoutType) bool {
 	return slices.Contains(e.DefaultFor, *wt)
 }
 
+// HasAnyEquipment reports whether the workout uses at least one of the given
+// equipment IDs. An empty list matches every workout.
+func (w *Workout) HasAnyEquipment(ids []uint64) bool {
+	if len(ids) == 0 {
+		return true
+	}
+
+	for _, e := range w.Equipment {
+		if slices.Contains(ids, e.ID) {
+			return true
+		}
+	}
+
+	return false
+}
+
 func (e *Equipment) Delete(db *gorm.DB) error {
 	if err := db.Model(e).Association("Workouts").Clear(); err != nil {
 		return err

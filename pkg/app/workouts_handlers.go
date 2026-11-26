@@ -45,7 +45,7 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 	if err != nil {
 		a.addErrorT(c, "user.not-found", filters.Username)
 
-		return Render(c, http.StatusOK, workouts.List(nil, filters, nil))
+		return Render(c, http.StatusOK, workouts.List(nil, filters, nil, nil))
 	}
 
 	w, err := target.GetWorkouts(database.VisibleWorkouts(filters.ToQuery(a.db), u))
@@ -58,7 +58,12 @@ func (a *App) workoutsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, workouts.List(w, filters, helpers.WorkoutTypesByCount(typeCounts)))
+	equipment, err := target.GetEquipmentForFilter(a.db)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, workouts.List(w, filters, helpers.WorkoutTypesByCount(typeCounts), equipment))
 }
 
 func (a *App) workoutsShowHandler(c *echo.Context) error {

@@ -7,7 +7,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Heatmap(workoutTypes []database.WorkoutType, selectedTypes []string, selected []database.WorkoutType) {
+templ Heatmap(workoutTypes []database.WorkoutType, selectedTypes []string, selected []database.WorkoutType, equipment []*database.Equipment, selectedEquipment []uint64) {
 	@partials.Page(partials.NewPageOptions()) {
 		<link rel="stylesheet" type="text/css" href={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.css" }/>
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/heatmap.js" }></script>
@@ -25,7 +25,7 @@ templ Heatmap(workoutTypes []database.WorkoutType, selectedTypes []string, selec
 			hx-swap="none"
 			hx-push-url="true"
 		>
-			@partials.WorkoutTypeFilter(workoutTypes, selectedTypes)
+			@partials.WorkoutTypeFilter(workoutTypes, selectedTypes, equipment, selectedEquipment)
 		</form>
 		<div id="map-container" data-map-container class="small-size pagebreak">
 			<wt-heatmap
@@ -34,6 +34,7 @@ templ Heatmap(workoutTypes []database.WorkoutType, selectedTypes []string, selec
 				api-workouts-coordinates-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-coordinates")) }
 				api-workouts-centers-route={ templ.JSONString(helpers.RouteFor(ctx, "api-workouts-centers")) }
 				types={ templ.JSONString(helpers.WorkoutTypeStrings(selected)) }
+				equipment={ templ.JSONString(selectedEquipment) }
 				i18n={ templ.JSONString(map[string]string{
           "streets":      i18n.T(ctx, "map.streets"),
           "aerial":       i18n.T(ctx, "map.aerial"),
