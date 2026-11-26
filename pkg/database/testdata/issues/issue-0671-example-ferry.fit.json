@@ -1,0 +1,85 @@
+{
+  "issues": [
+    671
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/22567566/example-ferry.fit.zip",
+  "originalName": "example-ferry.fit",
+  "file": "issue-0671-example-ferry.fit",
+  "workout": {
+    "name": "cycling - 2025-09-15 08:00:21",
+    "type": "cycling",
+    "start": "2025-09-15T08:00:21Z",
+    "end": "2025-09-15T09:44:23Z",
+    "creator": "hammerhead",
+    "center": {
+      "lat": 54.600308597,
+      "lng": 11.309923562,
+      "tz": "UTC"
+    },
+    "totalDistance": 25596.955483,
+    "totalDistance2D": 25593.039041,
+    "totalDuration": "1h44m2s",
+    "pauseDuration": "25m48s",
+    "maxSpeed": 7.156694,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 4.100762,
+    "averageSpeedNoPause": 5.453122,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": -49.304073,
+    "maxElevation": -35.304073,
+    "totalUp": 33.32,
+    "totalDown": 41.92,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 0,
+    "extraMetrics": [
+      "distance",
+      "elevation",
+      "speed",
+      "temperature"
+    ],
+    "pointsCount": 1408,
+    "pointsDigest": "992ab5f9800b2079def21aa7beb60a987c271db5b29ae48a85450fd81e295ba9",
+    "firstPoint": {
+      "time": "2025-09-15T08:00:21Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 1.6,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0.013265,
+      "extraMetrics": {
+        "distance": 0,
+        "speed": 2.42
+      }
+    },
+    "lastPoint": {
+      "time": "2025-09-15T09:44:23Z",
+      "lat": 54.682779992,
+      "lng": 11.381934928,
+      "elevation": -7,
+      "distance": 7.177089,
+      "distance2D": 7.177089,
+      "totalDistance": 25596.955483,
+      "totalDistance2D": 25593.039041,
+      "duration": "1s",
+      "totalDuration": "1h44m2s",
+      "slopeGrade": -0.008371,
+      "extraMetrics": {
+        "distance": 6787.64,
+        "elevation": -45.201436,
+        "speed": 7.107,
+        "temperature": 19
+      }
+    },
+    "climbs": [],
+    "heatmapPointsCount": 132,
+    "heatmapPointsDigest": "3ddffdafe10f6e8b9e14bd382ee6779604a28f934b9934a2b7429b889f7539b3"
+  }
+}

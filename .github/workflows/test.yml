@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TZ: UTC
     steps:
       - uses: actions/checkout@v7.0.1
 

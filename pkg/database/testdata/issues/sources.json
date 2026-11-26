@@ -1,0 +1,392 @@
+[
+ {
+  "file": "issue-0001-20250219.fit",
+  "original": "20250219.fit",
+  "url": "https://github.com/user-attachments/files/18935382/20250219.zip",
+  "sha256": "bd357eca46337eea65894aee3f8df4b17408abc6aef15cd141bf3af445d89aee",
+  "bytes": 47864,
+  "issues": [
+   1
+  ],
+  "issueTitles": [
+   "nice work on this project!"
+  ]
+ },
+ {
+  "file": "issue-0045-workout-2024-01-25-10-15-walk-puerto-mazarron.gpx",
+  "original": "workout-2024-01-25_10-15-Walk_Puerto_Mazarron.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/14962496/workout-2024-01-25_10-15-Walk_Puerto_Mazarron.zip",
+  "sha256": "cf3c821af31c0b412b00b579218f3f417c172a3392080cb69eb74ff019ac4203",
+  "bytes": 198661,
+  "issues": [
+   45
+  ],
+  "issueTitles": [
+   "Add imperial units"
+  ]
+ },
+ {
+  "file": "issue-0057-3-77mi-walk.gpx",
+  "original": "3.77mi Walk.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/14898154/3.77mi.Walk.zip",
+  "sha256": "de061366f4d7aff79bd82fffc65925411add724573a6a152fb08f91dc7fb8c0b",
+  "bytes": 925808,
+  "issues": [
+   57
+  ],
+  "issueTitles": [
+   "Add option to read time from filename"
+  ]
+ },
+ {
+  "file": "issue-0057-3-77mi-walk.tcx",
+  "original": "3.77mi Walk.tcx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/14898154/3.77mi.Walk.zip",
+  "sha256": "d793c117dd8d4504f474eeffdf872b539f5398b31babddb5dce1df320f132038",
+  "bytes": 2821701,
+  "issues": [
+   57
+  ],
+  "issueTitles": [
+   "Add option to read time from filename"
+  ]
+ },
+ {
+  "file": "issue-0141-may-3-2024-17-28-05.gpx",
+  "original": "May 3, 2024 17 28 05.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/15199218/track.zip",
+  "sha256": "311c324eb04d8274d2f111e89920356414391ea7c9348a422781cf8f2eb3e64a",
+  "bytes": 340914,
+  "issues": [
+   141
+  ],
+  "issueTitles": [
+   "Bug: Graphing error on GPX imported via FitoTrack API"
+  ]
+ },
+ {
+  "file": "issue-0141-workout-2024-05-03-17-28.gpx",
+  "original": "workout-2024-05-03_17-28.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/15199378/fitotrack_export.zip",
+  "sha256": "78b863fb1ddb8a7187678419a9ea5b3e585afe5782a36bd3184ba97df5bf7632",
+  "bytes": 340914,
+  "issues": [
+   141
+  ],
+  "issueTitles": [
+   "Bug: Graphing error on GPX imported via FitoTrack API"
+  ]
+ },
+ {
+  "file": "issue-0146-activity-15461078709.gpx",
+  "original": "activity_15461078709.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/15366794/gpx_with_unknown_location.zip",
+  "sha256": "ef03fd65827958d6991b2a2bbaefcc283d8b4453131d21033610ddc99ccdcd8a",
+  "bytes": 467837,
+  "issues": [
+   146
+  ],
+  "issueTitles": [
+   "Location unknown for some gpx files"
+  ]
+ },
+ {
+  "file": "issue-0160-20220407-180347.gpx",
+  "original": "20220407_180347.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/15504143/20220407_180347.zip",
+  "sha256": "0c39af55086ca8c8bbb559ed65d2f3dcf33846d9cf8d211306e2f3df33c4f2f5",
+  "bytes": 211312,
+  "issues": [
+   160
+  ],
+  "issueTitles": [
+   "Location of workouts showing as unknown"
+  ]
+ },
+ {
+  "file": "issue-0160-20240529-140526.gpx",
+  "original": "20240529_140526.gpx",
+  "url": "https://github.com/jovandeginste/workout-tracker/files/15504127/20240529_140526.zip",
+  "sha256": "d66673cb3aa5ada17e3cf358ce1150d143d27ae8cf32a690870f1b5d36bf9923",
+  "bytes": 460798,
+  "issues": [
+   160
+  ],
+  "issueTitles": [
+   "Location of workouts showing as unknown"
+  ]
+ },
+ {
+  "file": "issue-0160-runnerup-sm-a525m-2024-06-01-07-57-31-running.gpx",
+  "original": "RunnerUp_SM-A525M_2024-06-01-07-57-31_Running.gpx",
+  "url": "https://github.com/user-attachments/files/15522542/RunnerUp_SM-A525M_2024-06-01-07-57-31_Running.zip",
+  "sha256": "fb0beda30f3e65eeac427b889496fff1e0fc465e0af29c9e7046a25453f4aae1",
+  "bytes": 752807,
+  "issues": [
+   160
+  ],
+  "issueTitles": [
+   "Location of workouts showing as unknown"
+  ]
+ },
+ {
+  "file": "issue-0318-workout.tcx",
+  "original": "workout.tcx",
+  "url": "https://github.com/user-attachments/files/17535514/workout.zip",
+  "sha256": "35dbf59b1a333d8e239ab63f75bb0291a185ae77a0c1e294c649c3093a1d460a",
+  "bytes": 261974,
+  "issues": [
+   318
+  ],
+  "issueTitles": [
+   "FR: Track heart rate data"
+  ]
+ },
+ {
+  "file": "issue-0334-runnerup-pvg100-2024-12-21-08-07-46-running.gpx",
+  "original": "RunnerUp_PVG100_2024-12-21-08-07-46_Running.gpx",
+  "url": "https://github.com/user-attachments/files/18246681/RunnerUp_PVG100_2024-12-21-08-07-46_Running.zip",
+  "sha256": "1d505dddd9e741ddac73adaa7e0f22e08b8e7d655d0595ce640f86a0500c80f1",
+  "bytes": 838246,
+  "issues": [
+   334
+  ],
+  "issueTitles": [
+   "Location not show in Workout"
+  ]
+ },
+ {
+  "file": "issue-0387-20180526-27-mount-whitney-mr.gpx",
+  "original": "20180526-27-mount-whitney-mr.gpx",
+  "url": "https://github.com/user-attachments/files/18608943/gpx.zip",
+  "sha256": "0c0bd2e382c2649bb8c5ad3347d3d203aad120541d932c6a242a01475558e530",
+  "bytes": 144416,
+  "issues": [
+   387
+  ],
+  "issueTitles": [
+   "Workout metrics do not match"
+  ]
+ },
+ {
+  "file": "issue-0387-20211011-cowles-main.gpx",
+  "original": "20211011-cowles-main.gpx",
+  "url": "https://github.com/user-attachments/files/18608943/gpx.zip",
+  "sha256": "6a6e5accf88cc3d0160d11c847dfa2d2aa878d3cbfeed1c13fd80ea22e339c21",
+  "bytes": 177607,
+  "issues": [
+   387
+  ],
+  "issueTitles": [
+   "Workout metrics do not match"
+  ]
+ },
+ {
+  "file": "issue-0387-20211018-cowles.gpx",
+  "original": "20211018-cowles.gpx",
+  "url": "https://github.com/user-attachments/files/18608943/gpx.zip",
+  "sha256": "14f3789e35bd78a6a22795f8b787a86abaae79d98c9c42d5389f80f77e285e9a",
+  "bytes": 172908,
+  "issues": [
+   387
+  ],
+  "issueTitles": [
+   "Workout metrics do not match"
+  ]
+ },
+ {
+  "file": "issue-0387-20241218-cowles.tcx",
+  "original": "20241218 - Cowles.tcx",
+  "url": "https://github.com/user-attachments/files/18608943/gpx.zip",
+  "sha256": "3cf2abf2df9cc10ff5564b50229ad8f956b66a77cfc7dc6d54c9b238e58b54c1",
+  "bytes": 916729,
+  "issues": [
+   387
+  ],
+  "issueTitles": [
+   "Workout metrics do not match"
+  ]
+ },
+ {
+  "file": "issue-0531-18-may-2025-1008-walk.gpx",
+  "original": "18-May-2025-1008.-.walk.txt",
+  "url": "https://github.com/user-attachments/files/20272252/18-May-2025-1008.-.walk.txt",
+  "sha256": "f83b76389c56029cd86bba7761ece420df8b4735910fafca2177dd5e433fdd98",
+  "bytes": 75172,
+  "issues": [
+   531
+  ],
+  "issueTitles": [
+   "Elevation data offset by 50m"
+  ]
+ },
+ {
+  "file": "issue-0554-brocken-rundwanderung-im-harz.gpx",
+  "original": "brocken-rundwanderung-im-harz.gpx",
+  "url": "https://github.com/user-attachments/files/20756622/brocken-rundwanderung-im-harz.gpx.zip",
+  "sha256": "90c3e58d3f20ebde3c07c0d71f5802e2ebf00885f6603119c60b9140d498fb4d",
+  "bytes": 18446,
+  "issues": [
+   554
+  ],
+  "issueTitles": [
+   "GPX File without date brakes application"
+  ]
+ },
+ {
+  "file": "issue-0588-20250712-194946.gpx",
+  "original": "20250712_194946.gpx",
+  "url": "https://github.com/user-attachments/files/21207186/gpx.zip",
+  "sha256": "a04243f2fcbd8b0d364cbe65f02ad406c88075de1aa4d949a783d9dba17e64a6",
+  "bytes": 183994,
+  "issues": [
+   588
+  ],
+  "issueTitles": [
+   "Workout in calander view is incorrectly spanning multiple days"
+  ]
+ },
+ {
+  "file": "issue-0658-15718428901-activity.fit",
+  "original": "15718428901_ACTIVITY.fit",
+  "url": "https://github.com/user-attachments/files/22332397/15718428901.zip",
+  "sha256": "add9fbe0085117d4436e43337e8898adcbb210670fe24a03240c6046da2c2df1",
+  "bytes": 412059,
+  "issues": [
+   658
+  ],
+  "issueTitles": [
+   "Donated workout file - Cycling Odate to Hirosaki, Tohoku Japan - Contains HR data"
+  ]
+ },
+ {
+  "file": "issue-0671-example-ferry.fit",
+  "original": "example-ferry.fit",
+  "url": "https://github.com/user-attachments/files/22567566/example-ferry.fit.zip",
+  "sha256": "1b2c542f83fd47f34f6ad46f8fc7c962596fb32fc506de3907e665c5570af70e",
+  "bytes": 70523,
+  "issues": [
+   671
+  ],
+  "issueTitles": [
+   "Improve handling of pause times with movement"
+  ]
+ },
+ {
+  "file": "issue-0696-20191215-san-jacinto-marion.gpx",
+  "original": "20191215 - San Jacinto (Marion).gpx",
+  "url": "https://github.com/user-attachments/files/24085711/20191215.-.San.Jacinto.Marion.zip",
+  "sha256": "85769bda3b52993991a0b5ecedd94d298bf793dbe1e20e06ba4658a555a084d7",
+  "bytes": 217114,
+  "issues": [
+   696
+  ],
+  "issueTitles": [
+   "[Issue] Distance multiplying by x3 when importing GPX"
+  ]
+ },
+ {
+  "file": "issue-0737-swimming-2026-01-31-09-08-24.fit",
+  "original": "swimming_2026-01-31_09-08-24.dmp",
+  "url": "https://github.com/user-attachments/files/25151197/swimming_2026-01-31_09-08-24.dmp",
+  "sha256": "746f01302d59a7f3c1e3fe84e44bd3d5f2a37d2843fd57570eadd61970e1b343",
+  "bytes": 42248,
+  "issues": [
+   737
+  ],
+  "issueTitles": [
+   "Swimming workout from POLAR - all data are 0 or N/A"
+  ]
+ },
+ {
+  "file": "issue-0785-2026-04-01-12-08-04-fit.fit",
+  "original": "2026-04-01-12-08-04.fit.log",
+  "url": "https://github.com/user-attachments/files/26448025/2026-04-01-12-08-04.fit.log",
+  "sha256": "39a90a9363979dc5b2c5372b8814a8b41f5c31b6eba7dcda7158d92ad8dbb9cd",
+  "bytes": 60245,
+  "issues": [
+   785
+  ],
+  "issueTitles": [
+   "Swimming workout from Garmin - distances and speed data are 0 or N/A"
+  ]
+ },
+ {
+  "issues": [
+   829
+  ],
+  "issueTitles": [
+   "Max bike speed wrong data"
+  ],
+  "file": "issue-0829-opentracks-gpx-share.gpx",
+  "original": "OpenTracks GPX from Nextcloud share",
+  "url": "https://nc.mokserv.uk/s/q7ap6EDGKF5sDkD/download",
+  "sha256": "101c3359abe45d8eefbedd7e023b2cb4ecb9f688346edcc8325cbf7c51214b4c",
+  "bytes": 313249
+ },
+ {
+  "file": "issue-0829-runnerup-2310fpca4g-2026-06-05-16-35-02-cycling.gpx",
+  "original": "RunnerUp_2310FPCA4G_2026-06-05-16-35-02_Cycling.gpx",
+  "url": "https://github.com/user-attachments/files/28696682/cycle.zip",
+  "sha256": "7c4184af38877ad3fb0c9ba4a8064e4e5c102aa5c8b80f7adead60fd895322b9",
+  "bytes": 2154653,
+  "issues": [
+   829
+  ],
+  "issueTitles": [
+   "Max bike speed wrong data"
+  ]
+ },
+ {
+  "file": "issue-0860-18-98km-inline-skating-mapmyfitness.tcx",
+  "original": "18.98km Inline Skating MapMyFitness.tcx",
+  "url": "https://github.com/user-attachments/files/30970208/tcx.files.zip",
+  "sha256": "02e7526e08cce0f9813eef24d2d0aa5d0df91d1a86ab910370e22854a0c03846",
+  "bytes": 5693423,
+  "issues": [
+   860
+  ],
+  "issueTitles": [
+   "[Issue] TCX files exported from mapmyfitness.com show wrong data when imported into Workout Tracker / Activity file donation"
+  ]
+ },
+ {
+  "file": "issue-0860-2026-07-29-19-47-locus-map.tcx",
+  "original": "2026-07-29_19-47 Locus Map.tcx",
+  "url": "https://github.com/user-attachments/files/30970208/tcx.files.zip",
+  "sha256": "ee1eba2f55271eeafccd7e48dd3f881b2708bf23ea0b0dd6163b2aea8d034f34",
+  "bytes": 316915,
+  "issues": [
+   860
+  ],
+  "issueTitles": [
+   "[Issue] TCX files exported from mapmyfitness.com show wrong data when imported into Workout Tracker / Activity file donation"
+  ]
+ },
+ {
+  "file": "issue-0860-gotoes-260812-155806-rojqb.tcx",
+  "original": "GOTOES_260812-155806-rojQB.tcx",
+  "url": "https://github.com/user-attachments/files/30989340/GOTOES_260812-155806-rojQB.zip",
+  "sha256": "31c5cd2225ab6ac5f5a841078ad1206f8590e2ffe9e3fb9ddf0a88ce562f6b27",
+  "bytes": 2557497,
+  "issues": [
+   860
+  ],
+  "issueTitles": [
+   "[Issue] TCX files exported from mapmyfitness.com show wrong data when imported into Workout Tracker / Activity file donation"
+  ]
+ },
+ {
+  "file": "issue-0864-workout-anon.gpx",
+  "original": "workout-anon.gpx",
+  "url": "https://github.com/user-attachments/files/31622380/workout-anon.zip",
+  "sha256": "751f517aa0984fea137e4dffc0e6ae4d6ad4684b80f83d15b98a86dce5ba0de2",
+  "bytes": 1745514,
+  "issues": [
+   864
+  ],
+  "issueTitles": [
+   "Error 413 Request Entity Too Large"
+  ]
+ }
+]

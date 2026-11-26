@@ -1,0 +1,93 @@
+{
+  "issues": [
+    1
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/18935382/20250219.zip",
+  "originalName": "20250219.fit",
+  "file": "issue-0001-20250219.fit",
+  "workout": {
+    "name": "cycling - 2045-02-19 05:07:00",
+    "type": "cycling",
+    "start": "2025-02-20T04:35:31Z",
+    "end": "2025-02-20T05:06:58Z",
+    "creator": "garmin",
+    "center": {
+      "lat": 50.876616354,
+      "lng": 4.174307385,
+      "tz": "UTC"
+    },
+    "totalDistance": 18889.482289,
+    "totalDistance2D": 18889.482289,
+    "totalDuration": "31m27s",
+    "pauseDuration": "0s",
+    "maxSpeed": 1190.448847,
+    "maxCadence": 91,
+    "maxPower": 280,
+    "averageSpeed": 10.010324,
+    "averageSpeedNoPause": 10.010324,
+    "averageCadence": 78.410175,
+    "averagePower": 201.488076,
+    "minElevation": 0,
+    "maxElevation": 0,
+    "totalUp": 0,
+    "totalDown": 0,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 380,
+    "extraMetrics": [
+      "cadence",
+      "distance",
+      "elevation",
+      "heart-rate",
+      "power",
+      "speed"
+    ],
+    "pointsCount": 1888,
+    "pointsDigest": "7d1aff2f5ef383d412ffa433c2cd02affb27e1f6de4c3cdcb84011a69ac6c515",
+    "firstPoint": {
+      "time": "2025-02-20T04:35:31Z",
+      "lat": 50.865889192,
+      "lng": 4.179658815,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "cadence": 0,
+        "distance": 0.13,
+        "elevation": 0,
+        "heart-rate": 0,
+        "power": 0,
+        "speed": 0.529
+      }
+    },
+    "lastPoint": {
+      "time": "2025-02-20T05:06:58Z",
+      "lat": 50.865889192,
+      "lng": 4.177758135,
+      "elevation": 0,
+      "distance": 9.94625,
+      "distance2D": 9.94625,
+      "totalDistance": 18889.482289,
+      "totalDistance2D": 18889.482289,
+      "duration": "1s",
+      "totalDuration": "31m27s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "cadence": 43,
+        "distance": 16535.08,
+        "elevation": 0,
+        "heart-rate": 161,
+        "power": 121,
+        "speed": 8.54
+      }
+    },
+    "climbs": [],
+    "heatmapPointsCount": 313,
+    "heatmapPointsDigest": "4913482324b5e3eb4e7188be5f71f36a5d6cb7d18504310eaadd2c59c6090e31"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "issues": [
+    160
+  ],
+  "sourceUrl": "https://github.com/jovandeginste/workout-tracker/files/15504127/20240529_140526.zip",
+  "originalName": "20240529_140526.gpx",
+  "file": "issue-0160-20240529-140526.gpx",
+  "workout": {
+    "name": "20240529_140526.gpx",
+    "type": "walking",
+    "start": "2024-05-29T18:05:27Z",
+    "end": "2024-05-29T18:41:21Z",
+    "creator": "Samsung Health_0.2",
+    "center": {
+      "lat": 43.698385521,
+      "lng": -79.304579421,
+      "tz": "UTC"
+    },
+    "totalDistance": 3024.907482,
+    "totalDistance2D": 3022.072743,
+    "totalDuration": "35m54s",
+    "pauseDuration": "5s",
+    "maxSpeed": 2.637895,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 1.404321,
+    "averageSpeedNoPause": 1.407588,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": 135.07835,
+    "maxElevation": 141.32235,
+    "totalUp": 29.9781,
+    "totalDown": 28.9881,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 0,
+    "extraMetrics": [
+      "elevation",
+      "heart-rate"
+    ],
+    "pointsCount": 2136,
+    "pointsDigest": "0d44d72959136036f81c4dcfaf3e705c414d86d7a92f15e08fbe8994127b5ffa",
+    "firstPoint": {
+      "time": "2024-05-29T18:05:27Z",
+      "lat": 43.697152,
+      "lng": -79.2989997,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0.221434,
+      "extraMetrics": {
+        "heart-rate": 122
+      }
+    },
+    "lastPoint": {
+      "time": "2024-05-29T18:41:21Z",
+      "lat": 43.6971497,
+      "lng": -79.2990209,
+      "elevation": 102.25,
+      "distance": 1.433919,
+      "distance2D": 1.432258,
+      "totalDistance": 3024.907482,
+      "totalDistance2D": 3022.072743,
+      "duration": "1s",
+      "totalDuration": "35m54s",
+      "slopeGrade": -0.020632,
+      "extraMetrics": {
+        "elevation": 139.575033,
+        "heart-rate": 157
+      }
+    },
+    "climbs": [],
+    "heatmapPointsCount": 61,
+    "heatmapPointsDigest": "daf5328e871f47a68dbaf33fb2785d98b23049d951f9fde96a0f984de92a1fd9"
+  }
+}
