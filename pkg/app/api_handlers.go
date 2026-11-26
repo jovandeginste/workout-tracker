@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
+	"slices"
 
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/importers"
@@ -171,7 +172,13 @@ func (a *App) apiCenters(c *echo.Context) error {
 		return a.renderAPIError(c, resp, err)
 	}
 
+	types := workoutTypesFromQuery(c)
+
 	for _, w := range wos {
+		if len(types) > 0 && !slices.Contains(types, w.Type) {
+			continue
+		}
+
 		if w.Data == nil {
 			continue
 		}
@@ -202,7 +209,8 @@ func (a *App) apiCoordinates(c *echo.Context) error {
 	resp := APIResponse{}
 	coords := geojson.NewFeatureCollection()
 
-	points, err := a.getCurrentUser(c).GetHeatmapPoints(a.db)
+	types := workoutTypesFromQuery(c)
+	points, err := a.getCurrentUser(c).GetHeatmapPointsForTypes(a.db, types)
 	if err != nil {
 		return a.renderAPIError(c, resp, err)
 	}

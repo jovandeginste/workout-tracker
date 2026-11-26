@@ -19,10 +19,15 @@
   .small-size {
     @apply basis-1/2 2xl:basis-1/3;
   }
+  [data-map-container]:fullscreen {
+    @apply flex h-[100dvh] w-full flex-col m-0 p-0 bg-white;
+    @apply dark:bg-neutral-900;
+  }
   [data-map-container]:fullscreen .inner-form {
     @apply flex h-full flex-col m-0 p-0 border-0 rounded-none;
   }
-  [data-map-container]:fullscreen wt-map {
+  [data-map-container]:fullscreen wt-map,
+  [data-map-container]:fullscreen wt-heatmap {
     @apply flex-1;
     height: auto !important;
     border: 0 !important;

@@ -17,7 +17,15 @@ class WtHeatmap extends HTMLElement {
     super();
   }
 
+  updateSize() {
+    this.map?.invalidateSize(true);
+  }
+
   async connectedCallback() {
+    if (this.querySelector(".leaflet-container")) {
+      return;
+    }
+
     this.apiWorkoutsCoordinatesRoute = JSON.parse(
       this.getAttribute("api-workouts-coordinates-route"),
     );
@@ -25,12 +33,17 @@ class WtHeatmap extends HTMLElement {
       this.getAttribute("api-workouts-centers-route"),
     );
     this.i18n = JSON.parse(this.getAttribute("i18n"));
+    this.types = JSON.parse(this.getAttribute("types") || "[]") || [];
 
     this.style.display = "block";
 
     var map = L.map(this, {
       fadeAnimation: false,
     });
+    this.map = map;
+    const resizeMap = () => map.invalidateSize(true);
+    requestAnimationFrame(resizeMap);
+    setTimeout(resizeMap, 250);
     const layerStreet = streetLayer();
     const layerAerial = aerialLayer();
 
@@ -55,6 +68,8 @@ class WtHeatmap extends HTMLElement {
       if (heatMapData === null || markers === null) {
         return;
       }
+
+      map.invalidateSize(true);
       if (heatLayer !== null) {
         map.removeLayer(heatLayer);
       }
@@ -121,29 +136,53 @@ class WtHeatmap extends HTMLElement {
     var clusterConfig = { showCoverageOnHover: false };
 
     const fetchJson = async (route) => {
-      const response = await fetch(route, {
+      const params = new URLSearchParams();
+      this.types.forEach((type) => params.append("type", type));
+      const url = params.toString() ? `${route}?${params}` : route;
+      const response = await fetch(url, {
         method: "GET",
         headers: { Accept: "application/json" },
       });
       return response.json();
     };
 
-    let respJson = await fetchJson(this.apiWorkoutsCoordinatesRoute);
-    heatMapData = geoJson2heat(respJson.results);
+    this.loadData = async () => {
+      let respJson = await fetchJson(this.apiWorkoutsCoordinatesRoute);
+      heatMapData = geoJson2heat(respJson.results || { features: [] });
 
-    respJson = await fetchJson(this.apiWorkoutsCentersRoute);
-    markers = L.markerClusterGroup(clusterConfig);
-    const geoJsonLayer = L.geoJson(respJson.results, {
-      onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.details);
-      },
+      if (markers !== null) {
+        map.removeLayer(markers);
+      }
+
+      respJson = await fetchJson(this.apiWorkoutsCentersRoute);
+      markers = L.markerClusterGroup(clusterConfig);
+      const geoJsonLayer = L.geoJson(respJson.results || { features: [] }, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.details);
+        },
+      });
+      markers.addLayer(geoJsonLayer);
+      markers.addTo(map);
+
+      if (markers.getLayers().length > 0) {
+        map.fitBounds(markers.getBounds());
+      }
+
+      rerenderHeatMap();
+    };
+
+    await this.loadData();
+
+    const filterForm = document.getElementById("heatmap-filter");
+    filterForm?.addEventListener("change", () => {
+      this.types = Array.from(
+        filterForm.querySelectorAll('input[name="type"]:checked'),
+      )
+        .map((input) => input.value)
+        .filter(Boolean);
+
+      this.loadData();
     });
-    markers.addLayer(geoJsonLayer);
-    markers.addTo(map);
-
-    map.fitBounds(markers.getBounds());
-
-    rerenderHeatMap();
   }
 }
 
