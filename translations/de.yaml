@@ -44,7 +44,7 @@ de:
     edit: bearbeiten
     file: Datei
     filter: Filter
-    height: Höhe
+    height: Größe
     last: Letzte
     name: Name
     notes: Notizen
@@ -68,8 +68,8 @@ de:
     add: Ausrüstung hinzufügen
     default-types: Standard-Trainingsarten
     notice:
-      deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
-      updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
+      deleted: Die Ausrüstung '%s' wurde gelöscht.
+      updated: Die Ausrüstung '%s' wurde aktualisiert.
     update: Ausrüstung aktualisieren
   help:
     edit-gpx-files: 'Du kannst deine GPX-Dateien bearbeiten, bevor du sie hier hochlädst:'
@@ -86,6 +86,8 @@ de:
     aerial: Luftbild
     streets: Straßen
     fullscreen: Vollbild
+    markers: Markierungen anzeigen
+    only-visited: Nur anzeigen, wo du warst
   measurements:
     latest: Letzte Messungen
     none: Keine Messungen gefunden
@@ -139,11 +141,13 @@ de:
     find-matches: Übereinstimmungen finden
     matches: Treffer
     notice:
-      created: Der Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im 
+      created: Der Streckenabschnitt '%s' wurde erstellt - wir suchen im 
         Hintergrund nach Übereinstimmungen.
       searching: Beginnt im Hintergrund mit der Suche nach passenden Trainings 
-        für den Streckenabschnitt ‚%s‘.
-      updated: Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
+        für den Streckenabschnitt '%s'.
+      updated: Der Streckenabschnitt '%s' wurde aktualisiert.
+      deleted: Der Streckenabschnitt '%s' wurde gelöscht.
+      refreshed: Der Streckenabschnitt '%s' wurde neu geladen.
     start: Start
     update: Streckenabschnitt aktualisieren
   settings:
@@ -153,6 +157,10 @@ de:
     env-vars: Umgebungsvariablen
     overwritten-by: 'Diese Einstellungen können überschrieben werden durch:'
     update: Einstellungen speichern
+    login-custom-text: Individueller Anmeldetext (Markdown)
+    overridden: Diese Einstellung wird von der Konfigurationsdatei oder 
+      Umgebungsvariable verwaltet.
+    updated: Einstellungen aktualisiert
   sports:
     alpine-climbing: Alpinklettern
     auto: automatisch detektieren
@@ -206,6 +214,9 @@ de:
     trend: Trend
     trend-break: Trendbruch
     trend-period: Trendzeitraum
+    bar: Balken
+    chart-type: Diagrammtyp
+    line: Linie
   units:
     centimeter: Zentimeter
     feet: Fuß
@@ -229,7 +240,7 @@ de:
     logout: Abmelden
     notice:
       deleted: Der Benutzer '%s' wurde gelöscht.
-      updated: Der Benutzer ‚%s‘ wurde aktualisiert.
+      updated: Der Benutzer '%s' wurde aktualisiert.
     password: Passwort
     profile:
       api-key-updated: API-Schlüssel aktualisiert
@@ -258,6 +269,7 @@ de:
       your-settings: Deine Einstellungen
     update: Benutzer aktualisieren
     username: Benutzername
+    not-found: Kein Benutzer mit Benutzernamen %s gefunden
   workout:
     accuracy: Genauigkeit
     add-a-workout: Ein Training hinzufügen
@@ -303,11 +315,11 @@ de:
     min-elevation: Minimale Höhe
     no-equipment: keine Ausrüstung
     notice:
-      created: Das Training ‚%s‘ wurde erstellt.
+      created: Das Training '%s' wurde erstellt.
       deleted: Das Training '%s' wurde gelöscht.
       refresh-all: Alle Trainings werden in den nächsten Minuten aktualisiert.
-      refresh-soon: Das Training ‚%s‘ wird bald aktualisiert…
-      refreshed: Das Training '%s' wurde aktualisiert.
+      refresh-soon: Das Training '%s' wird bald aktualisiert…
+      refreshed: Das Training '%s' wurde neu geladen.
       share-link-created: Das Training '%s' hat nun einen teilbaren Link
       share-link-deleted: Der teilbare Link für das Training '%s' ist gelöscht
       updated: Das Training '%s' wurde aktualisiert.
@@ -344,3 +356,9 @@ de:
     unlocked: Die Attribute des Trainings '%s' sind jetzt entsperrt
     up: Höhenmeter
     update: Training aktualisieren
+    moving-duration: Dauer ohne Pausen
+    not-found: Training nicht gefunden
+    private: Privat
+    private-explanation: Ein privates Training ist nur für dich und Admins 
+      sichtbar.
+    time-of-day: Tageszeit
