@@ -273,6 +273,9 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 	workouts := make([]*Workout, len(gpxContent))
 
 	for i, g := range gpxContent {
+		// Each workout in a zip or backup is detected on its own
+		wt := workoutType
+
 		data := &MapData{
 			WorkoutData: g.Data,
 		}
@@ -281,11 +284,11 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 
 		if g.IsGPXBAsed() {
 			d = gpxDate(g.GPX)
-			data = gpxAsMapData(g.GPX, workoutType)
+			data = gpxAsMapData(g.GPX, wt)
 		}
 
-		if workoutType == WorkoutTypeAutoDetect {
-			workoutType = autoDetectWorkoutType(data, g.GPX, g.Data.Name)
+		if wt == WorkoutTypeAutoDetect {
+			wt = autoDetectWorkoutType(data, g.GPX, g.Data.Name)
 		}
 
 		w := &Workout{
@@ -295,7 +298,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 			Name:   g.Data.Name,
 			Data:   data,
 			Notes:  notes,
-			Type:   workoutType,
+			Type:   wt,
 			Date:   *d,
 		}
 
