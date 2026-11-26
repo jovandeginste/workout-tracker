@@ -4,6 +4,8 @@ import (
 	"archive/zip"
 	"bytes"
 	"io"
+	"path"
+	"strings"
 )
 
 func ParseZip(content []byte) ([]*Workout, error) {
@@ -16,6 +18,13 @@ func ParseZip(content []byte) ([]*Workout, error) {
 
 	// Read all the files from zip archive
 	for _, zipFile := range zipReader.File {
+		// A zipped folder has an entry for the folder itself, and macOS adds __MACOSX/,
+		// ._name and .DS_Store metadata files
+		if zipFile.FileInfo().IsDir() || strings.HasPrefix(zipFile.Name, "__MACOSX/") ||
+			strings.HasPrefix(path.Base(zipFile.Name), ".") {
+			continue
+		}
+
 		c, err := readFileFromZip(zipFile)
 		if err != nil {
 			return nil, err
