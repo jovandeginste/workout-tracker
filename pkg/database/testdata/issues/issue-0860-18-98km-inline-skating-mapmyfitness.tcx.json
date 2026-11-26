@@ -1,0 +1,711 @@
+{
+  "issues": [
+    860
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/30970208/tcx.files.zip",
+  "originalName": "18.98km Inline Skating MapMyFitness.tcx",
+  "file": "issue-0860-18-98km-inline-skating-mapmyfitness.tcx",
+  "workout": {
+    "name": "2026-07-29 17:46:58 +0000 UTC",
+    "type": "other",
+    "start": "2026-07-29T17:47:05.915Z",
+    "end": "2026-07-29T18:08:43.915Z",
+    "creator": "TCX importer",
+    "center": {
+      "lat": 53.160705563,
+      "lng": 18.028182055,
+      "tz": "UTC"
+    },
+    "totalDistance": 18976.0781,
+    "totalDistance2D": 18976.0781,
+    "totalDuration": "21m38s",
+    "pauseDuration": "42s",
+    "maxSpeed": 1023784802.687837,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 14.619475,
+    "averageSpeedNoPause": 15.108342,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": -44.356246,
+    "maxElevation": 70.143754,
+    "totalUp": 126179.21,
+    "totalDown": 126230.11,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 0,
+    "extraMetrics": [
+      "distance",
+      "elevation"
+    ],
+    "pointsCount": 24301,
+    "pointsDigest": "ddd50a493c4941352e5e8c3fe55c1852a90b83aeb5bcb0810f763e3d87a19928",
+    "firstPoint": {
+      "time": "2026-07-29T17:47:05.915Z",
+      "lat": 53.150562323,
+      "lng": 18.022687631,
+      "elevation": 50.9,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": -0.800156,
+      "extraMetrics": {
+        "elevation": 20.405507
+      }
+    },
+    "lastPoint": {
+      "time": "2026-07-29T19:30:07.943Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 18976.0781,
+      "totalDistance2D": 18976.0781,
+      "duration": "0s",
+      "totalDuration": "21m38s",
+      "slopeGrade": -0.58499
+    },
+    "climbs": [
+      {
+        "index": 1,
+        "type": "descent",
+        "startIdx": 4119,
+        "endIdx": 4629,
+        "gain": 9936.4,
+        "length": 318.2292,
+        "avgSlope": 31.224036,
+        "duration": "31s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:04:32.935Z",
+          "lat": 53.167744779,
+          "lng": 18.037106123,
+          "elevation": 55,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 2949.3904,
+          "totalDistance2D": 2949.3904,
+          "duration": "0s",
+          "totalDuration": "3m55s",
+          "slopeGrade": 0.213343,
+          "extraMetrics": {
+            "elevation": 24.582036
+          }
+        },
+        "end": {
+          "time": "2026-07-29T18:06:43.011Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 3267.6196,
+          "totalDistance2D": 3267.6196,
+          "duration": "0s",
+          "totalDuration": "4m26s",
+          "slopeGrade": -0.100909
+        }
+      },
+      {
+        "index": 1,
+        "type": "climb",
+        "startIdx": 4962,
+        "endIdx": 5241,
+        "gain": 4132.3,
+        "length": 310.1936,
+        "avgSlope": 13.32168,
+        "duration": "12s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:08:06.944Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 3662.2615,
+          "totalDistance2D": 3662.2615,
+          "duration": "0s",
+          "totalDuration": "4m43s",
+          "slopeGrade": -0.005634
+        },
+        "end": {
+          "time": "2026-07-29T18:09:17.946Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 3972.4551,
+          "totalDistance2D": 3972.4551,
+          "duration": "0s",
+          "totalDuration": "4m55s",
+          "slopeGrade": 0.177107
+        }
+      },
+      {
+        "index": 2,
+        "type": "descent",
+        "startIdx": 5438,
+        "endIdx": 5733,
+        "gain": 4304.9,
+        "length": 324.7148,
+        "avgSlope": 13.25748,
+        "duration": "21s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:10:07.922Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 4187.9458,
+          "totalDistance2D": 4187.9458,
+          "duration": "0s",
+          "totalDuration": "5m5s",
+          "slopeGrade": 0.019553
+        },
+        "end": {
+          "time": "2026-07-29T18:11:24.892Z",
+          "lat": 53.159478393,
+          "lng": 18.025102908,
+          "elevation": 25,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 4512.6606,
+          "totalDistance2D": 4512.6606,
+          "duration": "0s",
+          "totalDuration": "5m26s",
+          "slopeGrade": -0.042159,
+          "extraMetrics": {
+            "elevation": -5.466544
+          }
+        }
+      },
+      {
+        "index": 3,
+        "type": "descent",
+        "startIdx": 6046,
+        "endIdx": 6469,
+        "gain": 3133.5,
+        "length": 475.1123,
+        "avgSlope": 6.595283,
+        "duration": "21s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:12:43.957Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 4864.5005,
+          "totalDistance2D": 4864.5005,
+          "duration": "0s",
+          "totalDuration": "5m40s",
+          "slopeGrade": 0.007926
+        },
+        "end": {
+          "time": "2026-07-29T18:14:30.944Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 5339.6128,
+          "totalDistance2D": 5339.6128,
+          "duration": "0s",
+          "totalDuration": "6m1s",
+          "slopeGrade": -0.010072
+        }
+      },
+      {
+        "index": 4,
+        "type": "descent",
+        "startIdx": 9191,
+        "endIdx": 9735,
+        "gain": 4269.4,
+        "length": 544.6656,
+        "avgSlope": 7.838571,
+        "duration": "30s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:26:05.914Z",
+          "lat": 53.155746532,
+          "lng": 18.023827924,
+          "elevation": 87.8,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 6184.1655,
+          "totalDistance2D": 6184.1655,
+          "duration": "0s",
+          "totalDuration": "8m19s",
+          "slopeGrade": 0.119012,
+          "extraMetrics": {
+            "elevation": 57.32117
+          }
+        },
+        "end": {
+          "time": "2026-07-29T18:28:23.93Z",
+          "lat": 53.160605958,
+          "lng": 18.025150794,
+          "elevation": -7.3,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 6728.8311,
+          "totalDistance2D": 6728.8311,
+          "duration": "0s",
+          "totalDuration": "8m49s",
+          "slopeGrade": -0.012693,
+          "extraMetrics": {
+            "elevation": -37.763638
+          }
+        }
+      },
+      {
+        "index": 5,
+        "type": "descent",
+        "startIdx": 11077,
+        "endIdx": 11765,
+        "gain": 10711.6,
+        "length": 499.8071,
+        "avgSlope": 21.431468,
+        "duration": "43s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:34:04.995Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 8112.522,
+          "totalDistance2D": 8112.522,
+          "duration": "0s",
+          "totalDuration": "9m56s",
+          "slopeGrade": 0.00482
+        },
+        "end": {
+          "time": "2026-07-29T18:36:59.933Z",
+          "lat": 53.165213734,
+          "lng": 18.03580529,
+          "elevation": 51.2,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 8612.3291,
+          "totalDistance2D": 8612.3291,
+          "duration": "0s",
+          "totalDuration": "10m39s",
+          "slopeGrade": -0.025086,
+          "extraMetrics": {
+            "elevation": 20.772782
+          }
+        }
+      },
+      {
+        "index": 6,
+        "type": "descent",
+        "startIdx": 11781,
+        "endIdx": 12207,
+        "gain": 3860.6,
+        "length": 495.1553,
+        "avgSlope": 7.796746,
+        "duration": "23s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:37:03.941Z",
+          "lat": 53.165037188,
+          "lng": 18.035714327,
+          "elevation": 51.5,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 8631.4082,
+          "totalDistance2D": 8631.4082,
+          "duration": "0s",
+          "totalDuration": "10m39s",
+          "slopeGrade": 0.035594,
+          "extraMetrics": {
+            "elevation": 21.072135
+          }
+        },
+        "end": {
+          "time": "2026-07-29T18:38:52.933Z",
+          "lat": 53.164394013,
+          "lng": 18.030493968,
+          "elevation": 14.8,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 9126.5635,
+          "totalDistance2D": 9126.5635,
+          "duration": "0s",
+          "totalDuration": "11m2s",
+          "slopeGrade": -0.024312,
+          "extraMetrics": {
+            "elevation": -15.641704
+          }
+        }
+      },
+      {
+        "index": 7,
+        "type": "descent",
+        "startIdx": 12514,
+        "endIdx": 12905,
+        "gain": 6664.8,
+        "length": 362.9287,
+        "avgSlope": 18.363938,
+        "duration": "23s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:40:11.961Z",
+          "lat": 53.162506535,
+          "lng": 18.027027249,
+          "elevation": 90.2,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 9471.3115,
+          "totalDistance2D": 9471.3115,
+          "duration": "0s",
+          "totalDuration": "11m18s",
+          "slopeGrade": 0.088345,
+          "extraMetrics": {
+            "elevation": 59.745484
+          }
+        },
+        "end": {
+          "time": "2026-07-29T18:41:51.931Z",
+          "lat": 53.165167332,
+          "lng": 18.025307042,
+          "elevation": 40.6,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 9834.2402,
+          "totalDistance2D": 9834.2402,
+          "duration": "0s",
+          "totalDuration": "11m41s",
+          "slopeGrade": -0.150813,
+          "extraMetrics": {
+            "elevation": 10.147981
+          }
+        }
+      },
+      {
+        "index": 8,
+        "type": "descent",
+        "startIdx": 13740,
+        "endIdx": 15687,
+        "gain": 28125.5,
+        "length": 958.4863,
+        "avgSlope": 29.343664,
+        "duration": "1m46s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:45:21.992Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 10682.9727,
+          "totalDistance2D": 10682.9727,
+          "duration": "0s",
+          "totalDuration": "12m15s",
+          "slopeGrade": 0.01559
+        },
+        "end": {
+          "time": "2026-07-29T18:53:35.95Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 11641.459,
+          "totalDistance2D": 11641.459,
+          "duration": "0s",
+          "totalDuration": "14m1s",
+          "slopeGrade": -0.011912
+        }
+      },
+      {
+        "index": 2,
+        "type": "climb",
+        "startIdx": 14411,
+        "endIdx": 15391,
+        "gain": 13283.8,
+        "length": 355.3447,
+        "avgSlope": 37.382857,
+        "duration": "51s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:48:11.954Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 10940.6875,
+          "totalDistance2D": 10940.6875,
+          "duration": "0s",
+          "totalDuration": "12m52s",
+          "slopeGrade": -0.122554
+        },
+        "end": {
+          "time": "2026-07-29T18:52:20.946Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 11296.0322,
+          "totalDistance2D": 11296.0322,
+          "duration": "0s",
+          "totalDuration": "13m43s",
+          "slopeGrade": 0.010717
+        }
+      },
+      {
+        "index": 9,
+        "type": "descent",
+        "startIdx": 16105,
+        "endIdx": 16447,
+        "gain": 4642.7,
+        "length": 324.1465,
+        "avgSlope": 14.322845,
+        "duration": "16s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T18:55:22.957Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 12059.8877,
+          "totalDistance2D": 12059.8877,
+          "duration": "0s",
+          "totalDuration": "14m22s",
+          "slopeGrade": -0.008577
+        },
+        "end": {
+          "time": "2026-07-29T18:56:49.99Z",
+          "lat": 53.160178303,
+          "lng": 18.025287357,
+          "elevation": -8.5,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 12384.0342,
+          "totalDistance2D": 12384.0342,
+          "duration": "1s",
+          "totalDuration": "14m38s",
+          "slopeGrade": -0.014699,
+          "extraMetrics": {
+            "elevation": -38.964374
+          }
+        }
+      },
+      {
+        "index": 10,
+        "type": "descent",
+        "startIdx": 18275,
+        "endIdx": 18623,
+        "gain": 4244.5,
+        "length": 369.6972,
+        "avgSlope": 11.481017,
+        "duration": "14s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T19:04:34.934Z",
+          "lat": 53.154814029,
+          "lng": 18.023738617,
+          "elevation": 87.8,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 14006.2471,
+          "totalDistance2D": 14006.2471,
+          "duration": "0s",
+          "totalDuration": "16m12s",
+          "slopeGrade": -0.007309,
+          "extraMetrics": {
+            "elevation": 57.318633
+          }
+        },
+        "end": {
+          "time": "2026-07-29T19:06:02.91Z",
+          "lat": 53.158097925,
+          "lng": 18.024598237,
+          "elevation": 13.1,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 14375.9443,
+          "totalDistance2D": 14375.9443,
+          "duration": "0s",
+          "totalDuration": "16m26s",
+          "slopeGrade": -0.014755,
+          "extraMetrics": {
+            "elevation": -17.371161
+          }
+        }
+      },
+      {
+        "index": 3,
+        "type": "climb",
+        "startIdx": 20003,
+        "endIdx": 20302,
+        "gain": 6114.6,
+        "length": 308.5205,
+        "avgSlope": 19.819104,
+        "duration": "14s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T19:11:52.952Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 15703.4922,
+          "totalDistance2D": 15703.4922,
+          "duration": "0s",
+          "totalDuration": "17m35s",
+          "slopeGrade": -0.010917
+        },
+        "end": {
+          "time": "2026-07-29T19:13:08.946Z",
+          "lat": 53.166832714,
+          "lng": 18.034271836,
+          "elevation": 95.4,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16012.0127,
+          "totalDistance2D": 16012.0127,
+          "duration": "1s",
+          "totalDuration": "17m49s",
+          "slopeGrade": 0.088495,
+          "extraMetrics": {
+            "elevation": 64.973158
+          }
+        }
+      },
+      {
+        "index": 11,
+        "type": "descent",
+        "startIdx": 20312,
+        "endIdx": 21726,
+        "gain": 18802.4,
+        "length": 421.9521,
+        "avgSlope": 44.560508,
+        "duration": "1m25s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T19:13:10.959Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16025.8799,
+          "totalDistance2D": 16025.8799,
+          "duration": "0s",
+          "totalDuration": "17m50s",
+          "slopeGrade": 0.008623
+        },
+        "end": {
+          "time": "2026-07-29T19:19:09.952Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16447.832,
+          "totalDistance2D": 16447.832,
+          "duration": "0s",
+          "totalDuration": "19m15s",
+          "slopeGrade": -0.026202
+        }
+      },
+      {
+        "index": 4,
+        "type": "climb",
+        "startIdx": 21404,
+        "endIdx": 21858,
+        "gain": 5605,
+        "length": 375.7129,
+        "avgSlope": 14.918306,
+        "duration": "30s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T19:17:46.951Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16289.7402,
+          "totalDistance2D": 16289.7402,
+          "duration": "0s",
+          "totalDuration": "18m56s",
+          "slopeGrade": -0.251825
+        },
+        "end": {
+          "time": "2026-07-29T19:19:43.914Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16665.4531,
+          "totalDistance2D": 16665.4531,
+          "duration": "0s",
+          "totalDuration": "19m26s",
+          "slopeGrade": 0.02045
+        }
+      },
+      {
+        "index": 12,
+        "type": "descent",
+        "startIdx": 21851,
+        "endIdx": 22106,
+        "gain": 3434,
+        "length": 320.1894,
+        "avgSlope": 10.724902,
+        "duration": "14s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2026-07-29T19:19:41.925Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16655.2129,
+          "totalDistance2D": 16655.2129,
+          "duration": "0s",
+          "totalDuration": "19m26s",
+          "slopeGrade": 0.035867
+        },
+        "end": {
+          "time": "2026-07-29T19:20:47.922Z",
+          "lat": 53.164370556,
+          "lng": 18.031876105,
+          "elevation": 41.9,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 16975.4023,
+          "totalDistance2D": 16975.4023,
+          "duration": "0s",
+          "totalDuration": "19m40s",
+          "slopeGrade": -0.016037,
+          "extraMetrics": {
+            "elevation": 11.461487
+          }
+        }
+      }
+    ],
+    "heatmapPointsCount": 365,
+    "heatmapPointsDigest": "eead682a5a7fa14239b05afc0d1f4f6b16a81bc46999c9745350bf998bec8ff7"
+  }
+}

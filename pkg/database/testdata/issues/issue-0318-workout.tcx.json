@@ -1,0 +1,216 @@
+{
+  "issues": [
+    318
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/17535514/workout.zip",
+  "originalName": "workout.tcx",
+  "file": "issue-0318-workout.tcx",
+  "workout": {
+    "name": "2024-10-22 21:28:48 +0000 UTC",
+    "type": "other",
+    "start": "2024-10-22T21:28:48Z",
+    "end": "2024-10-22T21:59:27Z",
+    "creator": "TCX importer",
+    "center": {
+      "lat": 0,
+      "lng": 0,
+      "tz": ""
+    },
+    "totalDistance": 2253,
+    "totalDistance2D": 2253,
+    "totalDuration": "30m39s",
+    "pauseDuration": "0s",
+    "maxSpeed": 184.65,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 1.225122,
+    "averageSpeedNoPause": 1.225122,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": 0,
+    "maxElevation": 0,
+    "totalUp": 0,
+    "totalDown": 0,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 0,
+    "extraMetrics": [
+      "distance",
+      "heart-rate"
+    ],
+    "pointsCount": 508,
+    "pointsDigest": "ae31fb03bdd181e279801dab972d7c077833f1458af2aaf69b759225c016ef16",
+    "firstPoint": {
+      "time": "2024-10-22T21:28:48Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 201,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "heart-rate": 86
+      }
+    },
+    "lastPoint": {
+      "time": "2024-10-22T21:59:27Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 189,
+      "distance": 73.9,
+      "distance2D": 73.9,
+      "totalDistance": 2253,
+      "totalDistance2D": 2253,
+      "duration": "4s",
+      "totalDuration": "30m39s",
+      "slopeGrade": -0.010136,
+      "extraMetrics": {
+        "distance": 2253,
+        "heart-rate": 102
+      }
+    },
+    "climbs": [
+      {
+        "index": 1,
+        "type": "descent",
+        "startIdx": 12,
+        "endIdx": 227,
+        "gain": 50,
+        "length": 812.6,
+        "avgSlope": 0.061531,
+        "duration": "11m24s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2024-10-22T21:29:08Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 188,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 886.4,
+          "totalDistance2D": 886.4,
+          "duration": "1s",
+          "totalDuration": "20s",
+          "slopeGrade": 0.020282,
+          "extraMetrics": {
+            "distance": 886.4,
+            "heart-rate": 92
+          }
+        },
+        "end": {
+          "time": "2024-10-22T21:40:32Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 181,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 1699,
+          "totalDistance2D": 1699,
+          "duration": "4s",
+          "totalDuration": "11m44s",
+          "slopeGrade": -0.02182,
+          "extraMetrics": {
+            "distance": 1699,
+            "heart-rate": 96
+          }
+        }
+      },
+      {
+        "index": 1,
+        "type": "climb",
+        "startIdx": 190,
+        "endIdx": 285,
+        "gain": 22,
+        "length": 369.4,
+        "avgSlope": 0.059556,
+        "duration": "6m20s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2024-10-22T21:38:04Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 185,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 1514.3,
+          "totalDistance2D": 1514.3,
+          "duration": "4s",
+          "totalDuration": "9m16s",
+          "slopeGrade": 0.006634,
+          "extraMetrics": {
+            "distance": 1514.3,
+            "heart-rate": 103
+          }
+        },
+        "end": {
+          "time": "2024-10-22T21:44:24Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 186,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 1883.7,
+          "totalDistance2D": 1883.7,
+          "duration": "4s",
+          "totalDuration": "15m36s",
+          "slopeGrade": 0.025061,
+          "extraMetrics": {
+            "distance": 1883.7,
+            "heart-rate": 102
+          }
+        }
+      },
+      {
+        "index": 2,
+        "type": "descent",
+        "startIdx": 286,
+        "endIdx": 507,
+        "gain": 65,
+        "length": 332.4,
+        "avgSlope": 0.195548,
+        "duration": "14m59s",
+        "category": "Uncategorized",
+        "start": {
+          "time": "2024-10-22T21:44:28Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 187,
+          "distance": 36.9,
+          "distance2D": 36.9,
+          "totalDistance": 1920.6,
+          "totalDistance2D": 1920.6,
+          "duration": "4s",
+          "totalDuration": "15m40s",
+          "slopeGrade": -0.001291,
+          "extraMetrics": {
+            "distance": 1920.6,
+            "heart-rate": 101
+          }
+        },
+        "end": {
+          "time": "2024-10-22T21:59:27Z",
+          "lat": 0,
+          "lng": 0,
+          "elevation": 189,
+          "distance": 73.9,
+          "distance2D": 73.9,
+          "totalDistance": 2253,
+          "totalDistance2D": 2253,
+          "duration": "4s",
+          "totalDuration": "30m39s",
+          "slopeGrade": -0.010136,
+          "extraMetrics": {
+            "distance": 2253,
+            "heart-rate": 102
+          }
+        }
+      }
+    ],
+    "heatmapPointsCount": 0,
+    "heatmapPointsDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "issues": [
+    785
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/26448025/2026-04-01-12-08-04.fit.log",
+  "originalName": "2026-04-01-12-08-04.fit.log",
+  "file": "issue-0785-2026-04-01-12-08-04-fit.fit",
+  "workout": {
+    "name": "swimming - 2026-04-01 12:08:04",
+    "type": "swimming",
+    "start": "2026-04-01T10:08:04Z",
+    "end": "2026-04-01T11:06:29Z",
+    "creator": "garmin",
+    "center": {
+      "lat": 0,
+      "lng": 0,
+      "tz": ""
+    },
+    "totalDistance": 2550,
+    "totalDistance2D": 2550,
+    "totalDuration": "58m25s",
+    "pauseDuration": "0s",
+    "maxSpeed": 1.123896,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 0.727532,
+    "averageSpeedNoPause": 0.727532,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": 0,
+    "maxElevation": 0,
+    "totalUp": 0,
+    "totalDown": 0,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 618,
+    "extraMetrics": [
+      "distance",
+      "heart-rate",
+      "strokes"
+    ],
+    "pointsCount": 3506,
+    "pointsDigest": "1e4d0acf256ad74edb66321be066c96f56cf6f0c67c01dcb9984962531a89d89",
+    "firstPoint": {
+      "time": "2026-04-01T10:08:04Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "distance": 0,
+        "heart-rate": 90,
+        "strokes": 10
+      }
+    },
+    "lastPoint": {
+      "time": "2026-04-01T11:06:29Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 2550,
+      "totalDistance2D": 2550,
+      "duration": "1s",
+      "totalDuration": "58m25s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "distance": 2550,
+        "heart-rate": 141
+      }
+    },
+    "climbs": [],
+    "heatmapPointsCount": 0,
+    "heatmapPointsDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

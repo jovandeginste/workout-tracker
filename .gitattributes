@@ -1,1 +1,5 @@
 * text=auto
+
+# Keep the donated workout samples byte-for-byte intact; the golden files
+# contain checksums of the original files.
+pkg/database/testdata/issues/* -text

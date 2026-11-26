@@ -1,0 +1,125 @@
+{
+  "issues": [
+    588
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/21207186/gpx.zip",
+  "originalName": "20250712_194946.gpx",
+  "file": "issue-0588-20250712-194946.gpx",
+  "workout": {
+    "name": "20250712_194946.gpx",
+    "type": "walking",
+    "start": "2025-07-12T23:49:46Z",
+    "end": "2025-07-13T00:03:51Z",
+    "creator": "Samsung Health_0.2",
+    "center": {
+      "lat": 43.711301406,
+      "lng": -79.298440432,
+      "tz": "UTC"
+    },
+    "totalDistance": 1151.36145,
+    "totalDistance2D": 1149.272495,
+    "totalDuration": "14m5s",
+    "pauseDuration": "3s",
+    "maxSpeed": 1.726691,
+    "maxCadence": 118,
+    "maxPower": 0,
+    "averageSpeed": 1.362558,
+    "averageSpeedNoPause": 1.367413,
+    "averageCadence": 106.030303,
+    "averagePower": 0,
+    "minElevation": 178.975306,
+    "maxElevation": 190.512306,
+    "totalUp": 19.565,
+    "totalDown": 18.822,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 0,
+    "extraMetrics": [
+      "cadence",
+      "elevation",
+      "heart-rate"
+    ],
+    "pointsCount": 834,
+    "pointsDigest": "31ce6a6127bc7c4108204d5aa6d50a4a753c9dc797a431aa019fc5e27efb66f6",
+    "firstPoint": {
+      "time": "2025-07-12T23:49:46Z",
+      "lat": 43.7098252,
+      "lng": -79.2989963,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 4.878665,
+      "extraMetrics": {
+        "heart-rate": 123
+      }
+    },
+    "lastPoint": {
+      "time": "2025-07-13T00:03:51Z",
+      "lat": 43.7097458,
+      "lng": -79.2989649,
+      "elevation": 143.989,
+      "distance": 0.834587,
+      "distance2D": 0.834515,
+      "totalDistance": 1151.36145,
+      "totalDistance2D": 1149.272495,
+      "duration": "1s",
+      "totalDuration": "14m5s",
+      "slopeGrade": -0.030935,
+      "extraMetrics": {
+        "elevation": 181.316109
+      }
+    },
+    "climbs": [
+      {
+        "index": 1,
+        "type": "climb",
+        "startIdx": 0,
+        "endIdx": 554,
+        "gain": 164.598,
+        "length": 763.382815,
+        "avgSlope": 0.215617,
+        "duration": "9m21s",
+        "category": "Category 6",
+        "start": {
+          "time": "2025-07-12T23:49:46Z",
+          "lat": 43.7098252,
+          "lng": -79.2989963,
+          "elevation": 0,
+          "distance": 0,
+          "distance2D": 0,
+          "totalDistance": 0,
+          "totalDistance2D": 0,
+          "duration": "0s",
+          "totalDuration": "0s",
+          "slopeGrade": 4.878665,
+          "extraMetrics": {
+            "heart-rate": 123
+          }
+        },
+        "end": {
+          "time": "2025-07-12T23:59:07Z",
+          "lat": 43.7113754,
+          "lng": -79.2971909,
+          "elevation": 152.816,
+          "distance": 1.371773,
+          "distance2D": 1.366689,
+          "totalDistance": 763.382815,
+          "totalDistance2D": 762.045955,
+          "duration": "1s",
+          "totalDuration": "9m21s",
+          "slopeGrade": 0.010287,
+          "extraMetrics": {
+            "elevation": 190.143295,
+            "heart-rate": 147
+          }
+        }
+      }
+    ],
+    "heatmapPointsCount": 24,
+    "heatmapPointsDigest": "50172741feeab55f1bbdfeaa39421af36837cb376b81b1b71983f37c9e4db407"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "issues": [
+    737
+  ],
+  "sourceUrl": "https://github.com/user-attachments/files/25151197/swimming_2026-01-31_09-08-24.dmp",
+  "originalName": "swimming_2026-01-31_09-08-24.dmp",
+  "file": "issue-0737-swimming-2026-01-31-09-08-24.fit",
+  "workout": {
+    "name": "swimming - 2026-01-31 08:08:24",
+    "type": "swimming",
+    "start": "2026-01-31T08:08:25Z",
+    "end": "2026-01-31T08:49:31Z",
+    "creator": "polar_electro",
+    "center": {
+      "lat": 0,
+      "lng": 0,
+      "tz": ""
+    },
+    "totalDistance": 1275,
+    "totalDistance2D": 1275,
+    "totalDuration": "41m6s",
+    "pauseDuration": "0s",
+    "maxSpeed": 16.666667,
+    "maxCadence": 0,
+    "maxPower": 0,
+    "averageSpeed": 0.517032,
+    "averageSpeedNoPause": 0.517032,
+    "averageCadence": 0,
+    "averagePower": 0,
+    "minElevation": 0,
+    "maxElevation": 0,
+    "totalUp": 0,
+    "totalDown": 0,
+    "totalRepetitions": 0,
+    "totalWeight": 0,
+    "totalCalories": 446,
+    "extraMetrics": [
+      "distance",
+      "heart-rate",
+      "speed",
+      "temperature"
+    ],
+    "pointsCount": 2467,
+    "pointsDigest": "daa57e2486d54a20e3160f63b987d5cd13ba8b4c3b03781b292db5deb92100b1",
+    "firstPoint": {
+      "time": "2026-01-31T08:08:25Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 0,
+      "totalDistance2D": 0,
+      "duration": "0s",
+      "totalDuration": "0s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "distance": 0,
+        "heart-rate": 69,
+        "temperature": 22
+      }
+    },
+    "lastPoint": {
+      "time": "2026-01-31T08:49:31Z",
+      "lat": 0,
+      "lng": 0,
+      "elevation": 0,
+      "distance": 0,
+      "distance2D": 0,
+      "totalDistance": 1275,
+      "totalDistance2D": 1275,
+      "duration": "1s",
+      "totalDuration": "41m6s",
+      "slopeGrade": 0,
+      "extraMetrics": {
+        "distance": 1275,
+        "heart-rate": 139,
+        "speed": 0.774,
+        "temperature": 22
+      }
+    },
+    "climbs": [],
+    "heatmapPointsCount": 0,
+    "heatmapPointsDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
