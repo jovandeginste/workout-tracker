@@ -8,7 +8,8 @@ de:
   alerts:
     route-segments-added:
       one: 'Beim Hinzufügen des Streckenabschnittes ist ein Problem aufgetreten: %{list}'
-      other: 'Beim Hinzufügen des Streckenabschnittes sind %{count} Probleme aufgetreten: %{list}'
+      other: 'Beim Hinzufügen des Streckenabschnittes sind %{count} Probleme aufgetreten:
+        %{list}'
     something-wrong: 'Etwas ging schief: %{message}'
     workouts-added:
       one: 'Beim Hinzufügen des Trainings ist ein Problem aufgetreten: %{list}'
@@ -84,6 +85,7 @@ de:
   map:
     aerial: Luftbild
     streets: Straßen
+    fullscreen: Vollbild
   measurements:
     latest: Letzte Messungen
     none: Keine Messungen gefunden
@@ -98,7 +100,8 @@ de:
     statistics: Statistik
     workouts: Trainings
   misc:
-    convert-format: aus einem bisher nicht unterstützten Dateiformat konvertieren
+    convert-format: aus einem bisher nicht unterstützten Dateiformat 
+      konvertieren
     day: Tag
     day-1: 1 Tag
     day-7: 7 Tage
@@ -117,10 +120,13 @@ de:
     years-2: 2 Jahre
     years-5: 5 Jahre
     years-10: 10 Jahre
+    year: Jahr
   notices:
     route-segments-added:
-      one: 'Ein neuer Streckenabschnitt hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen'
-      other: "%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen"
+      one: 'Ein neuer Streckenabschnitt hinzugefügt: %{list} - wir suchen im Hintergrund
+        nach Übereinstimmungen'
+      other: "%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im
+        Hintergrund nach Übereinstimmungen"
     workouts-added:
       one: 'Ein neues Training hinzugefügt: %{list}'
       other: "%{count} neue Trainings hinzugefügt: %{list}"
@@ -133,8 +139,10 @@ de:
     find-matches: Übereinstimmungen finden
     matches: Treffer
     notice:
-      created: Der Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
-      searching: Beginnt im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt ‚%s‘.
+      created: Der Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im 
+        Hintergrund nach Übereinstimmungen.
+      searching: Beginnt im Hintergrund mit der Suche nach passenden Trainings 
+        für den Streckenabschnitt ‚%s‘.
       updated: Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
     start: Start
     update: Streckenabschnitt aktualisieren
@@ -211,7 +219,8 @@ de:
     pounds: pfund
   user:
     auth:
-      activation-needed: Dein Konto wurde erstellt, muss aber noch aktiviert werden.
+      activation-needed: Dein Konto wurde erstellt, muss aber noch aktiviert 
+        werden.
       create-account: Neues Konto erstellen
       register: Registrieren
       sign-in: Anmelden
@@ -254,7 +263,8 @@ de:
     add-a-workout: Ein Training hinzufügen
     add-workout: Training hinzufügen
     add-workouts: Trainings hinzufügen
-    attribute-locked: Dieses Attribut ist für automatische Aktualisierungen gesperrt
+    attribute-locked: Dieses Attribut ist für automatische Aktualisierungen 
+      gesperrt
     autodetect: Automatisch erkennen
     average-cadence: Durchschnittliche Kadenz
     average-per-minute: Durchschnitt pro Minute
@@ -267,7 +277,8 @@ de:
     cadence-avg-max: Kadenz (Mittelwert/Maximum)
     calories: Kalorien
     calories-burned: Kalorienverbrauch
-    calories-hint: Geschätzt auf der Grundlage der Aktivität und deines zuletzt gemessenen Gewichts
+    calories-hint: Geschätzt auf der Grundlage der Aktivität und deines zuletzt 
+      gemessenen Gewichts
     climbs: Aufstiege
     distance: Distanz
     duration: Dauer
@@ -279,7 +290,8 @@ de:
     heading: Kurs
     heart-rate: Herzfrequenz
     location: Standort
-    lock: Die Attribute dieses Trainings für automatische Aktualisierungen sperren oder entsperren.
+    lock: Die Attribute dieses Trainings für automatische Aktualisierungen 
+      sperren oder entsperren.
     locked: Die Attribute des Trainings '%s' sind jetzt gesperrt
     manual: Manuell
     map-full-width: Karte in voller Breite anzeigen
@@ -312,7 +324,8 @@ de:
     slope: Steigung
     social:
       completed: Ich habe das Training %s absolviert.
-      summary: Es hat mich %s gekostet, um %s zu gehen. Ich habe im Durchschnitt %s.
+      summary: Es hat mich %s gekostet, um %s zu gehen. Ich habe im Durchschnitt
+        %s.
     source: Quelle
     speed: Geschwindigkeit
     strokes: Bewegungen
