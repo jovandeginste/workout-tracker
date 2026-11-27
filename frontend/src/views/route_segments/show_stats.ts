@@ -36,9 +36,10 @@ type TrendPeriod = "all" | "365" | "90" | "30" | "year";
 @customElement("route-segment-stats")
 export class RouteSegmentStats extends LitElement {
   @property({
+    attribute: "trend-data",
     converter: (v: string) => JSON.parse(v) as TrendDataPoint[],
   })
-  data: TrendDataPoint[] = [];
+  trendData: TrendDataPoint[] = [];
 
   @property({
     attribute: "color-mode",
@@ -155,9 +156,9 @@ export class RouteSegmentStats extends LitElement {
   public override updated(_props: PropertyValues): void {
     super.updated(_props);
 
-    if (!this.data || this.data.length === 0) return;
+    if (!this.trendData || this.trendData.length === 0) return;
 
-    const processedData = this.data.map((d) => ({
+    const processedData = this.trendData.map((d) => ({
       ...d,
       type: d.type || "unknown",
     }));

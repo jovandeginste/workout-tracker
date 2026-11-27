@@ -41,7 +41,7 @@ templ ShowStats(s *database.RouteSegment) {
 		}
 	}}
 	<route-segment-stats
-		data={ templ.JSONString(trendData) }
+		trend-data={ templ.JSONString(trendData) }
 		translations={ templ.JSONString(translations) }
 		color-mode={ currentUser.Profile.Theme }
 		trend-period={ currentUser.Profile.RouteSegmentTrendPeriodOrDefault() }

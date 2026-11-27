@@ -51,9 +51,9 @@ templ Show(s *database.RouteSegment) {
 										<td>
 											@helpers.UserLink(m.Workout.User)
 										</td>
-										<td>
+										<td class="max-w-[0px] overflow-hidden whitespace-nowrap text-ellipsis">
 											<a href={ templ.SafeURL(helpers.RouteFor(ctx, "workout-show", m.WorkoutID)) }>
-												{ m.Workout.Name }
+												@partials.TruncatedName(m.Workout.Name, 20)
 											</a>
 										</td>
 										<td class="whitespace-nowrap font-mono lg:hidden 3xl:table-cell">
