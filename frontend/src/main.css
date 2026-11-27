@@ -42,11 +42,6 @@
   .leaflet-control {
     @apply dark:saturate-0 dark:invert dark:contrast-[0.80] dark:brightness-[0.85];
   }
-  .leaflet-popup-content-wrapper,
-  .leaflet-popup-tip {
-    @apply bg-neutral-100 text-zinc-900;
-    @apply dark:bg-neutral-900 dark:text-zinc-100;
-  }
 
   body {
     @apply md:px-20;
@@ -450,3 +445,31 @@
 
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Leaflet's stylesheet is bundled separately and loaded after this stylesheet.
+ * Keep these overrides unlayered so they win from Leaflet's defaults, even
+ * though they are defined before the Leaflet CSS in the document.
+ */
+.leaflet-container .leaflet-popup-content-wrapper,
+.leaflet-container .leaflet-popup-tip {
+  background-color: var(--color-neutral-100);
+  color: var(--color-zinc-900);
+}
+.dark .leaflet-container .leaflet-popup-content-wrapper,
+.dark .leaflet-container .leaflet-popup-tip {
+  background-color: var(--color-neutral-900);
+  color: var(--color-zinc-100);
+}
+.leaflet-container .leaflet-popup-content a {
+  color: var(--color-amber-700);
+}
+.dark .leaflet-container .leaflet-popup-content a {
+  color: var(--color-amber-100);
+}
+.leaflet-container .leaflet-popup-pane a.leaflet-popup-close-button {
+  color: var(--color-zinc-700);
+}
+.dark .leaflet-container .leaflet-popup-pane a.leaflet-popup-close-button {
+  color: var(--color-zinc-300);
+}
