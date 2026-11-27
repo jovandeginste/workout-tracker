@@ -872,6 +872,9 @@ const docTemplate = `{
                 "duration_seconds": {
                     "type": "integer"
                 },
+                "ignore_elevation": {
+                    "type": "boolean"
+                },
                 "location": {
                     "type": "string"
                 },
@@ -880,6 +883,9 @@ const docTemplate = `{
                 },
                 "notes": {
                     "type": "string"
+                },
+                "private": {
+                    "type": "boolean"
                 },
                 "repetitions": {
                     "type": "integer"
@@ -1969,6 +1975,10 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "ignore_elevation": {
+                    "description": "Whether to use 2D distances and ignore elevation data",
+                    "type": "boolean"
+                },
                 "locked": {
                     "description": "Whether the workout's main attributes should be auto-updated",
                     "type": "boolean"
@@ -1980,6 +1990,10 @@ const docTemplate = `{
                 "notes": {
                     "description": "The notes associated with the workout, in markdown",
                     "type": "string"
+                },
+                "private": {
+                    "description": "Whether the workout is only visible to its owner and to admins",
+                    "type": "boolean"
                 },
                 "publicUUID": {
                     "description": "UUID to publicly share a workout - this UUID can be rotated",
@@ -2093,6 +2107,10 @@ const docTemplate = `{
                             "$ref": "#/definitions/database.WorkoutType"
                         }
                     ]
+                },
+                "workouts": {
+                    "description": "The number of workouts of this type",
+                    "type": "integer"
                 }
             }
         },

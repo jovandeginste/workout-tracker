@@ -1,6 +1,7 @@
 package database
 
 import (
+	"cmp"
 	"errors"
 	"fmt"
 	"slices"
@@ -372,6 +373,11 @@ func (u *User) GetAllRecords(viewer *User) ([]*WorkoutRecord, error) {
 		}
 	}
 
+	// Most-used types first; keep the configured order for equal counts.
+	slices.SortStableFunc(rs, func(a, b *WorkoutRecord) int {
+		return cmp.Compare(b.Workouts, a.Workouts)
+	})
+
 	return rs, nil
 }
 
@@ -392,6 +398,16 @@ func (u *User) GetRecords(t WorkoutType, viewer *User) (*WorkoutRecord, error) {
 	}
 
 	r := &WorkoutRecord{WorkoutType: t}
+
+	var workouts int64
+
+	if err := u.statsBaseQuery(viewer).
+		Where("workouts.type = ?", t).
+		Count(&workouts).Error; err != nil {
+		return nil, err
+	}
+
+	r.Workouts = int(workouts)
 
 	mapping := map[*Float64Record]string{
 		&r.Distance:            "max(total_distance)",

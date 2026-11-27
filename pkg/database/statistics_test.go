@@ -149,3 +149,33 @@ func TestUser_GetTotalsFor_Empty(t *testing.T) {
 	require.NoError(t, err)
 	assert.Nil(t, totals)
 }
+
+func TestUser_GetAllRecords_SortsByWorkoutCount(t *testing.T) {
+	db := createMemoryDB(t)
+	u := createStatsUser(t, db)
+
+	for i := range 3 {
+		createStatsWorkout(t, db, u, WorkoutTypeCycling, time.Date(2025, 1, i+1, 10, 0, 0, 0, time.UTC), 30000, 100)
+	}
+
+	for i := range 2 {
+		createStatsWorkout(t, db, u, WorkoutTypeSwimming, time.Date(2025, 2, i+1, 10, 0, 0, 0, time.UTC), 1500, 10)
+	}
+
+	createStatsWorkout(t, db, u, WorkoutTypeRunning, time.Date(2025, 3, 1, 10, 0, 0, 0, time.UTC), 5000, 50)
+
+	records, err := u.GetAllRecords(u)
+	require.NoError(t, err)
+
+	var order []WorkoutType
+	for _, r := range records {
+		if r.Active {
+			order = append(order, r.WorkoutType)
+		}
+	}
+
+	assert.Equal(t, []WorkoutType{WorkoutTypeCycling, WorkoutTypeSwimming, WorkoutTypeRunning}, order)
+	assert.Equal(t, 3, records[0].Workouts)
+	assert.Equal(t, 2, records[1].Workouts)
+	assert.Equal(t, 1, records[2].Workouts)
+}

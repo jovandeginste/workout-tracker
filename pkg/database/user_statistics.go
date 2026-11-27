@@ -63,6 +63,7 @@ type (
 	// WorkoutRecord is the collection of records for a single workout type
 	WorkoutRecord struct {
 		WorkoutType         WorkoutType    `json:"workoutType"`         // The type of the workout
+		Workouts            int            `json:"workouts"`            // The number of workouts of this type
 		AverageSpeed        Float64Record  `json:"averageSpeed"`        // The record with the maximum average speed
 		AverageSpeedNoPause Float64Record  `json:"averageSpeedNoPause"` // The record with the maximum average speed without pause
 		MaxSpeed            Float64Record  `json:"maxSpeed"`            // The record with the maximum max speed
