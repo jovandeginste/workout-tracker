@@ -56,6 +56,20 @@ templ SelectablePill(id, name, value, label, extraClass string, checked bool) {
 	</label>
 }
 
+templ RadioPill(id, name, value, label, extraClass string, checked bool) {
+	<label class="inline">
+		<input
+			class="sr-only peer"
+			type="radio"
+			id={ id }
+			name={ name }
+			value={ value }
+			checked?={ checked }
+		/>
+		<span class={ "selectable-pill " + extraClass }>{ label }</span>
+	</label>
+}
+
 templ ActionForm(route, method, icon, labelKey, class string) {
 	<form action={ templ.SafeURL(route) } method={ method }>
 		<button class={ class } title={ i18n.T(ctx, labelKey) }>

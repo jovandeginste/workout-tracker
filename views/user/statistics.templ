@@ -36,11 +36,13 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 				@partials.TranslatedKeySelect("since", "since", since, helpers.StatisticSinceOptions())
 				<label for="per">{ i18n.T(ctx, "statistics.per") }</label>
 				@partials.TranslatedKeySelect("per", "per", per, helpers.StatisticPerOptions())
-				<label for="chart">{ i18n.T(ctx, "statistics.chart-type") }</label>
-				<select id="chart" name="chart">
-					<option value="line" selected?={ chartType == "line" }>{ i18n.T(ctx, "statistics.line") }</option>
-					<option value="bar" selected?={ chartType == "bar" }>{ i18n.T(ctx, "statistics.bar") }</option>
-				</select>
+				<div class="inline-flex flex-wrap items-center gap-1">
+					<span class="px-2">{ i18n.T(ctx, "statistics.chart-type") }</span>
+					<div class="flex flex-wrap items-center">
+						@partials.RadioPill("chart_line", "chart", "line", i18n.T(ctx, "statistics.line"), "pill-compact", chartType == "line")
+						@partials.RadioPill("chart_bar", "chart", "bar", i18n.T(ctx, "statistics.bar"), "pill-compact", chartType == "bar")
+					</div>
+				</div>
 			</form>
 			{{ currentUser := helpers.CurrentUser(ctx) }}
 			{{ stats, err := currentUser.GetStatisticsFor(since, per, selectedEquipment, currentUser) }}
