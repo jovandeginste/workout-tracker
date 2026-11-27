@@ -42,8 +42,18 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 
 	tc := tcxConverter{}
 
+	var (
+		totalDistance float64
+		totalCalories float64
+		maxSpeed      float64
+	)
+
 	for _, a := range t.Acts.Act {
 		for _, l := range a.Laps {
+			totalDistance += l.Dist
+			totalCalories += l.Calories
+			maxSpeed = max(maxSpeed, l.MaxSpeed)
+
 			if l.Trk == nil {
 				continue
 			}
@@ -57,6 +67,18 @@ func ParseTCX(content []byte) (*gpx.GPX, error) {
 				g.AppendPoint(gpxP)
 			}
 		}
+	}
+
+	if totalDistance > 0 {
+		AddGPXExtension(g, ExtensionTotalDistance, totalDistance)
+	}
+
+	if totalCalories > 0 {
+		AddGPXExtension(g, "total-calories", totalCalories)
+	}
+
+	if maxSpeed > 0 {
+		AddGPXExtension(g, ExtensionMaxSpeed, maxSpeed)
 	}
 
 	return g, nil

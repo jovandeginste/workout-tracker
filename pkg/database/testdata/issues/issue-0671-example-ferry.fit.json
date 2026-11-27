@@ -16,15 +16,15 @@
       "lng": 11.309923562,
       "tz": "UTC"
     },
-    "totalDistance": 25596.955483,
-    "totalDistance2D": 25593.039041,
+    "totalDistance": 6787.64,
+    "totalDistance2D": 6787.64,
     "totalDuration": "1h44m2s",
     "pauseDuration": "25m48s",
-    "maxSpeed": 7.156694,
+    "maxSpeed": 7.154,
     "maxCadence": 0,
     "maxPower": 0,
-    "averageSpeed": 4.100762,
-    "averageSpeedNoPause": 5.453122,
+    "averageSpeed": 1.087414,
+    "averageSpeedNoPause": 1.446025,
     "averageCadence": 0,
     "averagePower": 0,
     "minElevation": -49.304073,
@@ -41,7 +41,7 @@
       "temperature"
     ],
     "pointsCount": 1408,
-    "pointsDigest": "992ab5f9800b2079def21aa7beb60a987c271db5b29ae48a85450fd81e295ba9",
+    "pointsDigest": "6aa5de323f30e9e71cb28bb520ab53e8fc4812e9ad56e277ee879e12951972a3",
     "firstPoint": {
       "time": "2025-09-15T08:00:21Z",
       "lat": 0,
@@ -53,7 +53,7 @@
       "totalDistance2D": 0,
       "duration": "0s",
       "totalDuration": "0s",
-      "slopeGrade": 0.013265,
+      "slopeGrade": 0.013003,
       "extraMetrics": {
         "distance": 0,
         "speed": 2.42
@@ -64,13 +64,13 @@
       "lat": 54.682779992,
       "lng": 11.381934928,
       "elevation": -7,
-      "distance": 7.177089,
-      "distance2D": 7.177089,
-      "totalDistance": 25596.955483,
-      "totalDistance2D": 25593.039041,
+      "distance": 6.39,
+      "distance2D": 6.39,
+      "totalDistance": 6787.64,
+      "totalDistance2D": 6787.64,
       "duration": "1s",
       "totalDuration": "1h44m2s",
-      "slopeGrade": -0.008371,
+      "slopeGrade": -0.008322,
       "extraMetrics": {
         "distance": 6787.64,
         "elevation": -45.201436,
@@ -79,7 +79,7 @@
       }
     },
     "climbs": [],
-    "heatmapPointsCount": 132,
-    "heatmapPointsDigest": "3ddffdafe10f6e8b9e14bd382ee6779604a28f934b9934a2b7429b889f7539b3"
+    "heatmapPointsCount": 130,
+    "heatmapPointsDigest": "9d196baa7bbaa5e9851d24600159fa353c79af7ba860545b97d89e42c01b5b7b"
   }
 }

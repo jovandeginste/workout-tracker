@@ -44,6 +44,7 @@ type Workout struct {
 	Dirty               bool                 `json:"dirty"`                                                                              // Whether the workout has been modified and the details should be re-rendered
 	Private             bool                 `gorm:"not null;default:false" json:"private"`                                              // Whether the workout is only visible to its owner and to admins
 	IgnoreElevation     bool                 `gorm:"not null;default:false" json:"ignore_elevation"`                                     // Whether to use 2D distances and ignore elevation data
+	IgnoreDeviceValues  bool                 `gorm:"not null;default:false" json:"ignore_device_values"`                                 // Whether to recalculate the totals instead of using the values recorded by the device
 }
 
 type GPXData struct {
@@ -155,6 +156,18 @@ func (w *Workout) SetIgnoreElevation(ignore bool) {
 	}
 
 	w.IgnoreElevation = ignore
+	w.Dirty = true
+}
+
+// SetIgnoreDeviceValues updates whether the workout recalculates its totals
+// instead of using the values recorded by the device, and marks it for
+// recalculation when the value changes.
+func (w *Workout) SetIgnoreDeviceValues(ignore bool) {
+	if w.IgnoreDeviceValues == ignore {
+		return
+	}
+
+	w.IgnoreDeviceValues = ignore
 	w.Dirty = true
 }
 
@@ -296,7 +309,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 
 		if g.IsGPXBAsed() {
 			d = gpxDate(g.GPX)
-			data = gpxAsMapData(g.GPX, wt, false)
+			data = gpxAsMapData(g.GPX, wt, false, false)
 		}
 
 		if wt == WorkoutTypeAutoDetect {
@@ -708,7 +721,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
-	w.setData(gpxAsMapData(gpxContent, w.Type, w.IgnoreElevation))
+	w.setData(gpxAsMapData(gpxContent, w.Type, w.IgnoreElevation, w.IgnoreDeviceValues))
 
 	if err := w.UpdateRouteSegmentMatches(db); err != nil {
 		return err

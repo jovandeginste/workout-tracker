@@ -82,6 +82,26 @@ templ Form(w *database.Workout) {
 			</td>
 		</tr>
 	}
+	if w.HasFile() {
+		<tr>
+			<td>
+				<label for="ignore-device-values">
+					@helpers.IconFor("distance")
+					{ i18n.T(ctx, "workout.ignore-device-values") }
+				</label>
+			</td>
+			<td>
+				<input
+					type="checkbox"
+					name="ignore_device_values"
+					id="ignore-device-values"
+					value="true"
+					checked?={ w.IgnoreDeviceValues }
+				/>
+				<span class="text-sm">{ i18n.T(ctx, "workout.ignore-device-values-explanation") }</span>
+			</td>
+		</tr>
+	}
 	<tr>
 		<td><label for="date">{ i18n.T(ctx, "common.date") }</label></td>
 		<td>

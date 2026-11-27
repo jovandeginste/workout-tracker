@@ -39,21 +39,22 @@ func uploadedFile(file *multipart.FileHeader) ([]byte, error) {
 }
 
 type ManualWorkout struct {
-	Name            *string               `form:"name" json:"name"`
-	Date            *string               `form:"date" json:"date"`
-	Timezone        *string               `form:"timezone" json:"timezone"`
-	Location        *string               `form:"location" json:"location"`
-	DurationHours   *int                  `form:"duration_hours" json:"duration_hours"`
-	DurationMinutes *int                  `form:"duration_minutes" json:"duration_minutes"`
-	DurationSeconds *int                  `form:"duration_seconds" json:"duration_seconds"`
-	Distance        *float64              `form:"distance" json:"distance"`
-	Repetitions     *int                  `form:"repetitions" json:"repetitions"`
-	Weight          *float64              `form:"weight" json:"weight"`
-	Notes           *string               `form:"notes" json:"notes"`
-	Type            *database.WorkoutType `form:"type" json:"type"`
-	CustomType      *string               `form:"custom_type" json:"custom_type"`
-	Private         *bool                 `form:"private" json:"private"`
-	IgnoreElevation *bool                 `form:"ignore_elevation" json:"ignore_elevation"`
+	Name               *string               `form:"name" json:"name"`
+	Date               *string               `form:"date" json:"date"`
+	Timezone           *string               `form:"timezone" json:"timezone"`
+	Location           *string               `form:"location" json:"location"`
+	DurationHours      *int                  `form:"duration_hours" json:"duration_hours"`
+	DurationMinutes    *int                  `form:"duration_minutes" json:"duration_minutes"`
+	DurationSeconds    *int                  `form:"duration_seconds" json:"duration_seconds"`
+	Distance           *float64              `form:"distance" json:"distance"`
+	Repetitions        *int                  `form:"repetitions" json:"repetitions"`
+	Weight             *float64              `form:"weight" json:"weight"`
+	Notes              *string               `form:"notes" json:"notes"`
+	Type               *database.WorkoutType `form:"type" json:"type"`
+	CustomType         *string               `form:"custom_type" json:"custom_type"`
+	Private            *bool                 `form:"private" json:"private"`
+	IgnoreElevation    *bool                 `form:"ignore_elevation" json:"ignore_elevation"`
+	IgnoreDeviceValues *bool                 `form:"ignore_device_values" json:"ignore_device_values"`
 
 	units *database.UserPreferredUnits
 }
@@ -157,6 +158,10 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 		w.SetIgnoreElevation(*m.IgnoreElevation)
 	}
 
+	if m.IgnoreDeviceValues != nil {
+		w.SetIgnoreDeviceValues(*m.IgnoreDeviceValues)
+	}
+
 	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
@@ -234,6 +239,9 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 
 	ignoreElevation := c.FormValue("ignore_elevation") == "true"
 	d.IgnoreElevation = &ignoreElevation
+
+	ignoreDeviceValues := c.FormValue("ignore_device_values") == "true"
+	d.IgnoreDeviceValues = &ignoreDeviceValues
 
 	d.Update(workout)
 	workout.Private = c.FormValue("private") == "true"

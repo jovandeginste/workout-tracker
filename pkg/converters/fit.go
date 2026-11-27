@@ -52,10 +52,10 @@ func ParseFit(content []byte) (*gpx.GPX, error) {
 	}
 
 	if act.Sessions[0].TotalCalories != math.MaxUint16 {
-		gpxFile.Extensions.Nodes = append(gpxFile.Extensions.Nodes, gpx.ExtensionNode{
-			XMLName: xml.Name{Local: "total-calories"}, Data: cast.ToString(act.Sessions[0].TotalCalories),
-		})
+		AddGPXExtension(gpxFile, "total-calories", float64(act.Sessions[0].TotalCalories))
 	}
+
+	addSessionExtensions(gpxFile, act.Sessions[0])
 
 	gpxFile.AppendTrack(&gpx.GPXTrack{
 		Name: act.Sessions[0].SportProfileName,
