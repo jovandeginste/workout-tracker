@@ -310,6 +310,8 @@ en:
     power-avg-max: Power (avg/max)
     private: Private
     private-explanation: A private workout is only visible to you and to admins.
+    ignore-elevation: Ignore elevation
+    ignore-elevation-explanation: Use 2D distance and ignore elevation gain for this workout.
     refresh-in-progress: refresh in progress
     repetitions: Repetitions
     share:

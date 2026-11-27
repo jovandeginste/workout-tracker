@@ -53,6 +53,7 @@ type ManualWorkout struct {
 	Type            *database.WorkoutType `form:"type" json:"type"`
 	CustomType      *string               `form:"custom_type" json:"custom_type"`
 	Private         *bool                 `form:"private" json:"private"`
+	IgnoreElevation *bool                 `form:"ignore_elevation" json:"ignore_elevation"`
 
 	units *database.UserPreferredUnits
 }
@@ -152,6 +153,10 @@ func (m *ManualWorkout) Update(w *database.Workout) {
 	setIfNotNil(&w.CustomType, m.CustomType)
 	setIfNotNil(&w.Private, m.Private)
 
+	if m.IgnoreElevation != nil {
+		w.SetIgnoreElevation(*m.IgnoreElevation)
+	}
+
 	setIfNotNil(&w.Data.AddressString, m.Location)
 	setIfNotNil(&w.Data.TotalDistance, m.ToDistance())
 	setIfNotNil(&w.Data.TotalDuration, m.ToDuration())
@@ -226,6 +231,9 @@ func (a *App) workoutsUpdateHandler(c *echo.Context) error {
 	if err := c.Bind(d); err != nil {
 		return a.redirectWithError(c, a.Reverse("workouts"), err)
 	}
+
+	ignoreElevation := c.FormValue("ignore_elevation") == "true"
+	d.IgnoreElevation = &ignoreElevation
 
 	d.Update(workout)
 	workout.Private = c.FormValue("private") == "true"

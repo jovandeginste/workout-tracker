@@ -45,6 +45,44 @@ templ Form(w *database.Workout) {
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<label for="private">
+				@helpers.IconFor("hide")
+				{ i18n.T(ctx, "workout.private") }
+			</label>
+		</td>
+		<td>
+			<input
+				type="checkbox"
+				name="private"
+				id="private"
+				value="true"
+				checked?={ w.Private }
+			/>
+			<span class="text-sm">{ i18n.T(ctx, "workout.private-explanation") }</span>
+		</td>
+	</tr>
+	if w.Type.IsDistance() {
+		<tr>
+			<td>
+				<label for="ignore-elevation">
+					@helpers.IconFor("elevation")
+					{ i18n.T(ctx, "workout.ignore-elevation") }
+				</label>
+			</td>
+			<td>
+				<input
+					type="checkbox"
+					name="ignore_elevation"
+					id="ignore-elevation"
+					value="true"
+					checked?={ w.IgnoreElevation }
+				/>
+				<span class="text-sm">{ i18n.T(ctx, "workout.ignore-elevation-explanation") }</span>
+			</td>
+		</tr>
+	}
+	<tr>
 		<td><label for="date">{ i18n.T(ctx, "common.date") }</label></td>
 		<td>
 			<input
@@ -182,24 +220,6 @@ templ Form(w *database.Workout) {
 			for _, e := range currentUser.Equipment {
 				@partials.SelectablePill(fmt.Sprintf("equipment_%d", e.ID), "equipment", helpers.A2S(e.ID), helpers.THas(ctx, e.Name), "", w.Uses(e))
 			}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<label for="private">
-				@helpers.IconFor("hide")
-				{ i18n.T(ctx, "workout.private") }
-			</label>
-		</td>
-		<td>
-			<input
-				type="checkbox"
-				name="private"
-				id="private"
-				value="true"
-				checked?={ w.Private }
-			/>
-			<span class="text-sm">{ i18n.T(ctx, "workout.private-explanation") }</span>
 		</td>
 	</tr>
 }

@@ -385,8 +385,12 @@ func distance3DBetween(p1 gpx.GPXPoint, p2 gpx.GPXPoint) float64 {
 	return p2.Distance3D(&p1)
 }
 
-func maxSpeedForSegment(segment gpx.GPXTrackSegment) float64 {
-	ms := segment.MovingData().MaxSpeed
+func maxSpeedForSegment(segment gpx.GPXTrackSegment, includeMovingData bool) float64 {
+	ms := 0.0
+
+	if includeMovingData {
+		ms = segment.MovingData().MaxSpeed
+	}
 
 	for _, p := range segment.Points {
 		extraMetrics := ExtraMetrics{}
@@ -401,7 +405,25 @@ func maxSpeedForSegment(segment gpx.GPXTrackSegment) float64 {
 	return ms
 }
 
-func createMapData(gpxContent *gpx.GPX) *MapData {
+func stoppedDuration2D(segment gpx.GPXTrackSegment) float64 {
+	if len(segment.Points) < 2 {
+		return 0
+	}
+
+	var stopped float64
+
+	for i, pt := range segment.Points[1:] {
+		prev := &segment.Points[i]
+
+		if speed := pt.SpeedBetween(prev, false) * 3.6; speed <= stoppedSpeedThreshold {
+			stopped += pt.TimeDiff(prev)
+		}
+	}
+
+	return stopped
+}
+
+func createMapData(gpxContent *gpx.GPX, ignoreElevation bool) *MapData {
 	if len(gpxContent.Tracks) == 0 {
 		return nil
 	}
@@ -419,12 +441,18 @@ func createMapData(gpxContent *gpx.GPX) *MapData {
 				continue
 			}
 
+			if ignoreElevation {
+				pauseDuration += time.Duration(stoppedDuration2D(segment) * float64(time.Second))
+				maxSpeed = max(maxSpeed, maxSpeedForSegment(segment, false))
+				continue
+			}
+
 			pauseDuration += time.Duration(segment.MovingData().StoppedTime) * time.Second
 			minElevation = min(minElevation, segment.ElevationBounds().MinElevation)
 			maxElevation = max(maxElevation, segment.ElevationBounds().MaxElevation)
 			uphill += segment.UphillDownhill().Uphill
 			downhill += segment.UphillDownhill().Downhill
-			maxSpeed = max(maxSpeed, maxSpeedForSegment(segment))
+			maxSpeed = max(maxSpeed, maxSpeedForSegment(segment, true))
 		}
 	}
 
@@ -540,8 +568,8 @@ func maxSpeedWindow(points []MapPoint, center int, maxDeltaMeter float64, step i
 	return index, true
 }
 
-func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType) *MapData {
-	data := createMapData(gpxContent)
+func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation bool) *MapData {
+	data := createMapData(gpxContent, ignoreElevation)
 
 	points := allGPXPoints(gpxContent)
 	if len(points) < 2 {
@@ -571,8 +599,13 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType) *MapData {
 
 		if prevPt != nil {
 			if validGPS && pointHasLocation(prevPt) {
-				newPoint.Distance = distance3DBetween(*prevPt, pt)
 				newPoint.Distance2D = distance2DBetween(*prevPt, pt)
+
+				if ignoreElevation {
+					newPoint.Distance = newPoint.Distance2D
+				} else {
+					newPoint.Distance = distance3DBetween(*prevPt, pt)
+				}
 			} else {
 				newPoint.Distance = totalDistanceFromExtraMetrics(&pt) - totalDist
 				if newPoint.Distance < 0 {
