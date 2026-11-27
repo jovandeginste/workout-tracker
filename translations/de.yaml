@@ -8,7 +8,8 @@ de:
   alerts:
     route-segments-added:
       one: 'Beim Hinzufügen des Streckenabschnittes ist ein Problem aufgetreten: %{list}'
-      other: 'Beim Hinzufügen des Streckenabschnittes sind %{count} Probleme aufgetreten: %{list}'
+      other: 'Beim Hinzufügen des Streckenabschnittes sind %{count} Probleme aufgetreten:
+        %{list}'
     something-wrong: 'Etwas ging schief: %{message}'
     workouts-added:
       one: 'Beim Hinzufügen des Trainings ist ein Problem aufgetreten: %{list}'
@@ -43,7 +44,7 @@ de:
     edit: bearbeiten
     file: Datei
     filter: Filter
-    height: Höhe
+    height: Größe
     last: Letzte
     name: Name
     notes: Notizen
@@ -67,8 +68,8 @@ de:
     add: Ausrüstung hinzufügen
     default-types: Standard-Trainingsarten
     notice:
-      deleted: Die Ausrüstung ‚%s‘ wurde gelöscht.
-      updated: Die Ausrüstung ‚%s‘ wurde aktualisiert.
+      deleted: Die Ausrüstung '%s' wurde gelöscht.
+      updated: Die Ausrüstung '%s' wurde aktualisiert.
     update: Ausrüstung aktualisieren
   help:
     edit-gpx-files: 'Du kannst deine GPX-Dateien bearbeiten, bevor du sie hier hochlädst:'
@@ -84,6 +85,9 @@ de:
   map:
     aerial: Luftbild
     streets: Straßen
+    fullscreen: Vollbild
+    markers: Markierungen anzeigen
+    only-visited: Nur anzeigen, wo du warst
   measurements:
     latest: Letzte Messungen
     none: Keine Messungen gefunden
@@ -98,7 +102,8 @@ de:
     statistics: Statistik
     workouts: Trainings
   misc:
-    convert-format: aus einem bisher nicht unterstützten Dateiformat konvertieren
+    convert-format: aus einem bisher nicht unterstützten Dateiformat 
+      konvertieren
     day: Tag
     day-1: 1 Tag
     day-7: 7 Tage
@@ -117,10 +122,13 @@ de:
     years-2: 2 Jahre
     years-5: 5 Jahre
     years-10: 10 Jahre
+    year: Jahr
   notices:
     route-segments-added:
-      one: 'Ein neuer Streckenabschnitt hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen'
-      other: "%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im Hintergrund nach Übereinstimmungen"
+      one: 'Ein neuer Streckenabschnitt hinzugefügt: %{list} - wir suchen im Hintergrund
+        nach Übereinstimmungen'
+      other: "%{count} neue Streckenabschnitte hinzugefügt: %{list} - wir suchen im
+        Hintergrund nach Übereinstimmungen"
     workouts-added:
       one: 'Ein neues Training hinzugefügt: %{list}'
       other: "%{count} neue Trainings hinzugefügt: %{list}"
@@ -133,9 +141,13 @@ de:
     find-matches: Übereinstimmungen finden
     matches: Treffer
     notice:
-      created: Der Streckenabschnitt ‚%s‘ wurde erstellt - wir suchen im Hintergrund nach Übereinstimmungen.
-      searching: Beginnt im Hintergrund mit der Suche nach passenden Trainings für den Streckenabschnitt ‚%s‘.
-      updated: Der Streckenabschnitt ‚%s‘ wurde aktualisiert.
+      created: Der Streckenabschnitt '%s' wurde erstellt - wir suchen im 
+        Hintergrund nach Übereinstimmungen.
+      searching: Beginnt im Hintergrund mit der Suche nach passenden Trainings 
+        für den Streckenabschnitt '%s'.
+      updated: Der Streckenabschnitt '%s' wurde aktualisiert.
+      deleted: Der Streckenabschnitt '%s' wurde gelöscht.
+      refreshed: Der Streckenabschnitt '%s' wurde neu geladen.
     start: Start
     update: Streckenabschnitt aktualisieren
   settings:
@@ -145,6 +157,10 @@ de:
     env-vars: Umgebungsvariablen
     overwritten-by: 'Diese Einstellungen können überschrieben werden durch:'
     update: Einstellungen speichern
+    login-custom-text: Individueller Anmeldetext (Markdown)
+    overridden: Diese Einstellung wird von der Konfigurationsdatei oder 
+      Umgebungsvariable verwaltet.
+    updated: Einstellungen aktualisiert
   sports:
     alpine-climbing: Alpinklettern
     auto: automatisch detektieren
@@ -198,6 +214,9 @@ de:
     trend: Trend
     trend-break: Trendbruch
     trend-period: Trendzeitraum
+    bar: Balken
+    chart-type: Diagrammtyp
+    line: Linie
   units:
     centimeter: Zentimeter
     feet: Fuß
@@ -211,7 +230,8 @@ de:
     pounds: pfund
   user:
     auth:
-      activation-needed: Dein Konto wurde erstellt, muss aber noch aktiviert werden.
+      activation-needed: Dein Konto wurde erstellt, muss aber noch aktiviert 
+        werden.
       create-account: Neues Konto erstellen
       register: Registrieren
       sign-in: Anmelden
@@ -220,7 +240,7 @@ de:
     logout: Abmelden
     notice:
       deleted: Der Benutzer '%s' wurde gelöscht.
-      updated: Der Benutzer ‚%s‘ wurde aktualisiert.
+      updated: Der Benutzer '%s' wurde aktualisiert.
     password: Passwort
     profile:
       api-key-updated: API-Schlüssel aktualisiert
@@ -249,12 +269,14 @@ de:
       your-settings: Deine Einstellungen
     update: Benutzer aktualisieren
     username: Benutzername
+    not-found: Kein Benutzer mit Benutzernamen %s gefunden
   workout:
     accuracy: Genauigkeit
     add-a-workout: Ein Training hinzufügen
     add-workout: Training hinzufügen
     add-workouts: Trainings hinzufügen
-    attribute-locked: Dieses Attribut ist für automatische Aktualisierungen gesperrt
+    attribute-locked: Dieses Attribut ist für automatische Aktualisierungen 
+      gesperrt
     autodetect: Automatisch erkennen
     average-cadence: Durchschnittliche Kadenz
     average-per-minute: Durchschnitt pro Minute
@@ -267,7 +289,8 @@ de:
     cadence-avg-max: Kadenz (Mittelwert/Maximum)
     calories: Kalorien
     calories-burned: Kalorienverbrauch
-    calories-hint: Geschätzt auf der Grundlage der Aktivität und deines zuletzt gemessenen Gewichts
+    calories-hint: Geschätzt auf der Grundlage der Aktivität und deines zuletzt 
+      gemessenen Gewichts
     climbs: Aufstiege
     distance: Distanz
     duration: Dauer
@@ -279,7 +302,8 @@ de:
     heading: Kurs
     heart-rate: Herzfrequenz
     location: Standort
-    lock: Die Attribute dieses Trainings für automatische Aktualisierungen sperren oder entsperren.
+    lock: Die Attribute dieses Trainings für automatische Aktualisierungen 
+      sperren oder entsperren.
     locked: Die Attribute des Trainings '%s' sind jetzt gesperrt
     manual: Manuell
     map-full-width: Karte in voller Breite anzeigen
@@ -291,11 +315,11 @@ de:
     min-elevation: Minimale Höhe
     no-equipment: keine Ausrüstung
     notice:
-      created: Das Training ‚%s‘ wurde erstellt.
+      created: Das Training '%s' wurde erstellt.
       deleted: Das Training '%s' wurde gelöscht.
       refresh-all: Alle Trainings werden in den nächsten Minuten aktualisiert.
-      refresh-soon: Das Training ‚%s‘ wird bald aktualisiert…
-      refreshed: Das Training '%s' wurde aktualisiert.
+      refresh-soon: Das Training '%s' wird bald aktualisiert…
+      refreshed: Das Training '%s' wurde neu geladen.
       share-link-created: Das Training '%s' hat nun einen teilbaren Link
       share-link-deleted: Der teilbare Link für das Training '%s' ist gelöscht
       updated: Das Training '%s' wurde aktualisiert.
@@ -312,7 +336,8 @@ de:
     slope: Steigung
     social:
       completed: Ich habe das Training %s absolviert.
-      summary: Es hat mich %s gekostet, um %s zu gehen. Ich habe im Durchschnitt %s.
+      summary: Es hat mich %s gekostet, um %s zu gehen. Ich habe im Durchschnitt
+        %s.
     source: Quelle
     speed: Geschwindigkeit
     strokes: Bewegungen
@@ -331,3 +356,9 @@ de:
     unlocked: Die Attribute des Trainings '%s' sind jetzt entsperrt
     up: Höhenmeter
     update: Training aktualisieren
+    moving-duration: Dauer ohne Pausen
+    not-found: Training nicht gefunden
+    private: Privat
+    private-explanation: Ein privates Training ist nur für dich und Admins 
+      sichtbar.
+    time-of-day: Tageszeit
