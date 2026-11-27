@@ -180,7 +180,9 @@ templ FileInputRow() {
 				type="file"
 				id="file"
 				name="file"
-				accept={ helpers.SupportedFileTypes() }
+				if !helpers.IsIOS(ctx) {
+					accept={ helpers.SupportedFileTypes() }
+				}
 				multiple
 			/>
 		</td>

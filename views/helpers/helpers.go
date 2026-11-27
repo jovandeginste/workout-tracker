@@ -174,6 +174,22 @@ func SupportedFileTypes() string {
 	return strings.Join(converters.SupportedFileTypes, ", ")
 }
 
+// IsIOS reports whether the request comes from an iOS device.
+//
+// iOS Safari ignores extensions it does not know, and disables every file when
+// none of the listed extensions are known (WebKit bug 279606). So we leave the
+// accept filter out there and rely on the server-side validation instead.
+func IsIOS(ctx context.Context) bool {
+	req := Request(ctx)
+	if req == nil {
+		return false
+	}
+
+	ua := req.UserAgent()
+
+	return strings.Contains(ua, "iPhone") || strings.Contains(ua, "iPad") || strings.Contains(ua, "iPod")
+}
+
 func MarkdownToHTML(s string) string {
 	s = strings.ReplaceAll(s, "\\n", "\n")
 	doc := parser.NewWithExtensions(parser.CommonExtensions).Parse([]byte(s))

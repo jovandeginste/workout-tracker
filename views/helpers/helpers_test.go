@@ -3,6 +3,7 @@ package helpers
 import (
 	"context"
 	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 
@@ -84,4 +85,31 @@ func TestUserLinkWithName(t *testing.T) {
 	b.Reset()
 	require.NoError(t, UserLinkWithName(&database.User{}).Render(ctx, &b))
 	assert.Empty(t, b.String())
+}
+
+func TestIsIOS(t *testing.T) {
+	ctxWithUA := func(ua string) context.Context {
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		req.Header.Set("User-Agent", ua)
+
+		return context.WithValue(context.Background(), "request", req)
+	}
+
+	t.Run("desktop browsers are not iOS", func(t *testing.T) {
+		assert.False(t, IsIOS(ctxWithUA("Mozilla/5.0 (X11; Linux x86_64) Gecko/20100101 Firefox/130.0")))
+	})
+
+	t.Run("iOS browsers are iOS", func(t *testing.T) {
+		for _, ua := range []string{
+			"Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Mobile/15E148 Safari/604.1",
+			"Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/126.0.6478.153 Mobile/15E148 Safari/604.1",
+			"Mozilla/5.0 (iPad; CPU OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+		} {
+			assert.True(t, IsIOS(ctxWithUA(ua)))
+		}
+	})
+
+	t.Run("without a request it is not iOS", func(t *testing.T) {
+		assert.False(t, IsIOS(context.Background()))
+	})
 }

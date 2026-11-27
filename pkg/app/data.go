@@ -19,6 +19,7 @@ func (a *App) setContext(ctx *echo.Context) {
 		"version":        &a.Version,
 		"config":         &a.Config,
 		"echo":           a.echo,
+		"request":        ctx.Request(),
 		"sessionManager": a.sessionManager,
 	}
 
