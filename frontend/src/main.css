@@ -410,6 +410,10 @@
     @apply py-1 px-3 min-w-0 text-sm;
   }
 
+  .selectable-pill.pill-tight {
+    @apply mx-0;
+  }
+
   .peer:focus-visible + .selectable-pill {
     outline: 2px solid currentColor;
     outline-offset: 2px;

@@ -15,9 +15,11 @@ templ ShowStats(s *database.RouteSegment) {
 		speedUnit := currentUser.PreferredUnits().Speed(nil)
 		for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
 			trendData = append(trendData, helpers.TrendDataPoint{
-				Date:  m.Workout.Date.Format(time.RFC3339),
-				Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-				Type:  m.Workout.Type.String(),
+				Date:        m.Workout.Date.Format(time.RFC3339),
+				Speed:       helpers.HumanSpeed(ctx, m.AverageSpeed()),
+				Type:        m.Workout.Type.String(),
+				SegmentID:   s.ID,
+				SegmentName: s.Name,
 			})
 		}
 	}}

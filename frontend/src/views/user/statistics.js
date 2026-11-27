@@ -55,6 +55,7 @@ class WtStatistic extends HTMLElement {
       dataLabels: { enabled: false },
       legend: {
         position: "top",
+        clusterGroupedSeries: false,
         onItemClick: { toggleDataSeries: false },
         onItemHover: { highlightDataSeries: false },
       },
@@ -135,6 +136,7 @@ class WtStatistic extends HTMLElement {
           seriesName: firstNauticalSeries.name,
           show: s.name === firstNauticalSeries.name,
           opposite: hasStandard,
+          min: 0,
           title: { text: nauticalUnit },
           labels: {
             formatter: (val) => val.toFixed(1) + " " + nauticalUnit,
@@ -233,11 +235,11 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     this.speedUnit = this.getAttribute("speed-unit") || "";
     this.translations = JSON.parse(this.getAttribute("translations") || `{}`);
 
+    this.bindTrendSelect();
+
     if (!this.data || this.data.length === 0) {
       return;
     }
-
-    this.appendControls();
 
     const el = document.createElement("div");
     this.appendChild(el);
@@ -250,30 +252,18 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     this.chart.render();
   }
 
-  appendControls() {
-    const controls = document.createElement("div");
-    controls.className = "mb-3 flex flex-wrap justify-end gap-3";
+  bindTrendSelect() {
+    const selector = this.parentElement?.querySelector(
+      'select[name="trend-break-detection"]',
+    );
 
-    const selector = document.createElement("select");
-    selector.className = "input-ellipsis";
-    selector.innerHTML = `
-      <option value="trend">${this.translations.trend || "Trend"}</option>
-      <option value="break">${
-        this.translations.trendBreak || "Trend break"
-      }</option>
-    `;
-    selector.value = this.trendBreakDetection ? "break" : "trend";
+    if (!selector) {
+      return;
+    }
+
     selector.addEventListener("change", () => {
       this.updateTrendBreakDetection(selector.value === "break");
     });
-    controls.appendChild(selector);
-
-    const resetButton = document.createElement("button");
-    resetButton.type = "button";
-    resetButton.textContent = this.translations.resetZoom || "Reset zoom";
-    resetButton.addEventListener("click", () => this.resetZoom());
-    controls.appendChild(resetButton);
-    this.appendChild(controls);
   }
 
   async updateTrendBreakDetection(enabled) {
@@ -304,10 +294,6 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     );
   }
 
-  resetZoom() {
-    this.chart?.resetSeries(false, true);
-  }
-
   getChartOptions(series = []) {
     const theme = chartTheme().dark ? "dark" : "light";
 
@@ -335,9 +321,24 @@ class RouteSegmentTrendStatistic extends HTMLElement {
       markers: { size: 4, strokeWidth: 0, hover: { sizeOffset: 1 } },
       stroke: { curve: "straight", width: 2 },
       tooltip: {
-        x: { format: "MMM 'yy" },
-        y: {
-          formatter: (val) => `${Number(val).toFixed(1)} ${this.speedUnit}`,
+        custom: ({ seriesIndex, dataPointIndex, w }) => {
+          const series = w.config.series[seriesIndex];
+          const point = series.data[dataPointIndex];
+
+          if (!point) {
+            return "";
+          }
+
+          const segment = point.segmentName
+            ? `<div>${this.translations.segment || "Segment"}: ${this.escapeHtml(point.segmentName)}</div>`
+            : "";
+
+          return `<div style="padding:8px;font-size:12px;line-height:1.5">
+            <div style="font-weight:600">${series.name}</div>
+            ${segment}
+            <div>${this.translations.date || "Date"}: ${new Date(point.x).toLocaleDateString()}</div>
+            <div>${Number(point.y).toFixed(1)} ${this.speedUnit}</div>
+          </div>`;
         },
       },
       xaxis: this.getXAxisOptions(),
@@ -351,6 +352,20 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
   seriesColors(series) {
     return series.map((serie) => serie.color);
+  }
+
+  escapeHtml(value) {
+    return String(value).replace(
+      /[&<>"']/g,
+      (char) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[char],
+    );
   }
 
   getXAxisOptions() {
@@ -416,7 +431,12 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
       const type = item.type || "unknown";
       result[type] ||= [];
-      result[type].push({ x: date, y: speed });
+      result[type].push({
+        x: date,
+        y: speed,
+        segmentID: item.segmentID,
+        segmentName: item.segmentName,
+      });
 
       return result;
     }, {});
@@ -424,3 +444,145 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 }
 
 customElements.define("route-segment-trend-stat", RouteSegmentTrendStatistic);
+
+class WtDistancePaceStat extends HTMLElement {
+  connectedCallback() {
+    this.points = JSON.parse(this.getAttribute("points") || `[]`);
+    this.preferredUnits = JSON.parse(
+      this.getAttribute("preferred-units") || `{}`,
+    );
+    this.translations = JSON.parse(this.getAttribute("translations") || `{}`);
+
+    if (!this.points || this.points.length === 0) {
+      return;
+    }
+
+    const series = this.getSeriesData();
+
+    if (series.length === 0) {
+      return;
+    }
+
+    const el = document.createElement("div");
+    this.appendChild(el);
+
+    new ApexCharts(el, {
+      ...this.getChartOptions(series),
+      series,
+    }).render();
+  }
+
+  distanceUnit() {
+    return this.preferredUnits.distance || "km";
+  }
+
+  tempoUnit() {
+    return this.preferredUnits.tempo || `min/${this.distanceUnit()}`;
+  }
+
+  metersPerUnit() {
+    return this.distanceUnit() === "mi" ? 1609.344 : 1000;
+  }
+
+  formatPace(seconds) {
+    if (!Number.isFinite(seconds) || seconds <= 0) {
+      return "";
+    }
+
+    const total = Math.round(seconds);
+    const minutes = Math.floor(total / 60);
+    const rest = total % 60;
+
+    return `${minutes}:${String(rest).padStart(2, "0")}`;
+  }
+
+  getSeriesData() {
+    const factor = this.metersPerUnit();
+    const series = new Map();
+
+    this.points.forEach((point) => {
+      const speed = Number(point.speed);
+      const distance = Number(point.distance);
+
+      if (!Number.isFinite(speed) || speed <= 0 || !Number.isFinite(distance)) {
+        return;
+      }
+
+      const type = point.type || "unknown";
+      const name = point.localType || type;
+
+      if (!series.has(name)) {
+        series.set(name, {
+          name,
+          color: colorForType(type),
+          data: [],
+        });
+      }
+
+      const localDistance = distance / factor;
+
+      series.get(name).data.push({
+        x: localDistance,
+        y: factor / speed,
+        date: point.date,
+        distance: localDistance,
+      });
+    });
+
+    return [...series.values()];
+  }
+
+  getChartOptions(series) {
+    const theme = chartTheme().dark ? "dark" : "light";
+
+    return {
+      theme: { mode: theme },
+      chart: {
+        type: "scatter",
+        width: "99%",
+        height: 350,
+        animations: { enabled: false },
+        toolbar: { show: false },
+      },
+      colors: series.map((s) => s.color),
+      dataLabels: { enabled: false },
+      legend: {
+        position: "top",
+        onItemClick: { toggleDataSeries: false },
+        onItemHover: { highlightDataSeries: false },
+      },
+      markers: { size: 4, strokeWidth: 0, hover: { sizeOffset: 1 } },
+      stroke: { width: 0 },
+      xaxis: {
+        type: "numeric",
+        title: {
+          text: `${this.translations.distance || "Distance"} (${this.distanceUnit()})`,
+        },
+        labels: { formatter: (val) => Number(val).toFixed(1) },
+      },
+      yaxis: {
+        reversed: true,
+        title: {
+          text: `${this.translations.pace || "Pace"} (${this.tempoUnit()})`,
+        },
+        labels: { formatter: (val) => this.formatPace(val) },
+      },
+      tooltip: {
+        custom: ({ seriesIndex, dataPointIndex, w }) => {
+          const point = w.config.series[seriesIndex].data[dataPointIndex];
+          const name = w.config.series[seriesIndex].name;
+          const date = new Date(point.date).toLocaleDateString();
+
+          return `<div style="padding:8px;font-size:12px;line-height:1.5">
+            <div style="font-weight:600">${name}</div>
+            <div>${this.translations.date || "Date"}: ${date}</div>
+            <div>${this.translations.distance || "Distance"}: ${point.distance.toFixed(1)} ${this.distanceUnit()}</div>
+            <div>${this.translations.pace || "Pace"}: ${this.formatPace(point.y)} ${this.tempoUnit()}</div>
+          </div>`;
+        },
+      },
+    };
+  }
+}
+
+customElements.define("wt-distance-pace-stat", WtDistancePaceStat);

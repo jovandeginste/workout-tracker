@@ -94,10 +94,13 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		Type      []string `query:"type"`
 		Equipment []uint64 `query:"equipment"`
 		Chart     string   `query:"chart"`
+		Pause     string   `query:"pause"`
+		Segment   uint64   `query:"segment"`
 	}{
 		Since: "1 year",
 		Per:   "month",
 		Chart: "line",
+		Pause: "1",
 	}
 
 	if err := c.Bind(&statisticsParams); err != nil {
@@ -146,7 +149,34 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Equipment, statisticsParams.Chart, routeSegments, typeCounts, allEquipment))
+	workoutTypes := make([]database.WorkoutType, 0, len(statisticsParams.Type))
+	for _, t := range statisticsParams.Type {
+		workoutTypes = append(workoutTypes, database.AsWorkoutType(t))
+	}
+
+	includePause := statisticsParams.Pause != "0"
+
+	distancePacePoints, err := u.GetDistancePacePoints(database.StatConfig{
+		Since:     statisticsParams.Since,
+		Equipment: statisticsParams.Equipment,
+	}, workoutTypes, includePause, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(user.StatisticsData{
+		Since:              statisticsParams.Since,
+		Per:                statisticsParams.Per,
+		WorkoutTypes:       statisticsParams.Type,
+		SelectedEquipment:  statisticsParams.Equipment,
+		ChartType:          statisticsParams.Chart,
+		RouteSegments:      routeSegments,
+		TypeCounts:         typeCounts,
+		Equipment:          allEquipment,
+		SelectedSegment:    statisticsParams.Segment,
+		IncludePause:       includePause,
+		DistancePacePoints: distancePacePoints,
+	}))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {

@@ -86,9 +86,11 @@ type MapConfig struct {
 }
 
 type TrendDataPoint struct {
-	Date  string `json:"date"`
-	Speed string `json:"speed"`
-	Type  string `json:"type"`
+	Date        string `json:"date"`
+	Speed       string `json:"speed"`
+	Type        string `json:"type"`
+	SegmentID   uint64 `json:"segmentID"`
+	SegmentName string `json:"segmentName"`
 }
 
 type TranslatedKey struct {

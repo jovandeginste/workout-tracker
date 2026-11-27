@@ -10,7 +10,20 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Statistics(u *database.User, since, per string, workoutTypes []string, selectedEquipment []uint64, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int, equipment []*database.Equipment) {
+templ Statistics(data StatisticsData) {
+	{{
+		since := data.Since
+		per := data.Per
+		workoutTypes := data.WorkoutTypes
+		selectedEquipment := data.SelectedEquipment
+		chartType := data.ChartType
+		routeSegments := data.RouteSegments
+		typeCounts := data.TypeCounts
+		equipment := data.Equipment
+		selectedSegment := data.SelectedSegment
+		includePause := data.IncludePause
+		distancePacePoints := data.DistancePacePoints
+	}}
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<div id="statistics-content">
@@ -19,11 +32,14 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 				{ i18n.T(ctx, "statistics.progress", i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticPerOptions(), per)), i18n.T(ctx, helpers.FindTranslationForKey(helpers.StatisticSinceOptions(), since))) }
 			</h2>
 			<form
+				id="statistics-filters"
 				class="inner-form"
 				method="get"
+				autocomplete="off"
 				action={ templ.SafeURL(helpers.RouteFor(ctx, "statistics")) }
 				hx-get={ helpers.RouteFor(ctx, "statistics") }
 				hx-trigger="change"
+				hx-include="#segment-filter"
 				hx-target="#statistics-content"
 				hx-select="#statistics-content"
 				hx-swap="outerHTML focus-scroll:false"
@@ -34,69 +50,156 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 				@partials.TranslatedKeySelect("since", "since", since, helpers.StatisticSinceOptions())
 				<label for="per">{ i18n.T(ctx, "statistics.per") }</label>
 				@partials.TranslatedKeySelect("per", "per", per, helpers.StatisticPerOptions())
-				<label for="chart">{ i18n.T(ctx, "statistics.chart-type") }</label>
-				<select id="chart" name="chart">
-					<option value="line" selected?={ chartType == "line" }>{ i18n.T(ctx, "statistics.line") }</option>
-					<option value="bar" selected?={ chartType == "bar" }>{ i18n.T(ctx, "statistics.bar") }</option>
-				</select>
+				@partials.RadioPillGroup("statistics.chart-type", "chart", "pill-compact pill-tight", []partials.RadioPillOption{
+					{Value: "line", LabelKey: "statistics.line", Checked: chartType == "line"},
+					{Value: "bar", LabelKey: "statistics.bar", Checked: chartType == "bar"},
+				})
+				@partials.RadioPillGroup("statistics.pause", "pause", "pill-compact pill-tight", []partials.RadioPillOption{
+					{Value: "1", LabelKey: "statistics.include-pause", Checked: includePause},
+					{Value: "0", LabelKey: "statistics.exclude-pause", Checked: !includePause},
+				})
 			</form>
 			{{ currentUser := helpers.CurrentUser(ctx) }}
 			{{ stats, err := currentUser.GetStatisticsFor(since, per, selectedEquipment, currentUser) }}
 			if err != nil {
 				<pre>{ err.Error() }</pre>
 			}
-			{{
-				var routeSegmentTrendData []helpers.TrendDataPoint
-				routeSegmentTrendTranslations := map[string]string{
-					"trend":               i18n.T(ctx, "statistics.trend"),
-					"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
-					"trendBreakDetection": i18n.T(ctx, "statistics.break-detection"),
-					"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
-				}
-				for _, s := range routeSegments {
-					for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
-						if len(workoutTypes) > 0 && !slices.Contains(workoutTypes, m.Workout.Type.String()) {
-							continue
-						}
-						if !m.Workout.HasAnyEquipment(selectedEquipment) {
-							continue
-						}
-						routeSegmentTrendData = append(routeSegmentTrendData, helpers.TrendDataPoint{
-							Date:  m.Workout.Date.Format(time.RFC3339),
-							Speed: helpers.HumanSpeed(ctx, m.AverageSpeed()),
-							Type:  m.Workout.Type.String(),
-						})
-						if _, ok := routeSegmentTrendTranslations[m.Workout.Type.String()]; !ok {
-							routeSegmentTrendTranslations[m.Workout.Type.String()] = i18n.T(ctx, m.Workout.Type.StringT())
-						}
-					}
-				}
-			}}
-			if len(routeSegmentTrendData) > 0 {
-				<div class="inner-form">
-					<h3>
-						@helpers.IconFor("trend")
-						{ i18n.T(ctx, "statistics.personal-trend") }
-					</h3>
-					<route-segment-trend-stat
-						trend-data={ templ.JSONString(routeSegmentTrendData) }
-						since={ since }
-						workout-types={ templ.JSONString(workoutTypes) }
-						trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
-						config-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-config-update") }
-						speed-unit={ currentUser.PreferredUnits().Speed(nil) }
-						translations={ templ.JSONString(routeSegmentTrendTranslations) }
-					></route-segment-trend-stat>
-				</div>
-			}
+			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2">
+				@personalTrendCard(routeSegments, workoutTypes, selectedEquipment, selectedSegment, since)
+				@distancePaceCard(distancePacePoints)
+			</div>
 			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">
 				@statCard("workout", "menu.workouts", "workouts-per-time", "workouts", false, stats, workoutTypes, chartType, per)
 				@statCard("duration", "workout.duration", "duration-per-time", "durationSeconds", true, stats, workoutTypes, chartType, per)
 				@statCard("distance", "workout.distance", "distance-per-time", "localDistance", true, stats, workoutTypes, chartType, per)
 				@statCard("elevation", "workout.elevation", "elevation-per-time", "localUp", false, stats, workoutTypes, chartType, per)
-				@statCard("speed", "workout.average-speed", "average-speed-per-time", "localAverageSpeed", true, stats, workoutTypes, chartType, per)
-				@statCard("speed", "workout.average-speed-no-pause", "average-speed-no-pause-per-time", "localAverageSpeedNoPause", true, stats, workoutTypes, chartType, per)
+				{{
+					averageSpeedType := "localAverageSpeed"
+					if !includePause {
+						averageSpeedType = "localAverageSpeedNoPause"
+					}
+				}}
+				@statCard("speed", "workout.average-speed", "average-speed-per-time", averageSpeedType, true, stats, workoutTypes, chartType, per)
 				@statCard("max-speed", "workout.max-speed", "max-speed-per-time", "localMaxSpeed", true, stats, workoutTypes, chartType, per)
+			</div>
+		</div>
+	}
+}
+
+templ personalTrendCard(routeSegments []*database.RouteSegment, workoutTypes []string, selectedEquipment []uint64, selectedSegment uint64, since string) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	{{
+		var routeSegmentTrendData []helpers.TrendDataPoint
+		var routeSegmentTrendSegments []*database.RouteSegment
+		routeSegmentTrendTranslations := map[string]string{
+			"trend":   i18n.T(ctx, "statistics.trend"),
+			"segment": i18n.T(ctx, "misc.route-segment"),
+			"date":    i18n.T(ctx, "common.date"),
+		}
+		if selectedSegment != 0 {
+			found := false
+			for _, s := range routeSegments {
+				if s.ID == selectedSegment && len(s.RouteSegmentMatchesForUserID(currentUser.ID)) > 0 {
+					found = true
+					break
+				}
+			}
+			if !found {
+				selectedSegment = 0
+			}
+		}
+		for _, s := range routeSegments {
+			matches := s.RouteSegmentMatchesForUserID(currentUser.ID)
+			if len(matches) == 0 {
+				continue
+			}
+			routeSegmentTrendSegments = append(routeSegmentTrendSegments, s)
+			if selectedSegment != 0 && s.ID != selectedSegment {
+				continue
+			}
+			for _, m := range matches {
+				if len(workoutTypes) > 0 && !slices.Contains(workoutTypes, m.Workout.Type.String()) {
+					continue
+				}
+				if !m.Workout.HasAnyEquipment(selectedEquipment) {
+					continue
+				}
+				routeSegmentTrendData = append(routeSegmentTrendData, helpers.TrendDataPoint{
+					Date:        m.Workout.Date.Format(time.RFC3339),
+					Speed:       helpers.HumanSpeed(ctx, m.AverageSpeed()),
+					Type:        m.Workout.Type.String(),
+					SegmentID:   s.ID,
+					SegmentName: s.Name,
+				})
+				if _, ok := routeSegmentTrendTranslations[m.Workout.Type.String()]; !ok {
+					routeSegmentTrendTranslations[m.Workout.Type.String()] = i18n.T(ctx, m.Workout.Type.StringT())
+				}
+			}
+		}
+	}}
+	if len(routeSegmentTrendSegments) > 0 {
+		<div>
+			<div class="inner-form">
+				<div class="mb-5 flex flex-wrap items-center justify-between gap-2">
+					<h3 class="mb-0">
+						@helpers.IconFor("trend")
+						{ i18n.T(ctx, "statistics.personal-trend") }
+					</h3>
+					<div class="flex flex-wrap items-center gap-2">
+						<select
+							id="segment-filter"
+							name="segment"
+							class="input-ellipsis"
+							hx-get={ helpers.RouteFor(ctx, "statistics") }
+							hx-include="#statistics-filters"
+							hx-target="#statistics-content"
+							hx-select="#statistics-content"
+							hx-swap="outerHTML focus-scroll:false"
+							hx-push-url="true"
+						>
+							<option value="0" selected?={ selectedSegment == 0 }>{ i18n.T(ctx, "statistics.all-segments") }</option>
+							for _, s := range routeSegmentTrendSegments {
+								<option value={ helpers.A2S(s.ID) } selected?={ s.ID == selectedSegment }>{ s.Name }</option>
+							}
+						</select>
+						<select name="trend-break-detection" class="input-ellipsis">
+							<option value="trend" selected?={ !currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }>{ i18n.T(ctx, "statistics.trend") }</option>
+							<option value="break" selected?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }>{ i18n.T(ctx, "statistics.trend-break") }</option>
+						</select>
+					</div>
+				</div>
+				<route-segment-trend-stat
+					trend-data={ templ.JSONString(routeSegmentTrendData) }
+					since={ since }
+					workout-types={ templ.JSONString(workoutTypes) }
+					trend-break-detection?={ currentUser.Profile.RouteSegmentConfig.TrendBreakDetection }
+					config-update-route={ helpers.RouteFor(ctx, "user-profile-route-segment-config-update") }
+					speed-unit={ currentUser.PreferredUnits().Speed(nil) }
+					translations={ templ.JSONString(routeSegmentTrendTranslations) }
+				></route-segment-trend-stat>
+			</div>
+		</div>
+	}
+}
+
+templ distancePaceCard(points []*database.DistancePacePoint) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	if len(points) > 0 {
+		<div>
+			<div class="inner-form">
+				<h3>
+					@helpers.IconFor("distance")
+					{ i18n.T(ctx, "statistics.distance-vs-pace") }
+				</h3>
+				<wt-distance-pace-stat
+					points={ templ.JSONString(points) }
+					preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+					translations={ templ.JSONString(map[string]string{
+						"distance": i18n.T(ctx, "workout.distance"),
+						"pace":     i18n.T(ctx, "workout.tempo"),
+						"date":     i18n.T(ctx, "common.date"),
+					}) }
+				></wt-distance-pace-stat>
 			</div>
 		</div>
 	}

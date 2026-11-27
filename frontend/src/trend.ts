@@ -15,7 +15,6 @@ export interface TrendBreak {
 }
 
 export const DAY_MS = 24 * 60 * 60 * 1000;
-export const DAYS_PER_MONTH = 30.4375;
 export const MAX_TREND_BREAK_POINTS = 200;
 
 const PALETTE = [
@@ -71,15 +70,7 @@ export function normalCDF(value: number): number {
 }
 
 export function canShowTrend(points: ChartPoint[]): boolean {
-  if (points.length < 5) {
-    return false;
-  }
-
-  const first = points[0].x;
-  const last = points[points.length - 1].x;
-  const months = Math.max(1, (last - first) / (DAYS_PER_MONTH * DAY_MS));
-
-  return points.length / months >= 1;
+  return points.length >= 3;
 }
 
 export function linearRegression(points: ChartPoint[]): Regression {

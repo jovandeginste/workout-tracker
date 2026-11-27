@@ -16,6 +16,7 @@ templ List(workouts []*database.Workout, filters *database.WorkoutFilters, worko
 				<form
 					id="filters"
 					method="get"
+					autocomplete="off"
 					action={ templ.SafeURL(helpers.RouteFor(ctx, "workouts")) }
 					hx-get={ helpers.RouteFor(ctx, "workouts") }
 					hx-trigger="change"
