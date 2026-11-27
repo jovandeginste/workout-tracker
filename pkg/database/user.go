@@ -99,6 +99,19 @@ func (u *User) ShowFullDate() bool {
 	return u.Profile.PreferFullDate
 }
 
+// DisplayName returns the name of the user, falling back to the username.
+func (u *User) DisplayName() string {
+	if u == nil {
+		return ""
+	}
+
+	if u.Name != "" {
+		return u.Name
+	}
+
+	return u.Username
+}
+
 func (u *User) PreferredUnits() *UserPreferredUnits {
 	if u == nil {
 		return &UserPreferredUnits{}

@@ -6,22 +6,13 @@ templ IconFor(name string) {
 	@templ.Raw(iconFor(name))
 }
 
-// UserLink shows the username of the user, linking to their dashboard.
+// UserLink shows the name of the user, with their username as a tooltip,
+// linking to their dashboard.
 templ UserLink(u *database.User) {
 	if u != nil && u.ID != 0 {
-		<a href={ templ.SafeURL(RouteFor(ctx, "user-show", u.ID)) }>
+		<a href={ templ.SafeURL(RouteFor(ctx, "user-show", u.ID)) } title={ u.Username }>
 			@IconFor("user")
-			{ u.Username }
+			{ u.DisplayName() }
 		</a>
-	}
-}
-
-// UserLinkWithName shows the username of the user, followed by their name.
-templ UserLinkWithName(u *database.User) {
-	if u != nil && u.ID != 0 {
-		@UserLink(u)
-		if u.Name != "" && u.Name != u.Username {
-			<span class="user-name">{ u.Name }</span>
-		}
 	}
 }

@@ -499,13 +499,13 @@ func FullWorkoutDetails(w *database.Workout) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = helpers.UserLinkWithName(w.User).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = helpers.UserLink(w.User).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = partials.DetailRow("user", "user.username", "").Render(templ.WithChildren(ctx, templ_7745c5c3_Var23), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.DetailRow("user", "common.user", "").Render(templ.WithChildren(ctx, templ_7745c5c3_Var23), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

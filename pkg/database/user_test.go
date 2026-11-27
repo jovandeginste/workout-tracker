@@ -53,6 +53,22 @@ func TestUser_IsValid(t *testing.T) {
 	assert.True(t, u.IsActive())
 }
 
+func TestUser_DisplayName(t *testing.T) {
+	u := defaultUser()
+	u.Name = "Jo Vandeginste"
+	u.Username = "jo@dwarfy.be"
+
+	assert.Equal(t, "Jo Vandeginste", u.DisplayName())
+
+	u.Name = ""
+
+	assert.Equal(t, "jo@dwarfy.be", u.DisplayName())
+
+	var empty *User
+
+	assert.Empty(t, empty.DisplayName())
+}
+
 func TestUser_PasswordIsValid(t *testing.T) {
 	pwd := "my-password"
 	u := defaultUser()
