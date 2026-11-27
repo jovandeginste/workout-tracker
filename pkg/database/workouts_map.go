@@ -663,7 +663,7 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation,
 
 		if prevPt != nil {
 			newPoint.Distance, newPoint.Distance2D = tracker.step(prevPt, &pt)
-			newPoint.Duration = time.Duration(pt.TimeDiff(prevPt)) * time.Second
+			newPoint.Duration = pt.Timestamp.Sub(prevPt.Timestamp)
 
 			tracker.add(newPoint.Distance, newPoint.Distance2D)
 			totalTime += newPoint.Duration

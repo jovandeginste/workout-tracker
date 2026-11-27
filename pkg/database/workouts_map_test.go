@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tkrajina/gpxgo/gpx"
 )
 
 func TestMapPoint_IsMoving(t *testing.T) {
@@ -27,4 +28,20 @@ func TestMapPoint_IsMoving(t *testing.T) {
 			assert.Equal(t, tt.want, p.IsMoving())
 		})
 	}
+}
+
+func TestGpxAsMapDataKeepsSubSecondIntervals(t *testing.T) {
+	g := &gpx.GPX{}
+	start := time.Date(2026, 1, 1, 10, 0, 0, 0, time.UTC)
+
+	for i := range 5 {
+		g.AppendPoint(&gpx.GPXPoint{
+			Point:     gpx.Point{Latitude: 50 + float64(i)*0.0001, Longitude: 4},
+			Timestamp: start.Add(time.Duration(i) * 1500 * time.Millisecond),
+		})
+	}
+
+	data := gpxAsMapData(g, WorkoutTypeRunning, false, false)
+
+	assert.Equal(t, 6*time.Second, data.TotalDuration)
 }
