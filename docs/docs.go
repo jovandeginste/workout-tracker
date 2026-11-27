@@ -1878,6 +1878,10 @@ const docTemplate = `{
                     "description": "Whether the user is an admin",
                     "type": "boolean"
                 },
+                "authSource": {
+                    "description": "Where the user's password is checked: local or ldap",
+                    "type": "string"
+                },
                 "createdAt": {
                     "type": "string"
                 },

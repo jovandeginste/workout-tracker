@@ -13,6 +13,7 @@ import (
 	"github.com/cat-dealer/go-rand/v2"
 	"github.com/fsouza/slognil"
 	"github.com/invopop/ctxi18n/i18n"
+	"github.com/jovandeginste/workout-tracker/v2/pkg/auth"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/version"
@@ -38,6 +39,7 @@ type App struct {
 	workerPool        pond.Pool
 	workerPoolGeo     pond.Pool
 	workerPoolHeatmap pond.Pool
+	ldapAuth          auth.Authenticator
 }
 
 func (a *App) jwtSecret() []byte {
@@ -110,6 +112,10 @@ func (a *App) Configure() error {
 	}
 
 	if err := a.Config.UpdateFromDatabase(a.db); err != nil {
+		return err
+	}
+
+	if err := a.ConfigureAuthentication(); err != nil {
 		return err
 	}
 

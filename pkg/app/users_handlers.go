@@ -8,6 +8,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/database"
 	"github.com/jovandeginste/workout-tracker/v2/views/user"
 	"github.com/labstack/echo/v5"
+	"gorm.io/gorm"
 )
 
 var ErrLoginFailed = errors.New("username or password incorrect")
@@ -55,31 +56,49 @@ func filterUsers(users []*database.User, query string) []*database.User {
 
 // userSigninHandler will be executed after SignInForm submission.
 func (a *App) userSigninHandler(c *echo.Context) error {
-	// Initiate a new User struct.
-	u := new(database.User)
+	username := c.FormValue("username")
+	password := c.FormValue("password")
 
-	// Parse the submitted data and fill the User struct with the data from the SignIn form.
-	if err := c.Bind(u); err != nil {
-		return a.redirectWithError(c, a.Reverse("user-login"), err)
+	storedUser, err := database.GetUser(a.db, username)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		a.logger.Error("login: lookup user", "error", err)
+		return a.redirectWithError(c, a.Reverse("user-login"), ErrLoginFailed)
 	}
 
-	storedUser, err := database.GetUser(a.db, u.Username)
+	// LDAP usernames are case-insensitive. Only fall back to a folded lookup
+	// for LDAP accounts; local usernames keep their exact-match behaviour.
+	if storedUser == nil {
+		storedUser, err = database.GetUserFold(a.db, username)
+		if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			a.logger.Error("login: folded lookup user", "error", err)
+			return a.redirectWithError(c, a.Reverse("user-login"), ErrLoginFailed)
+		}
+
+		if storedUser != nil && storedUser.AuthSource != database.AuthSourceLDAP {
+			storedUser = nil
+		}
+	}
+
+	var u *database.User
+
+	switch {
+	case storedUser == nil:
+		u, err = a.loginWithLDAP(c, username, password)
+	case storedUser.AuthSource == database.AuthSourceLDAP:
+		u, err = a.loginWithLDAP(c, storedUser.Username, password)
+	default:
+		if !storedUser.ValidLogin(password) {
+			err = ErrLoginFailed
+		} else {
+			u = storedUser
+		}
+	}
+
 	if err != nil {
-		return a.redirectWithError(c, a.Reverse("user-login"), err)
-	}
-
-	if !storedUser.ValidLogin(c.FormValue("password")) {
 		return a.redirectWithError(c, a.Reverse("user-login"), ErrLoginFailed)
 	}
 
-	// If password is correct, generate tokens and set cookies.
-	a.sessionManager.Put(c.Request().Context(), "username", u.Username)
-
-	if err := a.createToken(storedUser, c); err != nil {
-		return a.redirectWithError(c, a.Reverse("user-login"), ErrLoginFailed)
-	}
-
-	return c.Redirect(http.StatusFound, a.Reverse("dashboard"))
+	return a.finishLogin(c, u)
 }
 
 // userSignoutHandler will log a user out
@@ -107,15 +126,15 @@ func (a *App) userRegisterHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("user-login"), err)
 	}
 
+	// The form may contain an AuthSource field; never let a registration
+	// choose an external provider.
+	u.AuthSource = database.AuthSourceLocal
+
 	if err := u.SetPassword(c.FormValue("password")); err != nil {
 		return a.redirectWithError(c, a.Reverse("user-login"), err)
 	}
 
-	u.Profile.Theme = BrowserTheme
-	u.Profile.TotalsShow = database.WorkoutTypeList{DefaultTotalsShow}
-	u.Profile.Language = BrowserLanguage
-	u.Profile.RouteSegmentConfig.TrendPeriod = database.DefaultRouteSegmentTrendPeriod
-	u.Profile.RouteSegmentConfig.TrendBreakDetection = true
+	applyUserDefaults(u)
 	// ensure user is not admin and not active by default
 	u.Admin = false
 	u.Active = false
@@ -127,6 +146,14 @@ func (a *App) userRegisterHandler(c *echo.Context) error {
 	a.addNoticeT(c, "user.auth.activation-needed")
 
 	return c.Redirect(http.StatusFound, a.Reverse("user-login"))
+}
+
+func applyUserDefaults(u *database.User) {
+	u.Profile.Theme = BrowserTheme
+	u.Profile.TotalsShow = database.WorkoutTypeList{DefaultTotalsShow}
+	u.Profile.Language = BrowserLanguage
+	u.Profile.RouteSegmentConfig.TrendPeriod = database.DefaultRouteSegmentTrendPeriod
+	u.Profile.RouteSegmentConfig.TrendBreakDetection = true
 }
 
 func (a *App) userShowHandler(c *echo.Context) error {

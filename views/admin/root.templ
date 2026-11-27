@@ -17,6 +17,13 @@ templ Root(users []*database.User) {
 			<h3>
 				{ i18n.T(ctx, "admin.manage-users") } ({ helpers.A2S(len(users)) })
 			</h3>
+			<a
+				class="button action"
+				href={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-new")) }
+			>
+				@helpers.IconFor("user-register")
+				{ i18n.T(ctx, "admin.create-user") }
+			</a>
 			<table>
 				<thead>
 					<tr>

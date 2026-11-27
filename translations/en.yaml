@@ -1,10 +1,20 @@
 ---
 en:
   admin:
+    auth-source: Authentication
+    auth-source-help: Local accounts use the password below. LDAP accounts use the directory password; the password field is ignored for them.
+    auth-source-ldap: LDAP
+    auth-source-local: Local
+    create-user: Create user
+    keep-local-admin: Keep at least one local admin, so you can still sign in when the directory is unavailable.
+    ldap-admin-help: When an LDAP admin group is configured, this is synced on the next login.
+    ldap-disabled: LDAP is not enabled in the server configuration; an LDAP user cannot sign in until it is.
+    ldap-managed: Managed by the directory. The password field is only used when switching to local.
     manage: Manage
     manage-user: Manage user '%s'
     manage-users: Manage users
-    password-hint: Leave blank to keep current password
+    password-help: Leave blank to keep the current password. Switching to LDAP clears it.
+    password-required-local: Required for local accounts.
     role: Admin
   alerts:
     route-segments-added:
@@ -227,6 +237,7 @@ en:
     auth:
       activation-needed: Your account has been created, but needs to be activated.
       create-account: Create a new account
+      ldap-hint: Directory accounts can sign in with their LDAP password.
       register: Register
       sign-in: Sign in
       username-email: Username (email)
@@ -234,6 +245,7 @@ en:
     logout: Logout
     not-found: No user found with username %s
     notice:
+      created: The user '%s' has been created.
       deleted: The user '%s' has been deleted.
       updated: The user '%s' has been updated.
     password: Password
@@ -261,6 +273,7 @@ en:
       update-units: Update preferred units
       updated: Profile updated
       your-settings: Your settings
+    create: Create user
     update: Update user
     username: Username
   workout:

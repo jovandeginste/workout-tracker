@@ -1,9 +1,19 @@
 nl:
   admin:
+    auth-source: Authenticatie
+    auth-source-help: Lokale accounts gebruiken het wachtwoord hieronder. LDAP-accounts gebruiken het wachtwoord van de directory; het wachtwoordveld wordt voor hen genegeerd.
+    auth-source-ldap: LDAP
+    auth-source-local: Lokaal
+    create-user: Gebruiker aanmaken
+    keep-local-admin: Houd minstens één lokale beheerder, zodat je nog kunt aanmelden als de directory niet beschikbaar is.
+    ldap-admin-help: Als er een LDAP-beheerdersgroep is ingesteld, wordt dit bij de volgende aanmelding overschreven.
+    ldap-disabled: LDAP is niet ingeschakeld in de serverconfiguratie; een LDAP-gebruiker kan pas aanmelden als dat wel zo is.
+    ldap-managed: Beheerd door de directory. Het wachtwoordveld wordt enkel gebruikt bij overschakelen naar lokaal.
     manage: Beheer
     manage-user: Beheer gebruiker '%s'
     manage-users: Gebruikersbeheer
-    password-hint: Laat leeg om het huidige wachtwoord te behouden
+    password-help: Laat leeg om het huidige wachtwoord te behouden. Bij overschakelen naar LDAP wordt het gewist.
+    password-required-local: Verplicht voor lokale accounts.
     role: Beheerder
   alerts:
     route-segments-added:
@@ -227,6 +237,7 @@ nl:
     auth:
       activation-needed: Jouw account is aangemaakt, maar moet nog worden geactiveerd.
       create-account: Maak een nieuwe account
+      ldap-hint: Accounts uit de directory kunnen aanmelden met hun LDAP-wachtwoord.
       register: Registreren
       sign-in: Aanmelden
       username-email: Gebruikersnaam (e-mailadres)
@@ -234,6 +245,7 @@ nl:
     logout: Afmelden
     not-found: Geen gebruiker gevonden met gebruikersnaam %s
     notice:
+      created: De gebruiker '%s' is aangemaakt.
       deleted: De gebruiker '%s' is verwijderd.
       updated: De gebruiker '%s' is bijgewerkt.
     password: Wachtwoord
@@ -261,6 +273,7 @@ nl:
       update-units: Voorkeurseenheden bijwerken
       updated: Profiel bijgewerkt
       your-settings: Uw instellingen
+    create: Gebruiker aanmaken
     update: Gebruiker bijwerken
     username: Gebruikersnaam
   workout:

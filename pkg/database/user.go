@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/mail"
+	"strings"
 	"time"
 
 	"github.com/cat-dealer/go-rand/v2"
@@ -21,13 +22,18 @@ const (
 	PasswordMaximumLength = 128
 	UsernameMinimumLength = 1
 	UsernameMaximumLength = 32
+
+	AuthSourceLocal = "local"
+	AuthSourceLDAP  = "ldap"
 )
 
 var (
-	ErrPasswordInvalidLength = errors.New("password has invalid length")
-	ErrUsernameInvalidLength = errors.New("username has invalid length")
-	ErrUsernameInvalid       = errors.New("username is not valid")
-	ErrNoUser                = errors.New("no user attached")
+	ErrPasswordInvalidLength     = errors.New("password has invalid length")
+	ErrPasswordManagedExternally = errors.New("password is managed externally")
+	ErrUsernameInvalidLength     = errors.New("username has invalid length")
+	ErrUsernameInvalid           = errors.New("username is not valid")
+	ErrInvalidAuthSource         = errors.New("invalid authentication source")
+	ErrNoUser                    = errors.New("no user attached")
 )
 
 type UserSecrets struct {
@@ -40,8 +46,9 @@ type UserData struct {
 	Model
 	LastVersion string `gorm:"last_version" json:"lastVersion"` // Which version of the app the user has last seen and acknowledged
 
-	Username string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)" json:"username"` // The user's username
-	Name     string `form:"name" gorm:"type:varchar(64);not null" json:"name"`                     // The user's name
+	Username   string `form:"username" gorm:"uniqueIndex;not null;type:varchar(32)" json:"username"` // The user's username
+	Name       string `form:"name" gorm:"type:varchar(64);not null" json:"name"`                     // The user's name
+	AuthSource string `gorm:"type:varchar(16);not null;default:local" json:"authSource"`             // Where the user's password is checked: local or ldap
 
 	Active bool `form:"active" json:"active"` // Whether the user is active
 	Admin  bool `form:"admin" json:"admin"`   // Whether the user is an admin
@@ -133,7 +140,16 @@ func (u *User) Timezone() *time.Location {
 	return loc
 }
 
+func (u *User) authSource() string {
+	if u.AuthSource == "" {
+		return AuthSourceLocal
+	}
+
+	return u.AuthSource
+}
+
 func (u *User) BeforeSave(_ *gorm.DB) error {
+	u.AuthSource = u.authSource()
 	u.GenerateAPIKey(false)
 	u.GenerateSalt()
 
@@ -175,7 +191,17 @@ func GetUserByID(db *gorm.DB, userID uint64) (*User, error) {
 }
 
 func GetUser(db *gorm.DB, username string) (*User, error) {
-	u, err := firstUser(db, currentUserQuery(db).Where(&UserData{Username: username}))
+	return getUserByQuery(db, currentUserQuery(db).Where(&UserData{Username: username}))
+}
+
+// GetUserFold returns the user with the given username, ignoring case. LDAP
+// usernames are case-insensitive, so external logins use this lookup.
+func GetUserFold(db *gorm.DB, username string) (*User, error) {
+	return getUserByQuery(db, currentUserQuery(db).Where("LOWER(username) = ?", strings.ToLower(username)))
+}
+
+func getUserByQuery(db *gorm.DB, query *gorm.DB) (*User, error) {
+	u, err := firstUser(db, query)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +234,12 @@ func (u *User) IsActive() bool {
 		return false
 	}
 
-	if !u.Active || u.Password == "" || u.Username == "" {
+	if !u.Active || u.Username == "" {
+		return false
+	}
+
+	// Keep the old rule for local accounts: no password, no login.
+	if u.authSource() == AuthSourceLocal && u.Password == "" {
 		return false
 	}
 
@@ -216,7 +247,7 @@ func (u *User) IsActive() bool {
 }
 
 func (u *User) ValidLogin(password string) bool {
-	if !u.IsActive() {
+	if !u.IsActive() || u.authSource() != AuthSourceLocal || u.Password == "" {
 		return false
 	}
 
@@ -228,8 +259,14 @@ func (u *User) AddSalt(password string) string {
 }
 
 func (u *User) IsValid() error {
-	if u.Password == "" {
-		return ErrPasswordInvalidLength
+	switch u.authSource() {
+	case AuthSourceLocal:
+		if u.Password == "" {
+			return ErrPasswordInvalidLength
+		}
+	case AuthSourceLDAP:
+	default:
+		return ErrInvalidAuthSource
 	}
 
 	if len(u.Username) < UsernameMinimumLength || len(u.Username) > UsernameMaximumLength {
@@ -248,6 +285,10 @@ func (u *User) IsValid() error {
 }
 
 func (u *User) SetPassword(password string) error {
+	if u.authSource() == AuthSourceLDAP {
+		return ErrPasswordManagedExternally
+	}
+
 	if len(password) < PasswordMinimumLength || len(password) > PasswordMaximumLength {
 		return ErrPasswordInvalidLength
 	}

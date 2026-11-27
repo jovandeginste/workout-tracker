@@ -341,6 +341,81 @@ If no users are in the database (eg. when starting with an empty database), a
 default `admin` user is created with password `admin`. You should change this
 password in a production environment.
 
+### LDAP authentication
+
+LDAP is optional and disabled by default. The app binds to the directory to
+verify the password; directory passwords are never stored locally.
+
+Auto-creation is off by default. Create the user first in _Admin -> Users -> New
+user_ and select LDAP, or open an existing user and switch the authentication
+pills to LDAP. A user with the LDAP source can only sign in through the
+directory. A user with the local source keeps using the local password; an
+existing local account is never linked to LDAP automatically.
+
+OpenLDAP example:
+
+```yaml
+ldap_enabled: true
+ldap_url: ldaps://ldap.example.com:636
+ldap_bind_dn: cn=workout-tracker,ou=services,dc=example,dc=com
+ldap_bind_password_file: /run/secrets/ldap-bind-password
+ldap_base_dn: ou=people,dc=example,dc=com
+ldap_user_filter: "(uid={username})"
+ldap_username_attribute: uid
+ldap_name_attribute: cn
+ldap_required_group: cn=workout-tracker-users,ou=groups,dc=example,dc=com
+ldap_admin_group: cn=workout-tracker-admins,ou=groups,dc=example,dc=com
+ldap_auto_create: false
+```
+
+Active Directory example:
+
+```yaml
+ldap_enabled: true
+ldap_url: ldaps://dc01.example.com:636
+ldap_bind_dn: CN=svc-workout,OU=Service Accounts,DC=example,DC=com
+ldap_bind_password_file: /run/secrets/ldap-bind-password
+ldap_base_dn: OU=Users,DC=example,DC=com
+ldap_user_filter: "(sAMAccountName={username})"
+ldap_username_attribute: sAMAccountName
+ldap_name_attribute: displayName
+ldap_admin_group: CN=Workout Admins,OU=Groups,DC=example,DC=com
+ldap_auto_create: false
+```
+
+Instead of a service account, you can bind directly with a DN template:
+
+```yaml
+ldap_enabled: true
+ldap_url: ldaps://ldap.example.com:636
+ldap_user_dn: "uid={username},ou=people,dc=example,dc=com"
+ldap_username_attribute: uid
+ldap_name_attribute: cn
+```
+
+Group checks use the `memberOf` attribute. `ldap_required_group` restricts
+access to members; `ldap_admin_group` makes members app admins on their next
+login. Nested groups and group searches are not supported. In direct-bind mode,
+the user must be able to read their own `memberOf` attribute.
+
+Other settings: `ldap_start_tls` for StartTLS on `ldap://`, `ldap_ca_file` for a
+private CA, `ldap_insecure_skip_verify` to skip certificate checks (not
+recommended), `ldap_timeout_seconds` (default 10), and `ldap_auto_create`
+(default false). All keys are also available as `WT_LDAP_*` environment
+variables, e.g. `WT_LDAP_URL` and `WT_LDAP_BIND_PASSWORD_FILE`.
+
+Security notes:
+
+- Keep at least one local admin, so you can still sign in when the directory is
+  unavailable.
+- Set `registration_disabled: true`; otherwise someone can register a local
+  account with the same username before the LDAP user first signs in.
+- Disabling a user in LDAP stops new logins, but existing sessions and API keys
+  remain valid until they expire or the app user is deactivated. Group changes
+  are applied on the next login.
+- There is currently no rate limiting on the login form. Direct binds can
+  trigger account lockout policies in Active Directory.
+
 ## API usage
 
 The API is documented using

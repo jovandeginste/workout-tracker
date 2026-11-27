@@ -16,3 +16,16 @@ web_root: /my-workout-tracker
 #   Welcome to this Workout Tracker instance!
 #
 #   Please contact the administrator for an account.
+
+# LDAP authentication (disabled by default)
+# ldap_enabled: true
+# ldap_url: ldaps://ldap.example.com:636
+# ldap_bind_dn: cn=workout-tracker,ou=services,dc=example,dc=com
+# ldap_bind_password_file: /run/secrets/ldap-bind-password
+# ldap_base_dn: ou=people,dc=example,dc=com
+# ldap_user_filter: "(uid={username})"
+# ldap_username_attribute: uid
+# ldap_name_attribute: cn
+# ldap_required_group: cn=workout-tracker-users,ou=groups,dc=example,dc=com
+# ldap_admin_group: cn=workout-tracker-admins,ou=groups,dc=example,dc=com
+# ldap_auto_create: false
