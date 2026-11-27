@@ -94,6 +94,7 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		Type      []string `query:"type"`
 		Equipment []uint64 `query:"equipment"`
 		Chart     string   `query:"chart"`
+		Segment   uint64   `query:"segment"`
 	}{
 		Since: "1 year",
 		Per:   "month",
@@ -169,6 +170,7 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		routeSegments,
 		typeCounts,
 		allEquipment,
+		statisticsParams.Segment,
 		distancePacePoints,
 	))
 }

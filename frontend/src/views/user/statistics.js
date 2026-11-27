@@ -233,11 +233,11 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     this.speedUnit = this.getAttribute("speed-unit") || "";
     this.translations = JSON.parse(this.getAttribute("translations") || `{}`);
 
+    this.bindTrendSelect();
+
     if (!this.data || this.data.length === 0) {
       return;
     }
-
-    this.appendControls();
 
     const el = document.createElement("div");
     this.appendChild(el);
@@ -250,24 +250,18 @@ class RouteSegmentTrendStatistic extends HTMLElement {
     this.chart.render();
   }
 
-  appendControls() {
-    const controls = document.createElement("div");
-    controls.className = "absolute right-2 top-2 z-10 md:right-5 md:top-5";
+  bindTrendSelect() {
+    const selector = this.parentElement?.querySelector(
+      'select[name="trend-break-detection"]',
+    );
 
-    const selector = document.createElement("select");
-    selector.className = "input-ellipsis";
-    selector.innerHTML = `
-      <option value="trend">${this.translations.trend || "Trend"}</option>
-      <option value="break">${
-        this.translations.trendBreak || "Trend break"
-      }</option>
-    `;
-    selector.value = this.trendBreakDetection ? "break" : "trend";
+    if (!selector) {
+      return;
+    }
+
     selector.addEventListener("change", () => {
       this.updateTrendBreakDetection(selector.value === "break");
     });
-    controls.appendChild(selector);
-    this.appendChild(controls);
   }
 
   async updateTrendBreakDetection(enabled) {
@@ -325,9 +319,24 @@ class RouteSegmentTrendStatistic extends HTMLElement {
       markers: { size: 4, strokeWidth: 0, hover: { sizeOffset: 1 } },
       stroke: { curve: "straight", width: 2 },
       tooltip: {
-        x: { format: "MMM 'yy" },
-        y: {
-          formatter: (val) => `${Number(val).toFixed(1)} ${this.speedUnit}`,
+        custom: ({ seriesIndex, dataPointIndex, w }) => {
+          const series = w.config.series[seriesIndex];
+          const point = series.data[dataPointIndex];
+
+          if (!point) {
+            return "";
+          }
+
+          const segment = point.segmentName
+            ? `<div>${this.translations.segment || "Segment"}: ${this.escapeHtml(point.segmentName)}</div>`
+            : "";
+
+          return `<div style="padding:8px;font-size:12px;line-height:1.5">
+            <div style="font-weight:600">${series.name}</div>
+            ${segment}
+            <div>${this.translations.date || "Date"}: ${new Date(point.x).toLocaleDateString()}</div>
+            <div>${Number(point.y).toFixed(1)} ${this.speedUnit}</div>
+          </div>`;
         },
       },
       xaxis: this.getXAxisOptions(),
@@ -341,6 +350,20 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
   seriesColors(series) {
     return series.map((serie) => serie.color);
+  }
+
+  escapeHtml(value) {
+    return String(value).replace(
+      /[&<>"']/g,
+      (char) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[char],
+    );
   }
 
   getXAxisOptions() {
@@ -406,7 +429,12 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
       const type = item.type || "unknown";
       result[type] ||= [];
-      result[type].push({ x: date, y: speed });
+      result[type].push({
+        x: date,
+        y: speed,
+        segmentID: item.segmentID,
+        segmentName: item.segmentName,
+      });
 
       return result;
     }, {});

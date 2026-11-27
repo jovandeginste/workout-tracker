@@ -189,6 +189,7 @@ nl:
     walking: wandelen
     weight-lifting: gewichtheffen
   statistics:
+    all-segments: Alle segmenten
     bar: Staaf
     break-detection: Trendbreukdetectie
     chart-type: Grafiektype

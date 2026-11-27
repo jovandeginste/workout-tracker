@@ -189,6 +189,7 @@ en:
     walking: walking
     weight-lifting: weight lifting
   statistics:
+    all-segments: All segments
     bar: Bar
     break-detection: Trend break detection
     chart-type: Chart type
