@@ -872,6 +872,9 @@ const docTemplate = `{
                 "duration_seconds": {
                     "type": "integer"
                 },
+                "ignore_device_values": {
+                    "type": "boolean"
+                },
                 "ignore_elevation": {
                     "type": "boolean"
                 },
@@ -1974,6 +1977,10 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "ignore_device_values": {
+                    "description": "Whether to recalculate the totals instead of using the values recorded by the device",
+                    "type": "boolean"
                 },
                 "ignore_elevation": {
                     "description": "Whether to use 2D distances and ignore elevation data",

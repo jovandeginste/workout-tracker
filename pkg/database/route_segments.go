@@ -122,7 +122,7 @@ func (rs *RouteSegment) UpdateFromContent() error {
 
 	gpxContent.GPX.SimplifyTracks(DefaultMaxDeltaMeter / 2)
 
-	data := gpxAsMapData(gpxContent.GPX, WorkoutTypeOther, false)
+	data := gpxAsMapData(gpxContent.GPX, WorkoutTypeOther, false, false)
 
 	rs.TotalDistance = data.TotalDistance
 	rs.MinElevation = data.MinElevation

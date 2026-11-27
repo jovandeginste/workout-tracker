@@ -568,7 +568,66 @@ func maxSpeedWindow(points []MapPoint, center int, maxDeltaMeter float64, step i
 	return index, true
 }
 
-func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation bool) *MapData {
+// distanceTracker accumulates the distance between consecutive track points.
+// It uses the cumulative distance that the device recorded when available and
+// falls back to the track geometry otherwise.
+type distanceTracker struct {
+	ignoreElevation    bool
+	ignoreDeviceValues bool
+	totalDistance      float64
+	totalDistance2D    float64
+	prevDeviceDistance float64
+	hasPrevDevice      bool
+}
+
+func (t *distanceTracker) add(distance, distance2D float64) {
+	t.totalDistance += distance
+	t.totalDistance2D += distance2D
+}
+
+func (t *distanceTracker) observe(pt *gpx.GPXPoint) {
+	if t.ignoreDeviceValues {
+		return
+	}
+
+	t.prevDeviceDistance, t.hasPrevDevice = deviceDistance(pt)
+}
+
+func (t *distanceTracker) step(prev, pt *gpx.GPXPoint) (float64, float64) {
+	if !t.ignoreDeviceValues {
+		deviceDist, hasDeviceDist := deviceDistance(pt)
+
+		if hasDeviceDist && t.hasPrevDevice && deviceDist >= t.prevDeviceDistance {
+			distance := deviceDist - t.prevDeviceDistance
+
+			t.prevDeviceDistance = deviceDist
+			t.hasPrevDevice = true
+
+			return distance, distance
+		}
+
+		t.prevDeviceDistance = deviceDist
+		t.hasPrevDevice = hasDeviceDist
+	}
+
+	if pointHasLocation(prev) && pointHasLocation(pt) {
+		distance2D := distance2DBetween(*prev, *pt)
+		if t.ignoreElevation {
+			return distance2D, distance2D
+		}
+
+		return distance3DBetween(*prev, *pt), distance2D
+	}
+
+	distance := totalDistanceFromExtraMetrics(pt) - t.totalDistance
+	if distance < 0 {
+		distance = 0
+	}
+
+	return distance, distance
+}
+
+func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation, ignoreDeviceValues bool) *MapData {
 	data := createMapData(gpxContent, ignoreElevation)
 
 	points := allGPXPoints(gpxContent)
@@ -576,12 +635,17 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation 
 		return data
 	}
 
+	tracker := &distanceTracker{
+		ignoreElevation:    ignoreElevation,
+		ignoreDeviceValues: ignoreDeviceValues,
+	}
+	tracker.observe(&points[0])
+
 	var (
-		totalDist, totalDist2D float64
-		totalTime              time.Duration
+		totalTime time.Duration
+		prevPt    *gpx.GPXPoint
 	)
 
-	var prevPt *gpx.GPXPoint
 	data.Details = &MapDataDetails{}
 
 	for _, pt := range points {
@@ -598,32 +662,15 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation 
 		}
 
 		if prevPt != nil {
-			if validGPS && pointHasLocation(prevPt) {
-				newPoint.Distance2D = distance2DBetween(*prevPt, pt)
-
-				if ignoreElevation {
-					newPoint.Distance = newPoint.Distance2D
-				} else {
-					newPoint.Distance = distance3DBetween(*prevPt, pt)
-				}
-			} else {
-				newPoint.Distance = totalDistanceFromExtraMetrics(&pt) - totalDist
-				if newPoint.Distance < 0 {
-					newPoint.Distance = 0
-				}
-
-				newPoint.Distance2D = newPoint.Distance
-			}
-
+			newPoint.Distance, newPoint.Distance2D = tracker.step(prevPt, &pt)
 			newPoint.Duration = time.Duration(pt.TimeDiff(prevPt)) * time.Second
 
-			totalDist += newPoint.Distance
-			totalDist2D += newPoint.Distance2D
+			tracker.add(newPoint.Distance, newPoint.Distance2D)
 			totalTime += newPoint.Duration
 		}
 
-		newPoint.TotalDistance = totalDist
-		newPoint.TotalDistance2D = totalDist2D
+		newPoint.TotalDistance = tracker.totalDistance
+		newPoint.TotalDistance2D = tracker.totalDistance2D
 		newPoint.TotalDuration = totalTime
 
 		extraMetrics := ExtraMetrics{}
@@ -640,17 +687,19 @@ func gpxAsMapData(gpxContent *gpx.GPX, workoutType WorkoutType, ignoreElevation 
 		data.Details.Points = append(data.Details.Points, newPoint)
 	}
 
-	data.TotalDistance = totalDist
-	data.TotalDistance2D = totalDist2D
+	data.TotalDistance = tracker.totalDistance
+	data.TotalDistance2D = tracker.totalDistance2D
 	data.TotalDuration = totalTime
-	data.MaxSpeed = max(data.MaxSpeed, maxSpeedForPoints(data.Details.Points, workoutType.MaxDeltaMeter()))
+
+	applyDeviceValues(gpxContent, data, ignoreElevation, ignoreDeviceValues)
+	data.updateMaxSpeed(gpxContent, workoutType, ignoreDeviceValues)
 
 	if totalTime > 0 {
-		data.AverageSpeed = totalDist / totalTime.Seconds()
+		data.AverageSpeed = data.TotalDistance / totalTime.Seconds()
 
 		pdDiff := totalTime - data.PauseDuration
 		if pdDiff > 0 {
-			data.AverageSpeedNoPause = totalDist / pdDiff.Seconds()
+			data.AverageSpeedNoPause = data.TotalDistance / pdDiff.Seconds()
 		}
 	}
 

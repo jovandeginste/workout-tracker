@@ -16,15 +16,15 @@
       "lng": 4.174307385,
       "tz": "UTC"
     },
-    "totalDistance": 18889.482289,
-    "totalDistance2D": 18889.482289,
+    "totalDistance": 16535.08,
+    "totalDistance2D": 16535.08,
     "totalDuration": "31m27s",
     "pauseDuration": "0s",
-    "maxSpeed": 1190.448847,
+    "maxSpeed": 9.351,
     "maxCadence": 91,
     "maxPower": 280,
-    "averageSpeed": 10.010324,
-    "averageSpeedNoPause": 10.010324,
+    "averageSpeed": 8.762629,
+    "averageSpeedNoPause": 8.762629,
     "averageCadence": 78.410175,
     "averagePower": 201.488076,
     "minElevation": 0,
@@ -43,7 +43,7 @@
       "speed"
     ],
     "pointsCount": 1888,
-    "pointsDigest": "7d1aff2f5ef383d412ffa433c2cd02affb27e1f6de4c3cdcb84011a69ac6c515",
+    "pointsDigest": "101a6615b69fd3a038cb42258c60f30511177af29ebd793a2524da8237608d71",
     "firstPoint": {
       "time": "2025-02-20T04:35:31Z",
       "lat": 50.865889192,
@@ -70,10 +70,10 @@
       "lat": 50.865889192,
       "lng": 4.177758135,
       "elevation": 0,
-      "distance": 9.94625,
-      "distance2D": 9.94625,
-      "totalDistance": 18889.482289,
-      "totalDistance2D": 18889.482289,
+      "distance": 10.1,
+      "distance2D": 10.1,
+      "totalDistance": 16534.95,
+      "totalDistance2D": 16534.95,
       "duration": "1s",
       "totalDuration": "31m27s",
       "slopeGrade": 0,
@@ -87,7 +87,7 @@
       }
     },
     "climbs": [],
-    "heatmapPointsCount": 313,
-    "heatmapPointsDigest": "4913482324b5e3eb4e7188be5f71f36a5d6cb7d18504310eaadd2c59c6090e31"
+    "heatmapPointsCount": 312,
+    "heatmapPointsDigest": "d25fff589dd9607a96fbe14c31a350ad64db88f5f388411d64f36ca56b61f215"
   }
 }

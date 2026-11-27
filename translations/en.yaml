@@ -317,6 +317,8 @@ en:
     private-explanation: A private workout is only visible to you and to admins.
     ignore-elevation: Ignore elevation
     ignore-elevation-explanation: Use 2D distance and ignore elevation gain for this workout.
+    ignore-device-values: Ignore device values
+    ignore-device-values-explanation: Recalculate the distance, elevation and other totals from the track points instead of using the values recorded by your device.
     refresh-in-progress: refresh in progress
     repetitions: Repetitions
     share:
