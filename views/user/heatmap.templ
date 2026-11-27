@@ -19,6 +19,7 @@ templ Heatmap(workoutTypes []database.WorkoutType, selectedTypes []string, selec
 			class="inner-form"
 			id="heatmap-filter"
 			method="get"
+			autocomplete="off"
 			action={ templ.SafeURL(helpers.RouteFor(ctx, "heatmap")) }
 			hx-get={ helpers.RouteFor(ctx, "heatmap") }
 			hx-trigger="change"

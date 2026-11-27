@@ -243,14 +243,14 @@ func SelectablePill(id, name, value, label, extraClass string, checked bool) tem
 		}
 		ctx = templ.InitializeContext(ctx)
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<label class=\"inline\"><input class=\"sr-only peer\" type=\"checkbox\" id=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<label class=\"inline\"><input class=\"sr-only peer\" type=\"checkbox\" autocomplete=\"off\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templruntime.NewAttributeExpression(id).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 50, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 51, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
 		if templ_7745c5c3_Err != nil {
@@ -263,7 +263,7 @@ func SelectablePill(id, name, value, label, extraClass string, checked bool) tem
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templruntime.NewAttributeExpression(name).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 51, Col: 14}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 52, Col: 14}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var13)
 		if templ_7745c5c3_Err != nil {
@@ -276,7 +276,7 @@ func SelectablePill(id, name, value, label, extraClass string, checked bool) tem
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templruntime.NewAttributeExpression(value).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 52, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 53, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var14)
 		if templ_7745c5c3_Err != nil {
@@ -339,7 +339,7 @@ func SelectablePill(id, name, value, label, extraClass string, checked bool) tem
 		var templ_7745c5c3_Var17 string
 		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 55, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 56, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -370,14 +370,14 @@ func RadioPill(id, name, value, label, extraClass string, checked bool) templ.Co
 		}
 		ctx = templ.InitializeContext(ctx)
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<label class=\"inline\"><input class=\"sr-only peer\" type=\"radio\" id=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<label class=\"inline\"><input class=\"sr-only peer\" type=\"radio\" autocomplete=\"off\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var19 string
 		templ_7745c5c3_Var19, templ_7745c5c3_Err = templruntime.NewAttributeExpression(id).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 64, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 66, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var19)
 		if templ_7745c5c3_Err != nil {
@@ -390,7 +390,7 @@ func RadioPill(id, name, value, label, extraClass string, checked bool) templ.Co
 		var templ_7745c5c3_Var20 string
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templruntime.NewAttributeExpression(name).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 65, Col: 14}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 67, Col: 14}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var20)
 		if templ_7745c5c3_Err != nil {
@@ -403,7 +403,7 @@ func RadioPill(id, name, value, label, extraClass string, checked bool) templ.Co
 		var templ_7745c5c3_Var21 string
 		templ_7745c5c3_Var21, templ_7745c5c3_Err = templruntime.NewAttributeExpression(value).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 66, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 68, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
 		if templ_7745c5c3_Err != nil {
@@ -466,7 +466,7 @@ func RadioPill(id, name, value, label, extraClass string, checked bool) templ.Co
 		var templ_7745c5c3_Var24 string
 		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 69, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 71, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 		if templ_7745c5c3_Err != nil {
@@ -504,7 +504,7 @@ func ActionForm(route, method, icon, labelKey, class string) templ.Component {
 		var templ_7745c5c3_Var26 string
 		templ_7745c5c3_Var26, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(route)).ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 74, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 76, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var26)
 		if templ_7745c5c3_Err != nil {
@@ -517,7 +517,7 @@ func ActionForm(route, method, icon, labelKey, class string) templ.Component {
 		var templ_7745c5c3_Var27 string
 		templ_7745c5c3_Var27, templ_7745c5c3_Err = templruntime.NewAttributeExpression(method).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 74, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 76, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var27)
 		if templ_7745c5c3_Err != nil {
@@ -556,7 +556,7 @@ func ActionForm(route, method, icon, labelKey, class string) templ.Component {
 			var templ_7745c5c3_Var30 string
 			templ_7745c5c3_Var30, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, labelKey)).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 75, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 77, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
 			if templ_7745c5c3_Err != nil {
@@ -616,7 +616,7 @@ func DeleteButton(route string) templ.Component {
 		var templ_7745c5c3_Var32 string
 		templ_7745c5c3_Var32, templ_7745c5c3_Err = templruntime.NewAttributeExpression(route).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 85, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 87, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var32)
 		if templ_7745c5c3_Err != nil {
@@ -629,7 +629,7 @@ func DeleteButton(route string) templ.Component {
 		var templ_7745c5c3_Var33 string
 		templ_7745c5c3_Var33, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "common.delete")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 89, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 91, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var33)
 		if templ_7745c5c3_Err != nil {
@@ -700,7 +700,7 @@ func WorkoutTypeFilter(types []database.WorkoutType, selected []string, equipmen
 		var templ_7745c5c3_Var36 string
 		templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.type"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 103, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 105, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
 		if templ_7745c5c3_Err != nil {
@@ -732,7 +732,7 @@ func WorkoutTypeFilter(types []database.WorkoutType, selected []string, equipmen
 			var templ_7745c5c3_Var37 string
 			templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "menu.equipment"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 113, Col: 53}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 115, Col: 53}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var37))
 			if templ_7745c5c3_Err != nil {
@@ -786,7 +786,7 @@ func WorkoutTypeOptions(selected string, includeAuto, includeAll bool) templ.Com
 			var templ_7745c5c3_Var39 string
 			templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.all"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 126, Col: 46}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 128, Col: 46}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var39))
 			if templ_7745c5c3_Err != nil {
@@ -805,7 +805,7 @@ func WorkoutTypeOptions(selected string, includeAuto, includeAll bool) templ.Com
 			var templ_7745c5c3_Var40 string
 			templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "workout.autodetect"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 129, Col: 58}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 131, Col: 58}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var40))
 			if templ_7745c5c3_Err != nil {
@@ -824,7 +824,7 @@ func WorkoutTypeOptions(selected string, includeAuto, includeAll bool) templ.Com
 			var templ_7745c5c3_Var41 string
 			templ_7745c5c3_Var41, templ_7745c5c3_Err = templruntime.NewAttributeExpression(wt.String()).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 132, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 134, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var41)
 			if templ_7745c5c3_Err != nil {
@@ -847,7 +847,7 @@ func WorkoutTypeOptions(selected string, includeAuto, includeAll bool) templ.Com
 			var templ_7745c5c3_Var42 string
 			templ_7745c5c3_Var42, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, wt.StringT()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 133, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 135, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var42))
 			if templ_7745c5c3_Err != nil {
@@ -886,7 +886,7 @@ func TranslatedKeySelect(id, name, selected string, options []helpers.Translated
 		var templ_7745c5c3_Var44 string
 		templ_7745c5c3_Var44, templ_7745c5c3_Err = templruntime.NewAttributeExpression(id).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 139, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 141, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var44)
 		if templ_7745c5c3_Err != nil {
@@ -899,7 +899,7 @@ func TranslatedKeySelect(id, name, selected string, options []helpers.Translated
 		var templ_7745c5c3_Var45 string
 		templ_7745c5c3_Var45, templ_7745c5c3_Err = templruntime.NewAttributeExpression(name).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 139, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 141, Col: 30}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var45)
 		if templ_7745c5c3_Err != nil {
@@ -917,7 +917,7 @@ func TranslatedKeySelect(id, name, selected string, options []helpers.Translated
 			var templ_7745c5c3_Var46 string
 			templ_7745c5c3_Var46, templ_7745c5c3_Err = templruntime.NewAttributeExpression(o.Key).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 141, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 143, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var46)
 			if templ_7745c5c3_Err != nil {
@@ -940,7 +940,7 @@ func TranslatedKeySelect(id, name, selected string, options []helpers.Translated
 			var templ_7745c5c3_Var47 string
 			templ_7745c5c3_Var47, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, o.Translation))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 142, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 144, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var47))
 			if templ_7745c5c3_Err != nil {
@@ -1008,7 +1008,7 @@ func FormActions(submitKey, cancelURL string) templ.Component {
 		var templ_7745c5c3_Var50 string
 		templ_7745c5c3_Var50, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, submitKey))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 162, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 164, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var50))
 		if templ_7745c5c3_Err != nil {
@@ -1021,7 +1021,7 @@ func FormActions(submitKey, cancelURL string) templ.Component {
 		var templ_7745c5c3_Var51 string
 		templ_7745c5c3_Var51, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.reset-changes"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 164, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 166, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var51))
 		if templ_7745c5c3_Err != nil {
@@ -1034,7 +1034,7 @@ func FormActions(submitKey, cancelURL string) templ.Component {
 		var templ_7745c5c3_Var52 string
 		templ_7745c5c3_Var52, templ_7745c5c3_Err = templruntime.NewAttributeExpression(cancelURL).ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 170, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 172, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var52)
 		if templ_7745c5c3_Err != nil {
@@ -1047,7 +1047,7 @@ func FormActions(submitKey, cancelURL string) templ.Component {
 		var templ_7745c5c3_Var53 string
 		templ_7745c5c3_Var53, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.cancel"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 172, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 174, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var53))
 		if templ_7745c5c3_Err != nil {
@@ -1094,7 +1094,7 @@ func DetailRow(icon, labelKey, class string) templ.Component {
 		var templ_7745c5c3_Var55 string
 		templ_7745c5c3_Var55, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, labelKey))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 182, Col: 29}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 184, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var55))
 		if templ_7745c5c3_Err != nil {
@@ -1180,7 +1180,7 @@ func FileInputRow() templ.Component {
 		var templ_7745c5c3_Var59 string
 		templ_7745c5c3_Var59, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.file"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 191, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 193, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var59))
 		if templ_7745c5c3_Err != nil {
@@ -1198,7 +1198,7 @@ func FileInputRow() templ.Component {
 			var templ_7745c5c3_Var60 string
 			templ_7745c5c3_Var60, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.SupportedFileTypes()).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 198, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 200, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var60)
 			if templ_7745c5c3_Err != nil {
@@ -1241,7 +1241,7 @@ func OverriddenNote() templ.Component {
 		var templ_7745c5c3_Var62 string
 		templ_7745c5c3_Var62, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "settings.overridden"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 208, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 210, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var62))
 		if templ_7745c5c3_Err != nil {
@@ -1287,7 +1287,7 @@ func ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) 
 		var templ_7745c5c3_Var64 string
 		templ_7745c5c3_Var64, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, titleKey))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 216, Col: 26}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 218, Col: 26}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var64))
 		if templ_7745c5c3_Err != nil {
@@ -1300,7 +1300,7 @@ func ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) 
 		var templ_7745c5c3_Var65 string
 		templ_7745c5c3_Var65, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.A2S(count))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 216, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 218, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var65))
 		if templ_7745c5c3_Err != nil {
@@ -1313,7 +1313,7 @@ func ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) 
 		var templ_7745c5c3_Var66 string
 		templ_7745c5c3_Var66, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(helpers.RouteFor(ctx, addRoute))).ResolveURL(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 219, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 221, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var66)
 		if templ_7745c5c3_Err != nil {
@@ -1334,7 +1334,7 @@ func ListHeader(icon, titleKey string, count int, addRoute, addLabelKey string) 
 		var templ_7745c5c3_Var67 string
 		templ_7745c5c3_Var67, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, addLabelKey))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 221, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 223, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var67))
 		if templ_7745c5c3_Err != nil {
@@ -1372,7 +1372,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var69 string
 		templ_7745c5c3_Var69, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(cancelURL)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 233, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 235, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var69)
 		if templ_7745c5c3_Err != nil {
@@ -1393,7 +1393,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var70 string
 		templ_7745c5c3_Var70, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.confirm-delete", i18n.T(ctx, entityKey)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 244, Col: 67}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 246, Col: 67}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var70))
 		if templ_7745c5c3_Err != nil {
@@ -1406,7 +1406,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var71 string
 		templ_7745c5c3_Var71, templ_7745c5c3_Err = templruntime.NewAttributeExpression(iconTitle).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 245, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 247, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var71)
 		if templ_7745c5c3_Err != nil {
@@ -1429,7 +1429,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var72 string
 		templ_7745c5c3_Var72, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 249, Col: 12}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 251, Col: 12}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var72))
 		if templ_7745c5c3_Err != nil {
@@ -1442,7 +1442,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var73 string
 		templ_7745c5c3_Var73, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(confirmURL)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 254, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 256, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var73)
 		if templ_7745c5c3_Err != nil {
@@ -1455,7 +1455,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var74 string
 		templ_7745c5c3_Var74, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.continue"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 256, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 258, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var74))
 		if templ_7745c5c3_Err != nil {
@@ -1468,7 +1468,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var75 string
 		templ_7745c5c3_Var75, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(cancelURL)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 258, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 260, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var75)
 		if templ_7745c5c3_Err != nil {
@@ -1481,7 +1481,7 @@ func DeleteModal(cancelURL, confirmURL, entityKey, name, icon, iconTitle string)
 		var templ_7745c5c3_Var76 string
 		templ_7745c5c3_Var76, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "common.cancel"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 262, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 264, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var76))
 		if templ_7745c5c3_Err != nil {
@@ -1520,7 +1520,7 @@ func SnippetDate(date time.Time) templ.Component {
 			var templ_7745c5c3_Var78 string
 			templ_7745c5c3_Var78, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RelativeDate(ctx, date)).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 271, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 273, Col: 47}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var78)
 			if templ_7745c5c3_Err != nil {
@@ -1533,7 +1533,7 @@ func SnippetDate(date time.Time) templ.Component {
 			var templ_7745c5c3_Var79 string
 			templ_7745c5c3_Var79, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.LocalDate(ctx, date))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 271, Col: 80}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 273, Col: 80}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var79))
 			if templ_7745c5c3_Err != nil {
@@ -1551,7 +1551,7 @@ func SnippetDate(date time.Time) templ.Component {
 			var templ_7745c5c3_Var80 string
 			templ_7745c5c3_Var80, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.LocalDate(ctx, date)).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 273, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 275, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var80)
 			if templ_7745c5c3_Err != nil {
@@ -1564,7 +1564,7 @@ func SnippetDate(date time.Time) templ.Component {
 			var templ_7745c5c3_Var81 string
 			templ_7745c5c3_Var81, templ_7745c5c3_Err = templ.JoinStringErrs(helpers.RelativeDate(ctx, date))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 273, Col: 80}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 275, Col: 80}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var81))
 			if templ_7745c5c3_Err != nil {
@@ -1610,7 +1610,7 @@ func printAll(messages []string) templ.Component {
 				var templ_7745c5c3_Var83 string
 				templ_7745c5c3_Var83, templ_7745c5c3_Err = templ.JoinStringErrs(m)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 283, Col: 7}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 285, Col: 7}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var83))
 				if templ_7745c5c3_Err != nil {
@@ -1711,7 +1711,7 @@ func UsernameFilter(value string) templ.Component {
 		var templ_7745c5c3_Var86 string
 		templ_7745c5c3_Var86, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "user.username"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 309, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 311, Col: 53}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var86))
 		if templ_7745c5c3_Err != nil {
@@ -1724,7 +1724,7 @@ func UsernameFilter(value string) templ.Component {
 		var templ_7745c5c3_Var87 string
 		templ_7745c5c3_Var87, templ_7745c5c3_Err = templruntime.NewAttributeExpression(value).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 316, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 318, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var87)
 		if templ_7745c5c3_Err != nil {
@@ -1737,7 +1737,7 @@ func UsernameFilter(value string) templ.Component {
 		var templ_7745c5c3_Var88 string
 		templ_7745c5c3_Var88, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.CurrentUser(ctx).Username).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 317, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 319, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var88)
 		if templ_7745c5c3_Err != nil {
@@ -1750,7 +1750,7 @@ func UsernameFilter(value string) templ.Component {
 		var templ_7745c5c3_Var89 string
 		templ_7745c5c3_Var89, templ_7745c5c3_Err = templruntime.NewAttributeExpression(helpers.RouteFor(ctx, "user-suggest")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 318, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 320, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var89)
 		if templ_7745c5c3_Err != nil {
@@ -1790,7 +1790,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var91 string
 			templ_7745c5c3_Var91, templ_7745c5c3_Err = templruntime.NewAttributeExpression(linf.Code).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 331, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 333, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var91)
 			if templ_7745c5c3_Err != nil {
@@ -1813,7 +1813,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var92 string
 			templ_7745c5c3_Var92, templ_7745c5c3_Err = templ.JoinStringErrs(linf.Flag)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 332, Col: 14}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 334, Col: 14}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var92))
 			if templ_7745c5c3_Err != nil {
@@ -1826,7 +1826,7 @@ func LanguageOptions(selected string) templ.Component {
 			var templ_7745c5c3_Var93 string
 			templ_7745c5c3_Var93, templ_7745c5c3_Err = templ.JoinStringErrs(linf.LocalName)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 332, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 334, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var93))
 			if templ_7745c5c3_Err != nil {
@@ -1844,7 +1844,7 @@ func LanguageOptions(selected string) templ.Component {
 				var templ_7745c5c3_Var94 string
 				templ_7745c5c3_Var94, templ_7745c5c3_Err = templ.JoinStringErrs(linf.EnglishName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 334, Col: 23}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 336, Col: 23}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var94))
 				if templ_7745c5c3_Err != nil {
@@ -1928,7 +1928,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var97 string
 			templ_7745c5c3_Var97, templ_7745c5c3_Err = templruntime.NewAttributeExpression(primaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 360, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 362, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var97)
 			if templ_7745c5c3_Err != nil {
@@ -1941,7 +1941,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var98 string
 			templ_7745c5c3_Var98, templ_7745c5c3_Err = templ.JoinStringErrs(secondaryText)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 360, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 362, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var98))
 			if templ_7745c5c3_Err != nil {
@@ -1959,7 +1959,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var99 string
 			templ_7745c5c3_Var99, templ_7745c5c3_Err = templruntime.NewAttributeExpression(secondaryText).Resolve(ctx)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 362, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 364, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var99)
 			if templ_7745c5c3_Err != nil {
@@ -1972,7 +1972,7 @@ func PreferredSpeedMetric(wt *database.WorkoutType, v float64, preferredUnits *d
 			var templ_7745c5c3_Var100 string
 			templ_7745c5c3_Var100, templ_7745c5c3_Err = templ.JoinStringErrs(primaryText)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 362, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/partials.templ`, Line: 364, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var100))
 			if templ_7745c5c3_Err != nil {

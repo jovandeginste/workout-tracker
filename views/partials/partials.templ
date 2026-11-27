@@ -47,6 +47,7 @@ templ SelectablePill(id, name, value, label, extraClass string, checked bool) {
 		<input
 			class="sr-only peer"
 			type="checkbox"
+			autocomplete="off"
 			id={ id }
 			name={ name }
 			value={ value }
@@ -61,6 +62,7 @@ templ RadioPill(id, name, value, label, extraClass string, checked bool) {
 		<input
 			class="sr-only peer"
 			type="radio"
+			autocomplete="off"
 			id={ id }
 			name={ name }
 			value={ value }

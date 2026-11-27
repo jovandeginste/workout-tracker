@@ -22,6 +22,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 				id="statistics-filters"
 				class="inner-form"
 				method="get"
+				autocomplete="off"
 				action={ templ.SafeURL(helpers.RouteFor(ctx, "statistics")) }
 				hx-get={ helpers.RouteFor(ctx, "statistics") }
 				hx-trigger="change"
