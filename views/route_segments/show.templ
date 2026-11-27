@@ -36,8 +36,9 @@ templ Show(s *database.RouteSegment) {
 						<table>
 							<thead>
 								<tr>
-									<th>
+									<th title={ i18n.T(ctx, "user.username") }>
 										@helpers.IconFor("user")
+										{ i18n.T(ctx, "user.username") }
 									</th>
 									<th>{ i18n.T(ctx, "common.workout") }</th>
 									<th class="lg:hidden 3xl:table-cell">{ i18n.T(ctx, "workout.distance") }</th>
@@ -48,7 +49,7 @@ templ Show(s *database.RouteSegment) {
 							<tbody>
 								for _, m := range s.RouteSegmentMatches {
 									<tr>
-										<td>
+										<td class="max-w-[0px] overflow-hidden whitespace-nowrap text-ellipsis">
 											@helpers.UserLink(m.Workout.User)
 										</td>
 										<td class="max-w-[0px] overflow-hidden whitespace-nowrap text-ellipsis">

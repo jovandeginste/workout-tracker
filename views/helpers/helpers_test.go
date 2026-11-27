@@ -52,39 +52,28 @@ func TestUserLink(t *testing.T) {
 		assert.Empty(t, render(&database.User{UserData: database.UserData{Username: "no-id"}}))
 	})
 
-	t.Run("it links the username to the user", func(t *testing.T) {
-		u := &database.User{UserData: database.UserData{Username: "jo", Name: "Jo Vandeginste"}}
+	t.Run("it links the name of the user, with the username as tooltip", func(t *testing.T) {
+		u := &database.User{UserData: database.UserData{Username: "jo@dwarfy.be", Name: "Jo Vandeginste"}}
 		u.ID = 42
 
 		body := render(u)
 
 		assert.Contains(t, body, `href="/users/42"`)
-		assert.Contains(t, body, "jo")
+		assert.Contains(t, body, `title="jo@dwarfy.be"`)
+		assert.Contains(t, body, "Jo Vandeginste")
 		assert.NotContains(t, body, "return")
 	})
-}
 
-func TestUserLinkWithName(t *testing.T) {
-	ctx := userLinkContext()
+	t.Run("it falls back to the username without a name", func(t *testing.T) {
+		u := &database.User{UserData: database.UserData{Username: "jo"}}
+		u.ID = 42
 
-	u := &database.User{UserData: database.UserData{Username: "jo", Name: "Jo Vandeginste"}}
-	u.ID = 42
+		body := render(u)
 
-	var b strings.Builder
-
-	require.NoError(t, UserLinkWithName(u).Render(ctx, &b))
-
-	assert.Contains(t, b.String(), "jo")
-	assert.Contains(t, b.String(), "Jo Vandeginste")
-	assert.NotContains(t, b.String(), "return")
-
-	b.Reset()
-	require.NoError(t, UserLinkWithName(nil).Render(ctx, &b))
-	assert.Empty(t, b.String())
-
-	b.Reset()
-	require.NoError(t, UserLinkWithName(&database.User{}).Render(ctx, &b))
-	assert.Empty(t, b.String())
+		assert.Contains(t, body, `href="/users/42"`)
+		assert.Contains(t, body, `title="jo"`)
+		assert.GreaterOrEqual(t, strings.Count(body, "jo"), 2)
+	})
 }
 
 func TestIsIOS(t *testing.T) {

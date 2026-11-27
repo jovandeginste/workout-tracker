@@ -244,7 +244,7 @@ func Show(e *database.Equipment) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = helpers.UserLinkWithName(&e.User).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = helpers.UserLink(&e.User).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

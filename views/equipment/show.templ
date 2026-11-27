@@ -54,7 +54,7 @@ templ Show(e *database.Equipment) {
 					<table>
 						<tbody>
 							@partials.DetailRow("user", "user.username", "") {
-								@helpers.UserLinkWithName(&e.User)
+								@helpers.UserLink(&e.User)
 							}
 							@partials.DetailRow("date", "common.created", "") {
 								@partials.SnippetDate(e.CreatedAt)

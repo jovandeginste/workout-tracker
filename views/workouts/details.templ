@@ -135,7 +135,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 	<table>
 		<tbody>
 			@partials.DetailRow("user", "user.username", "") {
-				@helpers.UserLinkWithName(w.User)
+				@helpers.UserLink(w.User)
 			}
 			if w.HasFile() {
 				@partials.DetailRow("file", "common.file", "") {

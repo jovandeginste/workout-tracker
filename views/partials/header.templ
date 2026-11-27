@@ -39,9 +39,9 @@ templ Header() {
 						</div>
 					}
 					<div>
-						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile")) }>
+						<a href={ templ.SafeURL(helpers.RouteFor(ctx, "user-profile")) } title={ currentUser.Username }>
 							@helpers.IconFor("user-profile")
-							{ currentUser.Name }
+							{ currentUser.DisplayName() }
 						</a>
 					</div>
 					<div class="-mr-5">
