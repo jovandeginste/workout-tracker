@@ -55,3 +55,39 @@ func TestRoute_DashboardMultipleTotals(t *testing.T) {
 	// Each selected workout type renders one row of four statistic tiles.
 	assert.Equal(t, 8, strings.Count(rec.Body.String(), `class="md:basis-1/2 lg:basis-1/4"`))
 }
+
+func TestRoute_DashboardRecordCards(t *testing.T) {
+	a := configuredApp(t)
+
+	u := defaultUser(a.db)
+	require.NoError(t, u.Save(a.db))
+
+	createMany := func(wt database.WorkoutType, n int, month time.Month) {
+		for i := range n {
+			createDashboardWorkout(t, a, u, wt, time.Date(2025, month, i+1, 10, 0, 0, 0, time.UTC))
+		}
+	}
+
+	createMany(database.WorkoutTypeRunning, 4, 1)
+	createMany(database.WorkoutTypeCycling, 3, 2)
+	createMany(database.WorkoutTypeSwimming, 2, 3)
+	createMany(database.WorkoutTypeWalking, 2, 4)
+	createMany(database.WorkoutTypeHiking, 1, 5)
+
+	c, rec := newTestContext(t, a, a.Reverse("dashboard"), u)
+	s := sessionLoadAndSave(a.sessionManager)
+
+	require.NoError(t, s(a.dashboardHandler)(c))
+	require.Equal(t, http.StatusOK, rec.Code)
+
+	body := rec.Body.String()
+
+	assert.Equal(t, 3, strings.Count(body, `<details class="record-card" open>`), "the top 3 types with more than one workout are open")
+	assert.Equal(t, 2, strings.Count(body, `<details class="record-card">`), "the other cards are closed")
+
+	assert.Contains(t, body, "Records for running (4)")
+	assert.Contains(t, body, "Records for cycling (3)")
+	assert.Contains(t, body, "Records for swimming (2)")
+	assert.Contains(t, body, "Records for walking (2)")
+	assert.Contains(t, body, "Records for hiking (1)")
+}

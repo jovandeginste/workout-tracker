@@ -120,13 +120,14 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 					return templ_7745c5c3_Err
 				}
 			} else {
+				shown := 0
 				for _, r := range recs {
 					if r.WorkoutType.IsDistance() && r.Active {
 						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"inner-form\">")
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
-						templ_7745c5c3_Err = StatsRecordsDistance(r).Render(ctx, templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = StatsRecordsDistance(r, shown < 3 && r.Workouts > 1).Render(ctx, templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -134,6 +135,7 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
+						shown++
 					}
 				}
 			}
@@ -165,7 +167,7 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "dashboard.other-users"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 44, Col: 43}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 46, Col: 43}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -184,7 +186,7 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 						var templ_7745c5c3_Var7 string
 						templ_7745c5c3_Var7, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.SafeURL(helpers.RouteFor(ctx, "user-show", u.ID))).ResolveURL(ctx)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 49, Col: 72}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 51, Col: 72}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 						if templ_7745c5c3_Err != nil {
@@ -197,7 +199,7 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 						var templ_7745c5c3_Var8 string
 						templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(u.Username)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 50, Col: 44}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 52, Col: 44}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 						if templ_7745c5c3_Err != nil {
@@ -229,7 +231,7 @@ func Show(user *database.User, users []*database.User, recentWorkouts []*databas
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "dashboard.recent-activity"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 60, Col: 46}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/user/show.templ`, Line: 62, Col: 46}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {

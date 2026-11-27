@@ -24,11 +24,13 @@ templ Show(user *database.User, users []*database.User, recentWorkouts []*databa
 				if err != nil {
 					<pre>{ err.Error() }</pre>
 				} else {
+					{{ shown := 0 }}
 					for _, r := range recs {
 						if r.WorkoutType.IsDistance() && r.Active {
 							<div class="inner-form">
-								@StatsRecordsDistance(r)
+								@StatsRecordsDistance(r, shown < 3 && r.Workouts > 1)
 							</div>
+							{{ shown++ }}
 						}
 					}
 				}

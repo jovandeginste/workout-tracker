@@ -865,6 +865,9 @@
                 "duration_seconds": {
                     "type": "integer"
                 },
+                "ignore_elevation": {
+                    "type": "boolean"
+                },
                 "location": {
                     "type": "string"
                 },
@@ -873,6 +876,9 @@
                 },
                 "notes": {
                     "type": "string"
+                },
+                "private": {
+                    "type": "boolean"
                 },
                 "repetitions": {
                     "type": "integer"
@@ -1962,6 +1968,10 @@
                 "id": {
                     "type": "integer"
                 },
+                "ignore_elevation": {
+                    "description": "Whether to use 2D distances and ignore elevation data",
+                    "type": "boolean"
+                },
                 "locked": {
                     "description": "Whether the workout's main attributes should be auto-updated",
                     "type": "boolean"
@@ -1973,6 +1983,10 @@
                 "notes": {
                     "description": "The notes associated with the workout, in markdown",
                     "type": "string"
+                },
+                "private": {
+                    "description": "Whether the workout is only visible to its owner and to admins",
+                    "type": "boolean"
                 },
                 "publicUUID": {
                     "description": "UUID to publicly share a workout - this UUID can be rotated",
@@ -2086,6 +2100,10 @@
                             "$ref": "#/definitions/database.WorkoutType"
                         }
                     ]
+                },
+                "workouts": {
+                    "description": "The number of workouts of this type",
+                    "type": "integer"
                 }
             }
         },

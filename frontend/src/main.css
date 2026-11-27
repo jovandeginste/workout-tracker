@@ -257,6 +257,46 @@
     @apply min-w-[100px] max-w-[150px] w-auto;
   }
 
+  details.record-card {
+    & > summary {
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      .chevron {
+        @apply inline-flex justify-center w-[1em];
+      }
+
+      .chevron .icon-decoration {
+        @apply mr-0;
+      }
+
+      h3 {
+        @apply mb-0;
+      }
+
+      .chevron-open {
+        display: none;
+      }
+    }
+
+    &[open] > summary {
+      h3 {
+        @apply mb-5;
+      }
+
+      .chevron-closed {
+        display: none;
+      }
+
+      .chevron-open {
+        display: inline-block;
+      }
+    }
+  }
+
   table {
     @apply text-sm w-full text-left table-auto border;
     @apply border-neutral-500;

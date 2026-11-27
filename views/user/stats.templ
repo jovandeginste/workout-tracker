@@ -64,96 +64,104 @@ templ StatsRecordDate(id uint64, date time.Time) {
 	</span>
 }
 
-templ StatsRecordsDistance(rec *database.WorkoutRecord) {
+templ StatsRecordsDistance(rec *database.WorkoutRecord, open bool) {
 	{{ preferredUnits := helpers.CurrentUser(ctx).PreferredUnits() }}
-	<h3>
-		@helpers.IconFor(rec.WorkoutType.String())
-		{ i18n.T(ctx, "dashboard.records-for", i18n.T(ctx, rec.WorkoutType.StringT())) }
-	</h3>
-	<table class="workout-info table-auto">
-		<tbody>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "workout.average-speed") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">
-					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeed.Value, preferredUnits)
-				</td>
-				<td>
-					@StatsRecordDate(rec.AverageSpeed.ID, rec.AverageSpeed.Date)
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("speed")
-						{ i18n.T(ctx, "workout.average-speed-no-pause") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">
-					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeedNoPause.Value, preferredUnits)
-				</td>
-				<td>
-					@StatsRecordDate(rec.AverageSpeedNoPause.ID, rec.AverageSpeedNoPause.Date)
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("max-speed")
-						{ i18n.T(ctx, "workout.max-speed") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">
-					@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.MaxSpeed.Value, preferredUnits)
-				</td>
-				<td>
-					@StatsRecordDate(rec.MaxSpeed.ID, rec.MaxSpeed.Date)
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("distance")
-						{ i18n.T(ctx, "workout.total-distance") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">
-					{ templatehelpers.HumanDistanceFor(preferredUnits.Distance(&rec.WorkoutType))(rec.Distance.Value) } { preferredUnits.Distance(&rec.WorkoutType) }
-				</td>
-				<td>
-					@StatsRecordDate(rec.Distance.ID, rec.Distance.Date)
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("up")
-						{ i18n.T(ctx, "workout.total-up") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">
-					{ helpers.HumanElevation(ctx, rec.TotalUp.Value ) } { preferredUnits.Elevation() }
-				</td>
-				<td>
-					@StatsRecordDate(rec.TotalUp.ID, rec.TotalUp.Date)
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span>
-						@helpers.IconFor("duration")
-						{ i18n.T(ctx, "workout.total-duration") }
-					</span>
-				</th>
-				<td class="font-mono whitespace-nowrap">{ helpers.HumanDuration(rec.Duration.Value) }</td>
-				<td>
-					@StatsRecordDate(rec.Duration.ID, rec.Duration.Date)
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<details class="record-card" open?={ open }>
+		<summary class="cursor-pointer">
+			<h3 class="inline-flex items-center gap-2">
+				<span class="chevron">
+					<span class="chevron-closed">@helpers.IconFor("welcome")</span>
+					<span class="chevron-open">@helpers.IconFor("down")</span>
+				</span>
+				@helpers.IconFor(rec.WorkoutType.String())
+				{ i18n.T(ctx, "dashboard.records-for", i18n.T(ctx, rec.WorkoutType.StringT())) } ({ rec.Workouts })
+			</h3>
+		</summary>
+		<table class="workout-info table-auto">
+			<tbody>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("speed")
+							{ i18n.T(ctx, "workout.average-speed") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">
+						@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeed.Value, preferredUnits)
+					</td>
+					<td>
+						@StatsRecordDate(rec.AverageSpeed.ID, rec.AverageSpeed.Date)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("speed")
+							{ i18n.T(ctx, "workout.average-speed-no-pause") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">
+						@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.AverageSpeedNoPause.Value, preferredUnits)
+					</td>
+					<td>
+						@StatsRecordDate(rec.AverageSpeedNoPause.ID, rec.AverageSpeedNoPause.Date)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("max-speed")
+							{ i18n.T(ctx, "workout.max-speed") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">
+						@partials.PreferredSpeedMetric(&rec.WorkoutType, rec.MaxSpeed.Value, preferredUnits)
+					</td>
+					<td>
+						@StatsRecordDate(rec.MaxSpeed.ID, rec.MaxSpeed.Date)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("distance")
+							{ i18n.T(ctx, "workout.total-distance") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">
+						{ templatehelpers.HumanDistanceFor(preferredUnits.Distance(&rec.WorkoutType))(rec.Distance.Value) } { preferredUnits.Distance(&rec.WorkoutType) }
+					</td>
+					<td>
+						@StatsRecordDate(rec.Distance.ID, rec.Distance.Date)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("up")
+							{ i18n.T(ctx, "workout.total-up") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">
+						{ helpers.HumanElevation(ctx, rec.TotalUp.Value ) } { preferredUnits.Elevation() }
+					</td>
+					<td>
+						@StatsRecordDate(rec.TotalUp.ID, rec.TotalUp.Date)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<span>
+							@helpers.IconFor("duration")
+							{ i18n.T(ctx, "workout.total-duration") }
+						</span>
+					</th>
+					<td class="font-mono whitespace-nowrap">{ helpers.HumanDuration(rec.Duration.Value) }</td>
+					<td>
+						@StatsRecordDate(rec.Duration.ID, rec.Duration.Date)
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</details>
 }
