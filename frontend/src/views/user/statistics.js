@@ -55,6 +55,7 @@ class WtStatistic extends HTMLElement {
       dataLabels: { enabled: false },
       legend: {
         position: "top",
+        clusterGroupedSeries: false,
         onItemClick: { toggleDataSeries: false },
         onItemHover: { highlightDataSeries: false },
       },
@@ -135,6 +136,7 @@ class WtStatistic extends HTMLElement {
           seriesName: firstNauticalSeries.name,
           show: s.name === firstNauticalSeries.name,
           opposite: hasStandard,
+          min: 0,
           title: { text: nauticalUnit },
           labels: {
             formatter: (val) => val.toFixed(1) + " " + nauticalUnit,
