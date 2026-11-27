@@ -183,8 +183,13 @@ func TestUser_GetAllRecords_SortsByWorkoutCount(t *testing.T) {
 	assert.Equal(t, 1, records[2].Workouts)
 }
 
-func createDistancePaceWorkout(t *testing.T, db *gorm.DB, u *User, wt WorkoutType, date time.Time, distance, speed float64) *Workout {
+func createDistancePaceWorkout(t *testing.T, db *gorm.DB, u *User, wt WorkoutType, date time.Time, distance, speed float64, speedNoPause ...float64) *Workout {
 	t.Helper()
+
+	noPause := speed
+	if len(speedNoPause) > 0 {
+		noPause = speedNoPause[0]
+	}
 
 	w := &Workout{
 		UserID: u.ID,
@@ -197,9 +202,10 @@ func createDistancePaceWorkout(t *testing.T, db *gorm.DB, u *User, wt WorkoutTyp
 	md := &MapData{
 		WorkoutID: w.ID,
 		WorkoutData: converters.WorkoutData{
-			TotalDistance: distance,
-			TotalDuration: time.Hour,
-			AverageSpeed:  speed,
+			TotalDistance:       distance,
+			TotalDuration:       time.Hour,
+			AverageSpeed:        speed,
+			AverageSpeedNoPause: noPause,
 		},
 	}
 	require.NoError(t, db.Create(md).Error)
@@ -226,7 +232,7 @@ func TestUser_GetDistancePacePoints(t *testing.T) {
 	// Workouts without distance or speed are not part of the chart.
 	createStatsWorkout(t, db, u, WorkoutTypeWeightLifting, recent.Add(2*time.Hour), 0, 0)
 
-	points, err := u.GetDistancePacePoints(StatConfig{Since: "1 year"}, nil, u)
+	points, err := u.GetDistancePacePoints(StatConfig{Since: "1 year"}, nil, true, u)
 	require.NoError(t, err)
 	require.Len(t, points, 2)
 
@@ -239,12 +245,12 @@ func TestUser_GetDistancePacePoints(t *testing.T) {
 	assert.Equal(t, 30000.0, points[1].Distance)
 	assert.Equal(t, 8.0, points[1].AverageSpeed)
 
-	points, err = u.GetDistancePacePoints(StatConfig{Since: "1 year"}, []WorkoutType{WorkoutTypeCycling}, u)
+	points, err = u.GetDistancePacePoints(StatConfig{Since: "1 year"}, []WorkoutType{WorkoutTypeCycling}, true, u)
 	require.NoError(t, err)
 	require.Len(t, points, 1)
 	assert.Equal(t, WorkoutTypeCycling, points[0].WorkoutType)
 
-	points, err = u.GetDistancePacePoints(StatConfig{Since: "forever"}, nil, u)
+	points, err = u.GetDistancePacePoints(StatConfig{Since: "forever"}, nil, true, u)
 	require.NoError(t, err)
 	require.Len(t, points, 3)
 	assert.Equal(t, WorkoutTypeRunning, points[0].WorkoutType)
@@ -269,8 +275,31 @@ func TestUser_GetDistancePacePointsFilterByEquipment(t *testing.T) {
 	require.NoError(t, db.Create(e).Error)
 	require.NoError(t, db.Model(withEquipment).Association("Equipment").Append(e))
 
-	points, err := u.GetDistancePacePoints(StatConfig{Since: "forever", Equipment: []uint64{e.ID}}, nil, u)
+	points, err := u.GetDistancePacePoints(StatConfig{Since: "forever", Equipment: []uint64{e.ID}}, nil, true, u)
 	require.NoError(t, err)
 	require.Len(t, points, 1)
 	assert.Equal(t, 5000.0, points[0].Distance)
+}
+
+func TestUser_GetDistancePacePointsWithoutPause(t *testing.T) {
+	db := createMemoryDB(t)
+	u := createStatsUser(t, db)
+
+	require.NoError(t, ctxi18n.LoadWithDefault(apptranslations.FS(), "en"))
+	ctx, err := ctxi18n.WithLocale(context.Background(), "en")
+	require.NoError(t, err)
+	u.SetContext(ctx)
+
+	date := time.Now().AddDate(0, -1, 0)
+	createDistancePaceWorkout(t, db, u, WorkoutTypeRunning, date, 5000, 3, 4)
+
+	withPause, err := u.GetDistancePacePoints(StatConfig{Since: "forever"}, nil, true, u)
+	require.NoError(t, err)
+	require.Len(t, withPause, 1)
+	assert.Equal(t, 3.0, withPause[0].AverageSpeed)
+
+	withoutPause, err := u.GetDistancePacePoints(StatConfig{Since: "forever"}, nil, false, u)
+	require.NoError(t, err)
+	require.Len(t, withoutPause, 1)
+	assert.Equal(t, 4.0, withoutPause[0].AverageSpeed)
 }

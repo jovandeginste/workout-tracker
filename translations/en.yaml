@@ -194,7 +194,10 @@ en:
     break-detection: Trend break detection
     chart-type: Chart type
     distance-vs-pace: Distance vs pace
+    exclude-pause: Without pauses
+    include-pause: With pauses
     line: Line
+    pause: Pauses
     per: Per
     period:
       all-time: All time

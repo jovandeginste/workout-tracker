@@ -94,11 +94,13 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		Type      []string `query:"type"`
 		Equipment []uint64 `query:"equipment"`
 		Chart     string   `query:"chart"`
+		Pause     string   `query:"pause"`
 		Segment   uint64   `query:"segment"`
 	}{
 		Since: "1 year",
 		Per:   "month",
 		Chart: "line",
+		Pause: "1",
 	}
 
 	if err := c.Bind(&statisticsParams); err != nil {
@@ -152,10 +154,12 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		workoutTypes = append(workoutTypes, database.AsWorkoutType(t))
 	}
 
+	includePause := statisticsParams.Pause != "0"
+
 	distancePacePoints, err := u.GetDistancePacePoints(database.StatConfig{
 		Since:     statisticsParams.Since,
 		Equipment: statisticsParams.Equipment,
-	}, workoutTypes, u)
+	}, workoutTypes, includePause, u)
 	if err != nil {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
@@ -171,6 +175,7 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		typeCounts,
 		allEquipment,
 		statisticsParams.Segment,
+		includePause,
 		distancePacePoints,
 	))
 }

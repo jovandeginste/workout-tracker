@@ -194,7 +194,10 @@ nl:
     break-detection: Trendbreukdetectie
     chart-type: Grafiektype
     distance-vs-pace: Afstand vs tempo
+    exclude-pause: Zonder pauzes
+    include-pause: Met pauzes
     line: Lijn
+    pause: Pauzes
     per: Per
     period:
       all-time: Altijd

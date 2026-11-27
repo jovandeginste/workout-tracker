@@ -200,8 +200,13 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 
 // GetDistancePacePoints returns one point per visible workout that has both a
 // distance and an average speed, for the distance-versus-pace chart.
-func (u *User) GetDistancePacePoints(statConfig StatConfig, types []WorkoutType, viewer *User) ([]*DistancePacePoint, error) {
+func (u *User) GetDistancePacePoints(statConfig StatConfig, types []WorkoutType, includePause bool, viewer *User) ([]*DistancePacePoint, error) {
 	sqlDialect := u.db.Dialector.Name()
+
+	speedColumn := "map_data.average_speed"
+	if !includePause {
+		speedColumn = "map_data.average_speed_no_pause"
+	}
 
 	points := []*DistancePacePoint{}
 
@@ -210,10 +215,10 @@ func (u *User) GetDistancePacePoints(statConfig StatConfig, types []WorkoutType,
 			"workouts.date as date",
 			"workouts.type as workout_type",
 			"map_data.total_distance as distance",
-			"map_data.average_speed as average_speed",
+			speedColumn+" as average_speed",
 		).
 		Where("map_data.total_distance > 0").
-		Where("map_data.average_speed > 0")
+		Where(speedColumn + " > 0")
 
 	if statConfig.Since != "" && statConfig.Since != "forever" {
 		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())

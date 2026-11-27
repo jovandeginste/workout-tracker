@@ -72,6 +72,17 @@ templ RadioPill(id, name, value, label, extraClass string, checked bool) {
 	</label>
 }
 
+templ RadioPillGroup(labelKey, name, extraClass string, options []RadioPillOption) {
+	<div class="inline-flex flex-wrap items-center gap-1">
+		<span class="px-2">{ i18n.T(ctx, labelKey) }</span>
+		<div class="flex flex-wrap items-center">
+			for _, option := range options {
+				@RadioPill(name+"_"+option.Value, name, option.Value, i18n.T(ctx, option.LabelKey), extraClass, option.Checked)
+			}
+		</div>
+	</div>
+}
+
 templ ActionForm(route, method, icon, labelKey, class string) {
 	<form action={ templ.SafeURL(route) } method={ method }>
 		<button class={ class } title={ i18n.T(ctx, labelKey) }>
