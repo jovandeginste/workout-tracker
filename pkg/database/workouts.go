@@ -43,6 +43,7 @@ type Workout struct {
 	Locked              bool                 `json:"locked"`                                                                             // Whether the workout's main attributes should be auto-updated
 	Dirty               bool                 `json:"dirty"`                                                                              // Whether the workout has been modified and the details should be re-rendered
 	Private             bool                 `gorm:"not null;default:false" json:"private"`                                              // Whether the workout is only visible to its owner and to admins
+	IgnoreElevation     bool                 `gorm:"not null;default:false" json:"ignore_elevation"`                                     // Whether to use 2D distances and ignore elevation data
 }
 
 type GPXData struct {
@@ -144,6 +145,17 @@ func (w *Workout) TotalDistance() float64 {
 
 func (w *Workout) TotalDistance2D() float64 {
 	return w.data().TotalDistance2D
+}
+
+// SetIgnoreElevation updates the workout's elevation handling and marks it for
+// recalculation when the value changes.
+func (w *Workout) SetIgnoreElevation(ignore bool) {
+	if w.IgnoreElevation == ignore {
+		return
+	}
+
+	w.IgnoreElevation = ignore
+	w.Dirty = true
 }
 
 func (w *Workout) Repetitions() int {
@@ -284,7 +296,7 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 
 		if g.IsGPXBAsed() {
 			d = gpxDate(g.GPX)
-			data = gpxAsMapData(g.GPX, wt)
+			data = gpxAsMapData(g.GPX, wt, false)
 		}
 
 		if wt == WorkoutTypeAutoDetect {
@@ -696,7 +708,7 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 		return err
 	}
 
-	w.setData(gpxAsMapData(gpxContent, w.Type))
+	w.setData(gpxAsMapData(gpxContent, w.Type, w.IgnoreElevation))
 
 	if err := w.UpdateRouteSegmentMatches(db); err != nil {
 		return err
@@ -705,7 +717,10 @@ func (w *Workout) UpdateData(db *gorm.DB) error {
 	w.UpdateExtraMetrics()
 	w.UpdateAverages()
 	w.Data.UpdateAddress()
-	w.Data.CalculateSlopes(w.Type)
+
+	if !w.IgnoreElevation {
+		w.Data.CalculateSlopes(w.Type)
+	}
 
 	w.Dirty = false
 
@@ -760,7 +775,7 @@ func (w *Workout) CaloriesBurned() float64 {
 }
 
 func (w *Workout) HasElevation() bool {
-	return w.HasExtraMetric("elevation")
+	return !w.IgnoreElevation && w.HasExtraMetric("elevation")
 }
 
 func (w *Workout) HasEnhancedSpeed() bool {

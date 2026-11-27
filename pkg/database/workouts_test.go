@@ -22,6 +22,10 @@ func goOffline() {
 func defaultWorkout(t *testing.T) *Workout {
 	t.Helper()
 
+	if gpxFS == nil {
+		populateGPXFS()
+	}
+
 	u := defaultUser()
 	f1, err := gpxFS.ReadFile("sample1.gpx")
 	require.NoError(t, err)
@@ -102,6 +106,66 @@ func TestWorkout_UpdateData(t *testing.T) {
 	require.NoError(t, w.UpdateData(db))
 	assert.Equal(t, d.Details.Points, w.Data.Details.Points)
 	assert.NotEqual(t, ud, w.UpdatedAt)
+}
+
+func TestWorkout_IgnoreElevation(t *testing.T) {
+	populateGPXFS()
+
+	db := createMemoryDB(t)
+	w := defaultWorkout(t)
+
+	require.NoError(t, w.Save(db))
+	require.False(t, w.IgnoreElevation)
+
+	distance3D := w.TotalDistance()
+	distance2D := w.TotalDistance2D()
+	up := w.TotalUp()
+
+	require.Greater(t, distance3D, distance2D)
+	require.Greater(t, up, 0.0)
+
+	w.SetIgnoreElevation(true)
+	require.True(t, w.Dirty)
+
+	require.NoError(t, w.UpdateData(db))
+	assert.InDelta(t, distance2D, w.TotalDistance(), 0.001)
+	assert.InDelta(t, w.TotalDistance2D(), w.TotalDistance(), 0.001)
+	assert.Zero(t, w.TotalUp())
+	assert.Zero(t, w.TotalDown())
+	assert.False(t, w.HasElevation())
+	assert.Empty(t, w.Data.Climbs)
+
+	w.SetIgnoreElevation(false)
+	require.True(t, w.Dirty)
+
+	require.NoError(t, w.UpdateData(db))
+	assert.InDelta(t, distance3D, w.TotalDistance(), 0.001)
+	assert.Greater(t, w.TotalUp(), 0.0)
+}
+
+func TestWorkout_IgnoreElevationStatistics(t *testing.T) {
+	populateGPXFS()
+
+	db := createMemoryDB(t)
+	u := createStatsUser(t, db)
+
+	f, err := gpxFS.ReadFile("sample1.gpx")
+	require.NoError(t, err)
+
+	workouts, err := NewWorkout(u, WorkoutTypeRunning, "", "sample1.gpx", f)
+	require.NoError(t, err)
+	require.Len(t, workouts, 1)
+
+	w := workouts[0]
+	require.NoError(t, w.Save(db))
+
+	w.SetIgnoreElevation(true)
+	require.NoError(t, w.UpdateData(db))
+
+	totals, err := u.GetTotals(WorkoutTypeRunning, u)
+	require.NoError(t, err)
+	assert.InDelta(t, w.TotalDistance2D(), totals.Distance, 0.001)
+	assert.Zero(t, totals.Up)
 }
 
 func TestWorkout_SaveAndGet(t *testing.T) {

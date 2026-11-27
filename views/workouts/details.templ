@@ -217,7 +217,9 @@ templ FullWorkoutDetails(w *database.Workout) {
 					@showLocked(w)
 					{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance()) }
 					{ helpers.DistanceUnitForWorkout(ctx, w) }
-					if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance() / w.TotalDistance2D()) - 1) > 0.1 {
+					if w.IgnoreElevation {
+						(2D)
+					} else if w.TotalDistance2D() > 0 && math.Abs((w.TotalDistance()/w.TotalDistance2D())-1) > 0.1 {
 						// Only print 2D distance if the difference is greater than 10%
 						(2D:
 						{ helpers.HumanDistanceForWorkout(ctx, w, w.TotalDistance2D()) }

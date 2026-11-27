@@ -310,6 +310,8 @@ nl:
     power-avg-max: Vermogen (gem/max)
     private: Privé
     private-explanation: Een privé-workout is enkel zichtbaar voor jou en voor beheerders.
+    ignore-elevation: Hoogte negeren
+    ignore-elevation-explanation: Gebruik 2D-afstand en negeer hoogtemeters voor deze workout.
     refresh-in-progress: bezig met verversen
     repetitions: Herhalingen
     share:
