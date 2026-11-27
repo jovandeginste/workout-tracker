@@ -146,7 +146,31 @@ func (a *App) statisticsHandler(c *echo.Context) error {
 		return a.redirectWithError(c, a.Reverse("dashboard"), err)
 	}
 
-	return Render(c, http.StatusOK, user.Statistics(u, statisticsParams.Since, statisticsParams.Per, statisticsParams.Type, statisticsParams.Equipment, statisticsParams.Chart, routeSegments, typeCounts, allEquipment))
+	workoutTypes := make([]database.WorkoutType, 0, len(statisticsParams.Type))
+	for _, t := range statisticsParams.Type {
+		workoutTypes = append(workoutTypes, database.AsWorkoutType(t))
+	}
+
+	distancePacePoints, err := u.GetDistancePacePoints(database.StatConfig{
+		Since:     statisticsParams.Since,
+		Equipment: statisticsParams.Equipment,
+	}, workoutTypes, u)
+	if err != nil {
+		return a.redirectWithError(c, a.Reverse("dashboard"), err)
+	}
+
+	return Render(c, http.StatusOK, user.Statistics(
+		u,
+		statisticsParams.Since,
+		statisticsParams.Per,
+		statisticsParams.Type,
+		statisticsParams.Equipment,
+		statisticsParams.Chart,
+		routeSegments,
+		typeCounts,
+		allEquipment,
+		distancePacePoints,
+	))
 }
 
 func (a *App) dailyDeleteHandler(c *echo.Context) error {

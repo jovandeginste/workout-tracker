@@ -192,6 +192,7 @@ en:
     bar: Bar
     break-detection: Trend break detection
     chart-type: Chart type
+    distance-vs-pace: Distance vs pace
     line: Line
     per: Per
     period:

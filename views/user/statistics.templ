@@ -10,7 +10,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/views/partials"
 )
 
-templ Statistics(u *database.User, since, per string, workoutTypes []string, selectedEquipment []uint64, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int, equipment []*database.Equipment) {
+templ Statistics(u *database.User, since, per string, workoutTypes []string, selectedEquipment []uint64, chartType string, routeSegments []*database.RouteSegment, typeCounts map[database.WorkoutType]int, equipment []*database.Equipment, distancePacePoints []*database.DistancePacePoint) {
 	@partials.Page(partials.NewPageOptions()) {
 		<script src={ helpers.RouteFor(ctx, "assets") + "/views/user/statistics.js" }></script>
 		<div id="statistics-content">
@@ -51,7 +51,6 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 					"trend":               i18n.T(ctx, "statistics.trend"),
 					"trendBreak":          i18n.T(ctx, "statistics.trend-break"),
 					"trendBreakDetection": i18n.T(ctx, "statistics.break-detection"),
-					"resetZoom":           i18n.T(ctx, "statistics.reset-zoom"),
 				}
 				for _, s := range routeSegments {
 					for _, m := range s.RouteSegmentMatchesForUserID(currentUser.ID) {
@@ -73,7 +72,7 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 				}
 			}}
 			if len(routeSegmentTrendData) > 0 {
-				<div class="inner-form">
+				<div class="inner-form relative">
 					<h3>
 						@helpers.IconFor("trend")
 						{ i18n.T(ctx, "statistics.personal-trend") }
@@ -87,6 +86,23 @@ templ Statistics(u *database.User, since, per string, workoutTypes []string, sel
 						speed-unit={ currentUser.PreferredUnits().Speed(nil) }
 						translations={ templ.JSONString(routeSegmentTrendTranslations) }
 					></route-segment-trend-stat>
+				</div>
+			}
+			if len(distancePacePoints) > 0 {
+				<div class="inner-form">
+					<h3>
+						@helpers.IconFor("distance")
+						{ i18n.T(ctx, "statistics.distance-vs-pace") }
+					</h3>
+					<wt-distance-pace-stat
+						points={ templ.JSONString(distancePacePoints) }
+						preferred-units={ templ.JSONString(helpers.PreferredUnitsToJSON(currentUser.PreferredUnits())) }
+						translations={ templ.JSONString(map[string]string{
+							"distance": i18n.T(ctx, "workout.distance"),
+							"pace":     i18n.T(ctx, "workout.tempo"),
+							"date":     i18n.T(ctx, "common.date"),
+						}) }
+					></wt-distance-pace-stat>
 				</div>
 			}
 			<div class="lg:flex lg:flex-wrap [&>*]:lg:basis-1/2 [&>*]:2xl:basis-1/3">

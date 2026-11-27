@@ -252,7 +252,7 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 
   appendControls() {
     const controls = document.createElement("div");
-    controls.className = "mb-3 flex flex-wrap justify-end gap-3";
+    controls.className = "absolute right-2 top-2 z-10 md:right-5 md:top-5";
 
     const selector = document.createElement("select");
     selector.className = "input-ellipsis";
@@ -267,12 +267,6 @@ class RouteSegmentTrendStatistic extends HTMLElement {
       this.updateTrendBreakDetection(selector.value === "break");
     });
     controls.appendChild(selector);
-
-    const resetButton = document.createElement("button");
-    resetButton.type = "button";
-    resetButton.textContent = this.translations.resetZoom || "Reset zoom";
-    resetButton.addEventListener("click", () => this.resetZoom());
-    controls.appendChild(resetButton);
     this.appendChild(controls);
   }
 
@@ -302,10 +296,6 @@ class RouteSegmentTrendStatistic extends HTMLElement {
       body,
       "Failed to save route segment trend break detection preference",
     );
-  }
-
-  resetZoom() {
-    this.chart?.resetSeries(false, true);
   }
 
   getChartOptions(series = []) {
@@ -424,3 +414,145 @@ class RouteSegmentTrendStatistic extends HTMLElement {
 }
 
 customElements.define("route-segment-trend-stat", RouteSegmentTrendStatistic);
+
+class WtDistancePaceStat extends HTMLElement {
+  connectedCallback() {
+    this.points = JSON.parse(this.getAttribute("points") || `[]`);
+    this.preferredUnits = JSON.parse(
+      this.getAttribute("preferred-units") || `{}`,
+    );
+    this.translations = JSON.parse(this.getAttribute("translations") || `{}`);
+
+    if (!this.points || this.points.length === 0) {
+      return;
+    }
+
+    const series = this.getSeriesData();
+
+    if (series.length === 0) {
+      return;
+    }
+
+    const el = document.createElement("div");
+    this.appendChild(el);
+
+    new ApexCharts(el, {
+      ...this.getChartOptions(series),
+      series,
+    }).render();
+  }
+
+  distanceUnit() {
+    return this.preferredUnits.distance || "km";
+  }
+
+  tempoUnit() {
+    return this.preferredUnits.tempo || `min/${this.distanceUnit()}`;
+  }
+
+  metersPerUnit() {
+    return this.distanceUnit() === "mi" ? 1609.344 : 1000;
+  }
+
+  formatPace(seconds) {
+    if (!Number.isFinite(seconds) || seconds <= 0) {
+      return "";
+    }
+
+    const total = Math.round(seconds);
+    const minutes = Math.floor(total / 60);
+    const rest = total % 60;
+
+    return `${minutes}:${String(rest).padStart(2, "0")}`;
+  }
+
+  getSeriesData() {
+    const factor = this.metersPerUnit();
+    const series = new Map();
+
+    this.points.forEach((point) => {
+      const speed = Number(point.speed);
+      const distance = Number(point.distance);
+
+      if (!Number.isFinite(speed) || speed <= 0 || !Number.isFinite(distance)) {
+        return;
+      }
+
+      const type = point.type || "unknown";
+      const name = point.localType || type;
+
+      if (!series.has(name)) {
+        series.set(name, {
+          name,
+          color: colorForType(type),
+          data: [],
+        });
+      }
+
+      const localDistance = distance / factor;
+
+      series.get(name).data.push({
+        x: localDistance,
+        y: factor / speed,
+        date: point.date,
+        distance: localDistance,
+      });
+    });
+
+    return [...series.values()];
+  }
+
+  getChartOptions(series) {
+    const theme = chartTheme().dark ? "dark" : "light";
+
+    return {
+      theme: { mode: theme },
+      chart: {
+        type: "scatter",
+        width: "99%",
+        height: 350,
+        animations: { enabled: false },
+        toolbar: { show: false },
+      },
+      colors: series.map((s) => s.color),
+      dataLabels: { enabled: false },
+      legend: {
+        position: "top",
+        onItemClick: { toggleDataSeries: false },
+        onItemHover: { highlightDataSeries: false },
+      },
+      markers: { size: 4, strokeWidth: 0, hover: { sizeOffset: 1 } },
+      stroke: { width: 0 },
+      xaxis: {
+        type: "numeric",
+        title: {
+          text: `${this.translations.distance || "Distance"} (${this.distanceUnit()})`,
+        },
+        labels: { formatter: (val) => Number(val).toFixed(1) },
+      },
+      yaxis: {
+        reversed: true,
+        title: {
+          text: `${this.translations.pace || "Pace"} (${this.tempoUnit()})`,
+        },
+        labels: { formatter: (val) => this.formatPace(val) },
+      },
+      tooltip: {
+        custom: ({ seriesIndex, dataPointIndex, w }) => {
+          const point = w.config.series[seriesIndex].data[dataPointIndex];
+          const name = w.config.series[seriesIndex].name;
+          const date = new Date(point.date).toLocaleDateString();
+
+          return `<div style="padding:8px;font-size:12px;line-height:1.5">
+            <div style="font-weight:600">${name}</div>
+            <div>${this.translations.date || "Date"}: ${date}</div>
+            <div>${this.translations.distance || "Distance"}: ${point.distance.toFixed(1)} ${this.distanceUnit()}</div>
+            <div>${this.translations.pace || "Pace"}: ${this.formatPace(point.y)} ${this.tempoUnit()}</div>
+          </div>`;
+        },
+      },
+    };
+  }
+}
+
+customElements.define("wt-distance-pace-stat", WtDistancePaceStat);

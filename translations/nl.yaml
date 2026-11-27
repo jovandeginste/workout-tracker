@@ -192,6 +192,7 @@ nl:
     bar: Staaf
     break-detection: Trendbreukdetectie
     chart-type: Grafiektype
+    distance-vs-pace: Afstand vs tempo
     line: Lijn
     per: Per
     period:

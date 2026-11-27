@@ -1,10 +1,13 @@
 package database
 
 import (
+	"context"
 	"testing"
 	"time"
 
+	"github.com/invopop/ctxi18n"
 	"github.com/jovandeginste/workout-tracker/v2/pkg/converters"
+	apptranslations "github.com/jovandeginste/workout-tracker/v2/translations"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
@@ -178,4 +181,96 @@ func TestUser_GetAllRecords_SortsByWorkoutCount(t *testing.T) {
 	assert.Equal(t, 3, records[0].Workouts)
 	assert.Equal(t, 2, records[1].Workouts)
 	assert.Equal(t, 1, records[2].Workouts)
+}
+
+func createDistancePaceWorkout(t *testing.T, db *gorm.DB, u *User, wt WorkoutType, date time.Time, distance, speed float64) *Workout {
+	t.Helper()
+
+	w := &Workout{
+		UserID: u.ID,
+		Date:   date,
+		Name:   "distance pace workout",
+		Type:   wt,
+	}
+	require.NoError(t, db.Create(w).Error)
+
+	md := &MapData{
+		WorkoutID: w.ID,
+		WorkoutData: converters.WorkoutData{
+			TotalDistance: distance,
+			TotalDuration: time.Hour,
+			AverageSpeed:  speed,
+		},
+	}
+	require.NoError(t, db.Create(md).Error)
+
+	return w
+}
+
+func TestUser_GetDistancePacePoints(t *testing.T) {
+	db := createMemoryDB(t)
+	u := createStatsUser(t, db)
+
+	require.NoError(t, ctxi18n.LoadWithDefault(apptranslations.FS(), "en"))
+	ctx, err := ctxi18n.WithLocale(context.Background(), "en")
+	require.NoError(t, err)
+	u.SetContext(ctx)
+
+	recent := time.Now().AddDate(0, -1, 0)
+	old := time.Now().AddDate(-2, 0, 0)
+
+	createDistancePaceWorkout(t, db, u, WorkoutTypeRunning, recent, 5000, 3)
+	createDistancePaceWorkout(t, db, u, WorkoutTypeCycling, recent.Add(time.Hour), 30000, 8)
+	createDistancePaceWorkout(t, db, u, WorkoutTypeRunning, old, 4000, 2.5)
+
+	// Workouts without distance or speed are not part of the chart.
+	createStatsWorkout(t, db, u, WorkoutTypeWeightLifting, recent.Add(2*time.Hour), 0, 0)
+
+	points, err := u.GetDistancePacePoints(StatConfig{Since: "1 year"}, nil, u)
+	require.NoError(t, err)
+	require.Len(t, points, 2)
+
+	assert.Equal(t, WorkoutTypeRunning, points[0].WorkoutType)
+	assert.Equal(t, 5000.0, points[0].Distance)
+	assert.Equal(t, 3.0, points[0].AverageSpeed)
+	assert.NotEmpty(t, points[0].LocalWorkoutType)
+
+	assert.Equal(t, WorkoutTypeCycling, points[1].WorkoutType)
+	assert.Equal(t, 30000.0, points[1].Distance)
+	assert.Equal(t, 8.0, points[1].AverageSpeed)
+
+	points, err = u.GetDistancePacePoints(StatConfig{Since: "1 year"}, []WorkoutType{WorkoutTypeCycling}, u)
+	require.NoError(t, err)
+	require.Len(t, points, 1)
+	assert.Equal(t, WorkoutTypeCycling, points[0].WorkoutType)
+
+	points, err = u.GetDistancePacePoints(StatConfig{Since: "forever"}, nil, u)
+	require.NoError(t, err)
+	require.Len(t, points, 3)
+	assert.Equal(t, WorkoutTypeRunning, points[0].WorkoutType)
+	assert.Equal(t, old.Year(), points[0].Date.Year())
+}
+
+func TestUser_GetDistancePacePointsFilterByEquipment(t *testing.T) {
+	db := createMemoryDB(t)
+	u := createStatsUser(t, db)
+
+	require.NoError(t, ctxi18n.LoadWithDefault(apptranslations.FS(), "en"))
+	ctx, err := ctxi18n.WithLocale(context.Background(), "en")
+	require.NoError(t, err)
+	u.SetContext(ctx)
+
+	date := time.Now().AddDate(0, -1, 0)
+
+	withEquipment := createDistancePaceWorkout(t, db, u, WorkoutTypeRunning, date, 5000, 3)
+	createDistancePaceWorkout(t, db, u, WorkoutTypeRunning, date.Add(time.Hour), 6000, 3)
+
+	e := &Equipment{Name: "distance pace filter shoes", UserID: u.ID}
+	require.NoError(t, db.Create(e).Error)
+	require.NoError(t, db.Model(withEquipment).Association("Equipment").Append(e))
+
+	points, err := u.GetDistancePacePoints(StatConfig{Since: "forever", Equipment: []uint64{e.ID}}, nil, u)
+	require.NoError(t, err)
+	require.Len(t, points, 1)
+	assert.Equal(t, 5000.0, points[0].Distance)
 }

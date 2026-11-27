@@ -46,6 +46,15 @@ type (
 		DurationSeconds float64 `json:"durationSeconds,omitempty"` // The total duration in the bucket, in seconds
 	}
 
+	// DistancePacePoint is a single workout in the distance-versus-pace chart
+	DistancePacePoint struct {
+		Date             time.Time   `json:"date"`      // The timestamp of the workout
+		WorkoutType      WorkoutType `json:"type"`      // The type of the workout
+		LocalWorkoutType string      `json:"localType"` // The localized type of the workout
+		Distance         float64     `json:"distance"`  // The total distance in meters
+		AverageSpeed     float64     `json:"speed"`     // The average speed in meters per second
+	}
+
 	// Float64Record is a single record if the value is a float64
 	Float64Record struct {
 		Date  time.Time `json:"date"`  // The timestamp of the record

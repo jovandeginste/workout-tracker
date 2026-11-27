@@ -198,6 +198,60 @@ func (u *User) GetStatistics(statConfig StatConfig, viewer *User) (*Statistics, 
 	return r, nil
 }
 
+// GetDistancePacePoints returns one point per visible workout that has both a
+// distance and an average speed, for the distance-versus-pace chart.
+func (u *User) GetDistancePacePoints(statConfig StatConfig, types []WorkoutType, viewer *User) ([]*DistancePacePoint, error) {
+	sqlDialect := u.db.Dialector.Name()
+
+	points := []*DistancePacePoint{}
+
+	q := u.statsBaseQuery(viewer).
+		Select(
+			"workouts.date as date",
+			"workouts.type as workout_type",
+			"map_data.total_distance as distance",
+			"map_data.average_speed as average_speed",
+		).
+		Where("map_data.total_distance > 0").
+		Where("map_data.average_speed > 0")
+
+	if statConfig.Since != "" && statConfig.Since != "forever" {
+		q = q.Where(GetDateLimitExpression(sqlDialect), "-"+statConfig.GetSince())
+	}
+
+	types = slices.DeleteFunc(slices.Clone(types), func(t WorkoutType) bool {
+		return t == ""
+	})
+
+	if len(types) > 0 {
+		q = q.Where("workouts.type IN ?", types)
+	}
+
+	equipment := make([]uint64, 0, len(statConfig.Equipment))
+	for _, id := range statConfig.Equipment {
+		if id != 0 {
+			equipment = append(equipment, id)
+		}
+	}
+
+	if len(equipment) > 0 {
+		q = q.Where(
+			"workouts.id IN (SELECT workout_id FROM workout_equipment WHERE equipment_id IN ?)",
+			equipment,
+		)
+	}
+
+	if err := q.Order("workouts.date").Scan(&points).Error; err != nil {
+		return nil, err
+	}
+
+	for _, p := range points {
+		p.LocalWorkoutType = u.I18n(p.WorkoutType.StringT())
+	}
+
+	return points, nil
+}
+
 func GetWorkoutTypeCounts(db *gorm.DB, userID uint64, viewer *User) (map[WorkoutType]int, error) {
 	var rows []struct {
 		WorkoutType WorkoutType `gorm:"column:workout_type"`
