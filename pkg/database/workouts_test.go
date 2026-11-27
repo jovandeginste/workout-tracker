@@ -1,6 +1,8 @@
 package database
 
 import (
+	"archive/zip"
+	"bytes"
 	"testing"
 	"time"
 
@@ -148,4 +150,30 @@ func TestMaxSpeedForPoints_UsesDistanceWindow(t *testing.T) {
 
 	assert.InDelta(t, 1.81, maxSpeedForPoints(points, 1), 0.01)
 	assert.InDelta(t, 1.0, maxSpeedForPoints(points, 20), 0.01)
+}
+
+func TestNewWorkout_ZipDetectsEachWorkoutType(t *testing.T) {
+	track := func(kind string) string {
+		return `<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="test" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>` + kind + `</name><type>` + kind + `</type><trkseg>
+<trkpt lat="51.0000" lon="4.0000"><time>2026-10-05T07:00:00Z</time></trkpt>
+<trkpt lat="51.0100" lon="4.0000"><time>2026-10-05T07:05:00Z</time></trkpt>
+</trkseg></trk></gpx>`
+	}
+
+	var buf bytes.Buffer
+	zw := zip.NewWriter(&buf)
+	for _, kind := range []string{"running", "cycling"} {
+		f, err := zw.Create(kind + ".gpx")
+		require.NoError(t, err)
+		_, err = f.Write([]byte(track(kind)))
+		require.NoError(t, err)
+	}
+	require.NoError(t, zw.Close())
+
+	w, err := NewWorkout(defaultUser(), WorkoutTypeAutoDetect, "", "both.zip", buf.Bytes())
+	require.NoError(t, err)
+	require.Len(t, w, 2)
+	assert.Equal(t, WorkoutTypeRunning, w[0].Type)
+	assert.Equal(t, WorkoutTypeCycling, w[1].Type)
 }
