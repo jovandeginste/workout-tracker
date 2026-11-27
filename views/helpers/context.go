@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/invopop/ctxi18n"
@@ -64,6 +65,16 @@ func popMessages(ctx context.Context, key string) []string {
 func appEcho(ctx context.Context) *echo.Echo {
 	switch v := ctx.Value("echo").(type) {
 	case *echo.Echo:
+		return v
+	default:
+		return nil
+	}
+}
+
+// Request returns the HTTP request for the current context, if available.
+func Request(ctx context.Context) *http.Request {
+	switch v := ctx.Value("request").(type) {
+	case *http.Request:
 		return v
 	default:
 		return nil
