@@ -134,7 +134,7 @@ templ FullWorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
-			@partials.DetailRow("user", "user.username", "") {
+			@partials.DetailRow("user", "common.user", "") {
 				@helpers.UserLink(w.User)
 			}
 			if w.HasFile() {
