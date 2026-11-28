@@ -81,6 +81,8 @@ type MapConfig struct {
 	ElevationName string
 	SlopeName     string
 	LiftName      string
+	ClimbsName    string
+	Labels        map[string]string
 	StreetsName   string
 	AerialName    string
 	ShowElevation bool

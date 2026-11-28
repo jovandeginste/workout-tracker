@@ -82,9 +82,14 @@ en:
     weblate: Please help translate via Weblate
   map:
     aerial: Aerial
+    climb: Climb
+    descent: Descent
+    end: End
     fullscreen: Fullscreen
+    lift: Lift
     markers: Show markers
     only-visited: Only show where you've been
+    start: Start
     streets: Streets
   measurements:
     latest: Latest measurements

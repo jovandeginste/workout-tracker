@@ -81,9 +81,14 @@ nl:
     weblate: Help deze toepassing vertalen op Weblate
   map:
     aerial: Lucht
+    climb: Klim
+    descent: Afdaling
+    end: Einde
     fullscreen: Volledig scherm
+    lift: Lift
     markers: Markeringen tonen
     only-visited: Toon enkel waar je geweest bent
+    start: Start
     streets: Straten
   measurements:
     latest: Laatste metingen

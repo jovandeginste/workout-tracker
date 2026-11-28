@@ -1,7 +1,7 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatDuration } from "../helpers.js";
-import { aerialLayer, endpointMarker, streetLayer } from "../map.js";
+import { aerialLayer, streetLayer } from "../map.js";
 
 /*
 interface Point {
@@ -43,6 +43,8 @@ class WtMap extends HTMLElement {
       elevationName: mapConfig.ElevationName,
       slopeName: mapConfig.SlopeName,
       liftName: mapConfig.LiftName,
+      climbsName: mapConfig.ClimbsName,
+      labels: mapConfig.Labels || {},
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
       showSlope: mapConfig.ShowSlope,
@@ -137,28 +139,21 @@ class WtMap extends HTMLElement {
     let liftLayerGroup;
     if (this.workout.lifts?.Data?.length) {
       liftLayerGroup = this.getLiftLayerGroup(polyLineProperties);
-      liftLayerGroup.addTo(map);
     }
 
     const positions = this.workout.position.Data.filter((x) => x !== null);
+    const annotations = this.getAnnotationLayers();
+    const liftsOverlay = liftLayerGroup
+      ? L.layerGroup([liftLayerGroup, annotations.lifts])
+      : annotations.lifts;
+
+    annotations.startEnd.addTo(map);
+    annotations.climbs.addTo(map);
+    liftsOverlay.addTo(map);
 
     if (positions.length > 0) {
-      let last = positions[positions.length - 1];
-      this.trackGroup.addLayer(
-        endpointMarker(last, "red")
-          .addTo(map)
-          .bindTooltip(this.getTooltip(positions.length - 1)),
-      );
-
-      let first = positions[0];
-      this.trackGroup.addLayer(
-        endpointMarker(first, "green")
-          .addTo(map)
-          .bindTooltip(this.getTooltip(0)),
-      );
-
       if (!this.hoverMarker) {
-        this.hoverMarker = L.circleMarker(first, {
+        this.hoverMarker = L.circleMarker(positions[0], {
           color: "blue",
           radius: 8,
         });
@@ -177,8 +172,15 @@ class WtMap extends HTMLElement {
       overlays[this.config.slopeName] = slopeLayerGroup;
     }
 
-    if (liftLayerGroup && this.config.liftName) {
-      overlays[this.config.liftName] = liftLayerGroup;
+    if (this.config.climbsName && annotations.climbs.getLayers().length > 0) {
+      overlays[this.config.climbsName] = annotations.climbs;
+    }
+
+    if (
+      this.config.liftName &&
+      (liftLayerGroup || annotations.lifts.getLayers().length > 0)
+    ) {
+      overlays[this.config.liftName] = liftsOverlay;
     }
 
     L.control.scale().addTo(map);
@@ -242,6 +244,104 @@ class WtMap extends HTMLElement {
     }
 
     return group;
+  }
+
+  getAnnotationLayers() {
+    const startEnd = new L.featureGroup();
+    const climbs = new L.featureGroup();
+    const lifts = new L.featureGroup();
+
+    const allPositions = this.workout.position.Data;
+    const positions = allPositions.filter((x) => x !== null);
+
+    if (positions.length > 0) {
+      const first = positions[0];
+      const last = positions[positions.length - 1];
+
+      startEnd.addLayer(
+        this.getFlagAnnotation(
+          first,
+          this.label("start", "Start"),
+          "start",
+          this.getTooltip(allPositions.indexOf(first)),
+        ),
+      );
+      startEnd.addLayer(
+        this.getFlagAnnotation(
+          last,
+          this.label("end", "End"),
+          "end",
+          this.getTooltip(allPositions.lastIndexOf(last)),
+        ),
+      );
+    }
+
+    for (const segment of this.workout.segments?.Data || []) {
+      const group = segment.kind === "lift" ? lifts : climbs;
+      group.addLayer(this.getSegmentAnnotation(segment, "start"));
+      group.addLayer(this.getSegmentAnnotation(segment, "end"));
+    }
+
+    return { startEnd, climbs, lifts };
+  }
+
+  getAnnotationIcon(html) {
+    return L.divIcon({
+      className: "wt-map-annotation",
+      html,
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
+    });
+  }
+
+  getFlagAnnotation(point, text, kind, tooltip) {
+    const html = `<span class="wt-map-flag wt-map-flag-${kind}"><span class="wt-map-flag-dot"></span><span class="wt-map-flag-label">${text}</span></span>`;
+
+    return L.marker(point, {
+      icon: this.getAnnotationIcon(html),
+      keyboard: false,
+    }).bindTooltip(tooltip, {
+      direction: "top",
+      offset: [0, -6],
+      opacity: 0.95,
+    });
+  }
+
+  label(key, fallback) {
+    return this.config.labels?.[key] || fallback;
+  }
+
+  getSegmentAnnotation(segment, which) {
+    const glyphs = {
+      climb: "▲",
+      descent: "▼",
+      lift: '<span class="icon-[fa-solid--tram]"></span>',
+    };
+
+    const glyph = glyphs[segment.kind] || "?";
+    const name = this.label(segment.kind, "Segment");
+    const html = `<span class="wt-map-badge wt-map-badge-${segment.kind} wt-map-badge-${which}">${glyph}<b>${segment.index}</b></span>`;
+    const direction = segment.kind === "descent" ? "↓" : "↑";
+    const distance =
+      segment.length >= 1000
+        ? `${(segment.length / 1000).toFixed(1)} km`
+        : `${Math.round(segment.length)} m`;
+    const when = this.label(which, which);
+    const slope = `${Math.round(100 * segment.avgSlope)}%`;
+    const tooltip = `<b>${name} ${
+      segment.index
+    }</b> — ${when}<br>${direction} ${Math.round(
+      segment.gain,
+    )} m · ${distance} · ${slope} · ${formatDuration(segment.duration)}`;
+
+    return L.marker(segment[which], {
+      icon: this.getAnnotationIcon(html),
+      keyboard: false,
+    }).bindTooltip(tooltip, {
+      direction: "top",
+      offset: [0, -10],
+      opacity: 0.95,
+    });
   }
 
   getSlopeLayerGroup(polyLineProperties = {}) {
