@@ -19,7 +19,7 @@ GO_TEST = TZ=UTC go test -short -count 1 -mod vendor -covermode=atomic
 
 BRANCH_NAME_DEPS ?= update-deps
 
-.PHONY: all clean test build screenshots meta install-deps
+.PHONY: all clean test build screenshots meta install-deps reset-testdata
 
 all: clean install-deps test build
 
@@ -97,6 +97,9 @@ dev-docker-clean:
 			--profile dev-sqlite \
 			--profile dev-postgres \
 			down --remove-orphans --volumes
+
+reset-testdata: build-server
+	./scripts/reset-testdata.sh --no-build
 
 build: build-frontend build-templates build-server build-docker screenshots
 meta: swagger screenshots changelog

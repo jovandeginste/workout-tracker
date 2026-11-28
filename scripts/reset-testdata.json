@@ -1,0 +1,291 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "admin",
+    "language": "en",
+    "theme": "dark",
+    "timezone": "Europe/Brussels"
+  },
+  "users": [
+    {
+      "username": "john@example.org",
+      "name": "John Doe",
+      "password": "john",
+      "language": "en",
+      "theme": "dark",
+      "timezone": "Europe/Brussels"
+    },
+    {
+      "username": "jane@example.org",
+      "name": "Jane Doe",
+      "password": "jane",
+      "language": "nl",
+      "theme": "light",
+      "timezone": "US/Eastern"
+    }
+  ],
+  "workouts": [
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/sample1.gpx",
+      "name": "Garmin sample",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0406-skiing-09-56-07.gpx",
+      "name": "Skiing activity",
+      "type": "skiing",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0696-20191215-san-jacinto-marion.gpx",
+      "name": "San Jacinto Marion",
+      "type": "running",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0387-20211011-cowles-main.gpx",
+      "name": "Cowles (Main)",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0387-20211018-cowles.gpx",
+      "name": "Cowles",
+      "type": "running",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0057-3-77mi-walk.tcx",
+      "name": "3.77mi walk (TCX)",
+      "type": "walking",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0057-3-77mi-walk.gpx",
+      "name": "3.77mi walk (GPX)",
+      "type": "walking",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0160-20220407-180347.gpx",
+      "name": "Walk 2022-04-07",
+      "type": "walking",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0146-activity-15461078709.gpx",
+      "name": "Shenandoah County",
+      "type": "other",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0045-workout-2024-01-25-10-15-walk-puerto-mazarron.gpx",
+      "name": "Walk Puerto Mazarron",
+      "type": "walking",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0141-may-3-2024-17-28-05.gpx",
+      "name": "May 3, 2024 17:28:05 (GPX)",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0141-workout-2024-05-03-17-28.gpx",
+      "name": "May 3, 2024 17:28 (GPX)",
+      "type": "running",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0160-20240529-140526.gpx",
+      "name": "Walk 2024-05-29",
+      "type": "walking",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0160-runnerup-sm-a525m-2024-06-01-07-57-31-running.gpx",
+      "name": "RunnerUp run 2024-06-01",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0658-15718428901-activity.fit",
+      "name": "Cycling 2024-06-03",
+      "type": "cycling",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/track.gpx",
+      "name": "FitoTrack track",
+      "type": "running",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0318-workout.tcx",
+      "name": "Workout 2024-10-22",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0387-20241218-cowles.tcx",
+      "name": "Cowles (TCX)",
+      "type": "running",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0334-runnerup-pvg100-2024-12-21-08-07-46-running.gpx",
+      "name": "PVG100 2024-12-21",
+      "type": "running",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0001-20250219.fit",
+      "name": "Cycling 2025-02-20",
+      "type": "cycling",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0531-18-may-2025-1008-walk.gpx",
+      "name": "Walk 18 May 2025",
+      "type": "walking",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0554-brocken-rundwanderung-im-harz.gpx",
+      "name": "Brocken-Rundwanderung im Harz",
+      "type": "walking",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0588-20250712-194946.gpx",
+      "name": "Walk 2025-07-12",
+      "type": "walking",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0671-example-ferry.fit",
+      "name": "Ferry cycling",
+      "type": "cycling",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0737-swimming-2026-01-31-09-08-24.fit",
+      "name": "Swimming 2026-01-31",
+      "type": "swimming",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0785-2026-04-01-12-08-04-fit.fit",
+      "name": "Swimming 2026-04-01",
+      "type": "swimming",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0829-runnerup-2310fpca4g-2026-06-05-16-35-02-cycling.gpx",
+      "name": "RunnerUp cycling 2026-06-05",
+      "type": "cycling",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0829-opentracks-gpx-share.gpx",
+      "name": "OpenTracks share 2026-06-13",
+      "type": "cycling",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0860-18-98km-inline-skating-mapmyfitness.tcx",
+      "name": "Inline skating 2026-07-29",
+      "type": "inline-skating",
+      "private": false,
+      "share": true
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0860-gotoes-260812-155806-rojqb.tcx",
+      "name": "Gotoes 2026-07-29",
+      "type": "inline-skating",
+      "private": true,
+      "share": false
+    },
+    {
+      "user": "john@example.org",
+      "file": "pkg/database/testdata/issues/issue-0860-2026-07-29-19-47-locus-map.tcx",
+      "name": "Locus map 2026-07-29",
+      "type": "inline-skating",
+      "private": false,
+      "share": false
+    },
+    {
+      "user": "jane@example.org",
+      "file": "pkg/database/testdata/issues/issue-0864-workout-anon.gpx",
+      "name": "Anonymous workout 2026-08-29",
+      "type": "cycling",
+      "private": false,
+      "share": false
+    }
+  ],
+  "skipped": [
+    {
+      "file": "pkg/database/testdata/issues/issue-0387-20180526-27-mount-whitney-mr.gpx",
+      "reason": "the converter panics on this sample; see the matching .json golden file"
+    }
+  ]
+}

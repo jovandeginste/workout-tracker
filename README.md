@@ -534,6 +534,7 @@ make clean # Removes build artifacts
 make dev-docker # Runs the server in a docker compose setup
 make dev-docker-sqlite # Runs the server in a docker compose setup with SQLite
 make dev-docker-clean # Removes volumes created by the dev-docker targets
+make reset-testdata # Replaces data/database.db with known users, profiles and workouts
 ```
 
 ## Use of AI
