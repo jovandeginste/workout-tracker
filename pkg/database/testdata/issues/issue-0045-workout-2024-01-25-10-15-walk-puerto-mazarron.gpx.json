@@ -36,11 +36,10 @@
     "totalCalories": 0,
     "extraMetrics": [
       "elevation",
-      "speed",
-      "trackpointextension"
+      "speed"
     ],
     "pointsCount": 633,
-    "pointsDigest": "14632a3dda83e5b23b3aff415e4f088f9cc0152c2ee0509dbf202ce3693efb4b",
+    "pointsDigest": "2f868e56a00868285d0e3afce38986da37d06ea2db07600cd262f5b2f274ceae",
     "firstPoint": {
       "time": "2024-01-25T10:15:23Z",
       "lat": 37.562241931,
@@ -55,8 +54,7 @@
       "slopeGrade": 0.027137,
       "extraMetrics": {
         "elevation": -2.102966,
-        "speed": 1.07113,
-        "trackpointextension": 0
+        "speed": 1.07113
       }
     },
     "lastPoint": {
@@ -73,8 +71,7 @@
       "slopeGrade": 0.00161,
       "extraMetrics": {
         "elevation": 7.882559,
-        "speed": 4.479942,
-        "trackpointextension": 0
+        "speed": 4.479942
       }
     },
     "climbs": [
@@ -102,8 +99,7 @@
           "slopeGrade": -0.019936,
           "extraMetrics": {
             "elevation": 0.620478,
-            "speed": 1.0572,
-            "trackpointextension": 0
+            "speed": 1.0572
           }
         },
         "end": {
@@ -120,8 +116,7 @@
           "slopeGrade": -0.010277,
           "extraMetrics": {
             "elevation": -4.314734,
-            "speed": 0.942879,
-            "trackpointextension": 0
+            "speed": 0.942879
           }
         }
       },
@@ -149,8 +144,7 @@
           "slopeGrade": 0.016176,
           "extraMetrics": {
             "elevation": -3.38312,
-            "speed": 0.801226,
-            "trackpointextension": 0
+            "speed": 0.801226
           }
         },
         "end": {
@@ -167,8 +161,7 @@
           "slopeGrade": 0.023267,
           "extraMetrics": {
             "elevation": 5.432102,
-            "speed": 0.016783,
-            "trackpointextension": 0
+            "speed": 0.016783
           }
         }
       },
@@ -196,8 +189,7 @@
           "slopeGrade": -0.017673,
           "extraMetrics": {
             "elevation": -0.004419,
-            "speed": 0.759486,
-            "trackpointextension": 0
+            "speed": 0.759486
           }
         },
         "end": {
@@ -214,8 +206,7 @@
           "slopeGrade": -0.012182,
           "extraMetrics": {
             "elevation": 3.925764,
-            "speed": 1.287655,
-            "trackpointextension": 0
+            "speed": 1.287655
           }
         }
       }

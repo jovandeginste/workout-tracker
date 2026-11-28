@@ -135,9 +135,19 @@ func (m *MapData) UpdateExtraMetrics() {
 	metrics := []string{}
 	found := map[string]bool{}
 
+	// Only list a metric when at least one point has a non-zero value. A metric
+	// that is zero for the whole workout was not recorded by the device.
 	for _, d := range m.Details.Points {
-		for k := range d.ExtraMetrics {
-			if found[k] {
+		for k, v := range d.ExtraMetrics {
+			if !extraMetricValueIsMeaningful(k, v) {
+				// Older workouts can still contain these values; drop them so
+				// the metric is not counted.
+				delete(d.ExtraMetrics, k)
+
+				continue
+			}
+
+			if v == 0 || found[k] {
 				continue
 			}
 

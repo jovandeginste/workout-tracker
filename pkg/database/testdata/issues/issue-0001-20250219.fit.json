@@ -37,13 +37,12 @@
     "extraMetrics": [
       "cadence",
       "distance",
-      "elevation",
       "heart-rate",
       "power",
       "speed"
     ],
     "pointsCount": 1888,
-    "pointsDigest": "101a6615b69fd3a038cb42258c60f30511177af29ebd793a2524da8237608d71",
+    "pointsDigest": "53cad5a372dc87fd222a11c74a27bd70fe16da27f21f806ba13d4f9810b84450",
     "firstPoint": {
       "time": "2025-02-20T04:35:31Z",
       "lat": 50.865889192,
@@ -60,7 +59,6 @@
         "cadence": 0,
         "distance": 0.13,
         "elevation": 0,
-        "heart-rate": 0,
         "power": 0,
         "speed": 0.529
       }
