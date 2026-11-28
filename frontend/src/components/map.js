@@ -137,11 +137,16 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (slopeLayerGroup && this.config.showSlope) {
-      slopeLayerGroup.addTo(map);
-    } else {
-      elevationLayerGroup.addTo(map);
-    }
+    this.trackLayers = {
+      elevation: elevationLayerGroup,
+      speed: speedLayerGroup,
+      slope: slopeLayerGroup,
+    };
+
+    const defaultColoring =
+      this.config.showSlope && slopeLayerGroup ? "slope" : "elevation";
+    this.trackColoring = defaultColoring;
+    this.setTrackColoring(defaultColoring);
 
     let liftHaloGroup;
     if (this.workout.lifts?.Data?.length) {
@@ -169,15 +174,7 @@ class WtMap extends HTMLElement {
       this.hoverMarker.addTo(map); // Adding marker to the map
     }
 
-    const overlays = {
-      [this.config.elevationName]: elevationLayerGroup,
-    };
-    if (speedLayerGroup) {
-      overlays[this.config.speedName] = speedLayerGroup;
-    }
-    if (slopeLayerGroup) {
-      overlays[this.config.slopeName] = slopeLayerGroup;
-    }
+    const overlays = {};
 
     if (this.config.climbsName && annotations.climbs.getLayers().length > 0) {
       overlays[this.config.climbsName] = annotations.climbs;
@@ -191,7 +188,8 @@ class WtMap extends HTMLElement {
     }
 
     L.control.scale().addTo(map);
-    L.control
+
+    const layersControl = L.control
       .layers(
         {
           [this.config.streetsName]: layerStreet,
@@ -201,9 +199,87 @@ class WtMap extends HTMLElement {
       )
       .addTo(map);
 
+    this.addTrackColoring(layersControl);
+
     layerStreet.addTo(map);
 
     this.resetZoom();
+  }
+
+  setTrackColoring(kind) {
+    const selected = this.trackLayers?.[kind];
+    if (!selected) {
+      return;
+    }
+
+    for (const group of Object.values(this.trackLayers)) {
+      if (group && this.map.hasLayer(group)) {
+        this.map.removeLayer(group);
+      }
+    }
+
+    selected.addTo(this.map);
+    this.trackColoring = kind;
+  }
+
+  addTrackColoring(layersControl) {
+    const options = [
+      ["elevation", this.config.elevationName, this.trackLayers.elevation],
+      ["speed", this.config.speedName, this.trackLayers.speed],
+      ["slope", this.config.slopeName, this.trackLayers.slope],
+    ].filter(
+      ([, name, group]) => name && group && group.getLayers().length > 0,
+    );
+
+    if (options.length < 2) {
+      return;
+    }
+
+    const list = layersControl
+      .getContainer()
+      .querySelector(".leaflet-control-layers-list");
+    if (!list) {
+      return;
+    }
+
+    const section = L.DomUtil.create(
+      "div",
+      "leaflet-control-layers-base wt-map-coloring",
+    );
+    const separator = list.querySelector(".leaflet-control-layers-separator");
+
+    if (separator) {
+      list.insertBefore(
+        L.DomUtil.create("div", "leaflet-control-layers-separator"),
+        separator,
+      );
+      list.insertBefore(section, separator);
+    } else {
+      list.appendChild(
+        L.DomUtil.create("div", "leaflet-control-layers-separator"),
+      );
+      list.appendChild(section);
+    }
+
+    const groupName = `${this.getAttribute("id") || "wt-map"}-coloring`;
+
+    for (const [value, name] of options) {
+      const label = L.DomUtil.create("label", "", section);
+      const span = L.DomUtil.create("span", "", label);
+      const input = L.DomUtil.create(
+        "input",
+        "leaflet-control-layers-selector",
+        span,
+      );
+
+      input.type = "radio";
+      input.name = groupName;
+      input.value = value;
+      input.checked = value === this.trackColoring;
+      input.addEventListener("change", () => this.setTrackColoring(value));
+
+      span.appendChild(document.createTextNode(` ${name}`));
+    }
   }
 
   getStreetLayer() {
