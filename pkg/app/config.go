@@ -28,6 +28,15 @@ func (a *App) ReadConfiguration() error {
 	viper.SetDefault("login_custom_text", "")
 	viper.SetDefault("worker_delay_seconds", 60)
 
+	viper.SetDefault("ldap_enabled", false)
+	viper.SetDefault("ldap_start_tls", false)
+	viper.SetDefault("ldap_insecure_skip_verify", false)
+	viper.SetDefault("ldap_username_attribute", "uid")
+	viper.SetDefault("ldap_name_attribute", "cn")
+	viper.SetDefault("ldap_auto_create", false)
+	viper.SetDefault("ldap_default_active", true)
+	viper.SetDefault("ldap_timeout_seconds", 10)
+
 	for _, envVar := range []string{
 		"bind",
 		"web_root",
@@ -44,6 +53,24 @@ func (a *App) ReadConfiguration() error {
 		"socials_disabled",
 		"login_custom_text",
 		"worker_delay_seconds",
+		"ldap_enabled",
+		"ldap_url",
+		"ldap_start_tls",
+		"ldap_insecure_skip_verify",
+		"ldap_ca_file",
+		"ldap_bind_dn",
+		"ldap_bind_password",
+		"ldap_bind_password_file",
+		"ldap_user_dn",
+		"ldap_base_dn",
+		"ldap_user_filter",
+		"ldap_username_attribute",
+		"ldap_name_attribute",
+		"ldap_required_group",
+		"ldap_admin_group",
+		"ldap_auto_create",
+		"ldap_default_active",
+		"ldap_timeout_seconds",
 	} {
 		if err := viper.BindEnv(envVar); err != nil {
 			return err

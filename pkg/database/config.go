@@ -50,6 +50,25 @@ type EnvConfig struct {
 
 	JWTEncryptionKeyFile string `mapstructure:"jwt_encryption_key_file" gorm:"-"` // File containing the encryption key for JWT
 	DSNFile              string `mapstructure:"dsn_file" gorm:"-"`                // File containing the database DSN
+
+	LDAPEnabled            bool   `mapstructure:"ldap_enabled" gorm:"-"`              // Enable LDAP authentication
+	LDAPURL                string `mapstructure:"ldap_url" gorm:"-"`                  // LDAP server URL
+	LDAPStartTLS           bool   `mapstructure:"ldap_start_tls" gorm:"-"`            // Use StartTLS on an ldap:// URL
+	LDAPInsecureSkipVerify bool   `mapstructure:"ldap_insecure_skip_verify" gorm:"-"` // Skip LDAP TLS certificate verification
+	LDAPCAFile             string `mapstructure:"ldap_ca_file" gorm:"-"`              // PEM file with a private CA
+	LDAPBindDN             string `mapstructure:"ldap_bind_dn" gorm:"-"`              // Service account DN for search mode
+	LDAPBindPassword       string `mapstructure:"ldap_bind_password" gorm:"-"`        // Service account password
+	LDAPBindPasswordFile   string `mapstructure:"ldap_bind_password_file" gorm:"-"`   // File with the service account password
+	LDAPUserDN             string `mapstructure:"ldap_user_dn" gorm:"-"`              // DN template for direct-bind mode
+	LDAPBaseDN             string `mapstructure:"ldap_base_dn" gorm:"-"`              // Search base for search mode
+	LDAPUserFilter         string `mapstructure:"ldap_user_filter" gorm:"-"`          // Search filter with a {username} placeholder
+	LDAPUsernameAttribute  string `mapstructure:"ldap_username_attribute" gorm:"-"`   // Attribute used as the app username
+	LDAPNameAttribute      string `mapstructure:"ldap_name_attribute" gorm:"-"`       // Attribute used as the display name
+	LDAPRequiredGroup      string `mapstructure:"ldap_required_group" gorm:"-"`       // DN of a group the user must be a member of
+	LDAPAdminGroup         string `mapstructure:"ldap_admin_group" gorm:"-"`          // DN of a group whose members become admins
+	LDAPAutoCreate         bool   `mapstructure:"ldap_auto_create" gorm:"-"`          // Create unknown LDAP users on login
+	LDAPDefaultActive      bool   `mapstructure:"ldap_default_active" gorm:"-"`       // Active value for newly created LDAP users
+	LDAPTimeoutSeconds     int    `mapstructure:"ldap_timeout_seconds" gorm:"-"`      // LDAP dial and operation timeout
 }
 
 func GetConfig(db *gorm.DB) (*Config, error) {

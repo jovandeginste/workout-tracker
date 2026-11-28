@@ -1,4 +1,3 @@
-
 package admin
 
 import (
@@ -15,87 +14,119 @@ templ EditUser(u *database.User) {
 			{ i18n.T(ctx, "admin.manage-user", u.Name) }
 		</h2>
 		<div class="inner-form">
-			<form
-				action={ templ.SafeURL(helpers.RouteFor(ctx, "admin-user-update", u.ID)) }
-				method="post"
-			>
-				<table>
-					<tbody>
-						<tr>
-							<td>
-								<label for="username">{ i18n.T(ctx, "user.username") }</label>
-							</td>
-							<td>
-								<input
-									id="username"
-									name="username"
-									size="40"
-									value={ u.Username }
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="name">{ i18n.T(ctx, "common.name") }</label>
-							</td>
-							<td>
-								<input id="name" name="name" size="40" value={ u.Name }/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="name">{ i18n.T(ctx, "user.password") }</label>
-							</td>
-							<td>
-								<input
-									type="password"
-									id="password"
-									name="password"
-									size="40"
-									placeholder={ i18n.T(ctx, "admin.password-hint") }
-									value=""
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="active">{ i18n.T(ctx, "common.active") }</label>
-							</td>
-							<td>
-								<input
-									type="checkbox"
-									id="active"
-									name="active"
-									size="40"
-									checked?={ u.Active }
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="admin">{ i18n.T(ctx, "admin.role") }</label>
-							</td>
-							<td>
-								<input
-									type="checkbox"
-									id="admin"
-									name="admin"
-									size="40"
-									checked?={ u.Admin }
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-								<button type="submit" size="40">
-									{ i18n.T(ctx, "user.update") }
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+			@userForm(u, helpers.RouteFor(ctx, "admin-user-update", u.ID), i18n.T(ctx, "user.update"))
 		</div>
 	}
+}
+
+templ NewUser(u *database.User) {
+	@partials.Page(partials.NewPageOptions()) {
+		<h2>
+			@helpers.IconFor(`admin`)
+			{ i18n.T(ctx, "admin.create-user") }
+		</h2>
+		<div class="inner-form">
+			@userForm(u, helpers.RouteFor(ctx, "admin-user-create"), i18n.T(ctx, "user.create"))
+		</div>
+	}
+}
+
+templ userForm(u *database.User, action, submitLabel string) {
+	<form action={ templ.SafeURL(action) } method="post">
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<label for="username">{ i18n.T(ctx, "user.username") }</label>
+					</td>
+					<td>
+						<input
+							id="username"
+							name="username"
+							size="40"
+							value={ u.Username }
+						/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="name">{ i18n.T(ctx, "common.name") }</label>
+					</td>
+					<td>
+						<input id="name" name="name" size="40" value={ u.Name }/>
+					</td>
+				</tr>
+				<tr>
+					<td>{ i18n.T(ctx, "admin.auth-source") }</td>
+					<td>
+						@partials.RadioPillGroup("admin.auth-source", "auth_source", "pill-compact", []partials.RadioPillOption{
+							{Value: database.AuthSourceLocal, LabelKey: "admin.auth-source-local", Checked: u.AuthSource != database.AuthSourceLDAP},
+							{Value: database.AuthSourceLDAP, LabelKey: "admin.auth-source-ldap", Checked: u.AuthSource == database.AuthSourceLDAP},
+						})
+						<p class="note">{ i18n.T(ctx, "admin.auth-source-help") }</p>
+						if ac := helpers.AppConfig(ctx); ac != nil && !ac.LDAPEnabled {
+							<p class="note">{ i18n.T(ctx, "admin.ldap-disabled") }</p>
+						}
+						<p class="note">{ i18n.T(ctx, "admin.keep-local-admin") }</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="password">{ i18n.T(ctx, "user.password") }</label>
+					</td>
+					<td>
+						<input
+							type="password"
+							id="password"
+							name="password"
+							size="40"
+							value=""
+						/>
+						if u.ID == 0 {
+							<p class="note">{ i18n.T(ctx, "admin.password-required-local") }</p>
+						} else if u.AuthSource == database.AuthSourceLDAP {
+							<p class="note">{ i18n.T(ctx, "admin.ldap-managed") }</p>
+						} else {
+							<p class="note">{ i18n.T(ctx, "admin.password-help") }</p>
+						}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="active">{ i18n.T(ctx, "common.active") }</label>
+					</td>
+					<td>
+						<input
+							type="checkbox"
+							id="active"
+							name="active"
+							size="40"
+							checked?={ u.Active }
+						/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="admin">{ i18n.T(ctx, "admin.role") }</label>
+					</td>
+					<td>
+						<input
+							type="checkbox"
+							id="admin"
+							name="admin"
+							size="40"
+							checked?={ u.Admin }
+						/>
+						<p class="note">{ i18n.T(ctx, "admin.ldap-admin-help") }</p>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit" size="40">{ submitLabel }</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 }

@@ -67,6 +67,9 @@ templ Login() {
 							</tbody>
 						</table>
 					</form>
+					if ac.LDAPEnabled {
+						<p class="note">{ i18n.T(ctx, "user.auth.ldap-hint") }</p>
+					}
 				</div>
 				if !ac.RegistrationDisabled {
 					<div class="inner-form">

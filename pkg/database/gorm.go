@@ -179,6 +179,12 @@ func migrateTotalsShow(db *gorm.DB) error {
 }
 
 func postMigrationActions(db *gorm.DB) error {
+	if err := db.Model(&User{}).
+		Where("auth_source = '' OR auth_source IS NULL").
+		UpdateColumn("auth_source", AuthSourceLocal).Error; err != nil {
+		return err
+	}
+
 	// Only select the workouts that still need their extra metrics; loading
 	// all workouts with their track points would read every GPS point into
 	// memory on every start.

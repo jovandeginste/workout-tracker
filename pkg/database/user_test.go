@@ -90,6 +90,49 @@ func TestUser_PasswordIsValid(t *testing.T) {
 	assert.False(t, u.ValidLogin(pwd+pwd))
 }
 
+func TestUser_LDAPWithoutPassword(t *testing.T) {
+	u := &User{
+		UserData: UserData{
+			Username:   "ldap-user",
+			AuthSource: AuthSourceLDAP,
+			Active:     true,
+		},
+	}
+
+	require.NoError(t, u.IsValid())
+	assert.True(t, u.IsActive())
+	assert.False(t, u.ValidLogin("anything"))
+	require.ErrorIs(t, u.SetPassword("my-password"), ErrPasswordManagedExternally)
+}
+
+func TestUser_AuthSourceDefaultsToLocal(t *testing.T) {
+	db := createMemoryDB(t)
+	u := defaultUser()
+	u.Active = true
+
+	require.NoError(t, u.Create(db))
+	assert.Equal(t, AuthSourceLocal, u.AuthSource)
+
+	stored, err := GetUser(db, u.Username)
+	require.NoError(t, err)
+	assert.Equal(t, AuthSourceLocal, stored.AuthSource)
+}
+
+func TestGetUserFold(t *testing.T) {
+	db := createMemoryDB(t)
+	u := defaultUser()
+	u.Active = true
+
+	require.NoError(t, u.Create(db))
+
+	stored, err := GetUserFold(db, "MY-USERNAME")
+	require.NoError(t, err)
+	assert.Equal(t, u.Username, stored.Username)
+
+	_, err = GetUserFold(db, "does-not-exist")
+	require.ErrorIs(t, err, gorm.ErrRecordNotFound)
+}
+
 func TestUser_IsNotActive(t *testing.T) {
 	u := User{
 		UserData: UserData{

@@ -10,6 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var ErrPasswordRequired = errors.New("a password is required for local accounts")
+
 func (a *App) adminRoutes(g *echo.Group) *echo.Group {
 	adminGroup := g.Group("/admin")
 	adminGroup.Use(a.ValidateAdminMiddleware)
@@ -18,6 +20,8 @@ func (a *App) adminRoutes(g *echo.Group) *echo.Group {
 	a.POST(adminGroup, "/config", a.adminConfigUpdateHandler, "admin-config-update")
 
 	adminUsersGroup := adminGroup.Group("/users")
+	a.GET(adminUsersGroup, "/new", a.adminUserNewHandler, "admin-user-new")
+	a.POST(adminUsersGroup, "", a.adminUserCreateHandler, "admin-user-create")
 	a.GET(adminUsersGroup, "/:id/edit", a.adminUserEditHandler, "admin-user-edit")
 	a.POST(adminUsersGroup, "/:id", a.adminUserUpdateHandler, "admin-user-update")
 	a.GET(adminUsersGroup, "/:id/delete", a.adminUserDeleteConfirmHandler, "admin-user-delete-confirm")
@@ -36,6 +40,60 @@ func (a *App) adminRootHandler(c *echo.Context) error {
 	}
 
 	return Render(c, http.StatusOK, admin.Root(users))
+}
+
+func (a *App) adminUserNewHandler(c *echo.Context) error {
+	u := &database.User{
+		UserData: database.UserData{
+			AuthSource: database.AuthSourceLocal,
+			Active:     true,
+		},
+	}
+
+	return Render(c, http.StatusOK, admin.NewUser(u))
+}
+
+func (a *App) adminUserCreateHandler(c *echo.Context) error {
+	u := &database.User{
+		UserData: database.UserData{
+			Username:   c.FormValue("username"),
+			Name:       c.FormValue("name"),
+			AuthSource: c.FormValue("auth_source"),
+			Admin:      isChecked(c.FormValue("admin")),
+			Active:     isChecked(c.FormValue("active")),
+		},
+	}
+
+	if u.AuthSource == "" {
+		u.AuthSource = database.AuthSourceLocal
+	}
+
+	switch u.AuthSource {
+	case database.AuthSourceLocal:
+		password := c.FormValue("password")
+		if password == "" {
+			return a.redirectWithError(c, a.Reverse("admin-user-new"), ErrPasswordRequired)
+		}
+
+		if err := u.SetPassword(password); err != nil {
+			return a.redirectWithError(c, a.Reverse("admin-user-new"), err)
+		}
+	case database.AuthSourceLDAP:
+		u.Password = ""
+	default:
+		return a.redirectWithError(c, a.Reverse("admin-user-new"), database.ErrInvalidAuthSource)
+	}
+
+	applyUserDefaults(u)
+	u.Profile.User = u
+
+	if err := u.Create(a.db); err != nil {
+		return a.redirectWithError(c, a.Reverse("admin-user-new"), err)
+	}
+
+	a.addNoticeT(c, "user.notice.created", u.Name)
+
+	return c.Redirect(http.StatusFound, a.Reverse("admin-user-edit", u.ID))
 }
 
 func (a *App) adminUserEditHandler(c *echo.Context) error {
@@ -62,10 +120,8 @@ func (a *App) adminUserUpdateHandler(c *echo.Context) error {
 	u.Admin = isChecked(c.FormValue("admin"))
 	u.Active = isChecked(c.FormValue("active"))
 
-	if c.FormValue("password") != "" {
-		if err := u.SetPassword(c.FormValue("password")); err != nil {
-			return a.redirectWithError(c, a.Reverse("admin-user-show", c.Param("id")), err)
-		}
+	if err := updateUserAuthSource(u, c.FormValue("auth_source"), c.FormValue("password")); err != nil {
+		return a.redirectWithError(c, a.Reverse("admin-user-show", c.Param("id")), err)
 	}
 
 	if err := u.Save(a.db); err != nil {
@@ -75,6 +131,38 @@ func (a *App) adminUserUpdateHandler(c *echo.Context) error {
 	a.addNoticeT(c, "user.notice.updated", u.Name)
 
 	return c.Redirect(http.StatusFound, a.Reverse("admin-user-show", c.Param("id")))
+}
+
+func updateUserAuthSource(u *database.User, source, password string) error {
+	current := u.AuthSource
+	if current == "" {
+		current = database.AuthSourceLocal
+	}
+
+	if source == "" {
+		source = current
+	}
+
+	switch source {
+	case database.AuthSourceLocal:
+		if current == database.AuthSourceLDAP && password == "" {
+			return ErrPasswordRequired
+		}
+
+		u.AuthSource = database.AuthSourceLocal
+
+		if password != "" {
+			return u.SetPassword(password)
+		}
+	case database.AuthSourceLDAP:
+		u.AuthSource = database.AuthSourceLDAP
+		u.Password = ""
+		u.Salt = ""
+	default:
+		return database.ErrInvalidAuthSource
+	}
+
+	return nil
 }
 
 func (a *App) adminUserDeleteHandler(c *echo.Context) error { //nolint:dupl
