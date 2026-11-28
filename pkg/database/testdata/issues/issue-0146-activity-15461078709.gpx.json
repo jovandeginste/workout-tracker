@@ -35,11 +35,10 @@
     "totalWeight": 0,
     "totalCalories": 0,
     "extraMetrics": [
-      "elevation",
-      "trackpointextension"
+      "elevation"
     ],
     "pointsCount": 1753,
-    "pointsDigest": "8a33607f2dfff5715b0177190900a658fd8ef35da9a7106b931877ef15869f01",
+    "pointsDigest": "a5028e7369ae33c736fa7a1d0d45bcb5a805a7c43e3d0a4bea6a1a5750f6fed0",
     "firstPoint": {
       "time": "2022-11-19T15:29:12Z",
       "lat": 38.933217963,
@@ -53,8 +52,7 @@
       "totalDuration": "0s",
       "slopeGrade": 0.024081,
       "extraMetrics": {
-        "elevation": 497.399994,
-        "trackpointextension": 0
+        "elevation": 497.399994
       }
     },
     "lastPoint": {
@@ -70,8 +68,7 @@
       "totalDuration": "3h53m47s",
       "slopeGrade": -0.021233,
       "extraMetrics": {
-        "elevation": 682.599976,
-        "trackpointextension": 0
+        "elevation": 682.599976
       }
     },
     "climbs": [
@@ -98,8 +95,7 @@
           "totalDuration": "17s",
           "slopeGrade": 0.007054,
           "extraMetrics": {
-            "elevation": 497.399994,
-            "trackpointextension": 0
+            "elevation": 497.399994
           }
         },
         "end": {
@@ -115,8 +111,7 @@
           "totalDuration": "52m29s",
           "slopeGrade": 0.021402,
           "extraMetrics": {
-            "elevation": 876.200012,
-            "trackpointextension": 0
+            "elevation": 876.200012
           }
         }
       },
@@ -143,8 +138,7 @@
           "totalDuration": "52m41s",
           "slopeGrade": -0.014962,
           "extraMetrics": {
-            "elevation": 875.799988,
-            "trackpointextension": 0
+            "elevation": 875.799988
           }
         },
         "end": {
@@ -160,8 +154,7 @@
           "totalDuration": "1h1m3s",
           "slopeGrade": -0.01165,
           "extraMetrics": {
-            "elevation": 842,
-            "trackpointextension": 0
+            "elevation": 842
           }
         }
       },
@@ -188,8 +181,7 @@
           "totalDuration": "1h1m42s",
           "slopeGrade": 0.015921,
           "extraMetrics": {
-            "elevation": 843,
-            "trackpointextension": 0
+            "elevation": 843
           }
         },
         "end": {
@@ -205,8 +197,7 @@
           "totalDuration": "1h8m56s",
           "slopeGrade": 0.012273,
           "extraMetrics": {
-            "elevation": 888.400024,
-            "trackpointextension": 0
+            "elevation": 888.400024
           }
         }
       },
@@ -233,8 +224,7 @@
           "totalDuration": "1h8m59s",
           "slopeGrade": -0.01312,
           "extraMetrics": {
-            "elevation": 888.200012,
-            "trackpointextension": 0
+            "elevation": 888.200012
           }
         },
         "end": {
@@ -250,8 +240,7 @@
           "totalDuration": "1h49m38s",
           "slopeGrade": -0.015801,
           "extraMetrics": {
-            "elevation": 812,
-            "trackpointextension": 0
+            "elevation": 812
           }
         }
       },
@@ -278,8 +267,7 @@
           "totalDuration": "1h49m53s",
           "slopeGrade": 0.012982,
           "extraMetrics": {
-            "elevation": 812.400024,
-            "trackpointextension": 0
+            "elevation": 812.400024
           }
         },
         "end": {
@@ -295,8 +283,7 @@
           "totalDuration": "2h6m42s",
           "slopeGrade": 0.020196,
           "extraMetrics": {
-            "elevation": 868.400024,
-            "trackpointextension": 0
+            "elevation": 868.400024
           }
         }
       },
@@ -323,8 +310,7 @@
           "totalDuration": "2h6m48s",
           "slopeGrade": -0.008275,
           "extraMetrics": {
-            "elevation": 868.799988,
-            "trackpointextension": 0
+            "elevation": 868.799988
           }
         },
         "end": {
@@ -340,8 +326,7 @@
           "totalDuration": "2h22m11s",
           "slopeGrade": -0.012249,
           "extraMetrics": {
-            "elevation": 681.200012,
-            "trackpointextension": 0
+            "elevation": 681.200012
           }
         }
       },
@@ -368,8 +353,7 @@
           "totalDuration": "2h22m32s",
           "slopeGrade": 0.017107,
           "extraMetrics": {
-            "elevation": 681,
-            "trackpointextension": 0
+            "elevation": 681
           }
         },
         "end": {
@@ -385,8 +369,7 @@
           "totalDuration": "2h33m18s",
           "slopeGrade": 0.014989,
           "extraMetrics": {
-            "elevation": 741,
-            "trackpointextension": 0
+            "elevation": 741
           }
         }
       },
@@ -413,8 +396,7 @@
           "totalDuration": "2h33m24s",
           "slopeGrade": -0.006061,
           "extraMetrics": {
-            "elevation": 741.599976,
-            "trackpointextension": 0
+            "elevation": 741.599976
           }
         },
         "end": {
@@ -430,8 +412,7 @@
           "totalDuration": "2h42m19s",
           "slopeGrade": -0.029228,
           "extraMetrics": {
-            "elevation": 699,
-            "trackpointextension": 0
+            "elevation": 699
           }
         }
       },
@@ -458,8 +439,7 @@
           "totalDuration": "2h42m26s",
           "slopeGrade": -0.002067,
           "extraMetrics": {
-            "elevation": 698.400024,
-            "trackpointextension": 0
+            "elevation": 698.400024
           }
         },
         "end": {
@@ -475,8 +455,7 @@
           "totalDuration": "3h5m15s",
           "slopeGrade": 0.056915,
           "extraMetrics": {
-            "elevation": 887,
-            "trackpointextension": 0
+            "elevation": 887
           }
         }
       },
@@ -503,8 +482,7 @@
           "totalDuration": "3h5m33s",
           "slopeGrade": 0.003434,
           "extraMetrics": {
-            "elevation": 884.799988,
-            "trackpointextension": 0
+            "elevation": 884.799988
           }
         },
         "end": {
@@ -520,8 +498,7 @@
           "totalDuration": "3h36m28s",
           "slopeGrade": -0.017551,
           "extraMetrics": {
-            "elevation": 700.200012,
-            "trackpointextension": 0
+            "elevation": 700.200012
           }
         }
       },
@@ -548,8 +525,7 @@
           "totalDuration": "3h41m8s",
           "slopeGrade": 0.000589,
           "extraMetrics": {
-            "elevation": 706.599976,
-            "trackpointextension": 0
+            "elevation": 706.599976
           }
         },
         "end": {
@@ -565,8 +541,7 @@
           "totalDuration": "3h45m56s",
           "slopeGrade": 0.012532,
           "extraMetrics": {
-            "elevation": 741.400024,
-            "trackpointextension": 0
+            "elevation": 741.400024
           }
         }
       },
@@ -593,8 +568,7 @@
           "totalDuration": "3h46m2s",
           "slopeGrade": -0.007625,
           "extraMetrics": {
-            "elevation": 741.400024,
-            "trackpointextension": 0
+            "elevation": 741.400024
           }
         },
         "end": {
@@ -610,8 +584,7 @@
           "totalDuration": "3h53m47s",
           "slopeGrade": -0.021233,
           "extraMetrics": {
-            "elevation": 682.599976,
-            "trackpointextension": 0
+            "elevation": 682.599976
           }
         }
       }

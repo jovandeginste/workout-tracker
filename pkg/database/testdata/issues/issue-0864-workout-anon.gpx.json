@@ -36,11 +36,10 @@
     "totalCalories": 0,
     "extraMetrics": [
       "elevation",
-      "heart-rate",
       "speed"
     ],
     "pointsCount": 4094,
-    "pointsDigest": "cdf0bd78fcae5ec2aa039afdcb487cea684e20a372e121c238cf670237719007",
+    "pointsDigest": "45875a67e032c39262726a6da5d008ea173fee8a5077c7009868d9933df82a82",
     "firstPoint": {
       "time": "2026-08-29T15:50:22.919Z",
       "lat": 0,
@@ -54,7 +53,6 @@
       "totalDuration": "0s",
       "slopeGrade": -0.100699,
       "extraMetrics": {
-        "heart-rate": 0,
         "speed": 4.114689
       }
     },
@@ -72,7 +70,6 @@
       "slopeGrade": -0.039595,
       "extraMetrics": {
         "elevation": 116.506664,
-        "heart-rate": 0,
         "speed": 0
       }
     },
@@ -101,7 +98,6 @@
           "slopeGrade": -0.018882,
           "extraMetrics": {
             "elevation": 142.375668,
-            "heart-rate": 0,
             "speed": 3.116643
           }
         },
@@ -119,7 +115,6 @@
           "slopeGrade": -0.01886,
           "extraMetrics": {
             "elevation": 89.611382,
-            "heart-rate": 0,
             "speed": 4.686546
           }
         }
@@ -148,7 +143,6 @@
           "slopeGrade": -0.019296,
           "extraMetrics": {
             "elevation": 95.347097,
-            "heart-rate": 0,
             "speed": 2.416106
           }
         },
@@ -166,7 +160,6 @@
           "slopeGrade": -0.019486,
           "extraMetrics": {
             "elevation": 59.268525,
-            "heart-rate": 0,
             "speed": 2.906636
           }
         }
@@ -195,7 +188,6 @@
           "slopeGrade": 0.00579,
           "extraMetrics": {
             "elevation": 58.954239,
-            "heart-rate": 0,
             "speed": 3.877403
           }
         },
@@ -213,7 +205,6 @@
           "slopeGrade": 0.013441,
           "extraMetrics": {
             "elevation": 81.411382,
-            "heart-rate": 0,
             "speed": 4.238738
           }
         }
@@ -242,7 +233,6 @@
           "slopeGrade": 0.012627,
           "extraMetrics": {
             "elevation": 61.375668,
-            "heart-rate": 0,
             "speed": 3.619012
           }
         },
@@ -260,7 +250,6 @@
           "slopeGrade": 0.013019,
           "extraMetrics": {
             "elevation": 81.389954,
-            "heart-rate": 0,
             "speed": 2.661629
           }
         }
@@ -289,7 +278,6 @@
           "slopeGrade": -0.01671,
           "extraMetrics": {
             "elevation": 94.118525,
-            "heart-rate": 0,
             "speed": 4.778681
           }
         },
@@ -307,7 +295,6 @@
           "slopeGrade": -0.013739,
           "extraMetrics": {
             "elevation": 72.311382,
-            "heart-rate": 0,
             "speed": 3.096054
           }
         }
@@ -336,7 +323,6 @@
           "slopeGrade": 0.019991,
           "extraMetrics": {
             "elevation": 71.189954,
-            "heart-rate": 0,
             "speed": 1.011429
           }
         },
@@ -354,7 +340,6 @@
           "slopeGrade": 0.014344,
           "extraMetrics": {
             "elevation": 120.504239,
-            "heart-rate": 0,
             "speed": 3.27981
           }
         }
@@ -383,7 +368,6 @@
           "slopeGrade": -0.017148,
           "extraMetrics": {
             "elevation": 120.389954,
-            "heart-rate": 0,
             "speed": 3.411064
           }
         },
@@ -401,7 +385,6 @@
           "slopeGrade": -0.011517,
           "extraMetrics": {
             "elevation": 77.061382,
-            "heart-rate": 0,
             "speed": 0
           }
         }
@@ -430,7 +413,6 @@
           "slopeGrade": 0.018699,
           "extraMetrics": {
             "elevation": 71.504239,
-            "heart-rate": 0,
             "speed": 4.191383
           }
         },
@@ -448,7 +430,6 @@
           "slopeGrade": 0.017562,
           "extraMetrics": {
             "elevation": 98.025668,
-            "heart-rate": 0,
             "speed": 4.333961
           }
         }
@@ -477,7 +458,6 @@
           "slopeGrade": 0.015098,
           "extraMetrics": {
             "elevation": 89.254239,
-            "heart-rate": 0,
             "speed": 3.767767
           }
         },
@@ -495,7 +475,6 @@
           "slopeGrade": 0.021865,
           "extraMetrics": {
             "elevation": 148.675668,
-            "heart-rate": 0,
             "speed": 2.951417
           }
         }
