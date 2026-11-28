@@ -131,6 +131,40 @@ templ Details(w *database.Workout) {
 }
 
 templ FullWorkoutDetails(w *database.Workout) {
+	@partials.TabbedContent(
+		"workout-metadata",
+		partials.Tab{
+			Icon:        "info",
+			Name:        i18n.T(ctx, "workout.general"),
+			Show:        true,
+			ContentFunc: func() templ.Component { return generalWorkoutDetails(w) },
+		},
+		partials.Tab{
+			Icon:        "metrics",
+			Name:        i18n.T(ctx, "workout.extra"),
+			Show:        hasExtraWorkoutDetails(w),
+			ContentFunc: func() templ.Component { return extraWorkoutDetails(w) },
+		},
+	)
+}
+
+func hasExtraWorkoutDetails(w *database.Workout) bool {
+	if w.Type.IsDistance() && w.Type.IsDuration() {
+		return true
+	}
+
+	if w.HasPower() {
+		return true
+	}
+
+	if w.Type.IsLocation() && w.HasElevation() {
+		return true
+	}
+
+	return w.Type.IsDuration() && w.PauseDuration() > 0
+}
+
+templ generalWorkoutDetails(w *database.Workout) {
 	{{ currentUser := helpers.CurrentUser(ctx) }}
 	<table>
 		<tbody>
@@ -206,11 +240,6 @@ templ FullWorkoutDetails(w *database.Workout) {
 					@showLocked(w)
 					{ helpers.HumanDuration(w.TotalDuration() ) }
 				}
-				if w.PauseDuration() > 0 {
-					@partials.DetailRow("pause", "workout.time-paused", "whitespace-nowrap font-mono") {
-						{ helpers.HumanDuration (w.PauseDuration() ) }
-					}
-				}
 			}
 			if w.Type.IsDistance() {
 				@partials.DetailRow("distance", "workout.total-distance", "whitespace-nowrap font-mono") {
@@ -232,61 +261,9 @@ templ FullWorkoutDetails(w *database.Workout) {
 					{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeed()) }
 					{ helpers.SpeedUnitForWorkout(ctx, w) }
 				}
-				if w.PauseDuration() != 0 {
-					@partials.DetailRow("speed", "workout.average-speed-no-pause", "whitespace-nowrap font-mono") {
-						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
-						{ helpers.SpeedUnitForWorkout(ctx, w) }
-					}
-				}
 				@partials.DetailRow("tempo", "workout.average-tempo", "whitespace-nowrap font-mono") {
 					{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeed() ) }
 					{ helpers.TempoUnitForWorkout(ctx, w) }
-				}
-				@partials.DetailRow("max-speed", "workout.max-tempo", "whitespace-nowrap font-mono") {
-					{ helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
-					{ helpers.TempoUnitForWorkout(ctx, w) }
-				}
-				if  w.PauseDuration()!= 0 {
-					@partials.DetailRow("tempo", "workout.average-tempo-no-pause", "whitespace-nowrap font-mono") {
-						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
-						{ helpers.TempoUnitForWorkout(ctx, w) }
-					}
-				}
-				@partials.DetailRow("max-speed", "workout.max-speed", "whitespace-nowrap font-mono") {
-					{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
-					{ helpers.SpeedUnitForWorkout(ctx, w) }
-				}
-				if w.HasCadence() {
-					@partials.DetailRow("cadence", "workout.cadence-avg-max", "whitespace-nowrap font-mono") {
-						{ helpers.HumanCadence (w.AverageCadence()) }
-						{ currentUser.PreferredUnits().Cadence() } /
-						{ helpers.HumanCadence (w.MaxCadence()) }
-						{ currentUser.PreferredUnits().Cadence() }
-					}
-				}
-			}
-			if w.Type.IsLocation() {
-				if w.HasElevation() {
-					if w.MinElevation() != 0 {
-						@partials.DetailRow("elevation", "workout.min-elevation", "whitespace-nowrap font-mono") {
-							{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
-						}
-					}
-					if w.MaxElevation() != 0 {
-						@partials.DetailRow("elevation", "workout.max-elevation", "whitespace-nowrap font-mono") {
-							{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
-						}
-					}
-					if w.TotalUp() != 0 {
-						@partials.DetailRow("up", "workout.total-up", "whitespace-nowrap font-mono") {
-							{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
-						}
-					}
-					if w.TotalDown() != 0 {
-						@partials.DetailRow("down", "workout.total-down", "whitespace-nowrap font-mono") {
-							{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
-						}
-					}
 				}
 			}
 			if w.HasCalories() {
@@ -317,14 +294,6 @@ templ FullWorkoutDetails(w *database.Workout) {
 					</td>
 				</tr>
 			}
-			if w.HasPower() {
-				@partials.DetailRow("power", "workout.power-avg-max", "whitespace-nowrap font-mono") {
-					{ helpers.HumanPower (w.AveragePower()) }
-					{ currentUser.PreferredUnits().Power() } /
-					{ helpers.HumanPower (w.MaxPower()) }
-					{ currentUser.PreferredUnits().Power() }
-				}
-			}
 			<tr>
 				<td>
 					@helpers.IconFor("equipment")
@@ -354,6 +323,79 @@ templ FullWorkoutDetails(w *database.Workout) {
 						}
 					</td>
 				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+templ extraWorkoutDetails(w *database.Workout) {
+	{{ currentUser := helpers.CurrentUser(ctx) }}
+	<table>
+		<tbody>
+			if w.Type.IsLocation() {
+				if w.HasElevation() {
+					if w.MinElevation() != 0 {
+						@partials.DetailRow("elevation", "workout.min-elevation", "whitespace-nowrap font-mono") {
+							{ helpers.HumanElevation (ctx,w.MinElevation() ) } { currentUser.PreferredUnits().Elevation() }
+						}
+					}
+					if w.MaxElevation() != 0 {
+						@partials.DetailRow("elevation", "workout.max-elevation", "whitespace-nowrap font-mono") {
+							{ helpers.HumanElevation (ctx,w.MaxElevation() ) } { currentUser.PreferredUnits().Elevation() }
+						}
+					}
+					if w.TotalUp() != 0 {
+						@partials.DetailRow("up", "workout.total-up", "whitespace-nowrap font-mono") {
+							{ helpers.HumanElevation (ctx,w.TotalUp() ) } { currentUser.PreferredUnits().Elevation() }
+						}
+					}
+					if w.TotalDown() != 0 {
+						@partials.DetailRow("down", "workout.total-down", "whitespace-nowrap font-mono") {
+							{ helpers.HumanElevation (ctx,w.TotalDown() ) } { currentUser.PreferredUnits().Elevation() }
+						}
+					}
+				}
+			}
+			if w.Type.IsDistance() &&  w.Type.IsDuration() {
+				@partials.DetailRow("max-speed", "workout.max-tempo", "whitespace-nowrap font-mono") {
+					{ helpers.HumanTempoForWorkout(ctx, w, w.MaxSpeed() ) }
+					{ helpers.TempoUnitForWorkout(ctx, w) }
+				}
+				@partials.DetailRow("max-speed", "workout.max-speed", "whitespace-nowrap font-mono") {
+					{ helpers.HumanSpeedForWorkout(ctx, w, w.MaxSpeed()) }
+					{ helpers.SpeedUnitForWorkout(ctx, w) }
+				}
+				if w.HasCadence() {
+					@partials.DetailRow("cadence", "workout.cadence-avg-max", "whitespace-nowrap font-mono") {
+						{ helpers.HumanCadence (w.AverageCadence()) }
+						{ currentUser.PreferredUnits().Cadence() } /
+						{ helpers.HumanCadence (w.MaxCadence()) }
+						{ currentUser.PreferredUnits().Cadence() }
+					}
+				}
+			}
+			if w.HasPower() {
+				@partials.DetailRow("power", "workout.power-avg-max", "whitespace-nowrap font-mono") {
+					{ helpers.HumanPower (w.AveragePower()) }
+					{ currentUser.PreferredUnits().Power() } /
+					{ helpers.HumanPower (w.MaxPower()) }
+					{ currentUser.PreferredUnits().Power() }
+				}
+			}
+			if w.Type.IsDuration() && w.PauseDuration() > 0 {
+				@partials.DetailRow("pause", "workout.time-paused", "whitespace-nowrap font-mono") {
+					{ helpers.HumanDuration (w.PauseDuration() ) }
+				}
+				if w.Type.IsDistance() {
+					@partials.DetailRow("speed", "workout.average-speed-no-pause", "whitespace-nowrap font-mono") {
+						{ helpers.HumanSpeedForWorkout(ctx, w, w.AverageSpeedNoPause() ) }
+						{ helpers.SpeedUnitForWorkout(ctx, w) }
+					}
+					@partials.DetailRow("tempo", "workout.average-tempo-no-pause", "whitespace-nowrap font-mono") {
+						{ helpers.HumanTempoForWorkout(ctx, w, w.AverageSpeedNoPause()) }
+						{ helpers.TempoUnitForWorkout(ctx, w) }
+					}
+				}
 			}
 		</tbody>
 	</table>

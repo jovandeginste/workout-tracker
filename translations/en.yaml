@@ -291,8 +291,10 @@ en:
     duration: Duration
     elevation: Elevation
     est-calories-burned: Calories burned (est)
+    extra: Extra
     extra-metrics: Extra metrics
     filter-workouts: Filter workouts
+    general: General
     heading: Heading
     heart-rate: Heart rate
     location: Location

@@ -291,8 +291,10 @@ nl:
     duration: Duur
     elevation: Hoogte
     est-calories-burned: Verbruik calorieën (geschat)
+    extra: Extra
     extra-metrics: Extra informatie
     filter-workouts: Filter workouts
+    general: Algemeen
     heading: Koers
     heart-rate: Hartslag
     lifts: Liften
