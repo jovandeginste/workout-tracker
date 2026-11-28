@@ -13,7 +13,7 @@ var (
 	gitRef     = "0.0.0-dev"
 	gitRefName = "local"
 	gitRefType = "local"
-	gitCommit  = "local"
+	gitCommit  = "master"
 	buildTime  = "now"
 )
 
