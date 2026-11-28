@@ -11,6 +11,7 @@
 
 [![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#workout-tracker:matrix.org)
 
+> [!NOTE]  
 > AI is used as a tool in this project. [Read more](#use-of-ai).
 
 A workout tracking web application for personal use (or family, friends), geared
