@@ -200,7 +200,7 @@ de:
     weight-lifting: Gewichtheben
   statistics:
     break-detection: Trendbrucherkennung
-    per: pro
+    per: Pro
     period:
       all-time: Gesamter Zeitraum
       last-30-days: Letzte 30 Tage
@@ -217,6 +217,11 @@ de:
     bar: Balken
     chart-type: Diagrammtyp
     line: Linie
+    include-pause: Mit Pausen
+    exclude-pause: Ohne Pausen
+    distance-vs-pace: Entfernung vs. Tempo
+    pause: Pausen
+    all-segments: Alle Segmente
   units:
     centimeter: Zentimeter
     feet: Fuß
@@ -362,3 +367,10 @@ de:
     private-explanation: Ein privates Training ist nur für dich und Admins 
       sichtbar.
     time-of-day: Tageszeit
+    ignore-device-values: Gerätewerte ignorieren
+    ignore-elevation: Höhe ignorieren
+    ignore-elevation-explanation: Für dieses Training die 2D-Entfernung 
+      verwenden und den Höhenunterschied ignorieren.
+    ignore-device-values-explanation: Die Entfernung, die Höhe und andere 
+      Gesamtwerte anhand der Streckenpunkte neu berechnen, anstatt die von 
+      deinem Gerät aufgezeichneten Werte zu verwenden.
