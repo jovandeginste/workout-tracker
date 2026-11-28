@@ -46,6 +46,11 @@
             # DB (optional, but good to have CLI tools)
             postgresql_16
             sqlite
+
+            # Helpers for scripts/reset-testdata.sh
+            curl
+            jq
+            lsof
           ];
 
           shellHook = ''
