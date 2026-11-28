@@ -29,6 +29,9 @@ class WtMap extends HTMLElement {
     super();
 
     this.hoverMarker = null;
+    this.selectedSegment = null;
+    this.selectedSegmentKey = null;
+    this.selectedMarkers = [];
   }
 
   connectedCallback() {
@@ -80,6 +83,10 @@ class WtMap extends HTMLElement {
       weight: 4,
       interactive: false,
     };
+
+    map.createPane("segmentHighlight");
+    map.getPane("segmentHighlight").style.zIndex = 350;
+    this.segmentHighlightLayer = L.featureGroup().addTo(map);
 
     let prevPoint;
     const hasSpeed = !!this.workout.speed?.Data?.length;
@@ -136,15 +143,15 @@ class WtMap extends HTMLElement {
       elevationLayerGroup.addTo(map);
     }
 
-    let liftLayerGroup;
+    let liftHaloGroup;
     if (this.workout.lifts?.Data?.length) {
-      liftLayerGroup = this.getLiftLayerGroup(polyLineProperties);
+      liftHaloGroup = this.getLiftHaloLayerGroup();
     }
 
     const positions = this.workout.position.Data.filter((x) => x !== null);
     const annotations = this.getAnnotationLayers();
-    const liftsOverlay = liftLayerGroup
-      ? L.layerGroup([liftLayerGroup, annotations.lifts])
+    const liftsOverlay = liftHaloGroup
+      ? L.layerGroup([liftHaloGroup, annotations.lifts])
       : annotations.lifts;
 
     annotations.startEnd.addTo(map);
@@ -178,7 +185,7 @@ class WtMap extends HTMLElement {
 
     if (
       this.config.liftName &&
-      (liftLayerGroup || annotations.lifts.getLayers().length > 0)
+      (liftHaloGroup || annotations.lifts.getLayers().length > 0)
     ) {
       overlays[this.config.liftName] = liftsOverlay;
     }
@@ -227,7 +234,7 @@ class WtMap extends HTMLElement {
     return group;
   }
 
-  getLiftLayerGroup(polyLineProperties = {}) {
+  getLiftHaloLayerGroup() {
     const group = new L.featureGroup();
 
     for (const positions of this.workout.lifts.Data) {
@@ -236,10 +243,11 @@ class WtMap extends HTMLElement {
       }
 
       L.polyline(positions, {
-        ...polyLineProperties,
+        pane: "segmentHighlight",
         color: "#f59e0b",
-        dashArray: "6 6",
-        weight: 4,
+        weight: 10,
+        opacity: 0.85,
+        interactive: false,
       }).addTo(group);
     }
 
@@ -278,8 +286,20 @@ class WtMap extends HTMLElement {
 
     for (const segment of this.workout.segments?.Data || []) {
       const group = segment.kind === "lift" ? lifts : climbs;
-      group.addLayer(this.getSegmentAnnotation(segment, "start"));
-      group.addLayer(this.getSegmentAnnotation(segment, "end"));
+      const markers = [
+        this.getSegmentAnnotation(segment, "start"),
+        this.getSegmentAnnotation(segment, "end"),
+      ];
+
+      for (const marker of markers) {
+        marker.on("mouseover", () => this.highlightSegment(segment, markers));
+        marker.on("mouseout", () => {
+          this.clearSegmentHighlight();
+          this.restoreSegmentHighlight();
+        });
+        marker.on("click", () => this.toggleSegmentSelection(segment, markers));
+        group.addLayer(marker);
+      }
     }
 
     return { startEnd, climbs, lifts };
@@ -309,6 +329,71 @@ class WtMap extends HTMLElement {
 
   label(key, fallback) {
     return this.config.labels?.[key] || fallback;
+  }
+
+  segmentKey(segment) {
+    return `${segment.kind}-${segment.index}`;
+  }
+
+  toggleSegmentSelection(segment, markers) {
+    if (this.selectedSegmentKey === this.segmentKey(segment)) {
+      this.selectedSegment = null;
+      this.selectedSegmentKey = null;
+      this.selectedMarkers = [];
+    } else {
+      this.selectedSegment = segment;
+      this.selectedSegmentKey = this.segmentKey(segment);
+      this.selectedMarkers = markers;
+    }
+
+    this.clearSegmentHighlight();
+    this.restoreSegmentHighlight();
+  }
+
+  restoreSegmentHighlight() {
+    if (!this.selectedSegment) {
+      return;
+    }
+
+    this.drawSegmentHighlight(this.selectedSegment, this.selectedMarkers);
+  }
+
+  highlightSegment(segment, markers) {
+    this.clearSegmentHighlight();
+    this.drawSegmentHighlight(segment, markers);
+  }
+
+  drawSegmentHighlight(segment, markers) {
+    const positions = this.workout.position.Data.slice(
+      segment.startIdx,
+      segment.endIdx + 1,
+    ).filter((p) => p !== null);
+
+    if (positions.length > 1) {
+      const isLift = segment.kind === "lift";
+
+      L.polyline(positions, {
+        pane: "segmentHighlight",
+        color: isLift ? "#fbbf24" : "#fff",
+        weight: isLift ? 10 : 9,
+        opacity: isLift ? 1 : 0.9,
+        interactive: false,
+      }).addTo(this.segmentHighlightLayer);
+    }
+
+    for (const marker of markers) {
+      marker.getElement()?.classList.add("wt-map-annotation-active");
+    }
+  }
+
+  clearSegmentHighlight() {
+    this.segmentHighlightLayer?.clearLayers();
+
+    for (const element of this.map
+      .getContainer()
+      .querySelectorAll(".wt-map-annotation-active")) {
+      element.classList.remove("wt-map-annotation-active");
+    }
   }
 
   getSegmentAnnotation(segment, which) {

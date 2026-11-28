@@ -600,6 +600,13 @@
   font-weight: 700;
 }
 
+.wt-map-annotation-active .wt-map-badge {
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 5px var(--badge-color),
+    0 2px 8px rgb(0 0 0 / 50%);
+}
+
 .wt-map-badge-start {
   transform: translate(-100%, -80%);
   background: var(--badge-color);
