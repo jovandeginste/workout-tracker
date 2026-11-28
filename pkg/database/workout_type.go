@@ -60,6 +60,7 @@ type WorkoutTypeConfiguration struct {
 	AreDescentsRelevant bool
 	MaxDeltaMeter       float64
 	Nautical            bool
+	AutoDetectLifts     bool
 }
 
 const DefaultMaxDeltaMeter = 20.0
@@ -96,6 +97,10 @@ func withNautical(c *WorkoutTypeConfiguration) {
 	c.Nautical = true
 }
 
+func withLiftDetection(c *WorkoutTypeConfiguration) {
+	c.AutoDetectLifts = true
+}
+
 var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeAlpineClimbing: workoutTypeConfig(true, true, false, false, withClimbs),
 	WorkoutTypeBadminton:      {},
@@ -123,8 +128,8 @@ var workoutTypeConfigs = map[WorkoutType]WorkoutTypeConfiguration{
 	WorkoutTypeRunning:        workoutTypeConfig(true, true, false, false, withClimbs, withDescents),
 	WorkoutTypeSailing:        workoutTypeConfig(true, true, false, false, withNautical),
 	WorkoutTypeSitups:         workoutTypeConfig(false, false, true, false),
-	WorkoutTypeSkiing:         workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta),
-	WorkoutTypeSnowboarding:   workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta),
+	WorkoutTypeSkiing:         workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta, withLiftDetection),
+	WorkoutTypeSnowboarding:   workoutTypeConfig(true, true, false, false, withDescents, withHighMaxDelta, withLiftDetection),
 	WorkoutTypeSquats:         workoutTypeConfig(false, false, true, true),
 	WorkoutTypeSwimming:       workoutTypeConfig(true, true, false, false),
 	WorkoutTypeTableTennis:    {},
@@ -276,4 +281,8 @@ func (wt WorkoutType) AreDescentsRelevant() bool {
 
 func (wt WorkoutType) IsNautical() bool {
 	return workoutTypeConfigs[wt].Nautical
+}
+
+func (wt WorkoutType) AutoDetectLifts() bool {
+	return workoutTypeConfigs[wt].AutoDetectLifts
 }

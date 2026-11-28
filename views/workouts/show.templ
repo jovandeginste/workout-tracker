@@ -78,6 +78,12 @@ templ Show(w *database.Workout) {
 				ContentFunc: func() templ.Component { return renderClimbs(w) },
 			},
 			partials.Tab{
+				Icon:        "lift",
+				Name:        i18n.T(ctx, "workout.lifts"),
+				Show:        len(w.Data.Lifts) > 0,
+				ContentFunc: func() templ.Component { return renderLifts(w) },
+			},
+			partials.Tab{
 				Icon:        "breakdown",
 				Name:        i18n.T(ctx, "workout.breakdown"),
 				Show:        w.Type.IsDistance() && w.Type.IsDuration() && w.Details() != nil,
@@ -122,6 +128,62 @@ templ renderRouteSegments(w *database.Workout) {
 templ renderNotes(w *database.Workout) {
 	<div class="pagebreak">
 		@templ.Raw(helpers.MarkdownToHTML(w.Notes))
+	</div>
+}
+
+templ renderLifts(w *database.Workout) {
+	{{ pu := helpers.CurrentUser(ctx).PreferredUnits() }}
+	<div class="print:w-full overflow-y-auto max-h-[300px] sm:max-h-[400px] md:max-h-[600px] print:max-h-[600px]">
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th class="hidden md:table-cell text-right">
+						@helpers.IconFor("location")
+						{ i18n.T(ctx, "climb.start") }
+					</th>
+					<th class="text-right">
+						@helpers.IconFor("distance")
+						{ i18n.T(ctx, "climb.distance") }
+					</th>
+					<th class="text-right">
+						@helpers.IconFor("duration")
+						{ i18n.T(ctx, "workout.duration") }
+					</th>
+					<th class="text-right">
+						@helpers.IconFor("gain")
+						{ i18n.T(ctx, "climb.elevation-gain") }
+					</th>
+					<th class="text-right">
+						@helpers.IconFor("speed")
+						{ i18n.T(ctx, "workout.average-speed") }
+					</th>
+				</tr>
+			</thead>
+			<tbody class="font-mono">
+				for _, lift := range w.Data.Lifts {
+					<tr>
+						<td>
+							<span class="text-amber-500">@helpers.IconFor("lift")</span>
+						</td>
+						<td class="hidden md:table-cell text-right">
+							{ helpers.HumanDistanceForWorkout(ctx, w, lift.Start.TotalDistance) }
+							{ helpers.DistanceUnitForWorkout(ctx, w) }
+						</td>
+						<td class="text-right">
+							{ helpers.HumanDistanceForWorkout(ctx, w, lift.Length) }
+							{ helpers.DistanceUnitForWorkout(ctx, w) }
+						</td>
+						<td class="text-right">{ helpers.HumanDuration(lift.Duration) }</td>
+						<td class="text-right">{ helpers.HumanElevation(ctx, lift.Gain) } { pu.Elevation() }</td>
+						<td class="text-right">
+							{ helpers.HumanSpeedForWorkout(ctx, w, lift.AverageSpeed()) }
+							{ helpers.SpeedUnitForWorkout(ctx, w) }
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	</div>
 }
 

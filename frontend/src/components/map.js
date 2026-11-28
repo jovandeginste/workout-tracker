@@ -1,7 +1,7 @@
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatDuration } from "../helpers.js";
-import { aerialLayer, endpointMarker, streetLayer } from "../map.js";
+import { aerialLayer, streetLayer } from "../map.js";
 
 /*
 interface Point {
@@ -29,6 +29,9 @@ class WtMap extends HTMLElement {
     super();
 
     this.hoverMarker = null;
+    this.selectedSegment = null;
+    this.selectedSegmentKey = null;
+    this.selectedMarkers = [];
   }
 
   connectedCallback() {
@@ -42,6 +45,9 @@ class WtMap extends HTMLElement {
       speedName: mapConfig.SpeedName,
       elevationName: mapConfig.ElevationName,
       slopeName: mapConfig.SlopeName,
+      liftName: mapConfig.LiftName,
+      climbsName: mapConfig.ClimbsName,
+      labels: mapConfig.Labels || {},
       streetsName: mapConfig.StreetsName,
       aerialName: mapConfig.AerialName,
       showSlope: mapConfig.ShowSlope,
@@ -77,6 +83,10 @@ class WtMap extends HTMLElement {
       weight: 4,
       interactive: false,
     };
+
+    map.createPane("segmentHighlight");
+    map.getPane("segmentHighlight").style.zIndex = 350;
+    this.segmentHighlightLayer = L.featureGroup().addTo(map);
 
     let prevPoint;
     const hasSpeed = !!this.workout.speed?.Data?.length;
@@ -127,31 +137,35 @@ class WtMap extends HTMLElement {
       prevPoint = p;
     });
 
-    if (slopeLayerGroup && this.config.showSlope) {
-      slopeLayerGroup.addTo(map);
-    } else {
-      elevationLayerGroup.addTo(map);
+    this.trackLayers = {
+      elevation: elevationLayerGroup,
+      speed: speedLayerGroup,
+      slope: slopeLayerGroup,
+    };
+
+    const defaultColoring =
+      this.config.showSlope && slopeLayerGroup ? "slope" : "elevation";
+    this.trackColoring = defaultColoring;
+    this.setTrackColoring(defaultColoring);
+
+    let liftHaloGroup;
+    if (this.workout.lifts?.Data?.length) {
+      liftHaloGroup = this.getLiftHaloLayerGroup();
     }
 
     const positions = this.workout.position.Data.filter((x) => x !== null);
+    const annotations = this.getAnnotationLayers();
+    const liftsOverlay = liftHaloGroup
+      ? L.layerGroup([liftHaloGroup, annotations.lifts])
+      : annotations.lifts;
+
+    annotations.startEnd.addTo(map);
+    annotations.climbs.addTo(map);
+    liftsOverlay.addTo(map);
 
     if (positions.length > 0) {
-      let last = positions[positions.length - 1];
-      this.trackGroup.addLayer(
-        endpointMarker(last, "red")
-          .addTo(map)
-          .bindTooltip(this.getTooltip(positions.length - 1)),
-      );
-
-      let first = positions[0];
-      this.trackGroup.addLayer(
-        endpointMarker(first, "green")
-          .addTo(map)
-          .bindTooltip(this.getTooltip(0)),
-      );
-
       if (!this.hoverMarker) {
-        this.hoverMarker = L.circleMarker(first, {
+        this.hoverMarker = L.circleMarker(positions[0], {
           color: "blue",
           radius: 8,
         });
@@ -160,18 +174,22 @@ class WtMap extends HTMLElement {
       this.hoverMarker.addTo(map); // Adding marker to the map
     }
 
-    const overlays = {
-      [this.config.elevationName]: elevationLayerGroup,
-    };
-    if (speedLayerGroup) {
-      overlays[this.config.speedName] = speedLayerGroup;
+    const overlays = {};
+
+    if (this.config.climbsName && annotations.climbs.getLayers().length > 0) {
+      overlays[this.config.climbsName] = annotations.climbs;
     }
-    if (slopeLayerGroup) {
-      overlays[this.config.slopeName] = slopeLayerGroup;
+
+    if (
+      this.config.liftName &&
+      (liftHaloGroup || annotations.lifts.getLayers().length > 0)
+    ) {
+      overlays[this.config.liftName] = liftsOverlay;
     }
 
     L.control.scale().addTo(map);
-    L.control
+
+    const layersControl = L.control
       .layers(
         {
           [this.config.streetsName]: layerStreet,
@@ -181,9 +199,87 @@ class WtMap extends HTMLElement {
       )
       .addTo(map);
 
+    this.addTrackColoring(layersControl);
+
     layerStreet.addTo(map);
 
     this.resetZoom();
+  }
+
+  setTrackColoring(kind) {
+    const selected = this.trackLayers?.[kind];
+    if (!selected) {
+      return;
+    }
+
+    for (const group of Object.values(this.trackLayers)) {
+      if (group && this.map.hasLayer(group)) {
+        this.map.removeLayer(group);
+      }
+    }
+
+    selected.addTo(this.map);
+    this.trackColoring = kind;
+  }
+
+  addTrackColoring(layersControl) {
+    const options = [
+      ["elevation", this.config.elevationName, this.trackLayers.elevation],
+      ["speed", this.config.speedName, this.trackLayers.speed],
+      ["slope", this.config.slopeName, this.trackLayers.slope],
+    ].filter(
+      ([, name, group]) => name && group && group.getLayers().length > 0,
+    );
+
+    if (options.length < 2) {
+      return;
+    }
+
+    const list = layersControl
+      .getContainer()
+      .querySelector(".leaflet-control-layers-list");
+    if (!list) {
+      return;
+    }
+
+    const section = L.DomUtil.create(
+      "div",
+      "leaflet-control-layers-base wt-map-coloring",
+    );
+    const separator = list.querySelector(".leaflet-control-layers-separator");
+
+    if (separator) {
+      list.insertBefore(
+        L.DomUtil.create("div", "leaflet-control-layers-separator"),
+        separator,
+      );
+      list.insertBefore(section, separator);
+    } else {
+      list.appendChild(
+        L.DomUtil.create("div", "leaflet-control-layers-separator"),
+      );
+      list.appendChild(section);
+    }
+
+    const groupName = `${this.getAttribute("id") || "wt-map"}-coloring`;
+
+    for (const [value, name] of options) {
+      const label = L.DomUtil.create("label", "", section);
+      const span = L.DomUtil.create("span", "", label);
+      const input = L.DomUtil.create(
+        "input",
+        "leaflet-control-layers-selector",
+        span,
+      );
+
+      input.type = "radio";
+      input.name = groupName;
+      input.value = value;
+      input.checked = value === this.trackColoring;
+      input.addEventListener("change", () => this.setTrackColoring(value));
+
+      span.appendChild(document.createTextNode(` ${name}`));
+    }
   }
 
   getStreetLayer() {
@@ -212,6 +308,201 @@ class WtMap extends HTMLElement {
     });
 
     return group;
+  }
+
+  getLiftHaloLayerGroup() {
+    const group = new L.featureGroup();
+
+    for (const positions of this.workout.lifts.Data) {
+      if (!positions || positions.length < 2) {
+        continue;
+      }
+
+      L.polyline(positions, {
+        pane: "segmentHighlight",
+        color: "#f59e0b",
+        weight: 10,
+        opacity: 0.85,
+        interactive: false,
+      }).addTo(group);
+    }
+
+    return group;
+  }
+
+  getAnnotationLayers() {
+    const startEnd = new L.featureGroup();
+    const climbs = new L.featureGroup();
+    const lifts = new L.featureGroup();
+
+    const allPositions = this.workout.position.Data;
+    const positions = allPositions.filter((x) => x !== null);
+
+    if (positions.length > 0) {
+      const first = positions[0];
+      const last = positions[positions.length - 1];
+
+      startEnd.addLayer(
+        this.getFlagAnnotation(
+          first,
+          this.label("start", "Start"),
+          "start",
+          this.getTooltip(allPositions.indexOf(first)),
+        ),
+      );
+      startEnd.addLayer(
+        this.getFlagAnnotation(
+          last,
+          this.label("end", "End"),
+          "end",
+          this.getTooltip(allPositions.lastIndexOf(last)),
+        ),
+      );
+    }
+
+    for (const segment of this.workout.segments?.Data || []) {
+      const group = segment.kind === "lift" ? lifts : climbs;
+      const markers = [
+        this.getSegmentAnnotation(segment, "start"),
+        this.getSegmentAnnotation(segment, "end"),
+      ];
+
+      for (const marker of markers) {
+        marker.on("mouseover", () => this.highlightSegment(segment, markers));
+        marker.on("mouseout", () => {
+          this.clearSegmentHighlight();
+          this.restoreSegmentHighlight();
+        });
+        marker.on("click", () => this.toggleSegmentSelection(segment, markers));
+        group.addLayer(marker);
+      }
+    }
+
+    return { startEnd, climbs, lifts };
+  }
+
+  getAnnotationIcon(html) {
+    return L.divIcon({
+      className: "wt-map-annotation",
+      html,
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
+    });
+  }
+
+  getFlagAnnotation(point, text, kind, tooltip) {
+    const html = `<span class="wt-map-flag wt-map-flag-${kind}"><span class="wt-map-flag-dot"></span><span class="wt-map-flag-label">${text}</span></span>`;
+
+    return L.marker(point, {
+      icon: this.getAnnotationIcon(html),
+      keyboard: false,
+    }).bindTooltip(tooltip, {
+      direction: "top",
+      offset: [0, -6],
+      opacity: 0.95,
+    });
+  }
+
+  label(key, fallback) {
+    return this.config.labels?.[key] || fallback;
+  }
+
+  segmentKey(segment) {
+    return `${segment.kind}-${segment.index}`;
+  }
+
+  toggleSegmentSelection(segment, markers) {
+    if (this.selectedSegmentKey === this.segmentKey(segment)) {
+      this.selectedSegment = null;
+      this.selectedSegmentKey = null;
+      this.selectedMarkers = [];
+    } else {
+      this.selectedSegment = segment;
+      this.selectedSegmentKey = this.segmentKey(segment);
+      this.selectedMarkers = markers;
+    }
+
+    this.clearSegmentHighlight();
+    this.restoreSegmentHighlight();
+  }
+
+  restoreSegmentHighlight() {
+    if (!this.selectedSegment) {
+      return;
+    }
+
+    this.drawSegmentHighlight(this.selectedSegment, this.selectedMarkers);
+  }
+
+  highlightSegment(segment, markers) {
+    this.clearSegmentHighlight();
+    this.drawSegmentHighlight(segment, markers);
+  }
+
+  drawSegmentHighlight(segment, markers) {
+    const positions = this.workout.position.Data.slice(
+      segment.startIdx,
+      segment.endIdx + 1,
+    ).filter((p) => p !== null);
+
+    if (positions.length > 1) {
+      const isLift = segment.kind === "lift";
+
+      L.polyline(positions, {
+        pane: "segmentHighlight",
+        color: isLift ? "#fbbf24" : "#fff",
+        weight: isLift ? 10 : 9,
+        opacity: isLift ? 1 : 0.9,
+        interactive: false,
+      }).addTo(this.segmentHighlightLayer);
+    }
+
+    for (const marker of markers) {
+      marker.getElement()?.classList.add("wt-map-annotation-active");
+    }
+  }
+
+  clearSegmentHighlight() {
+    this.segmentHighlightLayer?.clearLayers();
+
+    for (const element of this.map
+      .getContainer()
+      .querySelectorAll(".wt-map-annotation-active")) {
+      element.classList.remove("wt-map-annotation-active");
+    }
+  }
+
+  getSegmentAnnotation(segment, which) {
+    const glyphs = {
+      climb: "▲",
+      descent: "▼",
+      lift: '<span class="icon-[fa-solid--tram]"></span>',
+    };
+
+    const glyph = glyphs[segment.kind] || "?";
+    const name = this.label(segment.kind, "Segment");
+    const html = `<span class="wt-map-badge wt-map-badge-${segment.kind} wt-map-badge-${which}">${glyph}<b>${segment.index}</b></span>`;
+    const direction = segment.kind === "descent" ? "↓" : "↑";
+    const distance =
+      segment.length >= 1000
+        ? `${(segment.length / 1000).toFixed(1)} km`
+        : `${Math.round(segment.length)} m`;
+    const when = this.label(which, which);
+    const slope = `${Math.round(100 * segment.avgSlope)}%`;
+    const tooltip = `<b>${name} ${
+      segment.index
+    }</b> — ${when}<br>${direction} ${Math.round(
+      segment.gain,
+    )} m · ${distance} · ${slope} · ${formatDuration(segment.duration)}`;
+
+    return L.marker(segment[which], {
+      icon: this.getAnnotationIcon(html),
+      keyboard: false,
+    }).bindTooltip(tooltip, {
+      direction: "top",
+      offset: [0, -10],
+      opacity: 0.95,
+    });
   }
 
   getSlopeLayerGroup(polyLineProperties = {}) {

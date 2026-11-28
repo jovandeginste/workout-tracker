@@ -80,6 +80,9 @@ type MapConfig struct {
 	SpeedName     string
 	ElevationName string
 	SlopeName     string
+	LiftName      string
+	ClimbsName    string
+	Labels        map[string]string
 	StreetsName   string
 	AerialName    string
 	ShowElevation bool

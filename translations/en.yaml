@@ -82,9 +82,14 @@ en:
     weblate: Please help translate via Weblate
   map:
     aerial: Aerial
+    climb: Climb
+    descent: Descent
+    end: End
     fullscreen: Fullscreen
+    lift: Lift
     markers: Show markers
     only-visited: Only show where you've been
+    start: Start
     streets: Streets
   measurements:
     latest: Latest measurements
@@ -291,6 +296,7 @@ en:
     heading: Heading
     heart-rate: Heart rate
     location: Location
+    lifts: Lifts
     lock: Lock or unlock the attributes of this workout from automatic updates.
     locked: The attributes of workout '%s' are now locked
     manual: Manual

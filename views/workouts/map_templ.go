@@ -69,6 +69,15 @@ func Map(w *database.Workout) templ.Component {
 			SpeedName:     i18n.T(ctx, "workout.average-speed"),
 			ElevationName: i18n.T(ctx, "workout.elevation"),
 			SlopeName:     i18n.T(ctx, "workout.slope"),
+			LiftName:      i18n.T(ctx, "workout.lifts"),
+			ClimbsName:    i18n.T(ctx, "workout.climbs"),
+			Labels: map[string]string{
+				"start":   i18n.T(ctx, "map.start"),
+				"end":     i18n.T(ctx, "map.end"),
+				"climb":   i18n.T(ctx, "map.climb"),
+				"descent": i18n.T(ctx, "map.descent"),
+				"lift":    i18n.T(ctx, "map.lift"),
+			},
 			StreetsName:   i18n.T(ctx, "map.streets"),
 			AerialName:    i18n.T(ctx, "map.aerial"),
 			ShowElevation: true,
@@ -80,7 +89,7 @@ func Map(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.NewAttributeExpression(templ.JSONString(mapConfig)).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 30, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 39, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -103,7 +112,7 @@ func Map(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 39, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 48, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -116,7 +125,7 @@ func Map(w *database.Workout) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.NewAttributeExpression(i18n.T(ctx, "map.fullscreen")).Resolve(ctx)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 39, Col: 97}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/workouts/map.templ`, Line: 48, Col: 97}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {

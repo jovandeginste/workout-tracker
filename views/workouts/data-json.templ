@@ -33,6 +33,8 @@ func labelMap(ctx context.Context, w *database.Workout) map[string]*helpers.Data
 		"duration":        {Label: i18n.T(ctx, "workout.duration"), Data: []any{}},
 		"moving-duration": {Label: i18n.T(ctx, "workout.moving-duration"), Data: []any{}},
 		"slope":           {Label: i18n.T(ctx, "workout.slope"), Data: []any{}},
+		"lifts":           {Label: i18n.T(ctx, "workout.lifts"), Data: []any{}},
+		"segments":        {Label: "", Data: []any{}},
 	}
 
 	translations := translationMap(ctx)
@@ -93,6 +95,55 @@ func addDetails(ctx context.Context, data map[string]*helpers.Dataset, w *databa
 				data[m].Data = append(data[m].Data, nil)
 			}
 		}
+	}
+
+	for _, lift := range w.Data.Lifts {
+		positions := []any{}
+		for i := max(0, lift.StartIdx); i <= min(len(d.Points)-1, lift.EndIdx); i++ {
+			p := d.Points[i]
+			if p.Lat != 0 || p.Lng != 0 {
+				positions = append(positions, []float64{p.Lat, p.Lng})
+			}
+		}
+
+		data["lifts"].Data = append(data["lifts"].Data, positions)
+	}
+
+	for _, climb := range w.Data.Climbs {
+		data["segments"].Data = append(data["segments"].Data, segmentToMap(climb))
+	}
+
+	for _, lift := range w.Data.Lifts {
+		data["segments"].Data = append(data["segments"].Data, segmentToMap(lift))
+	}
+}
+
+// mapSegment is the map representation of a climb, descent or lift.
+type mapSegment struct {
+	Kind     string    `json:"kind"`
+	Index    int       `json:"index"`
+	StartIdx int       `json:"startIdx"`
+	EndIdx   int       `json:"endIdx"`
+	Start    []float64 `json:"start"`
+	End      []float64 `json:"end"`
+	Gain     float64   `json:"gain"`
+	Length   float64   `json:"length"`
+	AvgSlope float64   `json:"avgSlope"`
+	Duration float64   `json:"duration"`
+}
+
+func segmentToMap(segment database.Segment) mapSegment {
+	return mapSegment{
+		Kind:     string(segment.Type),
+		Index:    segment.Index,
+		StartIdx: segment.StartIdx,
+		EndIdx:   segment.EndIdx,
+		Start:    []float64{segment.Start.Lat, segment.Start.Lng},
+		End:      []float64{segment.End.Lat, segment.End.Lng},
+		Gain:     segment.Gain,
+		Length:   segment.Length,
+		AvgSlope: segment.AvgSlope,
+		Duration: segment.Duration.Seconds(),
 	}
 }
 
