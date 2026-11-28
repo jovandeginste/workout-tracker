@@ -9,6 +9,7 @@ import (
 	"github.com/jovandeginste/workout-tracker/v2/pkg/geocoder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/tkrajina/gpxgo/gpx"
 )
 
 func init() { //nolint:gochecknoinits
@@ -42,6 +43,35 @@ func defaultWorkout(t *testing.T) *Workout {
 	assert.Len(t, w, 1)
 
 	return w[0]
+}
+
+func TestWorkoutTypeFromGPXMetadata(t *testing.T) {
+	tests := []struct {
+		name      string
+		trackName string
+		trackType string
+		dataName  string
+		expected  WorkoutType
+		found     bool
+	}{
+		{name: "track type", trackType: "cycling", expected: WorkoutTypeCycling, found: true},
+		{name: "track name", trackName: "Skiing", expected: WorkoutTypeSkiing, found: true},
+		{name: "workout name", dataName: "Running 2024-05-01", expected: WorkoutTypeRunning, found: true},
+		{name: "unknown", trackName: "Activity", dataName: "Activity", expected: WorkoutTypeAutoDetect},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			g := &gpx.GPX{
+				Tracks: []gpx.GPXTrack{{Name: tt.trackName, Type: tt.trackType}},
+			}
+
+			workoutType, found := workoutTypeFromGPXMetadata(g, tt.dataName)
+
+			assert.Equal(t, tt.expected, workoutType)
+			assert.Equal(t, tt.found, found)
+		})
+	}
 }
 
 func TestWorkout_ParseWithType(t *testing.T) {

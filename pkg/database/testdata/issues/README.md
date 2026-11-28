@@ -21,9 +21,10 @@ The test suite runs in UTC. Use `make test-go`, or prefix direct `go test`
 invocations with `TZ=UTC`, so date and time formatting matches the goldens.
 
 The golden files keep the workout summary, detected climbs and descents, the
-number of parsed points, a SHA-256 digest of every point (including slope
-grades), the first and last point, and a digest of the derived heatmap points.
-Derived values that the background worker normally calculates (slope grades,
-climb and descent detection, cadence and power averages) are included. Storing
-all points would make the goldens larger than the samples. A digest mismatch
-means the point parsing changed even when the summary looks the same.
+detected lifts, the number of parsed points, a SHA-256 digest of every point
+(including slope grades), the first and last point, and a digest of the derived
+heatmap points. Derived values that the background worker normally calculates
+(slope grades, climb and descent detection, lift detection, cadence and power
+averages) are included. Storing all points would make the goldens larger than
+the samples. A digest mismatch means the point parsing changed even when the
+summary looks the same.

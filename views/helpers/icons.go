@@ -93,6 +93,7 @@ var iconMap = map[string]string{
 	"workout":           "icon-[fa6-solid--dumbbell]",
 	"equipment":         "icon-[fa6-solid--bicycle]",
 	"route-segment":     "icon-[fa6-solid--route]",
+	"lift":              "icon-[fa-solid--tram]",
 	"add":               "icon-[fa6-solid--circle-plus]",
 	"workout-add":       "icon-[fa6-solid--circle-plus]",
 	"equipment-add":     "icon-[fa6-solid--circle-plus]",

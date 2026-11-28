@@ -307,6 +307,14 @@ func NewWorkout(u *User, workoutType WorkoutType, notes string, filename string,
 
 		d := &g.Data.Start
 
+		// The type can determine how the points are processed (lift detection,
+		// max speed delta), so detect it from the file metadata before parsing.
+		if wt == WorkoutTypeAutoDetect && g.IsGPXBAsed() {
+			if detected, ok := workoutTypeFromGPXMetadata(g.GPX, g.Data.Name); ok {
+				wt = detected
+			}
+		}
+
 		if g.IsGPXBAsed() {
 			d = gpxDate(g.GPX)
 			data = gpxAsMapData(g.GPX, wt, false, false)
@@ -396,23 +404,8 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX, dataName string) 
 		return WorkoutTypeAutoDetect
 	}
 
-	// If the GPX file mentions a workout type (for the first track), use it
-	if len(gpxContent.Tracks) > 0 {
-		firstTrack := &gpxContent.Tracks[0]
-
-		if workoutType, ok := workoutTypeFromData(firstTrack.Type); ok {
-			return workoutType
-		}
-	}
-
-	// If the GPX file mentions a workout type in the name (Runkeeper), use it
-	if len(dataName) > 0 {
-		nameField := strings.Fields(dataName)
-		if len(nameField) > 0 {
-			if workoutType, ok := workoutTypeFromData(nameField[0]); ok {
-				return workoutType
-			}
-		}
+	if workoutType, ok := workoutTypeFromGPXMetadata(gpxContent, dataName); ok {
+		return workoutType
 	}
 
 	if data == nil {
@@ -428,6 +421,42 @@ func autoDetectWorkoutType(data *MapData, gpxContent *gpx.GPX, dataName string) 
 	}
 
 	return WorkoutTypeWalking
+}
+
+// workoutTypeFromGPXMetadata looks for an explicit workout type in the GPX
+// metadata, without looking at the recorded points.
+func workoutTypeFromGPXMetadata(gpxContent *gpx.GPX, dataName string) (WorkoutType, bool) {
+	if gpxContent == nil {
+		return WorkoutTypeAutoDetect, false
+	}
+
+	// If the GPX file mentions a workout type (for the first track), use it
+	if len(gpxContent.Tracks) > 0 {
+		firstTrack := &gpxContent.Tracks[0]
+
+		if workoutType, ok := workoutTypeFromData(firstTrack.Type); ok {
+			return workoutType, true
+		}
+
+		// Some apps (e.g. TomTom) only put the activity type in the track name
+		if nameField := strings.Fields(firstTrack.Name); len(nameField) > 0 {
+			if workoutType, ok := workoutTypeFromData(nameField[0]); ok {
+				return workoutType, true
+			}
+		}
+	}
+
+	// If the GPX file mentions a workout type in the name (Runkeeper), use it
+	if len(dataName) > 0 {
+		nameField := strings.Fields(dataName)
+		if len(nameField) > 0 {
+			if workoutType, ok := workoutTypeFromData(nameField[0]); ok {
+				return workoutType, true
+			}
+		}
+	}
+
+	return WorkoutTypeAutoDetect, false
 }
 
 func GetRecentWorkouts(db *gorm.DB, viewer *User, count int) ([]*Workout, error) {

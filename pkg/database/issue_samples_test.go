@@ -80,6 +80,7 @@ type issueSampleWorkout struct {
 	FirstPoint          *issueSamplePoint  `json:"firstPoint,omitempty"`
 	LastPoint           *issueSamplePoint  `json:"lastPoint,omitempty"`
 	Climbs              []issueSampleClimb `json:"climbs"`
+	Lifts               []issueSampleClimb `json:"lifts,omitempty"`
 	HeatmapPointsCount  int                `json:"heatmapPointsCount"`
 	HeatmapPointsDigest string             `json:"heatmapPointsDigest"`
 }
@@ -277,6 +278,7 @@ func issueSampleWorkoutFrom(w *Workout) *issueSampleWorkout {
 		TotalCalories:       roundFloat(data.TotalCalories, 6),
 		ExtraMetrics:        data.ExtraMetrics,
 		Climbs:              issueSampleClimbsFrom(data),
+		Lifts:               issueSampleLiftsFrom(data.Lifts),
 	}
 
 	if result.ExtraMetrics == nil {
@@ -287,9 +289,21 @@ func issueSampleWorkoutFrom(w *Workout) *issueSampleWorkout {
 }
 
 func issueSampleClimbsFrom(data *MapData) []issueSampleClimb {
-	result := make([]issueSampleClimb, 0, len(data.Climbs))
+	return issueSampleSegmentsFrom(data.Climbs)
+}
 
-	for _, climb := range data.Climbs {
+func issueSampleLiftsFrom(lifts []Segment) []issueSampleClimb {
+	if len(lifts) == 0 {
+		return nil
+	}
+
+	return issueSampleSegmentsFrom(lifts)
+}
+
+func issueSampleSegmentsFrom(segments []Segment) []issueSampleClimb {
+	result := make([]issueSampleClimb, 0, len(segments))
+
+	for _, climb := range segments {
 		result = append(result, issueSampleClimb{
 			Index:    climb.Index,
 			Type:     string(climb.Type),
